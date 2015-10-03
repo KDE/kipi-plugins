@@ -44,12 +44,11 @@ class QSpacerItem;
 class QComboBox;
 class QCloseEvent;
 
-class KColorButton;
-
 namespace KDcrawIface
 {
 class RIntNumInput;
 class RFileSelector;
+class RColorSelector;
 }
 
 using namespace KDcrawIface;
@@ -71,44 +70,44 @@ public:
 
 public:
 
-    QLabel*        ImageSizeLabel;
-    QLabel*        IconSizeLabel;
-    QLabel*        destinationDirectoryLabel_;
-    QLabel*        FileNameLabel_;
-    QLabel*        DestinationUrlLabel_;
-    QLabel*        GPXFileLabel_;
-    QLabel*        timeZoneLabel_;
-    QLabel*        GPXLineWidthLabel_;
-    QLabel*        GPXColorLabel_;
-    QLabel*        GPXAltitudeLabel_;
-    QLabel*        GPXTracksOpacityLabel_;
+    QLabel*         ImageSizeLabel;
+    QLabel*         IconSizeLabel;
+    QLabel*         destinationDirectoryLabel_;
+    QLabel*         FileNameLabel_;
+    QLabel*         DestinationUrlLabel_;
+    QLabel*         GPXFileLabel_;
+    QLabel*         timeZoneLabel_;
+    QLabel*         GPXLineWidthLabel_;
+    QLabel*         GPXColorLabel_;
+    QLabel*         GPXAltitudeLabel_;
+    QLabel*         GPXTracksOpacityLabel_;
 
-    QGroupBox*     TargetPreferenceGroupBox;
-    QGroupBox*     TargetTypeGroupBox;
+    QGroupBox*      TargetPreferenceGroupBox;
+    QGroupBox*      TargetTypeGroupBox;
 
-    QButtonGroup*  buttonGroupTargetType;
+    QButtonGroup*   buttonGroupTargetType;
 
-    QRadioButton*  LocalTargetRadioButton_;
-    QRadioButton*  GoogleMapTargetRadioButton_;
+    QRadioButton*   LocalTargetRadioButton_;
+    QRadioButton*   GoogleMapTargetRadioButton_;
 
-    QLineEdit*     DestinationUrl_;
-    QLineEdit*     FileName_;
+    QLineEdit*      DestinationUrl_;
+    QLineEdit*      FileName_;
 
-    QCheckBox*     GPXTracksCheckBox_;
+    QCheckBox*      GPXTracksCheckBox_;
 
-    QComboBox*     AltitudeCB_;
-    QComboBox*     timeZoneCB;
-    QComboBox*     GPXAltitudeCB_;
+    QComboBox*      AltitudeCB_;
+    QComboBox*      timeZoneCB;
+    QComboBox*      GPXAltitudeCB_;
 
-    KColorButton*  GPXTrackColor_;
+    RColorSelector* GPXTrackColor_;
 
-    RFileSelector* DestinationDirectory_;
-    RFileSelector* GPXFileUrlRequester_;
+    RFileSelector*  DestinationDirectory_;
+    RFileSelector*  GPXFileUrlRequester_;
 
-    RIntNumInput*  ImageSizeInput_;
-    RIntNumInput*  IconSizeInput_;
-    RIntNumInput*  GPXTracksOpacityInput_;
-    RIntNumInput*  GPXLineWidthInput_;
+    RIntNumInput*   ImageSizeInput_;
+    RIntNumInput*   IconSizeInput_;
+    RIntNumInput*   GPXTracksOpacityInput_;
+    RIntNumInput*   GPXLineWidthInput_;
 
 public Q_SLOTS:
 

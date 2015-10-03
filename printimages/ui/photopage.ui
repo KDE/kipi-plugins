@@ -577,10 +577,7 @@
                </widget>
               </item>
               <item>
-               <widget class="KColorButton" name="m_font_color">
-                <property name="text">
-                 <string>PushButton</string>
-                </property>
+               <widget class="KDcrawIface::RColorSelector" name="m_font_color">
                </widget>
               </item>
              </layout>
@@ -678,6 +675,11 @@
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>KDcrawIface::RColorSelector</class>
+   <extends>QPushButton</extends>
+   <header>KDCRAW/RWidgetUtils</header>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>ListPhotoSizes</tabstop>

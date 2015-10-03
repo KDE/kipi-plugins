@@ -34,7 +34,6 @@
 
 // KDE includes
 
-#include <kcolorbutton.h>
 #include <klocalizedstring.h>
 
 // Libkdcraw includes
@@ -80,33 +79,33 @@ public:
 
     }
 
-    RVBox*        vbox;
-    QComboBox*    thumbnailPosition;
+    RVBox*          vbox;
+    QComboBox*      thumbnailPosition;
 
-    KColorButton* textColor;
-    KColorButton* backgroundColor;
-    KColorButton* frameColor;
+    RColorSelector* textColor;
+    RColorSelector* backgroundColor;
+    RColorSelector* frameColor;
 
-    RIntNumInput* frameWidth;
-    RIntNumInput* stagePadding;
-    RIntNumInput* thumbnailColumns;
-    RIntNumInput* thumbnailRows;
+    RIntNumInput*   frameWidth;
+    RIntNumInput*   stagePadding;
+    RIntNumInput*   thumbnailColumns;
+    RIntNumInput*   thumbnailRows;
 
     // ---Autoviewer------
-    RIntNumInput* displayTime;
-    RIntNumInput* imagePadding;
+    RIntNumInput*   displayTime;
+    RIntNumInput*   imagePadding;
 
     // ---Tiltviewer------
-    KColorButton* bkgndInnerColor;
-    KColorButton* bkgndOuterColor;
-    KColorButton* backColor;
-    QCheckBox*    useReloadButton;
-    QCheckBox*    showFlipButton;
+    RColorSelector* bkgndInnerColor;
+    RColorSelector* bkgndOuterColor;
+    RColorSelector* backColor;
+    QCheckBox*      useReloadButton;
+    QCheckBox*      showFlipButton;
 
     // ---Postcardviewer----
-    RIntNumInput* cellDimension;
-    RIntNumInput* zoomInPerc;
-    RIntNumInput* zoomOutPerc;
+    RIntNumInput*   cellDimension;
+    RIntNumInput*   zoomInPerc;
+    RIntNumInput*   zoomOutPerc;
 };
 
 LookPage::LookPage(KAssistantDialog* const dlg)
@@ -184,20 +183,20 @@ void LookPage::setPageContent(int plugType)
 
             RHBox* hbox4    = new RHBox;
             QLabel* label4  = new QLabel(i18n("&Text Color:"), hbox4);
-            d->textColor    = new KColorButton(hbox4);
+            d->textColor    = new RColorSelector(hbox4);
             d->textColor->setColor(QColor("#FFFFFF"));
             d->textColor->setWhatsThis(i18n("Color of title and caption text"));
             label4->setBuddy(d->textColor);
 
             RHBox* hbox5       = new RHBox;
             QLabel* label5     = new QLabel(i18n("&Background Color:"), hbox5);
-            d->backgroundColor = new KColorButton(hbox5);
+            d->backgroundColor = new RColorSelector(hbox5);
             d->backgroundColor->setColor(QColor("#181818"));
             label5->setBuddy(d->backgroundColor);
 
             RHBox* hbox6    = new RHBox;
             QLabel* label6  = new QLabel(i18n("&Frame Color:"), hbox6);
-            d->frameColor   = new KColorButton(QColor("#FFFFFF"), hbox6);
+            d->frameColor   = new RColorSelector(hbox6);
             d->frameColor->setColor(QColor("#FFFFFF"));
             d->frameColor->setWhatsThis(i18n("Color of image frame, viewed icon, load bars, thumbnail arrows"));
             label6->setBuddy(d->frameColor);
@@ -261,13 +260,13 @@ void LookPage::setPageContent(int plugType)
 
             RHBox* hbox2       = new RHBox;
             QLabel* label2     = new QLabel(i18n("&Background Color:"), hbox2);
-            d->backgroundColor = new KColorButton(hbox2);
+            d->backgroundColor = new RColorSelector(hbox2);
             d->backgroundColor->setColor(QColor("#181818"));
             label2->setBuddy(d->backgroundColor);
 
             RHBox* hbox3    = new RHBox;
             QLabel* label3  = new QLabel(i18n("&Frame Color:"), hbox3);
-            d->frameColor   = new KColorButton(QColor("#FFFFFF"), hbox3);
+            d->frameColor   = new RColorSelector(hbox3);
             d->frameColor->setColor(QColor("#FFFFFF"));
             d->frameColor->setWhatsThis(i18n("Color of image frame, viewed icon, load bars, thumbnail arrows"));
             label3->setBuddy(d->frameColor);
@@ -352,28 +351,28 @@ void LookPage::setPageContent(int plugType)
 
             RHBox* hbox3    = new RHBox;
             QLabel* label3  = new QLabel(i18n("&Frame Color:"), hbox3);
-            d->frameColor   = new KColorButton(QColor("#FFFFFF"), hbox3);
+            d->frameColor   = new RColorSelector(hbox3);
             d->frameColor->setColor(QColor("#FFFFFF"));
             d->frameColor->setWhatsThis(i18n("Color of image frame, viewed icon, load bars, thumbnail arrows"));
             label3->setBuddy(d->frameColor);
 
-            RHBox* hbox4    = new RHBox;
-            QLabel* label4  = new QLabel(i18n("Background &Inner Color:"), hbox4);
-            d->bkgndInnerColor    = new KColorButton(hbox4);
+            RHBox* hbox4       = new RHBox;
+            QLabel* label4     = new QLabel(i18n("Background &Inner Color:"), hbox4);
+            d->bkgndInnerColor = new RColorSelector(hbox4);
             d->bkgndInnerColor->setColor(QColor("#FFFFFF"));
             d->bkgndInnerColor->setWhatsThis(i18n("Color of the stage background gradient center."));
             label4->setBuddy(d->bkgndInnerColor);
 
-            RHBox* hbox5    = new RHBox;
-            QLabel* label5  = new QLabel(i18n("Background &Outer Color:"), hbox5);
-            d->bkgndOuterColor    = new KColorButton(hbox5);
+            RHBox* hbox5       = new RHBox;
+            QLabel* label5     = new QLabel(i18n("Background &Outer Color:"), hbox5);
+            d->bkgndOuterColor = new RColorSelector(hbox5);
             d->bkgndOuterColor->setColor(QColor("#FFFFFF"));
             d->bkgndOuterColor->setWhatsThis(i18n("Color of the stage background gradient edge."));
             label5->setBuddy(d->bkgndOuterColor);
 
             RHBox* hbox6    = new RHBox;
             QLabel* label6  = new QLabel(i18n("Image Back Color:"), hbox6);
-            d->backColor    = new KColorButton(hbox6);
+            d->backColor    = new RColorSelector(hbox6);
             d->backColor->setColor(QColor("#FFFFFF"));
             d->backColor->setWhatsThis(i18n("Image's back color when pressing flip button"));
             label6->setBuddy(d->bkgndOuterColor);
@@ -422,20 +421,20 @@ void LookPage::setPageContent(int plugType)
 
             RHBox* hbox3    = new RHBox;
             QLabel* label3  = new QLabel(i18n("&Caption Color:"), hbox3);
-            d->textColor    = new KColorButton(hbox3);
+            d->textColor    = new RColorSelector(hbox3);
             d->textColor->setColor(QColor("#FFFFFF"));
             d->textColor->setWhatsThis(i18n("Color of title and caption text"));
             label3->setBuddy(d->textColor);
 
             RHBox* hbox4       = new RHBox;
             QLabel* label4     = new QLabel(i18n("&Background Color:"), hbox4);
-            d->backgroundColor = new KColorButton(hbox4);
+            d->backgroundColor = new RColorSelector(hbox4);
             d->backgroundColor->setColor(QColor("#181818"));
             label4->setBuddy(d->backgroundColor);
 
             RHBox* hbox5    = new RHBox;
             QLabel* label5  = new QLabel(i18n("&Frame Color:"), hbox5);
-            d->frameColor   = new KColorButton(QColor("#FFFFFF"), hbox5);
+            d->frameColor   = new RColorSelector(hbox5);
             d->frameColor->setColor(QColor("#FFFFFF"));
             d->frameColor->setWhatsThis(i18n("Color of image frame, viewed icon, load bars, thumbnail arrows"));
             label5->setBuddy(d->frameColor);

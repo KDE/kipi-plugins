@@ -39,7 +39,6 @@
 
 // KDE includes
 
-#include <kcolorbutton.h>
 #include <kconfig.h>
 #include <klocalizedstring.h>
 #include <kwindowconfig.h>
@@ -215,7 +214,8 @@ KmlWindow::KmlWindow(QWidget* const parent,
     GPXLineWidthInput_->setValue(4);
 
     GPXColorLabel_ = new QLabel(i18n("Track Color:" ), GPXTracksGroupBox);
-    GPXTrackColor_ = new KColorButton(QColor("#ffffff"), GPXTracksGroupBox);
+    GPXTrackColor_ = new RColorSelector(GPXTracksGroupBox);
+    GPXTrackColor_->setColor(QColor("#ffffff")); 
 
     GPXTracksOpacityLabel_ = new QLabel(i18n("Opacity (%):"), GPXTracksGroupBox);
     GPXTracksOpacityInput_ = new RIntNumInput(GPXTracksGroupBox);
@@ -240,7 +240,7 @@ KmlWindow::KmlWindow(QWidget* const parent,
 
     GPXTracksGroupBoxLayout->addWidget( GPXTracksCheckBox_,     0, 0, 1, 4);
     GPXTracksGroupBoxLayout->addWidget( GPXFileLabel_,          1, 0, 1, 1);
-    GPXTracksGroupBoxLayout->addWidget( GPXFileUrlRequester_,  1, 1, 1, 3);
+    GPXTracksGroupBoxLayout->addWidget( GPXFileUrlRequester_,   1, 1, 1, 3);
     GPXTracksGroupBoxLayout->addWidget( timeZoneLabel_,         2, 0, 1, 1);
     GPXTracksGroupBoxLayout->addWidget( timeZoneCB,             2, 1, 1, 3);
     GPXTracksGroupBoxLayout->addWidget( GPXLineWidthLabel_,     3, 0, 1, 1);
@@ -491,12 +491,12 @@ void KmlWindow::saveSettings()
 
     group.writeEntry(QLatin1String("UrlDestDir"),        url);
     group.writeEntry(QLatin1String("KMLFileName"),       FileName_->text());
-    group.writeEntry(QLatin1String("Altitude Mode"),     AltitudeCB_->currentIndex() );
+    group.writeEntry(QLatin1String("Altitude Mode"),     AltitudeCB_->currentIndex());
     group.writeEntry(QLatin1String("UseGPXTracks"),      GPXTracksCheckBox_->isChecked());
     group.writeEntry(QLatin1String("GPXFile"),           GPXFileUrlRequester_->lineEdit()->text());
-    group.writeEntry(QLatin1String("Time Zone"),         timeZoneCB->currentIndex() );
+    group.writeEntry(QLatin1String("Time Zone"),         timeZoneCB->currentIndex());
     group.writeEntry(QLatin1String("Line Width"),        GPXLineWidthInput_->value());
-    group.writeEntry(QLatin1String("Track Color"),       GPXTrackColor_->color().name ());
+    group.writeEntry(QLatin1String("Track Color"),       GPXTrackColor_->color().name());
     group.writeEntry(QLatin1String("Track Opacity"),     GPXTracksOpacityInput_->value());
     group.writeEntry(QLatin1String("GPX Altitude Mode"), GPXAltitudeCB_->currentIndex());
 
