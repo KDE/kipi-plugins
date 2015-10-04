@@ -58,10 +58,10 @@ struct IntroPage::Private
 {
     Private(Manager* const m)
         : mngr(m),
-//          addGPlusMetadataCheckBox(0),
+//        addGPlusMetadataCheckBox(0),
 
           // TODO HDR
-//          hdrCheckBox(0),
+//        hdrCheckBox(0),
 
           formatGroupBox(0),
           settingsGroupBox(0),
@@ -73,12 +73,11 @@ struct IntroPage::Private
     }
 
     Manager*                      mngr;
-/*
-    QCheckBox*                    addGPlusMetadataCheckBox;
-*/
+
+//  QCheckBox*                    addGPlusMetadataCheckBox;
 
     // TODO HDR
-//     QCheckBox*                    hdrCheckBox;
+//  QCheckBox*                    hdrCheckBox;
 
     QGroupBox*                    formatGroupBox;
     QGroupBox*                    settingsGroupBox;
@@ -122,15 +121,18 @@ IntroPage::IntroPage(Manager* const mngr, KPWizardDialog* const dlg)
     d->binariesWidget->addBinary(d->mngr->nonaBinary());
     d->binariesWidget->addBinary(d->mngr->panoModifyBinary());
     d->binariesWidget->addBinary(d->mngr->pto2MkBinary());
+
 #ifdef Q_WS_MAC
     d->binariesWidget->addDirectory("/Applications/Hugin/HuginTools");    // Hugin bundle PKG install
     d->binariesWidget->addDirectory("/opt/local/bin");                    // Std Macports install
     d->binariesWidget->addDirectory("/opt/digikam/bin");                  // digiKam Bundle PKG install
 #endif
+
 #ifdef Q_WS_WIN
     d->binariesWidget->addDirectory("C:/Program Files/Hugin/bin");
     d->binariesWidget->addDirectory("C:/Program Files (x86)/Hugin/bin");
 #endif
+
     vbox->addWidget(binaryBox);
 
 /*
@@ -222,7 +224,7 @@ IntroPage::IntroPage(Manager* const mngr, KPWizardDialog* const dlg)
     emit signalIntroPageIsValid(d->binariesWidget->allBinariesFound());
 
     // TODO HDR
-//     d->hdrCheckBox->setChecked(d->mngr->hdr());
+//   d->hdrCheckBox->setChecked(d->mngr->hdr());
 }
 
 IntroPage::~IntroPage()
