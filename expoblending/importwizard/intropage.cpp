@@ -80,18 +80,25 @@ IntroPage::IntroPage(Manager* const mngr, KPWizardDialog* const dlg)
                         "</qt>"));
     vbox->addWidget(title);
 
-    QGroupBox* binaryBox        = new QGroupBox(this);
-    QGridLayout* binaryLayout   = new QGridLayout;
+    QGroupBox* const binaryBox        = new QGroupBox(this);
+    QGridLayout* const binaryLayout   = new QGridLayout;
     binaryBox->setLayout(binaryLayout);
     binaryBox->setTitle(i18nc("@title:group", "Exposure Blending Binaries"));
     d->binariesWidget = new KIPIPlugins::KPBinarySearch(binaryBox);
     d->binariesWidget->addBinary(d->mngr->alignBinary());
     d->binariesWidget->addBinary(d->mngr->enfuseBinary());
+
 #ifdef Q_OS_MAC
     d->binariesWidget->addDirectory("/Applications/Hugin/HuginTools");    // Hugin bundle PKG install
     d->binariesWidget->addDirectory("/opt/local/bin");                    // Std Macports install
     d->binariesWidget->addDirectory("/opt/digikam/bin");                  // digiKam Bundle PKG install
 #endif
+
+#ifdef Q_WS_WIN
+    d->binariesWidget->addDirectory("C:/Program Files/Hugin/bin");
+    d->binariesWidget->addDirectory("C:/Program Files (x86)/Hugin/bin");
+#endif
+
     vbox->addWidget(binaryBox);
 
     connect(d->binariesWidget, SIGNAL(signalBinariesFound(bool)),
