@@ -31,7 +31,6 @@
 #include <QSpinBox>
 #include <QCheckBox>
 #include <QGroupBox>
-#include <QCloseEvent>
 #include <QMenu>
 #include <QComboBox>
 #include <QPushButton>
@@ -43,7 +42,6 @@
 #include <kmessagebox.h>
 #include <kconfig.h>
 #include <klocalizedstring.h>
-#include <kpassworddialog.h>
 #include <kwindowconfig.h>
 
 // LibKDcraw includes
@@ -147,9 +145,9 @@ SmugWindow::SmugWindow(const QString& tmpFolder, bool import, QWidget* const /*p
 
     // ------------------------------------------------------------------------
 
-    m_loginDlg  = new KPasswordDialog(this, KPasswordDialog::ShowUsernameLine);
-    m_loginDlg->setPrompt(i18n("<qt>Enter the <b>email address</b> and <b>password</b> for your "
-                               "<a href=\"http://www.smugmug.com\">SmugMug</a> account</qt>"));
+    m_loginDlg  = new KPLoginDialog(this,
+                                    i18n("<qt>Enter the <b>email address</b> and <b>password</b> for your "
+                                         "<a href=\"http://www.smugmug.com\">SmugMug</a> account</qt>"));
 
     // ------------------------------------------------------------------------
 
@@ -354,6 +352,7 @@ void SmugWindow::writeSettings()
     grp.writeEntry("Resize",          m_widget->m_resizeChB->isChecked());
     grp.writeEntry("Maximum Width",   m_widget->m_dimensionSpB->value());
     grp.writeEntry("Image Quality",   m_widget->m_imageQualitySpB->value());
+
     if (m_import)
     {
         KConfigGroup dialogGroup = config.group("Smug Import Dialog");
@@ -364,6 +363,7 @@ void SmugWindow::writeSettings()
         KConfigGroup dialogGroup = config.group("Smug Export Dialog");
         KWindowConfig::saveWindowSize(windowHandle(), dialogGroup);
     }
+
     config.sync();
 }
 
@@ -427,6 +427,7 @@ void SmugWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
     for (int i = 0; i < albumsList.size(); ++i)
     {
         QString albumIcon;
+
         if (!albumsList.at(i).password.isEmpty())
             albumIcon = QStringLiteral("folder-locked");
         else if (albumsList.at(i).isPublic)
@@ -612,12 +613,12 @@ void SmugWindow::slotUserChangeRequest(bool anonymous)
     else
     {
         // fill in current email and password
-        m_loginDlg->setUsername(m_email);
+        m_loginDlg->setLogin(m_email);
         m_loginDlg->setPassword(m_password);
 
         if (m_loginDlg->exec())
         {
-            m_email = m_loginDlg->username();
+            m_email    = m_loginDlg->login();
             m_password = m_loginDlg->password();
             authenticate(m_email, m_password);
         }
@@ -689,8 +690,7 @@ void SmugWindow::slotStartTransfer()
         if (m_transferQueue.isEmpty())
             return;
 
-        QString data = m_widget->m_albumsCoB->itemData(
-                                     m_widget->m_albumsCoB->currentIndex()).toString();
+        QString data = m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString();
         int colonIdx = data.indexOf(QLatin1Char(':'));
         m_currentAlbumID = data.left(colonIdx).toLongLong();
         m_currentAlbumKey = data.right(data.length() - colonIdx - 1);
@@ -702,8 +702,7 @@ void SmugWindow::slotStartTransfer()
         m_widget->progressBar()->setMaximum(m_imagesTotal);
         m_widget->progressBar()->setValue(0);
         m_widget->progressBar()->progressScheduled(i18n("Smug Export"), true, true);
-        m_widget->progressBar()->progressThumbnailChanged(
-            QIcon::fromTheme(QStringLiteral("kipi")).pixmap(22, 22));
+        m_widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme(QStringLiteral("kipi")).pixmap(22, 22));
         setUiInProgressState(true);
 
         qCDebug(KIPIPLUGINS_LOG) << "m_currentAlbumID" << m_currentAlbumID;
@@ -715,6 +714,7 @@ void SmugWindow::slotStartTransfer()
 bool SmugWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
 {
     QImage image;
+
     if (isRAW)
     {
         qCDebug(KIPIPLUGINS_LOG) << "Get RAW preview " << imgPath;
@@ -734,8 +734,8 @@ bool SmugWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
     // rescale image if requested
     int maxDim = m_widget->m_dimensionSpB->value();
 
-    if (m_widget->m_resizeChB->isChecked()
-        && (image.width() > maxDim || image.height() > maxDim))
+    if (m_widget->m_resizeChB->isChecked() &&
+        (image.width() > maxDim || image.height() > maxDim))
     {
         qCDebug(KIPIPLUGINS_LOG) << "Resizing to " << maxDim;
         image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio,
@@ -747,6 +747,7 @@ bool SmugWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
 
     // copy meta-data to temporary image
     KPMetadata meta;
+
     if (meta.load(imgPath))
     {
         meta.setImageDimensions(image.size());
@@ -859,6 +860,7 @@ void SmugWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
     {
         QString errText;
         QFile imgFile(imgPath);
+
         if (!imgFile.open(QIODevice::WriteOnly))
         {
             errText = imgFile.errorString();
@@ -868,7 +870,9 @@ void SmugWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
             errText = imgFile.errorString();
         }
         else
+        {
             imgFile.close();
+        }
 
         if (errText.isEmpty())
         {
@@ -914,7 +918,7 @@ void SmugWindow::slotCreateAlbumDone(int errCode, const QString& errMsg,
     }
 
     // reload album list and automatically select new album
-    m_currentAlbumID = newAlbumID;
+    m_currentAlbumID  = newAlbumID;
     m_currentAlbumKey = newAlbumKey;
     m_talker->listAlbums();
 }

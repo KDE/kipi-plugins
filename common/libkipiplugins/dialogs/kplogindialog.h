@@ -43,11 +43,11 @@ class KIPIPLUGINS_EXPORT KPLoginDialog : public QDialog
 
 public:
 
-    KPLoginDialog(QWidget* const parent, const QString& pluginName, const QString& header=QString(),
-                const QString& passwd=QString());
+    KPLoginDialog(QWidget* const parent, const QString& prompt,
+                  const QString& header=QString(), const QString& passwd=QString());
     ~KPLoginDialog();
 
-    QString login() const;
+    QString login()    const;
     QString password() const;
 
     void setLogin(const QString&);

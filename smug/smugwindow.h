@@ -29,6 +29,8 @@
 // Qt includes
 
 #include <QList>
+#include <QUrl>
+#include <QCloseEvent>
 
 // Libkipi includes
 
@@ -37,13 +39,8 @@
 // Local includes
 
 #include "kptooldialog.h"
+#include "kplogindialog.h"
 #include "smugitem.h"
-
-class QCloseEvent;
-
-class QUrl;
-class KProgressDialog;
-class KPasswordDialog;
 
 using namespace KIPI;
 using namespace KIPIPlugins;
@@ -132,7 +129,7 @@ private:
     qint64           m_currentTmplID;
     qint64           m_currentCategoryID;
 
-    KPasswordDialog* m_loginDlg;
+    KPLoginDialog*   m_loginDlg;
 
     QList<QUrl>      m_transferQueue;
 

@@ -46,7 +46,8 @@
 namespace KIPIPlugins
 {
 
-KPLoginDialog::KPLoginDialog(QWidget* const parent, const QString& pluginName, const QString& login, const QString& password)
+KPLoginDialog::KPLoginDialog(QWidget* const parent, const QString& prompt,
+                             const QString& login, const QString& password)
     : QDialog(parent)
 {
     setSizeGripEnabled(false);
@@ -57,7 +58,7 @@ KPLoginDialog::KPLoginDialog(QWidget* const parent, const QString& pluginName, c
     m_headerLabel->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
 
     m_headerLabel->setTextFormat(Qt::RichText);
-    m_headerLabel->setText(QString(pluginName));
+    m_headerLabel->setText(prompt);
 
     QFrame* const hline = new QFrame(this);
     hline->setObjectName(QStringLiteral("hline"));
