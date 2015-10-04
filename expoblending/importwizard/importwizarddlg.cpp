@@ -57,7 +57,8 @@ struct ImportWizardDlg::ImportWizardDlgPriv
           itemsPage(0),
           preProcessingPage(0),
           lastPage(0)
-    {}
+    {
+    }
 
     Manager*           mngr;
 
@@ -83,9 +84,9 @@ ImportWizardDlg::ImportWizardDlg(Manager* const mngr, QWidget* const parent)
 
     // ---------------------------------------------------------------
 
-    QDesktopWidget* desktop = QApplication::desktop();
-    int screen              = desktop->screenNumber();
-    QRect srect             = desktop->availableGeometry(screen);
+    QDesktopWidget* const desktop = QApplication::desktop();
+    int screen                    = desktop->screenNumber();
+    QRect srect                   = desktop->availableGeometry(screen);
     resize(800 <= srect.width()  ? 800 : srect.width(),
            750 <= srect.height() ? 750 : srect.height());
 
@@ -133,7 +134,7 @@ void ImportWizardDlg::next()
         return;
     }
 
-    KAssistantDialog::next();
+    KPWizardDialog::next();
 }
 
 void ImportWizardDlg::back()
@@ -141,12 +142,12 @@ void ImportWizardDlg::back()
     if (currentPage() == d->preProcessingPage->page())
     {
         d->preProcessingPage->cancel();
-        KAssistantDialog::back();
+        KPWizardDialog::back();
         setValid(d->preProcessingPage->page(), true);
         return;
     }
 
-    KAssistantDialog::back();
+    KPWizardDialog::back();
 }
 
 void ImportWizardDlg::slotIntroPageIsValid(bool binariesFound)
@@ -165,7 +166,7 @@ void ImportWizardDlg::slotPreProcessed(const ItemUrlsMap& map)
     {
         // pre-processing Done.
         d->mngr->setPreProcessedMap(map);
-        KAssistantDialog::next();
+        KPWizardDialog::next();
     }
 }
 

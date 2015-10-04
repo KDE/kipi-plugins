@@ -64,7 +64,8 @@ struct PreviewPage::Private
           canceled(false), 
           mngr(m),
           dlg(0)
-    {}
+    {
+    }
 
     QLabel*                title;
 
@@ -80,10 +81,10 @@ struct PreviewPage::Private
 
     Manager*               mngr;
 
-    KAssistantDialog*      dlg;
+    KPWizardDialog*        dlg;
 };
 
-PreviewPage::PreviewPage(Manager* const mngr, KAssistantDialog* const dlg)
+PreviewPage::PreviewPage(Manager* const mngr, KPWizardDialog* const dlg)
     : KPWizardPage(dlg, i18nc("@title:window", "<b>Preview and Post-Processing</b>")),
       d(new Private(mngr))
 {

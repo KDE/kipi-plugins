@@ -85,8 +85,9 @@ class WizardPage : public QWidget, public Ui_Class
 {
 public:
 
-    WizardPage(KAssistantDialog* const dialog, const QString& title)
-        : QWidget(dialog), mAssistant(dialog)
+    WizardPage(KPWizardDialog* const dialog, const QString& title)
+        : QWidget(dialog),
+          mAssistant(dialog)
     {
         this->setupUi(this);
         layout()->setMargin(0);
@@ -98,14 +99,14 @@ public:
         return mPage;
     }
 
-    KAssistantDialog* parent() const
+    KPWizardDialog* parent() const
     {
         return mAssistant;
     }
 
 private:
 
-    KAssistantDialog* mAssistant;
+    KPWizardDialog*   mAssistant;
     KPageWidgetItem*  mPage;
 };
 
@@ -2449,7 +2450,7 @@ void Wizard::accept()
 {
     if (d->m_photos.empty())
     {
-        KAssistantDialog::reject();
+        KPWizardDialog::reject();
         return;
     }
 
@@ -2492,7 +2493,7 @@ void Wizard::accept()
 
         if (!wantToPrint)
         {
-            KAssistantDialog::accept();
+            KPWizardDialog::accept();
             return;
         }
 
@@ -2559,7 +2560,7 @@ void Wizard::accept()
     }
 
     saveSettings(currentPage()->name());
-    KAssistantDialog::accept();
+    KPWizardDialog::accept();
 }
 
 void Wizard::pagesetupdialogexit()

@@ -50,7 +50,7 @@ class SelectionPage: public KPWizardPage
 
 public:
 
-    SelectionPage(FlashManager* const mngr, KAssistantDialog* const dlg);
+    SelectionPage(FlashManager* const mngr, KPWizardDialog* const dlg);
     ~SelectionPage();
 
     /**
@@ -67,7 +67,7 @@ public:
     /**
      * Check if at least one collection or one image is selected
      * User won't be allowed to start export with no images selected
-     * @param imageGetOption 0 - collection 1 - iamgeDialog
+     * @param imageGetOption 0 - collection 1 - ImageDialog
      * to know where to check for selected images
      */
     bool isSelectionEmpty(int imageGetOption);

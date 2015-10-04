@@ -33,18 +33,19 @@
 
 #include "kipiplugins_export.h"
 
-class KAssistantDialog;
 class KPageWidgetItem;
 
 namespace KIPIPlugins
 {
 
+class KPWizardDialog;
+    
 class KIPIPLUGINS_EXPORT KPWizardPage : public QScrollArea
 {
 
 public:
 
-    KPWizardPage(KAssistantDialog* const dlg, const QString& title);
+    KPWizardPage(KPWizardDialog* const dlg, const QString& title);
     virtual ~KPWizardPage();
 
     KPageWidgetItem* page() const;

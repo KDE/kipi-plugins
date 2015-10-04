@@ -42,7 +42,7 @@ class ItemsPage : public KPWizardPage
 
 public:
 
-    ItemsPage(Manager* const mngr, KAssistantDialog* const dlg);
+    ItemsPage(Manager* const mngr, KPWizardDialog* const dlg);
     ~ItemsPage();
 
     QList<QUrl> itemUrls() const;

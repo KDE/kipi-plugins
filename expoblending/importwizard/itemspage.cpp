@@ -60,15 +60,14 @@ struct ItemsPage::ItemsPagePriv
     Manager*      mngr;
 };
 
-ItemsPage::ItemsPage(Manager* const mngr, KAssistantDialog* const dlg)
+ItemsPage::ItemsPage(Manager* const mngr, KPWizardDialog* const dlg)
     : KPWizardPage(dlg, i18nc("@title:window", "<b>Set Bracketed Images</b>")),
       d(new ItemsPagePriv)
 {
-    d->mngr        = mngr;
+    d->mngr = mngr;
 
     QVBoxLayout* const vbox = new QVBoxLayout(this);
-
-    QLabel* label1 = new QLabel(this);
+    QLabel* const label1    = new QLabel(this);
     label1->setWordWrap(true);
     label1->setText(i18n("<qt>"
                          "<p>Set here the list of your bracketed images to fuse. Please follow these conditions:</p>"

@@ -61,12 +61,12 @@ public:
     QComboBox* imageGetOption;
 };
 
-IntroPage::IntroPage(KAssistantDialog* const dlg)
+IntroPage::IntroPage(KPWizardDialog* const dlg)
     : KPWizardPage(dlg, i18n("Welcome to FlashExport Tool")),
       d(new Private)
 {
-    RVBox* vbox   = new RVBox(this);
-    QLabel* title = new QLabel(vbox);
+    RVBox* const vbox   = new RVBox(this);
+    QLabel* const title = new QLabel(vbox);
 
     title->setWordWrap(true);
     title->setOpenExternalLinks(true);

@@ -41,7 +41,7 @@ class OptimizePage : public KPWizardPage
 
 public:
 
-    OptimizePage(Manager* const mngr, KAssistantDialog* const dlg);
+    OptimizePage(Manager* const mngr, KPWizardDialog* const dlg);
     ~OptimizePage();
 
     void process();

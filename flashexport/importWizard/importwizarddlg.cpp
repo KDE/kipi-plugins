@@ -167,12 +167,12 @@ void ImportWizardDlg::next()
         d->selectionPage->setPageContent(d->settings->imgGetOption);
     }
 
-    // Using KAssistantDialog::next twice to skip firstrun page if
+    // Using KPWizardDialog::next twice to skip firstrun page if
     // plugin is already installed
-    if(checkIfPluginInstalled())
+    if (checkIfPluginInstalled())
     {
         if(currentPage() == d->introPage->page())
-            KAssistantDialog::next();
+            KPWizardDialog::next();
     }
     else
     {
@@ -181,7 +181,7 @@ void ImportWizardDlg::next()
     }
     
     // Must have at least one collection (or some images) to proceed.
-    if(currentPage() == d->selectionPage->page())
+    if (currentPage() == d->selectionPage->page())
     {
         if (d->selectionPage->isSelectionEmpty(d->settings->imgGetOption))
         {
@@ -196,32 +196,35 @@ void ImportWizardDlg::next()
         saveSettings();
         // Disable Finish button while exporting
         setValid(d->progressPage->page(),false);
-        if(!checkIfFolderExist())
+
+        if (!checkIfFolderExist())
             return;
-        KAssistantDialog::next();
+
+        KPWizardDialog::next();
         d->simple->startExport();
         return;
     }
 
-    KAssistantDialog::next();
+    KPWizardDialog::next();
 }
 
 void ImportWizardDlg::back()
 {
-    if(checkIfPluginInstalled() && currentPage() == d->selectionPage->page())
-        KAssistantDialog::back();
+    if (checkIfPluginInstalled() && currentPage() == d->selectionPage->page())
+        KPWizardDialog::back();
 
-    if(currentPage() == d->progressPage->page())
+    if (currentPage() == d->progressPage->page())
         d->simple->slotCancel();
 
-    KAssistantDialog::back();
+    KPWizardDialog::back();
 }
 
 bool ImportWizardDlg::checkIfFolderExist()
 {
-    KIO::StatJob* job = KIO::stat(d->settings->exportUrl, KIO::StatJob::DestinationSide, 0);
+    KIO::StatJob* const job = KIO::stat(d->settings->exportUrl, KIO::StatJob::DestinationSide, 0);
     KJobWidgets::setWindow(job, QApplication::activeWindow());
     job->exec();
+
     if (!job->error())
     {
         int ret = QMessageBox::warning(this, i18n("Target Directory Exists"),

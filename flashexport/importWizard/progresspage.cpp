@@ -43,7 +43,7 @@
 namespace KIPIFlashExportPlugin
 {
 // link this page to SimpleViewer to gain access to settings container.
-ProgressPage::ProgressPage(FlashManager* const mngr, KAssistantDialog* const dlg)
+ProgressPage::ProgressPage(FlashManager* const mngr, KPWizardDialog* const dlg)
     : KPWizardPage(dlg, i18n("Exporting..."))
 {
     SimpleViewer* const simple               = mngr->simpleView();

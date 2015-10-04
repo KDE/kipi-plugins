@@ -199,7 +199,7 @@ void ImportWizardDlg::next()
         return;
     }
 
-    KAssistantDialog::next();
+    KPWizardDialog::next();
 }
 
 void ImportWizardDlg::back()
@@ -241,12 +241,12 @@ void ImportWizardDlg::back()
     }
     else if (currentPage() == d->lastPage->page())
     {
-        KAssistantDialog::back();
+        KPWizardDialog::back();
         d->previewPage->resetPage();
         return;
     }
 
-    KAssistantDialog::back();
+    KPWizardDialog::back();
 }
 
 void ImportWizardDlg::accept()
@@ -277,7 +277,7 @@ void ImportWizardDlg::slotPreProcessed(bool success)
         // pre-processing Done.
         setValid(d->preProcessingPage->page(), true);
         d->optimizePage->resetPage();
-        KAssistantDialog::next();
+        KPWizardDialog::next();
     }
 }
 
@@ -293,7 +293,7 @@ void ImportWizardDlg::slotOptimized(bool success)
         // Optimization finished.
         setValid(d->optimizePage->page(), true);
         setValid(d->previewPage->page(), true);
-        KAssistantDialog::next();
+        KPWizardDialog::next();
 
         // Start the Preview generation
         d->previewPage->computePreview();
@@ -313,7 +313,7 @@ void ImportWizardDlg::slotStitchingFinished(bool success)
     if (success)
     {
         setValid(d->previewPage->page(), true);
-        KAssistantDialog::next();
+        KPWizardDialog::next();
         d->lastPage->resetTitle();
     }
 }
@@ -322,7 +322,7 @@ void ImportWizardDlg::slotCopyFinished(bool success)
 {
     if (success)
     {
-        KAssistantDialog::accept();
+        KPWizardDialog::accept();
     }
     else
     {

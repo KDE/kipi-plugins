@@ -43,7 +43,7 @@ class PreProcessingPage : public KPWizardPage
 
 public:
 
-    PreProcessingPage(Manager* const mngr, KAssistantDialog* const dlg);
+    PreProcessingPage(Manager* const mngr, KPWizardDialog* const dlg);
     ~PreProcessingPage();
 
     void process();

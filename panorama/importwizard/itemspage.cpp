@@ -58,7 +58,7 @@ struct ItemsPage::ItemsPagePriv
     Manager*      mngr;
 };
 
-ItemsPage::ItemsPage(Manager* const mngr, KAssistantDialog* const dlg)
+ItemsPage::ItemsPage(Manager* const mngr, KPWizardDialog* const dlg)
     : KPWizardPage(dlg, i18nc("@title:window", "<b>Set Panorama Images</b>")), d(new ItemsPagePriv)
 {
     d->mngr        = mngr;

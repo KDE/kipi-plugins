@@ -95,7 +95,7 @@ public:
     Manager*                   mngr;
 };
 
-PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* const dlg)
+PreProcessingPage::PreProcessingPage(Manager* const mngr, KPWizardDialog* const dlg)
     : KPWizardPage(dlg, i18nc("@title:window", "<b>Pre-Processing Bracketed Images</b>")),
       d(new Private)
 {

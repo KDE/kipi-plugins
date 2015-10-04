@@ -67,7 +67,7 @@ public:
 };
 
 // link this page to SimpleViewer to gain access to settings container.
-FirstRunPage::FirstRunPage(KAssistantDialog* const dlg)
+FirstRunPage::FirstRunPage(KPWizardDialog* const dlg)
     : KPWizardPage(dlg, i18n("First Run")),
       d(new Private)
 {

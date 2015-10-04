@@ -56,7 +56,7 @@ public:
     KIPIPlugins::KPBinarySearch* binariesWidget;
 };
 
-IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
+IntroPage::IntroPage(Manager* const mngr, KPWizardDialog* const dlg)
     : KPWizardPage(dlg, i18nc("@title:window", "Welcome to Exposure Blending Tool")),
       d(new IntroPagePriv(mngr))
 {

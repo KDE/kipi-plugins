@@ -38,7 +38,7 @@ class LastPage : public KPWizardPage
 {
 public:
 
-    LastPage(Manager* const mngr, KAssistantDialog* const dlg);
+    LastPage(Manager* const mngr, KPWizardDialog* const dlg);
     ~LastPage();
 
 private:

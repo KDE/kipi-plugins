@@ -67,8 +67,9 @@ public:
     RVBox*                   vbox;
 };
 
-SelectionPage::SelectionPage(FlashManager* const mngr, KAssistantDialog* const dlg)
-    : KPWizardPage(dlg, i18n("Select Image Collections")), d(new Private)
+SelectionPage::SelectionPage(FlashManager* const mngr, KPWizardDialog* const dlg)
+    : KPWizardPage(dlg, i18n("Select Image Collections")),
+      d(new Private)
 {
     d->manager=mngr;
 }

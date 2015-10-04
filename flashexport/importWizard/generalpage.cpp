@@ -85,7 +85,7 @@ public:
     RFileSelector* exportUrl;
 };
 
-GeneralPage::GeneralPage (KAssistantDialog* dlg)
+GeneralPage::GeneralPage(KPWizardDialog* const dlg)
     : KPWizardPage(dlg, i18n("General Settings")),
       d(new Private)
 {
@@ -93,9 +93,9 @@ GeneralPage::GeneralPage (KAssistantDialog* dlg)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* box    = new QGroupBox(i18n("Gallery &Title"), vbox);
-    QVBoxLayout* vlay = new QVBoxLayout(box);
-    d->title          = new QLineEdit(this);
+    QGroupBox* const box    = new QGroupBox(i18n("Gallery &Title"), vbox);
+    QVBoxLayout* const vlay = new QVBoxLayout(box);
+    d->title                = new QLineEdit(this);
     d->title->setWhatsThis(i18n("Enter here the gallery title"));
 
     vlay->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));

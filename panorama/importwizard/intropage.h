@@ -47,7 +47,7 @@ class IntroPage : public KPWizardPage
 
 public:
 
-    IntroPage(Manager* const mngr, KAssistantDialog* const dlg);
+    IntroPage(Manager* const mngr, KPWizardDialog* const dlg);
     ~IntroPage();
 
     bool binariesFound();

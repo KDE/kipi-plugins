@@ -33,12 +33,15 @@
 
 // KDE includes
 
-#include <kassistantdialog.h>
 #include <kpagewidgetmodel.h>
 
 // Libkdcraw includes
 
 #include <KDCRAW/RWidgetUtils>
+
+// Local includes
+
+#include "kptooldialog.h"
 
 using namespace KDcrawIface;
 
@@ -65,7 +68,7 @@ public:
     KPageWidgetItem* page;
 };
 
-KPWizardPage::KPWizardPage(KAssistantDialog* const dlg, const QString& title)
+KPWizardPage::KPWizardPage(KPWizardDialog* const dlg, const QString& title)
     : QScrollArea(dlg),
       d(new Private)
 {

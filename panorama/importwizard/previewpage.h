@@ -41,7 +41,7 @@ class PreviewPage : public KPWizardPage
 
 public:
 
-    PreviewPage(Manager* const mngr, KAssistantDialog* const dlg);
+    PreviewPage(Manager* const mngr, KPWizardDialog* const dlg);
     ~PreviewPage();
 
     bool cancel();

@@ -75,7 +75,7 @@ struct LastPage::Private
     Manager*   mngr;
 };
 
-LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
+LastPage::LastPage(Manager* const mngr, KPWizardDialog* const dlg)
      : KPWizardPage(dlg, i18nc("@title:window", "<b>Panorama Stitched</b>")),
        d(new Private)
 {

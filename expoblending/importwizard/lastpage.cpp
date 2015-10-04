@@ -53,15 +53,13 @@ public:
     Manager* mngr;
 };
 
-LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
+LastPage::LastPage(Manager* const mngr, KPWizardDialog* const dlg)
         : KPWizardPage(dlg, i18nc("@title:window", "Pre-Processing is Complete")),
           d(new Private)
 {
-    d->mngr             = mngr;
-
+    d->mngr                 = mngr;
     QVBoxLayout* const vbox = new QVBoxLayout(this);
-
-    QLabel* const title = new QLabel(this);
+    QLabel* const title     = new QLabel(this);
     title->setOpenExternalLinks(true);
     title->setWordWrap(true);
     title->setText(i18n("<qt>"

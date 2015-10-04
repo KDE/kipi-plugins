@@ -97,7 +97,7 @@ struct OptimizePage::Private
     Manager*                   mngr;
 };
 
-OptimizePage::OptimizePage(Manager* const mngr, KAssistantDialog* const dlg)
+OptimizePage::OptimizePage(Manager* const mngr, KPWizardDialog* const dlg)
     : KPWizardPage(dlg, i18nc("@title:window", "<b>Optimization</b>")),
       d(new Private)
 {

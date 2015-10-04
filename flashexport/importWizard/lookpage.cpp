@@ -108,7 +108,7 @@ public:
     RIntNumInput*   zoomOutPerc;
 };
 
-LookPage::LookPage(KAssistantDialog* const dlg)
+LookPage::LookPage(KPWizardDialog* const dlg)
     : KPWizardPage(dlg, i18n("Configure appearance")),
       d(new Private)
 {

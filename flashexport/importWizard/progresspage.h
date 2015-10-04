@@ -38,7 +38,7 @@ class ProgressPage : public KPWizardPage
 {
 public:
 
-    ProgressPage(FlashManager* const mngr, KAssistantDialog* const dlg);
+    ProgressPage(FlashManager* const mngr, KPWizardDialog* const dlg);
     ~ProgressPage();
 };
 
