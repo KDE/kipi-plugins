@@ -49,7 +49,6 @@
 // KDE includes
 
 #include <kconfig.h>
-#include <kpassworddialog.h>
 #include <kio/renamedialog.h>
 #include <kconfiggroup.h>
 
