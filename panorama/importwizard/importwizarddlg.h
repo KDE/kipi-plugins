@@ -35,8 +35,6 @@
 #include "actions.h"
 #include "kptooldialog.h"
 
-class KPageWidgetItem;
-
 namespace KIPI
 {
     class Interface;
