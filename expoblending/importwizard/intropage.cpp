@@ -33,6 +33,10 @@
 
 #include <klocalizedstring.h>
 
+// Libkdcraw includes
+
+#include <KDCRAW/RWidgetUtils>
+
 // local includes
 
 #include "kpbinarysearch.h"
@@ -60,9 +64,9 @@ IntroPage::IntroPage(Manager* const mngr, KPWizardDialog* const dlg)
     : KPWizardPage(dlg, i18nc("@title:window", "Welcome to Exposure Blending Tool")),
       d(new IntroPagePriv(mngr))
 {
-    QVBoxLayout* const vbox = new QVBoxLayout();
+    KDcrawIface::RVBox* const vbox = new KDcrawIface::RVBox(this);
 
-    QLabel* const title     = new QLabel(this);
+    QLabel* const title     = new QLabel(vbox);
     title->setWordWrap(true);
     title->setOpenExternalLinks(true);
     title->setText(i18n("<qt>"
@@ -78,9 +82,8 @@ IntroPage::IntroPage(Manager* const mngr, KPWizardDialog* const dlg)
                         "<p>For more information, please take a look at "
                         "<a href='http://en.wikipedia.org/wiki/Bracketing'>this page</a></p>"
                         "</qt>"));
-    vbox->addWidget(title);
 
-    QGroupBox* const binaryBox        = new QGroupBox(this);
+    QGroupBox* const binaryBox        = new QGroupBox(vbox);
     QGridLayout* const binaryLayout   = new QGridLayout;
     binaryBox->setLayout(binaryLayout);
     binaryBox->setTitle(i18nc("@title:group", "Exposure Blending Binaries"));
@@ -99,14 +102,12 @@ IntroPage::IntroPage(Manager* const mngr, KPWizardDialog* const dlg)
     d->binariesWidget->addDirectory("C:/Program Files (x86)/Hugin/bin");
 #endif
 
-    vbox->addWidget(binaryBox);
-
     connect(d->binariesWidget, SIGNAL(signalBinariesFound(bool)),
             this, SIGNAL(signalIntroPageIsValid(bool)));
 
     emit signalIntroPageIsValid(d->binariesWidget->allBinariesFound());
 
-    setLayout(vbox);
+    setPageWidget(vbox);
 
     QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromUtf8("kipiplugin_expoblending/pics/assistant-stack.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));

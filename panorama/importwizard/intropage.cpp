@@ -39,6 +39,10 @@
 
 #include <klocalizedstring.h>
 
+// Libkdcraw includes
+
+#include <KDCRAW/RWidgetUtils>
+
 // Local includes
 
 #include "kpbinarysearch.h"
@@ -91,9 +95,9 @@ IntroPage::IntroPage(Manager* const mngr, KPWizardDialog* const dlg)
     : KPWizardPage(dlg, i18nc("@title:window", "<b>Welcome to Panorama Tool</b>")),
       d(new Private(mngr))
 {
-    QVBoxLayout* const vbox = new QVBoxLayout();
+    KDcrawIface::RVBox* const vbox = new KDcrawIface::RVBox(this);
 
-    QLabel* const title = new QLabel(this);
+    QLabel* const title = new QLabel(vbox);
     title->setWordWrap(true);
     title->setOpenExternalLinks(true);
     title->setText(i18n("<qt>"
@@ -106,9 +110,8 @@ IntroPage::IntroPage(Manager* const mngr, KPWizardDialog* const dlg)
                         "<p>For more information, please take a look at "
                         "<a href='http://hugin.sourceforge.net/tutorials/overview/en.shtml'>this page</a></p>"
                         "</qt>"));
-    vbox->addWidget(title);
 
-    QGroupBox* const binaryBox        = new QGroupBox(this);
+    QGroupBox* const binaryBox        = new QGroupBox(vbox);
     QGridLayout* const binaryLayout   = new QGridLayout;
     binaryBox->setLayout(binaryLayout);
     binaryBox->setTitle(i18nc("@title:group", "Panorama Binaries"));
@@ -133,8 +136,6 @@ IntroPage::IntroPage(Manager* const mngr, KPWizardDialog* const dlg)
     d->binariesWidget->addDirectory("C:/Program Files (x86)/Hugin/bin");
 #endif
 
-    vbox->addWidget(binaryBox);
-
 /*
     QVBoxLayout* const settingsVBox = new QVBoxLayout();
     d->settingsGroupBox             = new QGroupBox(i18nc("@title:group", "Panorama Settings"), this);
@@ -150,7 +151,7 @@ IntroPage::IntroPage(Manager* const mngr, KPWizardDialog* const dlg)
     vbox->addWidget(d->settingsGroupBox);
 */
     QVBoxLayout* const formatVBox = new QVBoxLayout();
-    d->formatGroupBox             = new QGroupBox(i18nc("@title:group", "File Format"), this);
+    d->formatGroupBox             = new QGroupBox(i18nc("@title:group", "File Format"), vbox);
     d->formatGroupBox->setLayout(formatVBox);
     QButtonGroup* const group     = new QButtonGroup();
 
@@ -172,7 +173,6 @@ IntroPage::IntroPage(Manager* const mngr, KPWizardDialog* const dlg)
                                            "your original photos using RAW images at the cost of a bigger panorama file."));
     formatVBox->addWidget(d->tiffRadioButton);
     group->addButton(d->tiffRadioButton);
-    vbox->addWidget(d->formatGroupBox);
 
     // TODO HDR
 /*
@@ -201,8 +201,7 @@ IntroPage::IntroPage(Manager* const mngr, KPWizardDialog* const dlg)
             break;
     }
 
-//     setPageWidget(vbox);
-    setLayout(vbox);
+    setPageWidget(vbox);
 
     QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("kipiplugin_panorama/pics/assistant-tripod.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
