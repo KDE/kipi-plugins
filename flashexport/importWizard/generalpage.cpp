@@ -89,7 +89,7 @@ GeneralPage::GeneralPage(KPWizardDialog* const dlg)
     : KPWizardPage(dlg, i18n("General Settings")),
       d(new Private)
 {
-    RVBox *vbox       = new RVBox(this);
+    RVBox* vbox             = new RVBox(this);
 
     // ------------------------------------------------------------------------
 
@@ -159,8 +159,8 @@ GeneralPage::GeneralPage(KPWizardDialog* const dlg)
 
     grid->addWidget(d->resizeExportImages, 0, 0, 1, 2);
     grid->addWidget(d->fixOrientation,     1, 1, 1, 1);
-    grid->addWidget(hbox,   2, 1, 1, 1);
-    grid->addWidget(hbox2,  3, 0, 1, 2);
+    grid->addWidget(hbox,                  2, 1, 1, 1);
+    grid->addWidget(hbox2,                 3, 0, 1, 2);
     grid->setColumnMinimumWidth(0, QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     grid->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     grid->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));

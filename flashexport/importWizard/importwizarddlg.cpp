@@ -241,7 +241,7 @@ bool ImportWizardDlg::checkIfFolderExist()
                 auto deleteJob = KIO::file_delete(d->settings->exportUrl);
                 KJobWidgets::setWindow(deleteJob, QApplication::activeWindow());
 
-                if(!deleteJob->exec())
+                if (!deleteJob->exec())
                 {
                     QMessageBox::critical(this, i18n("Cannot Delete Directory"),
                                           i18n("Could not delete %1.\n"
