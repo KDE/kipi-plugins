@@ -86,7 +86,7 @@ FirstRunPage::FirstRunPage(KPWizardDialog* const dlg)
     info2->setText(i18n("<p>1.) Download plugin from the following url:</p>"));
 
     QLabel* const link = new QLabel(vbox);
-    link->setAlignment(Qt::AlignRight);
+    link->setAlignment(Qt::AlignLeft);
     link->setOpenExternalLinks(true);
     link->setTextFormat(Qt::RichText);
     link->setTextInteractionFlags(Qt::LinksAccessibleByMouse);
@@ -107,6 +107,7 @@ FirstRunPage::FirstRunPage(KPWizardDialog* const dlg)
 
     setPageWidget(vbox);
     setLeftBottomPix(QIcon::fromTheme(QStringLiteral("kipi-flash")).pixmap(128));
+    setComplete(false);
 }
 
 FirstRunPage::~FirstRunPage()
