@@ -66,8 +66,8 @@ private:
 
 private:
 
-    struct PreProcessingPagePriv;
-    PreProcessingPagePriv* const d;
+    struct Private;
+    Private* const d;
 };
 
 }   // namespace KIPIPanoramaPlugin

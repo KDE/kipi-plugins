@@ -263,8 +263,8 @@ void CropFrame::mousePressEvent(QMouseEvent* e)
 {
     if (e->button() == Qt::LeftButton)
     {
-      m_mouseDown = true;
-      this->mouseMoveEvent(e);
+        m_mouseDown = true;
+        this->mouseMoveEvent(e);
     }
 }
 

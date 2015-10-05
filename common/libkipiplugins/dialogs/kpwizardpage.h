@@ -25,7 +25,7 @@
 
 // Qt includes
 
-#include <QScrollArea>
+#include <QWizardPage>
 #include <QString>
 #include <QPixmap>
 
@@ -33,14 +33,12 @@
 
 #include "kipiplugins_export.h"
 
-class KPageWidgetItem;
-
 namespace KIPIPlugins
 {
 
 class KPWizardDialog;
     
-class KIPIPLUGINS_EXPORT KPWizardPage : public QScrollArea
+class KIPIPLUGINS_EXPORT KPWizardPage : public QWizardPage
 {
 
 public:
@@ -48,11 +46,15 @@ public:
     KPWizardPage(KPWizardDialog* const dlg, const QString& title);
     virtual ~KPWizardPage();
 
-    KPageWidgetItem* page() const;
-
     void setPageWidget(QWidget* const w);
     void removePageWidget(QWidget* const w);
     void setLeftBottomPix(const QPixmap& pix);
+    void setShowLeftView(bool v);
+
+    void setComplete(bool b);
+    bool isComplete() const;
+    
+    int  id() const;
 
 private:
 

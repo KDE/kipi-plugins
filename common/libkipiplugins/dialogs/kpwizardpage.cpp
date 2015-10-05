@@ -30,10 +30,7 @@
 #include <QStandardPaths>
 #include <QApplication>
 #include <QStyle>
-
-// KDE includes
-
-#include <kpagewidgetmodel.h>
+#include <QScrollArea>
 
 // Libkdcraw includes
 
@@ -55,38 +52,45 @@ public:
     Private()
     {
         hlay          = 0;
-        page          = 0;
         logo          = 0;
         leftBottomPix = 0;
+        leftView      = 0;
+        isComplete    = true;
+        id            = -1;
     }
 
-    QLabel*          logo;
-    QLabel*          leftBottomPix;
+    bool         isComplete;
+    int          id;
+    
+    QWidget*     leftView;
+    QLabel*      logo;
+    QLabel*      leftBottomPix;
 
-    QHBoxLayout*     hlay;
-
-    KPageWidgetItem* page;
+    QHBoxLayout* hlay;
 };
 
 KPWizardPage::KPWizardPage(KPWizardDialog* const dlg, const QString& title)
-    : QScrollArea(dlg),
+    : QWizardPage(dlg),
       d(new Private)
 {
-    QWidget* const panel = new QWidget(viewport());
-    setWidget(panel);
-    setWidgetResizable(true);
+    setTitle(title);
+
+    QScrollArea* const sv = new QScrollArea(this);
+    QWidget* const panel  = new QWidget(sv->viewport());
+    sv->setWidget(panel);
+    sv->setWidgetResizable(true);
 
     d->hlay                    = new QHBoxLayout(panel);
-    QWidget* const vbox        = new QWidget(panel);
-    QVBoxLayout* const vboxLay = new QVBoxLayout(vbox);
-    d->logo                    = new QLabel(vbox);
+    d->leftView                = new QWidget(panel);
+    QVBoxLayout* const vboxLay = new QVBoxLayout(d->leftView);
+    d->logo                    = new QLabel(d->leftView);
     d->logo->setAlignment(Qt::AlignTop);
     d->logo->setPixmap(QPixmap(QStandardPaths::locate(QStandardPaths::GenericDataLocation,
                                                       QStringLiteral("kf5/kipi/pics/kipi-logo.svg")))
                                .scaled(128, 128, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
-    QLabel* const space = new QLabel(vbox);
-    d->leftBottomPix    = new QLabel(vbox);
+    QWidget* const space = new QLabel(d->leftView);
+    d->leftBottomPix     = new QLabel(d->leftView);
     d->leftBottomPix->setAlignment(Qt::AlignBottom);
 
     vboxLay->addWidget(d->logo);
@@ -98,12 +102,16 @@ KPWizardPage::KPWizardPage(KPWizardDialog* const dlg, const QString& title)
 
     RLineWidget* const line = new RLineWidget(Qt::Vertical, panel);
 
-    d->hlay->addWidget(vbox);
+    d->hlay->addWidget(d->leftView);
     d->hlay->addWidget(line);
     d->hlay->setMargin(0);
     d->hlay->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-
-    d->page = dlg->addPage(this, title);
+    
+    QVBoxLayout* const layout = new QVBoxLayout;
+    layout->addWidget(sv);
+    setLayout(layout);
+    
+    d->id = dlg->addPage(this);
 }
 
 KPWizardPage::~KPWizardPage()
@@ -111,9 +119,25 @@ KPWizardPage::~KPWizardPage()
     delete d;
 }
 
-KPageWidgetItem* KPWizardPage::page() const
+void KPWizardPage::setComplete(bool b)
 {
-    return d->page;
+    d->isComplete = b;
+    emit completeChanged();
+}
+
+bool KPWizardPage::isComplete() const
+{
+    return d->isComplete;
+}
+
+int KPWizardPage::id() const
+{
+    return d->id;
+}
+
+void KPWizardPage::setShowLeftView(bool v)
+{
+    d->leftView->setVisible(v);
 }
 
 void KPWizardPage::setPageWidget(QWidget* const w)
@@ -121,6 +145,7 @@ void KPWizardPage::setPageWidget(QWidget* const w)
     d->hlay->addWidget(w);
     d->hlay->setStretchFactor(w, 10);
 }
+
 void KPWizardPage::removePageWidget(QWidget* const w)
 {
     d->hlay->removeWidget(w);

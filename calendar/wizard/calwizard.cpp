@@ -61,34 +61,40 @@ CalWizard::CalWizard(QWidget* const parent)
     : KPWizardDialog(parent)
 {
     setWindowTitle(i18n("Create Calendar"));
-    setMaximumSize(800, 600);
-    cSettings_   = CalSettings::instance(this);
+    cSettings_        = CalSettings::instance(this);
 
     // ---------------------------------------------------------------
 
-    wTemplate_   = new CalTemplate(iface(), this);
-    addPage(wTemplate_, i18n("Create Template for Calendar"));
+    wTemplate_     = new CalTemplate(iface(), this);
+    wTemplatePage_ = new KPWizardPage(this, i18n("Create Template for Calendar"));
+    wTemplatePage_->setPageWidget(wTemplate_);
+    wTemplatePage_->setShowLeftView(false);
 
     // ---------------------------------------------------------------
 
     wEvents_     = new QWidget(this);
     calEventsUI.setupUi(wEvents_);
-    addPage(wEvents_, i18n("Choose events to show on the Calendar"));
+    wEventsPage_ = new KPWizardPage(this, i18n("Choose events to show on the Calendar"));
+    wEventsPage_->setPageWidget(wEvents_);
+    wEventsPage_->setShowLeftView(false);
 
     // ---------------------------------------------------------------
 
     wPrintLabel_ = new QLabel(this);
     wPrintLabel_->setIndent(20);
     wPrintLabel_->setWordWrap(true);
-
-    wPrintPage_ = addPage(wPrintLabel_, i18n("Print"));
+    wPrintPage_ = new KPWizardPage(this, i18n("Print Calendar"));
+    wPrintPage_->setPageWidget(wPrintLabel_);
+    wPrintPage_->setShowLeftView(false);
 
     // ---------------------------------------------------------------
 
     wFinish_     = new QWidget(this);
     calProgressUI.setupUi(wFinish_);
-    wFinishPage_ = addPage(wFinish_, i18n("Printing"));
-    
+    wFinishPage_ = new KPWizardPage(this, i18n("Printing in Progress"));
+    wFinishPage_->setPageWidget(wFinish_);
+    wFinishPage_->setShowLeftView(false);
+
     // ---------------------------------------------------------------
 
     calEventsUI.ohUrlRequester->setFileDlgFilter(i18n("%1|Calendar Data File", QLatin1String("*.ics")));
@@ -131,8 +137,8 @@ CalWizard::CalWizard(QWidget* const parent)
     printThread_ = 0;
     printer_     = 0;
 
-    connect(this, SIGNAL(currentPageChanged(KPageWidgetItem*,KPageWidgetItem*)),
-            this, SLOT(slotPageSelected(KPageWidgetItem*,KPageWidgetItem*)));
+    connect(this, SIGNAL(currentIdChanged(int)),
+            this, SLOT(slotPageSelected(int)));
 }
 
 CalWizard::~CalWizard()
@@ -147,9 +153,9 @@ CalWizard::~CalWizard()
     delete printer_;
 }
 
-void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* before)
+void CalWizard::slotPageSelected(int curr)
 {
-    Q_UNUSED(before);
+    KPWizardPage* const current = dynamic_cast<KPWizardPage*>(page(curr));
 
     if (current == wPrintPage_)
     {
@@ -177,7 +183,7 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
             wPrintLabel_->setText(QStringLiteral("<qt>") +
                                   i18n("No valid images selected for months<br/>"
                                        "Click Back to select images") + QStringLiteral("</qt>"));
-            setValid(wFinishPage_, false);
+            wFinishPage_->setComplete(false);
         }
         else
         {
@@ -185,7 +191,7 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
 
             QString extra;
 
-            if ((KLocale::global()->calendar()->month(QDate::currentDate()) >= 6 &&
+            if ((KLocale::global()->calendar()->month(QDate::currentDate()) >= 6    &&
                  KLocale::global()->calendar()->year(QDate::currentDate()) == year) ||
                  KLocale::global()->calendar()->year(QDate::currentDate()) > year)
                 extra = QStringLiteral("<br/><br/><b>") +
@@ -200,7 +206,7 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
                                   + printList.join(QStringLiteral(" - ")) + extra);
             wPrintLabel_->setTextFormat(Qt::RichText);
 
-            setValid(wFinishPage_, true);
+            wFinishPage_->setComplete(true);
         }
     }
 
@@ -210,8 +216,8 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
         calProgressUI.currentProgress->reset();
         calProgressUI.totalProgress->reset();
 
-        backButton()->setEnabled(false);
-        nextButton()->setEnabled(false);
+        button(QWizard::BackButton)->setEnabled(false);
+        button(QWizard::NextButton)->setEnabled(false);
 
         // Set printer settings ---------------------------------------
 
@@ -249,7 +255,7 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
         else
         {
             calProgressUI.finishLabel->setText(i18n("Printing Cancelled"));
-            backButton()->setEnabled(true);
+            button(QWizard::BackButton)->setEnabled(true);
         }
 
         delete printDialog;
@@ -261,8 +267,7 @@ void CalWizard::print()
     calProgressUI.totalProgress->setMaximum(months_.count());
     calProgressUI.totalProgress->setValue(0);
     calProgressUI.totalProgress->progressScheduled(i18n("Making calendar"), false, true);
-    calProgressUI.totalProgress->progressThumbnailChanged(
-        QIcon::fromTheme(QStringLiteral("kipi")).pixmap(22, 22));
+    calProgressUI.totalProgress->progressThumbnailChanged(QIcon::fromTheme(QStringLiteral("kipi")).pixmap(22, 22));
 
     if (printThread_)
     {
@@ -306,8 +311,7 @@ void CalWizard::updatePage(int page)
 
     int month = months_.keys().at(page);
 
-    calProgressUI.finishLabel->setText(i18n(
-        "Printing calendar page for %1 of %2",
+    calProgressUI.finishLabel->setText(i18n("Printing calendar page for %1 of %2",
         KLocale::global()->calendar()->monthName(month, year, KCalendarSystem::LongName),
         KLocale::global()->calendar()->formatDate(date, QStringLiteral("%Y"))));
 }
@@ -315,8 +319,8 @@ void CalWizard::updatePage(int page)
 void CalWizard::printComplete()
 {
     calProgressUI.totalProgress->progressCompleted();
-    backButton()->setEnabled(true);
-    nextButton()->setEnabled(true);
+    button(QWizard::BackButton)->setEnabled(true);
+    button(QWizard::NextButton)->setEnabled(true);
     calProgressUI.finishLabel->setText(i18n("Printing Complete"));
 }
 

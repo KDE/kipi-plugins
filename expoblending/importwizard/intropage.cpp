@@ -43,14 +43,16 @@
 #include "alignbinary.h"
 #include "enfusebinary.h"
 
+using namespace KDcrawIface;
+
 namespace KIPIExpoBlendingPlugin
 {
 
-class IntroPage::IntroPagePriv
+class IntroPage::Private
 {
 public:
 
-    IntroPagePriv(Manager* const m)
+    Private(Manager* const m)
         : mngr(m), 
           binariesWidget(0)
     {
@@ -62,15 +64,13 @@ public:
 
 IntroPage::IntroPage(Manager* const mngr, KPWizardDialog* const dlg)
     : KPWizardPage(dlg, i18nc("@title:window", "Welcome to Exposure Blending Tool")),
-      d(new IntroPagePriv(mngr))
+      d(new Private(mngr))
 {
-    KDcrawIface::RVBox* const vbox = new KDcrawIface::RVBox(this);
-
-    QLabel* const title     = new QLabel(vbox);
+    RVBox* const vbox   = new RVBox(this);
+    QLabel* const title = new QLabel(vbox);
     title->setWordWrap(true);
     title->setOpenExternalLinks(true);
     title->setText(i18n("<qt>"
-                        "<p><h1><b>Welcome to Exposure Blending tool</b></h1></p>"
                         "<p>This tool fuses bracketed images with different exposure to make pseudo "
                         "<a href='http://en.wikipedia.org/wiki/High_dynamic_range_imaging'>HDR image</a>.</p>"
                         "<p>It can also be used to merge focus bracketed stack to get a single image "
@@ -83,8 +83,8 @@ IntroPage::IntroPage(Manager* const mngr, KPWizardDialog* const dlg)
                         "<a href='http://en.wikipedia.org/wiki/Bracketing'>this page</a></p>"
                         "</qt>"));
 
-    QGroupBox* const binaryBox        = new QGroupBox(vbox);
-    QGridLayout* const binaryLayout   = new QGridLayout;
+    QGroupBox* const binaryBox      = new QGroupBox(vbox);
+    QGridLayout* const binaryLayout = new QGridLayout;
     binaryBox->setLayout(binaryLayout);
     binaryBox->setTitle(i18nc("@title:group", "Exposure Blending Binaries"));
     d->binariesWidget = new KIPIPlugins::KPBinarySearch(binaryBox);

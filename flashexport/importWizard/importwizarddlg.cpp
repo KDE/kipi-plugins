@@ -134,7 +134,7 @@ void ImportWizardDlg::slotActivate()
 {
     if (d->mngr->installPlugin(d->firstrunPage->getUrl()))
     {
-        setValid(d->firstrunPage->page(),true);
+        d->firstrunPage->setComplete(true);
     }
     else
     {
@@ -148,7 +148,7 @@ void ImportWizardDlg::slotActivate()
 
 void ImportWizardDlg::slotFinishEnable()
 {
-    setValid(d->progressPage->page(),true);
+    d->progressPage->setComplete(true);
 }
 
 FlashManager* ImportWizardDlg::manager() const
@@ -158,7 +158,7 @@ FlashManager* ImportWizardDlg::manager() const
 
 void ImportWizardDlg::next()
 {
-    if(currentPage() == d->introPage->page())
+    if (currentPage() == d->introPage)
     {
         d->introPage->settings(d->settings);
         d->simple->appendPluginFiles(d->settings->plugType);
@@ -171,17 +171,17 @@ void ImportWizardDlg::next()
     // plugin is already installed
     if (checkIfPluginInstalled())
     {
-        if(currentPage() == d->introPage->page())
+        if (currentPage() == d->introPage)
             KPWizardDialog::next();
     }
     else
     {
         //next must be disabled until receive Url via slotActivate.
-        setValid(d->firstrunPage->page(),false);
+        d->firstrunPage->setComplete(false);
     }
     
     // Must have at least one collection (or some images) to proceed.
-    if (currentPage() == d->selectionPage->page())
+    if (currentPage() == d->selectionPage)
     {
         if (d->selectionPage->isSelectionEmpty(d->settings->imgGetOption))
         {
@@ -191,11 +191,11 @@ void ImportWizardDlg::next()
         }
     }
 
-    if(currentPage() == d->generalPage->page())
+    if (currentPage() == d->generalPage)
     {
         saveSettings();
         // Disable Finish button while exporting
-        setValid(d->progressPage->page(),false);
+        d->progressPage->setComplete(false);
 
         if (!checkIfFolderExist())
             return;
@@ -210,10 +210,10 @@ void ImportWizardDlg::next()
 
 void ImportWizardDlg::back()
 {
-    if (checkIfPluginInstalled() && currentPage() == d->selectionPage->page())
+    if (checkIfPluginInstalled() && currentPage() == d->selectionPage)
         KPWizardDialog::back();
 
-    if (currentPage() == d->progressPage->page())
+    if (currentPage() == d->progressPage)
         d->simple->slotCancel();
 
     KPWizardDialog::back();

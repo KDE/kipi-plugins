@@ -48,6 +48,8 @@
 #include "nonabinary.h"
 #include "pto2mkbinary.h"
 
+using namespace KDcrawIface;
+
 namespace KIPIPanoramaPlugin
 {
 
@@ -90,23 +92,20 @@ PreviewPage::PreviewPage(Manager* const mngr, KPWizardDialog* const dlg)
 {
     d->dlg            = dlg;
 
-    QVBoxLayout* const vbox = new QVBoxLayout();
+    RVBox* const vbox = new RVBox(this);
 
-    d->title          = new QLabel(this);
+    d->title          = new QLabel(vbox);
     d->title->setOpenExternalLinks(true);
     d->title->setWordWrap(true);
-    vbox->addWidget(d->title);
 
-    d->previewWidget  = new KPPreviewManager(this);
+    d->previewWidget  = new KPPreviewManager(vbox);
     d->previewWidget->setButtonText(i18nc("@action:button", "Details..."));
     d->previewWidget->show();
-    vbox->addWidget(d->previewWidget);
 
-    d->postProcessing = new KPBatchProgressWidget(this);
+    d->postProcessing = new KPBatchProgressWidget(vbox);
     d->postProcessing->hide();
-    vbox->addWidget(d->postProcessing);
 
-    setLayout(vbox);
+    setPageWidget(vbox);
 
     QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("kipiplugin_panorama/pics/assistant-hugin.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));

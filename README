@@ -13,20 +13,17 @@ Notes:
 
 kipi-plugins is based in part on the work of the Independent JPEG Group.
 
-AcquireImages      : A tool to acquire images using flat scanner.
 Calendar           : A tool to create calendars.
 Facebook           : A tool to import/export images to/from a remote Facebook web service (http://www.facebook.com).
 Flickr             : A tool to export images to a remote Flickr based web service (http://www.flickr.com). Also compatible with Zooomr and 23HQ 
 HTMLExport         : A tool to export images collections into a static XHTML page.
 ImageViewer        : A tool to preview images using OpenGL.
-MetadataEdit       : A tool to edit EXIF, IPTC and XMP metadata.
 GoogleServices     : A tool to export images to Google web services.
 PrintImage         : A tool to print images in various format.
 SendImages         : A tool to send images by e-mail.
 FlashExport        : A tool to export images to Flash using SimpleViewer (http://www.airtightinteractive.com/simpleviewer).
 SlideShow          : A tool to Slide images with 2D and 3D effects using OpenGL.
 Smug               : A tool to import/export images to/from a remote SmugMug web service (http://www.smugmug.com).
-TimeAdjust         : A tool to adjust date and time.
 RemoteStorage      : A tool to export images to remote storage using network protocol (FTP, SSH, SAMBA, etc...).
 Muvee              : A tool to export images to Muvee Cloud web service (http://cloud.muvee.com).
 ExpoBlending       : A tool to create pseudo HDR image with a stack of bracketed images.
@@ -57,14 +54,12 @@ Enblend         >= 3.0.0 (runtime dependency)   http://enblend.sourceforge.net
 
 Optional:
 
-libkcalcore     >= 4.4.0                        https://projects.kde.org/projects/kde/pim/kcalcore
-libksane        >= 0.3.0                        https://projects.kde.org/projects/kde/kdegraphics/libs/libksane
+libkcalcore     >= 5.0.0                        https://projects.kde.org/projects/kde/pim/kcalcore
 libmediawiki    >= 5.0.0                        https://projects.kde.org/projects/extragear/libs/libmediawiki
 libkvkontakte   >= 4.70.0                       https://projects.kde.org/projects/extragear/libs/libkvkontakte
 libxslt         >= 1.1.0                        http://xmlsoft.org/XSLT
 libxml2         >= 2.7.0                        http://xmlsoft.org
 libX11          >= 1.1.5                        http://www.x11.org
-libexpat        >= 2.0.0                        http://expat.sourceforge.net
 libqtopengl     >= 4.3.0                        http://www.qtsoftware.com
 Mesa3D          >= 7.0.4                        http://mesa3d.sourceforge.net
 libqca          >= 2.1.0                        http://delta.affinix.com/qca

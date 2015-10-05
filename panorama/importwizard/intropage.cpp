@@ -101,7 +101,6 @@ IntroPage::IntroPage(Manager* const mngr, KPWizardDialog* const dlg)
     title->setWordWrap(true);
     title->setOpenExternalLinks(true);
     title->setText(i18n("<qt>"
-                        "<p><h1><b>Welcome to Panorama tool</b></h1></p>"
                         "<p>This tool stitches several images together to create a panorama, making the "
                         "seam between images not visible.</p>"
                         "<p>This assistant will help you to configure how to import images before "

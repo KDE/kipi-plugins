@@ -101,7 +101,7 @@ ImportWizardDlg::ImportWizardDlg(Manager* const mngr, QWidget* const parent)
     connect(d->preProcessingPage, SIGNAL(signalPreProcessed(ItemUrlsMap)),
             this, SLOT(slotPreProcessed(ItemUrlsMap)));
 
-    setValid(d->introPage->page(), d->introPage->binariesFound());
+    d->introPage->setComplete(d->introPage->binariesFound());
 }
 
 ImportWizardDlg::~ImportWizardDlg()
@@ -121,14 +121,14 @@ QList<QUrl> ImportWizardDlg::itemUrls() const
 
 void ImportWizardDlg::next()
 {
-    if (currentPage() == d->itemsPage->page())
+    if (currentPage() == d->itemsPage)
     {
         d->mngr->setItemsList(d->itemsPage->itemUrls());
     }
-    else if (currentPage() == d->preProcessingPage->page())
+    else if (currentPage() == d->preProcessingPage)
     {
         // Do not give access to Next button during alignment process.
-        setValid(d->preProcessingPage->page(), false);
+        d->preProcessingPage->setComplete(false);
         d->preProcessingPage->process();
         // Next is handled with signals/slots
         return;
@@ -139,11 +139,11 @@ void ImportWizardDlg::next()
 
 void ImportWizardDlg::back()
 {
-    if (currentPage() == d->preProcessingPage->page())
+    if (currentPage() == d->preProcessingPage)
     {
         d->preProcessingPage->cancel();
         KPWizardDialog::back();
-        setValid(d->preProcessingPage->page(), true);
+        d->preProcessingPage->setComplete(true);
         return;
     }
 
@@ -152,7 +152,7 @@ void ImportWizardDlg::back()
 
 void ImportWizardDlg::slotIntroPageIsValid(bool binariesFound)
 {
-    setValid(d->introPage->page(), binariesFound);
+    d->introPage->setComplete(binariesFound);
 }
 
 void ImportWizardDlg::slotPreProcessed(const ItemUrlsMap& map)
@@ -160,7 +160,7 @@ void ImportWizardDlg::slotPreProcessed(const ItemUrlsMap& map)
     if (map.isEmpty())
     {
         // pre-processing failed.
-        setValid(d->preProcessingPage->page(), false);
+        d->preProcessingPage->setComplete(false);
     }
     else
     {
@@ -172,7 +172,7 @@ void ImportWizardDlg::slotPreProcessed(const ItemUrlsMap& map)
 
 void ImportWizardDlg::slotItemsPageIsValid(bool valid)
 {
-    setValid(d->itemsPage->page(), valid);
+    d->itemsPage->setComplete(valid);
 }
 
 } // namespace KIPIExpoBlendingPlugin

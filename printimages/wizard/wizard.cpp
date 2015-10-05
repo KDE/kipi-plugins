@@ -81,40 +81,56 @@ namespace KIPIPrintImagesPlugin
 
 template <class Ui_Class>
 
-class WizardPage : public QWidget, public Ui_Class
+class WizardPage : public QWizardPage, public Ui_Class
 {
 public:
 
     WizardPage(KPWizardDialog* const dialog, const QString& title)
-        : QWidget(dialog),
+        : QWizardPage(dialog),
           mAssistant(dialog)
     {
         this->setupUi(this);
         layout()->setMargin(0);
-        mPage = dialog->addPage(this, title);
-    }
+        
+        setTitle(title);
 
-    KPageWidgetItem* page() const
+        mId       = dialog->addPage(this);
+        mComplete = true;
+    }
+    
+    int id() const
     {
-        return mPage;
+        return mId;
     }
 
-    KPWizardDialog* parent() const
+    KPWizardDialog* assistant() const
     {
         return mAssistant;
     }
 
+    void setComplete(bool b)
+    {
+        mComplete = b;
+        emit completeChanged();
+    }
+
+    bool isComplete() const
+    {
+        return mComplete;
+    }
+
 private:
 
-    KPWizardDialog*   mAssistant;
-    KPageWidgetItem*  mPage;
+    KPWizardDialog* mAssistant;
+    int             mId;
+    bool            mComplete;
 };
 
 // ---------------------------------------------------------------------------
 
 // some title name definitions (managed by translators)
-const char* photoPageName        =  I18N_NOOP("Select page layout");
-const char* cropPageName         =  I18N_NOOP("Crop photos");
+const char* photoPageName        = I18N_NOOP("Select page layout");
+const char* cropPageName         = I18N_NOOP("Crop photos");
 // custom page layout
 const char* customPageLayoutName = I18N_NOOP("Custom");
 
@@ -202,11 +218,11 @@ Wizard::Wizard(QWidget* const parent)
     }
 
     // selected page
-    connect(this, SIGNAL(currentPageChanged(KPageWidgetItem*,KPageWidgetItem*)),
-            this, SLOT(pageChanged(KPageWidgetItem*,KPageWidgetItem*)));
+    connect(this, SIGNAL(currentIdChanged(int)),
+            this, SLOT(pageChanged(int)));
 
     // cancel button
-    connect(this, SIGNAL(cancelClicked()),
+    connect(button(QWizard::CancelButton), SIGNAL(clicked()),
             this, SLOT(reject()));
 
     // caption information
@@ -261,8 +277,8 @@ Wizard::Wizard(QWidget* const parent)
             this, SLOT(crop_selection(int)));
 
     // remove a page
-    connect(this, SIGNAL(pageRemoved(KPageWidgetItem*)),
-            this, SLOT(slotPageRemoved(KPageWidgetItem*)));
+    connect(this, SIGNAL(pageRemoved(int)),
+            this, SLOT(slotPageRemoved(int)));
 
     connect(d->m_photoPage->m_pagesetup, SIGNAL(clicked()),
             this, SLOT(pagesetupclicked()));
@@ -401,9 +417,7 @@ void Wizard::print(const QList<QUrl>& fileList, const QString& tempPath)
     if (d->m_photos.count() == 1)
         d->m_cropPage->BtnCropNext->setEnabled(false);
 
-    // setCurrentPage should emit currentPageChanged but it seems not to at the moment
-    // setCurrentPage(d->m_photoPage->page());
-    currentPageChanged(d->m_photoPage->page(), NULL);
+    emit currentIdChanged(d->m_photoPage->id());
 }
 
 void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
@@ -1592,7 +1606,7 @@ void Wizard::slotRemovingItem(KIPIPlugins::KPImagesListViewItem* item)
         if (d->m_photos.empty())
         {
             // No photos => disabling next button (e.g. crop page)
-            d->m_photoPage->parent()->setValid(d->m_photoPage->page() , false);
+            d->m_photoPage->setComplete(false);
         }
     }
 }
@@ -1645,7 +1659,7 @@ void Wizard::slotAddItems(const QList<QUrl>& list)
 
     if (d->m_photos.size())
     {
-        d->m_photoPage->parent()->setValid(d->m_photoPage->page() , true);
+        d->m_photoPage->setComplete(true);
     }
 }
 
@@ -1665,24 +1679,30 @@ void Wizard::increaseCopies()
     }
 }
 
-void Wizard::pageChanged(KPageWidgetItem* current, KPageWidgetItem* before)
+void Wizard::pageChanged(int curr)
 {
+    QWizardPage* const current = page(curr);
+    
+    if (!current) return;
+    
+    QWizardPage* const before  = visitedPages().isEmpty() ? 0 : page(visitedPages().last());
+
     //Change cursor to waitCursor during transition
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
     if (before)
     {
-        saveSettings(before->name());
-        qCDebug(KIPIPLUGINS_LOG) << " before " << before->name();
+        saveSettings(before->title());
+        qCDebug(KIPIPLUGINS_LOG) << " before " << before->title();
     }
 
-    qCDebug(KIPIPLUGINS_LOG) << " current " << current->name();
+    qCDebug(KIPIPLUGINS_LOG) << " current " << current->title();
 
-    if (current->name() == i18n(photoPageName))
+    if (current->title() == i18n(photoPageName))
     {
         // readSettings only the first time
         if (!before)
-            readSettings(current->name());
+            readSettings(current->title());
 
         // set to first photo
         d->m_infopageCurrentPhoto = 0;
@@ -1733,9 +1753,9 @@ void Wizard::pageChanged(KPageWidgetItem* current, KPageWidgetItem* before)
         // create our photo sizes list
         previewPhotos();
     }
-    else if (current->name() == i18n(cropPageName))
+    else if (current->title() == i18n(cropPageName))
     {
-        readSettings(current->name());
+        readSettings(current->title());
         d->m_currentCropPhoto = 0;
 
         if (d->m_photos.size())
@@ -2424,9 +2444,9 @@ void Wizard::removeGimpFiles()
 }
 
 //TODO not needed at the moment maybe we can remove it
-void Wizard::slotPageRemoved(KPageWidgetItem* page)
+void Wizard::slotPageRemoved(int id)
 {
-    qCDebug(KIPIPLUGINS_LOG) << page->name();
+    qCDebug(KIPIPLUGINS_LOG) << page(id)->title();
 }
 
 void Wizard::crop_selection(int)
@@ -2559,7 +2579,7 @@ void Wizard::accept()
         QApplication::restoreOverrideCursor();
     }
 
-    saveSettings(currentPage()->name());
+    saveSettings(currentPage()->title());
     KPWizardDialog::accept();
 }
 

@@ -121,13 +121,13 @@ LookPage::~LookPage()
 
 void LookPage::setPageContent(int plugType)
 {
-    if(d->vbox)
+    if (d->vbox)
     {
        removePageWidget(d->vbox);
        delete d->vbox;
     }
 
-    d->vbox= new RVBox(this);
+    d->vbox = new RVBox(this);
     /* Every plugin have it's own settings
     * Keep a page for every plugin for a easier maintenance
     * even if some settings are common

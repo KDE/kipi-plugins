@@ -33,10 +33,16 @@
 
 #include <klocalizedstring.h>
 
+// libKdcraw includes
+
+#include <KDCRAW/RWidgetUtils>
+
 // Local includes
 
 #include "enfusebinary.h"
 #include "manager.h"
+
+using namespace KDcrawIface;
 
 namespace KIPIExpoBlendingPlugin
 {
@@ -58,8 +64,8 @@ LastPage::LastPage(Manager* const mngr, KPWizardDialog* const dlg)
           d(new Private)
 {
     d->mngr                 = mngr;
-    QVBoxLayout* const vbox = new QVBoxLayout(this);
-    QLabel* const title     = new QLabel(this);
+    RVBox* const vbox         = new RVBox(this);
+    QLabel* const title     = new QLabel(vbox);
     title->setOpenExternalLinks(true);
     title->setWordWrap(true);
     title->setText(i18n("<qt>"
@@ -72,11 +78,10 @@ LastPage::LastPage(Manager* const mngr, KPWizardDialog* const dlg)
                         "</qt>",
                         QDir::toNativeSeparators(d->mngr->enfuseBinary().path()),
                         d->mngr->enfuseBinary().url().url()));
-    vbox->addWidget(title);
 
-    vbox->addStretch(10);
+    vbox->setStretchFactor(new QWidget(vbox), 10);
 
-    setLayout(vbox);
+    setPageWidget(vbox);
 
     QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromUtf8("kipiplugin_expoblending/pics/assistant-enfuse.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));

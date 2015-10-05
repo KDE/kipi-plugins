@@ -99,7 +99,7 @@ void Plugin_Panorama::setupActions()
     setDefaultCategory(ToolsPlugin);
 
     m_action = new QAction(this);
-    m_action->setText(i18nc("@action", "Stitch images into a panorama..."));
+    m_action->setText(i18nc("@action", "Create panorama..."));
     m_action->setIcon(QIcon::fromTheme(QStringLiteral("kipi-panorama")));
     m_action->setEnabled(false);
 

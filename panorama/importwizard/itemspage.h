@@ -59,8 +59,8 @@ private Q_SLOTS:
 
 private:
 
-    struct ItemsPagePriv;
-    ItemsPagePriv* const d;
+    struct Private;
+    Private* const d;
 };
 
 }   // namespace KIPIPanoramaPlugin

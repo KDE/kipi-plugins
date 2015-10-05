@@ -71,12 +71,12 @@ SelectionPage::SelectionPage(FlashManager* const mngr, KPWizardDialog* const dlg
     : KPWizardPage(dlg, i18n("Select Image Collections")),
       d(new Private)
 {
-    d->manager=mngr;
+    d->manager = mngr;
 }
 
 void SelectionPage::setPageContent(int choice)
 {
-    if(d->vbox)
+    if (d->vbox)
     {
         removePageWidget(d->vbox);
         delete d->vbox;
@@ -84,12 +84,12 @@ void SelectionPage::setPageContent(int choice)
 
     d->vbox = new RVBox(this);
 
-    if(choice == 0) // Collection Selector
+    if (choice == 0) // Collection Selector
     {
-        Interface* interface       = d->manager->iface();
+        Interface* const interface = d->manager->iface();
         d->imageCollectionSelector = interface->imageCollectionSelector(d->vbox);
     }
-    else //Image Dialog
+    else             // Image Dialog
     {
         d->imageList = new KPImagesList(d->vbox);
         d->imageList->setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
@@ -106,7 +106,7 @@ SelectionPage::~SelectionPage()
 
 void SelectionPage::settings(SimpleViewerSettingsContainer* const container)
 {
-    if(container->imgGetOption == 0)
+    if (container->imgGetOption == 0)
         container->collections = d->imageCollectionSelector->selectedImageCollections();
     else
         container->imageDialogList = d->imageList->imageUrls();
@@ -114,9 +114,9 @@ void SelectionPage::settings(SimpleViewerSettingsContainer* const container)
 
 bool SelectionPage::isSelectionEmpty(int imageGetOption)
 {
-    if(imageGetOption==0) //Collections
+    if (imageGetOption == 0) // Collections
         return d->imageCollectionSelector->selectedImageCollections().isEmpty();
-    else //Image Dialog
+    else                     // Image Dialog
         return d->imageList->imageUrls().isEmpty();
 }
 

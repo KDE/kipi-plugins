@@ -68,7 +68,7 @@ public:
 protected Q_SLOTS:
 
     virtual void accept();
-    virtual void pageChanged(KPageWidgetItem*, KPageWidgetItem*);
+    virtual void pageChanged(int curr);
     virtual void captionChanged(const QString& text);
     virtual void saveCaptionSettings();
     virtual void outputChanged(const QString&);
@@ -86,7 +86,7 @@ protected Q_SLOTS:
 
     virtual void reject();
     virtual void crop_selection(int);
-    virtual void slotPageRemoved(KPageWidgetItem* page);
+    virtual void slotPageRemoved(int);
 
     virtual void pagesetupclicked();
     virtual void pagesetupdialogexit();

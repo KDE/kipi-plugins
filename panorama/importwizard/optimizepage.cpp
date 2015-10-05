@@ -56,6 +56,8 @@
 #include "manager.h"
 #include "actionthread.h"
 
+using namespace KDcrawIface;
+
 namespace KIPIPanoramaPlugin
 {
 
@@ -102,27 +104,24 @@ OptimizePage::OptimizePage(Manager* const mngr, KPWizardDialog* const dlg)
       d(new Private)
 {
     d->mngr                         = mngr;
-    QVBoxLayout* const vbox         = new QVBoxLayout();
     d->progressTimer                = new QTimer(this);
-    d->title                        = new QLabel(this);
+    RVBox* const vbox               = new RVBox(this);
+    d->title                        = new QLabel(vbox);
     d->title->setOpenExternalLinks(true);
     d->title->setWordWrap(true);
-    vbox->addWidget(d->title);
 
     KConfig config(QStringLiteral("kipirc"));
     KConfigGroup group              = config.group("Panorama Settings");
 
-    d->horizonCheckbox              = new QCheckBox(i18nc("@option:check", "Level horizon"), this);
+    d->horizonCheckbox              = new QCheckBox(i18nc("@option:check", "Level horizon"), vbox);
     d->horizonCheckbox->setChecked(group.readEntry("Horizon", true));
     d->horizonCheckbox->setToolTip(i18nc("@info:tooltip", "Detect the horizon and adapt the project to make it horizontal."));
     d->horizonCheckbox->setWhatsThis(i18nc("@info:whatsthis", "<b>Level horizon</b>: Detect the horizon and adapt the projection so that "
                                            "the detected horizon is an horizontal line in the final panorama"));
-    vbox->addWidget(d->horizonCheckbox);
-    
 /*
     if (!d->mngr->gPano())
     {
-        d->projectionAndSizeCheckbox = new QCheckBox(i18nc("@option:check", "Automatic projection and output aspect"), this);
+        d->projectionAndSizeCheckbox = new QCheckBox(i18nc("@option:check", "Automatic projection and output aspect"), vbox);
         d->projectionAndSizeCheckbox->setChecked(group.readEntry("Output Projection And Size", true));
         d->projectionAndSizeCheckbox->setToolTip(i18nc("@info:tooltip", "Adapt the projection of the panorama and the area rendered on the "
                                                        "resulting projection so that every photo fits in the resulting "
@@ -133,41 +132,35 @@ OptimizePage::OptimizePage(Manager* const mngr, KPWizardDialog* const dlg)
     }
     else
     {
-        d->projectionAndSizeCheckbox = new QCheckBox(i18nc("@option:check", "Automatic output aspect"), this);
+        d->projectionAndSizeCheckbox = new QCheckBox(i18nc("@option:check", "Automatic output aspect"), vbox);
         d->projectionAndSizeCheckbox->setChecked(group.readEntry("Output Projection And Size", true));
         d->projectionAndSizeCheckbox->setToolTip(i18nc("@info:tooltip", "Adapt the area rendered on the resulting projection so that "
                                                        "every photo fits in the resulting panorama."));
         d->projectionAndSizeCheckbox->setWhatsThis(i18nc("@info:whatsthis", "<b>Automatic output aspect</b>: Automatically adapt the area "
                                                          "rendered of the panorama to get every photos into the panorama."));
     }
-
-    vbox->addWidget(d->projectionAndSizeCheckbox);
 */
 
-//  d->preprocessResults            = new QLabel(this);
-//  vbox->addWidget(d->preprocessResults);
+//  d->preprocessResults            = new QLabel(vbox);
 
-    vbox->addStretch(2);
+    vbox->setStretchFactor(new QWidget(vbox), 2);
 
     QHBoxLayout* const hbox = new QHBoxLayout();
 
-    d->detailsBtn           = new QPushButton(this);
+    d->detailsBtn           = new QPushButton(vbox);
     d->detailsBtn->setText(i18nc("@action:button", "Details..."));
     d->detailsBtn->hide();
     hbox->addWidget(d->detailsBtn);
-
     hbox->addStretch(10);
 
-    vbox->addLayout(hbox);
-    vbox->addStretch(2);
+    vbox->setStretchFactor(new QWidget(vbox), 2);
 
-    d->progressLabel        = new QLabel(this);
+    d->progressLabel        = new QLabel(vbox);
     d->progressLabel->setAlignment(Qt::AlignCenter);
-    vbox->addWidget(d->progressLabel);
 
-    vbox->addStretch(10);
+    vbox->setStretchFactor(new QWidget(vbox), 10);
 
-    setLayout(vbox);
+    setPageWidget(vbox);
 
     resetTitle();
 

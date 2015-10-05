@@ -42,11 +42,17 @@
 #include <klocalizedstring.h>
 #include <kconfig.h>
 
+// libKdcraw includes
+
+#include <KDCRAW/RWidgetUtils>
+
 // Local includes
 
 #include "kipiplugins_debug.h"
 #include "manager.h"
 #include "actionthread.h"
+
+using namespace KDcrawIface;
 
 namespace KIPIPanoramaPlugin
 {
@@ -84,20 +90,19 @@ LastPage::LastPage(Manager* const mngr, KPWizardDialog* const dlg)
 
     d->mngr                   = mngr;
 
-    QVBoxLayout* const vbox = new QVBoxLayout();
+    RVBox* const vbox         = new RVBox(this);
 
-    d->title                  = new QLabel(this);
+    d->title                  = new QLabel(vbox);
     d->title->setOpenExternalLinks(true);
     d->title->setWordWrap(true);
-    vbox->addWidget(d->title);
 
-    QVBoxLayout *formatVBox   = new QVBoxLayout();
+    QVBoxLayout* const formatVBox = new QVBoxLayout();
 
-    d->saveSettingsGroupBox   = new QGroupBox(i18nc("@title:group", "Save Settings"), this);
+    d->saveSettingsGroupBox   = new QGroupBox(i18nc("@title:group", "Save Settings"), vbox);
     d->saveSettingsGroupBox->setLayout(formatVBox);
     formatVBox->addStretch(1);
 
-    QLabel *fileTemplateLabel = new QLabel(i18nc("@label:textbox", "File name template:"), d->saveSettingsGroupBox);
+    QLabel* const fileTemplateLabel = new QLabel(i18nc("@label:textbox", "File name template:"), d->saveSettingsGroupBox);
     formatVBox->addWidget(fileTemplateLabel);
 
     d->fileTemplateQLineEdit  = new QLineEdit(QStringLiteral("panorama"), d->saveSettingsGroupBox);
@@ -127,11 +132,9 @@ LastPage::LastPage(Manager* const mngr, KPWizardDialog* const dlg)
     d->errorLabel->hide();
     formatVBox->addWidget(d->errorLabel);
 
-    vbox->addWidget(d->saveSettingsGroupBox);
+    vbox->setStretchFactor(new QWidget(vbox), 2);
 
-    vbox->addStretch(2);
-
-    setLayout(vbox);
+    setPageWidget(vbox);
 
     QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("kipiplugin_panorama/pics/assistant-hugin.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));

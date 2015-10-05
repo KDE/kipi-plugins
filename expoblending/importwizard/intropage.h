@@ -50,8 +50,8 @@ Q_SIGNALS:
 
 private:
 
-    class IntroPagePriv;
-    IntroPagePriv* const d;
+    class Private;
+    Private* const d;
 };
 
 }   // namespace KIPIExpoBlendingPlugin

@@ -64,8 +64,8 @@ private Q_SLOTS:
 
 private:
 
-    class ItemsPagePriv;
-    ItemsPagePriv* const d;
+    class Private;
+    Private* const d;
 };
 
 }   // namespace KIPIExpoBlendingPlugin

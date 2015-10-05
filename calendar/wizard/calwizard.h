@@ -39,6 +39,7 @@
 // Local includes
 
 #include "kptooldialog.h"
+#include "kpwizardpage.h"
 
 class QLabel;
 class QPrinter;
@@ -74,7 +75,7 @@ private:
 
 private Q_SLOTS:
 
-    void slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* before);
+    void slotPageSelected(int current);
     void printComplete();
     void updatePage(int page);
 
@@ -89,8 +90,10 @@ private:
     QLabel*          wPrintLabel_;
     QWidget*         wFinish_;
 
-    KPageWidgetItem* wPrintPage_;
-    KPageWidgetItem* wFinishPage_;
+    KPWizardPage*    wTemplatePage_;
+    KPWizardPage*    wEventsPage_;
+    KPWizardPage*    wPrintPage_;
+    KPWizardPage*    wFinishPage_;
 
     QPrinter*        printer_;
 

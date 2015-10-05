@@ -57,6 +57,7 @@
 #include "manager.h"
 #include "actionthread.h"
 
+using namespace KDcrawIface;
 using namespace KIPIPlugins;
 
 namespace KIPIExpoBlendingPlugin
@@ -99,41 +100,34 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KPWizardDialog* const 
     : KPWizardPage(dlg, i18nc("@title:window", "<b>Pre-Processing Bracketed Images</b>")),
       d(new Private)
 {
-    d->mngr                 = mngr;
-    d->progressTimer        = new QTimer(this);
-    QVBoxLayout* const vbox = new QVBoxLayout(this);
-    d->title                = new QLabel(this);
+    d->mngr           = mngr;
+    d->progressTimer  = new QTimer(this);
+    RVBox* const vbox = new RVBox(this);
+    d->title          = new QLabel(vbox);
     d->title->setWordWrap(true);
     d->title->setOpenExternalLinks(true);
-    vbox->addWidget(d->title);
 
     KConfig config(QStringLiteral("kipirc"));
     KConfigGroup group = config.group("ExpoBlending Settings");
-    d->alignCheckBox   = new QCheckBox(i18nc("@option:check", "Align bracketed images"), this);
+    d->alignCheckBox   = new QCheckBox(i18nc("@option:check", "Align bracketed images"), vbox);
     d->alignCheckBox->setChecked(group.readEntry("Auto Alignment", true));
-    vbox->addWidget(d->alignCheckBox);
 
-    vbox->addStretch(2);
+    vbox->setStretchFactor(new QWidget(vbox), 2);
 
-    QHBoxLayout* const hbox = new QHBoxLayout();
-    d->detailsBtn           = new QPushButton(this);
+    RHBox* const hbox       = new RHBox(vbox);
+    d->detailsBtn           = new QPushButton(hbox);
     d->detailsBtn->setText(i18nc("@action:button", "Details..."));
     d->detailsBtn->hide();
-    hbox->addWidget(d->detailsBtn);
+    hbox->setStretchFactor(new QWidget(hbox), 10);
+    
+    vbox->setStretchFactor(new QWidget(vbox), 2);
 
-    hbox->addStretch(10);
-    vbox->addLayout(hbox);
-    vbox->addStretch(2);
-
-    d->progressLabel = new QLabel(this);
+    d->progressLabel = new QLabel(vbox);
     d->progressLabel->setAlignment(Qt::AlignCenter);
 
-    vbox->addWidget(d->progressLabel);
-    vbox->addStretch(10);
-    vbox->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    vbox->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    vbox->setStretchFactor(new QWidget(vbox), 10);
 
-    setLayout(vbox);
+    setPageWidget(vbox);
 
     resetTitle();
 

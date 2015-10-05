@@ -103,7 +103,7 @@ FirstRunPage::FirstRunPage(KPWizardDialog* const dlg)
     d->urlRequester->setFileDlgMode(QFileDialog::ExistingFile);
     
     connect(d->urlRequester, SIGNAL(signalUrlSelected(QUrl)),
-            this, SLOT(slotUrlSelected()));
+            this, SLOT(slotUrlSelected(QUrl)));
 
     setPageWidget(vbox);
     setLeftBottomPix(QIcon::fromTheme(QStringLiteral("kipi-flash")).pixmap(128));

@@ -100,15 +100,6 @@ QPushButton* KPDialogBase::getHelpButton() const
     }
 
     {
-        KPageDialog* const dlg = dynamic_cast<KPageDialog*>(d->dialog);
-
-        if (dlg)
-        {
-            return dlg->button(QDialogButtonBox::Help);
-        }
-    }
-
-    {
         KPOutputDialog* const dlg = dynamic_cast<KPOutputDialog*>(d->dialog);
 
         if (dlg)
@@ -264,10 +255,9 @@ void KPToolDialog::slotCloseClicked()
 // -----------------------------------------------------------------------------------
 
 KPWizardDialog::KPWizardDialog(QWidget* const parent)
-    : KAssistantDialog(parent),
+    : QWizard(parent),
       KPDialogBase(this)
 {
-    buttonBox()->addButton(QDialogButtonBox::Help);
 }
 
 KPWizardDialog::~KPWizardDialog()

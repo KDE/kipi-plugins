@@ -138,7 +138,7 @@ ImportWizardDlg::ImportWizardDlg(Manager* const mngr, QWidget* const parent)
     connect(d->lastPage, SIGNAL(signalIsValid(bool)),
             this, SLOT(slotLastPageIsValid(bool)));
 
-    setValid(d->introPage->page(), d->introPage->binariesFound());
+    d->introPage->setComplete(d->introPage->binariesFound());
 }
 
 ImportWizardDlg::~ImportWizardDlg()
@@ -163,38 +163,38 @@ QList<QUrl> ImportWizardDlg::itemUrls() const
 
 void ImportWizardDlg::next()
 {
-    if (currentPage() == d->itemsPage->page())
+    if (currentPage() == d->itemsPage)
     {
         d->mngr->setItemsList(d->itemsPage->itemUrls());
     }
-    else if (currentPage() == d->preProcessingPage->page())
+    else if (currentPage() == d->preProcessingPage)
     {
         // Do not give access to Next button during pre-processing.
-        setValid(d->preProcessingPage->page(), false);
+        d->preProcessingPage->setComplete(false);
         d->preProcessingPage->process();
         // Next is handled with signals/slots
         return;
     }
-    else if (currentPage() == d->optimizePage->page())
+    else if (currentPage() == d->optimizePage)
     {
         // Do not give access to Next button during optimization.
-        setValid(d->optimizePage->page(), false);
+        d->optimizePage->setComplete(false);
         d->optimizePage->process();
         // Next is handled with signals/slots
         return;
     }
-    else if (currentPage() == d->previewPage->page())
+    else if (currentPage() == d->previewPage)
     {
         // And start the final stitching process
-        setValid(d->previewPage->page(), false);
+        d->previewPage->setComplete(false);
         d->previewPage->startStitching();
 
         // Next will be handled using signals/slots
         return;
     }
-    else if (currentPage() == d->lastPage->page())
+    else if (currentPage() == d->lastPage)
     {
-        setValid(d->lastPage->page(), false);
+        d->lastPage->setComplete(false);
         d->lastPage->copyFiles();
         return;
     }
@@ -204,42 +204,42 @@ void ImportWizardDlg::next()
 
 void ImportWizardDlg::back()
 {
-    if (currentPage() == d->preProcessingPage->page())
+    if (currentPage() == d->preProcessingPage)
     {
         if (!d->preProcessingPage->cancel())
         {
-            setValid(d->preProcessingPage->page(), true);
+            d->preProcessingPage->setComplete(true);
             return;
         }
 
-        setValid(d->preProcessingPage->page(), true);
+        d->preProcessingPage->setComplete(true);
     }
-    else if (currentPage() == d->optimizePage->page())
+    else if (currentPage() == d->optimizePage)
     {
         if (!d->optimizePage->cancel())
         {
-            setValid(d->optimizePage->page(), true);
+            d->optimizePage->setComplete(true);
             return;
         }
 
-        setValid(d->optimizePage->page(), true);
+        d->optimizePage->setComplete(true);
         d->preProcessingPage->resetPage();
     }
-    else if (currentPage() == d->previewPage->page())
+    else if (currentPage() == d->previewPage)
     {
         if (d->previewPage->cancel())
         {
-            setValid(d->previewPage->page(), true);
+            d->previewPage->setComplete(true);
 
             d->optimizePage->resetPage();
         }
         else
         {
-            setValid(d->previewPage->page(), true);
+            d->previewPage->setComplete(true);
             return;
         }
     }
-    else if (currentPage() == d->lastPage->page())
+    else if (currentPage() == d->lastPage)
     {
         KPWizardDialog::back();
         d->previewPage->resetPage();
@@ -251,18 +251,18 @@ void ImportWizardDlg::back()
 
 void ImportWizardDlg::accept()
 {
-    setValid(d->lastPage->page(), false);
+    d->lastPage->setComplete(false);
     d->lastPage->copyFiles();
 }
 
 void ImportWizardDlg::slotIntroPageIsValid(bool binariesFound)
 {
-    setValid(d->introPage->page(), binariesFound);
+    d->introPage->setComplete(binariesFound);
 }
 
 void ImportWizardDlg::slotItemsPageIsValid(bool valid)
 {
-    setValid(d->itemsPage->page(), valid);
+    d->itemsPage->setComplete(valid);
 }
 
 void ImportWizardDlg::slotPreProcessed(bool success)
@@ -270,12 +270,12 @@ void ImportWizardDlg::slotPreProcessed(bool success)
     if (!success)
     {
         // pre-processing failed.
-        setValid(d->preProcessingPage->page(), false);
+        d->preProcessingPage->setComplete(false);
     }
     else
     {
         // pre-processing Done.
-        setValid(d->preProcessingPage->page(), true);
+        d->preProcessingPage->setComplete(true);
         d->optimizePage->resetPage();
         KPWizardDialog::next();
     }
@@ -286,13 +286,13 @@ void ImportWizardDlg::slotOptimized(bool success)
     if (!success)
     {
         // Optimization failed.
-        setValid(d->optimizePage->page(), false);
+        d->optimizePage->setComplete(false);
     }
     else
     {
         // Optimization finished.
-        setValid(d->optimizePage->page(), true);
-        setValid(d->previewPage->page(), true);
+        d->optimizePage->setComplete(true);
+        d->previewPage->setComplete(true);
         KPWizardDialog::next();
 
         // Start the Preview generation
@@ -304,7 +304,7 @@ void ImportWizardDlg::slotPreviewStitchingFinished(bool success)
 {
     if (!success)
     {
-        setValid(d->previewPage->page(), false);
+        d->previewPage->setComplete(false);
     }
 }
 
@@ -312,7 +312,7 @@ void ImportWizardDlg::slotStitchingFinished(bool success)
 {
     if (success)
     {
-        setValid(d->previewPage->page(), true);
+        d->previewPage->setComplete(true);
         KPWizardDialog::next();
         d->lastPage->resetTitle();
     }
@@ -326,13 +326,13 @@ void ImportWizardDlg::slotCopyFinished(bool success)
     }
     else
     {
-        setValid(d->lastPage->page(), true);
+        d->lastPage->setComplete(true);
     }
 }
 
 void ImportWizardDlg::slotLastPageIsValid(bool isValid)
 {
-    setValid(d->lastPage->page(), isValid);
+    d->lastPage->setComplete(isValid);
 }
 
 } // namespace KIPIPanoramaPlugin

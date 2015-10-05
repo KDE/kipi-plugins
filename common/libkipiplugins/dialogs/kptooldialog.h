@@ -25,7 +25,8 @@
 
 // KDE includes
 
-#include <kassistantdialog.h>
+#include <QWizard>
+#include <QDialogButtonBox>
 
 // Local includes
 
@@ -109,7 +110,7 @@ private:
 
 // -----------------------------------------------------------------------------------
 
-class KIPIPLUGINS_EXPORT KPWizardDialog : public KAssistantDialog, public KPDialogBase
+class KIPIPLUGINS_EXPORT KPWizardDialog : public QWizard, public KPDialogBase
 {
 public:
 
