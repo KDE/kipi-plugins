@@ -84,7 +84,7 @@ void SelectionPage::setPageContent(int choice)
 
     d->vbox = new RVBox(this);
 
-    if (choice == 0) // Collection Selector
+    if (choice == SimpleViewerSettingsContainer::COLLECTION)
     {
         Interface* const interface = d->manager->iface();
         d->imageCollectionSelector = interface->imageCollectionSelector(d->vbox);

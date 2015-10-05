@@ -34,7 +34,7 @@
 
 #include <QUrl>
 
-// Include files for KIPI
+// Libkipi includes
 
 #include <KIPI/ImageCollection>
 
@@ -53,6 +53,7 @@ public:
         TOP,
         BOTTOM
     };
+
     enum PluginType
     {
         SIMPLE = 0,
@@ -60,6 +61,7 @@ public:
         TILT,
         POSTCARD
     };
+
     enum ImageGetOption
     {
         COLLECTION = 0,
@@ -88,7 +90,7 @@ public:
         frameColor           = QColor();
 
         thumbnailColumns     = 0; // columns
-        thumbnailRows        = 0;    // rows
+        thumbnailRows        = 0; // rows
 
         imagesExportSize     = 0;
         frameWidth           = 0;

@@ -82,14 +82,14 @@ IntroPage::IntroPage(KPWizardDialog* const dlg)
                         "<p>2. TiltViewer is quite CPU intensive</p>"
                         "<p>3. Postcardviewer is designed only for small amount of photos</p>"
                         "</qt>"));
-    RHBox* hbox          = new RHBox(vbox);
-    QLabel* label        = new QLabel(i18n("Select &Plugin:"), hbox);
+    RHBox* const hbox   = new RHBox(vbox);
+    QLabel* const label = new QLabel(i18n("Select &Plugin:"), hbox);
 
-    d->plugin_select = new QComboBox(hbox);
-    QString simplew  = i18nc("SimpleViewer",   "SimpleViewer");
-    QString tilt     = i18nc("TiltViewer",     "TiltViewer");
-    QString autov    = i18nc("AutoViewer",     "AutoViewer");
-    QString postcard = i18nc("PostcardViewer", "PostcardViewer");
+    d->plugin_select    = new QComboBox(hbox);
+    QString simplew     = i18nc("SimpleViewer",   "SimpleViewer");
+    QString tilt        = i18nc("TiltViewer",     "TiltViewer");
+    QString autov       = i18nc("AutoViewer",     "AutoViewer");
+    QString postcard    = i18nc("PostcardViewer", "PostcardViewer");
     d->plugin_select->insertItem(SimpleViewerSettingsContainer::SIMPLE,   simplew);
     d->plugin_select->insertItem(SimpleViewerSettingsContainer::TILT,     tilt);
     d->plugin_select->insertItem(SimpleViewerSettingsContainer::AUTO,     autov);
@@ -100,16 +100,15 @@ IntroPage::IntroPage(KPWizardDialog* const dlg)
 
     // ComboBox for image selection method
 
-    RHBox* hbox2          = new RHBox(vbox);
-    QLabel* getImageLabel = new QLabel(i18n("&Choose image selection method:"),hbox2);
-    d->imageGetOption     = new QComboBox(hbox2);
-    QString collection    = i18nc("Collections",     "Collections");
-    QString dialog   = i18nc("Image Dialog",    "Image Dialog");
-    d->imageGetOption->insertItem(SimpleViewerSettingsContainer::COLLECTION, collection);
+    RHBox* const hbox2          = new RHBox(vbox);
+    QLabel* const getImageLabel = new QLabel(i18n("&Choose image selection method:"),hbox2);
+    d->imageGetOption           = new QComboBox(hbox2);
+    QString collection          = i18nc("Collections",     "Collections");
+    QString dialog              = i18nc("Image Dialog",    "Image Dialog");
+    d->imageGetOption->insertItem(SimpleViewerSettingsContainer::COLLECTION,  collection);
     d->imageGetOption->insertItem(SimpleViewerSettingsContainer::IMAGEDIALOG, dialog);
 
     getImageLabel->setBuddy(d->imageGetOption);
-
 
     setPageWidget(vbox);
     setLeftBottomPix(QIcon::fromTheme(QStringLiteral("kipi-flash")).pixmap(128));
@@ -121,9 +120,9 @@ IntroPage::~IntroPage()
 
 void IntroPage::settings(SimpleViewerSettingsContainer* const settings)
 {
-    settings->plugType = (SimpleViewerSettingsContainer::PluginType)d->plugin_select->currentIndex();
+    settings->plugType     = (SimpleViewerSettingsContainer::PluginType)d->plugin_select->currentIndex();
     settings->imgGetOption = (SimpleViewerSettingsContainer::ImageGetOption)d->imageGetOption->currentIndex();
-    qCDebug(KIPIPLUGINS_LOG) << "Plugin type obtained" ;
+    qCDebug(KIPIPLUGINS_LOG) << "Plugin type obtained";
 }
 
 }   // namespace KIPIFlashExportPlugin
