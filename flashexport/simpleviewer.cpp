@@ -138,10 +138,10 @@ void SimpleViewer::appendPluginFiles(int pluginType)
             d->simpleViewerFiles.clear();
             d->simpleViewerFiles.append(QStringLiteral("web/svcore/swf/simpleviewer.swf"));
             d->simpleViewerFiles.append(QStringLiteral("web/svcore/js/swfobject.js"));
-                    d->dataLocal = makeWritableDir(QStringLiteral("kipiplugin_flashexport/simpleviewer/")).absolutePath() + QStringLiteral("/");
-                    d->dataDir   = QStandardPaths::locate(QStandardPaths::GenericDataLocation,
-                                                          QStringLiteral("kipiplugin_flashexport/simpleviewer/"));
-                    qCDebug(KIPIPLUGINS_LOG) << "Data dir when set is " << d->dataDir;
+            d->dataLocal = makeWritableDir(QStringLiteral("kipiplugin_flashexport/simpleviewer/")).absolutePath() + QStringLiteral("/");
+            d->dataDir   = QStandardPaths::locate(QStandardPaths::GenericDataLocation,
+                                                  QStringLiteral("kipiplugin_flashexport/simpleviewer/"));
+            qCDebug(KIPIPLUGINS_LOG) << "Data dir when set is " << d->dataDir;
             break;
         case 1:
             d->simpleViewerFiles.clear();
@@ -307,7 +307,6 @@ bool SimpleViewer::createExportDirectories() const
 
     if (d->settings->plugType == 0)
     {
-
         QUrl thumbsDir = QUrl(d->tempDir->path());
         thumbsDir.setPath(thumbsDir.path() + QStringLiteral("/thumbs"));
 
@@ -323,7 +322,6 @@ bool SimpleViewer::createExportDirectories() const
     }
 
     QUrl imagesDir = QUrl(d->tempDir->path());
-
 
     qCDebug(KIPIPLUGINS_LOG) << "image folder url is" << imagesDir.url();
 
@@ -471,7 +469,8 @@ bool SimpleViewer::exportImages()
         default:
             break;
     }
-    if (d->settings->imgGetOption ==0)
+
+    if (d->settings->imgGetOption == 0)
     {
         for( QList<ImageCollection>::ConstIterator it = d->settings->collections.constBegin() ;
             !d->canceled && (it != d->settings->collections.constEnd()) ; ++it )
@@ -515,8 +514,8 @@ void SimpleViewer::processQUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
 
     qSort(images.begin(), images.end(), cmpUrl);
 
-    for(QList<QUrl>::ConstIterator it = images.constBegin();
-        !d->canceled && (it != images.constEnd()) ; ++it)
+    for (QList<QUrl>::ConstIterator it = images.constBegin();
+         !d->canceled && (it != images.constEnd()) ; ++it)
     {
         QApplication::processEvents();
         QUrl url = *it;
@@ -562,7 +561,7 @@ void SimpleViewer::processQUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
 
         meta.load(url.path());
         bool rotated = false;
-        newName = QStringLiteral("%1.%2").arg(tmp.sprintf("%03i", index)).arg(QStringLiteral("jpg"));
+        newName      = QStringLiteral("%1.%2").arg(tmp.sprintf("%03i", index)).arg(QStringLiteral("jpg"));
 
         if (d->settings->plugType == 0)
         {
@@ -856,7 +855,7 @@ bool SimpleViewer::createIndex() const
                                                                QStringLiteral("kipiplugin_flashexport/index3.template"));
             if (indexTemplateName.isEmpty())
             {
-            //TODO: errormsg
+                //TODO: errormsg
                 qCDebug(KIPIPLUGINS_LOG) << "No indexTemplateName" ;
                 return false;
             }
@@ -960,7 +959,7 @@ bool SimpleViewer::copySimpleViewer() const
     dir.setPath(d->dataDir);
     qCDebug(KIPIPLUGINS_LOG) << "Data dir is " << d->dataDir; 
     entries = dir.entryList(QDir::Files);
-    for(QStringList::ConstIterator it = entries.constBegin(); it != entries.constEnd(); ++it)
+    for (QStringList::ConstIterator it = entries.constBegin(); it != entries.constEnd(); ++it)
     {
         files.append(QUrl(dir.absolutePath() + QLatin1Char('/') + *it));
     }
@@ -1011,6 +1010,7 @@ bool SimpleViewer::openArchive(KZip& zip) const
         qCDebug(KIPIPLUGINS_LOG) << "Open archive failed\n";
         return false;
     }
+
     return true;
 }
 
@@ -1018,6 +1018,7 @@ bool SimpleViewer::extractArchive(KZip& zip) const
 {
     // read root directory content
     QStringList names = zip.directory()->entries();
+
     if (names.count() != 1)
     {
         qCDebug(KIPIPLUGINS_LOG) << "Wrong SimpleViewer Version or corrupted archive" ;
@@ -1027,6 +1028,7 @@ bool SimpleViewer::extractArchive(KZip& zip) const
 
     // open root directory
     const KArchiveEntry* const root = zip.directory()->entry(names[0]);
+
     if (!root || !root->isDirectory())
     {
         qCDebug(KIPIPLUGINS_LOG) << "could not open " << names[0] << " of zipname" ;
@@ -1036,8 +1038,8 @@ bool SimpleViewer::extractArchive(KZip& zip) const
     const KArchiveDirectory* const dir = dynamic_cast<const KArchiveDirectory*>(root);
 
     // extract the needed files from SimpleViewer archive
-    for(QStringList::ConstIterator it = d->simpleViewerFiles.constBegin();
-        it != d->simpleViewerFiles.constEnd(); ++it )
+    for (QStringList::ConstIterator it = d->simpleViewerFiles.constBegin();
+         it != d->simpleViewerFiles.constEnd(); ++it )
     {
         const KArchiveEntry* const entry = dir->entry(*it);
 

@@ -96,7 +96,7 @@ Interface* FlashManager::iface() const
 
 bool FlashManager::installPlugin(const QUrl& url)
 {
-    if(d->simple->unzip(url.path()))
+    if (d->simple->unzip(url.path()))
         return true;
     else
         return false;
