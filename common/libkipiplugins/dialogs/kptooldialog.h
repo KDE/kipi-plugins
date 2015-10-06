@@ -116,6 +116,12 @@ public:
 
     KPWizardDialog(QWidget* const parent=0);
     virtual ~KPWizardDialog();
+
+private:
+    
+    QPushButton* helpButton() const;
+    
+    friend class KPDialogBase;
 };
 
 } // namespace KIPIPlugins

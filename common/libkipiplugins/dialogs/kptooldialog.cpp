@@ -117,7 +117,16 @@ QPushButton* KPDialogBase::getHelpButton() const
         }
     }
 
-    return nullptr;
+    {
+        KPWizardDialog* const dlg = dynamic_cast<KPWizardDialog*>(d->dialog);
+
+        if (dlg)
+        {
+            return dlg->helpButton();
+        }
+    }
+
+    return 0;
 }
 
 void KPDialogBase::setAboutData(KPAboutData* const data, QPushButton* help)
@@ -180,6 +189,7 @@ KPToolDialog::KPToolDialog(QWidget* const parent)
 
 KPToolDialog::~KPToolDialog()
 {
+    delete d;
 }
 
 void KPToolDialog::setMainWidget(QWidget* const widget)
@@ -258,10 +268,16 @@ KPWizardDialog::KPWizardDialog(QWidget* const parent)
     : QWizard(parent),
       KPDialogBase(this)
 {
+    setOption(QWizard::HaveHelpButton, true);
 }
 
 KPWizardDialog::~KPWizardDialog()
 {
+}
+
+QPushButton* KPWizardDialog::helpButton() const
+{
+    return dynamic_cast<QPushButton*>(button(QWizard::HelpButton));
 }
 
 } // namespace KIPIPlugins
