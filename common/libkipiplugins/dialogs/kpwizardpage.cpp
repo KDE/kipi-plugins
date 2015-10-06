@@ -57,16 +57,19 @@ public:
         leftView      = 0;
         isComplete    = true;
         id            = -1;
+        dlg           = 0;
     }
 
-    bool         isComplete;
-    int          id;
+    bool            isComplete;
+    int             id;
     
-    QWidget*     leftView;
-    QLabel*      logo;
-    QLabel*      leftBottomPix;
+    QWidget*        leftView;
+    QLabel*         logo;
+    QLabel*         leftBottomPix;
 
-    QHBoxLayout* hlay;
+    QHBoxLayout*    hlay;
+    
+    KPWizardDialog* dlg;
 };
 
 KPWizardPage::KPWizardPage(KPWizardDialog* const dlg, const QString& title)
@@ -111,7 +114,8 @@ KPWizardPage::KPWizardPage(KPWizardDialog* const dlg, const QString& title)
     layout->addWidget(sv);
     setLayout(layout);
     
-    d->id = dlg->addPage(this);
+    d->dlg = dlg;
+    d->id  = d->dlg->addPage(this);
 }
 
 KPWizardPage::~KPWizardPage()
@@ -154,6 +158,11 @@ void KPWizardPage::removePageWidget(QWidget* const w)
 void KPWizardPage::setLeftBottomPix(const QPixmap& pix)
 {
     d->leftBottomPix->setPixmap(pix);
+}
+
+KPWizardDialog* KPWizardPage::assistant() const
+{
+    return d->dlg;
 }
 
 }   // namespace KIPIPlugins

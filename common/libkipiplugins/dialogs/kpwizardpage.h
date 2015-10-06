@@ -56,6 +56,8 @@ public:
     
     int  id() const;
 
+    KPWizardDialog* assistant() const;
+
 private:
 
     class Private;
