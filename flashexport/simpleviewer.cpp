@@ -200,7 +200,7 @@ void SimpleViewer::startExport()
     }
     else
     {
-        d->totalActions+=d->settings->imageDialogList.count();
+        d->totalActions += d->settings->imageDialogList.count();
     }
 
     // +copying SimpleViewer, +creating index.html
@@ -382,7 +382,7 @@ bool SimpleViewer::exportImages()
     xmlDoc.appendChild(xmlDoc.createProcessingInstruction( QStringLiteral("xml"),
                        QStringLiteral("version=\"1.0\" encoding=\"UTF-8\"") ) );
 
-    switch(d->settings->plugType)
+    switch (d->settings->plugType)
     {
         case 0:
         {
@@ -685,12 +685,12 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
         keywords.clear();
     }
 
-    switch(d->settings->plugType)
+    switch (d->settings->plugType)
     {
         case 0: //Simpleviewer
         {
 
-            QDomElement img = xmlDoc.createElement(QStringLiteral("image"));
+            QDomElement img      = xmlDoc.createElement(QStringLiteral("image"));
             galleryElem.appendChild(img);
             img.setAttribute(QStringLiteral("imageURL"), QStringLiteral("images/")+newName);
             img.setAttribute(QStringLiteral("thumbURL"), QStringLiteral("thumbs/")+newName);
@@ -707,24 +707,24 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
 
         case 1: //Autoviewer
         {
-            QDomElement img      = xmlDoc.createElement(QStringLiteral("image"));
+            QDomElement img        = xmlDoc.createElement(QStringLiteral("image"));
 
             galleryElem.appendChild(img);
 
-            QDomElement urlElem  = xmlDoc.createElement(QStringLiteral("url"));
+            QDomElement urlElem    = xmlDoc.createElement(QStringLiteral("url"));
             img.appendChild(urlElem);
-            QDomText    urlText  = xmlDoc.createTextNode(QStringLiteral("images/") + newName);
+            QDomText    urlText    = xmlDoc.createTextNode(QStringLiteral("images/") + newName);
             urlElem.appendChild(urlText);
 
-            QDomElement caption2 = xmlDoc.createElement(QStringLiteral("caption"));
+            QDomElement caption2   = xmlDoc.createElement(QStringLiteral("caption"));
             img.appendChild( caption2 );
-            QDomText captiontxt2 = xmlDoc.createTextNode(comment+keywords);
+            QDomText captiontxt2   = xmlDoc.createTextNode(comment+keywords);
             caption2.appendChild(captiontxt2);
 
-            QDomElement widthElem = xmlDoc.createElement(QStringLiteral("width"));
+            QDomElement widthElem  = xmlDoc.createElement(QStringLiteral("width"));
             img.appendChild(widthElem);
 
-            QDomText    widthText = xmlDoc.createTextNode(QString::number(d->width));
+            QDomText    widthText  = xmlDoc.createTextNode(QString::number(d->width));
 
             widthElem.appendChild(widthText);
 
@@ -758,12 +758,12 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
 
         case 3: //PostcardViewer
         {
-            QDomElement img     = xmlDoc.createElement(QStringLiteral("image"));
+            QDomElement img      = xmlDoc.createElement(QStringLiteral("image"));
             galleryElem.appendChild(img);
 
-            QDomElement urlElem = xmlDoc.createElement(QStringLiteral("url"));
+            QDomElement urlElem  = xmlDoc.createElement(QStringLiteral("url"));
             img.appendChild(urlElem);
-            QDomText    urlText = xmlDoc.createTextNode(QStringLiteral("images/") + newName);
+            QDomText    urlText  = xmlDoc.createTextNode(QStringLiteral("images/") + newName);
             urlElem.appendChild(urlText);
 
             QDomElement caption2 = xmlDoc.createElement(QStringLiteral("caption"));
@@ -959,6 +959,7 @@ bool SimpleViewer::copySimpleViewer() const
     dir.setPath(d->dataDir);
     qCDebug(KIPIPLUGINS_LOG) << "Data dir is " << d->dataDir; 
     entries = dir.entryList(QDir::Files);
+
     for (QStringList::ConstIterator it = entries.constBegin(); it != entries.constEnd(); ++it)
     {
         files.append(QUrl(dir.absolutePath() + QLatin1Char('/') + *it));
@@ -997,6 +998,7 @@ bool SimpleViewer::unzip(const QString& url) const
 
     if (!openArchive(zip))
     {
+        qCDebug(KIPIPLUGINS_LOG) << "Cannot open zip archive" ;
         return false;
     }
 
@@ -1064,7 +1066,7 @@ bool SimpleViewer::extractFile(const KArchiveEntry* entry) const
     if (entryFile == NULL)
         return false;
 
-    QByteArray array              = entryFile->data();
+    QByteArray array = entryFile->data();
 
     QFile file( d->dataLocal + entry->name() );
 
