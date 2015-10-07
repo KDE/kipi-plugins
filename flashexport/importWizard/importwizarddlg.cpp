@@ -132,6 +132,8 @@ ImportWizardDlg::~ImportWizardDlg()
 
 void ImportWizardDlg::slotActivate()
 {
+    qCDebug(KIPIPLUGINS_LOG) << "Installing " << d->firstrunPage->getUrl();
+    
     if (d->mngr->installPlugin(d->firstrunPage->getUrl()))
     {
         d->firstrunPage->setComplete(true);

@@ -46,6 +46,7 @@
 // Local includes
 
 #include "kpversion.h"
+#include "kipiplugins_debug.h"
 
 using namespace KDcrawIface;
 
@@ -117,6 +118,7 @@ FirstRunPage::~FirstRunPage()
 
 void FirstRunPage::slotUrlSelected(const QUrl& url)
 {
+    qCDebug(KIPIPLUGINS_LOG) << "Using archive from " << url;
     d->url = url;
     emit signalUrlObtained();
 }
