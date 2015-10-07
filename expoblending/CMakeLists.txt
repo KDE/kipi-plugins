@@ -73,7 +73,6 @@ add_library(kipiplugin_expoblending MODULE ${kipiplugin_expoblending_PART_SRCS})
 target_link_libraries(kipiplugin_expoblending
     PRIVATE
         libexpoblending
-        KF5::CoreAddons
         KF5::XmlGui
 )
 

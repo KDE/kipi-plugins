@@ -106,6 +106,7 @@ find_package(KF5 REQUIRED COMPONENTS
              I18n
              Archive
              KIO
+             XmlGui
              IconThemes                       # for GoogleServices (KIO/PixmapLoader)
              OPTIONAL_COMPONENTS CalendarCore # for Calendar
 )
