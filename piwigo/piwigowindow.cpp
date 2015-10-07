@@ -31,6 +31,8 @@
 #include <QCheckBox>
 #include <QDialog>
 #include <QFileInfo>
+#include <QBuffer>
+#include <QImage>
 #include <QGroupBox>
 #include <QPushButton>
 #include <QSpinBox>
@@ -45,7 +47,8 @@
 #include <QIcon>
 #include <QMenu>
 #include <QMessageBox>
-                      
+#include <QLabel>
+
 // KDE includes
 
 #include <kmessagebox.h>
@@ -58,10 +61,6 @@
 #include <KIPI/Interface>
 #include <KIPI/ImageCollection>
 
-// Libkdcraw includes
-
-#include <KDCRAW/RWidgetUtils>
-
 // Local includes
 
 #include "kipiplugins_debug.h"
@@ -71,8 +70,6 @@
 #include "piwigotalker.h"
 #include "kpimagedialog.h"
 #include "kpaboutdata.h"
-
-using namespace KDcrawIface;
 
 namespace KIPIPiwigoExportPlugin
 {
@@ -121,11 +118,26 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
 
     // ---------------------------------------------------------------------------
 
-    RActiveLabel* const logo = new RActiveLabel(QUrl(QLatin1String("http://piwigo.org")),
-                                                QStandardPaths::locate(QStandardPaths::GenericDataLocation,
-                                                                       QLatin1String("kipiplugin_piwigo/pics/piwigo_logo.png")));
+    QLabel* const logo = new QLabel();
+    logo->setMargin(0);
+    logo->setScaledContents(false);
+    logo->setOpenExternalLinks(true);
+    logo->setTextFormat(Qt::RichText);
+    logo->setFocusPolicy(Qt::NoFocus);
+    logo->setTextInteractionFlags(Qt::LinksAccessibleByMouse);
+    logo->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum));
     logo->setToolTip(i18n("Visit Piwigo website"));
     logo->setAlignment(Qt::AlignLeft);
+    QImage img = QImage(QStandardPaths::locate(QStandardPaths::GenericDataLocation,
+                                               QLatin1String("kipiplugin_piwigo/pics/piwigo_logo.png")));
+    
+    QByteArray byteArray;
+    QBuffer    buffer(&byteArray);
+    img.save(&buffer, "PNG");
+    logo->setText(QString::fromLatin1("<a href=\"%1\">%2</a>")
+                  .arg(QLatin1String("http://piwigo.org"))
+                  .arg(QString::fromLatin1("<img src=\"data:image/png;base64,%1\">")
+                  .arg(QString::fromLatin1(byteArray.toBase64().data()))));
     
     // ---------------------------------------------------------------------------
 
