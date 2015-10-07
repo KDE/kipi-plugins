@@ -51,14 +51,14 @@ add_library(kipiplugin_advancedslideshow MODULE ${kipiplugin_advancedslideshow_P
 
 target_link_libraries(kipiplugin_advancedslideshow
                       PRIVATE
-                      KF5::Parts
-                      KF5::WidgetsAddons
 
                       Qt5::OpenGL
                       Qt5::Svg
+
                       KF5::Kipi
                       KF5::KExiv2
                       KF5::KDcraw
+                      KF5::Parts
                       KF5kipiplugins
 
                       ${OPENGL_LIBRARIES}
