@@ -83,7 +83,7 @@ public:
     QSpinBox*      imagesExportSize;
     QSpinBox*      maxImageDimension;
 
-    RFileSelector* exportUrl;
+    KPFileSelector* exportUrl;
 };
 
 GeneralPage::GeneralPage(KPWizardDialog* const dlg)
@@ -107,7 +107,7 @@ GeneralPage::GeneralPage(KPWizardDialog* const dlg)
 
     QGroupBox* const box2    = new QGroupBox(i18n("Save Gallery To"), vbox);
     QVBoxLayout* const vlay2 = new QVBoxLayout(box2);
-    d->exportUrl             = new RFileSelector(this);
+    d->exportUrl             = new KPFileSelector(this);
     d->exportUrl->lineEdit()->setText(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + QLatin1String("/simpleviewer"));
     d->exportUrl->setFileDlgMode(QFileDialog::Directory);
 

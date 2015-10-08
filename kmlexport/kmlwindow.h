@@ -45,17 +45,12 @@ class QComboBox;
 class QCloseEvent;
 class QSpinBox;
 
-namespace KDcrawIface
-{
-class RFileSelector;
-}
-
 namespace KIPIPlugins
 {
 class KPColorSelector;
+class KPFileSelector;
 }
 
-using namespace KDcrawIface;
 using namespace KIPIPlugins;
 
 namespace KIPIKMLExportPlugin
@@ -105,8 +100,8 @@ public:
 
     KPColorSelector* GPXTrackColor_;
 
-    RFileSelector*  DestinationDirectory_;
-    RFileSelector*  GPXFileUrlRequester_;
+    KPFileSelector*  DestinationDirectory_;
+    KPFileSelector*  GPXFileUrlRequester_;
 
     QSpinBox*       ImageSizeInput_;
     QSpinBox*       IconSizeInput_;

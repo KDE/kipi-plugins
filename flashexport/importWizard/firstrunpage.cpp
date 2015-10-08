@@ -65,7 +65,7 @@ public:
 
     QUrl           url;
 
-    RFileSelector* urlRequester;
+    KPFileSelector* urlRequester;
 };
 
 // link this page to SimpleViewer to gain access to settings container.
@@ -99,7 +99,7 @@ FirstRunPage::FirstRunPage(KPWizardDialog* const dlg)
     QLabel* const info3   = new QLabel(vbox);
     info3->setText(i18n("<p>2.) Point this tool to the downloaded archive</p>"));
 
-    d->urlRequester = new RFileSelector(vbox);
+    d->urlRequester = new KPFileSelector(vbox);
     d->urlRequester->lineEdit()->setText(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
     d->urlRequester->setFileDlgTitle(i18n("Select downloaded archive"));
     d->urlRequester->setFileDlgMode(QFileDialog::ExistingFile);
