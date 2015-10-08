@@ -50,6 +50,7 @@ extern "C"
 #include <QApplication>
 #include <QMenu>
 #include <QMessageBox>
+#include <QGroupBox>
 
 // KDE includes
 
@@ -61,11 +62,6 @@ extern "C"
 // Libkipi includes
 
 #include <KIPI/Interface>
-
-// libKdcraw includes
-
-#include <libkdcraw_version.h>
-#include <KDCRAW/RExpanderBox>
 
 // Local includes
 
@@ -87,12 +83,11 @@ using namespace KDcrawIface;
 namespace KIPIExpoBlendingPlugin
 {
 
-struct ExpoBlendingDlg::ExpoBlendingDlgPriv
+struct ExpoBlendingDlg::Private
 {
-    ExpoBlendingDlgPriv()
+    Private()
         : templateFileName(0),
           previewWidget(0),
-          settingsExpander(0),
           enfuseSettingsBox(0),
           saveSettingsBox(0),
           bracketStack(0),
@@ -110,8 +105,6 @@ struct ExpoBlendingDlg::ExpoBlendingDlgPriv
 
     KPPreviewManager*     previewWidget;
 
-    RExpanderBox*         settingsExpander;
-
     EnfuseSettingsWidget* enfuseSettingsBox;
 
     KPSaveSettingsWidget* saveSettingsBox;
@@ -128,7 +121,7 @@ struct ExpoBlendingDlg::ExpoBlendingDlgPriv
 
 ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
     : KPToolDialog(parent),
-      d(new ExpoBlendingDlgPriv)
+      d(new Private)
 {
     d->mngr = mngr;
 
@@ -172,40 +165,45 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
     d->bracketStack                 = new BracketStackList(d->mngr->iface(), rightColumn->viewport());
     panel->addWidget(d->bracketStack, 1);
 
-    d->settingsExpander             = new RExpanderBox(rightColumn->viewport());
-    d->settingsExpander->setAlignment(Qt::AlignTop);
-    d->settingsExpander->setObjectName(QStringLiteral("Exposure Blending Settings Expander"));
-    panel->addWidget(d->settingsExpander, 1);
+    // ---------------------------------------------------------------
 
-    d->enfuseSettingsBox            = new EnfuseSettingsWidget(d->settingsExpander);
+    QGroupBox* const enfuse = new QGroupBox(rightColumn);
+    enfuse->setTitle(i18n("Enfuse Settings"));
+    QVBoxLayout* const elay = new QVBoxLayout(enfuse);
+    enfuse->setLayout(elay);
+    
+    d->enfuseSettingsBox            = new EnfuseSettingsWidget(enfuse);
+    elay->addWidget(d->enfuseSettingsBox);
 
-    QWidget* const dummySaveWidget  = new QWidget(d->settingsExpander);
-    QVBoxLayout* const saveVBox     = new QVBoxLayout();
+    panel->addWidget(enfuse, 1);
 
-    d->saveSettingsBox              = new KPSaveSettingsWidget(dummySaveWidget);
-    saveVBox->addWidget(d->saveSettingsBox);
+    // ---------------------------------------------------------------
+    
+    QGroupBox* const save = new QGroupBox(rightColumn);
+    save->setTitle(i18n("Save Settings"));
+    QVBoxLayout* const slay = new QVBoxLayout(enfuse);
+    save->setLayout(slay);
+
+    d->saveSettingsBox              = new KPSaveSettingsWidget(save);
+    slay->addWidget(d->saveSettingsBox);
 
     QHBoxLayout* const hbox         = new QHBoxLayout();
 
-    QLabel* const customLabel       = new QLabel(dummySaveWidget);
+    QLabel* const customLabel       = new QLabel(save);
     customLabel->setText(i18nc("@label:textbox", "File Name Template: "));
     hbox->addWidget(customLabel);
 
-    d->templateFileName             = new QLineEdit(dummySaveWidget);
+    d->templateFileName             = new QLineEdit(save);
     d->templateFileName->setClearButtonEnabled(true);
     hbox->addWidget(d->templateFileName);
 
     d->saveSettingsBox->setCustomSettingsWidget(d->saveSettingsBox);
-    saveVBox->addLayout(hbox);
+    slay->addLayout(hbox);
 
-    dummySaveWidget->setLayout(saveVBox);
+    panel->addWidget(save, 1);
 
-    d->settingsExpander->addItem(d->enfuseSettingsBox, i18nc("@title:group", "Enfuse Settings"), QStringLiteral("expoblending"), true);
-    d->settingsExpander->addItem(dummySaveWidget,      i18nc("@title:group", "Save Settings"),   QStringLiteral("savesettings"), true);
-    d->settingsExpander->setItemIcon(0, QIcon::fromTheme(QStringLiteral("kipi-expoblending")));
-    d->settingsExpander->setItemIcon(1, QIcon::fromTheme(QStringLiteral("document-save")));
-    d->settingsExpander->addStretch();
-
+    // ---------------------------------------------------------------
+    
     d->enfuseStack = new EnfuseStackList(rightColumn->viewport());
     panel->addWidget(d->enfuseStack, 1);
 
@@ -369,12 +367,6 @@ void ExpoBlendingDlg::readSettings()
     d->enfuseSettingsBox->readSettings(group);
     d->saveSettingsBox->readSettings(group);
 
-#if KDCRAW_VERSION >= 0x020000
-    d->settingsExpander->readSettings(group);
-#else
-    d->settingsExpander->readSettings();
-#endif
-
     d->templateFileName->insert(group.readEntry("Template File Name", QStringLiteral("enfuse")));
 
     KConfigGroup group2 = config.group("ExpoBlending Dialog");
@@ -388,12 +380,6 @@ void ExpoBlendingDlg::saveSettings()
 
     d->enfuseSettingsBox->writeSettings(group);
     d->saveSettingsBox->writeSettings(group);
-
-#if KDCRAW_VERSION >= 0x020000
-    d->settingsExpander->writeSettings(group);
-#else
-    d->settingsExpander->writeSettings();
-#endif
 
     group.writeEntry("Template File Name", d->templateFileName->text());
 
@@ -422,6 +408,7 @@ void ExpoBlendingDlg::slotPreview()
     settings.inputUrls      = d->bracketStack->urls();
     settings.outputFormat   = d->saveSettingsBox->fileFormat();
     d->mngr->thread()->enfusePreview(preprocessedList, d->mngr->itemsList()[0], settings, d->mngr->enfuseBinary().path());
+
     if (!d->mngr->thread()->isRunning())
         d->mngr->thread()->start();
 }
