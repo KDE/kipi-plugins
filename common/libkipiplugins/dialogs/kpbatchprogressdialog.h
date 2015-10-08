@@ -28,17 +28,11 @@
 #include <QCloseEvent>
 #include <QDialog>
 
-// Libkdcraw includes
-
-#include <KDCRAW/RWidgetUtils>
-
 // Local includes
 
 #include "kipiplugins_export.h"
 #include "kpprogresswidget.h"
 #include "kputil.h"
-
-using namespace KDcrawIface;
 
 namespace KIPIPlugins
 {

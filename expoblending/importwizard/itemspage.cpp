@@ -34,10 +34,6 @@
 
 #include <klocalizedstring.h>
 
-// Libkdcraw includes
-
-#include <KDCRAW/RWidgetUtils>
-
 // Libkipi includes
 
 #include <KIPI/Interface>

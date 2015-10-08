@@ -44,10 +44,6 @@
 
 #include <KIPI/Interface>
 
-// Libkdcraw includes
-
-#include <KDCRAW/RWidgetUtils>
-
 // Local includes
 
 #include "comboboxdelegate.h"

@@ -43,10 +43,6 @@
 
 #include <KIPI/Interface>
 
-// LibKDcraw includes
-
-#include <KDCRAW/RWidgetUtils>
-
 // Local includes
 
 #include "kputil.h"

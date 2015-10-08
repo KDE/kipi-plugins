@@ -35,17 +35,11 @@
 
 #include <imagecollectionselector.h>
 
-// Libkdcraw includes
-
-#include <KDCRAW/RWidgetUtils>
-
 // Local includes
 
 #include "flashmanager.h"
 #include "kpimageslist.h"
 #include "kputil.h"
-
-using namespace KDcrawIface;
 
 namespace KIPIFlashExportPlugin
 {

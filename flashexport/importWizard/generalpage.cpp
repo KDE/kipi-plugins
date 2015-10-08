@@ -39,16 +39,10 @@
 
 #include <klocalizedstring.h>
 
-// Libkdcraw includes
-
-#include <KDCRAW/RWidgetUtils>
-
 // Local includes
 
 #include "simpleviewer.h"
 #include "kputil.h"
-
-using namespace KDcrawIface;
 
 namespace KIPIFlashExportPlugin
 {

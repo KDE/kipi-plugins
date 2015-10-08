@@ -34,10 +34,6 @@
 #include <klocalizedstring.h>
 #include <kcombobox.h>
 
-// Libkdcraw includes
-
-#include <KDCRAW/RWidgetUtils>
-
 // Local includes
 
 #include "kipiplugins_debug.h"

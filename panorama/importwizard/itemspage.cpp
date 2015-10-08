@@ -36,10 +36,6 @@
 
 #include <klocalizedstring.h>
 
-// libKdcraw includes
-
-#include <KDCRAW/RWidgetUtils>
-
 // Local includes
 
 #include "kpimageslist.h"

@@ -37,10 +37,6 @@
 #include <klocalizedstring.h>
 #include <kio/pixmaploader.h>
 
-// Libkdcraw includes
-
-#include <KDCRAW/RWidgetUtils>
-
 // Local includes
 
 #include "kputil.h"

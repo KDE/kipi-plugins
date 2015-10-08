@@ -61,10 +61,6 @@
 #include <KIPI/UploadWidget>
 #include <KIPI/Interface>
 
-// libKdcraw includes
-
-#include <KDCRAW/RWidgetUtils>
-
 // Local includes
 
 #include "kputil.h"
@@ -74,7 +70,6 @@
 #include "kipiplugins_debug.h"
 
 using namespace KIPI;
-using namespace KDcrawIface;
 
 namespace KIPIWikiMediaPlugin
 {

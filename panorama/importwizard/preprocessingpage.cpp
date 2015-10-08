@@ -49,10 +49,6 @@
 
 #include <KIPI/Interface>
 
-// LibKDcraw includes
-
-#include <KDCRAW/RWidgetUtils>
-
 // Local includes
 
 #include "kipiplugins_debug.h"
@@ -63,8 +59,6 @@
 #include "manager.h"
 #include "actionthread.h"
 #include "kputil.h"
-
-using namespace KDcrawIface;
 
 namespace KIPIPanoramaPlugin
 {

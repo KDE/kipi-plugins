@@ -44,10 +44,6 @@
 #include <klocalizedstring.h>
 #include <kwindowconfig.h>
 
-// Libkdcraw includes
-
-#include <KDCRAW/RWidgetUtils>
-
 // Local includes
 
 #include "kpaboutdata.h"
