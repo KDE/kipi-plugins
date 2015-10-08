@@ -42,8 +42,10 @@
 #include "kpbinarysearch.h"
 #include "alignbinary.h"
 #include "enfusebinary.h"
+#include "kputil.h"
 
 using namespace KDcrawIface;
+using namespace KIPIPlugins;
 
 namespace KIPIExpoBlendingPlugin
 {
@@ -58,15 +60,15 @@ public:
     {
     }
 
-    Manager*                     mngr;
-    KIPIPlugins::KPBinarySearch* binariesWidget;
+    Manager*        mngr;
+    KPBinarySearch* binariesWidget;
 };
 
 IntroPage::IntroPage(Manager* const mngr, KPWizardDialog* const dlg)
     : KPWizardPage(dlg, i18nc("@title:window", "Welcome to Exposure Blending Tool")),
       d(new Private(mngr))
 {
-    RVBox* const vbox   = new RVBox(this);
+    KPVBox* const vbox   = new KPVBox(this);
     QLabel* const title = new QLabel(vbox);
     title->setWordWrap(true);
     title->setOpenExternalLinks(true);
@@ -87,7 +89,7 @@ IntroPage::IntroPage(Manager* const mngr, KPWizardDialog* const dlg)
     QGridLayout* const binaryLayout = new QGridLayout;
     binaryBox->setLayout(binaryLayout);
     binaryBox->setTitle(i18nc("@title:group", "Exposure Blending Binaries"));
-    d->binariesWidget = new KIPIPlugins::KPBinarySearch(binaryBox);
+    d->binariesWidget = new KPBinarySearch(binaryBox);
     d->binariesWidget->addBinary(d->mngr->alignBinary());
     d->binariesWidget->addBinary(d->mngr->enfuseBinary());
 

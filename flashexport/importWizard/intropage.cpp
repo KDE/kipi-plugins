@@ -41,6 +41,7 @@
 
 #include "simpleviewer.h"
 #include "kipiplugins_debug.h"
+#include "kputil.h"
 
 using namespace KDcrawIface;
 
@@ -65,7 +66,7 @@ IntroPage::IntroPage(KPWizardDialog* const dlg)
     : KPWizardPage(dlg, i18n("Welcome to FlashExport Tool")),
       d(new Private)
 {
-    RVBox* const vbox   = new RVBox(this);
+    KPVBox* const vbox   = new KPVBox(this);
     QLabel* const title = new QLabel(vbox);
 
     title->setWordWrap(true);
@@ -82,7 +83,7 @@ IntroPage::IntroPage(KPWizardDialog* const dlg)
                         "<p>2. TiltViewer is quite CPU intensive</p>"
                         "<p>3. Postcardviewer is designed only for small amount of photos</p>"
                         "</qt>"));
-    RHBox* const hbox   = new RHBox(vbox);
+    KPHBox* const hbox   = new KPHBox(vbox);
     QLabel* const label = new QLabel(i18n("Select &Plugin:"), hbox);
 
     d->plugin_select    = new QComboBox(hbox);
@@ -100,7 +101,7 @@ IntroPage::IntroPage(KPWizardDialog* const dlg)
 
     // ComboBox for image selection method
 
-    RHBox* const hbox2          = new RHBox(vbox);
+    KPHBox* const hbox2          = new KPHBox(vbox);
     QLabel* const getImageLabel = new QLabel(i18n("&Choose image selection method:"),hbox2);
     d->imageGetOption           = new QComboBox(hbox2);
     QString collection          = i18nc("Collections",     "Collections");

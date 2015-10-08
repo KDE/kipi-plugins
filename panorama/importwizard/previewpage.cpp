@@ -47,6 +47,7 @@
 #include "makebinary.h"
 #include "nonabinary.h"
 #include "pto2mkbinary.h"
+#include "kputil.h"
 
 using namespace KDcrawIface;
 
@@ -92,7 +93,7 @@ PreviewPage::PreviewPage(Manager* const mngr, KPWizardDialog* const dlg)
 {
     d->dlg            = dlg;
 
-    RVBox* const vbox = new RVBox(this);
+    KPVBox* const vbox = new KPVBox(this);
 
     d->title          = new QLabel(vbox);
     d->title->setOpenExternalLinks(true);

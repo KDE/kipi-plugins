@@ -55,6 +55,7 @@
 #include "panomodifybinary.h"
 #include "manager.h"
 #include "actionthread.h"
+#include "kputil.h"
 
 using namespace KDcrawIface;
 
@@ -105,7 +106,7 @@ OptimizePage::OptimizePage(Manager* const mngr, KPWizardDialog* const dlg)
 {
     d->mngr                         = mngr;
     d->progressTimer                = new QTimer(this);
-    RVBox* const vbox               = new RVBox(this);
+    KPVBox* const vbox               = new KPVBox(this);
     d->title                        = new QLabel(vbox);
     d->title->setOpenExternalLinks(true);
     d->title->setWordWrap(true);

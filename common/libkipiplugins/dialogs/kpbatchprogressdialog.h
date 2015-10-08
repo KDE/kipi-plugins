@@ -36,6 +36,7 @@
 
 #include "kipiplugins_export.h"
 #include "kpprogresswidget.h"
+#include "kputil.h"
 
 using namespace KDcrawIface;
 
@@ -53,7 +54,7 @@ enum ActionMessageType
 
 // --------------------------------------------------------------------------------------
 
-class KIPIPLUGINS_EXPORT KPBatchProgressWidget : public RVBox
+class KIPIPLUGINS_EXPORT KPBatchProgressWidget : public KPVBox
 {
     Q_OBJECT
 

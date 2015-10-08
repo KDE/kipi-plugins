@@ -41,6 +41,7 @@
 
 #include "enfusebinary.h"
 #include "manager.h"
+#include "kputil.h"
 
 using namespace KDcrawIface;
 
@@ -64,7 +65,7 @@ LastPage::LastPage(Manager* const mngr, KPWizardDialog* const dlg)
           d(new Private)
 {
     d->mngr                 = mngr;
-    RVBox* const vbox         = new RVBox(this);
+    KPVBox* const vbox      = new KPVBox(this);
     QLabel* const title     = new QLabel(vbox);
     title->setOpenExternalLinks(true);
     title->setWordWrap(true);

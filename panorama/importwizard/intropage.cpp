@@ -54,6 +54,7 @@
 #include "nonabinary.h"
 #include "panomodifybinary.h"
 #include "pto2mkbinary.h"
+#include "kputil.h"
 
 namespace KIPIPanoramaPlugin
 {
@@ -76,26 +77,26 @@ struct IntroPage::Private
     {
     }
 
-    Manager*                      mngr;
+    Manager*        mngr;
 
-//  QCheckBox*                    addGPlusMetadataCheckBox;
+//  QCheckBox*      addGPlusMetadataCheckBox;
 
     // TODO HDR
-//  QCheckBox*                    hdrCheckBox;
+//  QCheckBox*      hdrCheckBox;
 
-    QGroupBox*                    formatGroupBox;
-    QGroupBox*                    settingsGroupBox;
-    QRadioButton*                 jpegRadioButton;
-    QRadioButton*                 tiffRadioButton;
-    QRadioButton*                 hdrRadioButton;
-    KIPIPlugins::KPBinarySearch*  binariesWidget;
+    QGroupBox*      formatGroupBox;
+    QGroupBox*      settingsGroupBox;
+    QRadioButton*   jpegRadioButton;
+    QRadioButton*   tiffRadioButton;
+    QRadioButton*   hdrRadioButton;
+    KPBinarySearch* binariesWidget;
 };
 
 IntroPage::IntroPage(Manager* const mngr, KPWizardDialog* const dlg)
     : KPWizardPage(dlg, i18nc("@title:window", "<b>Welcome to Panorama Tool</b>")),
       d(new Private(mngr))
 {
-    KDcrawIface::RVBox* const vbox = new KDcrawIface::RVBox(this);
+    KPVBox* const vbox = new KPVBox(this);
 
     QLabel* const title = new QLabel(vbox);
     title->setWordWrap(true);

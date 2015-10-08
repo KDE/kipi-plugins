@@ -47,6 +47,7 @@
 
 #include "kpversion.h"
 #include "kipiplugins_debug.h"
+#include "kputil.h"
 
 using namespace KDcrawIface;
 
@@ -72,7 +73,7 @@ FirstRunPage::FirstRunPage(KPWizardDialog* const dlg)
     : KPWizardPage(dlg, i18n("First Run")),
       d(new Private)
 {
-    RVBox* const vbox   = new RVBox(this);
+    KPVBox* const vbox   = new KPVBox(this);
     QLabel* const info1 = new QLabel(vbox);
     info1->setWordWrap(true);
     info1->setText( i18n("<p>SimpleViewer's plugins are Flash components which are free to use, "

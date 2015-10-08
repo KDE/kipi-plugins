@@ -46,6 +46,7 @@
 // Local includes
 
 #include "simpleviewer.h"
+#include "kputil.h"
 
 using namespace KDcrawIface;
 
@@ -89,7 +90,7 @@ GeneralPage::GeneralPage(KPWizardDialog* const dlg)
     : KPWizardPage(dlg, i18n("General Settings")),
       d(new Private)
 {
-    RVBox* vbox             = new RVBox(this);
+    KPVBox* vbox             = new KPVBox(this);
 
     // ------------------------------------------------------------------------
 
@@ -130,7 +131,7 @@ GeneralPage::GeneralPage(KPWizardDialog* const dlg)
                                          "the images' orientations will be set according "
                                          "to their Exif information."));
 
-    RHBox* hbox         = new RHBox;
+    KPHBox* hbox         = new KPHBox;
     QLabel* label       = new QLabel(i18n("&Target Images' Size:"), hbox);
     d->imagesExportSize = new QSpinBox(hbox);
     d->imagesExportSize->setRange(200, 2000);
@@ -147,7 +148,7 @@ GeneralPage::GeneralPage(KPWizardDialog* const dlg)
     connect(d->resizeExportImages, SIGNAL(toggled(bool)),
             d->fixOrientation, SLOT(setEnabled(bool)));
 
-    RHBox* hbox2         = new RHBox;
+    KPHBox* hbox2         = new KPHBox;
     QLabel* label2       = new QLabel(i18n("&Displayed Images' Size:"), hbox2);
     d->maxImageDimension = new QSpinBox(hbox2);
     d->maxImageDimension->setRange(200, 2000);

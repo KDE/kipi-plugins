@@ -67,6 +67,7 @@
 
 // Local includes
 
+#include "kputil.h"
 #include "kpimageinfo.h"
 #include "kpimageslist.h"
 #include "kpprogresswidget.h"
@@ -196,7 +197,7 @@ WmWidget::WmWidget(QWidget* const parent)
     // --------------------- Upload tab ----------------------------------
 
     QScrollArea* const wrapperScroll = new QScrollArea(this);
-    RVBox* const wrapperPan          = new RVBox(wrapperScroll->viewport());
+    KPVBox* const wrapperPan          = new KPVBox(wrapperScroll->viewport());
     wrapperScroll->setWidget(wrapperPan);
     wrapperScroll->setWidgetResizable(true);
     wrapperScroll->setVisible(false);
@@ -205,13 +206,13 @@ WmWidget::WmWidget(QWidget* const parent)
     QHBoxLayout* const wrapperLayout = new QHBoxLayout(wrapper);
 
     QScrollArea* const upload = new QScrollArea(wrapper);
-    RVBox* const pan          = new RVBox(upload->viewport());
+    KPVBox* const pan          = new KPVBox(upload->viewport());
     pan->setAutoFillBackground(true);
 
     upload->setWidget(pan);
     upload->setWidgetResizable(true);
 
-    RVBox* const uploadBox             = new RVBox(pan);
+    KPVBox* const uploadBox             = new KPVBox(pan);
     QWidget* const uploadPanel         = new QWidget(uploadBox);
     QVBoxLayout* const uploadBoxLayout = new QVBoxLayout(uploadPanel);
 
@@ -268,7 +269,7 @@ WmWidget::WmWidget(QWidget* const parent)
     // --------------------- Config tab ----------------------------------
 
     QScrollArea* const config = new QScrollArea(wrapper);
-    RVBox* const panel2       = new RVBox(config->viewport());
+    KPVBox* const panel2       = new KPVBox(config->viewport());
     config->setWidget(panel2);
     config->setWidgetResizable(true);
 
@@ -309,7 +310,7 @@ WmWidget::WmWidget(QWidget* const parent)
     // --------------------- New wiki area ----------------------------------
 
     d->newWikiSv              = new QScrollArea(this);
-    RVBox* const newWikiPanel = new RVBox(d->newWikiSv->viewport());
+    KPVBox* const newWikiPanel = new KPVBox(d->newWikiSv->viewport());
     d->newWikiSv->setWidget(newWikiPanel);
     d->newWikiSv->setWidgetResizable(true);
     d->newWikiSv->setVisible(false);

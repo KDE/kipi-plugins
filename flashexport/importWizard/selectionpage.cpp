@@ -43,6 +43,7 @@
 
 #include "flashmanager.h"
 #include "kpimageslist.h"
+#include "kputil.h"
 
 using namespace KDcrawIface;
 
@@ -64,7 +65,7 @@ public:
     ImageCollectionSelector* imageCollectionSelector;
     KPImagesList*            imageList;
     FlashManager*            manager;
-    RVBox*                   vbox;
+    KPVBox*                   vbox;
 };
 
 SelectionPage::SelectionPage(FlashManager* const mngr, KPWizardDialog* const dlg)
@@ -82,7 +83,7 @@ void SelectionPage::setPageContent(int choice)
         delete d->vbox;
     }
 
-    d->vbox = new RVBox(this);
+    d->vbox = new KPVBox(this);
 
     if (choice == SimpleViewerSettingsContainer::COLLECTION)
     {

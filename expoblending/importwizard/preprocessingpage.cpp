@@ -56,6 +56,7 @@
 #include "alignbinary.h"
 #include "manager.h"
 #include "actionthread.h"
+#include "kputil.h"
 
 using namespace KDcrawIface;
 using namespace KIPIPlugins;
@@ -102,7 +103,7 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KPWizardDialog* const 
 {
     d->mngr           = mngr;
     d->progressTimer  = new QTimer(this);
-    RVBox* const vbox = new RVBox(this);
+    KPVBox* const vbox = new KPVBox(this);
     d->title          = new QLabel(vbox);
     d->title->setWordWrap(true);
     d->title->setOpenExternalLinks(true);
@@ -114,7 +115,7 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KPWizardDialog* const 
 
     vbox->setStretchFactor(new QWidget(vbox), 2);
 
-    RHBox* const hbox       = new RHBox(vbox);
+    KPHBox* const hbox       = new KPHBox(vbox);
     d->detailsBtn           = new QPushButton(hbox);
     d->detailsBtn->setText(i18nc("@action:button", "Details..."));
     d->detailsBtn->hide();

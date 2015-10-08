@@ -42,6 +42,7 @@
 
 #include "kipiplugins_debug.h"
 #include "kpimageslist.h"
+#include "kputil.h"
 
 namespace KIPIRemoteStoragePlugin
 {
@@ -51,7 +52,7 @@ KioExportWidget::KioExportWidget(QWidget* const parent)
 {
     // setup kio target selection
 
-    KDcrawIface::RHBox* const hbox = new KDcrawIface::RHBox(this);
+    KPHBox* const hbox  = new KPHBox(this);
     QLabel* const label = new QLabel(hbox);
     m_targetLabel       = new KUrlComboRequester(hbox);
     m_targetDialog      = 0;

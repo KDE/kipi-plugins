@@ -102,7 +102,7 @@ public:
 };
 
 KPBatchProgressWidget::KPBatchProgressWidget(QWidget* const parent)
-   : RVBox(parent),
+   : KPVBox(parent),
      d(new Private)
 {
     setContextMenuPolicy(Qt::CustomContextMenu);

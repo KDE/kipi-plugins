@@ -48,6 +48,7 @@
 #include "kpimageslist.h"
 #include "manager.h"
 #include "actionthread.h"
+#include "kputil.h"
 
 using namespace KDcrawIface;
 
@@ -73,7 +74,7 @@ ItemsPage::ItemsPage(Manager* const mngr, KPWizardDialog* const dlg)
 {
     d->mngr = mngr;
 
-    RVBox* const vbox    = new RVBox(this);
+    KPVBox* const vbox   = new KPVBox(this);
     QLabel* const label1 = new QLabel(vbox);
     label1->setWordWrap(true);
     label1->setText(i18n("<qt>"
