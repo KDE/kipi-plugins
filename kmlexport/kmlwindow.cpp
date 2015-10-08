@@ -52,6 +52,7 @@
 
 #include "kpaboutdata.h"
 #include "kpversion.h"
+#include "kputil.h"
 
 namespace KIPIKMLExportPlugin
 {
@@ -214,7 +215,7 @@ KmlWindow::KmlWindow(QWidget* const parent,
     GPXLineWidthInput_->setValue(4);
 
     GPXColorLabel_ = new QLabel(i18n("Track Color:" ), GPXTracksGroupBox);
-    GPXTrackColor_ = new RColorSelector(GPXTracksGroupBox);
+    GPXTrackColor_ = new KPColorSelector(GPXTracksGroupBox);
     GPXTrackColor_->setColor(QColor("#ffffff")); 
 
     GPXTracksOpacityLabel_ = new QLabel(i18n("Opacity (%):"), GPXTracksGroupBox);

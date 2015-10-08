@@ -98,7 +98,7 @@
            </spacer>
           </item>
           <item row="1" column="3">
-           <widget class="KDcrawIface::RColorSelector" name="m_commentsFontColor"/>
+           <widget class="KIPIPlugins::KPColorSelector" name="m_commentsFontColor"/>
           </item>
           <item row="2" column="0">
            <widget class="QLabel" name="label_2">
@@ -121,7 +121,7 @@
            </spacer>
           </item>
           <item row="2" column="3">
-           <widget class="KDcrawIface::RColorSelector" name="m_commentsBgColor"/>
+           <widget class="KIPIPlugins::KPColorSelector" name="m_commentsBgColor"/>
           </item>
           <item row="4" column="2">
            <spacer name="horizontalSpacer_4">
@@ -186,9 +186,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>KDcrawIface::RColorSelector</class>
+   <class>KIPIPlugins::KPColorSelector</class>
    <extends>QPushButton</extends>
-   <header>KDCRAW/RWidgetUtils</header>
+   <header>kputil.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

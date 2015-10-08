@@ -48,7 +48,11 @@ class QSpinBox;
 namespace KDcrawIface
 {
 class RFileSelector;
-class RColorSelector;
+}
+
+namespace KIPIPlugins
+{
+class KPColorSelector;
 }
 
 using namespace KDcrawIface;
@@ -99,7 +103,7 @@ public:
     QComboBox*      timeZoneCB;
     QComboBox*      GPXAltitudeCB_;
 
-    RColorSelector* GPXTrackColor_;
+    KPColorSelector* GPXTrackColor_;
 
     RFileSelector*  DestinationDirectory_;
     RFileSelector*  GPXFileUrlRequester_;

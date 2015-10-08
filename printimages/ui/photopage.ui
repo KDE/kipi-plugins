@@ -577,7 +577,7 @@
                </widget>
               </item>
               <item>
-               <widget class="KDcrawIface::RColorSelector" name="m_font_color">
+               <widget class="KIPIPlugins::KPColorSelector" name="m_font_color">
                </widget>
               </item>
              </layout>
@@ -676,9 +676,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>KDcrawIface::RColorSelector</class>
+   <class>KIPIPlugins::KPColorSelector</class>
    <extends>QPushButton</extends>
-   <header>KDCRAW/RWidgetUtils</header>
+   <header>kputil.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

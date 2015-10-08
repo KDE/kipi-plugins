@@ -83,9 +83,9 @@ public:
     KPVBox*          vbox;
     QComboBox*      thumbnailPosition;
 
-    RColorSelector* textColor;
-    RColorSelector* backgroundColor;
-    RColorSelector* frameColor;
+    KPColorSelector* textColor;
+    KPColorSelector* backgroundColor;
+    KPColorSelector* frameColor;
 
     QSpinBox*       frameWidth;
     QSpinBox*       stagePadding;
@@ -97,9 +97,9 @@ public:
     QSpinBox*       imagePadding;
 
     // ---Tiltviewer------
-    RColorSelector* bkgndInnerColor;
-    RColorSelector* bkgndOuterColor;
-    RColorSelector* backColor;
+    KPColorSelector* bkgndInnerColor;
+    KPColorSelector* bkgndOuterColor;
+    KPColorSelector* backColor;
     QCheckBox*      useReloadButton;
     QCheckBox*      showFlipButton;
 
@@ -186,20 +186,20 @@ void LookPage::setPageContent(int plugType)
 
             KPHBox* hbox4    = new KPHBox;
             QLabel* label4  = new QLabel(i18n("&Text Color:"), hbox4);
-            d->textColor    = new RColorSelector(hbox4);
+            d->textColor    = new KPColorSelector(hbox4);
             d->textColor->setColor(QColor("#FFFFFF"));
             d->textColor->setWhatsThis(i18n("Color of title and caption text"));
             label4->setBuddy(d->textColor);
 
             KPHBox* hbox5       = new KPHBox;
             QLabel* label5     = new QLabel(i18n("&Background Color:"), hbox5);
-            d->backgroundColor = new RColorSelector(hbox5);
+            d->backgroundColor = new KPColorSelector(hbox5);
             d->backgroundColor->setColor(QColor("#181818"));
             label5->setBuddy(d->backgroundColor);
 
             KPHBox* hbox6    = new KPHBox;
             QLabel* label6  = new QLabel(i18n("&Frame Color:"), hbox6);
-            d->frameColor   = new RColorSelector(hbox6);
+            d->frameColor   = new KPColorSelector(hbox6);
             d->frameColor->setColor(QColor("#FFFFFF"));
             d->frameColor->setWhatsThis(i18n("Color of image frame, viewed icon, load bars, thumbnail arrows"));
             label6->setBuddy(d->frameColor);
@@ -266,13 +266,13 @@ void LookPage::setPageContent(int plugType)
 
             KPHBox* hbox2       = new KPHBox;
             QLabel* label2     = new QLabel(i18n("&Background Color:"), hbox2);
-            d->backgroundColor = new RColorSelector(hbox2);
+            d->backgroundColor = new KPColorSelector(hbox2);
             d->backgroundColor->setColor(QColor("#181818"));
             label2->setBuddy(d->backgroundColor);
 
             KPHBox* hbox3    = new KPHBox;
             QLabel* label3  = new QLabel(i18n("&Frame Color:"), hbox3);
-            d->frameColor   = new RColorSelector(hbox3);
+            d->frameColor   = new KPColorSelector(hbox3);
             d->frameColor->setColor(QColor("#FFFFFF"));
             d->frameColor->setWhatsThis(i18n("Color of image frame, viewed icon, load bars, thumbnail arrows"));
             label3->setBuddy(d->frameColor);
@@ -361,28 +361,28 @@ void LookPage::setPageContent(int plugType)
 
             KPHBox* hbox3    = new KPHBox;
             QLabel* label3  = new QLabel(i18n("&Frame Color:"), hbox3);
-            d->frameColor   = new RColorSelector(hbox3);
+            d->frameColor   = new KPColorSelector(hbox3);
             d->frameColor->setColor(QColor("#FFFFFF"));
             d->frameColor->setWhatsThis(i18n("Color of image frame, viewed icon, load bars, thumbnail arrows"));
             label3->setBuddy(d->frameColor);
 
             KPHBox* hbox4       = new KPHBox;
             QLabel* label4     = new QLabel(i18n("Background &Inner Color:"), hbox4);
-            d->bkgndInnerColor = new RColorSelector(hbox4);
+            d->bkgndInnerColor = new KPColorSelector(hbox4);
             d->bkgndInnerColor->setColor(QColor("#FFFFFF"));
             d->bkgndInnerColor->setWhatsThis(i18n("Color of the stage background gradient center."));
             label4->setBuddy(d->bkgndInnerColor);
 
             KPHBox* hbox5       = new KPHBox;
             QLabel* label5     = new QLabel(i18n("Background &Outer Color:"), hbox5);
-            d->bkgndOuterColor = new RColorSelector(hbox5);
+            d->bkgndOuterColor = new KPColorSelector(hbox5);
             d->bkgndOuterColor->setColor(QColor("#FFFFFF"));
             d->bkgndOuterColor->setWhatsThis(i18n("Color of the stage background gradient edge."));
             label5->setBuddy(d->bkgndOuterColor);
 
             KPHBox* hbox6    = new KPHBox;
             QLabel* label6  = new QLabel(i18n("Image Back Color:"), hbox6);
-            d->backColor    = new RColorSelector(hbox6);
+            d->backColor    = new KPColorSelector(hbox6);
             d->backColor->setColor(QColor("#FFFFFF"));
             d->backColor->setWhatsThis(i18n("Image's back color when pressing flip button"));
             label6->setBuddy(d->bkgndOuterColor);
@@ -433,20 +433,20 @@ void LookPage::setPageContent(int plugType)
 
             KPHBox* hbox3    = new KPHBox;
             QLabel* label3  = new QLabel(i18n("&Caption Color:"), hbox3);
-            d->textColor    = new RColorSelector(hbox3);
+            d->textColor    = new KPColorSelector(hbox3);
             d->textColor->setColor(QColor("#FFFFFF"));
             d->textColor->setWhatsThis(i18n("Color of title and caption text"));
             label3->setBuddy(d->textColor);
 
             KPHBox* hbox4       = new KPHBox;
             QLabel* label4     = new QLabel(i18n("&Background Color:"), hbox4);
-            d->backgroundColor = new RColorSelector(hbox4);
+            d->backgroundColor = new KPColorSelector(hbox4);
             d->backgroundColor->setColor(QColor("#181818"));
             label4->setBuddy(d->backgroundColor);
 
             KPHBox* hbox5    = new KPHBox;
             QLabel* label5  = new QLabel(i18n("&Frame Color:"), hbox5);
-            d->frameColor   = new RColorSelector(hbox5);
+            d->frameColor   = new KPColorSelector(hbox5);
             d->frameColor->setColor(QColor("#FFFFFF"));
             d->frameColor->setWhatsThis(i18n("Color of image frame, viewed icon, load bars, thumbnail arrows"));
             label5->setBuddy(d->frameColor);
