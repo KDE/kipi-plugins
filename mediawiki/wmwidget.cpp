@@ -49,6 +49,7 @@
 #include <QTextEdit>
 #include <QLineEdit>
 #include <QComboBox>
+#include <QGroupBox>
 
 // KDE includes
 
@@ -63,8 +64,6 @@
 // libKdcraw includes
 
 #include <KDCRAW/RWidgetUtils>
-#include <KDCRAW/RExpanderBox>
-#include <libkdcraw_version.h>
 
 // Local includes
 
@@ -92,8 +91,6 @@ public:
         longitudeEdit      = 0;
         latitudeEdit       = 0;
         categoryEdit       = 0;
-        userBox            = 0;
-        loginBox           = 0;
         loginHeaderLbl     = 0;
         nameEdit           = 0;
         passwdEdit         = 0;
@@ -101,18 +98,15 @@ public:
         newWikiNameEdit    = 0;
         newWikiUrlEdit     = 0;
         wikiSelect         = 0;
-        textBox            = 0;
         authorEdit         = 0;
         sourceEdit         = 0;
         genCatEdit         = 0;
         genTxtEdit         = 0;
         genComEdit         = 0;
-        accountBox         = 0;
         headerLbl          = 0;
         wikiNameDisplayLbl = 0;
         userNameDisplayLbl = 0;
         changeUserBtn      = 0;
-        optionsBox         = 0;
         resizeChB          = 0;
         dimensionSpB       = 0;
         imageQualitySpB    = 0;
@@ -120,10 +114,11 @@ public:
         removeGeoChB       = 0;
         licenseComboBox    = 0;
         progressBar        = 0;
-        settingsExpander   = 0;
         imgList            = 0;
         uploadWidget       = 0;
         defaultMessage     = i18n("Select an image");
+        loginGBox          = 0;
+        userGBox           = 0;
     }
 
     QWidget*                                 fileBox;
@@ -134,8 +129,6 @@ public:
     QLineEdit*                               latitudeEdit;
     QTextEdit*                               categoryEdit;
 
-    RVBox*                                   userBox;
-    QWidget*                                 loginBox;
     QLabel*                                  loginHeaderLbl;
     QLineEdit*                               nameEdit;
     QLineEdit*                               passwdEdit;
@@ -144,8 +137,6 @@ public:
     QLineEdit*                               newWikiUrlEdit;
     QComboBox*                               wikiSelect;
 
-    QWidget*                                 textBox;
-
     QLineEdit*                               authorEdit;
     QLineEdit*                               sourceEdit;
 
@@ -153,13 +144,11 @@ public:
     QTextEdit*                               genTxtEdit;
     QTextEdit*                               genComEdit;
 
-    QWidget*                                 accountBox;
     QLabel*                                  headerLbl;
     QLabel*                                  wikiNameDisplayLbl;
     QLabel*                                  userNameDisplayLbl;
     QPushButton*                             changeUserBtn;
 
-    QWidget*                                 optionsBox;
     QCheckBox*                               resizeChB;
     QSpinBox*                                dimensionSpB;
     QSpinBox*                                imageQualitySpB;
@@ -167,9 +156,11 @@ public:
     QCheckBox*                               removeGeoChB;
     QComboBox*                               licenseComboBox;
 
+    QGroupBox*                               loginGBox;
+    QGroupBox*                               userGBox;
+
     KPProgressWidget*                        progressBar;
 
-    RExpanderBox*                            settingsExpander;
     KPImagesList*                            imgList;
     UploadWidget*                            uploadWidget;
 
@@ -281,20 +272,21 @@ WmWidget::WmWidget(QWidget* const parent)
     config->setWidget(panel2);
     config->setWidgetResizable(true);
 
-    d->settingsExpander = new RExpanderBox(panel2);
-    d->settingsExpander->setObjectName(QLatin1String("MediaWiki Settings Expander"));
+    // --------------------- Account area ----------------------------------
+    
+    d->userGBox = new QGroupBox(panel2);
+    d->userGBox->setTitle(i18n("Account"));
+    d->userGBox->setWhatsThis(i18n("This is the login form to your MediaWiki account."));
 
-    d->userBox    = new RVBox(panel2);
-    d->loginBox   = new QWidget(d->userBox);
-    d->loginBox->setWhatsThis(i18n("This is the login form to your MediaWiki account."));
-    QGridLayout* const loginBoxLayout = new QGridLayout(d->loginBox);
+    QGridLayout* const loginBoxLayout = new QGridLayout(d->userGBox);
+    d->userGBox->setLayout(loginBoxLayout);
 
-    d->wikiSelect                 = new QComboBox(d->loginBox);
+    d->wikiSelect                 = new QComboBox(d->userGBox);
     d->wikiSelect->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
-    QPushButton* const newWikiBtn = new QPushButton(QIcon::fromTheme(QLatin1String("list-add")), i18n("New"), d->loginBox);
+    QPushButton* const newWikiBtn = new QPushButton(QIcon::fromTheme(QLatin1String("list-add")), i18n("New"), d->userGBox);
     newWikiBtn->setToolTip(i18n("Add a wiki to this list"));
-    d->nameEdit                   = new QLineEdit(d->loginBox);
-    d->passwdEdit                 = new QLineEdit(d->loginBox);
+    d->nameEdit                   = new QLineEdit(d->userGBox);
+    d->passwdEdit                 = new QLineEdit(d->userGBox);
     d->passwdEdit->setEchoMode(QLineEdit::Password);
 
     d->wikiSelect->addItem(i18n("Wikimedia Commons"),  QLatin1String("http://commons.wikimedia.org/w/api.php"));
@@ -311,7 +303,7 @@ WmWidget::WmWidget(QWidget* const parent)
 
     d->wikiSelect->setEditable(false);
 
-    QLabel* const wikiLabel = new QLabel(d->loginBox);
+    QLabel* const wikiLabel = new QLabel(d->userGBox);
     wikiLabel->setText(i18n("Wiki:"));
 
     // --------------------- New wiki area ----------------------------------
@@ -330,7 +322,6 @@ WmWidget::WmWidget(QWidget* const parent)
     QLabel* const newWikiNameLabel   = new QLabel(newWikiPanel);
     newWikiNameLabel->setText(i18n("Name:"));
 
-
     QLabel* const newWikiUrlLabel    = new QLabel(newWikiPanel);
     newWikiUrlLabel->setText(i18n("API URL:"));
 
@@ -346,13 +337,13 @@ WmWidget::WmWidget(QWidget* const parent)
     newWikiLayout->addWidget(d->newWikiUrlEdit,  1, 1, 1, 1);
     newWikiLayout->addWidget(addWikiBtn,         2, 1, 1, 1);
 
-    QLabel* const nameLabel     = new QLabel(d->loginBox);
+    QLabel* const nameLabel     = new QLabel(d->userGBox);
     nameLabel->setText(i18n( "Login:" ));
 
-    QLabel* const passwdLabel   = new QLabel(d->loginBox);
+    QLabel* const passwdLabel   = new QLabel(d->userGBox);
     passwdLabel->setText(i18n("Password:"));
 
-    QPushButton* const loginBtn = new QPushButton(d->loginBox);
+    QPushButton* const loginBtn = new QPushButton(d->userGBox);
     loginBtn->setAutoDefault(true);
     loginBtn->setDefault(true);
     loginBtn->setText(i18n("&Log in"));
@@ -368,44 +359,49 @@ WmWidget::WmWidget(QWidget* const parent)
     loginBoxLayout->addWidget(loginBtn,      6, 0, 1, 1);
     loginBoxLayout->setObjectName(QLatin1String("loginBoxLayout"));
 
-    d->accountBox                       = new QWidget(d->userBox);
-    QGridLayout* const accountBoxLayout = new QGridLayout(d->accountBox);
+    // --------------------- Login info area ----------------------------------
+    
+    d->loginGBox = new QGroupBox(panel2);
+    d->loginGBox->setTitle(i18n("Login Information"));
+    
+    QGridLayout* const linfoBoxLayout = new QGridLayout(d->loginGBox);
+    d->loginGBox->setLayout(linfoBoxLayout);
 
-    QLabel* const wikiNameLbl = new QLabel(d->accountBox);
+    QLabel* const wikiNameLbl = new QLabel(d->loginGBox);
     wikiNameLbl->setText(i18nc("Name of the wiki the user is currently logged on", "Logged on: "));
-    d->wikiNameDisplayLbl     = new QLabel(d->accountBox);
+    d->wikiNameDisplayLbl     = new QLabel(d->loginGBox);
 
-    QLabel* const userNameLbl = new QLabel(d->accountBox);
+    QLabel* const userNameLbl = new QLabel(d->loginGBox);
     userNameLbl->setText(i18nc("Username which is used to connect to the wiki", "Logged as: "));
-    d->userNameDisplayLbl     = new QLabel(d->accountBox);
+    d->userNameDisplayLbl     = new QLabel(d->loginGBox);
 
-    d->changeUserBtn          = new QPushButton(QIcon::fromTheme(QLatin1String("system-switch-user")), i18n("Change Account"), d->accountBox);
+    d->changeUserBtn          = new QPushButton(QIcon::fromTheme(QLatin1String("system-switch-user")), i18n("Change Account"), d->loginGBox);
     d->changeUserBtn->setToolTip(i18n("Logout and change the account used for transfer"));
 
-    accountBoxLayout->addWidget(wikiNameLbl,           0, 0, 1, 1);
-    accountBoxLayout->addWidget(d->wikiNameDisplayLbl, 0, 1, 1, 1);
-    accountBoxLayout->addWidget(userNameLbl,           1, 0, 1, 1);
-    accountBoxLayout->addWidget(d->userNameDisplayLbl, 1, 1, 1, 1);
-    accountBoxLayout->addWidget(d->changeUserBtn,      2, 0, 1, 2);
-    d->accountBox->hide();
+    linfoBoxLayout->addWidget(wikiNameLbl,           0, 0, 1, 1);
+    linfoBoxLayout->addWidget(d->wikiNameDisplayLbl, 0, 1, 1, 1);
+    linfoBoxLayout->addWidget(userNameLbl,           1, 0, 1, 1);
+    linfoBoxLayout->addWidget(d->userNameDisplayLbl, 1, 1, 1, 1);
+    linfoBoxLayout->addWidget(d->changeUserBtn,      2, 0, 1, 2);
+    d->loginGBox->hide();
 
-    d->settingsExpander->addItem(d->userBox, i18n("Account"), QLatin1String("account"), true);
-    d->settingsExpander->setItemIcon(0, QIcon::fromTheme(QLatin1String("user-properties")));
+    // --------------------- Info area ----------------------------------
 
-    // --------------------- Login area ----------------------------------
+    QGroupBox* const textGBox = new QGroupBox(panel2);
+    textGBox->setTitle(i18n("Information"));
+    textGBox->setWhatsThis(i18n("This is the login form to your account on the chosen wiki."));
 
-    d->textBox                       = new QWidget(panel2);
-    d->textBox->setWhatsThis(i18n("This is the login form to your account on the chosen wiki."));
-    QGridLayout* const textBoxLayout = new QGridLayout(d->textBox);
+    QGridLayout* const textBoxLayout = new QGridLayout(textGBox);
+    textGBox->setLayout(textBoxLayout);
 
-    QLabel* const authorLbl  = new QLabel(i18n("Author:"), d->textBox);
-    d->authorEdit            = new QLineEdit(d->textBox);
+    QLabel* const authorLbl  = new QLabel(i18n("Author:"), textGBox);
+    d->authorEdit            = new QLineEdit(textGBox);
 
-    QLabel* const sourceLbl  = new QLabel(i18n("Source:"), d->textBox);
-    d->sourceEdit            = new QLineEdit(d->textBox);
+    QLabel* const sourceLbl  = new QLabel(i18n("Source:"), textGBox);
+    d->sourceEdit            = new QLineEdit(textGBox);
 
-    QLabel* const licenseLbl = new QLabel(i18n("License:"), d->textBox);
-    d->licenseComboBox       = new QComboBox(d->textBox);
+    QLabel* const licenseLbl = new QLabel(i18n("License:"), textGBox);
+    d->licenseComboBox       = new QComboBox(textGBox);
     d->licenseComboBox->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
 
     d->licenseComboBox->addItem(i18n("Own work, multi-license with CC-BY-SA-3.0 and GFDL"), 
@@ -433,21 +429,21 @@ WmWidget::WmWidget(QWidget* const parent)
     d->licenseComboBox->addItem(i18n("No license specified (not recommended for public wiki sites)"),
                                        QLatin1String(""));
 
-    QLabel* const genCatLbl = new QLabel(i18n("Generic categories:"), d->textBox);
-    d->genCatEdit           = new QTextEdit(d->textBox);
+    QLabel* const genCatLbl = new QLabel(i18n("Generic categories:"), textGBox);
+    d->genCatEdit           = new QTextEdit(textGBox);
     d->genCatEdit->setTabChangesFocus(1);
     d->genCatEdit->setWhatsThis(i18n("This is a place to enter categories that will be added to all the files."));
     d->genCatEdit->setAcceptRichText(false);
 
-    QLabel* const genTxtLbl = new QLabel(i18n("Generic text:"), d->textBox);
-    d->genTxtEdit           = new QTextEdit(d->textBox);
+    QLabel* const genTxtLbl = new QLabel(i18n("Generic text:"), textGBox);
+    d->genTxtEdit           = new QTextEdit(textGBox);
     d->genTxtEdit->setTabChangesFocus(1);
     d->genTxtEdit->setWhatsThis(i18n("This is a place to enter text that will be added to all the files, "
                                      "below the Information template."));
     d->genTxtEdit->setAcceptRichText(false);
 
-    QLabel* const genComLbl = new QLabel(i18n("Upload comments:"), d->textBox);
-    d->genComEdit           = new QTextEdit(d->textBox);
+    QLabel* const genComLbl = new QLabel(i18n("Upload comments:"), textGBox);
+    d->genComEdit           = new QTextEdit(textGBox);
     d->genComEdit->setTabChangesFocus(1);
     d->genComEdit->setWhatsThis(i18n("This is a place to enter text that will be used as upload comments. "
                                      "The default of 'Uploaded via KIPI uploader' will be used if empty."));
@@ -468,41 +464,41 @@ WmWidget::WmWidget(QWidget* const parent)
     textBoxLayout->addWidget(d->genComEdit,      6, 2, 1, 2);
     textBoxLayout->setObjectName(QLatin1String("textBoxLayout"));
 
-    d->settingsExpander->addItem(d->textBox, i18n("Information"), QLatin1String("information"), true);
-    d->settingsExpander->setItemIcon(1, QIcon::fromTheme(QLatin1String("document-properties")));
-
     // --------------------- Options area ----------------------------------
 
-    d->optionsBox                       = new QWidget(panel2);
-    d->optionsBox->setWhatsThis(i18n("These are options that will be applied to photos before upload."));
-    QGridLayout* const optionsBoxLayout = new QGridLayout(d->optionsBox);
-
-    d->resizeChB = new QCheckBox(d->optionsBox);
+    QGroupBox* const optGBox = new QGroupBox(panel2);
+    optGBox->setTitle(i18n("Options"));
+    optGBox->setWhatsThis(i18n("These are options that will be applied to photos before upload."));
+   
+    QGridLayout* const optionsBoxLayout = new QGridLayout(optGBox);
+    optGBox->setLayout(optionsBoxLayout);
+    
+    d->resizeChB = new QCheckBox(optGBox);
     d->resizeChB->setText(i18n("Resize photos before uploading"));
     d->resizeChB->setChecked(false);
 
-    d->dimensionSpB            = new QSpinBox(d->optionsBox);
+    d->dimensionSpB            = new QSpinBox(optGBox);
     d->dimensionSpB->setMinimum(0);
     d->dimensionSpB->setMaximum(10000);
     d->dimensionSpB->setSingleStep(10);
     d->dimensionSpB->setValue(1600);
     d->dimensionSpB->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     d->dimensionSpB->setEnabled(false);
-    QLabel* const dimensionLbl = new QLabel(i18n("Maximum size:"), d->optionsBox);
+    QLabel* const dimensionLbl = new QLabel(i18n("Maximum size:"), optGBox);
 
-    d->imageQualitySpB         = new QSpinBox(d->optionsBox);
+    d->imageQualitySpB         = new QSpinBox(optGBox);
     d->imageQualitySpB->setMinimum(0);
     d->imageQualitySpB->setMaximum(100);
     d->imageQualitySpB->setSingleStep(1);
     d->imageQualitySpB->setValue(85);
     d->imageQualitySpB->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    QLabel* const imageQualityLbl = new QLabel(i18n("JPEG quality:"), d->optionsBox);
+    QLabel* const imageQualityLbl = new QLabel(i18n("JPEG quality:"), optGBox);
 
-    d->removeMetaChB = new QCheckBox(d->optionsBox);
+    d->removeMetaChB = new QCheckBox(optGBox);
     d->removeMetaChB->setText(i18n("Remove metadata from file"));
     d->removeMetaChB->setChecked(false);
 
-    d->removeGeoChB = new QCheckBox(d->optionsBox);
+    d->removeGeoChB = new QCheckBox(optGBox);
     d->removeGeoChB->setText(i18n("Remove coordinates from file"));
     d->removeGeoChB->setChecked(false);
 
@@ -516,9 +512,6 @@ WmWidget::WmWidget(QWidget* const parent)
     optionsBoxLayout->setRowStretch(3, 10);
     optionsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     optionsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-
-    d->settingsExpander->addItem(d->optionsBox, i18n("Options"), QLatin1String("options"), true);
-    d->settingsExpander->setItemIcon(2, QIcon::fromTheme(QLatin1String("system-run")));
 
     // ------------------------------------------------------------------------
 
@@ -611,12 +604,6 @@ void WmWidget::readSettings(KConfigGroup& group)
 {
     qCDebug(KIPIPLUGINS_LOG) <<  "Read settings from" << group.name();
 
-#if KDCRAW_VERSION >= 0x020000
-    d->settingsExpander->readSettings(group);
-#else
-    d->settingsExpander->readSettings();
-#endif
-
     d->authorEdit->setText(group.readEntry("Author",           ""));
     d->sourceEdit->setText(group.readEntry("Source",           "{{own}}"));
 
@@ -646,12 +633,6 @@ void WmWidget::readSettings(KConfigGroup& group)
 void WmWidget::saveSettings(KConfigGroup& group)
 {
     qCDebug(KIPIPLUGINS_LOG) << "Save settings to" << group.name();
-
-#if KDCRAW_VERSION >= 0x020000
-    d->settingsExpander->writeSettings(group);
-#else
-    d->settingsExpander->writeSettings();
-#endif
 
     group.writeEntry("Author",        d->authorEdit->text());
     group.writeEntry("Source",        d->sourceEdit->text());
@@ -706,15 +687,15 @@ void WmWidget::updateLabels(const QString& userName, const QString& wikiName, co
 
 void WmWidget::invertAccountLoginBox()
 {
-    if (d->accountBox->isHidden())
+    if (d->loginGBox->isHidden())
     {
-        d->loginBox->hide();
-        d->accountBox->show();
+        d->userGBox->hide();
+        d->loginGBox->show();
     }
     else
     {
-        d->loginBox->show();
-        d->accountBox->hide();
+        d->userGBox->show();
+        d->loginGBox->hide();
     }
 }
 
