@@ -139,10 +139,8 @@ ReplaceDialog::ReplaceDialog(QWidget* const parent, const QString& _caption,
     QGridLayout* const gridLayout = new QGridLayout();
     pLayout->addLayout(gridLayout);
 
-    QString sentence1 = i18n("A linked item already exists.");
-
-    KDcrawIface::RAdjustableLabel* const lb1 = new KDcrawIface::RAdjustableLabel(this);
-    lb1->setAdjustedText(sentence1);
+    QLabel* const lb1 = new QLabel(this);
+    lb1->setText(i18n("A linked item already exists."));
     lb1->setAlignment(Qt::AlignHCenter);
     gridLayout->addWidget(lb1, 0, 0, 1, 3);
 
@@ -157,13 +155,13 @@ ReplaceDialog::ReplaceDialog(QWidget* const parent, const QString& _caption,
     d->lbSrc->setAlignment(Qt::AlignCenter);
     gridLayout->addWidget(d->lbSrc, 1, 2, 1, 1);
 
-    KDcrawIface::RAdjustableLabel* const lb2 = new KDcrawIface::RAdjustableLabel(this);
-    lb2->setAdjustedText(i18n("Destination"));
+    QLabel* const lb2 = new QLabel(this);
+    lb2->setText(i18n("Destination"));
     lb2->setAlignment(Qt::AlignHCenter);
     gridLayout->addWidget(lb2, 2, 0, 1, 1);
 
-    KDcrawIface::RAdjustableLabel* const lb3 = new KDcrawIface::RAdjustableLabel(this);
-    lb3->setAdjustedText(i18n("Source"));
+    QLabel* const lb3 = new QLabel(this);
+    lb3->setText(i18n("Source"));
     lb3->setAlignment(Qt::AlignHCenter);
     gridLayout->addWidget(lb3, 2, 2, 1, 1);
 
