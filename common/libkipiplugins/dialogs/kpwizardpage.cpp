@@ -32,15 +32,9 @@
 #include <QStyle>
 #include <QScrollArea>
 
-// Libkdcraw includes
-
-#include <KDCRAW/RWidgetUtils>
-
 // Local includes
 
 #include "kptooldialog.h"
-
-using namespace KDcrawIface;
 
 namespace KIPIPlugins
 {
@@ -103,10 +97,16 @@ KPWizardPage::KPWizardPage(KPWizardDialog* const dlg, const QString& title)
     vboxLay->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     vboxLay->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
-    RLineWidget* const line = new RLineWidget(Qt::Vertical, panel);
+    QFrame* const vline = new QFrame(panel);
+    vline->setLineWidth(1);
+    vline->setMidLineWidth(0);
+    vline->setFrameShape(QFrame::VLine);
+    vline->setFrameShadow(QFrame::Sunken);
+    vline->setMinimumSize(2, 0);
+    vline->updateGeometry();
 
     d->hlay->addWidget(d->leftView);
-    d->hlay->addWidget(line);
+    d->hlay->addWidget(vline);
     d->hlay->setMargin(0);
     d->hlay->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     

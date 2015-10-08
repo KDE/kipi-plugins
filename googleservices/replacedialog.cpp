@@ -30,6 +30,7 @@
 #include <QTimer>
 #include <QPushButton>
 #include <QDialogButtonBox>
+#include <QFrame>
 
 // KDE includes
 
@@ -168,8 +169,14 @@ ReplaceDialog::ReplaceDialog(QWidget* const parent, const QString& _caption,
     QHBoxLayout* const layout2 = new QHBoxLayout();
     pLayout->addLayout(layout2);
 
-    KDcrawIface::RLineWidget* const separator = new KDcrawIface::RLineWidget(Qt::Horizontal,this);
-    pLayout->addWidget(separator);
+    QFrame* const hline = new QFrame(this);
+    hline->setLineWidth(1);
+    hline->setMidLineWidth(0);
+    hline->setFrameShape(QFrame::HLine);
+    hline->setFrameShadow(QFrame::Sunken);
+    hline->setMinimumSize(0, 2);
+    hline->updateGeometry();
+    pLayout->addWidget(hline);
 
     QHBoxLayout* const layout = new QHBoxLayout();
     pLayout->addLayout(layout);

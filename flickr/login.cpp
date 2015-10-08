@@ -30,10 +30,7 @@
 #include <QVBoxLayout>
 #include <QDialogButtonBox>
 #include <QDialog>
-
-// Libkdcraw includes
-
-#include <KDCRAW/RWidgetUtils>
+#include <QFrame>
 
 // KDE includes
 
@@ -66,8 +63,14 @@ FlickrLogin::FlickrLogin(QWidget* const parent, const QString& header,
     m_headerLabel->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
     m_headerLabel->setText(header);
 
-    KDcrawIface::RLineWidget* const hline = new KDcrawIface::RLineWidget(Qt::Horizontal, this);
-
+    QFrame* const hline = new QFrame(this);
+    hline->setLineWidth(1);
+    hline->setMidLineWidth(0);
+    hline->setFrameShape(QFrame::HLine);
+    hline->setFrameShadow(QFrame::Sunken);
+    hline->setMinimumSize(0, 2);
+    hline->updateGeometry();
+    
     QGridLayout* const centerLayout = new QGridLayout();
 
     m_nameEdit   = new QLineEdit(this);
