@@ -48,6 +48,7 @@
 #include <QPushButton>
 #include <QTextEdit>
 #include <QLineEdit>
+#include <QComboBox>
 
 // KDE includes
 
@@ -63,7 +64,6 @@
 
 #include <KDCRAW/RWidgetUtils>
 #include <KDCRAW/RExpanderBox>
-#include <KDCRAW/SqueezedComboBox>
 #include <libkdcraw_version.h>
 
 // Local includes
@@ -165,7 +165,7 @@ public:
     QSpinBox*                                imageQualitySpB;
     QCheckBox*                               removeMetaChB;
     QCheckBox*                               removeGeoChB;
-    SqueezedComboBox*                        licenseComboBox;
+    QComboBox*                               licenseComboBox;
 
     KPProgressWidget*                        progressBar;
 
@@ -290,6 +290,7 @@ WmWidget::WmWidget(QWidget* const parent)
     QGridLayout* const loginBoxLayout = new QGridLayout(d->loginBox);
 
     d->wikiSelect                 = new QComboBox(d->loginBox);
+    d->wikiSelect->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
     QPushButton* const newWikiBtn = new QPushButton(QIcon::fromTheme(QLatin1String("list-add")), i18n("New"), d->loginBox);
     newWikiBtn->setToolTip(i18n("Add a wiki to this list"));
     d->nameEdit                   = new QLineEdit(d->loginBox);
@@ -404,31 +405,32 @@ WmWidget::WmWidget(QWidget* const parent)
     d->sourceEdit            = new QLineEdit(d->textBox);
 
     QLabel* const licenseLbl = new QLabel(i18n("License:"), d->textBox);
-    d->licenseComboBox       = new SqueezedComboBox(d->textBox);
+    d->licenseComboBox       = new QComboBox(d->textBox);
+    d->licenseComboBox->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
 
-    d->licenseComboBox->addSqueezedItem(i18n("Own work, multi-license with CC-BY-SA-3.0 and GFDL"), 
+    d->licenseComboBox->addItem(i18n("Own work, multi-license with CC-BY-SA-3.0 and GFDL"), 
                                        QLatin1String("{{self|cc-by-sa-3.0|GFDL|migration=redundant}}"));
-    d->licenseComboBox->addSqueezedItem(i18n("Own work, multi-license with CC-BY-SA-3.0 and older"), 
+    d->licenseComboBox->addItem(i18n("Own work, multi-license with CC-BY-SA-3.0 and older"), 
                                        QLatin1String("{{self|cc-by-sa-3.0,2.5,2.0,1.0}}"));
-    d->licenseComboBox->addSqueezedItem(i18n("Creative Commons Attribution-Share Alike 3.0"),
+    d->licenseComboBox->addItem(i18n("Creative Commons Attribution-Share Alike 3.0"),
                                        QLatin1String("{{self|cc-by-sa-3.0}}"));
-    d->licenseComboBox->addSqueezedItem(i18n("Own work, Creative Commons Attribution 3.0"),
+    d->licenseComboBox->addItem(i18n("Own work, Creative Commons Attribution 3.0"),
                                        QLatin1String("{{self|cc-by-3.0}}"));
-    d->licenseComboBox->addSqueezedItem(i18n("Own work, release into public domain under the CC-Zero license"),
+    d->licenseComboBox->addItem(i18n("Own work, release into public domain under the CC-Zero license"),
                                        QLatin1String("{{self|cc-zero}}"));
-    d->licenseComboBox->addSqueezedItem(i18n("Author died more than 100 years ago"),
+    d->licenseComboBox->addItem(i18n("Author died more than 100 years ago"),
                                        QLatin1String("{{PD-old}}"));
-    d->licenseComboBox->addSqueezedItem(i18n("Photo of a two-dimensional work whose author died more than 100 years ago"),
+    d->licenseComboBox->addItem(i18n("Photo of a two-dimensional work whose author died more than 100 years ago"),
                                        QLatin1String("{{PD-art}}"));
-    d->licenseComboBox->addSqueezedItem(i18n("First published in the United States before 1923"),
+    d->licenseComboBox->addItem(i18n("First published in the United States before 1923"),
                                        QLatin1String("{{PD-US}}"));
-    d->licenseComboBox->addSqueezedItem(i18n("Work of a U.S. government agency"),
+    d->licenseComboBox->addItem(i18n("Work of a U.S. government agency"),
                                        QLatin1String("{{PD-USGov}}"));
-    d->licenseComboBox->addSqueezedItem(i18n("Simple typefaces, individual words or geometric shapes"),
+    d->licenseComboBox->addItem(i18n("Simple typefaces, individual words or geometric shapes"),
                                        QLatin1String("{{PD-text}}"));
-    d->licenseComboBox->addSqueezedItem(i18n("Logos with only simple typefaces, individual words or geometric shapes"),
+    d->licenseComboBox->addItem(i18n("Logos with only simple typefaces, individual words or geometric shapes"),
                                        QLatin1String("{{PD-textlogo}}"));
-    d->licenseComboBox->addSqueezedItem(i18n("No license specified (not recommended for public wiki sites)"),
+    d->licenseComboBox->addItem(i18n("No license specified (not recommended for public wiki sites)"),
                                        QLatin1String(""));
 
     QLabel* const genCatLbl = new QLabel(i18n("Generic categories:"), d->textBox);
@@ -488,7 +490,7 @@ WmWidget::WmWidget(QWidget* const parent)
     d->dimensionSpB->setEnabled(false);
     QLabel* const dimensionLbl = new QLabel(i18n("Maximum size:"), d->optionsBox);
 
-    d->imageQualitySpB            = new QSpinBox(d->optionsBox);
+    d->imageQualitySpB         = new QSpinBox(d->optionsBox);
     d->imageQualitySpB->setMinimum(0);
     d->imageQualitySpB->setMaximum(100);
     d->imageQualitySpB->setSingleStep(1);
