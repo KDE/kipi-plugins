@@ -33,6 +33,7 @@
 #include <QApplication>
 #include <QStyle>
 #include <QIcon>
+#include <QSpinBox>
 
 // KDE includes
 
@@ -41,9 +42,8 @@
 // Libkdcraw includes
 
 #include <KDCRAW/RWidgetUtils>
-#include <KDCRAW/RNumInput>
 
-//Local includes
+// Local includes
 
 #include "simpleviewer.h"
 
@@ -79,8 +79,8 @@ public:
     QCheckBox*     openInKonqueror;
     QCheckBox*     showKeywords;
 
-    RIntNumInput*  imagesExportSize;
-    RIntNumInput*  maxImageDimension;
+    QSpinBox*      imagesExportSize;
+    QSpinBox*      maxImageDimension;
 
     RFileSelector* exportUrl;
 };
@@ -132,8 +132,9 @@ GeneralPage::GeneralPage(KPWizardDialog* const dlg)
 
     RHBox* hbox         = new RHBox;
     QLabel* label       = new QLabel(i18n("&Target Images' Size:"), hbox);
-    d->imagesExportSize = new RIntNumInput(hbox);
-    d->imagesExportSize->setRange(200, 2000, 1);
+    d->imagesExportSize = new QSpinBox(hbox);
+    d->imagesExportSize->setRange(200, 2000);
+    d->imagesExportSize->setSingleStep(1);
     d->imagesExportSize->setValue(640);
     d->imagesExportSize->setWhatsThis(i18n("The new size of the exported images, in pixels. "
                                            "SimpleViewer resizes the images too, but this "
@@ -148,8 +149,9 @@ GeneralPage::GeneralPage(KPWizardDialog* const dlg)
 
     RHBox* hbox2         = new RHBox;
     QLabel* label2       = new QLabel(i18n("&Displayed Images' Size:"), hbox2);
-    d->maxImageDimension = new RIntNumInput(hbox2);
-    d->maxImageDimension->setRange(200, 2000, 1);
+    d->maxImageDimension = new QSpinBox(hbox2);
+    d->maxImageDimension->setRange(200, 2000);
+    d->maxImageDimension->setSingleStep(1);
     d->maxImageDimension->setValue(640);
     d->maxImageDimension->setWhatsThis(i18n("Scales the displayed images to this size. Normally, use "
                                             "the height or width of your largest image (in pixels). "

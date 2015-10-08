@@ -36,6 +36,7 @@
 #include <QComboBox>
 #include <QLineEdit>
 #include <QCloseEvent>
+#include <QSpinBox>
 
 // KDE includes
 
@@ -45,7 +46,6 @@
 
 // Libkdcraw includes
 
-#include <KDCRAW/RNumInput>
 #include <KDCRAW/RWidgetUtils>
 
 // Local includes
@@ -145,11 +145,11 @@ KmlWindow::KmlWindow(QWidget* const parent,
     QGroupBox* const SizeGroupBox = new QGroupBox(i18n("Sizes" ), page);
     SizeGroupBoxLayout            = new QGridLayout(SizeGroupBox);
     IconSizeLabel                 = new QLabel(i18n("Icon Size:" ), SizeGroupBox);
-    IconSizeInput_                = new RIntNumInput(SizeGroupBox);
+    IconSizeInput_                = new QSpinBox(SizeGroupBox);
     IconSizeInput_->setValue(33);
 
     ImageSizeLabel  = new QLabel(i18n("Image Size:"), SizeGroupBox);
-    ImageSizeInput_ = new RIntNumInput(SizeGroupBox);
+    ImageSizeInput_ = new QSpinBox(SizeGroupBox);
     ImageSizeInput_->setValue(320);
 
     SizeGroupBoxLayout->addWidget(IconSizeLabel,   0, 0, 1, 1);
@@ -210,7 +210,7 @@ KmlWindow::KmlWindow(QWidget* const parent,
                                   "can be converted to match the local time"));
 
     GPXLineWidthLabel_ = new QLabel(i18n("Track Width:" ), GPXTracksGroupBox);
-    GPXLineWidthInput_ = new RIntNumInput( GPXTracksGroupBox);
+    GPXLineWidthInput_ = new QSpinBox(GPXTracksGroupBox);
     GPXLineWidthInput_->setValue(4);
 
     GPXColorLabel_ = new QLabel(i18n("Track Color:" ), GPXTracksGroupBox);
@@ -218,8 +218,9 @@ KmlWindow::KmlWindow(QWidget* const parent,
     GPXTrackColor_->setColor(QColor("#ffffff")); 
 
     GPXTracksOpacityLabel_ = new QLabel(i18n("Opacity (%):"), GPXTracksGroupBox);
-    GPXTracksOpacityInput_ = new RIntNumInput(GPXTracksGroupBox);
-    GPXTracksOpacityInput_->setRange(0, 100, 1);
+    GPXTracksOpacityInput_ = new QSpinBox(GPXTracksGroupBox);
+    GPXTracksOpacityInput_->setRange(0, 100);
+    GPXTracksOpacityInput_->setSingleStep(1);
     GPXTracksOpacityInput_->setValue(100 );
 
     GPXAltitudeLabel_ = new QLabel(i18n("Track Altitude:"), GPXTracksGroupBox);

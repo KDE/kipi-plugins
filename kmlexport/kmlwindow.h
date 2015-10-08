@@ -43,10 +43,10 @@ class QRadioButton;
 class QSpacerItem;
 class QComboBox;
 class QCloseEvent;
+class QSpinBox;
 
 namespace KDcrawIface
 {
-class RIntNumInput;
 class RFileSelector;
 class RColorSelector;
 }
@@ -104,10 +104,10 @@ public:
     RFileSelector*  DestinationDirectory_;
     RFileSelector*  GPXFileUrlRequester_;
 
-    RIntNumInput*   ImageSizeInput_;
-    RIntNumInput*   IconSizeInput_;
-    RIntNumInput*   GPXTracksOpacityInput_;
-    RIntNumInput*   GPXLineWidthInput_;
+    QSpinBox*       ImageSizeInput_;
+    QSpinBox*       IconSizeInput_;
+    QSpinBox*       GPXTracksOpacityInput_;
+    QSpinBox*       GPXLineWidthInput_;
 
 public Q_SLOTS:
 

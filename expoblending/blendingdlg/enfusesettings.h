@@ -51,10 +51,12 @@ struct EnfuseSettings
           saturation(0.2),
           contrast(0.0),
           outputFormat(KPSaveSettingsWidget::OUTPUT_PNG)
-    {}
+    {
+    }
 
     ~EnfuseSettings()
-    {}
+    {
+    }
 
     QString asCommentString() const;
 
@@ -100,8 +102,8 @@ public:
 
 private:
 
-    class EnfuseSettingsWidgetPriv;
-    EnfuseSettingsWidgetPriv* const d;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIExpoBlendingPlugin

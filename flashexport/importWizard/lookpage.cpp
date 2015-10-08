@@ -31,6 +31,7 @@
 #include <QComboBox>
 #include <QApplication>
 #include <QIcon>
+#include <QSpinBox>
 
 // KDE includes
 
@@ -39,7 +40,6 @@
 // Libkdcraw includes
 
 #include <KDCRAW/RWidgetUtils>
-#include <KDCRAW/RNumInput>
 
 // Local includes
 
@@ -86,14 +86,14 @@ public:
     RColorSelector* backgroundColor;
     RColorSelector* frameColor;
 
-    RIntNumInput*   frameWidth;
-    RIntNumInput*   stagePadding;
-    RIntNumInput*   thumbnailColumns;
-    RIntNumInput*   thumbnailRows;
+    QSpinBox*       frameWidth;
+    QSpinBox*       stagePadding;
+    QSpinBox*       thumbnailColumns;
+    QSpinBox*       thumbnailRows;
 
     // ---Autoviewer------
-    RIntNumInput*   displayTime;
-    RIntNumInput*   imagePadding;
+    QSpinBox*       displayTime;
+    QSpinBox*       imagePadding;
 
     // ---Tiltviewer------
     RColorSelector* bkgndInnerColor;
@@ -103,9 +103,9 @@ public:
     QCheckBox*      showFlipButton;
 
     // ---Postcardviewer----
-    RIntNumInput*   cellDimension;
-    RIntNumInput*   zoomInPerc;
-    RIntNumInput*   zoomOutPerc;
+    QSpinBox*       cellDimension;
+    QSpinBox*       zoomInPerc;
+    QSpinBox*       zoomOutPerc;
 };
 
 LookPage::LookPage(KPWizardDialog* const dlg)
@@ -142,16 +142,18 @@ void LookPage::setPageContent(int plugType)
 
             RHBox* hbox       = new RHBox;
             QLabel* label     = new QLabel(i18n("Thumbnail &Rows:"), hbox);
-            d->thumbnailRows  = new RIntNumInput(hbox);
-            d->thumbnailRows->setRange(1, 10, 1);
+            d->thumbnailRows  = new QSpinBox(hbox);
+            d->thumbnailRows->setRange(1, 10);
+            d->thumbnailRows->setSingleStep(1);
             d->thumbnailRows->setValue(3);
             d->thumbnailRows->setWhatsThis(i18n("Number of thumbnails rows"));
             label->setBuddy(d->thumbnailRows);
 
             RHBox* hbox2        = new RHBox;
             QLabel* label2      = new QLabel(i18n("Thumbnail &Columns:"), hbox2);
-            d->thumbnailColumns = new RIntNumInput(hbox2);
-            d->thumbnailColumns->setRange(1, 10, 1);
+            d->thumbnailColumns = new QSpinBox(hbox2);
+            d->thumbnailColumns->setRange(1, 10);
+            d->thumbnailColumns->setSingleStep(1);
             d->thumbnailColumns->setValue(3);
             d->thumbnailColumns->setWhatsThis(i18n("Number of thumbnails columns"));
             label2->setBuddy(d->thumbnailColumns);
@@ -214,16 +216,18 @@ void LookPage::setPageContent(int plugType)
 
             RHBox* hbox7   = new RHBox;
             QLabel* label7 = new QLabel(i18n("&Frame Width:"), hbox7);
-            d->frameWidth  = new RIntNumInput(hbox7);
-            d->frameWidth->setRange(0, 10, 1);
+            d->frameWidth  = new QSpinBox(hbox7);
+            d->frameWidth->setRange(0, 10);
+            d->frameWidth->setSingleStep(1);
             d->frameWidth->setValue(1);
             d->frameWidth->setWhatsThis(i18n("Width of image frame in pixels."));
             label7->setBuddy(d->frameWidth);
 
             RHBox* hbox8    = new RHBox;
             QLabel* label8  = new QLabel(i18n("&Stage Padding:"), hbox8);
-            d->stagePadding = new RIntNumInput(hbox8);
-            d->stagePadding->setRange(10, 100, 1);
+            d->stagePadding = new QSpinBox(hbox8);
+            d->stagePadding->setRange(10, 100);
+            d->stagePadding->setSingleStep(1);
             d->stagePadding->setValue(20);
             d->stagePadding->setWhatsThis(i18n("Distance between image and thumbnails in pixels."));
             label8->setBuddy(d->stagePadding);
@@ -243,8 +247,9 @@ void LookPage::setPageContent(int plugType)
 
             RHBox* hbox          = new RHBox;
             QLabel* label        = new QLabel(i18n("&Display Time:"), hbox);
-            d->displayTime = new RIntNumInput(hbox);
-            d->displayTime->setRange(1, 15, 1);
+            d->displayTime = new QSpinBox(hbox);
+            d->displayTime->setRange(1, 15);
+            d->displayTime->setSingleStep(1);
             d->displayTime->setValue(3);
             d->displayTime->setWhatsThis(i18n("Number of seconds each image will display in auto-play mode."));
             label->setBuddy(d->displayTime);
@@ -283,16 +288,18 @@ void LookPage::setPageContent(int plugType)
 
             RHBox* hbox4    = new RHBox;
             QLabel* label4  = new QLabel(i18n("&Frame Width:"), hbox4);
-            d->frameWidth = new RIntNumInput(hbox4);
-            d->frameWidth->setRange(0, 10, 1);
+            d->frameWidth = new QSpinBox(hbox4);
+            d->frameWidth->setRange(0, 10);
+            d->frameWidth->setSingleStep(1);
             d->frameWidth->setValue(1);
             d->frameWidth->setWhatsThis(i18n("Width of image frame in pixels."));
             label4->setBuddy(d->frameWidth);
 
             RHBox* hbox5    = new RHBox;
             QLabel* label5  = new QLabel(i18n("&Image Padding:"), hbox5);
-            d->imagePadding = new RIntNumInput(hbox5);
-            d->imagePadding->setRange(10, 100, 1);
+            d->imagePadding = new QSpinBox(hbox5);
+            d->imagePadding->setRange(10, 100);
+            d->imagePadding->setSingleStep(1);
             d->imagePadding->setValue(20);
             d->imagePadding->setWhatsThis(i18n("Distance between images in pixels"));
             label5->setBuddy(d->imagePadding);
@@ -310,18 +317,20 @@ void LookPage::setPageContent(int plugType)
             QGroupBox* box    = new QGroupBox(i18nc("Settings for flash export navigation", "Navigation"), d->vbox);
             QVBoxLayout* vlay = new QVBoxLayout(box);
 
-            RHBox* hbox          = new RHBox;
-            QLabel* label        = new QLabel(i18n(" &Rows:"), hbox);
-            d->thumbnailRows = new RIntNumInput(hbox);
-            d->thumbnailRows->setRange(1, 10, 1);
+            RHBox* hbox      = new RHBox;
+            QLabel* label    = new QLabel(i18n(" &Rows:"), hbox);
+            d->thumbnailRows = new QSpinBox(hbox);
+            d->thumbnailRows->setRange(1, 10);
+            d->thumbnailRows->setSingleStep(1);
             d->thumbnailRows->setValue(3);
             d->thumbnailRows->setWhatsThis(i18n("Number of rows of images to display."));
             label->setBuddy(d->thumbnailRows);
 
-            RHBox* hbox2          = new RHBox;
-            QLabel* label2        = new QLabel(i18n(" &Columns:"), hbox2);
-            d->thumbnailColumns = new RIntNumInput(hbox2);
-            d->thumbnailColumns->setRange(1, 10, 1);
+            RHBox* hbox2        = new RHBox;
+            QLabel* label2      = new QLabel(i18n(" &Columns:"), hbox2);
+            d->thumbnailColumns = new QSpinBox(hbox2);
+            d->thumbnailColumns->setRange(1, 10);
+            d->thumbnailColumns->setSingleStep(1);
             d->thumbnailColumns->setValue(3);
             d->thumbnailColumns->setWhatsThis(i18n("Number of columns of images to display."));
             label2->setBuddy(d->thumbnailColumns);
@@ -392,18 +401,20 @@ void LookPage::setPageContent(int plugType)
             QGroupBox* box    = new QGroupBox(i18nc("Settings for flash export navigation", "Navigation"), d->vbox);
             QVBoxLayout* vlay = new QVBoxLayout(box);
 
-            RHBox* hbox          = new RHBox;
-            QLabel* label        = new QLabel(i18n("Cell Dimension:"), hbox);
-            d->cellDimension = new RIntNumInput(hbox);
-            d->cellDimension->setRange(500, 1500, 1);
+            RHBox* hbox      = new RHBox;
+            QLabel* label    = new QLabel(i18n("Cell Dimension:"), hbox);
+            d->cellDimension = new QSpinBox(hbox);
+            d->cellDimension->setRange(500, 1500);
+            d->cellDimension->setSingleStep(1);
             d->cellDimension->setValue(800);
             d->cellDimension->setWhatsThis(i18n("Dimension of displayed image cells. Please use a higher value if you set high image size"));
             label->setBuddy(d->cellDimension);
 
-            RHBox* hbox2          = new RHBox;
-            QLabel* label2        = new QLabel(i18n(" &Columns:"), hbox2);
-            d->thumbnailColumns = new RIntNumInput(hbox2);
-            d->thumbnailColumns->setRange(1, 10, 1);
+            RHBox* hbox2        = new RHBox;
+            QLabel* label2      = new QLabel(i18n(" &Columns:"), hbox2);
+            d->thumbnailColumns = new QSpinBox(hbox2);
+            d->thumbnailColumns->setRange(1, 10);
+            d->thumbnailColumns->setSingleStep(1);
             d->thumbnailColumns->setValue(3);
             d->thumbnailColumns->setWhatsThis(i18n("Number of thumbnails columns"));
             label2->setBuddy(d->thumbnailColumns);
@@ -452,24 +463,27 @@ void LookPage::setPageContent(int plugType)
 
             RHBox* hbox6   = new RHBox;
             QLabel* label6 = new QLabel(i18n("&Zoom In Percentage:"), hbox6);
-            d->zoomInPerc  = new RIntNumInput(hbox6);
-            d->zoomInPerc->setRange(0, 100, 1);
+            d->zoomInPerc  = new QSpinBox(hbox6);
+            d->zoomInPerc->setRange(0, 100);
+            d->zoomInPerc->setSingleStep(1);
             d->zoomInPerc->setValue(100);
             d->zoomInPerc->setWhatsThis(i18n("The amount of scale when zoomed in (percentage)"));
             label6->setBuddy(d->zoomInPerc);
 
             RHBox* hbox7   = new RHBox;
             QLabel* label7 = new QLabel(i18n("&Zoom Out Percentage:"), hbox7);
-            d->zoomOutPerc = new RIntNumInput(hbox7);
-            d->zoomOutPerc->setRange(0, 100, 1);
+            d->zoomOutPerc = new QSpinBox(hbox7);
+            d->zoomOutPerc->setRange(0, 100);
+            d->zoomOutPerc->setSingleStep(1);
             d->zoomOutPerc->setValue(15);
             d->zoomOutPerc->setWhatsThis(i18n("The amount of scale when zoomed out (percentage)"));
             label7->setBuddy(d->zoomOutPerc);
 
             RHBox* hbox8   = new RHBox;
             QLabel* label8 = new QLabel(i18n("&Frame Width:"), hbox8);
-            d->frameWidth  = new RIntNumInput(hbox8);
-            d->frameWidth->setRange(0, 15, 1);
+            d->frameWidth  = new QSpinBox(hbox8);
+            d->frameWidth->setRange(0, 15);
+            d->frameWidth->setSingleStep(1);
             d->frameWidth->setValue(3);
             d->frameWidth->setWhatsThis(i18n("The frame width"));
             label8->setBuddy(d->frameWidth);

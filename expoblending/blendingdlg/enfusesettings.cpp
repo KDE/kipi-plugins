@@ -30,6 +30,7 @@
 #include <QLabel>
 #include <QStyle>
 #include <QApplication>
+#include <QSpinBox>
 #include <QDoubleSpinBox>
 
 // KDE includes
@@ -37,12 +38,6 @@
 #include <klocalizedstring.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-
-// Libkdcraw includes
-
-#include <KDCRAW/RNumInput>
-
-using namespace KDcrawIface;
 
 namespace KIPIExpoBlendingPlugin
 {
@@ -79,9 +74,9 @@ QString EnfuseSettings::inputImagesList() const
     return ret;
 }
 
-struct EnfuseSettingsWidget::EnfuseSettingsWidgetPriv
+struct EnfuseSettingsWidget::Private
 {
-    EnfuseSettingsWidgetPriv()
+    Private()
         : autoLevelsCB(0),
           hardMaskCB(0),
           ciecam02CB(0),
@@ -93,7 +88,8 @@ struct EnfuseSettingsWidget::EnfuseSettingsWidgetPriv
           exposureInput(0),
           saturationInput(0),
           contrastInput(0)
-    {}
+    {
+    }
 
     QCheckBox*       autoLevelsCB;
     QCheckBox*       hardMaskCB;
@@ -104,16 +100,16 @@ struct EnfuseSettingsWidget::EnfuseSettingsWidgetPriv
     QLabel*          saturationLabel;
     QLabel*          contrastLabel;
 
-    RIntNumInput*    levelsInput;
+    QSpinBox*        levelsInput;
 
-    RDoubleNumInput* exposureInput;
-    RDoubleNumInput* saturationInput;
-    RDoubleNumInput* contrastInput;
+    QDoubleSpinBox*  exposureInput;
+    QDoubleSpinBox*  saturationInput;
+    QDoubleSpinBox*  contrastInput;
 };
 
 EnfuseSettingsWidget::EnfuseSettingsWidget(QWidget* const parent)
     : QWidget(parent),
-      d(new EnfuseSettingsWidgetPriv)
+      d(new Private)
 {
     setAttribute(Qt::WA_DeleteOnClose);
 
@@ -129,9 +125,9 @@ EnfuseSettingsWidget::EnfuseSettingsWidget(QWidget* const parent)
                                         "i.e. optimise image features (contrast, saturation, . . .) to be as global as possible."));
 
     d->levelsLabel  = new QLabel(i18nc("@label:slider Enfuse settings", "Image Features Balance:"));
-    d->levelsInput  = new RIntNumInput(this);
-    d->levelsInput->setRange(1, 29, 1);
-    d->levelsInput->setDefaultValue(20);
+    d->levelsInput  = new QSpinBox(this);
+    d->levelsInput->setRange(1, 29);
+    d->levelsInput->setSingleStep(1);
     d->levelsInput->setToolTip(i18nc("@info:tooltip",
                                      "Balances between local features (small number) or global features (high number)."));
     d->levelsInput->setWhatsThis(i18nc("@info:whatsthis",
@@ -150,9 +146,9 @@ EnfuseSettingsWidget::EnfuseSettingsWidget(QWidget* const parent)
                                       "It improves sharpness at the expense of increased noise."));
 
     d->exposureLabel = new QLabel(i18nc("@label:slider Enfuse settings", "Well-Exposedness Contribution:"));
-    d->exposureInput = new RDoubleNumInput(this);
-    d->exposureInput->setRange(0.0, 1.0, 0.01);
-    d->exposureInput->setDefaultValue(1.0);
+    d->exposureInput = new QDoubleSpinBox(this);
+    d->exposureInput->setRange(0.0, 1.0);
+    d->exposureInput->setSingleStep(0.01);
     d->exposureInput->setToolTip(i18nc("@info:tooltip",
                                        "Contribution of well exposed pixels to the blending process."));
     d->exposureInput->setWhatsThis(i18nc("@info:whatsthis",
@@ -160,10 +156,10 @@ EnfuseSettingsWidget::EnfuseSettingsWidget(QWidget* const parent)
                                          "Higher values will favor well-exposed pixels."));
 
     d->saturationLabel = new QLabel(i18nc("@label:slider enfuse settings", "High-Saturation Contribution:"));
-    d->saturationInput = new RDoubleNumInput(this);
+    d->saturationInput = new QDoubleSpinBox(this);
     d->saturationInput->setDecimals(2);
-    d->saturationInput->setRange(0.0, 1.0, 0.01);
-    d->saturationInput->setDefaultValue(0.2);
+    d->saturationInput->setRange(0.0, 1.0);
+    d->saturationInput->setSingleStep(0.01);
     d->saturationInput->setToolTip(i18nc("@info:tooltip",
                                          "Contribution of highly saturated pixels to the blending process."));
     d->saturationInput->setWhatsThis(i18nc("@info:whatsthis",
@@ -171,10 +167,10 @@ EnfuseSettingsWidget::EnfuseSettingsWidget(QWidget* const parent)
                                            "saturation contribute more to the final output."));
 
     d->contrastLabel = new QLabel(i18nc("@label:slider enfuse settings", "High-Contrast Contribution:"));
-    d->contrastInput = new RDoubleNumInput(this);
+    d->contrastInput = new QDoubleSpinBox(this);
     d->contrastInput->setDecimals(2);
-    d->contrastInput->setRange(0.0, 1.0, 0.01);
-    d->contrastInput->setDefaultValue(0.0);
+    d->contrastInput->setRange(0.0, 1.0);
+    d->contrastInput->setSingleStep(0.01);
     d->contrastInput->setToolTip(i18nc("@info:tooltip",
                                        "Contribution of highly constrated pixels to the blending process."));
     d->contrastInput->setWhatsThis(i18nc("@info:whatsthis",
@@ -226,11 +222,11 @@ EnfuseSettingsWidget::~EnfuseSettingsWidget()
 void EnfuseSettingsWidget::resetToDefault()
 {
     d->autoLevelsCB->setChecked(true);
-    d->levelsInput->slotReset();
+    d->levelsInput->setValue(20);
     d->hardMaskCB->setChecked(false);
-    d->exposureInput->slotReset();
-    d->saturationInput->slotReset();
-    d->contrastInput->slotReset();
+    d->exposureInput->setValue(1.0);
+    d->saturationInput->setValue(0.2);
+    d->contrastInput->setValue(0.0);
     d->ciecam02CB->setChecked(false);
 }
 
@@ -261,11 +257,11 @@ EnfuseSettings EnfuseSettingsWidget::settings() const
 void EnfuseSettingsWidget::readSettings(KConfigGroup& group)
 {
     d->autoLevelsCB->setChecked(group.readEntry("Auto Levels",       true));
-    d->levelsInput->setValue(group.readEntry("Levels Value",         d->levelsInput->defaultValue()));
+    d->levelsInput->setValue(group.readEntry("Levels Value",         20));
     d->hardMaskCB->setChecked(group.readEntry("Hard Mask",           false));
-    d->exposureInput->setValue(group.readEntry("Exposure Value",     d->exposureInput->defaultValue()));
-    d->saturationInput->setValue(group.readEntry("Saturation Value", d->saturationInput->defaultValue()));
-    d->contrastInput->setValue(group.readEntry("Contrast Value",     d->contrastInput->defaultValue()));
+    d->exposureInput->setValue(group.readEntry("Exposure Value",     1.0));
+    d->saturationInput->setValue(group.readEntry("Saturation Value", 0.2));
+    d->contrastInput->setValue(group.readEntry("Contrast Value",     0.0));
     d->ciecam02CB->setChecked(group.readEntry("CIECAM02",            false));
 }
 
