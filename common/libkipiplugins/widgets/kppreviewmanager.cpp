@@ -48,6 +48,7 @@
 // Local includes
 
 #include "kppreviewimage.h"
+#include "kputil.h"
 
 namespace KIPIPlugins
 {
@@ -58,7 +59,7 @@ public:
 
     Private()
     {
-        progressPix   = KDcrawIface::WorkingPixmap();
+        progressPix   = KPWorkingPixmap();
         progressCount = 0;
         progressTimer = 0;
         progressLabel = 0;
@@ -77,7 +78,7 @@ public:
     QPushButton*               button;
 
     int                        progressCount;
-    KDcrawIface::WorkingPixmap progressPix;
+    KPWorkingPixmap            progressPix;
     QTimer*                    progressTimer;
     QLabel*                    progressLabel;
 

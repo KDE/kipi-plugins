@@ -70,7 +70,7 @@ public:
 
     Private()
     {
-        progressPix   = KDcrawIface::WorkingPixmap();
+        progressPix   = KPWorkingPixmap();
         progressCount = 0;
         progressTimer = 0;
         progressLabel = 0,
@@ -92,7 +92,7 @@ public:
 
     QPushButton*               detailsBtn;
 
-    KDcrawIface::WorkingPixmap progressPix;
+    KPWorkingPixmap progressPix;
 
     Manager*                   mngr;
 };

@@ -41,6 +41,12 @@
 
 #include <KDCRAW/RWidgetUtils>
 
+// Local includes
+
+#include "kputil.h"
+
+using namespace KIPIPlugins;
+
 namespace KIPIGoogleServicesPlugin
 {
 
@@ -50,7 +56,7 @@ public:
 
     Private()
     {
-        progressPix   = KDcrawIface::WorkingPixmap();
+        progressPix   = KPWorkingPixmap();
         bAdd          = 0;
         bAddAll       = 0;
         bReplace      = 0;
@@ -74,7 +80,7 @@ public:
     QLabel*                      lbDest;
     QByteArray                   buffer;
     QPixmap                      mimePix;
-    KDcrawIface::WorkingPixmap   progressPix;
+    KPWorkingPixmap              progressPix;
     int                          progressCount;
     QTimer*                      progressTimer;
     int                          result;

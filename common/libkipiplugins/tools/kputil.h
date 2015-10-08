@@ -89,6 +89,27 @@ class KIPIPLUGINS_EXPORT KPVBox : public KPHBox
     virtual ~KPVBox();
 };
 
+// --------------------------------------------------------------------------------------
+
+/** A widget to draw progress wheel indicator over thumbnails.
+ */
+class KIPIPLUGINS_EXPORT KPWorkingPixmap
+{
+public:
+
+    explicit KPWorkingPixmap();
+    ~KPWorkingPixmap();
+
+    bool    isEmpty()          const;
+    QSize   frameSize()        const;
+    int     frameCount()       const;
+    QPixmap frameAt(int index) const;
+
+private:
+
+    QVector<QPixmap> m_frames;
+};
+
 // ------------------------------------------------------------------------------------
 
 /** A widget to chosse a single local file or path.
@@ -123,27 +144,6 @@ private:
 
     class Private;
     Private* const d;
-};
-
-// --------------------------------------------------------------------------------------
-
-/** A widget to draw progress wheel indicator over thumbnails.
- */
-class KIPIPLUGINS_EXPORT KPWorkingPixmap
-{
-public:
-
-    explicit KPWorkingPixmap();
-    ~KPWorkingPixmap();
-
-    bool    isEmpty()          const;
-    QSize   frameSize()        const;
-    int     frameCount()       const;
-    QPixmap frameAt(int index) const;
-
-private:
-
-    QVector<QPixmap> m_frames;
 };
 
 // ------------------------------------------------------------------------------------

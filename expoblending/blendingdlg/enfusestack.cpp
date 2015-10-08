@@ -47,6 +47,10 @@
 
 #include <KDCRAW/RWidgetUtils>
 
+// Local includes
+
+#include "kputil.h"
+
 namespace KIPIExpoBlendingPlugin
 {
 
@@ -148,7 +152,7 @@ struct EnfuseStackList::Private
         : outputFormat(KPSaveSettingsWidget::OUTPUT_PNG),
           progressCount(0),
           progressTimer(0),
-          progressPix(KDcrawIface::WorkingPixmap()),
+          progressPix(KPWorkingPixmap()),
           processItem(0)
     {
     }
@@ -159,7 +163,7 @@ struct EnfuseStackList::Private
 
     int                                progressCount;
     QTimer*                            progressTimer;
-    KDcrawIface::WorkingPixmap         progressPix;
+    KPWorkingPixmap         progressPix;
     EnfuseStackItem*                   processItem;
 };
 

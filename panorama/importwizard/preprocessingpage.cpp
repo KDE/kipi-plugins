@@ -80,7 +80,7 @@ struct PreProcessingPage::Private
           title(0),
           celesteCheckBox(0),
           detailsBtn(0),
-          progressPix(KDcrawIface::WorkingPixmap()),
+          progressPix(KPWorkingPixmap()),
           mngr(0)
     {
     }
@@ -102,7 +102,7 @@ struct PreProcessingPage::Private
 
     QPushButton*               detailsBtn;
 
-    KDcrawIface::WorkingPixmap progressPix;
+    KPWorkingPixmap progressPix;
 
     Manager*                   mngr;
 };

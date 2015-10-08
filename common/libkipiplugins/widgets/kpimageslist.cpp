@@ -71,6 +71,7 @@
 #include "kpimageinfo.h"
 #include "kpimagedialog.h"
 #include "kipiplugins_debug.h"
+#include "kputil.h"
 
 using namespace KIPIPlugins;
 
@@ -504,7 +505,7 @@ public:
         progressCount          = 0;
         progressTimer          = 0;
         loadRawThumb           = 0;
-        progressPix            = KDcrawIface::WorkingPixmap();
+        progressPix            = KPWorkingPixmap();
         PluginLoader* const pl = PluginLoader::instance();
 
         if (pl)
@@ -527,7 +528,7 @@ public:
     CtrlButton*                saveButton;
 
     QList<QUrl>                processItems;
-    KDcrawIface::WorkingPixmap progressPix;
+    KPWorkingPixmap progressPix;
     int                        progressCount;
     QTimer*                    progressTimer;
 

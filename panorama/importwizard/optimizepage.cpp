@@ -74,7 +74,7 @@ struct OptimizePage::Private
           horizonCheckbox(0),
 //        projectionAndSizeCheckbox(0),
           detailsBtn(0),
-          progressPix(KDcrawIface::WorkingPixmap()),
+          progressPix(KPWorkingPixmap()),
           mngr(0)
     {
     }
@@ -95,7 +95,7 @@ struct OptimizePage::Private
 
     QPushButton*               detailsBtn;
 
-    KDcrawIface::WorkingPixmap progressPix;
+    KPWorkingPixmap progressPix;
 
     Manager*                   mngr;
 };

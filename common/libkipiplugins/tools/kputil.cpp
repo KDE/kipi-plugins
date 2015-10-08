@@ -172,6 +172,82 @@ KPVBox::~KPVBox()
 {
 }
 
+// ---------------------------------------------------------------------------------------
+
+KPWorkingPixmap::KPWorkingPixmap()
+{
+    QPixmap pix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QLatin1String("kipiplugins/pics/process-working.png")));
+    QSize   size(22, 22);
+
+    if (pix.isNull())
+    {
+        qCWarning(KIPIPLUGINS_LOG) << "Invalid pixmap specified.";
+        return;
+    }
+
+    if (!size.isValid())
+    {
+        size = QSize(pix.width(), pix.width());
+    }
+
+    if (pix.width() % size.width() || pix.height() % size.height())
+    {
+        qCWarning(KIPIPLUGINS_LOG) << "Invalid framesize.";
+        return;
+    }
+
+    const int rowCount = pix.height() / size.height();
+    const int colCount = pix.width()  / size.width();
+    m_frames.resize(rowCount * colCount);
+
+    int pos = 0;
+
+    for (int row = 0; row < rowCount; ++row)
+    {
+        for (int col = 0; col < colCount; ++col)
+        {
+            QPixmap frm     = pix.copy(col * size.width(), row * size.height(), size.width(), size.height());
+            m_frames[pos++] = frm;
+        }
+    }
+}
+
+KPWorkingPixmap::~KPWorkingPixmap()
+{
+}
+
+bool KPWorkingPixmap::isEmpty() const
+{
+    return m_frames.isEmpty();
+}
+
+QSize KPWorkingPixmap::frameSize() const
+{
+    if (isEmpty())
+    {
+        qCWarning(KIPIPLUGINS_LOG) << "No frame loaded.";
+        return QSize();
+    }
+
+    return m_frames[0].size();
+}
+
+int KPWorkingPixmap::frameCount() const
+{
+    return m_frames.size();
+}
+
+QPixmap KPWorkingPixmap::frameAt(int index) const
+{
+    if (isEmpty())
+    {
+        qCWarning(KIPIPLUGINS_LOG) << "No frame loaded.";
+        return QPixmap();
+    }
+
+    return m_frames.at(index);
+}
+
 // ------------------------------------------------------------------------------------
 
 class Q_DECL_HIDDEN KPFileSelector::Private
@@ -270,82 +346,6 @@ void KPFileSelector::slotBtnClicked()
     }
     
     delete fileDlg;
-}
-
-// ---------------------------------------------------------------------------------------
-
-KPWorkingPixmap::KPWorkingPixmap()
-{
-    QPixmap pix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QLatin1String("libkdcraw/pics/process-working.png")));
-    QSize   size(22, 22);
-
-    if (pix.isNull())
-    {
-        qCWarning(KIPIPLUGINS_LOG) << "Invalid pixmap specified.";
-        return;
-    }
-
-    if (!size.isValid())
-    {
-        size = QSize(pix.width(), pix.width());
-    }
-
-    if (pix.width() % size.width() || pix.height() % size.height())
-    {
-        qCWarning(KIPIPLUGINS_LOG) << "Invalid framesize.";
-        return;
-    }
-
-    const int rowCount = pix.height() / size.height();
-    const int colCount = pix.width()  / size.width();
-    m_frames.resize(rowCount * colCount);
-
-    int pos = 0;
-
-    for (int row = 0; row < rowCount; ++row)
-    {
-        for (int col = 0; col < colCount; ++col)
-        {
-            QPixmap frm     = pix.copy(col * size.width(), row * size.height(), size.width(), size.height());
-            m_frames[pos++] = frm;
-        }
-    }
-}
-
-KPWorkingPixmap::~KPWorkingPixmap()
-{
-}
-
-bool KPWorkingPixmap::isEmpty() const
-{
-    return m_frames.isEmpty();
-}
-
-QSize KPWorkingPixmap::frameSize() const
-{
-    if (isEmpty())
-    {
-        qCWarning(KIPIPLUGINS_LOG) << "No frame loaded.";
-        return QSize();
-    }
-
-    return m_frames[0].size();
-}
-
-int KPWorkingPixmap::frameCount() const
-{
-    return m_frames.size();
-}
-
-QPixmap KPWorkingPixmap::frameAt(int index) const
-{
-    if (isEmpty())
-    {
-        qCWarning(KIPIPLUGINS_LOG) << "No frame loaded.";
-        return QPixmap();
-    }
-
-    return m_frames.at(index);
 }
 
 // ------------------------------------------------------------------------------------
