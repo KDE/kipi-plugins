@@ -72,6 +72,7 @@ target_link_libraries(kipiplugin_expoblending
     PRIVATE
         libexpoblending
         KF5::XmlGui
+        KF5::ConfigCore
         KF5::I18n
 )
 

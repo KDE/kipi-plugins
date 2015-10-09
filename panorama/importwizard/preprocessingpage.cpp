@@ -43,6 +43,7 @@
 // KDE includes
 
 #include <kconfig.h>
+#include <kconfiggroup.h>
 #include <klocalizedstring.h>
 
 // LibKIPI includes
