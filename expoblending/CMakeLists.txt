@@ -1,6 +1,6 @@
 #
 # Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
-# Copyright (c) 2015, Benjamin Girault, <benjamin dot girault at gmail dot com>
+# Copyright (c) 2015,      Benjamin Girault, <benjamin dot girault at gmail dot com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
@@ -49,12 +49,10 @@ add_library(libexpoblending STATIC ${expoblending_common_SRCS})
 
 target_link_libraries(libexpoblending
     PUBLIC
-        ${KF5KDcraw_LIBRARIES}
         Qt5::Core
+        KF5kipiplugins
     PRIVATE
         KF5kipiplugins
-        ${KF5Kipi_LIBRARIES}
-        ${KF5KExiv2_LIBRARIES}
         KF5::Parts
         KF5::Kipi
         KF5::KExiv2
@@ -74,6 +72,7 @@ target_link_libraries(kipiplugin_expoblending
     PRIVATE
         libexpoblending
         KF5::XmlGui
+        KF5::I18n
 )
 
 configure_file(plugin/kipiplugin_expoblending.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_expoblending.desktop)
