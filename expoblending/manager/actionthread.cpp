@@ -714,11 +714,9 @@ bool ActionThread::convertRaw(const QUrl& inUrl, QUrl& outUrl, const RawDecoding
         meta.setXmpTagString("Xmp.tiff.Model", meta.getExifTagString("Exif.Image.Model"));
         meta.setImageOrientation(KPMetadata::ORIENTATION_NORMAL);
 
-        QByteArray prof = KPWriteImage::getICCProfilFromFile(settings.outputColorSpace);
-
         KPWriteImage wImageIface;
         wImageIface.setCancel(&d->cancel);
-        wImageIface.setImageData(imageData, width, height, true, false, prof, meta);
+        wImageIface.setImageData(imageData, width, height, true, false, QByteArray(), meta);
         QFileInfo fi(inUrl.toLocalFile());
         outUrl = QUrl::fromLocalFile(
             d->preprocessingTmpDir->path()

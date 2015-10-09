@@ -777,53 +777,6 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
     return true;
 }
 
-QByteArray KPWriteImage::getICCProfilFromFile(RawDecodingSettings::OutputColorSpace colorSpace)
-{
-    QString filePath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("libkdcraw/profiles/"));
-
-    switch(colorSpace)
-    {
-        case RawDecodingSettings::SRGB:
-        {
-            filePath.append(QStringLiteral("srgb.icm"));
-            break;
-        }
-        case RawDecodingSettings::ADOBERGB:
-        {
-            filePath.append(QStringLiteral("adobergb.icm"));
-            break;
-        }
-        case RawDecodingSettings::WIDEGAMMUT:
-        {
-            filePath.append(QStringLiteral("widegamut.icm"));
-            break;
-        }
-        case RawDecodingSettings::PROPHOTO:
-        {
-            filePath.append(QStringLiteral("prophoto.icm"));
-            break;
-        }
-        default:
-            break;
-    }
-
-    if ( filePath.isEmpty() )
-        return QByteArray();
-
-    QFile file(filePath);
-
-    if ( !file.open(QIODevice::ReadOnly) )
-        return QByteArray();
-
-    QByteArray data;
-    data.resize(file.size());
-    QDataStream stream( &file );
-    stream.readRawData(data.data(), data.size());
-    file.close();
-
-    return data;
-}
-
 void KPWriteImage::writeRawProfile(png_struct* const ping, png_info* const ping_info, char* const profile_type,
                                    char* const profile_data, png_uint_32 length)
 {

@@ -76,8 +76,6 @@ public:
     bool write2TIFF(const QString& destPath);
     bool write2PPM(const QString& destPath);
 
-    static QByteArray getICCProfilFromFile(RawDecodingSettings::OutputColorSpace colorSpace);
-
 private:
 
     void   writeRawProfile(png_struct* const ping, png_info* const ping_info, char* const profile_type,

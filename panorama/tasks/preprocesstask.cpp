@@ -185,11 +185,9 @@ bool PreProcessTask::convertRaw()
         metaOut.setXmpTagString("Xmp.tiff.Model", metaOut.getExifTagString("Exif.Image.Model"));
         metaOut.setImageOrientation(KPMetadata::ORIENTATION_NORMAL);
 
-        QByteArray prof = KPWriteImage::getICCProfilFromFile(settings.outputColorSpace);
-
         KPWriteImage wImageIface;
         wImageIface.setCancel(&isAbortedFlag);
-        wImageIface.setImageData(imageData, width, height, true, false, prof, metaOut);
+        wImageIface.setImageData(imageData, width, height, true, false, QByteArray(), metaOut);
         QFileInfo fi(inUrl.toLocalFile());
         outUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName().replace(QLatin1String("."), QLatin1String("_")) + QStringLiteral(".tif")));
 
