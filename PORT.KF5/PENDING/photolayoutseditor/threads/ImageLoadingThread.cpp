@@ -52,7 +52,7 @@
 #include "photolayoutseditor.h"
 
 using namespace KIPIPlugins;
-using namespace KDcrawIface;
+
 
 namespace KIPIPhotoLayoutsEditor
 {

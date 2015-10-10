@@ -39,7 +39,7 @@
 #include "manager.h"
 #include "kputil.h"
 
-using namespace KDcrawIface;
+
 
 namespace KIPIExpoBlendingPlugin
 {

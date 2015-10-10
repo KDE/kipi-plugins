@@ -78,7 +78,7 @@ extern "C"
 #include "kpversion.h"
 #include "manager.h"
 
-using namespace KDcrawIface;
+
 
 namespace KIPIExpoBlendingPlugin
 {

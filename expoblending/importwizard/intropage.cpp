@@ -41,7 +41,7 @@
 #include "enfusebinary.h"
 #include "kputil.h"
 
-using namespace KDcrawIface;
+
 using namespace KIPIPlugins;
 
 namespace KIPIExpoBlendingPlugin

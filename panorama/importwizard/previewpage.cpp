@@ -49,7 +49,7 @@
 #include "pto2mkbinary.h"
 #include "kputil.h"
 
-using namespace KDcrawIface;
+
 
 namespace KIPIPanoramaPlugin
 {

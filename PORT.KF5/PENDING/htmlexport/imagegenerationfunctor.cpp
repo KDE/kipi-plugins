@@ -53,7 +53,7 @@
 #include "imageelement.h"
 #include "kpmetadata.h"
 
-using namespace KDcrawIface;
+
 
 namespace KIPIHTMLExport
 {

@@ -66,7 +66,7 @@
 #include "swalbum.h"
 #include "swlogin.h"
 
-using namespace KDcrawIface;
+
 
 namespace KIPIMuveePlugin
 {

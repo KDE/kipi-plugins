@@ -56,7 +56,7 @@
 #include "kpmetadata.h"
 #include "myimagelist.h"
 
-using namespace KDcrawIface;
+
 using namespace KIPIPlugins;
 
 namespace KIPITimeAdjustPlugin

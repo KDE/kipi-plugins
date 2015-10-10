@@ -43,7 +43,7 @@
 #include "actionthread.h"
 #include "kputil.h"
 
-using namespace KDcrawIface;
+
 
 namespace KIPIPanoramaPlugin
 {
