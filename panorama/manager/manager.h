@@ -45,7 +45,7 @@ namespace KIPI
 }
 
 using namespace KIPI;
-using namespace KDcrawIface;
+
 
 namespace KIPIPanoramaPlugin
 {

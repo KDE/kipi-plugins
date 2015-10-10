@@ -28,7 +28,7 @@
 #include "task.h"
 #include "ptotype/ptotype.h"
 
-using namespace KDcrawIface;
+
 
 namespace KIPIPanoramaPlugin
 {

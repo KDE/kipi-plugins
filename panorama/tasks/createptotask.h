@@ -27,7 +27,7 @@
 
 #include "task.h"
 
-using namespace KDcrawIface;
+
 
 namespace KIPIPanoramaPlugin
 {

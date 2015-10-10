@@ -36,7 +36,7 @@
 
 #include "timeadjustsettings.h"
 
-using namespace KDcrawIface;
+
 
 namespace KIPITimeAdjustPlugin
 {

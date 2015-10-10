@@ -51,7 +51,7 @@ extern "C"
 #include "kipiplugins_export.h"
 #include "kpmetadata.h"
 
-using namespace KDcrawIface;
+
 
 namespace KIPIPlugins
 {

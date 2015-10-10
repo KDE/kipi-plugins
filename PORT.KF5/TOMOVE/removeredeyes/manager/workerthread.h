@@ -40,7 +40,7 @@
 #include "locator.h"
 #include "workerthreaddata.h"
 
-using namespace KDcrawIface;
+
 
 namespace KIPIRemoveRedEyesPlugin
 {

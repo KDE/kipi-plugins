@@ -27,7 +27,7 @@
 
 #include "commandtask.h"
 
-using namespace KDcrawIface;
+
 
 namespace KIPIPanoramaPlugin
 {
