@@ -558,7 +558,6 @@ bool FbTalker::addPhoto(const QString& imgPath, const QString& albumID, const QS
 
     QMap<QString, QString> args;
     args["access_token"] = m_accessToken;
-    args["name"]         = KUrl(imgPath).fileName();
 
     if (!caption.isEmpty())
         args["message"]  = caption;
@@ -572,7 +571,7 @@ bool FbTalker::addPhoto(const QString& imgPath, const QString& albumID, const QS
         form.addPair(it.key(), it.value());
     }
 
-    if (!form.addFile(args["name"], imgPath))
+    if (!form.addFile(KUrl(imgPath).fileName(), imgPath))
     {
         emit signalBusy(false);
         return false;
