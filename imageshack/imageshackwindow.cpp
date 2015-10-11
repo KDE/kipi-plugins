@@ -47,7 +47,6 @@
 
 // KDE includes
 
-#include <kmessagebox.h>
 #include <kconfig.h>
 #include <klocalizedstring.h>
 #include <kwindowconfig.h>
@@ -401,10 +400,10 @@ void ImageshackWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
     }
     else
     {
-        if (KMessageBox::warningContinueCancel(this,
-                                               i18n("Failed to upload photo to Imageshack: %1\n"
-                                                    "Do you want to continue?", errMsg))
-            != KMessageBox::Continue)
+        if (QMessageBox::question(this, i18n("Uploading Failed"),
+                                  i18n("Failed to upload photo into Imageshack: %1\n"
+                                       "Do you want to continue?", errMsg))
+            != QMessageBox::Yes)
         {
             m_widget->m_progressBar->setVisible(false);
             m_transferQueue.clear();

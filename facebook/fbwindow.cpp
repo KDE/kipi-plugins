@@ -681,7 +681,7 @@ void FbWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
     }
     else
     {
-        if (QMessageBox::question(this, i18n("Upload Failed"),
+        if (QMessageBox::question(this, i18n("Uploading Failed"),
                                   i18n("Failed to upload photo into Facebook: %1\n"
                                        "Do you want to continue?", errMsg))
             != QMessageBox::Yes)
