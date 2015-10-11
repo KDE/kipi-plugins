@@ -44,7 +44,6 @@
 #include <kconfig.h>
 #include <kwallet.h>
 #include <kwindowconfig.h>
-#include <kmessagebox.h>
 
 // Libkipi includes
 
@@ -295,10 +294,11 @@ void DBWindow::slotStartTransfer()
         return;
     }
 
-    if(!(m_talker->authenticated()))
+    if (!(m_talker->authenticated()))
     {
-        if (KMessageBox::warningContinueCancel(this, i18n("Authentication failed. Click \"Continue\" to authenticate."))
-            == KMessageBox::Continue)
+        if (QMessageBox::question(this, i18n("Login Failed"),
+                                  i18n("Authentication failed. Do you want to try again?"))
+            == QMessageBox::Yes)
         {
             m_talker->obtain_req_token();
             return;
@@ -358,8 +358,11 @@ void DBWindow::uploadNextPhoto()
 
 void DBWindow::slotAddPhotoFailed(const QString& msg)
 {
-    if (KMessageBox::warningContinueCancel(this, i18n("Failed to upload photo to Dropbox.\n%1\nDo you want to continue?",msg))
-        != KMessageBox::Continue)
+    if (QMessageBox::question(this, i18n("Uploading Failed"),
+                              i18n("Failed to upload photo to Dropbox."
+                                   "\n%1\n"
+                                   "Do you want to continue?", msg))
+        != QMessageBox::Yes)
     {
         m_transferQueue.clear();
         m_widget->progressBar()->hide();
@@ -413,8 +416,9 @@ void DBWindow::slotReloadAlbumsRequest()
 
 void DBWindow::slotAccessTokenFailed()
 {
-    if (KMessageBox::warningContinueCancel(this, i18n("Authentication failed. Click \"Continue\" to authenticate."))
-        == KMessageBox::Continue)
+    if (QMessageBox::question(this, i18n("Login Failed"),
+                              i18n("Authentication failed. Do you want to try again?"))
+        == QMessageBox::Yes)
     {
         m_talker->obtain_req_token();
         return;
