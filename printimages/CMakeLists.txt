@@ -48,7 +48,6 @@ target_link_libraries(kipiplugin_printimages
                       KF5::Kipi
                       KF5::KDcraw
                       KF5::KExiv2
-                      KF5::WidgetsAddons
                       KF5kipiplugins
                      )
 

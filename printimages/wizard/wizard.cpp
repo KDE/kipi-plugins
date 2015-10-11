@@ -52,7 +52,6 @@
 // KDE includes
 
 #include <kconfigdialogmanager.h>
-#include <kmessagebox.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <kdesktopfile.h>
@@ -2380,14 +2379,17 @@ QStringList Wizard::printPhotosToFile(const QList<TPhoto*>& photos, const QStrin
 
         if (QFile::exists(filename))
         {
-            int result = KMessageBox::warningYesNoCancel(this,
-                                                         i18n("The following file will be overwritten. Are you sure you want to overwrite it?") +
-                                                         QLatin1String("\n\n") + filename);
-            if (result == KMessageBox::No)
+            int result = QMessageBox::question(this, i18n("Overwrite File"),
+                                               i18n("The following file will be overwritten. Are you sure you want to overwrite it?") +
+                                               QLatin1String("\n\n") + filename,
+                                               QMessageBox::StandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel),
+                                               QMessageBox::No);
+
+            if (result == QMessageBox::No)
             {
                 saveFile = false;
             }
-            else if (result == KMessageBox::Cancel)
+            else if (result == QMessageBox::Cancel)
             {
                 break;
             }
