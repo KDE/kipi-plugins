@@ -34,7 +34,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kmessagebox.h>
 
 // LibKvkontakte includes
 
@@ -289,13 +288,10 @@ void AlbumChooserWidget::slotDeleteAlbumRequest()
         return;
     }
 
-    if (KMessageBox::warningContinueCancel(
-        this,
-        i18n("<qt>Are you sure you want to remove the album <b>%1</b> including all photos in it?</qt>", album.title),
-        i18nc("@title:window", "Confirm Album Deletion"),
-        KStandardGuiItem::del(),
-        KStandardGuiItem::cancel(),
-        QStringLiteral("kipi_vkontakte_delete_album_with_photos")) != KMessageBox::Continue)
+    if (QMessageBox::question(this, i18nc("@title:window", "Confirm Album Deletion"),
+                              i18n("<qt>Are you sure you want to remove the album <b>%1</b> "
+                                   "including all photos in it?</qt>", album.title))
+            != QMessageBox::Yes)
     {
         return;
     }

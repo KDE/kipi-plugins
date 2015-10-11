@@ -23,7 +23,6 @@ target_link_libraries(kipiplugin_vkontakte
         KF5::Kipi
         KF5::KExiv2
         KF5::KDcraw
-        KF5::WidgetsAddons
         KF5::WindowSystem
         KF5kipiplugins
         ${LIBKVKONTAKTE_LIBRARIES}
