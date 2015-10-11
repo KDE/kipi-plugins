@@ -20,12 +20,13 @@ add_library(kipiplugin_vkontakte MODULE ${kipiplugin_vkontakte_PART_SRCS})
 
 target_link_libraries(kipiplugin_vkontakte
     PRIVATE
+        KF5::Kipi
+        KF5::KExiv2
+        KF5::KDcraw
+        KF5::WidgetsAddons
+        KF5::WindowSystem
         KF5kipiplugins
         ${LIBKVKONTAKTE_LIBRARIES}
-        ${KF5KDcraw_LIBRARIES}
-        KF5::Kipi
-
-        KF5::WindowSystem
 )
 
 configure_file(kipiplugin_vkontakte.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_vkontakte.desktop)

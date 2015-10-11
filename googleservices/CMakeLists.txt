@@ -28,7 +28,6 @@ target_link_libraries(kipiplugin_googleservices
         KF5::KDcraw
         KF5::Kipi
         KF5::KExiv2
-        KF5::WidgetsAddons
         KF5::KIOCore
         KF5::KIOWidgets
         KF5::WindowSystem

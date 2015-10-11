@@ -31,6 +31,7 @@ target_link_libraries(kipiplugin_imgur
         KF5::KExiv2
         KF5::Kipi
         KF5::KIOCore
+        KF5::WidgetsAddons
         KF5::WindowSystem
 )
 

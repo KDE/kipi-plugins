@@ -19,10 +19,10 @@ add_library(kipiplugin_sendimages MODULE ${kipiplugin_sendimages_PART_SRCS})
 target_link_libraries(kipiplugin_sendimages
                       PRIVATE
                       KF5::Parts
-
-                      ${KF5Kipi_LIBRARIES}
-                      ${KF5KExiv2_LIBRARIES}
-                      ${KF5KDcraw_LIBRARIES}
+                      KF5::WidgetsAddons
+                      KF5::KDcraw
+                      KF5::Kipi
+                      KF5::KExiv2
 
                       KF5kipiplugins
 )

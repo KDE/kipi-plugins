@@ -25,6 +25,7 @@ target_link_libraries(kipiplugin_dropbox
                       KF5::Kipi
                       KF5::KExiv2
                       KF5::KIOCore
+                      KF5::WidgetsAddons
                       KF5::Wallet
                       KF5::WindowSystem
                       KF5kipiplugins

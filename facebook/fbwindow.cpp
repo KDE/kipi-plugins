@@ -36,7 +36,6 @@
 
 // KDE includes
 
-#include <kmessagebox.h>
 #include <kconfig.h>
 #include <klocalizedstring.h>
 #include <kwindowconfig.h>
@@ -474,10 +473,10 @@ void FbWindow::slotUserChangeRequest()
                      i18n("After you have been logged out in the browser, "
                           "click \"Continue\" to authenticate for another account"),
                      QMessageBox::Yes | QMessageBox::No);
-    
+
         (warn.button(QMessageBox::Yes))->setText(i18n("Continue"));
-        (warn.button(QMessageBox::No))->setText(i18n("Cancel"));      
-    
+        (warn.button(QMessageBox::No))->setText(i18n("Cancel"));
+
         if (warn.exec() == QMessageBox::Yes)
         {
             m_accessToken.clear();
@@ -682,10 +681,10 @@ void FbWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
     }
     else
     {
-        if (KMessageBox::warningContinueCancel(this,
-                                               i18n("Failed to upload photo into Facebook: %1\n"
-                                                    "Do you want to continue?", errMsg))
-            != KMessageBox::Continue)
+        if (QMessageBox::question(this, i18n("Upload Failed"),
+                                  i18n("Failed to upload photo into Facebook: %1\n"
+                                       "Do you want to continue?", errMsg))
+            != QMessageBox::Yes)
         {
             setRejectButtonMode(QDialogButtonBox::Close);
             d->m_progressBar->hide();

@@ -26,7 +26,7 @@ target_link_libraries(kipiplugin_smug
                       KF5::KDcraw
                       KF5::KIOCore
                       KF5::WindowSystem
-
+                      KF5::WidgetsAddons
                       KF5kipiplugins
                      )
 

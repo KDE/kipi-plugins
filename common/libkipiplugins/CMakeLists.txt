@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+# Copyright (c) 2010-2015, Gilles Caulier, <caulier dot gilles at gmail dot com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
@@ -54,7 +54,6 @@ target_link_libraries(KF5kipiplugins
                       KF5::I18n
                       KF5::ConfigCore
                       KF5::KIOFileWidgets
-                      KF5::WidgetsAddons
                       KF5::CoreAddons
 
                       ${KF5Kipi_LIBRARIES}
