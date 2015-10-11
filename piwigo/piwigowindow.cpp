@@ -51,7 +51,6 @@
 
 // KDE includes
 
-#include <kmessagebox.h>
 #include <kconfig.h>
 #include <klocalizedstring.h>
 #include <kconfiggroup.h>
@@ -390,11 +389,10 @@ void PiwigoWindow::slotDoLogin()
 
 void PiwigoWindow::slotLoginFailed(const QString& msg)
 {
-    if (KMessageBox::warningYesNo(this,
-                                  i18n("Failed to login into remote piwigo. ")
-                                  + msg
-                                  + i18n("\nDo you want to check your settings and try again?"))
-            != KMessageBox::Yes)
+    if (QMessageBox::question(this, i18n("Login Failed"),
+                              i18n("Failed to login into remote piwigo. ") + msg +
+                              i18n("\nDo you want to check your settings and try again?"))
+            != QMessageBox::Yes)
     {
         close();
         return;
@@ -594,12 +592,10 @@ void PiwigoWindow::slotAddPhotoFailed(const QString& msg)
     d->progressDlg->reset();
     d->progressDlg->hide();
 
-    if (KMessageBox::warningContinueCancel(this,
-                                           i18n("Failed to upload media into "
-                                                "remote piwigo. ")
-                                           + msg
-                                           + i18n("\nDo you want to continue?"))
-            != KMessageBox::Continue)
+    if (QMessageBox::question(this, i18n("Uploading Failed"),
+                              i18n("Failed to upload media into remote Piwigo. ") + msg +
+                              i18n("\nDo you want to continue?"))
+            != QMessageBox::Yes)
     {
         return;
     }

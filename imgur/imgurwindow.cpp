@@ -32,7 +32,6 @@
 #include <klocalizedstring.h>
 #include <kconfig.h>
 #include <kwindowconfig.h>
-#include <kmessagebox.h>
 
 // Local includes
 
