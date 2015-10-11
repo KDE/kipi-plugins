@@ -229,16 +229,16 @@ void ImgurWindow::slotAddPhotoError(const QUrl& /*currentImage*/, const ImgurErr
 {
     if (!d->webService->imageQueue()->isEmpty())
     {
-        if (KMessageBox::warningContinueCancel(this,
-                                               i18n("Failed to upload photo to Imgur: %1\n"
-                                                    "Do you want to continue?", error.message))
-            == KMessageBox::Continue)
+        if (QMessageBox::question(this, i18n("Uploading Failed"),
+                                  i18n("Failed to upload photo to Imgur: %1\n"
+                                       "Do you want to continue?", error.message))
+                != QMessageBox::Yes)
         {
-            setContinueUpload(true);
+            setContinueUpload(false);
         }
         else
         {
-            setContinueUpload(false);
+            setContinueUpload(true);
         }
 
     }
@@ -274,8 +274,8 @@ void ImgurWindow::slotAuthenticated(bool yes, const QString& message)
     {
         startButton()->setEnabled(yes);
     }
-    else if (KMessageBox::warningContinueCancel(this, err)
-               == KMessageBox::Continue)
+    else if (QMessageBox::question(this, i18n("Processing Failed"), err)
+             == QMessageBox::Yes)
     {
         startButton()->setEnabled(true);
     }
