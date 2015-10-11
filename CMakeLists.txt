@@ -97,16 +97,16 @@ find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS
 )
 
 find_package(KF5 REQUIRED COMPONENTS
-             WidgetsAddons
-             WindowSystem
              Parts
-             Wallet
              Config
-             ThreadWeaver
-             I18n
-             Archive
-             KIO
+             WindowSystem
              XmlGui
+             I18n
+             KIO
+             Wallet
+             WidgetsAddons
+             ThreadWeaver                     # for Panorama
+             Archive                          # for FlashExport
              IconThemes                       # for GoogleServices (KIO/PixmapLoader)
              OPTIONAL_COMPONENTS CalendarCore # for Calendar
 )
