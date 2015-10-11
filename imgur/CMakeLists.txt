@@ -32,6 +32,7 @@ target_link_libraries(kipiplugin_imgur
         KF5::Kipi
         KF5::KIOCore
         KF5::WindowSystem
+        KF5::CoreAddons
 )
 
 if(QTKOAUTH_FOUND)

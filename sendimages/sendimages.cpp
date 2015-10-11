@@ -40,7 +40,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kmessagebox.h>
 #include <ktoolinvocation.h>
 
 // Libkipi includes
@@ -321,16 +320,20 @@ bool SendImages::showFailedResizedImages() const
             list.append((*it).fileName());
         }
 
-        int valRet = KMessageBox::warningYesNoCancelList(QApplication::activeWindow(),
-                                  i18n("The images listed below cannot be resized.\n"
-                                       "Do you want them to be added as attachments "
-                                       "(without resizing)?"),
-                                  list,
-                                  i18n("Failed to resize images"));
+        QMessageBox mbox(QApplication::activeWindow());
+        mbox.setIcon(QMessageBox::Warning);
+        mbox.setWindowTitle(i18n("Processing Failed"));
+        mbox.setText(i18n("Some images cannot be resized.\n"
+                          "Do you want them to be added as attachments without resizing?"));
+        mbox.setStandardButtons(QMessageBox::StandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel));
+        mbox.setDefaultButton(QMessageBox::No);
+        mbox.setDetailedText(list.join(QLatin1String("\n")));
+
+        int valRet = mbox.exec();
 
         switch (valRet)
         {
-            case KMessageBox::Yes:
+            case QMessageBox::Yes:
             {
                 // Added source image files instead resized images...
                 for (QList<QUrl>::const_iterator it = d->failedResizedImages.constBegin();
@@ -342,12 +345,12 @@ bool SendImages::showFailedResizedImages() const
 
                 break;
             }
-            case KMessageBox::No:
+            case QMessageBox::No:
             {
                 // Do nothing...
                 break;
             }
-            case KMessageBox::Cancel:
+            case QMessageBox::Cancel:
             {
                 // Stop process...
                 return false;

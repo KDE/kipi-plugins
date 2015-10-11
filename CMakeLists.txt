@@ -104,7 +104,8 @@ find_package(KF5 REQUIRED COMPONENTS
              I18n
              KIO
              Wallet
-             WidgetsAddons
+             CoreAddons                       # Krandom use
+             Service                          # for SendImages (KToolInvocation)
              ThreadWeaver                     # for Panorama
              Archive                          # for FlashExport
              IconThemes                       # for GoogleServices (KIO/PixmapLoader)
