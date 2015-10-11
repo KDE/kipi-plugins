@@ -39,7 +39,6 @@
 
 // KDE includes
 
-#include <kmessagebox.h>
 #include <kconfig.h>
 #include <klocalizedstring.h>
 #include <kwindowconfig.h>
@@ -820,10 +819,11 @@ void SmugWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
     }
     else
     {
-        if (KMessageBox::warningContinueCancel(this,
-                         i18n("Failed to upload photo into SmugMug: %1\n"
-                              "Do you want to continue?", errMsg))
-                         != KMessageBox::Continue)
+        if (QMessageBox::question(this, i18n("Uploading Failed"),
+                              i18n("Failed to upload photo to SmugMug."
+                                   "\n%1\n"
+                                   "Do you want to continue?", errMsg))
+            != QMessageBox::Yes)
         {
             setUiInProgressState(false);
             m_transferQueue.clear();
@@ -881,10 +881,10 @@ void SmugWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
         }
         else
         {
-            if (KMessageBox::warningContinueCancel(this,
-                             i18n("Failed to save photo: %1\n"
-                                  "Do you want to continue?", errText))
-                             != KMessageBox::Continue)
+            if (QMessageBox::question(this, i18n("Processing Failed"),
+                                      i18n("Failed to save photo: %1\n"
+                                           "Do you want to continue?", errText))
+                != QMessageBox::Yes)
             {
                 m_transferQueue.clear();
                 setUiInProgressState(false);
@@ -894,10 +894,10 @@ void SmugWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
     }
     else
     {
-        if (KMessageBox::warningContinueCancel(this,
-                         i18n("Failed to download photo: %1\n"
-                              "Do you want to continue?", errMsg))
-                         != KMessageBox::Continue)
+        if (QMessageBox::question(this, i18n("Processing Failed"),
+                                  i18n("Failed to download photo: %1\n"
+                                       "Do you want to continue?", errMsg))
+                != QMessageBox::Yes)
         {
             m_transferQueue.clear();
             setUiInProgressState(false);
