@@ -84,11 +84,4 @@ void SharedContainer::setIface(KIPI::Interface* const iface)
     kipiIface = iface;
 }
 
-// -------------------------------------------------------------
-
-VolumeSlider::VolumeSlider(QWidget* const parent)
-            : Phonon::VolumeSlider(parent)
-{
-}
-
 } // namespace KIPIAdvancedSlideshowPlugin

@@ -107,7 +107,7 @@
       </layout>
      </item>
      <item>
-      <widget class="VolSlider" native="1" name="m_volumeSlider" >
+      <widget class="Phonon::VolumeSlider" native="1" name="m_volumeSlider" >
        <property name="sizePolicy" >
         <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
          <horstretch>0</horstretch>
@@ -131,9 +131,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>VolSlider</class>
+   <class>Phonon::VolumeSlider</class>
    <extends>QWidget</extends>
-   <header>volslider.h</header>
+   <header>phonon/volumeslider.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

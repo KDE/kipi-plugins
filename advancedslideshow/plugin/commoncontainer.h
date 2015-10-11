@@ -29,10 +29,6 @@
 #include <QFont>
 #include <QUrl>
 
-// Phonon includes
-
-#include <phonon/volumeslider.h>
-
 // libkipi includes
 
 #include <KIPI/Interface>
@@ -111,16 +107,6 @@ public:
 private :
 
     KIPI::Interface*     kipiIface;
-};
-
-// ----------------------------------------------------------
-
-class VolumeSlider : public Phonon::VolumeSlider
-{
-
-public:
-
-    explicit VolumeSlider(QWidget* const parent);
 };
 
 } // namespace KIPIAdvancedSlideshowPlugin
