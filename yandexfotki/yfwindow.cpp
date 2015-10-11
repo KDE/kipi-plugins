@@ -64,7 +64,6 @@ extern "C"
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <klocalizedstring.h>
-#include <kmessagebox.h>
 
 // LibKDcraw includes
 
@@ -610,9 +609,10 @@ void YandexFotkiWindow::updateNextPhoto()
 
             if (!prepared)
             {
-                if (KMessageBox::warningContinueCancel(this,
-                                                       i18n("Failed to prepare image %1\n"
-                                                               "Do you want to continue?", photo.originalUrl())) != KMessageBox::Continue)
+                if (QMessageBox::question(this, i18n("Processing Failed"),
+                                  i18n("Failed to prepare image %1\n"
+                                       "Do you want to continue?", photo.originalUrl()))
+                    != QMessageBox::Yes)
                 {
                     // stop uploading
                     m_transferQueue.clear();
@@ -723,11 +723,12 @@ void YandexFotkiWindow::slotError()
         case YandexFotkiTalker::STATE_UPDATEPHOTO_FILE_ERROR:
         case YandexFotkiTalker::STATE_UPDATEPHOTO_INFO_ERROR:
             qCDebug(KIPIPLUGINS_LOG) << "UpdatePhotoError";
-            if (KMessageBox::warningContinueCancel(this,
-                     i18n("Failed to upload image %1\n"
-                          "Do you want to continue?",
-                           m_transferQueue.top().originalUrl())) !=
-                    KMessageBox::Continue)
+
+            if (QMessageBox::question(this, i18n("Uploading Failed"),
+                                      i18n("Failed to upload image %1\n"
+                                           "Do you want to continue?",
+                                      m_transferQueue.top().originalUrl()))
+                != QMessageBox::Yes)
             {
                 // clear upload stack
                 m_transferQueue.clear();
