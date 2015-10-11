@@ -132,6 +132,9 @@ if(KF5Kipi_FOUND)
     find_package(BISON)                                                        # For Panorama (must be found before KdepimLibs for MacOS).
     find_package(Phonon4Qt5)                                                   # For AdvancedSlideShow.
     find_package(QtKOAuth)                                                     # For Imgur Auhtenticated API
+
+# Plugins in pending state
+#
 #    find_package(Qca-qt5)                                                      # For Muvee.
 #    MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)                                       # For Htmlexport.
 #    MACRO_OPTIONAL_FIND_PACKAGE(LibXslt)                                       # For Htmlexport.
@@ -219,6 +222,9 @@ if(KF5Kipi_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("Mediawiki"          KF5MediaWiki_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("AdvancedSlideshow"  BUILD_VIEWERS)
     PRINT_COMPONENT_COMPILE_STATUS("Calendar"           KF5CalendarCore_FOUND)
+
+# Plugins in pending state
+#
 #    PRINT_COMPONENT_COMPILE_STATUS("Muvee"              Qca-qt5_FOUND)
 #    PRINT_COMPONENT_COMPILE_STATUS("VideoSlideshow"     ImageMagick_FOUND AND QTGSTREAMER_FOUND)
 #    PRINT_COMPONENT_COMPILE_STATUS("HtmlExport"         LIBXML2_FOUND AND LIBXSLT_FOUND)
