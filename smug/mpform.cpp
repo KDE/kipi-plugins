@@ -33,13 +33,14 @@
 #include <QFile>
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QMimeType>
-
-// KDE includes
-
-#include <QApplication>
-#include "kipiplugins_debug.h"
 #include <QUrl>
-#include <krandom.h>
+#include <QApplication>
+
+// local includes
+
+#include "kipiplugins_debug.h"
+#include "kputil.h"
+
 
 namespace KIPISmugPlugin
 {
@@ -47,7 +48,7 @@ namespace KIPISmugPlugin
 MPForm::MPForm()
 {
     m_boundary  = "----------";
-    m_boundary += KRandom::randomString(42 + 13).toLatin1();
+    m_boundary += KIPIPlugins::KPRandomGenerator::randomString(42 + 13).toLatin1();
 }
 
 MPForm::~MPForm()
