@@ -180,6 +180,21 @@ private:
     Private* const d;
 };
 
+// ---------------------------------------------------------------------------------------
+
+/** Generates random string
+ */
+
+class KIPIPLUGINS_EXPORT KPRandomGenerator
+{
+public:
+    
+    KPRandomGenerator();
+    ~KPRandomGenerator();
+    
+    static QString randomString(const int& length);
+};
+
 } // namespace KIPIPlugins
 
 #endif // KPUTIL_H
