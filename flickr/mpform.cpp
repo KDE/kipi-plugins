@@ -42,6 +42,7 @@
 // Local includes
 
 #include "kipiplugins_debug.h"
+#include "kputil.h"
 
 namespace KIPIFlickrPlugin
 {
@@ -49,28 +50,11 @@ namespace KIPIFlickrPlugin
 MPForm::MPForm()
 {
     m_boundary  = "----------";
-    m_boundary += randomString(42 + 13).toLatin1();
+    m_boundary += KIPIPlugins::KPRandomGenerator::randomString(42 + 13).toLatin1();
 }
 
 MPForm::~MPForm()
 {
-}
-
-QString MPForm::randomString(const int& length)
-{
-   const QString possibleCharacters(QStringLiteral("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"));
-
-   QString randomString;
-   qsrand((uint)QTime::currentTime().msec());
-
-   for(int i=0; i<length; ++i)
-   {
-       int index = qrand() % possibleCharacters.length();
-       QChar nextChar = possibleCharacters.at(index);
-       randomString.append(nextChar);
-   }
-
-   return randomString;
 }
 
 void MPForm::reset()
