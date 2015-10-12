@@ -31,13 +31,13 @@
 
 #include <QUrl>
 
-// Libkdcraw includes
+// Local includes
 
-#include <KDCRAW/RActionThreadBase>
+#include "kpthreadmanager.h"
 
-using namespace KDcrawIface;
+using namespace KIPIPlugins;
 
-class ActionThread : public RActionThreadBase
+class ActionThread : public KPThreadManager
 {
     Q_OBJECT
 

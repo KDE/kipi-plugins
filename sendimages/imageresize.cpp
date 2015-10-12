@@ -51,12 +51,13 @@
 #include "kipiplugins_debug.h"
 
 using namespace KIPIPlugins;
+using namespace KDcrawIface;
 
 namespace KIPISendimagesPlugin
 {
 
 Task::Task(int* count)
-    : RActionJob()
+    : KPJob()
 {
     m_count = count;
 }
@@ -212,7 +213,7 @@ bool Task::imageResize(const EmailSettings& settings, const QUrl& orgUrl,
 // ----------------------------------------------------------------------------------------------------
 
 ImageResize::ImageResize(QObject* const parent)
-    : RActionThreadBase(parent)
+    : KPThreadManager(parent)
 {
     m_count  = new int;
     *m_count = 0;
@@ -225,7 +226,7 @@ ImageResize::~ImageResize()
 
 void ImageResize::resize(const EmailSettings& settings)
 {
-    RJobCollection collection;
+    KPJobCollection collection;
     *m_count = 0;
     int i    = 1;
 
@@ -262,7 +263,7 @@ void ImageResize::resize(const EmailSettings& settings)
 void ImageResize::cancel()
 {
     *m_count   = 0;
-    RActionThreadBase::cancel();
+    KPThreadManager::cancel();
 }
 
 }  // namespace KIPISendimagesPlugin

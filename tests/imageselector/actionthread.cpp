@@ -32,16 +32,12 @@
 #include <QTransform>
 #include <QDebug>
 
-// Local includes
-
-#include "ractionjob.h"
-
-class Task : public RActionJob
+class Task : public KPJob
 {
 public:
 
     Task()
-        : RActionJob()
+        : KPJob()
     {
     }
 
@@ -97,7 +93,7 @@ protected:
 // ----------------------------------------------------------------------------------------------------
 
 ActionThread::ActionThread(QObject* const parent)
-    : RActionThreadBase(parent)
+    : KPThreadManager(parent)
 {
 }
 
@@ -107,7 +103,7 @@ ActionThread::~ActionThread()
 
 void ActionThread::rotate(const QList<QUrl>& list)
 {
-    RJobCollection collection;
+    KPJobCollection collection;
 
     foreach (const QUrl& url, list)
     {

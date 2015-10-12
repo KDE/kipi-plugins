@@ -29,20 +29,17 @@
 #include <QMutex>
 #include <QUrl>
 
-// Libkdcraw includes
-
-#include <KDCRAW/RActionThreadBase>
-
 // Local includes
 
+#include "kpthreadmanager.h"
 #include "emailsettings.h"
 
-using namespace KDcrawIface;
+using namespace KIPIPlugins;
 
 namespace KIPISendimagesPlugin
 {
 
-class Task : public RActionJob
+class Task : public KPJob
 {
     Q_OBJECT
 
@@ -77,7 +74,7 @@ private:
 
 // ----------------------------------------------------------------------------------------------------
 
-class ImageResize : public RActionThreadBase
+class ImageResize : public KPThreadManager
 {
     Q_OBJECT
 

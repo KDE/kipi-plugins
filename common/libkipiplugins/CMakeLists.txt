@@ -19,6 +19,7 @@ set(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kipiplugins_debug.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpbinaryiface.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpversion.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpaboutdata.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpthreadmanager.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/imageio/iccjpeg.c
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/imageio/kpwritehelp.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/imageio/kpwriteimage.cpp
