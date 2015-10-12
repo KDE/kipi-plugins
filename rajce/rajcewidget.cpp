@@ -43,7 +43,6 @@
 
 #include <klocalizedstring.h>
 #include <kconfig.h>
-#include <kcolorscheme.h>
 #include <kconfiggroup.h>
 
 // Libkipi includes
@@ -161,7 +160,8 @@ void RajceWidget::updateLabels(const QString&, const QString&)
             this, SLOT(selectedAlbumChanged(QString)));
 
     unsigned max = m_session->state().maxHeight();
-    max          = max > m_session->state().maxWidth() ? max : m_session->state().maxWidth();
+    max          = max > m_session->state().maxWidth() ? max
+                                                       : m_session->state().maxWidth();
     m_dimensionSpB->setMaximum(max);
 
     if (m_dimensionSpB->value() == 0)
@@ -175,13 +175,9 @@ void RajceWidget::updateLabels(const QString&, const QString&)
     m_dimensionSpB->setEnabled(loggedIn);
     m_imageQualitySpB->setEnabled(loggedIn);
 
-    KColorScheme scheme(palette().currentColorGroup(), KColorScheme::Window);
-    QColor backgroundColor = scheme.background().color();
-
     if (m_session->state().lastErrorCode() != 0)
     {
         m_progressBar->setVisible(true);
-        backgroundColor = scheme.background(KColorScheme::NegativeBackground).color();
 
         switch (m_session->state().lastErrorCode())
         {
@@ -206,11 +202,11 @@ void RajceWidget::updateLabels(const QString&, const QString&)
             case NonexistentTarget:                                                                                break;
             default:                                                                                               break;
         }
+        
+        QPalette palette = m_progressBar->palette();
+        palette.setColor(QPalette::Active, QPalette::Background, Qt::darkRed);
+        m_progressBar->setPalette(palette);
     }
-
-    QPalette palette = m_progressBar->palette();
-    palette.setColor(QPalette::Active, QPalette::Background, backgroundColor);
-    m_progressBar->setPalette(palette);
 }
 
 void RajceWidget::reactivate()
@@ -255,7 +251,7 @@ void RajceWidget::progressStarted(unsigned commandType)
 {
     QString text;
 
-    /*
+/*
     enum RajceCommandType
     {
         Login = 0,
@@ -266,7 +262,7 @@ void RajceWidget::progressStarted(unsigned commandType)
         CloseAlbum,
         AddPhoto
     };
-    */
+*/
 
     switch(commandType)
     {
