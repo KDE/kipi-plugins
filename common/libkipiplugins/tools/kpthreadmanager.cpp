@@ -45,7 +45,6 @@
 namespace KIPIPlugins
 {
 
-
 KPJob::KPJob()
     : QObject(),
       QRunnable(),
@@ -65,7 +64,7 @@ void KPJob::cancel()
 }
 
 // -----------------------------------------------------------------
-    
+
 class Q_DECL_HIDDEN KPThreadManager::Private
 {
 public:
@@ -202,7 +201,7 @@ void KPThreadManager::run()
             for (KPJobCollection::iterator it = d->todo.begin() ; it != d->todo.end(); ++it)
             {
                 KPJob* const job = it.key();
-                int priority          =  it.value();
+                int priority     =  it.value();
 
                 connect(job, SIGNAL(signalDone()),
                         this, SLOT(slotJobFinished()));
