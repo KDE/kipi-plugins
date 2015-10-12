@@ -37,34 +37,20 @@
 #include <QMimeType>
 #include <QTime>
 
+//local includes
+
+#include "kputil.h"
+
 namespace KIPIGoogleServicesPlugin
 {
 
 MPForm_Picasa::MPForm_Picasa()
-    : m_boundary(QByteArray("----------") + randomString(42 + 13))
+    : m_boundary(QByteArray("----------") + KIPIPlugins::KPRandomGenerator::randomString(42 + 13).toLatin1())
 {
 }
 
 MPForm_Picasa::~MPForm_Picasa()
 {
-}
-
-QByteArray MPForm_Picasa::randomString(const int& length)
-{
-   const QLatin1String possibleCharacters(
-       QLatin1Literal("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"));
-
-   QByteArray randomString;
-   qsrand((uint)QTime::currentTime().msec());
-
-   for(int i=0; i<length; ++i)
-   {
-       int index = qrand() % possibleCharacters.size();
-       char nextChar = possibleCharacters.data()[index];
-       randomString.append(nextChar);
-   }
-
-   return randomString;
 }
 
 void MPForm_Picasa::reset()

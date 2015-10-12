@@ -46,7 +46,6 @@ public:
     bool addPair(const QString& name, const QString& value, const QString& contentType=QString());
     bool addFile(const QString& name, const QString& path);
 
-    QByteArray randomString(const int& length);
     QString    contentType() const;
     QByteArray formData()    const;
     QString    boundary()    const;
