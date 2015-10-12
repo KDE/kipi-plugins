@@ -37,19 +37,16 @@
 #include <QUrl>
 #include <QString>
 
-// KDE includes
-
-#include <krandom.h>
-
 // Local includes
 
 #include "kipiplugins_debug.h"
+#include "kputil.h"
 
 namespace KIPIFacebookPlugin
 {
 
 MPForm::MPForm()
-    : m_boundary(KRandom::randomString(42 + 13).toLatin1())
+    : m_boundary(KIPIPlugins::KPRandomGenerator::randomString(42 + 13).toLatin1())
 {
     reset();
 }
