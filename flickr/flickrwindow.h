@@ -60,11 +60,6 @@ namespace KIPIPlugins
     class KPAboutData;
 }
 
-namespace KWallet
-{
-    class Wallet;
-}
-
 using namespace KIPI;
 using namespace KIPIPlugins;
 
@@ -181,8 +176,6 @@ private:
     QProgressDialog*                       m_authProgressDlg;
 
     QList< QPair<QUrl, FPhotoInfo> >       m_uploadQueue;
-
-//  KWallet::Wallet*                       m_wallet;
 
     QLineEdit*                             m_tagsLineEdit;
 

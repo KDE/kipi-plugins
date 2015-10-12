@@ -42,7 +42,6 @@
 
 #include <klocalizedstring.h>
 #include <kconfig.h>
-#include <kwallet.h>
 #include <kwindowconfig.h>
 
 // Libkipi includes

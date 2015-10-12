@@ -31,11 +31,6 @@
 
 #include <QString>
 
-namespace KWallet
-{
-    class Wallet;
-}
-
 namespace KIPIPiwigoExportPlugin
 {
 
@@ -68,8 +63,6 @@ private:
     QString          mUrl;
     QString          mUsername;
     QString          mPassword;
-
-    KWallet::Wallet* mpWallet;
 };
 
 } // namespace KIPIPiwigoExportPlugin

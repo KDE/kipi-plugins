@@ -103,7 +103,6 @@ find_package(KF5 REQUIRED COMPONENTS
              XmlGui
              I18n
              KIO
-             Wallet
              CoreAddons                       # Krandom use
              Service                          # for SendImages (KToolInvocation)
              ThreadWeaver                     # for Panorama

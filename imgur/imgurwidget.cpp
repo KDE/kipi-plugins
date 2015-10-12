@@ -127,14 +127,8 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
 
     accountBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     accountBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-/*
-   connect(d->dlg, SIGNAL(signalWalletOpened(bool)),
-           this, SLOT(slotSetLoggedUser(bool)));
-
-   connect(this, SIGNAL(signalLoggedUserChanged(QString)),
-           userNameDisplayLbl, SLOT(setText(QString)));
-*/
 #endif //OAUTH_ENABLED
+
     // ------------------------------------------------------------------------
 
     settingsBoxLayout->addWidget(d->headerLbl);

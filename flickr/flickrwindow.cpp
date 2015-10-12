@@ -98,7 +98,6 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
     m_tmp                       = tmpFolder;
     m_uploadCount               = 0;
     m_uploadTotal               = 0;
-    //  m_wallet                    = 0;
     m_widget                    = new FlickrWidget(this, iface(), serviceName);
     m_albumDlg                  = new NewAlbum(this,QStringLiteral("Flickr"));
     m_albumsListComboBox        = m_widget->getAlbumsCoB();
@@ -146,13 +145,13 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
                                                      "(c) 2008-2015, Gilles Caulier\n"
                                                      "(c) 2009, Luka Renko\n"
                                                      "(c) 2015, Shourya Singh Gupta"));
-    
+
     about->addAuthor(i18n("Vardhman Jain"), i18n("Author and maintainer"),
                      QStringLiteral("Vardhman at gmail dot com"));
 
     about->addAuthor(i18n("Gilles Caulier"), i18n("Developer"),
                      QStringLiteral("caulier dot gilles at gmail dot com"));
-    
+
     about->addAuthor(i18n("Shourya Singh Gupta"), i18n("Developer"),
                      QStringLiteral("shouryasgupta at gmail dot com"));
 
@@ -204,7 +203,7 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
 
     connect(m_changeUserButton, SIGNAL(clicked()),
             this, SLOT(slotUserChangeRequest()));
-    
+
     connect(m_removeAccount, SIGNAL(clicked()),
             this, SLOT(slotRemoveAccount()));
 
@@ -230,7 +229,6 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
 
     m_talker->m_authProgressDlg = m_authProgressDlg;
 
-    
     // --------------------------------------------------------------------------
 
     connect(this, &QDialog::finished,
@@ -245,9 +243,6 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
 
 FlickrWindow::~FlickrWindow()
 {
-    //   if (m_wallet)
-    //      delete m_wallet;
-
     delete m_authProgressDlg;
     delete m_talker;
     delete m_widget;

@@ -46,7 +46,6 @@ namespace KIPIPiwigoExportPlugin
 
 Piwigo::Piwigo()
 {
-    mpWallet = 0;
     load();
 }
 

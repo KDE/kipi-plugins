@@ -286,7 +286,6 @@ void YandexFotkiWindow::readSettings()
     KConfig config(QStringLiteral("kipirc"));
     KConfigGroup grp = config.group("YandexFotki Settings");
 
-    // TODO: use kwallet ??
     m_talker.setLogin(grp.readEntry("login", ""));
     // don't store tokens in plaintext
     //m_talker.setToken(grp.readEntry("token", ""));
@@ -314,7 +313,6 @@ void YandexFotkiWindow::writeSettings()
     KConfig config(QStringLiteral("kipirc"));
     KConfigGroup grp = config.group("YandexFotki Settings");
 
-    // TODO: user kwallet ??
     grp.writeEntry("token", m_talker.token());
     // don't store tokens in plaintext
     //grp.writeEntry("login", m_talker.login());
