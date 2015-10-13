@@ -556,7 +556,7 @@ public:
     void setServiceProvider(const QString& arg);
 
     /*!
-     * \brief Specifies the the user-friendly name of the associated broadcast channel.
+     * \brief Specifies the user-friendly name of the associated broadcast channel.
      *
      * \param arg specifies the user-friendly name of the associated broadcast channel.
      *
@@ -583,7 +583,7 @@ public:
     void setProgramTitle(const QString& arg);
 
     /*!
-     * \brief Specifies the the name of the series.
+     * \brief Specifies the name of the series.
      *
      * \param arg specifies the name of the series.
      *
@@ -621,7 +621,7 @@ public:
     void setChannelId(const HChannelId& arg);
 
      /*!
-     * \brief Specifies the the total number of episodes in the series to which this content
+     * \brief Specifies the total number of episodes in the series to which this content
      * belongs.
      *
      * \param arg specifies the total number of episodes in the series to which this content
@@ -632,7 +632,7 @@ public:
     void setEpisodeCount(qint32 arg);
 
     /*!
-     * \brief Specifies the the episode number within the series to which this content
+     * \brief Specifies the episode number within the series to which this content
      * belongs.
      *
      * \param arg specifies the episode number within the series to which this content
@@ -851,7 +851,7 @@ public:
     void setRelations(const QList<QUrl>& arg);
 
     /*!
-     * \brief Specifies the the start time of a scheduled program.
+     * \brief Specifies the start time of a scheduled program.
      *
      * \param arg specifies the start time of a scheduled program.
      *
@@ -860,7 +860,7 @@ public:
     void setScheduledStartTime(const HScheduledTime& arg);
 
     /*!
-     * \brief Specifies the the end time of a scheduled program.
+     * \brief Specifies the end time of a scheduled program.
      *
      * \param arg specifies the end time of a scheduled program.
      *

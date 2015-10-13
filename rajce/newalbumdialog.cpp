@@ -44,8 +44,8 @@ NewAlbumDialog::NewAlbumDialog(QWidget* const parent)
     getLocEdit()->hide();
     getDateTimeEdit()->hide();
     
-    QGroupBox* const privBox = new QGroupBox(i18n("Visiblity"), getMainWidget());
-    privBox->setWhatsThis(i18n("Set the visiblity of the album"));   
+    QGroupBox* const privBox = new QGroupBox(i18n("Visibility"), getMainWidget());
+    privBox->setWhatsThis(i18n("Set the visibility of the album"));   
     
     QLabel* const lbl   = new QLabel(i18n("Public"), privBox);
     

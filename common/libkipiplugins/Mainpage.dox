@@ -59,7 +59,7 @@ KPSettingsWidget contains the following GUI elements :
                <ul>
                    <li><b>Resize Image Check Box</b> : If checked, then the image will be resized and modified before uploading.</li>
                    <li><b>Image Quality Spin Box</b> : If Resize Image check box is checked then,  this spin box sets the new image quality value of JPEG image to be uploaded.</li>
-                   <li><b>Maximum dimension Spin Box</b> : If Resize Image check box is checked then, this spin box sets the maximum dimension of the image. If size of image is larger than than the maximum image dimension specified, the the image is scaled down to the maximum allowed image dimension.</li>
+                   <li><b>Maximum dimension Spin Box</b> : If Resize Image check box is checked then, this spin box sets the maximum dimension of the image. If size of image is larger than than the maximum image dimension specified, the image is scaled down to the maximum allowed image dimension.</li>
                    <li><b>QLabels</b> : Labels to provide information about the widgets.</li>
                </ul>
             </li>

@@ -198,7 +198,7 @@ public:
      * \brief Returns the CDS metadata properties that the server
      * should include in the response.
      *
-     * \return The the CDS metadata properties that the server
+     * \return The CDS metadata properties that the server
      * should include in the response.
      *
      * \sa setFilter()

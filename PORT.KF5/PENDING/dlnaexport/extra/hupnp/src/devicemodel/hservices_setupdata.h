@@ -172,7 +172,7 @@ public:
     int version() const;
 
     /*!
-     * \brief Sets the the <em>inclusion requirement</em>.
+     * \brief Sets the <em>inclusion requirement</em>.
      *
      * \param arg specifies the <em>inclusion requirement</em>.
      *

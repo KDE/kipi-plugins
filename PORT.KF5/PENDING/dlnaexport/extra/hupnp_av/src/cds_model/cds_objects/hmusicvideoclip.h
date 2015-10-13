@@ -207,7 +207,7 @@ public:
     void setAlbums(const QStringList& arg);
 
     /*!
-     * \brief Specifies the the start time of a scheduled program.
+     * \brief Specifies the start time of a scheduled program.
      *
      * \param arg specifies the start time of a scheduled program.
      *
@@ -216,7 +216,7 @@ public:
     void setScheduledStartTime(const HScheduledTime& arg);
 
     /*!
-     * \brief Specifies the the end time of a scheduled program.
+     * \brief Specifies the end time of a scheduled program.
      *
      * \param arg specifies the end time of a scheduled program.
      *

@@ -123,11 +123,11 @@ SlideShowConfig::SlideShowConfig(QWidget* const parent, SharedContainer* const s
                                                      "(c) 2006-2009, Valerio Fuoglio"));
 
     about->addAuthor(ki18n("Renchi Raju").toString(),
-                     ki18n("Developper").toString(),
+                     ki18n("Developer").toString(),
                      QStringLiteral("renchi dot raju at gmail dot com"));
 
     about->addAuthor(ki18n("Valerio Fuoglio").toString(),
-                     ki18n("Developper").toString(),
+                     ki18n("Developer").toString(),
                      QStringLiteral("valerio dot fuoglio at gmail dot com"));
 
     about->setHandbookEntry(QStringLiteral("slideshow"));

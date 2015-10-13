@@ -133,7 +133,7 @@ EnfuseSettingsWidget::EnfuseSettingsWidget(QWidget* const parent)
     d->levelsInput->setWhatsThis(i18nc("@info:whatsthis",
                                        "Set the number of levels for pyramid blending. "
                                        "Balances towards local features (small number) or global features (high number). "
-                                       "Additionnally, a low number trades off quality of results for faster "
+                                       "Additionally, a low number trades off quality of results for faster "
                                        "execution time and lower memory usage."));
 
     d->hardMaskCB = new QCheckBox(i18nc("@option:check", "Hard Mask"), this);
@@ -172,7 +172,7 @@ EnfuseSettingsWidget::EnfuseSettingsWidget(QWidget* const parent)
     d->contrastInput->setRange(0.0, 1.0);
     d->contrastInput->setSingleStep(0.01);
     d->contrastInput->setToolTip(i18nc("@info:tooltip",
-                                       "Contribution of highly constrated pixels to the blending process."));
+                                       "Contribution of highly contrasted pixels to the blending process."));
     d->contrastInput->setWhatsThis(i18nc("@info:whatsthis",
                                          "Sets the relative weight of high-contrast pixels. "
                                          "Increasing this weight makes pixels with neighboring differently colored "
