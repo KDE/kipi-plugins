@@ -1,0 +1,10 @@
+Kipi-plugins 4.13.0 - Release date: 2015-08-30
+------------------------------------------------------------------------
+
+NEW FEATURES:
+
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
+
+001 ==> 280058 - No coordinates shown in GPSSync window when using sidecar files.
+002 ==> 
+ 
