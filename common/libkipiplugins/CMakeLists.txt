@@ -45,21 +45,23 @@ generate_export_header(KF5kipiplugins BASE_NAME kipiplugins EXPORT_MACRO_NAME KI
 
 target_link_libraries(KF5kipiplugins
 
-                      PRIVATE
-                      ${JPEG_LIBRARIES}
-                      ${TIFF_LIBRARIES}
-                      ${PNG_LIBRARIES}
-
                       PUBLIC
                       Qt5::Gui
+                      
+                      PRIVATE
+
                       KF5::I18n
                       KF5::ConfigCore
                       KF5::KIOFileWidgets
                       KF5::CoreAddons
 
-                      ${KF5Kipi_LIBRARIES}
-                      ${KF5KExiv2_LIBRARIES}
-                      ${KF5KDcraw_LIBRARIES}
+                      KF5::Kipi
+                      KF5::KDcraw
+                      KF5::KExiv2
+
+                      ${JPEG_LIBRARIES}
+                      ${TIFF_LIBRARIES}
+                      ${PNG_LIBRARIES}
 )
 
 set_target_properties(KF5kipiplugins PROPERTIES

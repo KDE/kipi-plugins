@@ -94,6 +94,8 @@ add_executable(expoblending ${expoblending_SRCS})
 
 target_link_libraries(expoblending
     libexpoblending
+    KF5::I18n
+    KF5::XmlGui
     KF5kipiplugins
 )
 

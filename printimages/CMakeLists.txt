@@ -44,10 +44,12 @@ target_link_libraries(kipiplugin_printimages
                       Qt5::Core
                       Qt5::PrintSupport
                       Qt5::Gui
+
                       KF5::KIOCore
                       KF5::Kipi
                       KF5::KDcraw
                       KF5::KExiv2
+
                       KF5kipiplugins
                      )
 

@@ -24,15 +24,17 @@ add_library(kipiplugin_rajce MODULE ${kipiplugin_rajce_PART_SRCS})
 
 target_link_libraries(kipiplugin_rajce
                       PRIVATE
+                      Qt5::Core
+                      Qt5::Xml
+                      Qt5::XmlPatterns
+                      
                       KF5::KDcraw
                       KF5::Kipi
                       KF5::KExiv2
                       KF5::KIOCore
+                      KF5::KIOFileWidgets
                       KF5::WindowSystem
 
-                      Qt5::Core
-                      Qt5::Xml
-                      Qt5::XmlPatterns
                       KF5kipiplugins
                      )
 

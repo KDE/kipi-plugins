@@ -24,6 +24,7 @@ target_link_libraries(kipiplugin_vkontakte
         KF5::KExiv2
         KF5::KDcraw
         KF5::WindowSystem
+        KF5::KIOFileWidgets
         KF5kipiplugins
         ${LIBKVKONTAKTE_LIBRARIES}
 )

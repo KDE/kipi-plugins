@@ -23,6 +23,7 @@ target_link_libraries(${PLUGIN_NAME}
         KF5kipiplugins
         KF5::Kipi
         KF5::KIOCore
+        KF5::KIOFileWidgets
         KF5::WindowSystem
 )
 
