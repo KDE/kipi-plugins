@@ -29,7 +29,6 @@ target_link_libraries(kipiplugin_rajce
                       KF5::KExiv2
                       KF5::KIOCore
                       KF5::WindowSystem
-                      KF5::CoreAddons
 
                       Qt5::Core
                       Qt5::Xml

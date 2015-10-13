@@ -33,7 +33,6 @@
 
 // KDE includes
 
-#include <krandom.h>
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
 #include <kjobwidgets.h>
@@ -48,6 +47,7 @@
 #include "mpform.h"
 #include "kpversion.h"
 #include "kpmetadata.h"
+#include "kputil.h"
 
 using namespace KIPIPlugins;
 
@@ -624,7 +624,8 @@ QString AddPhotoCommand::additionalXml() const
     metadata[QStringLiteral("PeopleRegionSet")] = QStringLiteral("");
     //    }
 
-    QString id = QString::number(KRandom::random());
+    qsrand((uint)QTime::currentTime().msec());
+    QString id = QString::number(qrand());
     QString ret(QStringLiteral("  <objectInfo>\n    <Item id=\""));
     ret.append(id).append(QStringLiteral("\">\n"));
 
