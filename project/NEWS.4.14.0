@@ -1,0 +1,14 @@
+Kipi-plugins 4.14.0 - Release date: 2015-10-11
+------------------------------------------------------------------------
+
+NEW FEATURES:
+
+General : Add support of OpenCV 3.x
+
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
+
+001 ==> 306442 - digiKam 2.8 crash when opening geolocation plugin.
+002 ==> 352596 - Unable to upload large image to flickr even though I'm resizing it.
+003 ==> 352621 - Export to facebook crashes.
+004 ==> 352862 - Photos are compressed when exported to picasa.
+005 ==> 352750 - Facebook export: Filename is used as Description.
