@@ -29,9 +29,10 @@
 #include <QFileInfo>
 #include <QUrl>
 
-// LibKDcraw includes
+// Libkipi includes
 
-#include <KDCRAW/KDcraw>
+#include <KIPI/Interface>
+#include <KIPI/PluginLoader>
 
 // Local includes
 
@@ -39,7 +40,7 @@
 #include "kpimageinfo.h"
 #include "timer.h"
 
-using namespace KDcrawIface;
+using namespace KIPI;
 
 namespace KIPIViewerPlugin
 {
@@ -70,6 +71,12 @@ public:
         rotate_list[2] = KPMetadata::ORIENTATION_ROT_270;
         rotate_list[3] = KPMetadata::ORIENTATION_ROT_180;
 
+        PluginLoader* const pl = PluginLoader::instance();
+
+        if (pl)
+        {
+            iface = pl->interface();
+        } 
     }
 
     float                        rdx, rdy, z, ux, uy, rtx, rty;
@@ -81,6 +88,7 @@ public:
     QSize                        initial_size;
     KPMetadata::ImageOrientation rotate_list[4];
     int                          rotate_idx;
+    Interface*                   iface;
 };
 
 Texture::Texture()
@@ -129,7 +137,13 @@ bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
     if (KPMetadata::isRawFile(QUrl::fromLocalFile(d->filename)))
     {
         // it's a RAW file, use the libkdcraw loader
-        KDcraw::loadRawPreview(d->qimage, d->filename);
+        if (d->iface)
+        {
+            RawProcessor* const rawdec = d->iface->createRawProcessor();
+
+            if (rawdec)
+                rawdec->loadRawPreview(QUrl::fromLocalFile(d->filename), d->qimage);
+        }
     }
     else
     {
@@ -137,7 +151,8 @@ bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
         d->qimage = QImage(d->filename);
     }
 
-    //handle rotation
+    // handle rotation
+
     KPImageInfo info(QUrl::fromLocalFile(d->filename));
 
     if ( info.orientation() != KPMetadata::ORIENTATION_UNSPECIFIED )

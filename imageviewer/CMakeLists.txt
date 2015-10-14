@@ -25,7 +25,6 @@ target_link_libraries(kipiplugin_imageviewer
                       ${OPENGL_LIBRARIES}
                       KF5::Kipi
                       KF5::KExiv2
-                      KF5::KDcraw
 
                       # For Linux Only.
                       ${X11_LIBRARIES}
