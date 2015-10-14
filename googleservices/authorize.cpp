@@ -54,10 +54,6 @@
 #include <kjobwidgets.h>
 #include <kconfiggroup.h>
 
-// LibKDcraw includes
-
-#include <KDCRAW/KDcraw>
-
 // local includes
 
 #include "mpform_gdrive.h"

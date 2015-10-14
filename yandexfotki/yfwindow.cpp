@@ -67,7 +67,6 @@ extern "C"
 
 // LibKDcraw includes
 
-#include <libkdcraw_version.h>
 #include <KDCRAW/KDcraw>
 
 // Libkipi includes
@@ -367,7 +366,7 @@ void YandexFotkiWindow::authenticate(bool forceAuthWindow)
     // update credentials
     if (forceAuthWindow || m_talker.login().isNull() || m_talker.password().isNull())
     {
-        KPLoginDialog* dlg = new KPLoginDialog(this, QStringLiteral("Yandex.Fotki"), m_talker.login(), QString());
+        KPLoginDialog* const dlg = new KPLoginDialog(this, QStringLiteral("Yandex.Fotki"), m_talker.login(), QString());
 
         if (dlg->exec() == QDialog::Accepted)
         {

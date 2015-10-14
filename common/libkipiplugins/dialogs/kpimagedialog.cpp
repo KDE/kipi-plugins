@@ -42,7 +42,6 @@
 
 // LibKDcraw includes
 
-#include <libkdcraw_version.h>
 #include <KDCRAW/DcrawInfoContainer>
 #include <KDCRAW/KDcraw>
 
@@ -98,7 +97,8 @@ public:
 };
 
 KPImageDialogPreview::KPImageDialogPreview(QWidget* const parent)
-    : KPreviewWidgetBase(parent), d(new Private)
+    : KPreviewWidgetBase(parent),
+      d(new Private)
 {
     QVBoxLayout* const vlay = new QVBoxLayout(this);
     d->imageLabel           = new QLabel(this);

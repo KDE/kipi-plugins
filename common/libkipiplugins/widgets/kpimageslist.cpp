@@ -60,10 +60,6 @@
 #include <KIPI/Interface>
 #include <KIPI/PluginLoader>
 
-// LibKDcraw includes
-
-#include <KDCRAW/KDcraw>
-
 // Local includes
 
 #include "kprawthumbthread.h"

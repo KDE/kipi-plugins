@@ -33,10 +33,6 @@
 #include <QMap>
 #include <QUrl>
 
-// LibKDcraw includes
-
-#include <KDCRAW/KDcraw>
-
 namespace KIPIPanoramaPlugin
 {
 

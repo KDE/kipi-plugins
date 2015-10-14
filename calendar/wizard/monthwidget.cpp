@@ -47,11 +47,6 @@
 
 #include <KIPI/Interface>
 
-// LibKDcraw includes
-
-#include <libkdcraw_version.h>
-#include <KDCRAW/KDcraw>
-
 // Local includes
 
 #include "calsettings.h"

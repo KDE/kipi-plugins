@@ -42,16 +42,10 @@ extern "C"
 #include <png.h>
 }
 
-// LibKDcraw includes
-
-#include <KDCRAW/RawDecodingSettings>
-
 // Local includes
 
 #include "kipiplugins_export.h"
 #include "kpmetadata.h"
-
-
 
 namespace KIPIPlugins
 {

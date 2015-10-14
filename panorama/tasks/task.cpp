@@ -30,10 +30,6 @@
 
 #include <klocalizedstring.h>
 
-// LibKDcraw includes
-
-#include <KDCRAW/KDcraw>
-
 namespace KIPIPanoramaPlugin
 {
 

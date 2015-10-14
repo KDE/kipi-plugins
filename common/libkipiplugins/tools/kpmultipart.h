@@ -24,7 +24,8 @@
 #define KPMULTIPART_H
 
 // Qt includes
-#include <QtNetwork/QHttpMultiPart>
+
+#include <QHttpMultiPart>
 #include <QString>
 
 // KDE includes
@@ -42,15 +43,17 @@ class KIPIPLUGINS_EXPORT KPMultiPart
 {
 
 public:
+
     KPMultiPart();
     ~KPMultiPart();
     
-    QHttpMultiPart* multiPart();
+    QHttpMultiPart* multiPart() const;
 
-    bool appendFile(const QString &header, const QString &path);
+    bool appendFile(const QString &header, const QString& path);
     bool appendPair(const QString& name, const QString& value, const QString& contentType);
 
 private:
+
     QHttpMultiPart* m_multiPart;
 };
 

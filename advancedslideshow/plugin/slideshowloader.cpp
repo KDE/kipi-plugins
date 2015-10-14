@@ -37,7 +37,6 @@
 
 // LibKDcraw includes
 
-#include <libkdcraw_version.h>
 #include <KDCRAW/KDcraw>
 
 // Libkipi includes

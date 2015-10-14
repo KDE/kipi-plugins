@@ -23,14 +23,15 @@
 #include "kpmultipart.h"
 
 // Qt includes
-#include <QtCore/QFile>
-#include <QtCore/QFileInfo>
-#include <QtCore/QMimeDatabase>
-#include <QtCore/QMimeType>
-#include <QtCore/QJsonDocument>
-#include <QtNetwork/QNetworkAccessManager>
-#include <QtNetwork/QNetworkReply>
-#include <QtNetwork/QHttpMultiPart>
+
+#include <QFile>
+#include <QFileInfo>
+#include <QMimeDatabase>
+#include <QMimeType>
+#include <QJsonDocument>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QHttpMultiPart>
 
 // Local includes
 
@@ -62,9 +63,10 @@ bool KPMultiPart::appendPair(const QString& name, const QString& value, const QS
     return true;
 }
 
-bool KPMultiPart::appendFile(const QString &header, const QString &path)
+bool KPMultiPart::appendFile(const QString& header, const QString& path)
 {
     QString mime = QMimeDatabase().mimeTypeForUrl(QUrl(path)).name();
+
     if (mime.isEmpty())
         return false;
 
@@ -75,7 +77,8 @@ bool KPMultiPart::appendFile(const QString &header, const QString &path)
                         QVariant(QString("form-data; name=\"%1\"; filename=\"%2\"").arg(header).arg(fileInfo.fileName())));
     imagePart.setHeader(QNetworkRequest::ContentLengthHeader, QVariant(fileInfo.size()));
     imagePart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant(mime));
-    QFile *file = new QFile(path);
+    QFile* const file = new QFile(path);
+
     if (!file->open(QIODevice::ReadOnly))
     {
         delete file;
@@ -89,7 +92,7 @@ bool KPMultiPart::appendFile(const QString &header, const QString &path)
     return true;
 }
 
-QHttpMultiPart* KPMultiPart::multiPart()
+QHttpMultiPart* KPMultiPart::multiPart() const
 {
     return m_multiPart;
 }
