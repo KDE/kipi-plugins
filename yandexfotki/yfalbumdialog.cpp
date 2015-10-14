@@ -54,7 +54,7 @@ YandexFotkiAlbumDialog::YandexFotkiAlbumDialog(QWidget* const parent, YandexFotk
     hideLocation();
     hideDateTime();
 
-    QGroupBox* const albumBox = new QGroupBox(i18n(""), this);
+    QGroupBox* const albumBox = new QGroupBox(QString(), this);
 
     m_passwordEdit = new QLineEdit();
     m_passwordEdit->setWhatsThis(i18n("Password for the album (optional)."));
