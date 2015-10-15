@@ -28,21 +28,16 @@
 #include <QImage>
 #include <QUrl>
 #include <QList>
-
-// KDE includes
-
-#include <kpreviewwidgetbase.h>
+#include <QScrollArea>
 
 // Local includes
 
 #include "kipiplugins_export.h"
 
-class KFileItem;
-
 namespace KIPIPlugins
 {
 
-class KIPIPLUGINS_EXPORT KPImageDialogPreview : public KPreviewWidgetBase
+class KIPIPLUGINS_EXPORT KPImageDialogPreview : public QScrollArea
 {
     Q_OBJECT
 
@@ -58,9 +53,6 @@ private Q_SLOTS:
     void showPreview();
     void showPreview(const QUrl&);
     void slotThumbnail(const QUrl&, const QPixmap&);
-    void slotKDEPreview(const KFileItem&, const QPixmap&);
-    void slotKDEPreviewFailed(const KFileItem&);
-    void slotRawThumb(const QUrl&, const QImage&);
     void clearPreview();
 
 private:

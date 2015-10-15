@@ -38,7 +38,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kio/previewjob.h>
 
 // Libkipi includes
 
@@ -49,6 +48,7 @@
 // Local includes
 
 #include "kpmetadata.h"
+#include "kipiplugins_debug.h"
 
 using namespace KIPI;
 
@@ -87,7 +87,7 @@ public:
 };
 
 KPImageDialogPreview::KPImageDialogPreview(QWidget* const parent)
-    : KPreviewWidgetBase(parent),
+    : QScrollArea(parent),
       d(new Private)
 {
     QVBoxLayout* const vlay = new QVBoxLayout(this);
@@ -103,8 +103,6 @@ KPImageDialogPreview::KPImageDialogPreview(QWidget* const parent)
     vlay->addWidget(d->imageLabel);
     vlay->addWidget(d->infoLabel);
     vlay->addStretch();
-
-    setSupportedMimeTypes(d->iface->supportedImageMimeTypes());
 
     if (d->iface)
     {
@@ -156,18 +154,7 @@ void KPImageDialogPreview::showPreview(const QUrl& url)
         }
         else
         {
-            if ( !d->currentUrl.isValid() )
-                return;
-
-            KFileItemList items;
-            items.append(KFileItem(d->currentUrl));
-            KIO::PreviewJob* const job = KIO::filePreview(items, QSize(256, 256));
-
-            connect(job, SIGNAL(gotPreview(KFileItem,QPixmap)),
-                    this, SLOT(slotKDEPreview(KFileItem,QPixmap)));
-
-            connect(job, SIGNAL(failed(KFileItem)),
-                    this, SLOT(slotKDEPreviewFailed(KFileItem)));
+            qCDebug(KIPIPLUGINS_LOG) << "No KIPI interface available : thumbnails will not generated.";
         }
 
         // Try to use libkexiv2 to identify image.
@@ -254,22 +241,6 @@ void KPImageDialogPreview::showPreview(const QUrl& url)
 
         d->infoLabel->setText(identify);
     }
-}
-
-// Used only if Kipi interface is null.
-void KPImageDialogPreview::slotKDEPreview(const KFileItem& item, const QPixmap& pix)
-{
-    if (!pix.isNull())
-        slotThumbnail(item.url(), pix);
-}
-
-void KPImageDialogPreview::slotKDEPreviewFailed(const KFileItem&)
-{
-}
-
-void KPImageDialogPreview::slotRawThumb(const QUrl& url, const QImage& img)
-{
-    slotThumbnail(url, QPixmap::fromImage(img));
 }
 
 void KPImageDialogPreview::slotThumbnail(const QUrl& url, const QPixmap& pix)

@@ -51,7 +51,6 @@ target_link_libraries(KF5kipiplugins
 
                       KF5::I18n
                       KF5::ConfigCore
-                      KF5::KIOFileWidgets
 
                       KF5::Kipi
                       KF5::KExiv2

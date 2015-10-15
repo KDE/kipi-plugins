@@ -51,8 +51,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kio/previewjob.h>
-#include <kfileitem.h>
 
 // Libkipi includes
 
@@ -521,7 +519,7 @@ public:
     CtrlButton*                saveButton;
 
     QList<QUrl>                processItems;
-    KPWorkingPixmap progressPix;
+    KPWorkingPixmap            progressPix;
     int                        progressCount;
     QTimer*                    progressTimer;
 
@@ -1270,39 +1268,8 @@ void KPImagesList::updateThumbnail(const QUrl& url)
     }
     else
     {
-        if (!url.isValid())
-        {
-            return;
-        }
-
-        KFileItemList items;
-        items.append(KFileItem(url));
-        KIO::PreviewJob* const job = KIO::filePreview(items, QSize(DEFAULTSIZE, DEFAULTSIZE));
-
-        connect(job, SIGNAL(gotPreview(KFileItem,QPixmap)),
-                this, SLOT(slotKDEPreview(KFileItem,QPixmap)));
-
-        connect(job, SIGNAL(failed(KFileItem)),
-                this, SLOT(slotKDEPreviewFailed(KFileItem)));
+        qCDebug(KIPIPLUGINS_LOG) << "No KIPI interface available : thumbnails will not generated.";
     }
-}
-
-// Used only if Kipi interface is null.
-void KPImagesList::slotKDEPreview(const KFileItem& item, const QPixmap& pix)
-{
-    if (!pix.isNull())
-    {
-        slotThumbnail(item.url(), pix);
-    }
-}
-
-void KPImagesList::slotKDEPreviewFailed(const KFileItem&)
-{
-}
-
-void KPImagesList::slotRawThumb(const QUrl& url, const QImage& img)
-{
-    slotThumbnail(url, QPixmap::fromImage(img));
 }
 
 void KPImagesList::slotThumbnail(const QUrl& url, const QPixmap& pix)

@@ -40,8 +40,6 @@
 
 #include "kipiplugins_export.h"
 
-class KFileItem;
-
 namespace KIPI
 {
 class Interface;
@@ -290,12 +288,6 @@ protected Q_SLOTS:
     virtual void slotSaveItems();
     virtual void slotThumbnail(const QUrl& url, const QPixmap& pix);
     virtual void slotImageListChanged();
-
-private Q_SLOTS:
-
-    void slotKDEPreview(const KFileItem&, const QPixmap&);
-    void slotKDEPreviewFailed(const KFileItem&);
-    void slotRawThumb(const QUrl&, const QImage&);
 
 private:
 
