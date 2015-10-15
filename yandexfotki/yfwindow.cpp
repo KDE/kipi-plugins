@@ -65,10 +65,6 @@ extern "C"
 #include <kconfiggroup.h>
 #include <klocalizedstring.h>
 
-// LibKDcraw includes
-
-#include <KDCRAW/KDcraw>
-
 // Libkipi includes
 
 #include <KIPI/Interface>
@@ -89,7 +85,7 @@ extern "C"
 #include "kplogindialog.h"
 #include "yfwidget.h"
 
-using namespace KDcrawIface;
+using namespace KIPI;
 
 namespace KIPIYandexFotkiPlugin
 {
@@ -559,12 +555,16 @@ void YandexFotkiWindow::updateNextPhoto()
         {
             QImage image;
 
-            // check if we have to RAW file -> use preview image then
-            bool isRAW = KPMetadata::isRawFile(QUrl::fromLocalFile(photo.originalUrl()));
-
-            if (isRAW)
+            if (iface())
             {
-                KDcraw::loadRawPreview(image, photo.originalUrl());
+                RawProcessor* const rawdec = iface()->createRawProcessor();
+
+                // check if its a RAW file.
+                if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(photo.originalUrl())))
+                {
+                    rawdec->loadRawPreview(QUrl::fromLocalFile(photo.originalUrl()), image);
+                    delete rawdec;
+                }
             }
             else
             {
