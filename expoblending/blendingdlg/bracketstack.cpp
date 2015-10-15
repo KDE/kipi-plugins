@@ -40,12 +40,6 @@
 
 #include <KIPI/Interface>
 
-// Local includes
-
-#include "kprawthumbthread.h"
-
-using namespace KIPIPlugins;
-
 namespace KIPIExpoBlendingPlugin
 {
 
@@ -110,13 +104,11 @@ bool BracketStackItem::operator< (const QTreeWidgetItem& other) const
 struct BracketStackList::Private
 {
     Private()
-        : iface(0),
-          loadRawThumb(0)
+        : iface(0)
     {
     }
 
-    Interface*        iface;
-    KPRawThumbThread* loadRawThumb;
+    Interface* iface;
 };
 
 BracketStackList::BracketStackList(Interface* const iface, QWidget* const parent)
@@ -147,11 +139,6 @@ BracketStackList::BracketStackList(Interface* const iface, QWidget* const parent
         connect(d->iface, SIGNAL(gotThumbnail(QUrl, QPixmap)),
                 this, SLOT(slotThumbnail(QUrl, QPixmap)));
     }
-
-    d->loadRawThumb = new KPRawThumbThread(this);
-
-    connect(d->loadRawThumb, SIGNAL(signalRawThumb(QUrl, QImage)),
-            this, SLOT(slotRawThumb(QUrl, QImage)));
 
     sortItems(2, Qt::DescendingOrder);
 }
@@ -271,9 +258,8 @@ void BracketStackList::slotKDEPreview(const KFileItem& item, const QPixmap& pix)
     }
 }
 
-void BracketStackList::slotKDEPreviewFailed(const KFileItem& item)
+void BracketStackList::slotKDEPreviewFailed(const KFileItem&)
 {
-    d->loadRawThumb->getRawThumb(item.url());
 }
 
 void BracketStackList::slotRawThumb(const QUrl& url, const QImage& img)

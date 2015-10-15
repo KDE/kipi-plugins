@@ -15,7 +15,6 @@ set(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kipiplugins_debug.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpmetadata.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kphostsettings.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpmetasettings.cpp
-                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/kprawthumbthread.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpbinaryiface.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpversion.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpaboutdata.cpp
@@ -47,7 +46,7 @@ target_link_libraries(KF5kipiplugins
 
                       PUBLIC
                       Qt5::Gui
-                      
+
                       PRIVATE
 
                       KF5::I18n
@@ -55,7 +54,6 @@ target_link_libraries(KF5kipiplugins
                       KF5::KIOFileWidgets
 
                       KF5::Kipi
-                      KF5::KDcraw
                       KF5::KExiv2
 
                       ${JPEG_LIBRARIES}

@@ -62,7 +62,6 @@
 
 // Local includes
 
-#include "kprawthumbthread.h"
 #include "kpimageinfo.h"
 #include "kpimagedialog.h"
 #include "kipiplugins_debug.h"
@@ -499,7 +498,6 @@ public:
         allowDuplicate         = false;
         progressCount          = 0;
         progressTimer          = 0;
-        loadRawThumb           = 0;
         progressPix            = KPWorkingPixmap();
         PluginLoader* const pl = PluginLoader::instance();
 
@@ -529,7 +527,6 @@ public:
 
     KPImagesListView*          listView;
     Interface*                 iface;
-    KPRawThumbThread*          loadRawThumb;
 };
 
 KPImagesList::KPImagesList(QWidget* const parent, int iconSize)
@@ -582,11 +579,6 @@ KPImagesList::KPImagesList(QWidget* const parent, int iconSize)
         connect(d->iface, &Interface::gotThumbnail, 
                 this, &KPImagesList::slotThumbnail);
     }
-
-    d->loadRawThumb = new KPRawThumbThread(this);
-
-    connect(d->loadRawThumb, &KPRawThumbThread::signalRawThumb, 
-            this, &KPImagesList::slotRawThumb);
 
     connect(d->listView, &KPImagesListView::signalItemClicked, 
             this, &KPImagesList::signalItemClicked);
@@ -1306,9 +1298,8 @@ void KPImagesList::slotKDEPreview(const KFileItem& item, const QPixmap& pix)
     }
 }
 
-void KPImagesList::slotKDEPreviewFailed(const KFileItem& item)
+void KPImagesList::slotKDEPreviewFailed(const KFileItem&)
 {
-    d->loadRawThumb->getRawThumb(item.url());
 }
 
 void KPImagesList::slotRawThumb(const QUrl& url, const QImage& img)
@@ -1318,8 +1309,6 @@ void KPImagesList::slotRawThumb(const QUrl& url, const QImage& img)
 
 void KPImagesList::slotThumbnail(const QUrl& url, const QPixmap& pix)
 {
-qDebug() << " :: " << url;
-
     QTreeWidgetItemIterator it(d->listView);
 
     while (*it)
