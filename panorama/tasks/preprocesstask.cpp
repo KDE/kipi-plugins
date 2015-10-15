@@ -30,6 +30,11 @@
 
 #include <klocalizedstring.h>
 
+// Libkipi includes
+
+#include <KIPI/Interface>
+#include <KIPI/PluginLoader>
+
 // Local includes
 
 #include "kipiplugins_debug.h"
@@ -37,6 +42,7 @@
 #include "kpversion.h"
 #include "kpwriteimage.h"
 
+using namespace KIPI;
 using namespace KIPIPlugins;
 
 namespace KIPIPanoramaPlugin
@@ -69,16 +75,30 @@ void PreProcessTask::requestAbort()
 
 void PreProcessTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 {
-    if (KPMetadata::isRawFile(fileUrl))
-    {
-        preProcessedUrl.preprocessedUrl = tmpDir;
+    PluginLoader* const pl = PluginLoader::instance();
 
-        if (!convertRaw())
+    if (pl)
+    {
+        Interface* const iface = pl->interface();
+        
+        if (iface)
         {
-            successFlag = false;
-            return;
+            RawProcessor* const rawdec = iface->createRawProcessor();
+
+            // check if its a RAW file.
+            if (rawdec && rawdec->isRawFile(fileUrl))
+            {
+                preProcessedUrl.preprocessedUrl = tmpDir;
+                delete rawdec;
+
+                if (!convertRaw())
+                {
+                    successFlag = false;
+                    return;
+                }
+            }
         }
-    }
+    } 
     else
     {
         // NOTE: in this case, preprocessed Url is the original file Url.

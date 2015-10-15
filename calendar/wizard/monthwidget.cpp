@@ -140,7 +140,16 @@ void MonthWidget::setImage(const QUrl& url)
     // check if the file is an image
 
     // Check if RAW file.
-    if (KPMetadata::isRawFile(url))
+    bool isRAW = false;
+
+    if (interface_)
+    {
+        RawProcessor* const rawdec = interface_->createRawProcessor();
+        isRAW = (rawdec && rawdec->isRawFile(url));
+        delete rawdec;
+    }
+    
+    if (isRAW)
     {
         // Check if image can be loaded by native Qt loader.
         if (QImageReader::imageFormat(url.path()).isEmpty())

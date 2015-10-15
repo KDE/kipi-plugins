@@ -117,10 +117,6 @@ public:
      */
     static bool moveSidecar(const QUrl& src, const QUrl& dest);
 
-    /** Return true if url is a RAW file. File-name extension is used to check type mime.
-     */
-    static bool isRawFile(const QUrl& url);
-
 private:
 
     void init();

@@ -55,7 +55,12 @@
 #include <QTemporaryDir>
 #include <QProcess>
 
-// LibKDcraw includes
+// Libkipi includes
+
+#include <KIPI/Interface>
+#include <KIPI/PluginLoader>
+
+// Libkdcraw includes
 
 #include <KDCRAW/KDcraw>
 
@@ -64,6 +69,8 @@
 #include "kipiplugins_debug.h"
 #include "kpwriteimage.h"
 #include "kpversion.h"
+
+using namespace KIPI;
 
 namespace KIPIExpoBlendingPlugin
 {
@@ -74,7 +81,14 @@ struct ActionThread::Private
         : cancel(false),
           align(false),
           enfuseVersion4x(true)
-    {}
+    {
+        PluginLoader* const pl = PluginLoader::instance();
+
+        if (pl)
+        {
+            iface = pl->interface();
+        } 
+    }
 
     struct Task
     {
@@ -121,6 +135,8 @@ struct ActionThread::Private
     // Preprocessing
     QList<QUrl>                     mixedUrls;     // Original non-RAW + Raw converted urls to align.
     ItemUrlsMap                     preProcessedUrlsMap;
+    
+    Interface*                      iface;
 };
 
 ActionThread::ActionThread(QObject* const parent)
@@ -458,7 +474,17 @@ void ActionThread::preProcessingMultithreaded(const QUrl& url, volatile bool& er
         return;
     }
 
-    if (KPMetadata::isRawFile(QUrl::fromLocalFile(url.toLocalFile())))
+    // check if we have to RAW file -> use preview image then
+    bool isRAW = false;
+
+    if (d->iface)
+    {
+        RawProcessor* const rawdec = d->iface->createRawProcessor();
+        isRAW = (rawdec && rawdec->isRawFile(url));
+        delete rawdec;
+    }
+    
+    if (isRAW)
     {
         QUrl preprocessedUrl, previewUrl;
 

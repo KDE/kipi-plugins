@@ -45,16 +45,17 @@
 
 #include <klocalizedstring.h>
 
-// libKdcraw includes
+// Libkipi includes
 
-#include <KDCRAW/KDcraw>
+#include <KIPI/Interface>
+#include <KIPI/PluginLoader>
 
 // Local includes
 
 #include "kipiplugins_debug.h"
 #include "kpmetadata.h"
 
-using namespace KDcrawIface;
+using namespace KIPI;
 
 namespace KIPIPlugins
 {
@@ -591,10 +592,24 @@ bool KPPreviewImage::load(const QUrl& file) const
 {
     QImage image;
 
-    if (KPMetadata::isRawFile(file))
+    PluginLoader* const pl = PluginLoader::instance();
+
+    if (pl)
     {
-        KDcraw::loadRawPreview(image, file.toLocalFile());
-    }
+        Interface* const iface = pl->interface();
+        
+        if (iface)
+        {
+            RawProcessor* const rawdec = iface->createRawProcessor();
+
+            // check if its a RAW file.
+            if (rawdec && rawdec->isRawFile(file))
+            {
+                rawdec->loadRawPreview(file, image);
+                delete rawdec;
+            }
+        }
+    } 
     else
     {
         image.load(file.toLocalFile());

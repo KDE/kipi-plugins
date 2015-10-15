@@ -792,7 +792,14 @@ void SmugWindow::uploadNextPhoto()
     bool res;
 
     // check if we have to RAW file -> use preview image then
-    bool isRAW = KPMetadata::isRawFile(imgPath);
+    bool isRAW = false;
+
+    if (iface())
+    {
+        RawProcessor* const rawdec = iface()->createRawProcessor();
+        isRAW = (rawdec && rawdec->isRawFile(imgPath));
+        delete rawdec;
+    }
 
     if (isRAW || m_widget->m_resizeChB->isChecked())
     {

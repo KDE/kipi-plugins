@@ -640,7 +640,15 @@ void FbWindow::uploadNextPhoto()
     d->m_progressBar->setValue(m_imagesCount);
 
     // check if we have to RAW file -> use preview image then
-    bool    isRAW = KPMetadata::isRawFile(QUrl::fromLocalFile(imgPath));
+    bool isRAW = false;
+
+    if (iface())
+    {
+        RawProcessor* const rawdec = iface()->createRawProcessor();
+        isRAW = (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(imgPath)));
+        delete rawdec;
+    }
+    
     QString caption;
     bool    res;
 

@@ -30,11 +30,17 @@
 
 #include <klocalizedstring.h>
 
+// Libkipi includes
+
+#include <KIPI/Interface>
+#include <KIPI/PluginLoader>
+
 // Local includes
 
 #include "kipiplugins_debug.h"
 #include "kpmetadata.h"
 
+using namespace KIPI;
 using namespace KIPIPlugins;
 
 namespace KIPIPanoramaPlugin
@@ -181,9 +187,22 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 
         qCDebug(KIPIPLUGINS_LOG) << "Copying converted RAW files...";
 
+        RawProcessor* rawdec   = 0;
+        PluginLoader* const pl = PluginLoader::instance();
+
+        if (pl)
+        {
+            Interface* const iface = pl->interface();
+            
+            if (iface)
+            {
+                rawdec = iface->createRawProcessor();
+            }
+        }
+        
         for (ItemUrlsMap::const_iterator i = urlList->constBegin(); i != urlList->constEnd(); ++i)
         {
-            if (KPMetadata::isRawFile(i.key()))
+            if (rawdec && rawdec->isRawFile(i.key()))
             {
                 QUrl finalImgUrl = finalPanoUrl.adjusted(QUrl::RemoveFilename)
                                                .resolved(QUrl::fromLocalFile(i->preprocessedUrl.fileName()));
@@ -205,6 +224,8 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
                 }
             }
         }
+        
+        delete rawdec;
     }
 
     successFlag = true;

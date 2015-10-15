@@ -834,7 +834,13 @@ void KPImagesList::slotAddImages(const QList<QUrl>& list)
     }
 
     QList<QUrl> urls;
-    bool raw = false;
+    bool raw             = false;
+    RawProcessor* rawdec = 0;
+    
+    if (d->iface)
+    {
+        rawdec = d->iface->createRawProcessor();
+    }
 
     for (QList<QUrl>::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it)
     {
@@ -860,16 +866,18 @@ void KPImagesList::slotAddImages(const QList<QUrl>& list)
         if (d->allowDuplicate || !found)
         {
             // if RAW files are not allowed, skip the image
-            if (!d->allowRAW && KPMetadata::isRawFile(imageUrl))
+            if (!d->allowRAW && rawdec && rawdec->isRawFile(imageUrl))
             {
                 raw = true;
                 continue;
-            }
-
+            }                
+                    
             new KPImagesListViewItem(listView(), imageUrl);
             urls.append(imageUrl);
         }
     }
+
+    delete rawdec;
 
     emit signalAddItems(urls);
     emit signalImageListChanged();

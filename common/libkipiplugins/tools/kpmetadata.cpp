@@ -35,16 +35,10 @@
 #include "kpmetasettings.h"
 #include "kphostsettings.h"
 
-// LibKDcraw includes
-
-#include <KDCRAW/KDcraw>
-
 // LibKipi includes
 
 #include <KIPI/Interface>
 #include <KIPI/PluginLoader>
-
-using namespace KDcrawIface;
 
 namespace KIPIPlugins
 {
@@ -133,14 +127,6 @@ bool KPMetadata::moveSidecar(const QUrl& src, const QUrl& dst)
     }
 
     return true;
-}
-
-bool KPMetadata::isRawFile(const QUrl& url)
-{
-    QString   rawFilesExt(QLatin1String(KDcraw::rawFiles()));
-    QFileInfo fileInfo(url.toLocalFile());
-
-    return (rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper()));
 }
 
 }  // namespace KIPIPlugins
