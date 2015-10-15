@@ -20,7 +20,6 @@ target_link_libraries(kipiplugin_sendimages
                       PRIVATE
                       KF5::Parts
                       KF5::Service
-                      KF5::KDcraw
                       KF5::Kipi
                       KF5::KExiv2
 

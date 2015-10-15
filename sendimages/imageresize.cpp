@@ -38,9 +38,10 @@
 
 #include <klocalizedstring.h>
 
-// LibKDcraw includes
+// Libkipi includes
 
-#include <KDCRAW/KDcraw>
+#include <KIPI/Interface>
+#include <KIPI/PluginLoader>
 
 // Local includes
 
@@ -49,8 +50,8 @@
 #include "kpmetadata.h"
 #include "kipiplugins_debug.h"
 
+using namespace KIPI;
 using namespace KIPIPlugins;
-using namespace KDcrawIface;
 
 namespace KIPISendimagesPlugin
 {
@@ -124,11 +125,28 @@ bool Task::imageResize(const EmailSettings& settings, const QUrl& orgUrl,
 
     QImage img;
 
-    // Check if RAW file.
-    if (KPMetadata::isRawFile(orgUrl))
-        KDcraw::loadRawPreview(img, orgUrl.path());
+    PluginLoader* const pl = PluginLoader::instance();
+
+    if (pl)
+    {
+        Interface* const iface = pl->interface();
+        
+        if (iface)
+        {
+            RawProcessor* const rawdec = iface->createRawProcessor();
+
+            // check if its a RAW file.
+            if (rawdec && rawdec->isRawFile(orgUrl))
+            {
+                rawdec->loadRawPreview(orgUrl, img);
+                delete rawdec;
+            }
+        }
+    } 
     else
+    {
         img.load(orgUrl.path());
+    }
 
     int sizeFactor = emailSettings.size();
 
