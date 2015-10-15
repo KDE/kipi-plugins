@@ -22,7 +22,6 @@ add_library(kipiplugin_imageshack MODULE ${kipiplugin_imageshack_PART_SRCS})
 
 target_link_libraries(kipiplugin_imageshack
                       PRIVATE
-                      KF5::KDcraw
                       KF5::Kipi
                       KF5::KExiv2
                       KF5::KIOCore
