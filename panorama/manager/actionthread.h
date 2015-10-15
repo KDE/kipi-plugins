@@ -35,16 +35,10 @@
 
 #include <ThreadWeaver/Sequence>
 
-// LibKDcraw includes
-
-#include <KDCRAW/RawDecodingSettings>
-
 // Local includes
 
 #include "actions.h"
 #include "ptotype/ptotype.h"
-
-using namespace KDcrawIface;
 
 namespace KIPIPanoramaPlugin
 {
@@ -63,7 +57,7 @@ public:
     void preProcessFiles(const QList<QUrl>& urlList, KIPIPanoramaPlugin::ItemUrlsMap& preProcessedMap,
                          QUrl& baseUrl, QUrl& cpFindPtoUrl, QUrl& cpCleanPtoUrl,
                          bool celeste, KIPIPanoramaPlugin::PanoramaFileType fileType, bool gPano,
-                         const RawDecodingSettings& rawSettings, const QString& huginVersion,
+                         const QString& huginVersion,
                          const QString& cpCleanPath, const QString& cpFindPath);
 
     void optimizeProject(QUrl& ptoUrl, QUrl& optimizePtoUrl, QUrl& viewCropPtoUrl,
@@ -117,7 +111,6 @@ private:
 
     struct Private;
     Private* const d;
-
 };
 
 }  // namespace KIPIPanoramaPlugin

@@ -527,13 +527,12 @@ void SimpleViewer::processQUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
         // Check if RAW file.
         if (d->interface)
         {
-            RawProcessor* const rawdec = d->interface->createRawProcessor();
+            QPointer<RawProcessor> rawdec = d->interface->createRawProcessor();
 
             // check if its a RAW file.
             if (rawdec && rawdec->isRawFile(url))
             {
                 rawdec->loadRawPreview(url, image);
-                delete rawdec;
             }
         }
         else

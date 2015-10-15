@@ -27,15 +27,15 @@
 
 #include <QPointer>
 
-// LibKDcraw includes
+// Libkipi includes
 
-#include <KDCRAW/KDcraw>
+#include <KIPI/Interface>
 
 // Local includes
 
 #include "task.h"
 
-using namespace KDcrawIface;
+using namespace KIPI;
 
 namespace KIPIPanoramaPlugin
 {
@@ -51,20 +51,19 @@ private:
 
     const QUrl                  fileUrl;
     ItemPreprocessedUrls&       preProcessedUrl;
-    const RawDecodingSettings   settings;
-    QPointer<KDcraw>            rawProcess;
+    QPointer<RawProcessor>      rawProcess;
 
 public:
 
     PreProcessTask(const QString& workDirPath, int id, ItemPreprocessedUrls& targetUrls,
-                   const QUrl& sourceUrl, const RawDecodingSettings& rawSettings);
+                   const QUrl& sourceUrl);
     ~PreProcessTask();
 
     void requestAbort();
 
 protected:
 
-    void run(ThreadWeaver::JobPointer self, ThreadWeaver::Thread *thread) override;
+    void run(ThreadWeaver::JobPointer self, ThreadWeaver::Thread* thread) override;
 
 private:
 

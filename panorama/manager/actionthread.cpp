@@ -98,7 +98,7 @@ void ActionThread::finish()
 void ActionThread::preProcessFiles(const QList<QUrl>& urlList, ItemUrlsMap& preProcessedMap,
                                    QUrl& baseUrl, QUrl& cpFindPtoUrl, QUrl& cpCleanPtoUrl,
                                    bool celeste, PanoramaFileType fileType, bool gPano,
-                                   const RawDecodingSettings& rawSettings, const QString& huginVersion,
+                                   const QString& huginVersion,
                                    const QString& cpCleanPath, const QString& cpFindPath)
 {
     QString prefix = QDir::tempPath() +
@@ -113,6 +113,7 @@ void ActionThread::preProcessFiles(const QList<QUrl>& urlList, ItemUrlsMap& preP
     QSharedPointer<Collection> preprocessJobs(new Collection());
 
     int id = 0;
+
     for (const QUrl& file : urlList)
     {
         preProcessedMap.insert(file, ItemPreprocessedUrls());
@@ -120,16 +121,17 @@ void ActionThread::preProcessFiles(const QList<QUrl>& urlList, ItemUrlsMap& preP
         QObjectDecorator* t = new QObjectDecorator(new PreProcessTask(d->preprocessingTmpDir->path(),
                                                                       id++,
                                                                       preProcessedMap[file],
-                                                                      file,
-                                                                      rawSettings));
+                                                                      file));
 
         connect(t, SIGNAL(started(ThreadWeaver::JobPointer)),
                 this, SLOT(slotStarting(ThreadWeaver::JobPointer)));
+
         connect(t, SIGNAL(done(ThreadWeaver::JobPointer)),
                 this, SLOT(slotStepDone(ThreadWeaver::JobPointer)));
 
         (*preprocessJobs) << JobPointer(t);
     }
+
     (*jobSeq) << preprocessJobs;
 
     QObjectDecorator* pto = new QObjectDecorator(new CreatePtoTask(d->preprocessingTmpDir->path(),
@@ -142,6 +144,7 @@ void ActionThread::preProcessFiles(const QList<QUrl>& urlList, ItemUrlsMap& preP
 
     connect(pto, SIGNAL(started(ThreadWeaver::JobPointer)),
             this, SLOT(slotStarting(ThreadWeaver::JobPointer)));
+
     connect(pto, SIGNAL(done(ThreadWeaver::JobPointer)),
             this, SLOT(slotStepDone(ThreadWeaver::JobPointer)));
 
@@ -155,6 +158,7 @@ void ActionThread::preProcessFiles(const QList<QUrl>& urlList, ItemUrlsMap& preP
 
     connect(cpFind, SIGNAL(started(ThreadWeaver::JobPointer)),
             this, SLOT(slotStarting(ThreadWeaver::JobPointer)));
+
     connect(cpFind, SIGNAL(done(ThreadWeaver::JobPointer)),
             this, SLOT(slotStepDone(ThreadWeaver::JobPointer)));
 
@@ -167,6 +171,7 @@ void ActionThread::preProcessFiles(const QList<QUrl>& urlList, ItemUrlsMap& preP
 
     connect(cpClean, SIGNAL(started(ThreadWeaver::JobPointer)),
             this, SLOT(slotStarting(ThreadWeaver::JobPointer)));
+
     connect(cpClean, SIGNAL(done(ThreadWeaver::JobPointer)),
             this, SLOT(slotDone(ThreadWeaver::JobPointer)));
 
@@ -190,6 +195,7 @@ void ActionThread::optimizeProject(QUrl& ptoUrl, QUrl& optimizePtoUrl, QUrl& vie
 
     connect(ot, SIGNAL(started(ThreadWeaver::JobPointer)),
             this, SLOT(slotStarting(ThreadWeaver::JobPointer)));
+
     connect(ot, SIGNAL(done(ThreadWeaver::JobPointer)),
             this, SLOT(slotStepDone(ThreadWeaver::JobPointer)));
 
@@ -203,6 +209,7 @@ void ActionThread::optimizeProject(QUrl& ptoUrl, QUrl& optimizePtoUrl, QUrl& vie
 
     connect(act, SIGNAL(started(ThreadWeaver::JobPointer)),
             this, SLOT(slotStarting(ThreadWeaver::JobPointer)));
+
     connect(act, SIGNAL(done(ThreadWeaver::JobPointer)),
             this, SLOT(slotDone(ThreadWeaver::JobPointer)));
 
@@ -225,6 +232,7 @@ void ActionThread::generatePanoramaPreview(QSharedPointer<const PTOType> ptoData
 
     connect(ptoTask, SIGNAL(started(ThreadWeaver::JobPointer)),
             this, SLOT(slotStarting(ThreadWeaver::JobPointer)));
+
     connect(ptoTask, SIGNAL(done(ThreadWeaver::JobPointer)),
             this, SLOT(slotStepDone(ThreadWeaver::JobPointer)));
 
@@ -260,6 +268,7 @@ void ActionThread::compileProject(QSharedPointer<const PTOType> basePtoData, QUr
 
     connect(ptoTask, SIGNAL(started(ThreadWeaver::JobPointer)),
             this, SLOT(slotStarting(ThreadWeaver::JobPointer)));
+
     connect(ptoTask, SIGNAL(done(ThreadWeaver::JobPointer)),
             this, SLOT(slotStepDone(ThreadWeaver::JobPointer)));
 
@@ -395,6 +404,7 @@ void ActionThread::appendStitchingJobs(QSharedPointer<Sequence>& js, const QUrl&
 
     connect(createMKTask, SIGNAL(started(ThreadWeaver::JobPointer)),
             this, SLOT(slotStarting(ThreadWeaver::JobPointer)));
+
     connect(createMKTask, SIGNAL(done(ThreadWeaver::JobPointer)),
             this, SLOT(slotStepDone(ThreadWeaver::JobPointer)));
 
@@ -412,6 +422,7 @@ void ActionThread::appendStitchingJobs(QSharedPointer<Sequence>& js, const QUrl&
 
         connect(t, SIGNAL(started(ThreadWeaver::JobPointer)),
                 this, SLOT(slotStarting(ThreadWeaver::JobPointer)));
+
         connect(t, SIGNAL(done(ThreadWeaver::JobPointer)),
                 this, SLOT(slotStepDone(ThreadWeaver::JobPointer)));
 
@@ -428,6 +439,7 @@ void ActionThread::appendStitchingJobs(QSharedPointer<Sequence>& js, const QUrl&
 
     connect(compileMKTask, SIGNAL(started(ThreadWeaver::JobPointer)),
             this, SLOT(slotStarting(ThreadWeaver::JobPointer)));
+
     connect(compileMKTask, SIGNAL(done(ThreadWeaver::JobPointer)),
             this, SLOT(slotDone(ThreadWeaver::JobPointer)));
 

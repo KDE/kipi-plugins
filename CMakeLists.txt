@@ -49,7 +49,6 @@ set(KF5_VERSION         "5.1.0")
 set(REQUIRED_QT_VERSION "5.2.0")
 set(KIPI_MIN_VERSION    "5.0.0")
 set(KEXIV2_MIN_VERSION  "5.0.0")
-set(KDCRAW_MIN_VERSION  "5.0.0")
 cmake_minimum_required(VERSION ${CMAKE_MIN_VERSION})
 
 ############## ECM setup ######################
@@ -117,7 +116,6 @@ DETECT_LIBKIPI(${KIPI_MIN_VERSION})
 if(KF5Kipi_FOUND)
 
     DETECT_LIBKEXIV2(${KEXIV2_MIN_VERSION})
-    DETECT_LIBKDCRAW(${KDCRAW_MIN_VERSION})
     find_package(JPEG REQUIRED)
     find_package(PNG  REQUIRED)
     find_package(TIFF REQUIRED)
@@ -163,7 +161,6 @@ if(KF5Kipi_FOUND)
     PRINT_LIBRARY_STATUS("libpng"    "http://www.libpng.org/pub/png/libpng.html"                        "(version >= 1.2.7)"                 PNG_FOUND)
     PRINT_LIBRARY_STATUS("libkipi"   "https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi"   "(version >= ${KIPI_MIN_VERSION}))"  KF5Kipi_FOUND)
     PRINT_LIBRARY_STATUS("libkexiv2" "https://projects.kde.org/projects/kde/kdegraphics/libs/libkexiv2" "(version >= ${KEXIV2_MIN_VERSION})" KF5KExiv2_FOUND)
-    PRINT_LIBRARY_STATUS("libkdcraw" "https://projects.kde.org/projects/kde/kdegraphics/libs/libkdcraw" "(version >= ${KDCRAW_MIN_VERSION})" KF5KDcraw_FOUND)
 
     # Optional shared libraries results.
 
@@ -190,7 +187,7 @@ if(KF5Kipi_FOUND)
 
      message(STATUS "")
 
-     if(Qt5_FOUND AND KF5_FOUND AND JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KF5Kipi_FOUND AND KF5KDcraw_FOUND AND KF5KExiv2_FOUND)
+     if(Qt5_FOUND AND KF5_FOUND AND JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KF5Kipi_FOUND AND KF5KExiv2_FOUND)
          set(KIPI_COMPILE_MESSAGE "kipi-plugins will be compiled")
          FILL_WITH_DOTS(KIPI_COMPILE_MESSAGE)
          message(STATUS " ${KIPI_COMPILE_MESSAGE} YES")
@@ -285,7 +282,6 @@ if(KF5Kipi_FOUND)
                             ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/tools
                             ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/tools/imageio
                             ${KF5KExiv2_INCLUDE_DIRS}
-                            ${KF5KDcraw_INCLUDE_DIRS}
                             ${KF5Kipi_INCLUDE_DIRS}
                         )
 

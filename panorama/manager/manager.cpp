@@ -73,14 +73,14 @@ struct Manager::Private
       group(config.group("Panorama Settings"))
     {
         gPano    = group.readEntry("GPano", false);
-//         hdr      = group.readEntry("HDR", false);
+//      hdr      = group.readEntry("HDR", false);
         fileType = (PanoramaFileType) group.readEntry("File Type", (int) JPEG);
     }
 
 
     ~Private()
     {
-//         group.writeEntry("HDR", hdr);
+//      group.writeEntry("HDR", hdr);
         group.writeEntry("GPano", gPano);
         group.writeEntry("File Type", (int) fileType);
         config.sync();
@@ -115,8 +115,6 @@ struct Manager::Private
 
     ItemUrlsMap                    preProcessedUrlsMap;
 
-    RawDecodingSettings            rawDecodingSettings;
-
     Interface*                     iface;
 
     ActionThread*                  thread;
@@ -143,7 +141,6 @@ Manager::Manager(QObject* const parent)
       d(new Private)
 {
     d->thread                               = new ActionThread(this);
-    d->rawDecodingSettings.sixteenBitsImage = true;
 }
 
 Manager::~Manager()
@@ -568,16 +565,6 @@ void Manager::setItemsList(const QList<QUrl>& urls)
 QList<QUrl>& Manager::itemsList() const
 {
     return d->inputUrls;
-}
-
-void Manager::setRawDecodingSettings(const RawDecodingSettings& settings)
-{
-    d->rawDecodingSettings = settings;
-}
-
-RawDecodingSettings& Manager::rawDecodingSettings() const
-{
-    return d->rawDecodingSettings;
 }
 
 void Manager::setPreProcessedMap(const ItemUrlsMap& urls)

@@ -29,20 +29,15 @@
 
 #include <QThread>
 
-// LibKDcraw includes
-
-#include <KDCRAW/RawDecodingSettings>
-
 // Local includes
 
 #include "enfusesettings.h"
 #include "actions.h"
 #include "kpmetadata.h"
 
-using namespace KIPIPlugins;
-using namespace KDcrawIface;
-
 class QProcess;
+
+using namespace KIPIPlugins;
 
 namespace KIPIExpoBlendingPlugin
 {
@@ -59,7 +54,7 @@ public:
     ~ActionThread();
 
     void setEnfuseVersion(const double version);
-    void setPreProcessingSettings(bool align, const RawDecodingSettings& settings);
+    void setPreProcessingSettings(bool align);
     void loadProcessed(const QUrl& url);
     void identifyFiles(const QList<QUrl>& urlList);
     void convertRawFiles(const QList<QUrl>& urlList);
@@ -85,12 +80,10 @@ private:
 
     void    run();
 
-    void    preProcessingMultithreaded(const QUrl& url, volatile bool& error, const RawDecodingSettings& settings);
-    bool    startPreProcessing(const QList<QUrl>& inUrls,
-                               bool  align, const RawDecodingSettings& settings,
-                               const QString& alignPath, QString& errors);
+    void    preProcessingMultithreaded(const QUrl& url, volatile bool& error);
+    bool    startPreProcessing(const QList<QUrl>& inUrls, bool  align, const QString& alignPath, QString& errors);
     bool    computePreview(const QUrl& inUrl, QUrl& outUrl);
-    bool    convertRaw(const QUrl& inUrl, QUrl& outUrl, const RawDecodingSettings& settings);
+    bool    convertRaw(const QUrl& inUrl, QUrl& outUrl);
 
     bool    startEnfuse(const QList<QUrl>& inUrls, QUrl& outUrl,
                         const EnfuseSettings& settings,

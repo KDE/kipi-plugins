@@ -29,10 +29,6 @@
 #include <QObject>
 #include <QUrl>
 
-// Libkdcraw includes
-
-#include <KDCRAW/RawDecodingSettings>
-
 // Local includes
 
 #include "actions.h"
@@ -43,7 +39,6 @@ namespace KIPI
 }
 
 using namespace KIPI;
-using namespace KDcrawIface;
 
 namespace KIPIExpoBlendingPlugin
 {
@@ -70,9 +65,6 @@ public:
 
     void setItemsList(const QList<QUrl>& urls);
     QList<QUrl>& itemsList() const;
-
-    void setRawDecodingSettings(const RawDecodingSettings& settings);
-    RawDecodingSettings rawDecodingSettings() const;
 
     void setPreProcessedMap(const ItemUrlsMap& urls);
     ItemUrlsMap& preProcessedMap() const;

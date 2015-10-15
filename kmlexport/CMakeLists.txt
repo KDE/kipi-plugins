@@ -19,9 +19,8 @@ target_link_libraries(kipiplugin_kmlexport
                       PRIVATE
                       KF5::Parts
 
-                      ${KF5Kipi_LIBRARIES}
-                      ${KF5KExiv2_LIBRARIES}
-                      ${KF5KDcraw_LIBRARIES}
+                      KF5::Kipi
+                      KF5::KExiv2
 
                       KF5kipiplugins
                      )

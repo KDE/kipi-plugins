@@ -60,10 +60,6 @@
 #include <KIPI/Interface>
 #include <KIPI/PluginLoader>
 
-// Libkdcraw includes
-
-#include <KDCRAW/KDcraw>
-
 // Local includes
 
 #include "kipiplugins_debug.h"
@@ -97,7 +93,6 @@ struct ActionThread::Private
         QUrl                        outputUrl;
         QString                     binaryPath;
         Action                      action;
-        RawDecodingSettings         rawDecodingSettings;
         EnfuseSettings              enfuseSettings;
     };
 
@@ -119,7 +114,7 @@ struct ActionThread::Private
      * A list of all running raw instances. Only access this variable via
      * <code>mutex</code>.
      */
-    QList<QPointer<KDcraw> >        rawProcesses;
+    QList<QPointer<RawProcessor> >  rawProcesses;
 
     QSharedPointer<QTemporaryDir>   preprocessingTmpDir;
 
@@ -129,8 +124,6 @@ struct ActionThread::Private
      */
     QList<QUrl>                     enfuseTmpUrls;
     QMutex                          enfuseTmpUrlsMutex;
-
-    RawDecodingSettings             rawDecodingSettings;
 
     // Preprocessing
     QList<QUrl>                     mixedUrls;     // Original non-RAW + Raw converted urls to align.
@@ -172,18 +165,19 @@ void ActionThread::cleanUpResultFiles()
 {
     // Cleanup all tmp files created by Enfuse process.
     QMutexLocker(&d->enfuseTmpUrlsMutex);
+
     for (QUrl& url: d->enfuseTmpUrls)
     {
         qCDebug(KIPIPLUGINS_LOG) << "Removing temp file " << url.toLocalFile();
         QFile(url.toLocalFile()).remove();
     }
+
     d->enfuseTmpUrls.clear();
 }
 
-void ActionThread::setPreProcessingSettings(bool align, const RawDecodingSettings& settings)
+void ActionThread::setPreProcessingSettings(bool align)
 {
     d->align               = align;
-    d->rawDecodingSettings = settings;
 }
 
 void ActionThread::identifyFiles(const QList<QUrl>& urlList)
@@ -216,7 +210,6 @@ void ActionThread::preProcessFiles(const QList<QUrl>& urlList, const QString& al
     Private::Task* const t = new Private::Task;
     t->action              = PREPROCESSING;
     t->urls                = urlList;
-    t->rawDecodingSettings = d->rawDecodingSettings;
     t->align               = d->align;
     t->binaryPath          = alignPath;
 
@@ -267,7 +260,7 @@ void ActionThread::cancel()
     if (d->alignProcess)
         d->alignProcess->kill();
 
-    for (QPointer<KDcraw>& rawProcess: d->rawProcesses)
+    for (QPointer<RawProcessor>& rawProcess: d->rawProcesses)
     {
         if (rawProcess)
         {
@@ -281,11 +274,13 @@ void ActionThread::cancel()
 void ActionThread::run()
 {
     d->cancel = false;
+
     while (!d->cancel)
     {
         Private::Task* t = 0;
         {
             QMutexLocker lock(&d->mutex);
+
             if (!d->todo.isEmpty())
                 t = d->todo.takeFirst();
             else
@@ -305,6 +300,7 @@ void ActionThread::run()
                     if (!t->urls.isEmpty())
                     {
                         float val = getAverageSceneLuminance(t->urls[0]);
+
                         if (val != -1)
                             avLum.setNum(log2f(val), 'g', 2);
                     }
@@ -328,7 +324,7 @@ void ActionThread::run()
 
                     QString errors;
 
-                    bool result  = startPreProcessing(t->urls, t->align, t->rawDecodingSettings, t->binaryPath, errors);
+                    bool result  = startPreProcessing(t->urls, t->align, t->binaryPath, errors);
 
                     ActionData ad2;
                     ad2.action              = PREPROCESSING;
@@ -467,7 +463,7 @@ void ActionThread::run()
     }
 }
 
-void ActionThread::preProcessingMultithreaded(const QUrl& url, volatile bool& error, const RawDecodingSettings& settings)
+void ActionThread::preProcessingMultithreaded(const QUrl& url, volatile bool& error)
 {
     if (error)
     {
@@ -487,7 +483,7 @@ void ActionThread::preProcessingMultithreaded(const QUrl& url, volatile bool& er
     {
         QUrl preprocessedUrl, previewUrl;
 
-        if (!convertRaw(url, preprocessedUrl, settings))
+        if (!convertRaw(url, preprocessedUrl))
         {
             error = true;
             return;
@@ -525,7 +521,7 @@ void ActionThread::preProcessingMultithreaded(const QUrl& url, volatile bool& er
 }
 
 bool ActionThread::startPreProcessing(const QList<QUrl>& inUrls,
-                                      bool align, const RawDecodingSettings& settings,
+                                      bool align,
                                       const QString& alignPath, QString& errors)
 {
     QString prefix = QDir::tempPath() +
@@ -550,8 +546,7 @@ bool ActionThread::startPreProcessing(const QList<QUrl>& inUrls,
         tasks.append(QtConcurrent::run(this,
                                        &ActionThread::preProcessingMultithreaded,
                                        url,
-                                       error,
-                                       settings
+                                       error
                                       ));
     }
 
@@ -694,23 +689,32 @@ bool ActionThread::computePreview(const QUrl& inUrl, QUrl& outUrl)
     return false;
 }
 
-bool ActionThread::convertRaw(const QUrl& inUrl, QUrl& outUrl, const RawDecodingSettings& settings)
+bool ActionThread::convertRaw(const QUrl& inUrl, QUrl& outUrl)
 {
     int        width, height, rgbmax;
     QByteArray imageData;
 
-    QPointer<KDcraw> rawdec = new KDcraw;
-
+    QPointer<RawProcessor> rawdec = 0;
+    bool decoded                  = false;
+    
+    if (d->iface)
     {
-        QMutexLocker lock(&d->mutex);
-        d->rawProcesses << rawdec;
+        rawdec = d->iface->createRawProcessor();
     }
 
-    bool decoded = rawdec->decodeRAWImage(inUrl.toLocalFile(), settings, imageData, width, height, rgbmax);
-
+    if (rawdec)
     {
-        QMutexLocker lock(&d->mutex);
-        d->rawProcesses.removeAll(rawdec);
+        {
+            QMutexLocker lock(&d->mutex);
+            d->rawProcesses << rawdec;
+        }
+
+        decoded = rawdec->decodeRawImage(inUrl, imageData, width, height, rgbmax);
+
+        {
+            QMutexLocker lock(&d->mutex);
+            d->rawProcesses.removeAll(rawdec);
+        }
     }
 
     if (decoded)

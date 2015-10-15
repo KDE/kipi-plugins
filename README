@@ -48,7 +48,6 @@ libjpeg         >= 6b                           http://www.ijg.org
 libpng          >= 1.2.0                        http://www.libpng.org/pub/png/libpng.html
 libkipi         >= 5.0.0                        https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi
 libkexiv2       >= 5.0.0                        https://projects.kde.org/projects/kde/kdegraphics/libs/libkexiv2
-libkdcraw       >= 5.0.0                        https://projects.kde.org/projects/kde/kdegraphics/libs/libkdcraw
 Hugin           >= 0.8.0 (runtime dependency)   http://hugin.sourceforge.net
 Enblend         >= 3.0.0 (runtime dependency)   http://enblend.sourceforge.net
 

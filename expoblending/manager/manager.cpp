@@ -53,8 +53,6 @@ public:
 
     ItemUrlsMap            preProcessedUrlsMap;
 
-    RawDecodingSettings    rawDecodingSettings;
-
     Interface*             iface;
 
     ActionThread*          thread;
@@ -71,7 +69,6 @@ Manager::Manager(QObject* const parent)
       d(new ManagerPriv)
 {
     d->thread                               = new ActionThread(this);
-    d->rawDecodingSettings.sixteenBitsImage = true;
 
     connect(&d->enfuseBinary, SIGNAL(signalEnfuseVersion(double)),
             this, SLOT(slotSetEnfuseVersion(double)));
@@ -129,16 +126,6 @@ void Manager::setItemsList(const QList<QUrl>& urls)
 QList<QUrl>& Manager::itemsList() const
 {
     return d->inputUrls;
-}
-
-void Manager::setRawDecodingSettings(const RawDecodingSettings& settings)
-{
-    d->rawDecodingSettings = settings;
-}
-
-RawDecodingSettings Manager::rawDecodingSettings() const
-{
-    return d->rawDecodingSettings;
 }
 
 void Manager::setPreProcessedMap(const ItemUrlsMap& urls)

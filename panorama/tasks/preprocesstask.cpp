@@ -42,20 +42,18 @@
 #include "kpversion.h"
 #include "kpwriteimage.h"
 
-using namespace KIPI;
 using namespace KIPIPlugins;
 
 namespace KIPIPanoramaPlugin
 {
 
 PreProcessTask::PreProcessTask(const QString& workDirPath, int id, ItemPreprocessedUrls& targetUrls,
-                               const QUrl& sourceUrl, const RawDecodingSettings& rawSettings)
+                               const QUrl& sourceUrl)
     : Task(PREPROCESS_INPUT,
       workDirPath),
       id(id),
       fileUrl(sourceUrl),
-      preProcessedUrl(targetUrls),
-      settings(rawSettings)
+      preProcessedUrl(targetUrls)
 {
 }
 
@@ -159,9 +157,19 @@ bool PreProcessTask::convertRaw()
     int        width, height, rgbmax;
     QByteArray imageData;
 
-    rawProcess = new KDcraw;
-    bool decoded = rawProcess->decodeRAWImage(inUrl.toLocalFile(), settings, imageData, width, height, rgbmax);
-    delete rawProcess;
+    bool decoded           = false;
+    PluginLoader* const pl = PluginLoader::instance();
+
+    if (pl)
+    {
+        Interface* const iface = pl->interface();
+        
+        if (iface)
+        {
+            rawProcess   = iface->createRawProcessor();    
+            bool decoded = rawProcess->decodeRawImage(inUrl, imageData, width, height, rgbmax);
+        }            
+    }
 
     if (decoded)
     {

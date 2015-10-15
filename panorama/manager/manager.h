@@ -29,10 +29,6 @@
 
 #include <QObject>
 
-// Libkdcraw includes
-
-#include <KDCRAW/RawDecodingSettings>
-
 // Local includes
 
 #include "actions.h"
@@ -45,7 +41,6 @@ namespace KIPI
 }
 
 using namespace KIPI;
-
 
 namespace KIPIPanoramaPlugin
 {
@@ -119,9 +114,6 @@ public:
     void                    resetMkUrl();
     QUrl&                   panoUrl() const;
     void                    resetPanoUrl();
-
-    void setRawDecodingSettings(const RawDecodingSettings& settings);
-    RawDecodingSettings& rawDecodingSettings() const;
 
     ItemUrlsMap&            preProcessedMap()     const;
     ActionThread*           thread()              const;
