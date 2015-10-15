@@ -33,6 +33,7 @@
 #include <QCloseEvent>
 #include <QSpinBox>
 #include <QMessageBox>
+#include <QPointer>
 
 // KDE includes
 
@@ -567,14 +568,13 @@ bool FbWindow::prepareImageForUpload(const QString& imgPath, bool isRAW, QString
     {
         if (iface())
         {
-            KIPI::RawProcessor* const rawdec = iface()->createRawProcessor();
+            QPointer<RawProcessor> rawdec = iface()->createRawProcessor();
 
             // check if its a RAW file.
             if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(imgPath)))
             {
                 qCDebug(KIPIPLUGINS_LOG) << "Get RAW preview " << imgPath;
                 rawdec->loadRawPreview(QUrl::fromLocalFile(imgPath), image);
-                delete rawdec;
             }
         }
     }
@@ -644,9 +644,8 @@ void FbWindow::uploadNextPhoto()
 
     if (iface())
     {
-        RawProcessor* const rawdec = iface()->createRawProcessor();
+        QPointer<RawProcessor> rawdec = iface()->createRawProcessor();
         isRAW = (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(imgPath)));
-        delete rawdec;
     }
     
     QString caption;

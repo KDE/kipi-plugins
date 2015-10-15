@@ -322,13 +322,12 @@ void CalPainter::paint(int month)
         
         if (iface)
         {
-            RawProcessor* const rawdec = iface->createRawProcessor();
+            QPointer<RawProcessor> rawdec = iface->createRawProcessor();
 
             // check if its a RAW file.
             if (rawdec && rawdec->isRawFile(imagePath_))
             {
                 rawdec->loadRawPreview(imagePath_, image_);
-                delete rawdec;
             }
         }
     }

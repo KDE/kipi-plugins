@@ -479,9 +479,8 @@ void ActionThread::preProcessingMultithreaded(const QUrl& url, volatile bool& er
 
     if (d->iface)
     {
-        RawProcessor* const rawdec = d->iface->createRawProcessor();
+        QPointer<RawProcessor> rawdec = d->iface->createRawProcessor();
         isRAW = (rawdec && rawdec->isRawFile(url));
-        delete rawdec;
     }
     
     if (isRAW)

@@ -600,13 +600,12 @@ bool KPPreviewImage::load(const QUrl& file) const
         
         if (iface)
         {
-            RawProcessor* const rawdec = iface->createRawProcessor();
+            QPointer<RawProcessor> rawdec = iface->createRawProcessor();
 
             // check if its a RAW file.
             if (rawdec && rawdec->isRawFile(file))
             {
                 rawdec->loadRawPreview(file, image);
-                delete rawdec;
             }
         }
     } 

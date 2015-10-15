@@ -144,9 +144,8 @@ void MonthWidget::setImage(const QUrl& url)
 
     if (interface_)
     {
-        RawProcessor* const rawdec = interface_->createRawProcessor();
+        QPointer<RawProcessor> rawdec = interface_->createRawProcessor();
         isRAW = (rawdec && rawdec->isRawFile(url));
-        delete rawdec;
     }
     
     if (isRAW)

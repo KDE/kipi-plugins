@@ -723,12 +723,11 @@ bool SmugWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
             
             if (iface)
             {
-                RawProcessor* const rawdec = iface->createRawProcessor();
+                QPointer<RawProcessor> rawdec = iface->createRawProcessor();
 
                 if (rawdec)
                 {
                     rawdec->loadRawPreview(QUrl::fromLocalFile(imgPath), image);
-                    delete rawdec;
                 }
             }
         } 
@@ -796,9 +795,8 @@ void SmugWindow::uploadNextPhoto()
 
     if (iface())
     {
-        RawProcessor* const rawdec = iface()->createRawProcessor();
+        QPointer<RawProcessor> rawdec = iface()->createRawProcessor();
         isRAW = (rawdec && rawdec->isRawFile(imgPath));
-        delete rawdec;
     }
 
     if (isRAW || m_widget->m_resizeChB->isChecked())

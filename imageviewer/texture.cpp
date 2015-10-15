@@ -135,13 +135,12 @@ bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
 
     if (d->iface)
     {
-        RawProcessor* const rawdec = d->iface->createRawProcessor();
+        QPointer<RawProcessor> rawdec = d->iface->createRawProcessor();
 
         // check if its a RAW file.
         if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(d->filename)))
         {
             rawdec->loadRawPreview(QUrl::fromLocalFile(d->filename), d->qimage);
-            delete rawdec;
         }
     }
     else

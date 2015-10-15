@@ -83,13 +83,12 @@ void PreProcessTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
         
         if (iface)
         {
-            RawProcessor* const rawdec = iface->createRawProcessor();
+            QPointer<RawProcessor> rawdec = iface->createRawProcessor();
 
             // check if its a RAW file.
             if (rawdec && rawdec->isRawFile(fileUrl))
             {
                 preProcessedUrl.preprocessedUrl = tmpDir;
-                delete rawdec;
 
                 if (!convertRaw())
                 {

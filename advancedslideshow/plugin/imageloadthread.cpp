@@ -176,13 +176,12 @@ bool ImageLoadThread::loadImage()
         
         if (iface)
         {
-            RawProcessor* const rawdec = iface->createRawProcessor();
+            QPointer<RawProcessor> rawdec = iface->createRawProcessor();
 
             // check if its a RAW file.
             if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(path)))
             {
                 rawdec->loadRawPreview(QUrl::fromLocalFile(path), image);
-                delete rawdec;
             }
         }
     } 

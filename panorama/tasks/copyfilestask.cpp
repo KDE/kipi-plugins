@@ -187,8 +187,8 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 
         qCDebug(KIPIPLUGINS_LOG) << "Copying converted RAW files...";
 
-        RawProcessor* rawdec   = 0;
-        PluginLoader* const pl = PluginLoader::instance();
+        QPointer<RawProcessor> rawdec = 0;
+        PluginLoader* const pl        = PluginLoader::instance();
 
         if (pl)
         {
@@ -224,8 +224,6 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
                 }
             }
         }
-        
-        delete rawdec;
     }
 
     successFlag = true;

@@ -826,8 +826,8 @@ void KPImagesList::slotAddImages(const QList<QUrl>& list)
     }
 
     QList<QUrl> urls;
-    bool raw             = false;
-    RawProcessor* rawdec = 0;
+    bool raw                      = false;
+    QPointer<RawProcessor> rawdec = 0;
     
     if (d->iface)
     {
@@ -868,8 +868,6 @@ void KPImagesList::slotAddImages(const QList<QUrl>& list)
             urls.append(imageUrl);
         }
     }
-
-    delete rawdec;
 
     emit signalAddItems(urls);
     emit signalImageListChanged();

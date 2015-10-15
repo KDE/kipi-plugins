@@ -299,13 +299,12 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QS
         
         if (iface)
         {
-            RawProcessor* const rawdec = iface->createRawProcessor();
+            QPointer<RawProcessor> rawdec = iface->createRawProcessor();
 
             // check if its a RAW file.
             if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(photoPath)))
             {
                 rawdec->loadRawPreview(QUrl::fromLocalFile(photoPath), image);
-                delete rawdec;
             }
         }
     } 
