@@ -40,11 +40,6 @@
 #include <klocalizedstring.h>
 #include <kio/previewjob.h>
 
-// LibKDcraw includes
-
-#include <KDCRAW/DcrawInfoContainer>
-#include <KDCRAW/KDcraw>
-
 // Libkipi includes
 
 #include <KIPI/Interface>
@@ -53,11 +48,9 @@
 
 // Local includes
 
-#include "kprawthumbthread.h"
 #include "kpmetadata.h"
 
 using namespace KIPI;
-using namespace KDcrawIface;
 
 namespace KIPIPlugins
 {
@@ -72,7 +65,6 @@ public:
         imageLabel   = 0;
         infoLabel    = 0;
         iface        = 0;
-        loadRawThumb = 0;
 
         PluginLoader* const pl = PluginLoader::instance();
 
@@ -92,8 +84,6 @@ public:
     KPMetadata        metaIface;
 
     Interface*        iface;
-
-    KPRawThumbThread* loadRawThumb;
 };
 
 KPImageDialogPreview::KPImageDialogPreview(QWidget* const parent)
@@ -118,17 +108,13 @@ KPImageDialogPreview::KPImageDialogPreview(QWidget* const parent)
 
     if (d->iface)
     {
-        connect(d->iface, &Interface::gotThumbnail, this, &KPImageDialogPreview::slotThumbnail);
+        connect(d->iface, &Interface::gotThumbnail,
+                this, &KPImageDialogPreview::slotThumbnail);
     }
-
-    d->loadRawThumb = new KPRawThumbThread(this);
-
-    connect(d->loadRawThumb, &KPRawThumbThread::signalRawThumb, this, &KPImageDialogPreview::slotRawThumb);
 }
 
 KPImageDialogPreview::~KPImageDialogPreview()
 {
-    d->loadRawThumb->cancel();
     delete d;
 }
 
@@ -240,43 +226,6 @@ void KPImageDialogPreview::showPreview(const QUrl& url)
                 }
             }
         }
-        else
-        {
-            // Try to use libkdcraw interface to identify image.
-
-            DcrawInfoContainer info;
-            KDcraw             dcrawIface;
-            dcrawIface.rawFileIdentify(info, d->currentUrl.path());
-
-            if (info.isDecodable)
-            {
-                if (!info.make.isEmpty())
-                    make = info.make;
-
-                if (!info.model.isEmpty())
-                    model = info.model;
-
-                if (info.dateTime.isValid())
-                    dateTime = QLocale().toString(info.dateTime, QLocale::ShortFormat);
-
-                if (info.aperture != -1.0)
-                    aperture = QString::number(info.aperture);
-
-                if (info.focalLength != -1.0)
-                    focalLength = QString::number(info.focalLength);
-
-                if (info.exposureTime != -1.0)
-                    exposureTime = QString::number(info.exposureTime);
-
-                if (info.sensitivity != -1)
-                    sensitivity = QString::number(info.sensitivity);
-            }
-            else
-            {
-                d->infoLabel->clear();
-                return;
-            }
-        }
 
         if (make.isEmpty())         make         = unavailable;
         if (model.isEmpty())        model        = unavailable;
@@ -314,9 +263,8 @@ void KPImageDialogPreview::slotKDEPreview(const KFileItem& item, const QPixmap& 
         slotThumbnail(item.url(), pix);
 }
 
-void KPImageDialogPreview::slotKDEPreviewFailed(const KFileItem& item)
+void KPImageDialogPreview::slotKDEPreviewFailed(const KFileItem&)
 {
-    d->loadRawThumb->getRawThumb(item.url());
 }
 
 void KPImageDialogPreview::slotRawThumb(const QUrl& url, const QImage& img)
@@ -380,14 +328,26 @@ public:
 };
 
 KPImageDialog::KPImageDialog(QWidget* const parent, bool singleSelect, bool onlyRaw)
-           : d(new Private)
+    : d(new Private)
 {
     d->singleSelect = singleSelect;
     d->onlyRaw      = onlyRaw;
 
     QStringList patternList;
     QString     allPictures;
+    QString     rawFiles;
 
+    if (d->iface)
+    {
+        RawProcessor* const rawdec = d->iface->createRawProcessor();
+
+        if (rawdec)
+        {
+            rawFiles = rawdec->rawFiles();
+            delete rawdec;
+        }
+    }
+    
     if (!d->onlyRaw)
     {
         patternList = d->iface->supportedImageMimeTypes();
@@ -395,20 +355,20 @@ KPImageDialog::KPImageDialog(QWidget* const parent, bool singleSelect, bool only
         // All Images from list must been always the first entry given by KDE API
         allPictures = patternList[0];
 
-        allPictures.insert(allPictures.indexOf(QStringLiteral("|")), QString::fromLatin1(KDcraw::rawFiles()) + QStringLiteral(" *.JPE *.TIF"));
+        allPictures.insert(allPictures.indexOf(QStringLiteral("|")), rawFiles + QStringLiteral(" *.JPE *.TIF"));
         patternList.removeAll(patternList[0]);
         patternList.prepend(allPictures);
     }
     else
     {
-        allPictures.insert(allPictures.indexOf(QStringLiteral("|")), QString::fromLatin1(KDcraw::rawFiles()) + QStringLiteral(" *.JPE *.TIF"));
+        allPictures.insert(allPictures.indexOf(QStringLiteral("|")), rawFiles + QStringLiteral(" *.JPE *.TIF"));
         patternList.prepend(allPictures);
     }
 
     // Added RAW file formats supported by dcraw program like a type mime.
     // Nota: we cannot use here "image/x-raw" type mime from KDE because it uncomplete
     // or unavailable(see file #121242 in bug).
-    patternList.append(i18n("\n%1|Camera RAW files", QString::fromLatin1(KDcraw::rawFiles())));
+    patternList.append(i18n("\n%1|Camera RAW files", rawFiles));
 
     d->fileFormats = patternList.join(QStringLiteral("\n"));
 

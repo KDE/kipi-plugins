@@ -54,7 +54,6 @@
 #include "slideshow.h"
 #include "slideshowgl.h"
 #include "slideshowkb.h"
-#include "kpimagedialog.h"
 #include "kpimageslist.h"
 #include "common/kpsvgpixmaprenderer.h"
 
