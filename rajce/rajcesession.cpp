@@ -37,9 +37,10 @@
 #include <kio/jobuidelegate.h>
 #include <kjobwidgets.h>
 
-// Libkdcraw includes
+// Libkipi includes
 
-#include <KDCRAW/KDcraw>
+#include <KIPI/Interface>
+#include <KIPI/PluginLoader>
 
 // Local includes
 
@@ -49,6 +50,7 @@
 #include "kpmetadata.h"
 #include "kputil.h"
 
+using namespace KIPI;
 using namespace KIPIPlugins;
 
 namespace KIPIRajcePlugin
@@ -560,12 +562,23 @@ AddPhotoCommand::AddPhotoCommand(const QString& tmpDir, const QString& path, uns
       m_imagePath(path),
       m_form(0)
 {
-    bool isRaw = KPMetadata::isRawFile(QUrl::fromLocalFile(path));
+    PluginLoader* const pl = PluginLoader::instance();
 
-    if (isRaw)
+    if (pl)
     {
-        qCDebug(KIPIPLUGINS_LOG) << "Get RAW preview " << path;
-        KDcrawIface::KDcraw::loadRawPreview(m_image, path);
+        Interface* const iface = pl->interface();
+        
+        if (iface)
+        {
+            RawProcessor* const rawdec = iface->createRawProcessor();
+
+            // check if its a RAW file.
+            if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(path)))
+            {
+                rawdec->loadRawPreview(QUrl::fromLocalFile(path), m_image);
+                delete rawdec;
+            }
+        }
     }
     else
     {
