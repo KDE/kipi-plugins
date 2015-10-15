@@ -23,7 +23,6 @@ target_link_libraries(kipiplugin_smug
                       PRIVATE
                       KF5::Kipi
                       KF5::KExiv2
-                      KF5::KDcraw
                       KF5::KIOCore
                       KF5::KIOWidgets
                       KF5::WindowSystem

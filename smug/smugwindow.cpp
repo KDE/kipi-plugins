@@ -43,14 +43,11 @@
 #include <klocalizedstring.h>
 #include <kwindowconfig.h>
 
-// LibKDcraw includes
-
-#include <KDCRAW/KDcraw>
-
 // Libkipi includes
 
 #include <KIPI/Interface>
 #include <KIPI/UploadWidget>
+#include <KIPI/PluginLoader>
 
 // Local includes
 
@@ -394,6 +391,7 @@ void SmugWindow::slotLoginDone(int errCode, const QString &errMsg)
             m_anonymousImport = m_widget->isAnonymous();
             // anonymous: list albums after login only if nick is not empty
             QString nick = m_widget->getNickName();
+
             if (!nick.isEmpty() || !m_anonymousImport)
             {
                 m_talker->listAlbums(nick);
@@ -716,7 +714,24 @@ bool SmugWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
     if (isRAW)
     {
         qCDebug(KIPIPLUGINS_LOG) << "Get RAW preview " << imgPath;
-        KDcrawIface::KDcraw::loadRawPreview(image, imgPath);
+        
+        PluginLoader* const pl = PluginLoader::instance();
+
+        if (pl)
+        {
+            Interface* const iface = pl->interface();
+            
+            if (iface)
+            {
+                RawProcessor* const rawdec = iface->createRawProcessor();
+
+                if (rawdec)
+                {
+                    rawdec->loadRawPreview(QUrl::fromLocalFile(imgPath), image);
+                    delete rawdec;
+                }
+            }
+        } 
     }
     else
     {
@@ -724,7 +739,9 @@ bool SmugWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
     }
 
     if (image.isNull())
+    {
         return false;
+    }
 
     // get temporary file name
     m_tmpPath  = m_tmpDir + QFileInfo(imgPath).baseName().trimmed() + QStringLiteral(".jpg");
