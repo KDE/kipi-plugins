@@ -39,14 +39,17 @@
 #include <kglobal.h>
 #include <klocalizedstring.h>
 
-// LibKDcraw includes
+// Libkipi includes
 
-#include <KDCRAW/KDcraw>
+#include <KIPI/Interface>
+#include <KIPI/PluginLoader>
 
 // Local includes
 
 #include "calsettings.h"
 #include "kipiplugins_debug.h"
+
+using namespace KIPI;
 
 namespace KIPICalendarPlugin
 {
@@ -311,10 +314,23 @@ void CalPainter::paint(int month)
         }
     }
 
-    // Check if RAW file.
-    if (KPMetadata::isRawFile(imagePath_))
+    PluginLoader* const pl = PluginLoader::instance();
+
+    if (pl)
     {
-        KDcrawIface::KDcraw::loadRawPreview(image_, imagePath_.path());
+        Interface* const iface = pl->interface();
+        
+        if (iface)
+        {
+            RawProcessor* const rawdec = iface->createRawProcessor();
+
+            // check if its a RAW file.
+            if (rawdec && rawdec->isRawFile(imagePath_))
+            {
+                rawdec->loadRawPreview(imagePath_, image_);
+                delete rawdec;
+            }
+        }
     }
     else
     {

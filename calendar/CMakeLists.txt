@@ -33,7 +33,6 @@ target_link_libraries(kipiplugin_calendar
                       KF5::Parts
                       KF5::Kipi
                       KF5::KExiv2
-                      KF5::KDcraw
                       KF5kipiplugins
 
                       KF5::CalendarCore 
