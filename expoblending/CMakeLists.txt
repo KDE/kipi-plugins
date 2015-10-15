@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+# Copyright (c) 2010-2015, Gilles Caulier, <caulier dot gilles at gmail dot com>
 # Copyright (c) 2015,      Benjamin Girault, <benjamin dot girault at gmail dot com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
@@ -80,23 +80,3 @@ configure_file(plugin/kipiplugin_expoblending.desktop.cmake.in ${CMAKE_CURRENT_B
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_expoblending.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_expoblending                                            DESTINATION ${PLUGIN_INSTALL_DIR})
 install(FILES   plugin/kipiplugin_expoblendingui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)
-
-# =======================================================
-# Stand alone version of ExpoBlending plugin
-
-set(expoblending_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/expoblending.cpp)
-
-file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/./icons/*-apps-kipi-expoblending.png")
-ecm_add_app_icon(expoblending_SRCS ICONS ${ICONS_SRCS})
-
-add_executable(expoblending ${expoblending_SRCS})
-
-target_link_libraries(expoblending
-    libexpoblending
-    KF5::I18n
-    KF5::XmlGui
-    KF5kipiplugins
-)
-
-install(TARGETS expoblending ${INSTALL_TARGETS_DEFAULT_ARGS})
-install(PROGRAMS plugin/expoblending.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
