@@ -133,16 +133,15 @@ bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
     d->initial_size = size;
     d->texnr        = tn;
 
-    // check if its a RAW file.
-    if (KPMetadata::isRawFile(QUrl::fromLocalFile(d->filename)))
+    if (d->iface)
     {
-        // it's a RAW file, use the libkdcraw loader
-        if (d->iface)
-        {
-            RawProcessor* const rawdec = d->iface->createRawProcessor();
+        RawProcessor* const rawdec = d->iface->createRawProcessor();
 
-            if (rawdec)
-                rawdec->loadRawPreview(QUrl::fromLocalFile(d->filename), d->qimage);
+        // check if its a RAW file.
+        if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(d->filename)))
+        {
+            rawdec->loadRawPreview(QUrl::fromLocalFile(d->filename), d->qimage);
+            delete rawdec;
         }
     }
     else
