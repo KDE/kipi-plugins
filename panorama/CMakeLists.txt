@@ -8,8 +8,6 @@
 add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_panorama\" -DQT_NO_URL_CAST_FROM_STRING -DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII)
 remove_definitions(-DQT_DEPRECATED_SINCE(5,0))
 
-add_subdirectory(icons)
-
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/importwizard
                     ${CMAKE_CURRENT_SOURCE_DIR}/manager
                     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
@@ -98,12 +96,6 @@ install(TARGETS kipiplugin_panorama                                            D
 install(FILES   plugin/kipiplugin_panoramaui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)
 
 # =======================================================
-# Test program
 
-if(BUILD_TESTING)
-    set(pto_parser_test_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/parser_test.cpp)
-
-    add_executable(pto_parser_test ${pto_parser_test_SRCS})
-
-    target_link_libraries(pto_parser_test libpanorama)
-endif()
+add_subdirectory(tests)
+add_subdirectory(icons)
