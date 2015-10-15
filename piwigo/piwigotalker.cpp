@@ -42,9 +42,10 @@
 #include <kio/jobuidelegate.h>
 #include <klocalizedstring.h>
 
-// LibKDcraw includes
+// Libkipi includes
 
-#include <KDCRAW/KDcraw>
+#include <KIPI/Interface>
+#include <KIPI/PluginLoader>
 
 // Local includes
 
@@ -55,6 +56,7 @@
 #include "kpimageinfo.h"
 #include "kputil.h"
 
+using namespace KIPI;
 using namespace KIPIPlugins;
 
 namespace KIPIPiwigoExportPlugin
@@ -83,6 +85,7 @@ PiwigoTalker::~PiwigoTalker()
 void PiwigoTalker::cancel()
 {
     deleteTemporaryFile();
+
     if (m_job)
     {
         m_job->kill();
@@ -204,11 +207,28 @@ bool PiwigoTalker::addPhoto(int   albumId,
         // Image management
         QImage image;
 
-        // Check if RAW file.
-        if (KPMetadata::isRawFile(QUrl::fromLocalFile(mediaPath)))
-            KDcrawIface::KDcraw::loadRawPreview(image, mediaPath);
+        PluginLoader* const pl = PluginLoader::instance();
+
+        if (pl)
+        {
+            Interface* const iface = pl->interface();
+            
+            if (iface)
+            {
+                RawProcessor* const rawdec = iface->createRawProcessor();
+
+                // check if its a RAW file.
+                if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(mediaPath)))
+                {
+                    rawdec->loadRawPreview(QUrl::fromLocalFile(mediaPath), image);
+                    delete rawdec;
+                }
+            }
+        } 
         else
+        {
             image.load(mediaPath);
+        }
 
         if (image.isNull())
         {
