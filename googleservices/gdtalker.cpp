@@ -54,9 +54,10 @@
 #include <kio/jobuidelegate.h>
 #include <kjobwidgets.h>
 
-// LibKDcraw includes
+// Libkipi includes
 
-#include <KDCRAW/KDcraw>
+#include <KIPI/Interface>
+#include <KIPI/PluginLoader>
 
 // local includes
 
@@ -66,6 +67,8 @@
 #include "gsitem.h"
 #include "mpform_gdrive.h"
 #include "kipiplugins_debug.h"
+
+using namespace KIPI;
 
 namespace KIPIGoogleServicesPlugin
 {
@@ -196,10 +199,24 @@ bool GDTalker::addPhoto(const QString& imgPath,const GSPhoto& info,const QString
     QString path = imgPath;
     QImage image;
 
-    if (KPMetadata::isRawFile(QUrl::fromLocalFile(imgPath)))
+    PluginLoader* const pl = PluginLoader::instance();
+
+    if (pl)
     {
-        KDcrawIface::KDcraw::loadRawPreview(image,imgPath);
-    }
+        Interface* const iface = pl->interface();
+        
+        if (iface)
+        {
+            RawProcessor* const rawdec = iface->createRawProcessor();
+
+            // check if its a RAW file.
+            if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(imgPath)))
+            {
+                rawdec->loadRawPreview(QUrl::fromLocalFile(imgPath), image);
+                delete rawdec;
+            }
+        }
+    } 
     else
     {
         image.load(imgPath);

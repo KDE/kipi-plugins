@@ -25,7 +25,6 @@ add_library(kipiplugin_googleservices MODULE ${kipiplugin_googleservices_PART_SR
 
 target_link_libraries(kipiplugin_googleservices
     PRIVATE
-        KF5::KDcraw
         KF5::Kipi
         KF5::KExiv2
         KF5::KIOCore

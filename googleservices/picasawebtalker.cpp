@@ -59,9 +59,10 @@
 #include <kio/jobuidelegate.h>
 #include <klocalizedstring.h>
 
-// LibKDcraw includes
+// Libkipi includes
 
-#include <KDCRAW/KDcraw>
+#include <KIPI/Interface>
+#include <KIPI/PluginLoader>
 
 // Local includes
 
@@ -69,6 +70,8 @@
 #include "kpmetadata.h"
 #include "mpform_picasa.h"
 #include "kipiplugins_debug.h"
+
+using namespace KIPI;
 
 namespace KIPIGoogleServicesPlugin
 {
@@ -288,16 +291,30 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QS
     QString path = photoPath;
     QImage image;
 
-    if(KIPIPlugins::KPMetadata::isRawFile(QUrl::fromLocalFile(photoPath)))
+    PluginLoader* const pl = PluginLoader::instance();
+
+    if (pl)
     {
-        KDcrawIface::KDcraw::loadRawPreview(image,photoPath);
-    }
+        Interface* const iface = pl->interface();
+        
+        if (iface)
+        {
+            RawProcessor* const rawdec = iface->createRawProcessor();
+
+            // check if its a RAW file.
+            if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(photoPath)))
+            {
+                rawdec->loadRawPreview(QUrl::fromLocalFile(photoPath), image);
+                delete rawdec;
+            }
+        }
+    } 
     else
     {
         image.load(photoPath);
     }
 
-    if(image.isNull())
+    if (image.isNull())
     {
         return false;
     }
@@ -305,7 +322,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QS
     path = QDir::tempPath() + QLatin1Char('/') + QFileInfo(photoPath).baseName().trimmed() + QStringLiteral(".jpg");
     int imgQualityToApply = 100;
 
-    if(rescale)
+    if (rescale)
     {
         if(image.width() > maxDim || image.height() > maxDim)
             image = image.scaled(maxDim,maxDim,Qt::KeepAspectRatio,Qt::SmoothTransformation);
@@ -420,10 +437,24 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, con
     QString path = photoPath;
     QImage image;
 
-    if(KIPIPlugins::KPMetadata::isRawFile(QUrl::fromLocalFile(photoPath)))
+    PluginLoader* const pl = PluginLoader::instance();
+
+    if (pl)
     {
-        KDcrawIface::KDcraw::loadRawPreview(image,photoPath);
-    }
+        Interface* const iface = pl->interface();
+        
+        if (iface)
+        {
+            RawProcessor* const rawdec = iface->createRawProcessor();
+
+            // check if its a RAW file.
+            if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(photoPath)))
+            {
+                rawdec->loadRawPreview(QUrl::fromLocalFile(photoPath), image);
+                delete rawdec;
+            }
+        }
+    } 
     else
     {
         image.load(photoPath);
