@@ -35,20 +35,17 @@
 
 #include "kipiplugins_debug.h"
 
-// LibKDcraw includes
-
-#include <KDCRAW/KDcraw>
-
 // Libkipi includes
 
 #include <KIPI/Interface>
+#include <KIPI/PluginLoader>
 
 // Local includes
 
 #include "commoncontainer.h"
 #include "kpimageinfo.h"
 
-using namespace KDcrawIface;
+using namespace KIPI;
 
 namespace KIPIAdvancedSlideshowPlugin
 {
@@ -74,11 +71,25 @@ void LoadThread::run()
     QImage newImage;
 
     // check if it's a RAW file.
-    if (KPMetadata::isRawFile(m_path))
+    
+    PluginLoader* const pl = PluginLoader::instance();
+
+    if (pl)
     {
-        // it's a RAW file, use the libkdcraw loader
-        KDcraw::loadRawPreview(newImage, m_path.toLocalFile());
-    }
+        Interface* const iface = pl->interface();
+        
+        if (iface)
+        {
+            RawProcessor* const rawdec = iface->createRawProcessor();
+
+            // check if its a RAW file.
+            if (rawdec && rawdec->isRawFile(m_path))
+            {
+                rawdec->loadRawPreview(m_path, newImage);
+                delete rawdec;
+            }
+        }
+    } 
     else
     {
         // use the standard loader

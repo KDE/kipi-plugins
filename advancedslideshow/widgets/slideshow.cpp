@@ -45,17 +45,16 @@
 #include <QSvgRenderer>
 #include <QTimer>
 #include <QWheelEvent>
+#include <QApplication>
+#include <QDesktopWidget>
 
 // KDE includes
 
-#include <QApplication>
 #include <klocalizedstring.h>
 
 // libkipi includes
 
 #include <KIPI/Interface>
-#include <QApplication>
-#include <QDesktopWidget>
 
 // Local includes
 

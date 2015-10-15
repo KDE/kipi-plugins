@@ -44,10 +44,6 @@
 #include <kjobwidgets.h>
 #include <klocalizedstring.h>
 
-// Libkdcraw includes
-
-#include <KDCRAW/KDcraw>
-
 // Local includes
 
 #include "kpversion.h"
@@ -132,6 +128,7 @@ SimpleViewer::~SimpleViewer()
 void SimpleViewer::appendPluginFiles(int pluginType)
 {
     qCDebug(KIPIPLUGINS_LOG) << "Value of plugin type in append files" << pluginType;
+
     switch(pluginType)
     {
         case 0:
@@ -528,10 +525,21 @@ void SimpleViewer::processQUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
         d->progressWdg->addedAction(i18n("Processing %1", url.fileName()), StartingMessage);
 
         // Check if RAW file.
-        if (KPMetadata::isRawFile(url))
-            KDcrawIface::KDcraw::loadRawPreview(image, url.path());
+        if (d->interface)
+        {
+            RawProcessor* const rawdec = d->interface->createRawProcessor();
+
+            // check if its a RAW file.
+            if (rawdec && rawdec->isRawFile(url))
+            {
+                rawdec->loadRawPreview(url, image);
+                delete rawdec;
+            }
+        }
         else
+        {
             image.load(url.path());
+        }
 
         if (image.isNull())
         {

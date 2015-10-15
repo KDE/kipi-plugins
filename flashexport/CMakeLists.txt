@@ -32,9 +32,8 @@ target_link_libraries(kipiplugin_flashexport
                       KF5::Archive
                       KF5::JobWidgets
 
-                      ${KF5Kipi_LIBRARIES}
-                      ${KF5KExiv2_LIBRARIES}
-                      ${KF5KDcraw_LIBRARIES}
+                      KF5::Kipi
+                      KF5::KExiv2
 
                       KF5kipiplugins
 )

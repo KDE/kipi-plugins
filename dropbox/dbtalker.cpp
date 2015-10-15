@@ -57,9 +57,10 @@
 #include <kio/jobuidelegate.h>
 #include <kjobwidgets.h>
 
-// LibKDcraw includes
+// Libkipi includes
 
-#include <KDCRAW/KDcraw>
+#include <KIPI/Interface>
+#include <KIPI/PluginLoader>
 
 // Local includes
 
@@ -70,6 +71,8 @@
 #include "dbwindow.h"
 #include "dbitem.h"
 #include "mpform.h"
+
+using namespace KIPI;
 
 namespace KIPIDropboxPlugin
 {
@@ -100,7 +103,7 @@ QString DBTalker::generateNonce(qint32 length)
 {
     QString clng = QStringLiteral("");
 
-    for(int i=0; i<length; ++i)
+    for(int i = 0; i < length; ++i)
     {
         clng += QString::number(int( qrand() / (RAND_MAX + 1.0) * (16 + 1 - 0) + 0 ), 16).toUpper();
     }
@@ -141,7 +144,7 @@ void DBTalker::obtain_req_token()
 
 bool DBTalker::authenticated()
 {
-    if(auth)
+    if (auth)
     {
         return true;
     }
@@ -174,7 +177,7 @@ void DBTalker::doOAuth()
 
     emit signalBusy(false);
 
-    dialog = new QDialog(QApplication::activeWindow(),0);
+    dialog = new QDialog(QApplication::activeWindow(), 0);
     dialog->setModal(true);
     dialog->setWindowTitle(i18n("Authorize Dropbox"));
     QDialogButtonBox* const buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, dialog);
@@ -339,7 +342,7 @@ void DBTalker::listFolders(const QString& path)
 
 bool DBTalker::addPhoto(const QString& imgPath, const QString& uploadFolder, bool rescale, int maxDim, int imageQuality)
 {
-    if(m_job)
+    if (m_job)
     {
         m_job->kill();
         m_job = 0;
@@ -349,16 +352,30 @@ bool DBTalker::addPhoto(const QString& imgPath, const QString& uploadFolder, boo
     MPForm form;
     QImage image;
 
-    if(KPMetadata::isRawFile(QUrl::fromLocalFile(imgPath)))
+    PluginLoader* const pl = PluginLoader::instance();
+
+    if (pl)
     {
-        KDcrawIface::KDcraw::loadRawPreview(image, imgPath);
-    }
+        Interface* const iface = pl->interface();
+        
+        if (iface)
+        {
+            RawProcessor* const rawdec = iface->createRawProcessor();
+
+            // check if its a RAW file.
+            if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(imgPath)))
+            {
+                rawdec->loadRawPreview(QUrl::fromLocalFile(imgPath), image);
+                delete rawdec;
+            }
+        }
+    } 
     else
     {
         image.load(imgPath);
     }
 
-    if(image.isNull())
+    if (image.isNull())
     {
         return false;
     }
@@ -366,7 +383,7 @@ bool DBTalker::addPhoto(const QString& imgPath, const QString& uploadFolder, boo
     QDir tempDir = makeTemporaryDir("kipi-dropbox");
     QString path = tempDir.filePath(QFileInfo(imgPath).baseName().trimmed() + QStringLiteral(".jpg"));
 
-    if(rescale && (image.width() > maxDim || image.height() > maxDim))
+    if (rescale && (image.width() > maxDim || image.height() > maxDim))
     {
         image = image.scaled(maxDim,maxDim,Qt::KeepAspectRatio,Qt::SmoothTransformation);
     }

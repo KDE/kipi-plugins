@@ -40,10 +40,6 @@
 #include <klocalizedstring.h>
 #include <kwindowconfig.h>
 
-// LibKDcraw includes
-
-#include <KDCRAW/KDcraw>
-
 // Libkipi includes
 
 #include <KIPI/Interface>
@@ -98,7 +94,7 @@ public:
 
 FbWindow::FbWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     : KPToolDialog(0),
-      d(new Private(this,iface()))
+      d(new Private(this, iface()))
 {
     m_tmpPath.clear();
     m_tmpDir      = tmpFolder;
@@ -569,8 +565,18 @@ bool FbWindow::prepareImageForUpload(const QString& imgPath, bool isRAW, QString
 
     if (isRAW)
     {
-        qCDebug(KIPIPLUGINS_LOG) << "Get RAW preview " << imgPath;
-        KDcrawIface::KDcraw::loadRawPreview(image, imgPath);
+        if (iface())
+        {
+            KIPI::RawProcessor* const rawdec = iface()->createRawProcessor();
+
+            // check if its a RAW file.
+            if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(imgPath)))
+            {
+                qCDebug(KIPIPLUGINS_LOG) << "Get RAW preview " << imgPath;
+                rawdec->loadRawPreview(QUrl::fromLocalFile(imgPath), image);
+                delete rawdec;
+            }
+        }
     }
     else
     {

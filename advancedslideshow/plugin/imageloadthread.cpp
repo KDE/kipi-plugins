@@ -30,13 +30,14 @@
 #include <QMatrix>
 #include <QFileInfo>
 
+// Libkipi includes
+
+#include <KIPI/Interface>
+#include <KIPI/PluginLoader>
+
 // KDE includes
 
 #include <klocalizedstring.h>
-
-// LibKDcraw includes
-
-#include <KDCRAW/KDcraw>
 
 // Local includes
 
@@ -45,7 +46,7 @@
 #include "kpmetadata.h"
 
 using namespace KIPIPlugins;
-using namespace KDcrawIface;
+using namespace KIPI;
 
 namespace KIPIAdvancedSlideshowPlugin
 {
@@ -166,11 +167,25 @@ bool ImageLoadThread::loadImage()
     QImage              image;
 
     // check if it's a RAW file.
-    if (KPMetadata::isRawFile(QUrl::fromLocalFile(path)))
+    
+    PluginLoader* const pl = PluginLoader::instance();
+
+    if (pl)
     {
-        // it's a RAW file, use the libkdcraw loader
-        KDcraw::loadRawPreview(image, path);
-    }
+        Interface* const iface = pl->interface();
+        
+        if (iface)
+        {
+            RawProcessor* const rawdec = iface->createRawProcessor();
+
+            // check if its a RAW file.
+            if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(path)))
+            {
+                rawdec->loadRawPreview(QUrl::fromLocalFile(path), image);
+                delete rawdec;
+            }
+        }
+    } 
     else
     {
         // use the standard loader
@@ -189,8 +204,8 @@ bool ImageLoadThread::loadImage()
         return false;
     }
 
-    float aspect    = (float)image.width() / (float)image.height();
-    image           = image.scaled(m_width, m_height, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    float aspect = (float)image.width() / (float)image.height();
+    image        = image.scaled(m_width, m_height, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
     m_imageLock.lock();
 

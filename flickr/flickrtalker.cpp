@@ -53,9 +53,10 @@
 #include <kjobwidgets.h>
 #include <kio/jobuidelegate.h>
 
-// LibKDcraw includes
+// Libkipi includes
 
-#include <KDCRAW/KDcraw>
+#include <KIPI/Interface>
+#include <KIPI/PluginLoader>
 
 // Local includes
 
@@ -66,6 +67,7 @@
 #include "flickrwindow.h"
 #include "kipiplugins_debug.h"
 
+using namespace KIPI;
 using namespace KIPIPlugins;
 
 namespace KIPIFlickrPlugin
@@ -708,10 +710,25 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
     QImage image;
 
     // Check if RAW file.
-    if (KPMetadata::isRawFile(QUrl::fromLocalFile(photoPath)))
+
+    PluginLoader* const pl = PluginLoader::instance();
+
+    if (pl)
     {
-        KDcrawIface::KDcraw::loadRawPreview(image, photoPath);
-    }
+        Interface* const iface = pl->interface();
+        
+        if (iface)
+        {
+            RawProcessor* const rawdec = iface->createRawProcessor();
+
+            // check if its a RAW file.
+            if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(photoPath)))
+            {
+                rawdec->loadRawPreview(QUrl::fromLocalFile(photoPath), image);
+                delete rawdec;
+            }
+        }
+    } 
     else
     {
         image.load(photoPath);
@@ -723,7 +740,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
 
         if (rescale)
         {
-            if(image.width() > maxDim || image.height() > maxDim)
+            if (image.width() > maxDim || image.height() > maxDim)
                 image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
             image.save(path, "JPEG", imageQuality);
