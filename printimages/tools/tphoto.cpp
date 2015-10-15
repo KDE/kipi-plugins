@@ -28,16 +28,18 @@
 #include <QPainter>
 #include <QFileInfo>
 
-// LibKDcraw includes
+// Libkipi includes
 
-#include <KDCRAW/KDcraw>
+#include <KIPI/Interface>
+#include <KIPI/PluginLoader>
 
 // Local includes
 
 #include "kpmetadata.h"
 
 #define IMAGE_FILE_MASK "*"
-//"*.jpg;*.jpeg;*.JPG;*.JPEG;*.png;*.PNG"
+
+using namespace KIPI;
 
 namespace KIPIPrintImagesPlugin
 {
@@ -125,11 +127,28 @@ QImage TPhoto::loadPhoto()
 {
     QImage photo;
 
-    // Check if RAW file.
-    if (KPMetadata::isRawFile(filename))
-        KDcrawIface::KDcraw::loadRawPreview(photo, filename.path());
+    PluginLoader* const pl = PluginLoader::instance();
+
+    if (pl)
+    {
+        Interface* const iface = pl->interface();
+        
+        if (iface)
+        {
+            RawProcessor* const rawdec = iface->createRawProcessor();
+
+            // check if its a RAW file.
+            if (rawdec && rawdec->isRawFile(filename))
+            {
+                rawdec->loadRawPreview(filename, photo);
+                delete rawdec;
+            }
+        }
+    } 
     else
-        photo.load(filename.path()); // PENDING(blackie) handle URL
+    {
+        photo.load(filename.path());
+    }
 
     return photo;
 }
