@@ -32,8 +32,6 @@
 #include <QPixmap>
 #include <QUrl>
 
-class KFileItem;
-
 namespace KIPI
 {
 class Interface;
@@ -92,9 +90,6 @@ Q_SIGNALS:
 
 private Q_SLOTS:
 
-    void slotKDEPreview(const KFileItem&, const QPixmap&);
-    void slotKDEPreviewFailed(const KFileItem&);
-    void slotRawThumb(const QUrl&, const QImage&);
     void slotThumbnail(const QUrl& url, const QPixmap& pix);
 
 private:

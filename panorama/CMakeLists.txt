@@ -5,8 +5,7 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_panorama\" -DQT_NO_URL_CAST_FROM_STRING -DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII)
-remove_definitions(-DQT_DEPRECATED_SINCE(5,0))
+add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_panorama\")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/importwizard
                     ${CMAKE_CURRENT_SOURCE_DIR}/manager

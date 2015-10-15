@@ -33,12 +33,14 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kio/previewjob.h>
-#include <kfileitem.h>
 
 // Libkipi includes
 
 #include <KIPI/Interface>
+
+// Local includes
+
+#include "kipiplugins_debug.h"
 
 namespace KIPIExpoBlendingPlugin
 {
@@ -227,44 +229,10 @@ void BracketStackList::addItems(const QList<QUrl>& list)
     }
     else
     {
-        KFileItemList items;
-
-        for (const QUrl& url: urls)
-        {
-            if (url.isValid())
-            {
-                items.append(KFileItem(url));
-            }
-        }
-
-        KIO::PreviewJob* const job = KIO::filePreview(items, iconSize());
-
-        connect(job, SIGNAL(gotPreview(KFileItem, QPixmap)),
-                this, SLOT(slotKDEPreview(KFileItem, QPixmap)));
-
-        connect(job, SIGNAL(failed(KFileItem)),
-                this, SLOT(slotKDEPreviewFailed(KFileItem)));
+        qCDebug(KIPIPLUGINS_LOG) << "No KIPI interface available : thumbnails will not generated.";
     }
 
     emit signalAddItems(urls);
-}
-
-// Used only if Kipi interface is null.
-void BracketStackList::slotKDEPreview(const KFileItem& item, const QPixmap& pix)
-{
-    if (!pix.isNull())
-    {
-        slotThumbnail(item.url(), pix);
-    }
-}
-
-void BracketStackList::slotKDEPreviewFailed(const KFileItem&)
-{
-}
-
-void BracketStackList::slotRawThumb(const QUrl& url, const QImage& img)
-{
-    slotThumbnail(url, QPixmap::fromImage(img));
 }
 
 void BracketStackList::slotThumbnail(const QUrl& url, const QPixmap& pix)

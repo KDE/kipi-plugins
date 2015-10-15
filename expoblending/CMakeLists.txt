@@ -5,8 +5,7 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_expoblending\" -DQT_NO_URL_CAST_FROM_STRING -DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII)
-remove_definitions(-DQT_DEPRECATED_SINCE(5,0))
+add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_expoblending\")
 
 add_subdirectory(icons)
 
@@ -51,13 +50,16 @@ target_link_libraries(libexpoblending
     PUBLIC
         Qt5::Core
         KF5kipiplugins
+
     PRIVATE
-        KF5kipiplugins
+        Qt5::Widgets
+
         KF5::Parts
         KF5::Kipi
         KF5::KExiv2
         KF5::ConfigCore
-        Qt5::Widgets
+
+        KF5kipiplugins
 )
 
 # =======================================================
