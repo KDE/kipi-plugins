@@ -152,7 +152,7 @@ bool PreProcessTask::computePreview(const QUrl& inUrl)
 bool PreProcessTask::convertRaw()
 {
     const QUrl& inUrl = fileUrl;
-    QUrl &outUrl      = preProcessedUrl.preprocessedUrl;
+    QUrl& outUrl      = preProcessedUrl.preprocessedUrl;
 
     int        width, height, rgbmax;
     QByteArray imageData;
@@ -166,8 +166,8 @@ bool PreProcessTask::convertRaw()
         
         if (iface)
         {
-            rawProcess   = iface->createRawProcessor();    
-            bool decoded = rawProcess->decodeRawImage(inUrl, imageData, width, height, rgbmax);
+            rawProcess = iface->createRawProcessor();    
+            decoded    = rawProcess->decodeRawImage(inUrl, imageData, width, height, rgbmax);
         }            
     }
 
