@@ -46,12 +46,11 @@
 #include <QMutex>
 #include <QMutexLocker>
 #include <QWaitCondition>
-#include <QtDebug>
 #include <QDateTime>
 #include <QFileInfo>
 #include <QPointer>
 #include <QFuture>
-#include <QtConcurrent/QtConcurrent>
+#include <QtConcurrent>
 #include <QTemporaryDir>
 #include <QProcess>
 
@@ -76,7 +75,8 @@ struct ActionThread::Private
     Private()
         : cancel(false),
           align(false),
-          enfuseVersion4x(true)
+          enfuseVersion4x(true),
+          iface(0)
     {
         PluginLoader* const pl = PluginLoader::instance();
 
@@ -177,7 +177,7 @@ void ActionThread::cleanUpResultFiles()
 
 void ActionThread::setPreProcessingSettings(bool align)
 {
-    d->align               = align;
+    d->align = align;
 }
 
 void ActionThread::identifyFiles(const QList<QUrl>& urlList)
@@ -476,7 +476,7 @@ void ActionThread::preProcessingMultithreaded(const QUrl& url, volatile bool& er
     if (d->iface)
     {
         QPointer<RawProcessor> rawdec = d->iface->createRawProcessor();
-        isRAW = (rawdec && rawdec->isRawFile(url));
+        isRAW                         = (rawdec && rawdec->isRawFile(url));
     }
     
     if (isRAW)

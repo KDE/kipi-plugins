@@ -49,6 +49,7 @@ add_library(libexpoblending STATIC ${expoblending_common_SRCS})
 target_link_libraries(libexpoblending
     PUBLIC
         Qt5::Core
+        Qt5::Concurrent
         KF5kipiplugins
 
     PRIVATE
