@@ -145,7 +145,7 @@ void MonthWidget::setImage(const QUrl& url)
     if (interface_)
     {
         QPointer<RawProcessor> rawdec = interface_->createRawProcessor();
-        isRAW = (rawdec && rawdec->isRawFile(url));
+        isRAW                         = (rawdec && rawdec->isRawFile(url));
     }
     
     if (isRAW)
@@ -161,7 +161,10 @@ void MonthWidget::setImage(const QUrl& url)
     imagePath_ = url;
     CalSettings::instance()->setImage(month_, imagePath_);
 
-    interface_->thumbnail(url, thumbSize.width());
+    if (interface_)
+    {
+        interface_->thumbnail(url, thumbSize.width());
+    }
 }
 
 void MonthWidget::dropEvent(QDropEvent* event)
