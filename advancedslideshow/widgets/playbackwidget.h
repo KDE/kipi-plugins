@@ -81,21 +81,22 @@ private Q_SLOTS:
 
 private:
 
-    void checkSkip ();
-    void setGUIPlay( bool );
+    void checkSkip();
+    void setGUIPlay(bool);
     void setZeroTime();
 
 private:
 
-    SharedContainer*     m_sharedData;
+    SharedContainer*      m_sharedData;
     QList<QUrl>           m_urlList;
-    int                  m_currIndex;
-    bool                 m_stopCalled;
-    bool                 m_isZeroTime;
-    bool                 m_canHide;
+    int                   m_currIndex;
+    bool                  m_stopCalled;
+    bool                  m_isZeroTime;
+    bool                  m_canHide;
 
-    Phonon::MediaObject* m_mediaObject;
-    Phonon::AudioOutput* m_audioOutput;
+    Phonon::MediaObject*  m_mediaObject;
+    Phonon::AudioOutput*  m_audioOutput;
+    Phonon::VolumeSlider* m_volumeSlider;
 };
 
 } // namespace KIPIAdvancedSlideshowPlugin

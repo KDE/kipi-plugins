@@ -105,6 +105,14 @@ PlaybackWidget::PlaybackWidget(QWidget* const parent, QList<QUrl>& urls, SharedC
 
     m_audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
     Phonon::createPath(m_mediaObject, m_audioOutput);
+    
+    m_volumeSlider = new Phonon::VolumeSlider(m_volumeWidget);
+    QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    sizePolicy1.setHorizontalStretch(0);
+    sizePolicy1.setVerticalStretch(0);
+    sizePolicy1.setHeightForWidth(m_volumeWidget->sizePolicy().hasHeightForWidth());
+    m_volumeSlider->setSizePolicy(sizePolicy1);
+    m_volumeSlider->setProperty("maximum", QVariant(100));
     m_volumeSlider->setAudioOutput(m_audioOutput);
     m_volumeSlider->setOrientation(Qt::Horizontal);
     setZeroTime();
