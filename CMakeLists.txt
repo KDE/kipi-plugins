@@ -127,16 +127,8 @@ if(KF5Kipi_FOUND)
     find_package(OpenGL)                                                       # For AdvancedSlideshow and ImageViewer.
     find_package(FLEX)                                                         # For Panorama (must be found before KdepimLibs for MacOS).
     find_package(BISON)                                                        # For Panorama (must be found before KdepimLibs for MacOS).
+    find_package(QtKOAuth)                                                     # For Imgur Auhtenticated API.
     find_package(Phonon4Qt5)                                                   # For AdvancedSlideShow.
-    find_package(QtKOAuth)                                                     # For Imgur Auhtenticated API
-
-# Plugins in pending state
-#
-#    find_package(Qca-qt5)                                                      # For Muvee.
-#    MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)                                       # For Htmlexport.
-#    MACRO_OPTIONAL_FIND_PACKAGE(LibXslt)                                       # For Htmlexport.
-#    MACRO_OPTIONAL_FIND_PACKAGE(ImageMagick COMPONENTS MagickCore display)     # For VideoSlideshow.
-#    MACRO_OPTIONAL_FIND_PACKAGE(QtGStreamer)                                   # For VideoSlideshow.
 
     # -- X11 check, LINUX Only -------------------------------------------------------------------------
 
@@ -167,13 +159,8 @@ if(KF5Kipi_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libmediawiki"   "https://projects.kde.org/projects/extragear/libs/libmediawiki"   "(version >= 5.0.0)"                  "Kipi-plugins will be compiled without libmediawiki support."   KF5MediaWiki_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte"  "https://projects.kde.org/projects/extragear/libs/libkvkontakte"  "(version >= 4.70.0)"                 "Kipi-plugins will be compiled without libkvkontakte support."  KF5Vkontakte_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libkcalcore"    "https://projects.kde.org/projects/kde/pim/kcalcore"              "(version >= 4.81.0)"                 "Kipi-plugins will be compiled without libkcalcore support."    KF5CalendarCore_FOUND)
-
-#    PRINT_OPTIONAL_LIBRARY_STATUS("libqca"         "http://delta.affinix.com/qca"                                    "(version >= 2.1.0"                   "Kipi-plugins will be compiled without libqca support."         Qca-qt5_FOUND)
-#    PRINT_OPTIONAL_LIBRARY_STATUS("libxml2"        "http://xmlsoft.org"                                              "(version >= 2.7.0)"                  "Kipi-plugins will be compiled without libxml2 support."        LIBXML2_FOUND)
-#    PRINT_OPTIONAL_LIBRARY_STATUS("libxslt"        "http://xmlsoft.org/XSLT"                                         "(version >= 1.1.0)"                  "Kipi-plugins will be compiled without libxstl support."        LIBXSLT_FOUND)
-#    PRINT_OPTIONAL_LIBRARY_STATUS("libimagemagick" "http://www.imagemagick.org"                                      "(version >= 5.5.4)"                  "Kipi-plugins will be compiled without libimagemagick support." ImageMagick_FOUND)
-#    PRINT_OPTIONAL_LIBRARY_STATUS("libqtgstreamer" "http://gstreamer.freedesktop.org/modules/qt-gstreamer.html"      "(version >= 0.9.0)"                  "Kipi-plugins will be compiled without libqtgstreamer support." QTGSTREAMER_FOUND)
-#    PRINT_OPTIONAL_LIBRARY_STATUS("libqtkoauth"    "https://github.com/kypeli/kQOAuth"                               "(version >= 0.97)"                   "Kipi-plugins will be compiled without libqtkoauth support."    QTKOAUTH_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libphonon"      "https://projects.kde.org/projects/kdesupport/phonon"             "(version >= 4.81.0)"                 "Kipi-plugins will be compiled without libphonon support."      Phonon4Qt5_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libqtkoauth"    "https://github.com/kypeli/kQOAuth"                               "(version >= 0.97)"                   "Kipi-plugins will be compiled without libqtkoauth support."    QTKOAUTH_FOUND)
 
     PRINT_OPTIONAL_LIBRARY_STATUS("native Opengl support"  "" "" "Kipi-plugins will be compiled without native OpenGL support."  OPENGL_FOUND AND OPENGL_GLU_FOUND)
     PRINT_OPTIONAL_QTMODULE_STATUS("Qt5 OpenGL"            Qt5OpenGL_FOUND)
@@ -218,36 +205,6 @@ if(KF5Kipi_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("Mediawiki"          KF5MediaWiki_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("AdvancedSlideshow"  BUILD_VIEWERS)
     PRINT_COMPONENT_COMPILE_STATUS("Calendar"           KF5CalendarCore_FOUND)
-
-# Plugins in pending state
-#
-#    PRINT_COMPONENT_COMPILE_STATUS("Muvee"              Qca-qt5_FOUND)
-#    PRINT_COMPONENT_COMPILE_STATUS("VideoSlideshow"     ImageMagick_FOUND AND QTGSTREAMER_FOUND)
-#    PRINT_COMPONENT_COMPILE_STATUS("HtmlExport"         LIBXML2_FOUND AND LIBXSLT_FOUND)
-#
-#     # Set QtGStreamer API version --------------------------------------------------------------------------
-#
-#     if(QTGSTREAMER_FOUND)
-#
-#         message(STATUS "----------------------------------------------------------------------------------")
-#         message(STATUS "")
-#
-#         if((${QtGStreamer_VERSION_MAJOR} EQUAL 1 AND ${QtGStreamer_VERSION_MINOR} EQUAL 1 AND ${QtGStreamer_VERSION_PATCH} GREATER 80)
-#            OR (${QtGStreamer_VERSION_MAJOR} EQUAL 1 AND ${QtGStreamer_VERSION_MINOR} GREATER 1) )
-#             set(GSTREAMER_API_1 TRUE)
-#         else()
-#             set(GSTREAMER_API_1 FALSE)
-#         endif()
-#
-#         configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/gstreamerapi.h.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/gstreamerapi.h" @ONLY)
-#
-#         message(STATUS "Found QtGstreamer version: ${QtGStreamer_VERSION}")
-#         message(STATUS "Using GStreamer API 1:     ${GSTREAMER_API_1}")
-#
-#         message(STATUS "----------------------------------------------------------------------------------")
-#         message(STATUS "")
-#
-#     endif()
 
     # ==================================================================================================
 
@@ -341,31 +298,6 @@ if(KF5Kipi_FOUND)
         if(KF5Vkontakte_FOUND)
             add_subdirectory(vkontakte)
         endif()
-
-# Plugins in pending state
-#
-#         add_subdirectory(dlnaexport)
-#         add_subdirectory(photolayoutseditor)
-#
-#         if(Qca-qt5_FOUND)
-#             add_subdirectory(muvee)
-#         endif()
-#
-#
-#         # Currently the cmake module distributed w/ cmake uses a different variable
-#         # name LIBXLST_EXSLT_LIBRARIES for libxeslt than the cmake modeule 
-#         # distributed w/ kdelibs LIBEXSLT_LIBRARIES.
-#         if(NOT LIBXSLT_EXSLT_LIBRARIES AND LIBEXSLT_LIBRARIES)
-#             set(LIBXSLT_EXSLT_LIBRARIES ${LIBEXSLT_LIBRARIES})
-#         endif()
-#
-#         if(LIBXML2_FOUND AND LIBXSLT_FOUND AND LIBXSLT_EXSLT_LIBRARIES)
-#             add_subdirectory(htmlexport)
-#         endif()
-#
-#         if(ImageMagick_FOUND AND QTGSTREAMER_FOUND)
-#             add_subdirectory(videoslideshow)
-#         endif()
 
     endif()
 

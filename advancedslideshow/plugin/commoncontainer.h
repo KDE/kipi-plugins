@@ -38,8 +38,11 @@ namespace KIPIAdvancedSlideshowPlugin
 
 class MainDialog;
 class CaptionDialog;
-class SoundtrackDialog;
 class AdvancedDialog;
+
+#ifdef HAVE_PHONON
+class SoundtrackDialog;
+#endif
 
 class SharedContainer
 {
@@ -63,7 +66,9 @@ public:
 
     MainDialog*          mainPage;
     CaptionDialog*       captionPage;
+#ifdef HAVE_PHONON
     SoundtrackDialog*    soundtrackPage;
+#endif
     AdvancedDialog*      advancedPage;
 
     // Config file data
@@ -94,8 +99,8 @@ public:
     bool                 soundtrackRememberPlaylist;
     bool                 soundtrackPlayListNeedsUpdate;
     QUrl                 soundtrackPath;
-    QList<QUrl>           soundtrackUrls;
-
+    QList<QUrl>          soundtrackUrls;
+    
     // --> Advanced page
     bool                 useMilliseconds;
     bool                 enableMouseWheel;

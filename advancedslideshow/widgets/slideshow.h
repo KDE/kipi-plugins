@@ -51,7 +51,10 @@ namespace KIPIAdvancedSlideshowPlugin
 class SlideShowLoader;
 class SlidePlaybackWidget;
 class SharedContainer;
+
+#ifdef HAVE_PHONON
 class PlaybackWidget;
+#endif
 
 class SlideShow : public QWidget
 {
@@ -136,8 +139,11 @@ private:
     QMap<QString, EffectMethod> Effects;
 
     SlideShowLoader*            m_imageLoader;
-    PlaybackWidget*             m_playbackWidget;
     QPixmap                     m_currImage;
+
+#ifdef HAVE_PHONON
+    PlaybackWidget*             m_playbackWidget;
+#endif
 
     FileList                    m_fileList;
     QStringList                 m_commentsList;

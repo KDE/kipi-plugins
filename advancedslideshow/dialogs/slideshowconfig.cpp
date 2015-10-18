@@ -101,11 +101,13 @@ SlideShowConfig::SlideShowConfig(QWidget* const parent, SharedContainer* const s
                    QIcon::fromTheme(QStringLiteral("draw-freehand")),
                    i18nc("captions for the slideshow", "Caption"));
 
+#ifdef HAVE_PHONON
     d->sharedData->soundtrackPage  = new SoundtrackDialog(this, d->sharedData);
     d->tab->addTab(d->sharedData->soundtrackPage,
                    QIcon::fromTheme(QStringLiteral("speaker")),
                    i18n("Soundtrack"));
-
+#endif
+    
     d->sharedData->advancedPage  = new AdvancedDialog(this, d->sharedData);
     d->tab->addTab(d->sharedData->advancedPage,
                    QIcon::fromTheme(QStringLiteral("configure")),
@@ -186,10 +188,12 @@ void SlideShowConfig::readSettings()
 
     d->sharedData->commentsLinesLength = grp.readEntry("Comments Lines Length", 72);
 
+#ifdef HAVE_PHONON
     // Soundtrack tab
     d->sharedData->soundtrackLoop             = grp.readEntry("Soundtrack Loop", false);
     d->sharedData->soundtrackPath             = QUrl(grp.readEntry("Soundtrack Path", "" ));
     d->sharedData->soundtrackRememberPlaylist = grp.readEntry("Soundtrack Remember Playlist", false);
+#endif
 
     // Advanced tab
     d->sharedData->useMilliseconds     = grp.readEntry("Use Milliseconds", false);
@@ -222,8 +226,11 @@ void SlideShowConfig::readSettings()
 
     d->sharedData->mainPage->readSettings();
     d->sharedData->captionPage->readSettings();
-    d->sharedData->soundtrackPage->readSettings();
     d->sharedData->advancedPage->readSettings();
+
+#ifdef HAVE_PHONON
+    d->sharedData->soundtrackPage->readSettings();
+#endif
 }
 
 void SlideShowConfig::saveSettings()
@@ -232,8 +239,11 @@ void SlideShowConfig::saveSettings()
 
     d->sharedData->mainPage->saveSettings();
     d->sharedData->captionPage->saveSettings();
-    d->sharedData->soundtrackPage->saveSettings();
     d->sharedData->advancedPage->saveSettings();
+
+#ifdef HAVE_PHONON
+    d->sharedData->soundtrackPage->saveSettings();
+#endif
 
     KConfigGroup grp = d->config->group(objectName());
     grp.writeEntry("OpenGL",                   d->sharedData->opengl);
@@ -265,10 +275,12 @@ void SlideShowConfig::saveSettings()
     grp.writeEntry("Effect Name (OpenGL)",     d->sharedData->effectNameGL);
     grp.writeEntry("Effect Name",              d->sharedData->effectName);
 
+#ifdef HAVE_PHONON
     // Soundtrack tab
     grp.writeEntry("Soundtrack Loop",              d->sharedData->soundtrackLoop);
     grp.writeEntry("Soundtrack Path",              d->sharedData->soundtrackPath.toLocalFile());
     grp.writeEntry("Soundtrack Remember Playlist", d->sharedData->soundtrackRememberPlaylist);
+#endif
 
     // Advanced settings
     grp.writeEntry("KB Disable FadeInOut", d->sharedData->kbDisableFadeInOut);

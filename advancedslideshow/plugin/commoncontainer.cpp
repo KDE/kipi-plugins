@@ -39,7 +39,10 @@ SharedContainer::SharedContainer()
     mainPage                      = 0;
     captionPage                   = 0;
     advancedPage                  = 0;
+
+#ifdef HAVE_PHONON
     soundtrackPage                = 0;
+#endif
 
     opengl                        = false;
     openGlFullScale               = false;

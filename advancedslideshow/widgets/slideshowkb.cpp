@@ -235,9 +235,13 @@ SlideShowKB::SlideShowKB(const QList<QPair<QString, int> >& fileList,
 
     // -- playback widget -------------------------------
 
+#ifdef HAVE_PHONON
+    
     m_playbackWidget = new PlaybackWidget(this, m_sharedData->soundtrackUrls, m_sharedData);
     m_playbackWidget->hide();
     m_playbackWidget->move(m_deskX, m_deskY);
+
+#endif
 
     // -- load image and let's start
 
@@ -579,7 +583,9 @@ void SlideShowKB::keyPressEvent(QKeyEvent* event)
     if (!event)
         return;
 
+#ifdef HAVE_PHONON
     m_playbackWidget->keyPressEvent(event);
+#endif
 
     if (event->key() == Qt::Key_Escape)
         close();
@@ -600,6 +606,7 @@ void SlideShowKB::mouseMoveEvent(QMouseEvent* e)
     m_mouseMoveTimer->start(1000);
     m_mouseMoveTimer->setSingleShot(true);
 
+#ifdef HAVE_PHONON
     if (!m_playbackWidget->canHide())
         return;
 
@@ -616,6 +623,9 @@ void SlideShowKB::mouseMoveEvent(QMouseEvent* e)
     }
 
     m_playbackWidget->show();
+#else
+    Q_UNUSED(e);
+#endif
 }
 
 void SlideShowKB::slotEndOfShow()

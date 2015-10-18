@@ -16,16 +16,14 @@ kipi-plugins is based in part on the work of the Independent JPEG Group.
 Calendar           : A tool to create calendars.
 Facebook           : A tool to import/export images to/from a remote Facebook web service (http://www.facebook.com).
 Flickr             : A tool to export images to a remote Flickr based web service (http://www.flickr.com). Also compatible with Zooomr and 23HQ 
-HTMLExport         : A tool to export images collections into a static XHTML page.
 ImageViewer        : A tool to preview images using OpenGL.
 GoogleServices     : A tool to export images to Google web services.
 PrintImage         : A tool to print images in various format.
 SendImages         : A tool to send images by e-mail.
 FlashExport        : A tool to export images to Flash using SimpleViewer (http://www.airtightinteractive.com/simpleviewer).
-SlideShow          : A tool to Slide images with 2D and 3D effects using OpenGL.
+AdvancedSlideShow  : A tool to Slide images with 2D and 3D effects using OpenGL.
 Smug               : A tool to import/export images to/from a remote SmugMug web service (http://www.smugmug.com).
 RemoteStorage      : A tool to export images to remote storage using network protocol (FTP, SSH, SAMBA, etc...).
-Muvee              : A tool to export images to Muvee Cloud web service (http://cloud.muvee.com).
 ExpoBlending       : A tool to create pseudo HDR image with a stack of bracketed images.
 Piwigo             : A tool to export images to a remote Piwigo (PHPWebGallery) server (http://piwigo.org).
 YandexFotki        : A tool to export images to Yandex web service (http://fotki.yandex.ru).
@@ -35,7 +33,6 @@ Vkontakte          : A tool to export images to VKontakte web service (http://ww
 PhotoLayoutEditor  : A tool to assemble images together.
 ImageShack         : A tool to export images to ImageShack web service (http://imageshack.us)
 ImgurExport        : A tool to export images to ImgUr web service (http://imgur.com)
-DLNAExport         : A tool to export collection on DLNA compatible device over the network (http://www.dlna.org).
 Panorama           : A tool to assemble panoramic photo automatically.
 
 -- DEPENDENCIES -------------------------------------------------------
@@ -53,6 +50,7 @@ Enblend         >= 3.0.0 (runtime dependency)   http://enblend.sourceforge.net
 
 Optional:
 
+libphonon       >= 4.81.0                       https://projects.kde.org/projects/kdesupport/phonon
 libkcalcore     >= 5.0.0                        https://projects.kde.org/projects/kde/pim/kcalcore
 libmediawiki    >= 5.0.0                        https://projects.kde.org/projects/extragear/libs/libmediawiki
 libkvkontakte   >= 4.70.0                       https://projects.kde.org/projects/extragear/libs/libkvkontakte
@@ -71,9 +69,8 @@ bison           >= 2.5.0                        http://www.gnu.org/software/biso
 
 Plugin Specific Dependencies (for compiling and for running) :
 
-SlideShow          : X11 (Linux Only), Mesa3D, and OpenGL support for libqt
+AdvancedSlideShow  : libphonon, X11 (Linux Only), Mesa3D, and OpenGL support for libqt
 ImageViewer        : X11 (Linux Only), Mesa3D, and OpenGL support for libqt
-AcquireImages      : libksane.
 Calendar           : libkcalcore.
 FaceBook           : libqjson.
 ExpoBlending       : Hugin command line tools (runtime dependency).
@@ -81,10 +78,6 @@ Mediawiki          : libmediawiki.
 Vkontakte          : libkvkontakte.
 Panorama           : Hugin command line tools, flex, bison (runtime dependency).
 Imgur              : libqtkoauth for Imgur.com's authenticated API.
-VideoSlideshow     : libimagemagick and libqtgstreamer
-DebianScreenshots  : libqjson.
-HtmlExport         : libxslt and libxml2.
-Muvee              : libqca.
 
 -- CONTACT ------------------------------------------------------------
 
@@ -132,4 +125,4 @@ More details can be found at this url: http://techbase.kde.org/Development/Tutor
 
 Note: To know KDE install path on your computer, use 'kf5-config --prefix' command line like this (with full debug object enabled):
 
-"cmake . -DCMAKE_BUILD_TYPE=debugfull -DCMAKE_INSTALL_PREFIX=`kf54-config --prefix`"
+"cmake . -DCMAKE_BUILD_TYPE=debugfull -DCMAKE_INSTALL_PREFIX=`kf5-config --prefix`"

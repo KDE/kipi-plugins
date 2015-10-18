@@ -92,6 +92,8 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
         m_slidePlaybackWidget->setEnabledPrev( false );
     }
 
+#ifdef HAVE_PHONON
+
     // -- playback widget -------------------------------
 
     m_playbackWidget = new PlaybackWidget(this, m_sharedData->soundtrackUrls, m_sharedData);
@@ -113,6 +115,8 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
     connect(m_slidePlaybackWidget, SIGNAL(signalClose()),
             this, SLOT(slotClose()));
 
+#endif
+    
     // ---------------------------------------------------------------
 
     m_fileIndex     = -1; // start with -1
@@ -560,7 +564,10 @@ void SlideShow::keyPressEvent(QKeyEvent* event)
     if (!event)
         return;
 
+#ifdef HAVE_PHONON
     m_playbackWidget->keyPressEvent(event);
+#endif
+
     m_slidePlaybackWidget->keyPressEvent(event);
 }
 
@@ -589,7 +596,11 @@ void SlideShow::mouseMoveEvent( QMouseEvent* e )
     m_mouseMoveTimer->setSingleShot( true );
     m_mouseMoveTimer->start( 1000 );
 
-    if (!m_slidePlaybackWidget->canHide() || !m_playbackWidget->canHide())
+    if (!m_slidePlaybackWidget->canHide()
+#ifdef HAVE_PHONON
+        || !m_playbackWidget->canHide()
+#endif
+       )
         return;
 
     QPoint pos( e->pos() );
@@ -597,14 +608,20 @@ void SlideShow::mouseMoveEvent( QMouseEvent* e )
     if (( pos.y() > ( m_deskY + 20 ) ) &&
             ( pos.y() < ( m_deskY + m_deskHeight - 20 - 1 ) ) )
     {
-        if (!m_slidePlaybackWidget->canHide() || !m_playbackWidget->canHide())
+        if (!m_slidePlaybackWidget->canHide()
+#ifdef HAVE_PHONON
+            || !m_playbackWidget->canHide()
+#endif
+           )
         {
             return;
         }
         else
         {
             m_slidePlaybackWidget->hide();
+#ifdef HAVE_PHONON
             m_playbackWidget->hide();
+#endif
         }
 
         return;
@@ -633,7 +650,9 @@ void SlideShow::mouseMoveEvent( QMouseEvent* e )
 //    }
 
     m_slidePlaybackWidget->show();
+#ifdef HAVE_PHONON
     m_playbackWidget->show();
+#endif
 }
 
 void SlideShow::wheelEvent( QWheelEvent* e )

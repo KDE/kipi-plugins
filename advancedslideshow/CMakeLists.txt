@@ -6,6 +6,10 @@
 
 subdirs(icons)
 
+if(Phonon4Qt5_FOUND)
+    add_definitions(-DHAVE_PHONON)
+endif()
+
 add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_advancedslideshow\")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/dialogs
@@ -16,14 +20,11 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/dialogs
                    )
 
 set(kipiplugin_advancedslideshow_PART_SRCS dialogs/captiondialog.cpp
-                                           dialogs/soundtrackdialog.cpp
                                            dialogs/advanceddialog.cpp
                                            dialogs/maindialog.cpp
                                            dialogs/slideshowconfig.cpp
 
-                                           widgets/playbackwidget.cpp
                                            widgets/slideplaybackwidget.cpp
-                                           widgets/listsounditems.cpp
                                            widgets/slideshow.cpp
                                            widgets/slideshowgl.cpp
                                            widgets/slideshowkb.cpp
@@ -38,13 +39,24 @@ set(kipiplugin_advancedslideshow_PART_SRCS dialogs/captiondialog.cpp
                                            common/kpsvgpixmaprenderer.cpp
    )
 
+if(Phonon4Qt5_FOUND)
+    set(kipiplugin_advancedslideshow_PART_SRCS ${kipiplugin_advancedslideshow_PART_SRCS}
+        widgets/listsounditems.cpp
+        dialogs/soundtrackdialog.cpp
+        widgets/playbackwidget.cpp
+       )
+        
+    ki18n_wrap_ui(kipiplugin_advancedslideshow_PART_SRCS
+                  ui/soundtrackdialog.ui
+                  ui/playbackwidget.ui
+                 )
+endif()
+   
 ki18n_wrap_ui(kipiplugin_advancedslideshow_PART_SRCS
               ui/maindialog.ui
               ui/captiondialog.ui
               ui/advanceddialog.ui
-              ui/soundtrackdialog.ui
               ui/slideplaybackwidget.ui
-              ui/playbackwidget.ui
              )
 
 add_library(kipiplugin_advancedslideshow MODULE ${kipiplugin_advancedslideshow_PART_SRCS})
@@ -62,12 +74,18 @@ target_link_libraries(kipiplugin_advancedslideshow
                       KF5kipiplugins
 
                       ${OPENGL_LIBRARIES}
-                      ${PHONON_LIBRARIES}
 
                       # For Linux only.
                       ${X11_LIBRARIES}
                       ${X11_Xrandr_LIB}
                      )
+
+if(Phonon4Qt5_FOUND)
+    target_link_libraries(kipiplugin_advancedslideshow
+                          PRIVATE
+                          ${PHONON_LIBRARIES}
+                         )
+endif()
 
 configure_file(plugin/kipiplugin_advancedslideshow.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_advancedslideshow.desktop)
 

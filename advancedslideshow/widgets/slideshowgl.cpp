@@ -107,12 +107,16 @@ SlideShowGL::SlideShowGL(const QList<QPair<QString, int> >& fileList,
     connect(m_slidePlaybackWidget, SIGNAL(signalClose()),
             this, SLOT(slotClose()));
 
+#ifdef HAVE_PHONON
+
     m_playbackWidget = new PlaybackWidget(this, m_sharedData->soundtrackUrls, m_sharedData);
     m_playbackWidget->hide();
+    m_playbackWidget->move(m_deskX, m_deskY);
 
+#endif
+    
     int w = m_slidePlaybackWidget->width();
     m_slidePlaybackWidget->move(m_deskX + m_deskWidth - w - 1, m_deskY);
-    m_playbackWidget->move(m_deskX, m_deskY);
 
     // -- Minimal texture size (opengl specs) --------------
 
@@ -273,7 +277,9 @@ void SlideShowGL::keyPressEvent(QKeyEvent* event)
         return;
 
     m_slidePlaybackWidget->keyPressEvent(event);
+#ifdef HAVE_PHONON
     m_playbackWidget->keyPressEvent(event);
+#endif
 }
 
 void SlideShowGL::mousePressEvent(QMouseEvent* e)
@@ -301,7 +307,11 @@ void SlideShowGL::mouseMoveEvent(QMouseEvent* e)
     m_mouseMoveTimer->setSingleShot(true);
     m_mouseMoveTimer->start(1000);
 
-    if (!m_slidePlaybackWidget->canHide() || !m_playbackWidget->canHide())
+    if (!m_slidePlaybackWidget->canHide()
+#ifdef HAVE_PHONON
+        || !m_playbackWidget->canHide()
+#endif
+       )
         return;
 
     QPoint pos(e->pos());
@@ -309,21 +319,29 @@ void SlideShowGL::mouseMoveEvent(QMouseEvent* e)
     if ((pos.y() > (m_deskY + 20)) &&
             (pos.y() < (m_deskY + m_deskHeight - 20 - 1)))
     {
-        if (m_slidePlaybackWidget->isHidden() || m_playbackWidget->isHidden())
+        if (m_slidePlaybackWidget->isHidden()
+#ifdef HAVE_PHONON
+            || m_playbackWidget->isHidden()
+#endif
+           )
         {
             return;
         }
         else
         {
             m_slidePlaybackWidget->hide();
+#ifdef HAVE_PHONON
             m_playbackWidget->hide();
+#endif
         }
 
         return;
     }
 
     m_slidePlaybackWidget->show();
+#ifdef HAVE_PHONON
     m_playbackWidget->show();
+#endif
 }
 
 void SlideShowGL::wheelEvent(QWheelEvent* e)
