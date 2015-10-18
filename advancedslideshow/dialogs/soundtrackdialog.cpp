@@ -390,7 +390,9 @@ void SoundtrackDialog::slotSoundFilesButtonUp()
     }
 
     if (Cpt == 0)
+    {
         return;
+    }
 
     if (Cpt > 1)
     {
@@ -401,7 +403,9 @@ void SoundtrackDialog::slotSoundFilesButtonUp()
     unsigned int Index = m_SoundFilesListBox->currentRow();
 
     if (Index == 0)
+    {
         return;
+    }
 
     SoundItem* const pitem = static_cast<SoundItem*>(m_SoundFilesListBox->takeItem(Index));
 
@@ -422,7 +426,9 @@ void SoundtrackDialog::slotSoundFilesButtonDown()
     }
 
     if (Cpt == 0)
+    {
         return;
+    }
 
     if (Cpt > 1)
     {
@@ -433,7 +439,9 @@ void SoundtrackDialog::slotSoundFilesButtonDown()
     int Index = m_SoundFilesListBox->currentRow();
 
     if (Index == m_SoundFilesListBox->count())
+    {
         return;
+    }
 
     SoundItem* const pitem = static_cast<SoundItem*>(m_SoundFilesListBox->takeItem(Index));
 
@@ -534,6 +542,7 @@ void SoundtrackDialog::slotSoundFilesButtonSave()
                     }
                 }
             }
+
             file.close();
         }
     }

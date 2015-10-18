@@ -31,7 +31,7 @@
 // KDE includes
 
 #include <QUrl>
-#include <QtWidgets/QDialog>
+#include <QDialog>
 
 // Local includes
 
@@ -97,7 +97,7 @@ private Q_SLOTS:
 
 private:
 
-    QList<QUrl>              m_urlList;
+    QList<QUrl>             m_urlList;
     SharedContainer*        m_sharedData;
     QTime                   m_totalTime;
     QTime                   m_imageTime;
