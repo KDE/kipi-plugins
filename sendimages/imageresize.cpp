@@ -46,7 +46,6 @@
 // Local includes
 
 #include "kpversion.h"
-#include "kpwriteimage.h"
 #include "kpmetadata.h"
 #include "kipiplugins_debug.h"
 
@@ -209,14 +208,15 @@ bool Task::imageResize(const EmailSettings& settings, const QUrl& orgUrl,
         }
         else if (emailSettings.format() == QLatin1String("PNG"))
         {
-            QByteArray data((const char*)img.bits(), img.byteCount());
-            KPWriteImage wImageIface;
-            wImageIface.setImageData(data, img.width(), img.height(), false, true, QByteArray(), meta);
-
-            if ( !wImageIface.write2PNG(destPath) )
+            if ( !img.save(destPath,
+                           emailSettings.format().toLatin1().constData()) )
             {
                 err = i18n("Cannot save resized image (PNG). Aborting.");
                 return false;
+            }
+            else
+            {
+                meta.save(destPath);
             }
         }
 
