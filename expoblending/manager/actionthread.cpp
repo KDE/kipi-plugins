@@ -749,12 +749,11 @@ bool ActionThread::convertRaw(const QUrl& inUrl, QUrl& outUrl)
             + QChar::fromLatin1('.')
             + fi.completeBaseName().replace(QChar::fromLatin1('.'), QChar::fromLatin1('_'))
             + QStringLiteral(".tif"));
-
-        // wImageIface.setCancel(&d->cancel);
         
         if (d->iface && !d->iface->saveImage(outUrl, QLatin1String("TIF"),
                                              imageData, width, height,
-                                             true, false))
+                                             true, false,
+                                             &d->cancel))
         {
             return false;
         }

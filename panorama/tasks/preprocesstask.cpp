@@ -212,7 +212,8 @@ bool PreProcessTask::convertRaw()
         
         if (iface && !iface->saveImage(outUrl, QLatin1String("TIF"),
                                        imageData, width, height,
-                                       true, false))
+                                       true, false,
+                                       &isAbortedFlag))
         {
             errString = i18n("Tiff image creation failed.");
             return false;
