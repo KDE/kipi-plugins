@@ -37,7 +37,6 @@ extern "C"
 #endif
 #include <sys/types.h>
 #include <tiffvers.h>
-#include "iccjpeg.h"
 }
 
 // Qt includes
@@ -139,121 +138,6 @@ void KPWriteImage::setImageData(const QByteArray& data, uint width, uint height,
     d->iccProfile = iccProfile;
     d->meta       = metadata;
     d->meta.setSettings(metadata.settings());
-}
-
-bool KPWriteImage::write2JPEG(const QString& destPath)
-{
-    QFile file(destPath);
-
-    if (!file.open(QIODevice::ReadWrite))
-    {
-        qCDebug(KIPIPLUGINS_LOG) << "Failed to open JPEG file for writing" ;
-        return false;
-    }
-
-    struct jpeg_compress_struct cinfo;
-    struct jpeg_error_mgr       jerr;
-
-    // Init JPEG compressor.
-    cinfo.err              = jpeg_std_error(&jerr);
-    jpeg_create_compress(&cinfo);
-    kp_jpeg_qiodevice_dest(&cinfo, &file);
-    cinfo.image_width      = d->width;
-    cinfo.image_height     = d->height;
-    cinfo.input_components = 3;
-    cinfo.in_color_space   = JCS_RGB;
-    jpeg_set_defaults(&cinfo);
-
-    // bug #149578: set encoder horizontal and vertical chroma subsampling
-    // factor to 2x1, 1x1, 1x1 (4:2:2) : Medium subsampling.
-    // See this page for details: http://en.wikipedia.org/wiki/Chroma_subsampling
-    cinfo.comp_info[0].h_samp_factor = 2;
-    cinfo.comp_info[0].v_samp_factor = 1;
-    cinfo.comp_info[1].h_samp_factor = 1;
-    cinfo.comp_info[1].v_samp_factor = 1;
-    cinfo.comp_info[2].h_samp_factor = 1;
-    cinfo.comp_info[2].v_samp_factor = 1;
-
-    // bug #154273: use 99 compression level instead 100 to reduce output JPEG file size.
-    jpeg_set_quality(&cinfo, 99, true);
-    jpeg_start_compress(&cinfo, true);
-
-    // Write ICC color profile.
-    if (!d->iccProfile.isEmpty())
-        write_icc_profile (&cinfo, (JOCTET *)d->iccProfile.data(), d->iccProfile.size());
-
-    // Write image data
-    uchar* line = new uchar[d->width*3];
-    uchar* dstPtr     = 0;
-
-    if (!d->sixteenBit)     // 8 bits image.
-    {
-        uchar* srcPtr = (uchar*)d->data.data();
-
-        for (uint j=0; j < d->height; ++j)
-        {
-            if (cancel())
-            {
-                delete [] line;
-                jpeg_destroy_compress(&cinfo);
-                file.close();
-                return false;
-            }
-
-            dstPtr = line;
-
-            for (uint i = 0; i < d->width; ++i)
-            {
-                dstPtr[2] = srcPtr[0];  // Blue
-                dstPtr[1] = srcPtr[1];  // Green
-                dstPtr[0] = srcPtr[2];  // Red
-
-                d->hasAlpha ? srcPtr += 4 : srcPtr += 3;
-                dstPtr += 3;
-            }
-
-            jpeg_write_scanlines(&cinfo, &line, 1);
-        }
-    }
-    else                    // 16 bits image
-    {
-        unsigned short* srcPtr = reinterpret_cast<unsigned short*>(d->data.data());
-
-        for (uint j=0; j < d->height; ++j)
-        {
-            if (cancel())
-            {
-                delete [] line;
-                jpeg_destroy_compress(&cinfo);
-                file.close();
-                return false;
-            }
-
-            dstPtr = line;
-
-            for (uint i = 0; i < d->width; ++i)
-            {
-                dstPtr[2] = (srcPtr[0] * 255UL)/65535UL;    // Blue
-                dstPtr[1] = (srcPtr[1] * 255UL)/65535UL;    // Green
-                dstPtr[0] = (srcPtr[2] * 255UL)/65535UL;    // Red
-
-                d->hasAlpha ? srcPtr += 4 : srcPtr += 3;
-                dstPtr += 3;
-            }
-
-            jpeg_write_scanlines(&cinfo, &line, 1);
-        }
-    }
-
-    delete [] line;
-
-    jpeg_finish_compress(&cinfo);
-    jpeg_destroy_compress(&cinfo);
-    file.close();
-
-    d->meta.save(destPath);
-
-    return true;
 }
 
 bool KPWriteImage::write2PNG(const QString& destPath)

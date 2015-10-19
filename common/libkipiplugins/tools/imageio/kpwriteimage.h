@@ -36,7 +36,6 @@
 
 extern "C"
 {
-#include <jpeglib.h>
 #include <tiffio.h>
 #include <tiff.h>
 #include <png.h>
@@ -65,7 +64,6 @@ public:
     void setCancel(bool* const cancel);
     bool cancel() const;
 
-    bool write2JPEG(const QString& destPath);
     bool write2PNG(const QString& destPath);
     bool write2TIFF(const QString& destPath);
 

@@ -116,7 +116,6 @@ DETECT_LIBKIPI(${KIPI_MIN_VERSION})
 if(KF5Kipi_FOUND)
 
     DETECT_LIBKEXIV2(${KEXIV2_MIN_VERSION})
-    find_package(JPEG REQUIRED)
     find_package(PNG  REQUIRED)
     find_package(TIFF REQUIRED)
 
@@ -148,7 +147,6 @@ if(KF5Kipi_FOUND)
 
     PRINT_LIBRARY_STATUS("libqt"     "http://www.qtsoftware.com"                                        "(version >= ${QT_MIN_VERSION})"     Qt5_FOUND)
     PRINT_LIBRARY_STATUS("libkde"    "http://www.kde.org"                                               "(version >= ${KDE_MIN_VERSION})"    KF5_FOUND)
-    PRINT_LIBRARY_STATUS("libjpeg"   "http://www.ijg.org"                                               "(version >= 6b)"                    JPEG_FOUND)
     PRINT_LIBRARY_STATUS("libtiff"   "http://www.remotesensing.org/libtiff"                             "(version >= 3.8.2)"                 TIFF_FOUND)
     PRINT_LIBRARY_STATUS("libpng"    "http://www.libpng.org/pub/png/libpng.html"                        "(version >= 1.2.7)"                 PNG_FOUND)
     PRINT_LIBRARY_STATUS("libkipi"   "https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi"   "(version >= ${KIPI_MIN_VERSION}))"  KF5Kipi_FOUND)
@@ -174,7 +172,7 @@ if(KF5Kipi_FOUND)
 
      message(STATUS "")
 
-     if(Qt5_FOUND AND KF5_FOUND AND JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KF5Kipi_FOUND AND KF5KExiv2_FOUND)
+     if(Qt5_FOUND AND KF5_FOUND AND PNG_FOUND AND TIFF_FOUND AND KF5Kipi_FOUND AND KF5KExiv2_FOUND)
          set(KIPI_COMPILE_MESSAGE "kipi-plugins will be compiled")
          FILL_WITH_DOTS(KIPI_COMPILE_MESSAGE)
          message(STATUS " ${KIPI_COMPILE_MESSAGE} YES")

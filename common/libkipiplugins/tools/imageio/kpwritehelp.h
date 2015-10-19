@@ -36,7 +36,6 @@
 
 extern "C"
 {
-#include <jpeglib.h>
 #include <png.h>
 }
 
@@ -46,28 +45,6 @@ extern "C"
 
 namespace KIPIPlugins
 {
-
-/**
-  * a replacement function for jpeg_stdio_dest
-  * for convenience reasons, it uses a QIODevice instead of a QFile, but the main advantage is to not give over
-  * a FILE* pointer on Windows which can break due to different MS C Runtime libraries.
-  *
-  * Prepare for output to a QIODevice.
-  * The caller must have already opened the device, and is responsible
-  * for closing it after finishing compression.
-  */
-KIPIPLUGINS_EXPORT void kp_jpeg_qiodevice_dest(j_compress_ptr cinfo, QIODevice* const outfile);
-
-/**
-  * a replacement function for jpeg_stdio_src
-  * for convenience reasons, it uses a QIODevice instead of a QFile, but the main advantage is to not give over
-  * a FILE* pointer on Windows which can break due to different MS C Runtime libraries.
-  *
-  * Prepare for input from a QIODevice.
-  * The caller must have already opened the device, and is responsible
-  * for closing it after finishing reading.
-  */
-KIPIPLUGINS_EXPORT void kp_jpeg_qiodevice_src(j_decompress_ptr cinfo, QIODevice* const infile);
 
 /**
   * a callback function for writing a png image
