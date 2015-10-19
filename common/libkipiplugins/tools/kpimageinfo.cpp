@@ -27,7 +27,6 @@
 
 #include <QMap>
 #include <QVariant>
-#include <QDebug>
 
 // Libkipi includes
 
@@ -140,14 +139,6 @@ qlonglong KPImageInfo::fileSize() const
     if (hasFileSize())
         return d->attribute(QLatin1String("filesize")).toLongLong();
 
-#if KIPI_VERSION < 0x010500
-    if (d->hasValidData())
-    {
-        ImageInfo info = d->iface->info(d->url);
-        return (qlonglong)info.size();
-    }
-#endif
-
     return (-1);
 }
 
@@ -161,31 +152,10 @@ void KPImageInfo::setDescription(const QString& desc)
     if (d->iface)
     {
         d->setAttribute(QLatin1String("comment"), desc);
-
-#if KIPI_VERSION < 0x010500
-        if (d->hasValidData())
-        {
-            ImageInfo info = d->iface->info(d->url);
-            info.setDescription(desc);
-        }
-#endif
     }
     else
     {
-        KPMetadata meta(d->url.toLocalFile());
-
-        // We set image comments, outside Exif, XMP, and IPTC.
-        meta.setComments(desc.toUtf8());
-
-        // We set Exif comments
-        meta.setExifComment(desc);
-
-        // We set IPTC comments
-        QString trunc = desc;
-        trunc.truncate(2000);
-        meta.removeIptcTag("Iptc.Application2.Caption");
-        meta.setIptcTagString("Iptc.Application2.Caption", trunc);
-        meta.applyChanges();
+        qCDebug(KIPIPLUGINS_LOG) << "KIPI interface is null";
     }
 }
 
@@ -194,32 +164,10 @@ QString KPImageInfo::description() const
     if (d->iface)
     {
         if (hasDescription()) return d->attribute(QLatin1String("comment")).toString();
-
-#if KIPI_VERSION < 0x010500
-        if (d->hasValidData())
-        {
-            ImageInfo info = d->iface->info(d->url);
-            return info.description();
-        }
-#endif
     }
     else
     {
-        KPMetadata meta(d->url.toLocalFile());
-
-        // We trying image comments, outside Exif, XMP, and IPTC.
-        QString comment = meta.getCommentsDecoded();
-        if (!comment.isEmpty()) return comment;
-
-        // We trying to get Exif comments
-
-        comment = meta.getExifComment();
-        if (!comment.isEmpty()) return comment;
-
-        // We trying to get IPTC comments
-
-        comment = meta.getIptcTagString("Iptc.Application2.Caption", false);
-        if (!comment.isEmpty()) return comment;
+        qCDebug(KIPIPLUGINS_LOG) << "KIPI interface is null";
     }
 
     return QString();
@@ -228,35 +176,26 @@ QString KPImageInfo::description() const
 bool KPImageInfo::hasDescription() const
 {
     if (d->iface)
+    {
         return d->hasAttribute(QLatin1String("comment"));
-
+    }
+    else
+    {
+        qCDebug(KIPIPLUGINS_LOG) << "KIPI interface is null";
+    }
+    
     return (!description().isNull());
 }
 
 void KPImageInfo::setDate(const QDateTime& date)
 {
     d->setAttribute(QLatin1String("date"), date);
-
-#if KIPI_VERSION < 0x010500
-    if (d->hasValidData())
-    {
-        ImageInfo info = d->iface->info(d->url);
-        info.setTime(date);
-    }
-#endif
 }
 
 QDateTime KPImageInfo::date() const
 {
-    if (hasDate()) return d->attribute(QLatin1String("date")).toDateTime();
-
-#if KIPI_VERSION < 0x010500
-    if (d->hasValidData())
-    {
-        ImageInfo info = d->iface->info(d->url);
-        return info.time();
-    }
-#endif
+    if (hasDate())
+        return d->attribute(QLatin1String("date")).toDateTime();
 
     return QDateTime();
 }
@@ -271,47 +210,19 @@ bool KPImageInfo::isExactDate() const
     if (d->hasAttribute(QLatin1String("isexactdate")))
         return d->attribute(QLatin1String("isexactdate")).toBool();
 
-#if KIPI_VERSION < 0x010500
-    if (d->hasValidData())
-    {
-        ImageInfo info = d->iface->info(d->url);
-        return info.isTimeExact();
-    }
-#endif
-
     return true;
 }
 
 void KPImageInfo::setName(const QString& name)
 {
     d->setAttribute(QLatin1String("name"), name);
-
-    if (d->hasValidData())
-    {
-#if (KIPI_VERSION >= 0x010300) && (KIPI_VERSION < 0x010500)
-        ImageInfo info = d->iface->info(d->url);
-        info.setName(name);
-#elif (KIPI_VERSION < 0x010300)
-        ImageInfo info = d->iface->info(d->url);
-        info.setTitle(name);
-#endif
-    }
 }
 
 QString KPImageInfo::name() const
 {
-    if (hasName()) return d->attribute(QLatin1String("name")).toString();
+    if (hasName())
+        return d->attribute(QLatin1String("name")).toString();
 
-    if (d->hasValidData())
-    {
-#if (KIPI_VERSION >= 0x010300) && (KIPI_VERSION < 0x010500)
-        ImageInfo info = d->iface->info(d->url);
-        return info.name();
-#elif (KIPI_VERSION < 0x010300)
-        ImageInfo info = d->iface->info(d->url);
-        return info.title();
-#endif
-    }
     return QString();
 }
 
@@ -320,44 +231,24 @@ bool KPImageInfo::hasName() const
     return d->hasAttribute(QLatin1String("name"));
 }
 
-void KPImageInfo::setOrientation(KPMetadata::ImageOrientation orientation)
+void KPImageInfo::setOrientation(int orientation)
 {
-    d->setAttribute(QLatin1String("orientation"), (int)orientation);
-    d->setAttribute(QLatin1String("angle"),       (int)orientation);     // NOTE: For compatibility.
-
-#if KIPI_VERSION < 0x010500
-    if (d->hasValidData())
-    {
-        ImageInfo info = d->iface->info(d->url);
-        info.setAngle((int)orientation);
-    }
-#endif
+    d->setAttribute(QLatin1String("orientation"), orientation);
 }
 
-KPMetadata::ImageOrientation KPImageInfo::orientation() const
+int KPImageInfo::orientation() const
 {
-    KPMetadata::ImageOrientation orientation = KPMetadata::ORIENTATION_UNSPECIFIED;
+    int orientation = 0;
 
     if (d->hasAttribute(QLatin1String("orientation")))
-        orientation = (KPMetadata::ImageOrientation)(d->attribute(QLatin1String("orientation")).toInt());
-    else if (d->hasAttribute(QLatin1String("angle")))
-        orientation = (KPMetadata::ImageOrientation)(d->attribute(QLatin1String("angle")).toInt());    // NOTE: For compatibility.
-
-#if KIPI_VERSION < 0x010500
-    if (d->hasValidData())
-    {
-        ImageInfo info = d->iface->info(d->url);
-        orientation    = (KPMetadata::ImageOrientation)info.angle();
-    }
-#endif
+        orientation = d->attribute(QLatin1String("orientation")).toInt();
 
     return orientation;
 }
 
 bool KPImageInfo::hasOrientation() const
 {
-    return (d->hasAttribute(QLatin1String("orientation")) || 
-            d->hasAttribute(QLatin1String("angle")));          // NOTE: For compatibility.
+    return (d->hasAttribute(QLatin1String("orientation"));
 }
 
 void KPImageInfo::setTitle(const QString& title)
@@ -526,27 +417,13 @@ QStringList KPImageInfo::keywords() const
 {
     QStringList keywords;
 
-    if(d->iface)
+    if (d->iface)
     {
         keywords = d->attribute(QLatin1String("keywords")).toStringList();
-
-        if (keywords.isEmpty())
-            keywords = d->attribute(QLatin1String("tags")).toStringList();     // NOTE: For compatibility.
     }
     else
     {
-        KPMetadata meta(d->url.toLocalFile());
-        // Trying to find IPTC keywords
-        keywords = meta.getIptcKeywords();
-
-        if(!keywords.isEmpty())
-            return keywords;
-
-        // Trying to find Xmp keywords
-        keywords = meta.getXmpKeywords();
-
-        if(!keywords.isEmpty())
-            return keywords;
+        qCDebug(KIPIPLUGINS_LOG) << "KIPI interface is null";
     }
 
     return keywords;
@@ -554,25 +431,13 @@ QStringList KPImageInfo::keywords() const
 
 bool KPImageInfo::hasKeywords() const
 {
-    if(d->iface)
+    if (d->iface)
     {
-        return (d->hasAttribute(QLatin1String("keywords")) ||
-                d->hasAttribute(QLatin1String("tags")));       // NOTE: For compatibility.
+        return (d->hasAttribute(QLatin1String("keywords"));
     }
     else
     {
-        KPMetadata meta(d->url.toLocalFile());
-        // Trying to find IPTC keywords
-        QStringList keywords = meta.getIptcKeywords();
-
-        if(!keywords.isEmpty())
-            return true;
-
-        // Trying to find Xmp keywords
-        keywords = meta.getXmpKeywords();
-
-        if(!keywords.isEmpty())
-            return true;
+        qCDebug(KIPIPLUGINS_LOG) << "KIPI interface is null";
     }
 
     return false;

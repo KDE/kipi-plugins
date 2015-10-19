@@ -35,7 +35,6 @@
 // Local includes
 
 #include "kipiplugins_export.h"
-#include "kpmetadata.h"
 
 namespace KIPIPlugins
 {
@@ -153,12 +152,11 @@ public:
      */
     void removeGeolocationInfo();
 
-    /** Manage orientation of item. See libkexiv2 library for details.
-     *  Use RotationMatrix::toMatrix() from libkexiv2 to get a QMatrix corresponding to orientation flage and to apply it on QImage.
+    /** Manage orientation of item. See libkipi library for details.
      */
-    void                         setOrientation(KPMetadata::ImageOrientation orientation);
-    KPMetadata::ImageOrientation orientation() const;
-    bool                         hasOrientation() const;
+    void setOrientation(int);
+    int  orientation() const;
+    bool hasOrientation() const;
 
     /** Manage creators information of item.
      */
