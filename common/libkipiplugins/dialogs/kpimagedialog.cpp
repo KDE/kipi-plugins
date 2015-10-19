@@ -47,7 +47,6 @@
 
 // Local includes
 
-#include "kpmetadata.h"
 #include "kipiplugins_debug.h"
 
 using namespace KIPI;

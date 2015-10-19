@@ -84,7 +84,7 @@ public:
 
     QString              kipipluginsVer;
 
-    KPMetadata           metadata;
+    KPMetadata           meta;
 };
 
 KPWriteImage::KPWriteImage()
@@ -137,8 +137,8 @@ void KPWriteImage::setImageData(const QByteArray& data, uint width, uint height,
     d->sixteenBit = sixteenBit;
     d->hasAlpha   = hasAlpha;
     d->iccProfile = iccProfile;
-    d->metadata   = metadata;
-    d->metadata.setSettings(metadata.settings());
+    d->meta       = metadata;
+    d->meta.setSettings(metadata.settings());
 }
 
 bool KPWriteImage::write2JPEG(const QString& destPath)
@@ -251,7 +251,7 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
     jpeg_destroy_compress(&cinfo);
     file.close();
 
-    d->metadata.save(destPath);
+    d->meta.save(destPath);
 
     return true;
 }
@@ -332,7 +332,7 @@ bool KPWriteImage::write2PPM(const QString& destPath)
     delete [] line;
     fclose(file);
 
-    d->metadata.save(destPath);
+    d->meta.save(destPath);
 
     return true;
 }
@@ -424,16 +424,16 @@ bool KPWriteImage::write2PNG(const QString& destPath)
 
     // Store Exif data.
 
-    QByteArray ba = d->metadata.getExifEncoded(true);
+    QByteArray ba = d->meta.getExifEncoded(true);
 
     writeRawProfile(png_ptr, info_ptr, (png_charp)"exif", ba.data(), (png_uint_32) ba.size());
 
     // Store Iptc data.
-    QByteArray ba2 = d->metadata.getIptc();
+    QByteArray ba2 = d->meta.getIptc();
     writeRawProfile(png_ptr, info_ptr, (png_charp)"iptc", ba2.data(), (png_uint_32) ba2.size());
 
     // Store Xmp data.
-    QByteArray ba3 = d->metadata.getXmp();
+    QByteArray ba3 = d->meta.getXmp();
     writeRawProfile(png_ptr, info_ptr, (png_charp)("xmp"), ba3.data(), (png_uint_32) ba3.size());
 
     png_write_info(png_ptr, info_ptr);
@@ -512,7 +512,7 @@ bool KPWriteImage::write2PNG(const QString& destPath)
     png_destroy_info_struct(png_ptr, (png_infopp) & info_ptr);
     file.close();
 
-    d->metadata.save(destPath);
+    d->meta.save(destPath);
 
     return true;
 }
@@ -574,13 +574,13 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
     TIFFSetField(tif, TIFFTAG_ROWSPERSTRIP,        TIFFDefaultStripSize(tif, 0));
 
     // Store Iptc data.
-    QByteArray ba2 = d->metadata.getIptc(true);
+    QByteArray ba2 = d->meta.getIptc(true);
 #if defined(TIFFTAG_PHOTOSHOP)
     TIFFSetField (tif, TIFFTAG_PHOTOSHOP, (uint32)ba2.size(), (uchar *)ba2.data());
 #endif
 
     // Store Xmp data.
-    QByteArray ba3 = d->metadata.getXmp();
+    QByteArray ba3 = d->meta.getXmp();
 #if defined(TIFFTAG_XMLPACKET)
     TIFFSetField(tif, TIFFTAG_XMLPACKET, (uint32)ba3.size(), (uchar *)ba3.data());
 #endif
@@ -717,7 +717,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 
     // Write thumbnail in tiff directory IFD1
 
-    QImage thumb = d->metadata.getExifThumbnail(false);
+    QImage thumb = d->meta.getExifThumbnail(false);
 
     if (!thumb.isNull())
     {
@@ -772,7 +772,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
     TIFFClose(tif);
 
     // Store metadata (Exiv2 0.18 support tiff writing mode)
-    d->metadata.save(destPath);
+    d->meta.save(destPath);
 
     return true;
 }
@@ -934,10 +934,10 @@ long KPWriteImage::formatStringList(char* const string, const size_t length, con
 }
 
 void KPWriteImage::tiffSetExifAsciiTag(TIFF* const tif, ttag_t tiffTag,
-                                       const KPMetadata& metadata,
+                                       const KPMetadata& meta,
                                        const char* exifTagName)
 {
-    QByteArray tag = metadata.getExifTagData(exifTagName);
+    QByteArray tag = meta.getExifTagData(exifTagName);
 
     if (!tag.isEmpty())
     {
@@ -947,10 +947,10 @@ void KPWriteImage::tiffSetExifAsciiTag(TIFF* const tif, ttag_t tiffTag,
 }
 
 void KPWriteImage::tiffSetExifDataTag(TIFF* const tif, ttag_t tiffTag,
-                                      const KPMetadata &metadata,
+                                      const KPMetadata& meta,
                                       const char* exifTagName)
 {
-    QByteArray tag = metadata.getExifTagData(exifTagName);
+    QByteArray tag = meta.getExifTagData(exifTagName);
 
     if (!tag.isEmpty())
     {
