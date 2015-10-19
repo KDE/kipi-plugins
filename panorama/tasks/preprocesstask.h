@@ -45,13 +45,7 @@ class PreProcessTask : public Task
 
 public:
 
-    const int                   id;
-
-private:
-
-    const QUrl                  fileUrl;
-    ItemPreprocessedUrls&       preProcessedUrl;
-    QPointer<RawProcessor>      rawProcess;
+    const int id;
 
 public:
 
@@ -69,6 +63,13 @@ private:
 
     bool computePreview(const QUrl& inUrl);
     bool convertRaw();
+    
+private:
+
+    Interface*                  iface;
+    const QUrl                  fileUrl;
+    ItemPreprocessedUrls&       preProcessedUrl;
+    QPointer<RawProcessor>      rawProcess;
 };
 
 }  // namespace KIPIPanoramaPlugin

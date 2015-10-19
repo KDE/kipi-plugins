@@ -19,7 +19,6 @@ set(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kipiplugins_debug.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpversion.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpaboutdata.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpthreadmanager.cpp
-                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/imageio/kpwriteimage.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpbinarysearch.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpprogresswidget.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kppreviewimage.cpp
@@ -52,10 +51,6 @@ target_link_libraries(KF5kipiplugins
 
                       KF5::Kipi
                       KF5::KExiv2
-
-                      ${JPEG_LIBRARIES}
-                      ${TIFF_LIBRARIES}
-                      ${PNG_LIBRARIES}
 )
 
 set_target_properties(KF5kipiplugins PROPERTIES

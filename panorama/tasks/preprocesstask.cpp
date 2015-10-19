@@ -40,7 +40,6 @@
 #include "kipiplugins_debug.h"
 #include "kpmetadata.h"
 #include "kpversion.h"
-#include "kpwriteimage.h"
 
 using namespace KIPIPlugins;
 
@@ -52,9 +51,17 @@ PreProcessTask::PreProcessTask(const QString& workDirPath, int id, ItemPreproces
     : Task(PREPROCESS_INPUT,
       workDirPath),
       id(id),
+      iface(0),
       fileUrl(sourceUrl),
       preProcessedUrl(targetUrls)
+     
 {
+    PluginLoader* const pl = PluginLoader::instance();
+
+    if (pl)
+    {
+        iface = pl->interface();
+    }
 }
 
 PreProcessTask::~PreProcessTask()
@@ -73,29 +80,22 @@ void PreProcessTask::requestAbort()
 
 void PreProcessTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 {
-    PluginLoader* const pl = PluginLoader::instance();
-
-    if (pl)
+    if (iface)
     {
-        Interface* const iface = pl->interface();
-        
-        if (iface)
+        QPointer<RawProcessor> rawdec = iface->createRawProcessor();
+
+        // check if its a RAW file.
+        if (rawdec && rawdec->isRawFile(fileUrl))
         {
-            QPointer<RawProcessor> rawdec = iface->createRawProcessor();
+            preProcessedUrl.preprocessedUrl = tmpDir;
 
-            // check if its a RAW file.
-            if (rawdec && rawdec->isRawFile(fileUrl))
+            if (!convertRaw())
             {
-                preProcessedUrl.preprocessedUrl = tmpDir;
-
-                if (!convertRaw())
-                {
-                    successFlag = false;
-                    return;
-                }
+                successFlag = false;
+                return;
             }
         }
-    } 
+    }
     else
     {
         // NOTE: in this case, preprocessed Url is the original file Url.
@@ -153,23 +153,16 @@ bool PreProcessTask::convertRaw()
 {
     const QUrl& inUrl = fileUrl;
     QUrl& outUrl      = preProcessedUrl.preprocessedUrl;
+    bool decoded      = false;
 
     int        width, height, rgbmax;
     QByteArray imageData;
 
-    bool decoded           = false;
-    PluginLoader* const pl = PluginLoader::instance();
-
-    if (pl)
+    if (iface)
     {
-        Interface* const iface = pl->interface();
-        
-        if (iface)
-        {
-            rawProcess = iface->createRawProcessor();    
-            decoded    = rawProcess->decodeRawImage(inUrl, imageData, width, height, rgbmax);
-        }            
-    }
+        rawProcess = iface->createRawProcessor();    
+        decoded    = rawProcess->decodeRawImage(inUrl, imageData, width, height, rgbmax);
+    }            
 
     if (decoded)
     {
@@ -212,21 +205,20 @@ bool PreProcessTask::convertRaw()
         metaOut.setXmpTagString("Xmp.tiff.Model", metaOut.getExifTagString("Exif.Image.Model"));
         metaOut.setImageOrientation(KPMetadata::ORIENTATION_NORMAL);
 
-        KPWriteImage wImageIface;
-        wImageIface.setCancel(&isAbortedFlag);
-        wImageIface.setImageData(imageData, width, height, true, false, QByteArray(), metaOut);
         QFileInfo fi(inUrl.toLocalFile());
         outUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName().replace(QLatin1String("."), QLatin1String("_")) + QStringLiteral(".tif")));
 
-        if (!wImageIface.write2TIFF(outUrl.toLocalFile()))
+        // wImageIface.setCancel(&isAbortedFlag);
+        
+        if (iface && !iface->saveImage(outUrl, QLatin1String("TIF"),
+                                       imageData, width, height,
+                                       true, false))
         {
             errString = i18n("Tiff image creation failed.");
             return false;
         }
-        else
-        {
-            metaOut.save(outUrl.toLocalFile());
-        }
+        
+        metaOut.save(outUrl.toLocalFile());
     }
     else
     {

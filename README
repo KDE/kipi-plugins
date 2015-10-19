@@ -40,7 +40,6 @@ Panorama           : A tool to assemble panoramic photo automatically.
 CMake           >= 3.0.0                        http://www.cmake.org
 libqt           >= 5.5.0                        http://www.qtsoftware.com
 libkde          >= 5.5.0                        http://www.kde.org
-libtiff         >= 3.8.2                        http://www.remotesensing.org/libtiff
 libkipi         >= 5.0.0                        https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi
 libkexiv2       >= 5.0.0                        https://projects.kde.org/projects/kde/kdegraphics/libs/libkexiv2
 Hugin           >= 0.8.0 (runtime dependency)   http://hugin.sourceforge.net

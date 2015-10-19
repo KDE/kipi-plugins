@@ -62,7 +62,6 @@
 // Local includes
 
 #include "kipiplugins_debug.h"
-#include "kpwriteimage.h"
 #include "kpversion.h"
 
 using namespace KIPI;
@@ -743,9 +742,6 @@ bool ActionThread::convertRaw(const QUrl& inUrl, QUrl& outUrl)
         meta.setXmpTagString("Xmp.tiff.Model", meta.getExifTagString("Exif.Image.Model"));
         meta.setImageOrientation(KPMetadata::ORIENTATION_NORMAL);
 
-        KPWriteImage wImageIface;
-        wImageIface.setCancel(&d->cancel);
-        wImageIface.setImageData(imageData, width, height, true, false, QByteArray(), meta);
         QFileInfo fi(inUrl.toLocalFile());
         outUrl = QUrl::fromLocalFile(
             d->preprocessingTmpDir->path()
@@ -754,8 +750,16 @@ bool ActionThread::convertRaw(const QUrl& inUrl, QUrl& outUrl)
             + fi.completeBaseName().replace(QChar::fromLatin1('.'), QChar::fromLatin1('_'))
             + QStringLiteral(".tif"));
 
-        if (!wImageIface.write2TIFF(outUrl.toLocalFile()))
+        // wImageIface.setCancel(&d->cancel);
+        
+        if (d->iface && !d->iface->saveImage(outUrl, QLatin1String("TIF"),
+                                             imageData, width, height,
+                                             true, false))
+        {
             return false;
+        }
+
+        meta.save(outUrl.toLocalFile());
     }
     else
     {
