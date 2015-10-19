@@ -248,7 +248,7 @@ int KPImageInfo::orientation() const
 
 bool KPImageInfo::hasOrientation() const
 {
-    return (d->hasAttribute(QLatin1String("orientation"));
+    return d->hasAttribute(QLatin1String("orientation"));
 }
 
 void KPImageInfo::setTitle(const QString& title)
@@ -433,7 +433,7 @@ bool KPImageInfo::hasKeywords() const
 {
     if (d->iface)
     {
-        return (d->hasAttribute(QLatin1String("keywords"));
+        return d->hasAttribute(QLatin1String("keywords"));
     }
     else
     {

@@ -58,6 +58,7 @@
 
 #include "kipiplugins_debug.h"
 #include "kpaboutdata.h"
+#include "kpmetadata.h"
 #include "kpimageinfo.h"
 #include "kpimageslist.h"
 #include "kpprogresswidget.h"

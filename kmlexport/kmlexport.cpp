@@ -203,7 +203,7 @@ void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum 
 
     if ( info.orientation() != KPMetadata::ORIENTATION_UNSPECIFIED )
     {
-        QMatrix matrix = RotationMatrix::toMatrix(info.orientation());
+        QMatrix matrix = RotationMatrix::toMatrix((KPMetadata::ImageOrientation)info.orientation());
         image          = image.transformed( matrix );
     }
 

@@ -68,7 +68,6 @@ public:
     bool write2JPEG(const QString& destPath);
     bool write2PNG(const QString& destPath);
     bool write2TIFF(const QString& destPath);
-    bool write2PPM(const QString& destPath);
 
 private:
 

@@ -155,7 +155,7 @@ bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
 
     if ( info.orientation() != KPMetadata::ORIENTATION_UNSPECIFIED )
     {
-        QMatrix matrix = RotationMatrix::toMatrix(info.orientation());
+        QMatrix matrix = RotationMatrix::toMatrix((KPMetadata::ImageOrientation)info.orientation());
         d->qimage      = d->qimage.transformed(matrix);
     }
 

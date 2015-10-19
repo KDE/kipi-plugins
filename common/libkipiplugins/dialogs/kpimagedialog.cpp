@@ -48,6 +48,7 @@
 // Local includes
 
 #include "kipiplugins_debug.h"
+#include "kpmetadata.h"
 
 using namespace KIPI;
 
@@ -80,7 +81,7 @@ public:
 
     QUrl              currentUrl;
 
-    KPMetadata        metaIface;
+    KPMetadata        meta;
 
     Interface*        iface;
 };
@@ -158,57 +159,57 @@ void KPImageDialogPreview::showPreview(const QUrl& url)
 
         // Try to use libkexiv2 to identify image.
 
-        if (d->metaIface.load(d->currentUrl.path()) &&
-            (d->metaIface.hasExif() || d->metaIface.hasXmp()))
+        if (d->meta.load(d->currentUrl.path()) &&
+            (d->meta.hasExif() || d->meta.hasXmp()))
         {
-            make = d->metaIface.getExifTagString("Exif.Image.Make");
+            make = d->meta.getExifTagString("Exif.Image.Make");
             if (make.isEmpty())
-                make = d->metaIface.getXmpTagString("Xmp.tiff.Make");
+                make = d->meta.getXmpTagString("Xmp.tiff.Make");
 
-            model = d->metaIface.getExifTagString("Exif.Image.Model");
+            model = d->meta.getExifTagString("Exif.Image.Model");
             if (model.isEmpty())
-                model = d->metaIface.getXmpTagString("Xmp.tiff.Model");
+                model = d->meta.getXmpTagString("Xmp.tiff.Model");
 
-            if (d->metaIface.getImageDateTime().isValid())
-                dateTime = QLocale().toString(d->metaIface.getImageDateTime(), QLocale::ShortFormat);
+            if (d->meta.getImageDateTime().isValid())
+                dateTime = QLocale().toString(d->meta.getImageDateTime(), QLocale::ShortFormat);
 
-            aperture = d->metaIface.getExifTagString("Exif.Photo.FNumber");
+            aperture = d->meta.getExifTagString("Exif.Photo.FNumber");
             if (aperture.isEmpty())
             {
-                aperture = d->metaIface.getExifTagString("Exif.Photo.ApertureValue");
+                aperture = d->meta.getExifTagString("Exif.Photo.ApertureValue");
                 if (aperture.isEmpty())
                 {
-                    aperture = d->metaIface.getXmpTagString("Xmp.exif.FNumber");
+                    aperture = d->meta.getXmpTagString("Xmp.exif.FNumber");
                     if (aperture.isEmpty())
-                        aperture = d->metaIface.getXmpTagString("Xmp.exif.ApertureValue");
+                        aperture = d->meta.getXmpTagString("Xmp.exif.ApertureValue");
                 }
             }
 
-            focalLength = d->metaIface.getExifTagString("Exif.Photo.FocalLength");
+            focalLength = d->meta.getExifTagString("Exif.Photo.FocalLength");
             if (focalLength.isEmpty())
-                focalLength = d->metaIface.getXmpTagString("Xmp.exif.FocalLength");
+                focalLength = d->meta.getXmpTagString("Xmp.exif.FocalLength");
 
-            exposureTime = d->metaIface.getExifTagString("Exif.Photo.ExposureTime");
+            exposureTime = d->meta.getExifTagString("Exif.Photo.ExposureTime");
             if (exposureTime.isEmpty())
             {
-                exposureTime = d->metaIface.getExifTagString("Exif.Photo.ShutterSpeedValue");
+                exposureTime = d->meta.getExifTagString("Exif.Photo.ShutterSpeedValue");
                 if (exposureTime.isEmpty())
                 {
-                    exposureTime = d->metaIface.getXmpTagString("Xmp.exif.ExposureTime");
+                    exposureTime = d->meta.getXmpTagString("Xmp.exif.ExposureTime");
                     if (exposureTime.isEmpty())
-                        exposureTime = d->metaIface.getXmpTagString("Xmp.exif.ShutterSpeedValue");
+                        exposureTime = d->meta.getXmpTagString("Xmp.exif.ShutterSpeedValue");
                 }
             }
 
-            sensitivity = d->metaIface.getExifTagString("Exif.Photo.ISOSpeedRatings");
+            sensitivity = d->meta.getExifTagString("Exif.Photo.ISOSpeedRatings");
             if (sensitivity.isEmpty())
             {
-                sensitivity = d->metaIface.getExifTagString("Exif.Photo.ExposureIndex");
+                sensitivity = d->meta.getExifTagString("Exif.Photo.ExposureIndex");
                 if (sensitivity.isEmpty())
                 {
-                    sensitivity = d->metaIface.getXmpTagString("Xmp.exif.ISOSpeedRatings");
+                    sensitivity = d->meta.getXmpTagString("Xmp.exif.ISOSpeedRatings");
                     if (sensitivity.isEmpty())
-                        sensitivity = d->metaIface.getXmpTagString("Xmp.exif.ExposureIndex");
+                        sensitivity = d->meta.getXmpTagString("Xmp.exif.ExposureIndex");
                 }
             }
         }

@@ -132,7 +132,7 @@ SlideShowLoader::SlideShowLoader(FileList& pathList, uint cacheSize, int width, 
     {
         filePath    = QUrl(m_pathList[i].first);
         KPImageInfo info(filePath);
-        orientation = info.orientation();
+        orientation = (KPMetadata::ImageOrientation)info.orientation();
 
         LoadThread* const newThread = new LoadThread(m_loadedImages, m_imageLock,
                                                      filePath, orientation, m_swidth, m_sheight);
@@ -147,7 +147,7 @@ SlideShowLoader::SlideShowLoader(FileList& pathList, uint cacheSize, int width, 
         int toLoad  = (m_currIndex - i) % m_pathList.count();
         filePath    = QUrl(m_pathList[toLoad].first);
         KPImageInfo info(filePath);
-        orientation = info.orientation();
+        orientation = (KPMetadata::ImageOrientation)info.orientation();
 
         LoadThread* const newThread = new LoadThread(m_loadedImages, m_imageLock,
                                                      filePath, orientation, m_swidth, m_sheight);
@@ -209,7 +209,7 @@ void SlideShowLoader::next()
 
     QUrl filePath                            = QUrl::fromLocalFile((m_pathList[newBorn].first));
     KPImageInfo info(filePath);
-    KPMetadata::ImageOrientation orientation = info.orientation();
+    KPMetadata::ImageOrientation orientation = (KPMetadata::ImageOrientation)info.orientation();
 
     LoadThread* const newThread = new LoadThread(m_loadedImages, m_imageLock, filePath, orientation, m_swidth, m_sheight);
 
@@ -250,7 +250,7 @@ void SlideShowLoader::prev()
 
     QUrl filePath                            = QUrl::fromLocalFile(m_pathList[newBorn].first);
     KPImageInfo info(filePath);
-    KPMetadata::ImageOrientation orientation = info.orientation();
+    KPMetadata::ImageOrientation orientation = (KPMetadata::ImageOrientation)info.orientation();
 
     LoadThread* const newThread = new LoadThread(m_loadedImages, m_imageLock, filePath, orientation, m_swidth, m_sheight);
 
@@ -297,7 +297,7 @@ void SlideShowLoader::checkIsIn(int index)
     {
         QUrl filePath                            = QUrl(m_pathList[index].first);
         KPImageInfo info(filePath);
-        KPMetadata::ImageOrientation orientation = info.orientation();
+        KPMetadata::ImageOrientation orientation = (KPMetadata::ImageOrientation)info.orientation();
 
         LoadThread* const newThread = new LoadThread(m_loadedImages, m_imageLock, filePath, orientation, m_swidth, m_sheight);
 

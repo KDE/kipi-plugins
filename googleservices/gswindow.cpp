@@ -54,6 +54,7 @@
 
 #include "kpimageslist.h"
 #include "kpaboutdata.h"
+#include "kpmetadata.h"
 #include "kpimageinfo.h"
 #include "kpversion.h"
 #include "kpprogresswidget.h"

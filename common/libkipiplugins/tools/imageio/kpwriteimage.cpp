@@ -256,87 +256,6 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
     return true;
 }
 
-bool KPWriteImage::write2PPM(const QString& destPath)
-{
-    FILE* const file = fopen((const char*)(QFile::encodeName(destPath)).constData(), "wb");
-
-    if (!file)
-    {
-        qCDebug(KIPIPLUGINS_LOG) << "Failed to open ppm file for writing" ;
-        return false;
-    }
-
-    fprintf(file, "P6\n%d %d\n255\n", d->width, d->height);
-
-    // Write image data
-    uchar* const line = new uchar[d->width*3];
-    uchar* dstPtr     = 0;
-
-    if (!d->sixteenBit)     // 8 bits image.
-    {
-        uchar* srcPtr = (uchar*)d->data.data();
-
-        for (uint j=0; j < d->height; ++j)
-        {
-            if (cancel())
-            {
-                delete [] line;
-                fclose(file);
-                return false;
-            }
-
-            dstPtr = line;
-
-            for (uint i = 0; i < d->width; ++i)
-            {
-                dstPtr[2] = srcPtr[0];  // Blue
-                dstPtr[1] = srcPtr[1];  // Green
-                dstPtr[0] = srcPtr[2];  // Red
-
-                d->hasAlpha ? srcPtr += 4 : srcPtr += 3;
-                dstPtr += 3;
-            }
-
-            fwrite(line, 1, d->width*3, file);
-        }
-    }
-    else                    // 16 bits image
-    {
-        unsigned short* srcPtr = reinterpret_cast<unsigned short*>(d->data.data());
-
-        for (uint j=0; j < d->height; ++j)
-        {
-            if (cancel())
-            {
-                delete [] line;
-                fclose(file);
-                return false;
-            }
-
-            dstPtr = line;
-
-            for (uint i = 0; i < d->width; ++i)
-            {
-                dstPtr[2] = (srcPtr[0] * 255UL)/65535UL;    // Blue
-                dstPtr[1] = (srcPtr[1] * 255UL)/65535UL;    // Green
-                dstPtr[0] = (srcPtr[2] * 255UL)/65535UL;    // Red
-
-                d->hasAlpha ? srcPtr += 4 : srcPtr += 3;
-                dstPtr += 3;
-            }
-
-            fwrite(line, 1, d->width*3, file);
-        }
-    }
-
-    delete [] line;
-    fclose(file);
-
-    d->meta.save(destPath);
-
-    return true;
-}
-
 bool KPWriteImage::write2PNG(const QString& destPath)
 {
     /*
@@ -587,13 +506,13 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 
     // Standard Exif ASCII tags (available with libtiff 3.6.1)
 
-    tiffSetExifAsciiTag(tif, TIFFTAG_DOCUMENTNAME,     d->metadata, "Exif.Image.DocumentName");
-    tiffSetExifAsciiTag(tif, TIFFTAG_IMAGEDESCRIPTION, d->metadata, "Exif.Image.ImageDescription");
-    tiffSetExifAsciiTag(tif, TIFFTAG_MAKE,             d->metadata, "Exif.Image.Make");
-    tiffSetExifAsciiTag(tif, TIFFTAG_MODEL,            d->metadata, "Exif.Image.Model");
-    tiffSetExifAsciiTag(tif, TIFFTAG_DATETIME,         d->metadata, "Exif.Image.DateTime");
-    tiffSetExifAsciiTag(tif, TIFFTAG_ARTIST,           d->metadata, "Exif.Image.Artist");
-    tiffSetExifAsciiTag(tif, TIFFTAG_COPYRIGHT,        d->metadata, "Exif.Image.Copyright");
+    tiffSetExifAsciiTag(tif, TIFFTAG_DOCUMENTNAME,     d->meta, "Exif.Image.DocumentName");
+    tiffSetExifAsciiTag(tif, TIFFTAG_IMAGEDESCRIPTION, d->meta, "Exif.Image.ImageDescription");
+    tiffSetExifAsciiTag(tif, TIFFTAG_MAKE,             d->meta, "Exif.Image.Make");
+    tiffSetExifAsciiTag(tif, TIFFTAG_MODEL,            d->meta, "Exif.Image.Model");
+    tiffSetExifAsciiTag(tif, TIFFTAG_DATETIME,         d->meta, "Exif.Image.DateTime");
+    tiffSetExifAsciiTag(tif, TIFFTAG_ARTIST,           d->meta, "Exif.Image.Artist");
+    tiffSetExifAsciiTag(tif, TIFFTAG_COPYRIGHT,        d->meta, "Exif.Image.Copyright");
 
     QString libtiffver(QStringLiteral(TIFFLIB_VERSION_STR));
     libtiffver.replace(QLatin1Char('\n'), QLatin1Char(' '));
