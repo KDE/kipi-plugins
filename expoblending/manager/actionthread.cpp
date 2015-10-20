@@ -64,8 +64,6 @@
 #include "kipiplugins_debug.h"
 #include "kpversion.h"
 
-using namespace KIPI;
-
 namespace KIPIExpoBlendingPlugin
 {
 
@@ -75,13 +73,17 @@ struct ActionThread::Private
         : cancel(false),
           align(false),
           enfuseVersion4x(true),
-          iface(0)
+          iface(0),
+          meta(0)
     {
         PluginLoader* const pl = PluginLoader::instance();
 
         if (pl)
         {
             iface = pl->interface();
+            
+            if (iface)
+                meta = iface->createMetadataProcessor();
         } 
     }
 
@@ -129,6 +131,7 @@ struct ActionThread::Private
     ItemUrlsMap                     preProcessedUrlsMap;
     
     Interface*                      iface;
+    MetadataProcessor*              meta;
 };
 
 ActionThread::ActionThread(QObject* const parent)
@@ -347,10 +350,11 @@ void ActionThread::run()
                     bool result  = image.load(t->urls[0].toLocalFile());
 
                     // rotate image
+
                     if (result)
                     {
-                        KPMetadata meta(t->urls[0].toLocalFile());
-                        meta.rotateExifQImage(image, meta.getImageOrientation());
+                        if (d->meta && d->meta->load(t->urls[0]))
+                            d->meta->rotateExifQImage(image, d->meta->getImageOrientation());
                     }
 
                     ActionData ad2;
@@ -380,12 +384,19 @@ void ActionThread::run()
                     qCDebug(KIPIPLUGINS_LOG) << "Preview result was: " << result;
 
                     // preserve exif information for auto rotation
+
                     if (result)
                     {
-                        KPMetadata metaIn(t->urls[0].toLocalFile());
-                        KPMetadata metaOut(destUrl.toLocalFile());
-                        metaOut.setImageOrientation(metaIn.getImageOrientation());
-                        metaOut.applyChanges();
+                        if (d->meta && d->meta->load(t->urls[0]))
+                        {
+                            int orientation = d->meta->getImageOrientation();
+
+                            if (d->meta->load(destUrl))
+                            {
+                                d->meta->setImageOrientation(orientation);
+                                d->meta->applyChanges();
+                            }
+                        }
                     }
 
                     // To be cleaned in destructor.
@@ -419,21 +430,23 @@ void ActionThread::run()
                     result = startEnfuse(t->urls, destUrl, t->enfuseSettings, t->binaryPath, errors);
 
                     // We will take first image metadata from stack to restore Exif, Iptc, and Xmp.
-                    KPMetadata meta;
-                    meta.load(t->urls[0].toLocalFile());
-                    result = result & meta.setXmpTagString("Xmp.kipi.EnfuseInputFiles", t->enfuseSettings.inputImagesList(), false);
-                    result = result & meta.setXmpTagString("Xmp.kipi.EnfuseSettings", t->enfuseSettings.asCommentString().replace(QChar::fromLatin1('\n'), QLatin1String(" ; ")), false);
-                    meta.setImageDateTime(QDateTime::currentDateTime());
-
-                    if (t->enfuseSettings.outputFormat != KPSaveSettingsWidget::OUTPUT_JPEG)
+                    
+                    if (d->meta && d->meta->load(t->urls[0]))
                     {
-                        QImage img;
+                        result = result & d->meta->setXmpTagString(QLatin1String("Xmp.kipi.EnfuseInputFiles"), t->enfuseSettings.inputImagesList());
+                        result = result & d->meta->setXmpTagString(QLatin1String("Xmp.kipi.EnfuseSettings"),   t->enfuseSettings.asCommentString().replace(QChar::fromLatin1('\n'), QLatin1String(" ; ")));
+                        d->meta->setImageDateTime(QDateTime::currentDateTime());
 
-                        if (img.load(destUrl.toLocalFile()))
-                            meta.setImagePreview(img.scaled(1280, 1024, Qt::KeepAspectRatio));
+                        if (t->enfuseSettings.outputFormat != KPSaveSettingsWidget::OUTPUT_JPEG)
+                        {
+                            QImage img;
+
+                            if (img.load(destUrl.toLocalFile()))
+                                d->meta->setImagePreview(img.scaled(1280, 1024, Qt::KeepAspectRatio));
+                        }
+
+                        d->meta->save(destUrl);
                     }
-
-                    meta.save(destUrl.toLocalFile());
 
                     // To be cleaned in destructor.
                     QMutexLocker(&d->enfuseTmpUrlsMutex);
@@ -674,10 +687,16 @@ bool ActionThread::computePreview(const QUrl& inUrl, QUrl& outUrl)
 
         if (saved)
         {
-            KPMetadata metaIn(inUrl.toLocalFile());
-            KPMetadata metaOut(outUrl.toLocalFile());
-            metaOut.setImageOrientation(metaIn.getImageOrientation());
-            metaOut.applyChanges();
+            if (d->meta && d->meta->load(inUrl))
+            {
+                int orientation = d->meta->getImageOrientation();
+                
+                if (d->meta->load(outUrl))
+                {
+                    d->meta->setImageOrientation(orientation);
+                    d->meta->applyChanges();
+                }
+            }
         }
 
         qCDebug(KIPIPLUGINS_LOG) << "Preview Image url: " << outUrl << ", saved: " << saved;
@@ -733,32 +752,33 @@ bool ActionThread::convertRaw(const QUrl& inUrl, QUrl& outUrl)
             sptr += 6;
         }
 
-        KPMetadata meta;
-        meta.load(inUrl.toLocalFile());
-        meta.setImageProgramId(QStringLiteral("Kipi-plugins"), QString::fromUtf8(kipiplugins_version));
-        meta.setImageDimensions(QSize(width, height));
-        meta.setExifTagString("Exif.Image.DocumentName", inUrl.fileName());
-        meta.setXmpTagString("Xmp.tiff.Make",  meta.getExifTagString("Exif.Image.Make"));
-        meta.setXmpTagString("Xmp.tiff.Model", meta.getExifTagString("Exif.Image.Model"));
-        meta.setImageOrientation(KPMetadata::ORIENTATION_NORMAL);
-
-        QFileInfo fi(inUrl.toLocalFile());
-        outUrl = QUrl::fromLocalFile(
-            d->preprocessingTmpDir->path()
-            + QChar::fromLatin1('/')
-            + QChar::fromLatin1('.')
-            + fi.completeBaseName().replace(QChar::fromLatin1('.'), QChar::fromLatin1('_'))
-            + QStringLiteral(".tif"));
-        
-        if (d->iface && !d->iface->saveImage(outUrl, QLatin1String("TIF"),
-                                             imageData, width, height,
-                                             true, false,
-                                             &d->cancel))
+        if (d->meta && d->meta->load(inUrl))
         {
-            return false;
-        }
+            d->meta->setImageProgramId(QStringLiteral("Kipi-plugins"), QString::fromUtf8(kipiplugins_version));
+            d->meta->setImageDimensions(QSize(width, height));
+            d->meta->setExifTagString(QLatin1String("Exif.Image.DocumentName"), inUrl.fileName());
+            d->meta->setXmpTagString(QLatin1String("Xmp.tiff.Make"),  d->meta->getExifTagString(QLatin1String("Exif.Image.Make")));
+            d->meta->setXmpTagString(QLatin1String("Xmp.tiff.Model"), d->meta->getExifTagString(QLatin1String("Exif.Image.Model")));
+            d->meta->setImageOrientation(MetadataProcessor::NORMAL);
 
-        meta.save(outUrl.toLocalFile());
+            QFileInfo fi(inUrl.toLocalFile());
+            outUrl = QUrl::fromLocalFile(
+                d->preprocessingTmpDir->path()
+                + QChar::fromLatin1('/')
+                + QChar::fromLatin1('.')
+                + fi.completeBaseName().replace(QChar::fromLatin1('.'), QChar::fromLatin1('_'))
+                + QStringLiteral(".tif"));
+            
+            if (d->iface && !d->iface->saveImage(outUrl, QLatin1String("TIF"),
+                                                imageData, width, height,
+                                                true, false,
+                                                &d->cancel))
+            {
+                return false;
+            }
+
+            d->meta->save(outUrl);
+        }
     }
     else
     {
@@ -893,9 +913,13 @@ QString ActionThread::getProcessError(QProcess& proc) const
  */
 float ActionThread::getAverageSceneLuminance(const QUrl& url)
 {
-    KPMetadata meta;
-    meta.load(url.toLocalFile());
-    if (!meta.hasExif())
+    if (!d->meta)
+        return -1;
+        
+    if (!d->meta->load(url))
+        return -1;    
+        
+    if (!d->meta->hasExif())
         return -1;
 
     long num = 1, den = 1;
@@ -907,17 +931,17 @@ float ActionThread::getAverageSceneLuminance(const QUrl& url)
     float    fnum = -1.0;
     QVariant rationals;
 
-    if (meta.getExifTagRational("Exif.Photo.ExposureTime", num, den))
+    if (d->meta->getExifTagRational(QLatin1String("Exif.Photo.ExposureTime"), num, den))
     {
         if (den)
             expo = (float)(num) / (float)(den);
     }
-    else if (getXmpRational("Xmp.exif.ExposureTime", num, den, meta))
+    else if (getXmpRational(QLatin1String("Xmp.exif.ExposureTime"), num, den, d->meta))
     {
         if (den)
             expo = (float)(num) / (float)(den);
     }
-    else if (meta.getExifTagRational("Exif.Photo.ShutterSpeedValue", num, den))
+    else if (d->meta->getExifTagRational(QLatin1String("Exif.Photo.ShutterSpeedValue"), num, den))
     {
         long   nmr = 1, div = 1;
         double tmp = 0.0;
@@ -937,7 +961,7 @@ float ActionThread::getAverageSceneLuminance(const QUrl& url)
         if (div)
             expo = (float)(nmr) / (float)(div);
     }
-    else if (getXmpRational("Xmp.exif.ShutterSpeedValue", num, den, meta))
+    else if (getXmpRational(QLatin1String("Xmp.exif.ShutterSpeedValue"), num, den, d->meta))
     {
         long   nmr = 1, div = 1;
         double tmp = 0.0;
@@ -960,22 +984,22 @@ float ActionThread::getAverageSceneLuminance(const QUrl& url)
 
     qCDebug(KIPIPLUGINS_LOG) << url.fileName() << " : expo = " << expo;
 
-    if (meta.getExifTagRational("Exif.Photo.FNumber", num, den))
+    if (d->meta->getExifTagRational(QLatin1String("Exif.Photo.FNumber"), num, den))
     {
         if (den)
             fnum = (float)(num) / (float)(den);
     }
-    else if (getXmpRational("Xmp.exif.FNumber", num, den, meta))
+    else if (getXmpRational(QLatin1String("Xmp.exif.FNumber"), num, den, d->meta))
     {
         if (den)
             fnum = (float)(num) / (float)(den);
     }
-    else if (meta.getExifTagRational("Exif.Photo.ApertureValue", num, den))
+    else if (d->meta->getExifTagRational(QLatin1String("Exif.Photo.ApertureValue"), num, den))
     {
         if (den)
             fnum = (float)(exp(log(2.0) * (float)(num) / (float)(den) / 2.0));
     }
-    else if (getXmpRational("Xmp.exif.ApertureValue", num, den, meta))
+    else if (getXmpRational(QLatin1String("Xmp.exif.ApertureValue"), num, den, d->meta))
     {
         if (den)
             fnum = (float)(exp(log(2.0) * (float)(num) / (float)(den) / 2.0));
@@ -990,12 +1014,12 @@ float ActionThread::getAverageSceneLuminance(const QUrl& url)
 
     // If iso is found use that value, otherwise assume a value of iso=100. (again, some cameras do not print iso in exif).
 
-    if (meta.getExifTagRational("Exif.Photo.ISOSpeedRatings", num, den))
+    if (d->meta->getExifTagRational(QLatin1String("Exif.Photo.ISOSpeedRatings"), num, den))
     {
         if (den)
             iso = (float)(num) / (float)(den);
     }
-    else if (getXmpRational("Xmp.exif.ISOSpeedRatings", num, den, meta))
+    else if (getXmpRational(QLatin1String("Xmp.exif.ISOSpeedRatings"), num, den, d->meta))
     {
         if (den)
             iso = (float)(num) / (float)(den);
@@ -1020,9 +1044,9 @@ float ActionThread::getAverageSceneLuminance(const QUrl& url)
     return -1.0;
 }
 
-bool ActionThread::getXmpRational(const char* xmpTagName, long& num, long& den, KPMetadata& meta)
+bool ActionThread::getXmpRational(const QString& xmpTagName, long& num, long& den, MetadataProcessor* const meta)
 {
-    QVariant rationals = meta.getXmpTagVariant(xmpTagName);
+    QVariant rationals = meta->getXmpTagVariant(xmpTagName);
 
     if (!rationals.isNull())
     {

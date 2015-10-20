@@ -57,7 +57,6 @@ target_link_libraries(libexpoblending
 
         KF5::Parts
         KF5::Kipi
-        KF5::KExiv2
         KF5::ConfigCore
 
         KF5kipiplugins

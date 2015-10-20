@@ -33,11 +33,16 @@
 
 #include "enfusesettings.h"
 #include "actions.h"
-#include "kpmetadata.h"
 
 class QProcess;
 
+namespace KIPI
+{
+    class MetadataProcessor;
+}
+
 using namespace KIPIPlugins;
+using namespace KIPI;
 
 namespace KIPIExpoBlendingPlugin
 {
@@ -92,7 +97,7 @@ private:
     QString getProcessError(QProcess& proc) const;
 
     float   getAverageSceneLuminance(const QUrl& url);
-    bool    getXmpRational(const char* xmpTagName, long& num, long& den, KPMetadata& meta);
+    bool    getXmpRational(const QString& xmpTagName, long& num, long& den, MetadataProcessor* const meta);
 
 private:
 
