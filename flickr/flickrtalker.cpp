@@ -762,7 +762,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
             }
             else
             {
-                qWarning() << "(flickrExport::Image doesn't have metadata)";
+                qCWarning(KIPIPLUGINS_LOG) << "flickrExport::Image doesn't have metadata";
             }
         }
 
