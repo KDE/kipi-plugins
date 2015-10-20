@@ -52,9 +52,9 @@
 
 // Local includes
 
+#include "kpmetadata.h"
 #include "kpimageslist.h"
 #include "kpaboutdata.h"
-#include "kpmetadata.h"
 #include "kpimageinfo.h"
 #include "kpversion.h"
 #include "kpprogresswidget.h"
@@ -74,19 +74,19 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
 {
     m_serviceName = serviceName;
     
-    if(QString::compare(m_serviceName, QStringLiteral("googledriveexport"), Qt::CaseInsensitive) == 0)
+    if (QString::compare(m_serviceName, QStringLiteral("googledriveexport"), Qt::CaseInsensitive) == 0)
     {
         name = PluginName::GDrive;
         m_pluginName = QStringLiteral("Google Drive");
     }
-    else if(QString::compare(m_serviceName, QStringLiteral("picasawebexport"), Qt::CaseInsensitive) == 0)
+    else if (QString::compare(m_serviceName, QStringLiteral("picasawebexport"), Qt::CaseInsensitive) == 0)
     {
-        name = PluginName::PicasaExport;
+        name         = PluginName::PicasaExport;
         m_pluginName = QStringLiteral("Google Photos/PicasaWeb");
     }
     else
     {
-        name = PluginName::PicasaImport;
+        name         = PluginName::PicasaImport;
         m_pluginName = QStringLiteral("Google Photos/PicasaWeb");
     }
     
@@ -99,7 +99,7 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
     
     setMainWidget(m_widget);
     setModal(false);  
-    KPAboutData* about;
+    KPAboutData* about = 0;
     
     switch (name)
     {
@@ -130,7 +130,7 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
             m_widget->setMinimumSize(700,500);
             
             m_albumDlg = new NewAlbumDlg(this,m_serviceName,m_pluginName);
-            m_talker = new GDTalker(this);
+            m_talker   = new GDTalker(this);
 
             connect(m_talker,SIGNAL(signalBusy(bool)),
                     this,SLOT(slotBusy(bool)));
@@ -162,7 +162,7 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
             readSettings();
             buttonStateChange(false);
 
-            if(refresh_token.isEmpty())
+            if (refresh_token.isEmpty())
             {
                 m_talker->doOAuth();
             }
@@ -182,10 +182,10 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
                                         ki18n("A Kipi plugin to export image collections to "
                                                 "Google Photos/Picasa web service."),
                                         ki18n("(c) 2007-2009, Vardhman Jain\n"
-                                                "(c) 2008-2013, Gilles Caulier\n"
-                                                "(c) 2009, Luka Renko\n"
-                                                "(c) 2010, Jens Mueller\n"
-                                                "(c) 2015, Shourya Singh Gupta"));
+                                              "(c) 2008-2015, Gilles Caulier\n"
+                                              "(c) 2009, Luka Renko\n"
+                                              "(c) 2010, Jens Mueller\n"
+                                              "(c) 2015, Shourya Singh Gupta"));
 
             about->addAuthor(i18n( "Vardhman Jain" ), i18n("Author and maintainer"),
                              QStringLiteral("Vardhman at gmail dot com"));
@@ -206,7 +206,8 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
             setAboutData(about);
 
             setWindowIcon(QIcon::fromTheme(QStringLiteral("kipi-picasa")));
-            if(name == PluginName::PicasaExport)
+
+            if (name == PluginName::PicasaExport)
             {
                 setWindowTitle(i18n("Export to Google Photos/PicasaWeb Service"));
 
@@ -226,7 +227,7 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
             }
             
             m_picasa_albumdlg = new NewAlbumDlg(this,m_serviceName,m_pluginName);
-            m_picsasa_talker = new PicasawebTalker(this);
+            m_picsasa_talker  = new PicasawebTalker(this);
             
             connect(m_picsasa_talker,SIGNAL(signalBusy(bool)),
                     this,SLOT(slotBusy(bool)));
@@ -258,7 +259,7 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
             readSettings();
             buttonStateChange(false);
 
-            if(refresh_token.isEmpty())
+            if (refresh_token.isEmpty())
             {
                 m_picsasa_talker->doOAuth();
             }
@@ -310,7 +311,7 @@ void GSWindow::readSettings()
     
     KConfigGroup grp;
     
-    switch(name)
+    switch (name)
     {
         case PluginName::GDrive :
             grp = config.group("Google Drive Settings");
@@ -321,7 +322,7 @@ void GSWindow::readSettings()
     }
 
     m_currentAlbumId = grp.readEntry("Current Album",QString());
-    refresh_token = grp.readEntry("refresh_token");
+    refresh_token    = grp.readEntry("refresh_token");
     
     if (grp.readEntry("Resize", false))
     {
@@ -339,12 +340,12 @@ void GSWindow::readSettings()
     m_widget->getDimensionSpB()->setValue(grp.readEntry("Maximum Width",    1600));
     m_widget->getImgQualitySpB()->setValue(grp.readEntry("Image Quality", 90));
     
-    if(name == PluginName::PicasaExport)
+    if (name == PluginName::PicasaExport)
         m_widget->m_tagsBGrp->button(grp.readEntry("Tag Paths", 0))->setChecked(true);
 
     KConfigGroup dialogGroup;
     
-    switch(name)
+    switch (name)
     {
         case PluginName::GDrive :
             dialogGroup = config.group("Google Drive Export Dialog");
@@ -363,8 +364,8 @@ void GSWindow::readSettings()
 void GSWindow::writeSettings()
 {
     KConfig config(QStringLiteral("kipirc"));
-    
     KConfigGroup grp;
+
     switch(name)
     {
         case PluginName::GDrive :
@@ -381,12 +382,12 @@ void GSWindow::writeSettings()
     grp.writeEntry("Maximum Width",   m_widget->getDimensionSpB()->value());
     grp.writeEntry("Image Quality",   m_widget->getImgQualitySpB()->value());
     
-    if(name == PluginName::PicasaExport)
+    if (name == PluginName::PicasaExport)
         grp.writeEntry("Tag Paths",     m_widget->m_tagsBGrp->checkedId());
 
     KConfigGroup dialogGroup;
     
-    switch(name)
+    switch (name)
     {
         case PluginName::GDrive :
             dialogGroup = config.group("Google Drive Export Dialog");
@@ -534,7 +535,8 @@ void GSWindow::slotListAlbumsDone(int code,const QString& errMsg ,const QList <G
     switch (name)
     {
         case PluginName::GDrive :
-            if(code == 0)
+
+            if (code == 0)
             {
                 QMessageBox::critical(this, i18nc("@title:window", "Error"),
                                       i18n("Google Drive Call Failed: %1\n", errMsg));
@@ -544,7 +546,7 @@ void GSWindow::slotListAlbumsDone(int code,const QString& errMsg ,const QList <G
             m_widget->getAlbumsCoB()->clear();
             qCDebug(KIPIPLUGINS_LOG) << "slotListAlbumsDone1:" << list.size();
 
-            for(int i=0;i<list.size();i++)
+            for (int i=0;i<list.size();i++)
             {
                 m_widget->getAlbumsCoB()->addItem(
                     QIcon::fromTheme(QStringLiteral("system-users")),
@@ -561,7 +563,8 @@ void GSWindow::slotListAlbumsDone(int code,const QString& errMsg ,const QList <G
             break;
         
         default :
-            if(code == 0)
+
+            if (code == 0)
             {
                 QMessageBox::critical(this, i18nc("@title:window", "Error"),
                                       i18n("Google Photos/PicasaWeb Call Failed: %1\n", errMsg));
@@ -616,24 +619,24 @@ void GSWindow::picasaTransferHandler()
     
     switch (name)
     {
-    case PluginName::PicasaImport:
-        // list photos of the album, then start download
-        connect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GSPhoto>)),
-                this, SLOT(slotListPhotosDoneForDownload(int,QString,QList<GSPhoto>)));
+        case PluginName::PicasaImport:
+            // list photos of the album, then start download
+            connect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GSPhoto>)),
+                    this, SLOT(slotListPhotosDoneForDownload(int,QString,QList<GSPhoto>)));
 
-        m_picsasa_talker->listPhotos(
-            m_widget->getAlbumsCoB()->itemData(m_widget->getAlbumsCoB()->currentIndex()).toString(),
-            m_widget->getDimensionCoB()->itemData(m_widget->getDimensionCoB()->currentIndex()).toString());
-        break;
+            m_picsasa_talker->listPhotos(
+                m_widget->getAlbumsCoB()->itemData(m_widget->getAlbumsCoB()->currentIndex()).toString(),
+                m_widget->getDimensionCoB()->itemData(m_widget->getDimensionCoB()->currentIndex()).toString());
+            break;
 
-    default:
-        // list photos of the album, then start upload with add/update items
-        connect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GSPhoto>)),
-                this, SLOT(slotListPhotosDoneForUpload(int,QString,QList<GSPhoto>)));
+        default:
+            // list photos of the album, then start upload with add/update items
+            connect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GSPhoto>)),
+                    this, SLOT(slotListPhotosDoneForUpload(int,QString,QList<GSPhoto>)));
 
-        m_picsasa_talker->listPhotos(
-            m_widget->getAlbumsCoB()->itemData(m_widget->getAlbumsCoB()->currentIndex()).toString());
-        break;
+            m_picsasa_talker->listPhotos(
+                m_widget->getAlbumsCoB()->itemData(m_widget->getAlbumsCoB()->currentIndex()).toString());
+            break;
     }
 }
 
@@ -642,8 +645,8 @@ void GSWindow::slotTextBoxEmpty()
     qCDebug(KIPIPLUGINS_LOG) << "in slotTextBoxEmpty";
     QMessageBox::critical(this, i18nc("@title:window", "Error"),
                           i18n("The textbox is empty, please enter the code from the browser in the textbox. "
-                                  "To complete the authentication click \"Change Account\", "
-                                  "or \"Start Upload\" to authenticate again."));
+                               "To complete the authentication click \"Change Account\", "
+                               "or \"Start Upload\" to authenticate again."));
 }
 
 void GSWindow::slotStartTransfer()
@@ -654,7 +657,7 @@ void GSWindow::slotStartTransfer()
     {
         case PluginName::GDrive :
         case PluginName::PicasaExport :
-            if(m_widget->imagesList()->imageUrls().isEmpty())
+            if (m_widget->imagesList()->imageUrls().isEmpty())
             {
                 QMessageBox::critical(this, i18nc("@title:window", "Error"),
                                       i18n("No image selected. Please select which images should be uploaded."));
@@ -668,7 +671,7 @@ void GSWindow::slotStartTransfer()
     switch (name)
     {
         case PluginName::GDrive :
-            if(!(m_talker->authenticated()))
+            if (!(m_talker->authenticated()))
             {
                 QMessageBox warn(QMessageBox::Warning,
                                  i18n("Warning"),
@@ -691,7 +694,7 @@ void GSWindow::slotStartTransfer()
             break;
 
         default :
-            if(!(m_picsasa_talker->authenticated()))
+            if (!(m_picsasa_talker->authenticated()))
             {
                 QMessageBox warn(QMessageBox::Warning,
                                  i18n("Warning"),
@@ -711,14 +714,15 @@ void GSWindow::slotStartTransfer()
                     return;
                 }
                 
-            }     
+            }
+
             picasaTransferHandler();
             return;
     }
 
     typedef QPair<QUrl, GSPhoto> Pair;
 
-    for(int i=0 ;i < (m_widget->imagesList()->imageUrls().size()) ; i++)
+    for (int i=0 ;i < (m_widget->imagesList()->imageUrls().size()) ; i++)
     {
         KPImageInfo info(m_widget->imagesList()->imageUrls().value(i));
         GSPhoto temp;
@@ -751,8 +755,7 @@ void GSWindow::slotStartTransfer()
     m_widget->progressBar()->setValue(0);
     m_widget->progressBar()->show();
     m_widget->progressBar()->progressScheduled(i18n("Google Drive export"), true, true);
-    m_widget->progressBar()->progressThumbnailChanged(
-        QIcon::fromTheme(QStringLiteral("kipi")).pixmap(22, 22));
+    m_widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme(QStringLiteral("kipi")).pixmap(22, 22));
 
     uploadNextPhoto();
 }
@@ -771,8 +774,8 @@ void GSWindow::uploadNextPhoto()
     typedef QPair<QUrl,GSPhoto> Pair;
     Pair pathComments = m_transferQueue.first();
     GSPhoto info      = pathComments.second;
+    bool res          = true;
     m_widget->imagesList()->processing(pathComments.first);
-    bool res = true;
     
     switch (name)
     {
@@ -805,7 +808,7 @@ void GSWindow::uploadNextPhoto()
                         ReplaceDialog dlg(this, QStringLiteral(""), iface(), pathComments.first, info.thumbURL);
                         dlg.exec();
                         
-                        switch(dlg.getResult())
+                        switch (dlg.getResult())
                         {
                             case PWR_ADD_ALL:
                                 m_renamingOpt = PWR_ADD_ALL;
@@ -975,6 +978,7 @@ void GSWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
         if (errText.isEmpty())
         {
             KPMetadata meta;
+
             if (meta.load(tmpUrl.toLocalFile()))
             {
                 if (meta.supportXmp() && meta.canWriteXmp(tmpUrl.toLocalFile()))
@@ -1094,8 +1098,9 @@ void GSWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
         {
             QFile::remove(newUrl.toLocalFile());
         }
+
+/*
         //jmueller: rename from tmpDir to home does not work for me
-        /*
         int ret;
 #if KDE_IS_VERSION(4,2,85)
         // KDE 4.3.0
@@ -1108,7 +1113,8 @@ void GSWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
                          newUrl.toLocalFile());
 #endif
         if (ret != 0)
-        */
+*/
+
         if (QFile::rename(tmpUrl.toLocalFile(), newUrl.toLocalFile()) == false)
         {
             QMessageBox::critical(this, i18nc("@title:window", "Error"),
@@ -1134,7 +1140,7 @@ void GSWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
 
 void GSWindow::slotAddPhotoDone(int err, const QString& msg, const QString& photoId)
 {
-    if(err == 0)
+    if (err == 0)
     {
         m_widget->imagesList()->processed(m_transferQueue.first().first,false);
         
@@ -1248,7 +1254,6 @@ void GSWindow::slotAccessTokenObtained()
 
 void GSWindow::slotRefreshTokenObtained(const QString& msg)
 {
-    
     switch (name)
     {
         case PluginName::GDrive :
@@ -1268,7 +1273,7 @@ void GSWindow::slotCreateFolderDone(int code, const QString& msg, const QString&
     switch (name)
     {
         case PluginName::GDrive :
-            if(code == 0)
+            if (code == 0)
                 QMessageBox::critical(this, i18nc("@title:window", "Error"),
                                       i18n("Google Drive call failed:\n%1", msg));
             else
@@ -1276,7 +1281,7 @@ void GSWindow::slotCreateFolderDone(int code, const QString& msg, const QString&
             break;
         case PluginName::PicasaImport :
         case PluginName::PicasaExport :
-            if(code == 0)
+            if (code == 0)
                 QMessageBox::critical(this, i18nc("@title:window", "Error"),
                                       i18n("Google Photos/PicasaWeb call failed:\n%1", msg));
             else

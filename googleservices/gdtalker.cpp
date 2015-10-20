@@ -61,7 +61,6 @@
 // local includes
 
 #include "kpversion.h"
-#include "kpmetadata.h"
 #include "gswindow.h"
 #include "gsitem.h"
 #include "mpform_gdrive.h"
@@ -237,15 +236,18 @@ bool GDTalker::addPhoto(const QString& imgPath,const GSPhoto& info,const QString
 
     image.save(path,"JPEG",imgQualityToApply);
 
-    KPMetadata meta;
-
-    if (meta.load(imgPath))
+    if (m_iface)
     {
-        meta.setImageDimensions(image.size());
-        meta.setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
-        meta.save(path);
-    }
+        QPointer<MetadataProcessor> meta = m_iface->createMetadataProcessor();
 
+        if (meta && meta->load(QUrl::fromLocalFile(imgPath)))
+        {
+            meta->setImageDimensions(image.size());
+            meta->setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
+            meta->save(QUrl::fromLocalFile(path));
+        }
+    }
+   
     if (!form.addFile(path))
     {
         emit signalBusy(false);
