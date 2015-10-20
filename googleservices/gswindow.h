@@ -29,6 +29,7 @@
 #include <QList>
 #include <QPair>
 #include <QUrl>
+#include <QPointer>
 
 // Libkipi includes
 
@@ -42,11 +43,6 @@
 class QCloseEvent;
 
 class KProgressDialog;
-
-namespace KIPI
-{
-    class Interface;
-}
 
 namespace KIPIPlugins
 {
@@ -134,6 +130,8 @@ private:
     QString                       m_currentAlbumId;
 
     QList< QPair<QUrl, GSPhoto> > m_transferQueue;
+    
+    QPointer<MetadataProcessor>   m_meta;
 };
 
 } // namespace KIPIGoogleServicesPlugin

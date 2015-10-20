@@ -52,7 +52,6 @@
 
 // Local includes
 
-#include "kpmetadata.h"
 #include "kpimageslist.h"
 #include "kpaboutdata.h"
 #include "kpimageinfo.h"
@@ -72,6 +71,11 @@ namespace KIPIGoogleServicesPlugin
 GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QString& serviceName)
     : KPToolDialog(0)
 {
+    if (iface())
+    {
+        m_meta = iface()->createMetadataProcessor();
+    }
+
     m_serviceName = serviceName;
     
     if (QString::compare(m_serviceName, QStringLiteral("googledriveexport"), Qt::CaseInsensitive) == 0)
@@ -481,11 +485,10 @@ void GSWindow::slotListPhotosDoneForUpload(int errCode, const QString& errMsg, c
 
         // check for existing items
         QString localId;
-        KPMetadata meta;
-
-        if (meta.load((*it).toLocalFile()))
+        
+        if (m_meta && m_meta->load(*it))
         {
-            localId = meta.getXmpTagString("Xmp.kipi.picasawebGPhotoId");
+            localId = m_meta->getXmpTagString("Xmp.kipi.picasawebGPhotoId");
         }
 
         QList<GSPhoto>::const_iterator itPWP;
@@ -977,23 +980,21 @@ void GSWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
 
         if (errText.isEmpty())
         {
-            KPMetadata meta;
-
-            if (meta.load(tmpUrl.toLocalFile()))
+            if (m_meta && m_meta->load(tmpUrl))
             {
-                if (meta.supportXmp() && meta.canWriteXmp(tmpUrl.toLocalFile()))
+                if (m_meta->supportXmp() && m_meta->canWriteXmp(tmpUrl))
                 {
-                    meta.setXmpTagString("Xmp.kipi.picasawebGPhotoId", item.id, false);
-                    meta.setXmpKeywords(item.tags, false);
+                    m_meta->setXmpTagString("Xmp.kipi.picasawebGPhotoId", item.id);
+                    m_meta->setXmpKeywords(item.tags);
                 }
 
 
                 if (!item.gpsLat.isEmpty() && !item.gpsLon.isEmpty())
                 {
-                    meta.setGPSInfo(0.0, item.gpsLat.toDouble(), item.gpsLon.toDouble(), false);
+                    m_meta->setGPSInfo(0.0, item.gpsLat.toDouble(), item.gpsLon.toDouble());
                 }
 
-                meta.save(tmpUrl.toLocalFile());
+                m_meta->save(tmpUrl);
             }
 
             m_transferQueue.pop_front();
@@ -1168,14 +1169,19 @@ void GSWindow::slotAddPhotoDone(int err, const QString& msg, const QString& phot
     }
     else
     {
-        KPMetadata meta;
         QString fileName = m_transferQueue.first().first.path();
 
-        if (!photoId.isEmpty() && meta.supportXmp() && meta.canWriteXmp(fileName) && meta.load(fileName))
+        if (m_meta                                             && 
+            m_meta->supportXmp()                               && 
+            m_meta->canWriteXmp(QUrl::fromLocalFile(fileName)) &&
+            m_meta->load(QUrl::fromLocalFile(fileName))        && 
+            !photoId.isEmpty()
+           )
         {
-            meta.setXmpTagString("Xmp.kipi.picasawebGPhotoId", photoId, false);
-            meta.save(fileName);
+            m_meta->setXmpTagString("Xmp.kipi.picasawebGPhotoId", photoId);
+            m_meta->save(QUrl::fromLocalFile(fileName));
         }
+
         // Remove photo uploaded from the list
         m_widget->imagesList()->removeItemByUrl(m_transferQueue.first().first);
         m_transferQueue.pop_front();
@@ -1194,7 +1200,7 @@ void GSWindow::slotImageListChanged()
 
 void GSWindow::slotNewAlbumRequest()
 {
-    switch(name)
+    switch (name)
     {
         case PluginName::GDrive :
             if (m_albumDlg->exec() == QDialog::Accepted)

@@ -61,17 +61,13 @@
 
 // Libkipi includes
 
-#include <KIPI/Interface>
 #include <KIPI/PluginLoader>
 
 // Local includes
 
 #include "kpversion.h"
-#include "kpmetadata.h"
 #include "mpform_picasa.h"
 #include "kipiplugins_debug.h"
-
-using namespace KIPI;
 
 namespace KIPIGoogleServicesPlugin
 {
@@ -82,10 +78,21 @@ static bool picasaLessThan(GSFolder& p1, GSFolder& p2)
 }
 
 PicasawebTalker::PicasawebTalker(QWidget* const parent)
-    : Authorize(parent, QStringLiteral("https://picasaweb.google.com/data/"))
-    , m_job(0)
-    , m_state(FE_LOGOUT)
+    : Authorize(parent, QStringLiteral("https://picasaweb.google.com/data/")),
+      m_job(0),
+      m_state(FE_LOGOUT),
+      m_iface(0)
 {
+    PluginLoader* const pl = PluginLoader::instance();
+
+    if (pl)
+    {
+        m_iface = pl->interface();
+        
+        if (m_iface)
+            m_meta = m_iface->createMetadataProcessor();
+    }
+    
     connect(this, SIGNAL(signalError(QString)),
             this, SLOT(slotError(QString)));
 }
@@ -291,24 +298,18 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QS
     QString path = photoPath;
     QImage image;
 
-    PluginLoader* const pl = PluginLoader::instance();
-
-    if (pl)
+    if (m_iface)
     {
-        Interface* const iface = pl->interface();
-        
-        if (iface)
-        {
-            QPointer<RawProcessor> rawdec = iface->createRawProcessor();
+        QPointer<RawProcessor> rawdec = m_iface->createRawProcessor();
 
-            // check if its a RAW file.
-            if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(photoPath)))
-            {
-                rawdec->loadRawPreview(QUrl::fromLocalFile(photoPath), image);
-            }
+        // check if its a RAW file.
+        if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(photoPath)))
+        {
+            rawdec->loadRawPreview(QUrl::fromLocalFile(photoPath), image);
         }
-    } 
-    else
+    }
+    
+    if (image.isNull())
     {
         image.load(photoPath);
     }
@@ -331,20 +332,16 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QS
 
     image.save(path,"JPEG",imgQualityToApply);
 
-    KIPIPlugins::KPMetadata meta;
-
-    if(meta.load(photoPath))
+    if (m_meta && m_meta->load(QUrl::fromLocalFile(photoPath)))
     {
-        meta.setImageDimensions(image.size());
-        meta.setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
-        meta.save(path);
+        m_meta->setImageDimensions(image.size());
+        m_meta->setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
+        m_meta->save(QUrl::fromLocalFile(path));
     }
 
     //Create the Body in atom-xml
     QDomDocument docMeta;
-    QDomProcessingInstruction instr = docMeta.createProcessingInstruction(
-        QStringLiteral("xml"),
-        QStringLiteral("version='1.0' encoding='UTF-8'"));
+    QDomProcessingInstruction instr = docMeta.createProcessingInstruction(QStringLiteral("xml"), QStringLiteral("version='1.0' encoding='UTF-8'"));
     docMeta.appendChild(instr);
     QDomElement entryElem = docMeta.createElement(QStringLiteral("entry"));
     docMeta.appendChild(entryElem);
@@ -431,34 +428,27 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, con
         m_job = 0;
     }
 
-    MPForm_Picasa      form;
-    
+    MPForm_Picasa form;
     QString path = photoPath;
     QImage image;
 
-    PluginLoader* const pl = PluginLoader::instance();
-
-    if (pl)
+    if (m_iface)
     {
-        Interface* const iface = pl->interface();
-        
-        if (iface)
-        {
-            QPointer<RawProcessor> rawdec = iface->createRawProcessor();
+        QPointer<RawProcessor> rawdec = m_iface->createRawProcessor();
 
-            // check if its a RAW file.
-            if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(photoPath)))
-            {
-                rawdec->loadRawPreview(QUrl::fromLocalFile(photoPath), image);
-            }
+        // check if its a RAW file.
+        if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(photoPath)))
+        {
+            rawdec->loadRawPreview(QUrl::fromLocalFile(photoPath), image);
         }
-    } 
-    else
+    }
+
+    if (image.isNull())
     {
         image.load(photoPath);
     }
 
-    if(image.isNull())
+    if (image.isNull())
     {
         return false;
     }
@@ -467,9 +457,9 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, con
     
     int imgQualityToApply = 100;
 
-    if(rescale)
+    if (rescale)
     {
-        if(image.width() > maxDim || image.height() > maxDim)
+        if (image.width() > maxDim || image.height() > maxDim)
             image = image.scaled(maxDim,maxDim,Qt::KeepAspectRatio,Qt::SmoothTransformation);
         
         imgQualityToApply = imageQuality;
@@ -477,13 +467,11 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, con
 
     image.save(path,"JPEG",imgQualityToApply);
 
-    KIPIPlugins::KPMetadata meta;
-
-    if(meta.load(photoPath))
+    if (m_meta && m_meta->load(QUrl::fromLocalFile(photoPath)))
     {
-        meta.setImageDimensions(image.size());
-        meta.setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
-        meta.save(path);
+        m_meta->setImageDimensions(image.size());
+        m_meta->setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
+        m_meta->save(QUrl::fromLocalFile(path));
     }
 
     //Create the Body in atom-xml
@@ -550,7 +538,7 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, con
     form.finish();
 
     QString auth_string = QStringLiteral("Authorization: ") + m_bearer_access_token;
-    KIO::TransferJob* const job = KIO::put(info.editUrl, -1, KIO::HideProgressInfo);
+    KIO::TransferJob* const job      = KIO::put(info.editUrl, -1, KIO::HideProgressInfo);
     KIO::JobUiDelegate* const job_ui = static_cast<KIO::JobUiDelegate*>(job->ui());
     job_ui->setWindow(m_parent);
     job->addMetaData(QStringLiteral("content-type"), form.contentType());
@@ -706,26 +694,26 @@ void PicasawebTalker::slotResult(KJob *job)
         return;
     }
 
-    switch(m_state)
+    switch (m_state)
     {
-        case(FE_LOGOUT):
+        case (FE_LOGOUT):
             break;        
-        case(FE_CREATEALBUM):
+        case (FE_CREATEALBUM):
             parseResponseCreateAlbum(m_buffer);
             break;
-        case(FE_LISTALBUMS):
+        case (FE_LISTALBUMS):
             parseResponseListAlbums(m_buffer);
             break;
-        case(FE_LISTPHOTOS):
+        case (FE_LISTPHOTOS):
             parseResponseListPhotos(m_buffer);
             break;
-        case(FE_ADDPHOTO):
+        case (FE_ADDPHOTO):
             parseResponseAddPhoto(m_buffer);
             break;
-        case(FE_UPDATEPHOTO):
+        case (FE_UPDATEPHOTO):
             emit signalAddPhotoDone(1, QStringLiteral(""), QStringLiteral(""));
             break;
-        case(FE_GETPHOTO):
+        case (FE_GETPHOTO):
             // all we get is data of the image
             emit signalGetPhotoDone(1, QString(), m_buffer);
             break;
@@ -754,48 +742,48 @@ void PicasawebTalker::parseResponseListAlbums(const QByteArray& data)
 
     while (!node.isNull())
     {
-        if(node.isElement() && node.nodeName() == QStringLiteral("gphoto:nickname"))
+        if (node.isElement() && node.nodeName() == QStringLiteral("gphoto:nickname"))
         {
             m_loginName = node.toElement().text();
         }
         
-        if(node.isElement() && node.nodeName() == QStringLiteral("gphoto:user"))
+        if (node.isElement() && node.nodeName() == QStringLiteral("gphoto:user"))
         {
             m_username = node.toElement().text();
         }
 
-
         if (node.isElement() && node.nodeName() == QStringLiteral("entry"))
         {
-            e = node.toElement();
-            QDomNode details=e.firstChild();
-            GSFolder fps;
+            e                    = node.toElement();
+            QDomNode details     = e.firstChild();
             QDomNode detailsNode = details;
+            GSFolder fps;
 
-            while(!detailsNode.isNull())
+            while (!detailsNode.isNull())
             {
-                if(detailsNode.isElement())
+                if (detailsNode.isElement())
                 {
-                    //kDebug()<<"Node name is "<< detailsNode.nodeName()<<" and its value is "<<detailsNode.toElement().text();
-                    if(detailsNode.nodeName() == QStringLiteral("gphoto:id"))
+                    if (detailsNode.nodeName() == QStringLiteral("gphoto:id"))
                     {
                         fps.id = detailsNode.toElement().text();
                     }
 
-                    if(detailsNode.nodeName() == QStringLiteral("title"))
+                    if (detailsNode.nodeName() == QStringLiteral("title"))
                     {
                         fps.title = detailsNode.toElement().text();
                     }
 
-                    if(detailsNode.nodeName() == QStringLiteral("gphoto:access"))
+                    if (detailsNode.nodeName() == QStringLiteral("gphoto:access"))
                     {
                         fps.access = detailsNode.toElement().text();
                     }
                 }
                 detailsNode = detailsNode.nextSibling();
             }
+
             albumList.append(fps);
         }
+
         node = node.nextSibling();
     }
 
@@ -806,6 +794,7 @@ void PicasawebTalker::parseResponseListAlbums(const QByteArray& data)
 void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
 {
     QDomDocument doc(QStringLiteral("feed"));
+
     if ( !doc.setContent( data ) )
     {
         emit signalListPhotosDone(0, i18n("Failed to fetch photo-set list"), QList<GSPhoto>());
@@ -817,36 +806,36 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
 
     QList<GSPhoto> photoList;
 
-    while(!node.isNull())
+    while (!node.isNull())
     {
         if (node.isElement() && node.nodeName() == QStringLiteral("entry"))
         {
             QDomNode details     = node.firstChild();
-            GSPhoto fps;
             QDomNode detailsNode = details;
+            GSPhoto fps;
 
-            while(!detailsNode.isNull())
+            while (!detailsNode.isNull())
             {
-                if(detailsNode.isElement())
+                if (detailsNode.isElement())
                 {
                     QDomElement detailsElem = detailsNode.toElement();
 
-                    if(detailsNode.nodeName() == QStringLiteral("gphoto:id"))
+                    if (detailsNode.nodeName() == QStringLiteral("gphoto:id"))
                     {
                         fps.id = detailsElem.text();
                     }
 
-                    if(detailsNode.nodeName() == QStringLiteral("title"))
+                    if (detailsNode.nodeName() == QStringLiteral("title"))
                     {
                         //fps.title = detailsElem.text();
                     }
                     
-                    if(detailsNode.nodeName() == QStringLiteral("summary"))
+                    if (detailsNode.nodeName() == QStringLiteral("summary"))
                     {
                         fps.description = detailsElem.text();
                     }
 
-                    if(detailsNode.nodeName() == QStringLiteral("gphoto:access"))
+                    if (detailsNode.nodeName() == QStringLiteral("gphoto:access"))
                     {
                         fps.access = detailsElem.text();
                     }
@@ -857,7 +846,7 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
                         fps.editUrl = QUrl(detailsElem.attribute(QStringLiteral("href")));
                     }
 
-                    if(detailsNode.nodeName() == QStringLiteral("georss:where"))
+                    if (detailsNode.nodeName() == QStringLiteral("georss:where"))
                     {
                         QDomNode geoPointNode = detailsElem.namedItem(QStringLiteral("gml:Point"));
 
@@ -879,7 +868,7 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
                         }
                     }
 
-                    if(detailsNode.nodeName() == QStringLiteral("media:group"))
+                    if (detailsNode.nodeName() == QStringLiteral("media:group"))
                     {
                         QDomNode thumbNode = detailsElem.namedItem(QStringLiteral("media:thumbnail"));
 
@@ -896,10 +885,9 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
                             fps.tags = keywordNode.toElement().text().split(QLatin1Char(','));
                         }
 
-                        QDomNodeList contentsList = detailsElem.elementsByTagName(
-                            QStringLiteral("media:content"));
+                        QDomNodeList contentsList = detailsElem.elementsByTagName(QStringLiteral("media:content"));
 
-                        for(int i = 0; i < contentsList.size(); ++i)
+                        for (int i = 0; i < contentsList.size(); ++i)
                         {
                             QDomElement contentElem = contentsList.at(i).toElement();
 
@@ -958,7 +946,7 @@ void PicasawebTalker::parseResponseCreateAlbum(const QByteArray& data)
         success       = true;
         QDomNode node = docElem.firstChild(); //this should mean <entry>
 
-        while( !node.isNull() )
+        while ( !node.isNull() )
         {
             if ( node.isElement())
             {
@@ -971,7 +959,7 @@ void PicasawebTalker::parseResponseCreateAlbum(const QByteArray& data)
         }
     }
 
-    if(success == true)
+    if (success == true)
     {
         signalCreateAlbumDone(1, QStringLiteral(""), albumId);
     }
@@ -999,7 +987,7 @@ void PicasawebTalker::parseResponseAddPhoto(const QByteArray& data)
     {
         QDomNode node = docElem.firstChild(); //this should mean <entry>
 
-        while(!node.isNull())
+        while (!node.isNull())
         {
             if (node.isElement())
             {

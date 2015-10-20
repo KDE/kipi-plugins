@@ -31,15 +31,22 @@
 #include <QHash>
 #include <QObject>
 #include <QUrl>
+#include <QPointer>
 
 // KDE includes
 
 #include <kio/jobclasses.h>
 
-//local includes
+// Libkipi includes
+
+#include <KIPI/Interface>
+
+// Local includes
 
 #include "authorize.h"
 #include "gsitem.h"
+
+using namespace KIPI;
 
 namespace KIO
 {
@@ -124,6 +131,9 @@ private:
     KIO::Job*                   m_job;
 
     State                       m_state;
+    
+    Interface*                  m_iface;
+    QPointer<MetadataProcessor> m_meta;
 };
 
 } // namespace KIPIGoogleServicesPlugin
