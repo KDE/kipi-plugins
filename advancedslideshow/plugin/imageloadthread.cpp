@@ -43,9 +43,7 @@
 
 #include "kipiplugins_debug.h"
 #include "slideshowkb.h"
-#include "kpmetadata.h"
 
-using namespace KIPIPlugins;
 using namespace KIPI;
 
 namespace KIPIAdvancedSlideshowPlugin
