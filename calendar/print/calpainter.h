@@ -30,18 +30,15 @@
 #include <QImage>
 #include <QObject>
 #include <QPainter>
-
-// KDE includes
-
 #include <QUrl>
 
-// Local includes
+// Libkipi includes
 
-#include "kpmetadata.h"
+#include <KIPI/Interface>
 
 class QPaintDevice;
 
-using namespace KIPIPlugins;
+using namespace KIPI;
 
 namespace KIPICalendarPlugin
 {
@@ -55,7 +52,7 @@ public:
     explicit CalPainter(QPaintDevice* const pd);
     virtual ~CalPainter();
 
-    void setImage(const QUrl& imagePath, KPMetadata::ImageOrientation orientation);
+    void setImage(const QUrl& imagePath, int orientation);
     void paint(int month);
 
 Q_SIGNALS:
@@ -70,13 +67,15 @@ public Q_SLOTS:
 
 private:
 
-    bool                         cancelled_;
+    bool       cancelled_;
 
-    KPMetadata::ImageOrientation orientation_;
+    int        orientation_;
 
-    QImage                       image_;
+    QImage     image_;
 
-    QUrl                         imagePath_;
+    QUrl       imagePath_;
+    
+    Interface* iface_;
 };
 
 }  // NameSpace KIPICalendarPlugin

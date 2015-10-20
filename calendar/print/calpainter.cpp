@@ -28,7 +28,7 @@
 
 #include <QDate>
 #include <QFileInfo>
-#include <QMatrix>
+#include <QPointer>
 #include <QPaintDevice>
 #include <QRect>
 #include <QString>
@@ -41,7 +41,6 @@
 
 // Libkipi includes
 
-#include <KIPI/Interface>
 #include <KIPI/PluginLoader>
 
 // Local includes
@@ -49,16 +48,22 @@
 #include "calsettings.h"
 #include "kipiplugins_debug.h"
 
-using namespace KIPI;
-
 namespace KIPICalendarPlugin
 {
 
 CalPainter::CalPainter(QPaintDevice* const pd)
     : QPainter(pd)
 {
-    orientation_ = KPMetadata::ORIENTATION_UNSPECIFIED;
+    orientation_ = MetadataProcessor::UNSPECIFIED;
     cancelled_   = false;
+    iface_       = 0;
+    
+    PluginLoader* const pl = PluginLoader::instance();
+
+    if (pl)
+    {
+        iface_ = pl->interface();
+    }
 }
 
 CalPainter::~CalPainter()
@@ -70,7 +75,7 @@ void CalPainter::cancel()
     cancelled_ = true;
 }
 
-void CalPainter::setImage(const QUrl& imagePath, KPMetadata::ImageOrientation orientation)
+void CalPainter::setImage(const QUrl& imagePath, int orientation)
 {
     imagePath_   = imagePath;
     orientation_ = orientation;
@@ -314,24 +319,18 @@ void CalPainter::paint(int month)
         }
     }
 
-    PluginLoader* const pl = PluginLoader::instance();
-
-    if (pl)
+    if (iface_)
     {
-        Interface* const iface = pl->interface();
-        
-        if (iface)
-        {
-            QPointer<RawProcessor> rawdec = iface->createRawProcessor();
+        QPointer<RawProcessor> rawdec = iface_->createRawProcessor();
 
-            // check if its a RAW file.
-            if (rawdec && rawdec->isRawFile(imagePath_))
-            {
-                rawdec->loadRawPreview(imagePath_, image_);
-            }
+        // check if its a RAW file.
+        if (rawdec && rawdec->isRawFile(imagePath_))
+        {
+            rawdec->loadRawPreview(imagePath_, image_);
         }
     }
-    else
+    
+    if (image_.isNull())
     {
         image_.load(imagePath_.path());
     }
@@ -342,10 +341,15 @@ void CalPainter::paint(int month)
     }
     else
     {
-        if ( orientation_ != KPMetadata::ORIENTATION_UNSPECIFIED )
+        if ( orientation_ != MetadataProcessor::UNSPECIFIED )
         {
-            QMatrix matrix = RotationMatrix::toMatrix(orientation_);
-            image_         = image_.transformed( matrix );
+            if (iface_)
+            {    
+                QPointer<MetadataProcessor> meta = iface_->createMetadataProcessor();
+        
+                if (meta)
+                    meta->rotateExifQImage(image_, orientation_);
+            }
         }
 
         emit signalProgress(0);
@@ -359,7 +363,7 @@ void CalPainter::paint(int month)
         int y = (rImage.height() - h) / 2;
 
         int blockSize = 10;
-        int block = 0;
+        int block     = 0;
 
         while (block < h && !cancelled_)
         {

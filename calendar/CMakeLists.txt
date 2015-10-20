@@ -32,11 +32,8 @@ include_directories(${KDEPIMLIBS_INCLUDE_DIR}
 target_link_libraries(kipiplugin_calendar
                       KF5::Parts
                       KF5::Kipi
-                      KF5::KExiv2
-                      KF5kipiplugins
-
                       KF5::CalendarCore 
-                      
+                      KF5kipiplugins
                      )
 
 configure_file(plugin/kipiplugin_calendar.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_calendar.desktop)

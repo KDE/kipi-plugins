@@ -42,7 +42,8 @@ namespace KIPICalendarPlugin
 {
 
 CalWidget::CalWidget(QWidget* const parent)
-    : QWidget(parent, 0), _current(1)
+    : QWidget(parent, 0),
+      _current(1)
 {
     setAttribute(Qt::WA_NoBackground);
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -54,14 +55,13 @@ CalWidget::~CalWidget()
 
 void CalWidget::paintEvent(QPaintEvent* e)
 {
-    int month = _current;
+    int month       = _current;
     CalPainter painter(this);
 
-    QUrl imgUrl = CalSettings::instance()->image(month);
+    QUrl imgUrl     = CalSettings::instance()->image(month);
     KPImageInfo info(imgUrl);
-    KPMetadata::ImageOrientation orientation = (KPMetadata::ImageOrientation)info.orientation();
+    int orientation = info.orientation();
     painter.setImage(imgUrl, orientation);
-
     painter.paint(month);
 
     Q_UNUSED(e);

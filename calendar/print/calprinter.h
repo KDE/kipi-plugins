@@ -27,9 +27,6 @@
 
 #include <QMap>
 #include <QThread>
-
-// KDE includes
-
 #include <QUrl>
 
 class QPrinter;

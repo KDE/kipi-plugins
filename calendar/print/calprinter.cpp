@@ -80,7 +80,7 @@ void CalPrinter::run()
         ++currPage;
 
         KPImageInfo info(months_.value(month));
-        KPMetadata::ImageOrientation orientation = (KPMetadata::ImageOrientation)info.orientation();
+        int orientation = info.orientation();
 
         painter_->setImage(months_.value(month), orientation);
         painter_->paint(month);

@@ -157,6 +157,10 @@ bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
 
     if ( info.orientation() != MetadataProcessor::UNSPECIFIED )
     {
+        QPointer<MetadataProcessor> meta = d->iface->createMetadataProcessor();
+        
+        if (meta)
+            meta->rotateExifQImage(d->qimage, info.orientation());
     }
 
     if (d->qimage.isNull())
