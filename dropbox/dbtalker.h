@@ -36,9 +36,15 @@
 
 #include <kio/job.h>
 
+// Libkipi includes
+
+#include <KIPI/Interface>
+
 // Local includes
 
 #include "dbitem.h"
+
+using namespace KIPI;
 
 namespace KIPIDropboxPlugin
 {
@@ -111,10 +117,10 @@ private:
 
 private:
 
-    QDialog*                        dialog;
-    bool                            auth;
-    long                            timestamp;
-    QString                         nonce;
+    QDialog*                        m_dialog;
+    bool                            m_auth;
+    long                            m_timestamp;
+    QString                         m_nonce;
     QString                         m_oauth_consumer_key;
     QString                         m_oauth_signature;
     QString                         m_oauth_signature_method;
@@ -130,7 +136,10 @@ private:
 
     KIO::Job*                       m_job;
     QByteArray                      m_buffer;
-    QQueue<QString>                 queue;
+    QQueue<QString>                 m_queue;
+
+    Interface*                      m_iface;
+    MetadataProcessor*              m_meta;
 };
 
 } // namespace KIPIDropboxPlugin
