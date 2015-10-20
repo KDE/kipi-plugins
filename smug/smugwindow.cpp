@@ -28,6 +28,7 @@
 // Qt includes
 
 #include <QFileInfo>
+#include <QPointer>
 #include <QSpinBox>
 #include <QCheckBox>
 #include <QGroupBox>
@@ -715,24 +716,18 @@ bool SmugWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
     {
         qCDebug(KIPIPLUGINS_LOG) << "Get RAW preview " << imgPath;
         
-        PluginLoader* const pl = PluginLoader::instance();
-
-        if (pl)
+        if (iface())
         {
-            Interface* const iface = pl->interface();
-            
-            if (iface)
-            {
-                QPointer<RawProcessor> rawdec = iface->createRawProcessor();
+            QPointer<RawProcessor> rawdec = iface()->createRawProcessor();
 
-                if (rawdec)
-                {
-                    rawdec->loadRawPreview(QUrl::fromLocalFile(imgPath), image);
-                }
+            if (rawdec)
+            {
+                rawdec->loadRawPreview(QUrl::fromLocalFile(imgPath), image);
             }
-        } 
+        }
     }
-    else
+
+    if (image.isNull())
     {
        image.load(imgPath);
     }
@@ -760,13 +755,16 @@ bool SmugWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
     image.save(m_tmpPath, "JPEG", m_widget->m_imageQualitySpB->value());
 
     // copy meta-data to temporary image
-    KPMetadata meta;
-
-    if (meta.load(imgPath))
+    if (iface())
     {
-        meta.setImageDimensions(image.size());
-        meta.setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
-        meta.save(m_tmpPath);
+        QPointer<MetadataProcessor> meta = iface()->createMetadataProcessor();
+
+        if (meta && meta->load(QUrl::fromLocalFile(imgPath)))
+        {
+            meta->setImageDimensions(image.size());
+            meta->setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
+            meta->save(QUrl::fromLocalFile(m_tmpPath));
+        }
     }
 
     return true;
