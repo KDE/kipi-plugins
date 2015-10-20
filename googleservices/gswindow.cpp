@@ -488,7 +488,7 @@ void GSWindow::slotListPhotosDoneForUpload(int errCode, const QString& errMsg, c
         
         if (m_meta && m_meta->load(*it))
         {
-            localId = m_meta->getXmpTagString("Xmp.kipi.picasawebGPhotoId");
+            localId = m_meta->getXmpTagString(QLatin1String("Xmp.kipi.picasawebGPhotoId"));
         }
 
         QList<GSPhoto>::const_iterator itPWP;
@@ -984,7 +984,7 @@ void GSWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
             {
                 if (m_meta->supportXmp() && m_meta->canWriteXmp(tmpUrl))
                 {
-                    m_meta->setXmpTagString("Xmp.kipi.picasawebGPhotoId", item.id);
+                    m_meta->setXmpTagString(QLatin1String("Xmp.kipi.picasawebGPhotoId"), item.id);
                     m_meta->setXmpKeywords(item.tags);
                 }
 
@@ -1178,7 +1178,7 @@ void GSWindow::slotAddPhotoDone(int err, const QString& msg, const QString& phot
             !photoId.isEmpty()
            )
         {
-            m_meta->setXmpTagString("Xmp.kipi.picasawebGPhotoId", photoId);
+            m_meta->setXmpTagString(QLatin1String("Xmp.kipi.picasawebGPhotoId"), photoId);
             m_meta->save(QUrl::fromLocalFile(fileName));
         }
 

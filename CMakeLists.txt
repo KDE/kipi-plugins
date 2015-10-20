@@ -244,7 +244,10 @@ if(KF5Kipi_FOUND)
             add_definitions(-D_AFX_SECURE_NO_WARNINGS)
         endif()
 
-        add_definitions(-DQT_USE_QSTRINGBUILDER -DQT_USE_FAST_OPERATOR_PLUS)
+        # TODO: remove later
+        add_definitions(-DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII)
+        add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
+        remove_definitions(-DQT_DEPRECATED_SINCE(5,0))
 
         if(NOT WIN32)
             configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/kipi-plugins.lsm.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipi-plugins.lsm)

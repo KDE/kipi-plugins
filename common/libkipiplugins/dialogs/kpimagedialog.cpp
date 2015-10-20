@@ -165,54 +165,54 @@ void KPImageDialogPreview::showPreview(const QUrl& url)
             d->meta->load(d->currentUrl) &&
             (d->meta->hasExif() || d->meta->hasXmp()))
         {
-            make = d->meta->getExifTagString("Exif.Image.Make");
+            make = d->meta->getExifTagString(QLatin1String("Exif.Image.Make"));
             if (make.isEmpty())
-                make = d->meta->getXmpTagString("Xmp.tiff.Make");
+                make = d->meta->getXmpTagString(QLatin1String("Xmp.tiff.Make"));
 
-            model = d->meta->getExifTagString("Exif.Image.Model");
+            model = d->meta->getExifTagString(QLatin1String("Exif.Image.Model"));
             if (model.isEmpty())
-                model = d->meta->getXmpTagString("Xmp.tiff.Model");
+                model = d->meta->getXmpTagString(QLatin1String("Xmp.tiff.Model"));
 
             if (d->meta->getImageDateTime().isValid())
                 dateTime = QLocale().toString(d->meta->getImageDateTime(), QLocale::ShortFormat);
 
-            aperture = d->meta->getExifTagString("Exif.Photo.FNumber");
+            aperture = d->meta->getExifTagString(QLatin1String("Exif.Photo.FNumber"));
             if (aperture.isEmpty())
             {
-                aperture = d->meta->getExifTagString("Exif.Photo.ApertureValue");
+                aperture = d->meta->getExifTagString(QLatin1String("Exif.Photo.ApertureValue"));
                 if (aperture.isEmpty())
                 {
-                    aperture = d->meta->getXmpTagString("Xmp.exif.FNumber");
+                    aperture = d->meta->getXmpTagString(QLatin1String("Xmp.exif.FNumber"));
                     if (aperture.isEmpty())
-                        aperture = d->meta->getXmpTagString("Xmp.exif.ApertureValue");
+                        aperture = d->meta->getXmpTagString(QLatin1String("Xmp.exif.ApertureValue"));
                 }
             }
 
-            focalLength = d->meta->getExifTagString("Exif.Photo.FocalLength");
+            focalLength = d->meta->getExifTagString(QLatin1String("Exif.Photo.FocalLength"));
             if (focalLength.isEmpty())
-                focalLength = d->meta->getXmpTagString("Xmp.exif.FocalLength");
+                focalLength = d->meta->getXmpTagString(QLatin1String("Xmp.exif.FocalLength"));
 
-            exposureTime = d->meta->getExifTagString("Exif.Photo.ExposureTime");
+            exposureTime = d->meta->getExifTagString(QLatin1String("Exif.Photo.ExposureTime"));
             if (exposureTime.isEmpty())
             {
-                exposureTime = d->meta->getExifTagString("Exif.Photo.ShutterSpeedValue");
+                exposureTime = d->meta->getExifTagString(QLatin1String("Exif.Photo.ShutterSpeedValue"));
                 if (exposureTime.isEmpty())
                 {
-                    exposureTime = d->meta->getXmpTagString("Xmp.exif.ExposureTime");
+                    exposureTime = d->meta->getXmpTagString(QLatin1String("Xmp.exif.ExposureTime"));
                     if (exposureTime.isEmpty())
-                        exposureTime = d->meta->getXmpTagString("Xmp.exif.ShutterSpeedValue");
+                        exposureTime = d->meta->getXmpTagString(QLatin1String("Xmp.exif.ShutterSpeedValue"));
                 }
             }
 
-            sensitivity = d->meta->getExifTagString("Exif.Photo.ISOSpeedRatings");
+            sensitivity = d->meta->getExifTagString(QLatin1String("Exif.Photo.ISOSpeedRatings"));
             if (sensitivity.isEmpty())
             {
-                sensitivity = d->meta->getExifTagString("Exif.Photo.ExposureIndex");
+                sensitivity = d->meta->getExifTagString(QLatin1String("Exif.Photo.ExposureIndex"));
                 if (sensitivity.isEmpty())
                 {
-                    sensitivity = d->meta->getXmpTagString("Xmp.exif.ISOSpeedRatings");
+                    sensitivity = d->meta->getXmpTagString(QLatin1String("Xmp.exif.ISOSpeedRatings"));
                     if (sensitivity.isEmpty())
-                        sensitivity = d->meta->getXmpTagString("Xmp.exif.ExposureIndex");
+                        sensitivity = d->meta->getXmpTagString(QLatin1String("Xmp.exif.ExposureIndex"));
                 }
             }
         }

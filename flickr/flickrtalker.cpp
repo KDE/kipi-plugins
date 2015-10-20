@@ -754,7 +754,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
 
                 // NOTE: see bug #153207: Flickr use IPTC keywords to create Tags in web interface
                 //       As IPTC do not support UTF-8, we need to remove it.
-                meta->removeIptcTag("Iptc.Application2.Keywords");
+                meta->removeIptcTag(QLatin1String("Iptc.Application2.Keywords"));
 
                 meta->setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
                 meta->save(QUrl::fromLocalFile(path));
