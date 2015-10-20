@@ -36,7 +36,6 @@
 // Local includes
 
 #include "kipiplugins_debug.h"
-#include "kpmetadata.h"
 #include "kpimageinfo.h"
 #include "kpaboutdata.h"
 #include "kpversion.h"

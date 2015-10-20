@@ -30,12 +30,6 @@
 
 #include <klocalizedstring.h>
 
-// Local includes
-
-#include "kpmetadata.h"
-
-using namespace KIPIPlugins;
-
 namespace KIPIPanoramaPlugin
 {
 
