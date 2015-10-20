@@ -42,7 +42,6 @@
 #include <QStringList>
 #include <QProgressDialog>
 #include <QUrlQuery>
-#include <QDebug>
 #include <QStandardPaths>
 #include <QtWidgets/QApplication>
 #include <QDesktopServices>
