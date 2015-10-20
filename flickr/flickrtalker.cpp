@@ -55,19 +55,16 @@
 
 // Libkipi includes
 
-#include <KIPI/Interface>
 #include <KIPI/PluginLoader>
 
 // Local includes
 
 #include "kpversion.h"
-#include "kpmetadata.h"
 #include "mpform.h"
 #include "flickritem.h"
 #include "flickrwindow.h"
 #include "kipiplugins_debug.h"
 
-using namespace KIPI;
 using namespace KIPIPlugins;
 
 namespace KIPIFlickrPlugin
@@ -80,9 +77,16 @@ FlickrTalker::FlickrTalker(QWidget* const parent, const QString& serviceName)
     m_photoSetsList   = 0;
     m_authProgressDlg = 0;
     m_state           = FE_LOGOUT;
+    m_serviceName     = serviceName;
+    m_iface           = 0;
 
-    m_serviceName = serviceName;
+    PluginLoader* const pl = PluginLoader::instance();
 
+    if (pl)
+    {
+        m_iface = pl->interface();
+    }
+        
     if (serviceName == QStringLiteral("23"))
     {
         m_apiUrl    = QStringLiteral("http://www.23hq.com/services/rest/");
@@ -711,24 +715,16 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
 
     // Check if RAW file.
 
-    PluginLoader* const pl = PluginLoader::instance();
-
-    if (pl)
+    if (m_iface)
     {
-        Interface* const iface = pl->interface();
-        
-        if (iface)
-        {
-            RawProcessor* const rawdec = iface->createRawProcessor();
+        QPointer<RawProcessor> rawdec = m_iface->createRawProcessor();
 
-            // check if its a RAW file.
-            if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(photoPath)))
-            {
-                rawdec->loadRawPreview(QUrl::fromLocalFile(photoPath), image);
-                delete rawdec;
-            }
+        // check if its a RAW file.
+        if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(photoPath)))
+        {
+            rawdec->loadRawPreview(QUrl::fromLocalFile(photoPath), image);
         }
-    } 
+    }
     
     if (image.isNull())
     {
@@ -749,22 +745,25 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
 
         // Restore all metadata.
 
-        KPMetadata meta;
-
-        if (meta.load(photoPath))
+        if (m_iface)
         {
-            meta.setImageDimensions(image.size());
+            QPointer<MetadataProcessor> meta = m_iface->createMetadataProcessor();
 
-            // NOTE: see bug #153207: Flickr use IPTC keywords to create Tags in web interface
-            //       As IPTC do not support UTF-8, we need to remove it.
-            meta.removeIptcTag("Iptc.Application2.Keywords", false);
+            if (meta && meta->load(QUrl::fromLocalFile(photoPath)))
+            {
+                meta->setImageDimensions(image.size());
 
-            meta.setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
-            meta.save(path);
-        }
-        else
-        {
-            qWarning() << "(flickrExport::Image doesn't have metadata)";
+                // NOTE: see bug #153207: Flickr use IPTC keywords to create Tags in web interface
+                //       As IPTC do not support UTF-8, we need to remove it.
+                meta->removeIptcTag("Iptc.Application2.Keywords");
+
+                meta->setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
+                meta->save(QUrl::fromLocalFile(path));
+            }
+            else
+            {
+                qWarning() << "(flickrExport::Image doesn't have metadata)";
+            }
         }
 
         qCDebug(KIPIPLUGINS_LOG) << "Resizing and saving to temp file: " << path;

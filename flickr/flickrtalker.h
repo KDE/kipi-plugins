@@ -38,11 +38,17 @@
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
 
+// Libkipi includes
+
+#include <KIPI/Interface>
+
 // Local includes
 
 #include "flickritem.h"
 
 class QProgressDialog;
+
+using namespace KIPI;
 
 namespace KIPIFlickrPlugin
 {
@@ -150,7 +156,7 @@ private Q_SLOTS:
 private:
 
     QWidget*   m_parent;
-    //  QString    m_cookie;
+//  QString    m_cookie;
     QByteArray m_buffer;
 
     QString    m_serviceName;
@@ -168,6 +174,8 @@ private:
     KIO::Job*  m_job;
 
     State      m_state;
+    
+    Interface* m_iface;
 };
 
 } // namespace KIPIFlickrPlugin
