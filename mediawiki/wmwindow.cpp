@@ -27,6 +27,7 @@
 
 // Qt includes
 
+#include <QPointer>
 #include <QLayout>
 #include <QCloseEvent>
 #include <QFileInfo>
@@ -58,7 +59,6 @@
 
 #include "kipiplugins_debug.h"
 #include "kpaboutdata.h"
-#include "kpmetadata.h"
 #include "kpimageinfo.h"
 #include "kpimageslist.h"
 #include "kpprogresswidget.h"
@@ -230,16 +230,31 @@ void WMWindow::slotProgressCanceled()
 
 bool WMWindow::prepareImageForUpload(const QString& imgPath)
 {
+    // Get temporary file name
 
-    // get temporary file name
     d->tmpPath = d->tmpDir + QFileInfo(imgPath).baseName().trimmed() + QLatin1String(".jpg");
 
     QImage image;
-    // rescale image if requested: metadata is lost
+
+    // Rescale image if requested: metadata is lost
 
     if (d->widget->resize())
     {
-        image.load(imgPath);
+        if (iface())
+        {
+            QPointer<RawProcessor> rawdec = iface()->createRawProcessor();
+
+            // check if its a RAW file.
+            if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(imgPath)))
+            {
+                rawdec->loadRawPreview(QUrl::fromLocalFile(imgPath), image);
+            }
+        }
+        
+        if (image.isNull())
+        {
+            image.load(imgPath);
+        }
 
         if (image.isNull())
         {
@@ -263,37 +278,37 @@ bool WMWindow::prepareImageForUpload(const QString& imgPath)
         QFile::copy(imgPath, d->tmpPath);
     }
 
-    KPMetadata meta;
+    if (iface())
+    {            
+        // NOTE : In case of metadata are saved to tmp file, we will override MetadataProcessor settings from KIPI host
+        // to write metadata to image file rather than sidecar file, to be effective with remote web service.
 
-    // In case of metadata are saved to tmp file, we will override KPMetadata settings
-    // to write metadata to image file rather than sidecar file, to be effective with remote web service.
+        QPointer<MetadataProcessor> meta = iface()->createMetadataProcessor();
 
-    meta.setMetadataWritingMode((KPMetadata::MetadataWritingMode)
-                                KPMetadata::WRITETOIMAGEONLY);
-
-    if (d->widget->removeMeta())
-    {
-        // save empty metadata to erase them
-        meta.save(d->tmpPath);
-    }
-    else
-    {
-        // copy meta data from initial to temporary image
-        meta.load(imgPath);
-
-        if (d->widget->resize())
+        if (d->widget->removeMeta())
         {
-            meta.setImageDimensions(image.size());
+            // save empty metadata to erase them
+            meta->save(QUrl::fromLocalFile(d->tmpPath), true);
         }
-
-        if (d->widget->removeGeo())
+        else
         {
-            meta.removeGPSInfo();
+            // copy meta data from initial to temporary image
+            meta->load(QUrl::fromLocalFile(imgPath));
+
+            if (d->widget->resize())
+            {
+                meta->setImageDimensions(image.size());
+            }
+
+            if (d->widget->removeGeo())
+            {
+                meta->removeGPSInfo();
+            }
+
+            meta->save(QUrl::fromLocalFile(d->tmpPath), true);
         }
-
-        meta.save(d->tmpPath);
     }
-
+   
     return true;
 }
 

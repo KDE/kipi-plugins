@@ -25,7 +25,6 @@ target_link_libraries(kipiplugin_wikimedia
 
                       ${LIBMEDIAWIKI_LIBRARIES}
                       KF5::Kipi
-                      KF5::KExiv2
                       KF5::KIOCore
                       KF5::WindowSystem
                      )
