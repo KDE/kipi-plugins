@@ -577,7 +577,8 @@ bool FbWindow::prepareImageForUpload(const QString& imgPath, bool isRAW, QString
             }
         }
     }
-    else
+    
+    if (image.isNull())
     {
         image.load(imgPath);
     }

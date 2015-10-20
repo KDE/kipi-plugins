@@ -729,7 +729,8 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
             }
         }
     } 
-    else
+    
+    if (image.isNull())
     {
         image.load(photoPath);
     }
@@ -773,7 +774,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
 
     qCDebug(KIPIPLUGINS_LOG) << "QUrl path is " << QUrl::fromLocalFile(path) << "Image size after resizing (in bytes) is "<< tempFileInfo.size();
 
-    if(tempFileInfo.size() > (getMaxAllowedFileSize().toLongLong()))
+    if (tempFileInfo.size() > (getMaxAllowedFileSize().toLongLong()))
     {
         emit signalAddPhotoFailed(i18n("File Size exceeds maximum allowed file size."));
         return false;
