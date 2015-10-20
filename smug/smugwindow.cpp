@@ -54,7 +54,6 @@
 
 #include "kipiplugins_debug.h"
 #include "kpimageslist.h"
-#include "kpmetadata.h"
 #include "kpaboutdata.h"
 #include "kpimageinfo.h"
 #include "kpversion.h"
