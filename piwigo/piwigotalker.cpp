@@ -44,7 +44,6 @@
 
 // Libkipi includes
 
-#include <KIPI/Interface>
 #include <KIPI/PluginLoader>
 
 // Local includes
@@ -52,11 +51,9 @@
 #include "kipiplugins_debug.h"
 #include "piwigoitem.h"
 #include "kpversion.h"
-#include "kpmetadata.h"
 #include "kpimageinfo.h"
 #include "kputil.h"
 
-using namespace KIPI;
 using namespace KIPIPlugins;
 
 namespace KIPIPiwigoExportPlugin
@@ -73,8 +70,15 @@ PiwigoTalker::PiwigoTalker(QWidget* const parent)
       m_nbOfChunks(0),
       m_version(-1),
       m_albumId(0),
-      m_photoId(0)
+      m_photoId(0),
+      m_iface(0)
 {
+    PluginLoader* const pl = PluginLoader::instance();
+
+    if (pl)
+    {
+        m_iface = pl->interface();
+    }
 }
 
 PiwigoTalker::~PiwigoTalker()
@@ -181,10 +185,8 @@ bool PiwigoTalker::addPhoto(int   albumId,
                             int   maxHeight,
                             int   quality)
 {
-    QUrl mediaUrl = QUrl(mediaPath);
-
-    m_job     = 0;
-    m_state   = GE_CHECKPHOTOEXIST;
+    m_job         = 0;
+    m_state       = GE_CHECKPHOTOEXIST;
     m_talker_buffer.resize(0);
 
     m_path    = mediaPath; // By default, m_path contains the original file
@@ -195,8 +197,8 @@ bool PiwigoTalker::addPhoto(int   albumId,
 
     qCDebug(KIPIPLUGINS_LOG) << mediaPath << " " << m_md5sum.toHex();
 
-    if (mediaPath.endsWith(QStringLiteral(".mp4")) || mediaPath.endsWith(QStringLiteral(".MP4")) ||
-        mediaPath.endsWith(QStringLiteral(".ogg")) || mediaPath.endsWith(QStringLiteral(".OGG")) ||
+    if (mediaPath.endsWith(QStringLiteral(".mp4"))  || mediaPath.endsWith(QStringLiteral(".MP4")) ||
+        mediaPath.endsWith(QStringLiteral(".ogg"))  || mediaPath.endsWith(QStringLiteral(".OGG")) ||
         mediaPath.endsWith(QStringLiteral(".webm")) || mediaPath.endsWith(QStringLiteral(".WEBM")))
     {
         // Video management
@@ -207,24 +209,18 @@ bool PiwigoTalker::addPhoto(int   albumId,
         // Image management
         QImage image;
 
-        PluginLoader* const pl = PluginLoader::instance();
-
-        if (pl)
+        if (m_iface)
         {
-            Interface* const iface = pl->interface();
-            
-            if (iface)
-            {
-                QPointer<RawProcessor> rawdec = iface->createRawProcessor();
+            QPointer<RawProcessor> rawdec = m_iface->createRawProcessor();
 
-                // check if its a RAW file.
-                if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(mediaPath)))
-                {
-                    rawdec->loadRawPreview(QUrl::fromLocalFile(mediaPath), image);
-                }
+            // check if its a RAW file.
+            if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(mediaPath)))
+            {
+                rawdec->loadRawPreview(QUrl::fromLocalFile(mediaPath), image);
             }
-        } 
-        else
+        }
+
+        if (image.isNull())
         {
             image.load(mediaPath);
         }
@@ -247,24 +243,27 @@ bool PiwigoTalker::addPhoto(int   albumId,
                 image = image.scaled(maxWidth, maxHeight, Qt::KeepAspectRatio, Qt::SmoothTransformation);
             }
 
-            m_path = m_tmpPath = makeTemporaryDir("kipi-piwigo").filePath(QUrl(mediaPath).fileName());
+            m_path = m_tmpPath = makeTemporaryDir("kipi-piwigo").filePath(QUrl::fromLocalFile(mediaPath).fileName());
             image.save(m_path, "JPEG", quality);
 
             qCDebug(KIPIPLUGINS_LOG) << "Upload a resized version: " << m_path ;
 
             // Restore all metadata with EXIF
             // in the resized version
-            KPMetadata meta;
-
-            if (meta.load(mediaPath))
+            if (m_iface)
             {
-                meta.setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
-                meta.setImageDimensions(image.size());
-                meta.save(m_path);
-            }
-            else
-            {
-                qCDebug(KIPIPLUGINS_LOG) << "Image " << mediaPath << " has no exif data";
+                QPointer<MetadataProcessor> meta = m_iface->createMetadataProcessor();
+            
+                if (meta && meta->load(QUrl::fromLocalFile(mediaPath)))
+                {
+                    meta->setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
+                    meta->setImageDimensions(image.size());
+                    meta->save(QUrl::fromLocalFile(m_path));
+                }
+                else
+                {
+                    qCDebug(KIPIPLUGINS_LOG) << "Image " << mediaPath << " has no exif data";
+                }
             }
         }
     }
@@ -278,8 +277,8 @@ bool PiwigoTalker::addPhoto(int   albumId,
     m_author  = QStringLiteral("");
     m_date    = fi.created();
 
-    // Look in the Digikam database
-    KPImageInfo info(mediaUrl);
+    // Look in the Kipi host database
+    KPImageInfo info(QUrl::fromLocalFile(mediaPath));
 
     if (info.hasTitle() && !info.title().isEmpty())
         m_title = info.title();

@@ -40,6 +40,12 @@
 
 #include <kio/job.h>
 
+// Libkipi includes
+
+#include <KIPI/Interface>
+
+using namespace KIPI;
+
 template <class T> class QList;
 
 namespace KIPIPiwigoExportPlugin
@@ -155,6 +161,7 @@ private:
     QString           m_title;      // Synchronized with Piwigo name
     QString           m_author;     // Synchronized with Piwigo author
     QDateTime         m_date;       // Synchronized with Piwigo date
+    Interface*        m_iface;
 
     static QString    s_authToken;
 };
