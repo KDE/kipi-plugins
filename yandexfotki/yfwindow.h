@@ -49,6 +49,7 @@ class QComboBox;
 namespace KIPI
 {
     class UploadWidget;
+    class MetadataProcessor;
 }
 
 namespace KIPIPlugins
@@ -121,51 +122,46 @@ protected:
 
 protected:
 
-    /*
-     * Plugin
-     */
+    // Plugin
+    bool                        m_import;
+    YandexFotkiWidget*          m_widget; 
 
-    bool                     m_import;
-
-    YandexFotkiWidget*       m_widget; 
-    /*
-     * User interface
-     */
-    QLabel*                  m_loginLabel;
-    QLabel*                  m_headerLabel;
-    QPushButton*             m_changeUserButton;
+    // User interface
+    QLabel*                     m_loginLabel;
+    QLabel*                     m_headerLabel;
+    QPushButton*                m_changeUserButton;
 
     // albums
-    QGroupBox*               m_albumsBox;
-    QPushButton*             m_newAlbumButton;
-    QPushButton*             m_reloadAlbumsButton;
-    QComboBox*               m_albumsCombo;
+    QGroupBox*                  m_albumsBox;
+    QPushButton*                m_newAlbumButton;
+    QPushButton*                m_reloadAlbumsButton;
+    QComboBox*                  m_albumsCombo;
 
     // upload settings
-    QComboBox*               m_accessCombo;
-    QCheckBox*               m_hideOriginalCheck;
-    QCheckBox*               m_disableCommentsCheck;
-    QCheckBox*               m_adultCheck;
-    QCheckBox*               m_resizeCheck;
-    QSpinBox*                m_dimensionSpin;
-    QSpinBox*                m_imageQualitySpin;
-    QButtonGroup*            m_policyGroup;
+    QComboBox*                  m_accessCombo;
+    QCheckBox*                  m_hideOriginalCheck;
+    QCheckBox*                  m_disableCommentsCheck;
+    QCheckBox*                  m_adultCheck;
+    QCheckBox*                  m_resizeCheck;
+    QSpinBox*                   m_dimensionSpin;
+    QSpinBox*                   m_imageQualitySpin;
+    QButtonGroup*               m_policyGroup;
 
-    KPImagesList*            m_imgList;
-//     UploadWidget*            m_uploadWidget;
+    KPImagesList*               m_imgList;
+//  UploadWidget*               m_uploadWidget;
 
-    QProgressBar*            m_progressBar;
+    QProgressBar*               m_progressBar;
 
-    /*
-     * Backend
-     */
-    QString                  m_tmpDir;
-    YandexFotkiTalker        m_talker;
+    // Backend
+    QString                     m_tmpDir;
+    YandexFotkiTalker           m_talker;
 
-    QStack<YandexFotkiPhoto> m_transferQueue;
+    QStack<YandexFotkiPhoto>    m_transferQueue;
+    
+    QPointer<MetadataProcessor> m_meta;
 
     // XMP id const for images
-    static const char*       XMP_SERVICE_ID;
+    static const char*          XMP_SERVICE_ID;
 };
 
 } // namespace KIPIYandexFotkiPlugin

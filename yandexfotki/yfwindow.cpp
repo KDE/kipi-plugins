@@ -76,7 +76,6 @@ extern "C"
 #include "kpaboutdata.h"
 #include "kpimageinfo.h"
 #include "kpversion.h"
-#include "kpmetadata.h"
 #include "kpimageslist.h"
 #include "yftalker.h"
 #include "yfalbumdialog.h"
@@ -99,29 +98,33 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
     : KPToolDialog(parent)
 {
     m_import = import;
-
     m_tmpDir = makeTemporaryDir("kipi-yandexfotki").absolutePath() + QStringLiteral("/");
+    m_widget = new YandexFotkiWidget(this, iface(), QStringLiteral("Yandex.Fotki"));
     
-    m_widget =  new YandexFotkiWidget(this, iface(), QStringLiteral("Yandex.Fotki"));
-    
-    m_loginLabel = m_widget->getUserNameLabel();
-    m_headerLabel = m_widget->getHeaderLbl();
-    m_changeUserButton = m_widget->getChangeUserBtn();
-    m_newAlbumButton = m_widget->getNewAlbmBtn();
-    m_reloadAlbumsButton = m_widget->getReloadBtn();
-    m_albumsCombo = m_widget->getAlbumsCoB();
-    m_resizeCheck = m_widget->getResizeCheckBox();
-    m_dimensionSpin = m_widget->getDimensionSpB();
-    m_imageQualitySpin = m_widget->getImgQualitySpB();
-    m_imgList = m_widget->imagesList();
-    m_progressBar = m_widget->progressBar(); 
-    m_accessCombo = m_widget->m_accessCombo;
-    m_hideOriginalCheck = m_widget->m_hideOriginalCheck;
+    m_loginLabel           = m_widget->getUserNameLabel();
+    m_headerLabel          = m_widget->getHeaderLbl();
+    m_changeUserButton     = m_widget->getChangeUserBtn();
+    m_newAlbumButton       = m_widget->getNewAlbmBtn();
+    m_reloadAlbumsButton   = m_widget->getReloadBtn();
+    m_albumsCombo          = m_widget->getAlbumsCoB();
+    m_resizeCheck          = m_widget->getResizeCheckBox();
+    m_dimensionSpin        = m_widget->getDimensionSpB();
+    m_imageQualitySpin     = m_widget->getImgQualitySpB();
+    m_imgList              = m_widget->imagesList();
+    m_progressBar          = m_widget->progressBar(); 
+    m_accessCombo          = m_widget->m_accessCombo;
+    m_hideOriginalCheck    = m_widget->m_hideOriginalCheck;
     m_disableCommentsCheck = m_widget->m_disableCommentsCheck;
-    m_adultCheck = m_widget->m_adultCheck;
-    m_policyGroup = m_widget->m_policyGroup;  
-    m_albumsBox   = m_widget->getAlbumBox();
-    
+    m_adultCheck           = m_widget->m_adultCheck;
+    m_policyGroup          = m_widget->m_policyGroup;  
+    m_albumsBox            = m_widget->getAlbumBox();
+    m_meta                 = 0;
+
+    if (iface())
+    {
+        m_meta = iface()->createMetadataProcessor();
+    }
+        
     connect(m_changeUserButton, SIGNAL(clicked()),
             this, SLOT(slotChangeUserClicked()));
     
@@ -450,17 +453,14 @@ void YandexFotkiWindow::slotListPhotosDoneForUpload(const QList <YandexFotkiPhot
     foreach(const QUrl& url, m_imgList->imageUrls(true))
     {
         KPImageInfo info(url);
-        KPMetadata  meta;
-
-        const QString imgPath = url.toLocalFile();
 
         // check if photo alredy uploaded
 
         int oldPhotoId = -1;
-
-        if (meta.load(imgPath))
+        
+        if (m_meta && m_meta->load(url))
         {
-            QString localId = meta.getXmpTagString(XMP_SERVICE_ID);
+            QString localId = m_meta->getXmpTagString(QLatin1String(XMP_SERVICE_ID));
             oldPhotoId      = dups.value(localId, -1);
         }
 
@@ -474,7 +474,7 @@ void YandexFotkiWindow::slotListPhotosDoneForUpload(const QList <YandexFotkiPhot
         {
             if (policy == YandexFotkiWidget::UpdatePolicy::POLICY_SKIP)
             {
-                qCDebug(KIPIPLUGINS_LOG) << "SKIP: " << imgPath;
+                qCDebug(KIPIPLUGINS_LOG) << "SKIP: " << url;
                 continue;
             }
 
@@ -500,10 +500,9 @@ void YandexFotkiWindow::slotListPhotosDoneForUpload(const QList <YandexFotkiPhot
             m_transferQueue.push(YandexFotkiPhoto());
         }
 
-
         YandexFotkiPhoto& photo = m_transferQueue.top();
         // TODO: updateFile is not used
-        photo.setOriginalUrl(imgPath);
+        photo.setOriginalUrl(url.toLocalFile());
         photo.setTitle(info.name());
         photo.setSummary(info.description());
         photo.setAccess(access);
@@ -524,11 +523,11 @@ void YandexFotkiWindow::slotListPhotosDoneForUpload(const QList <YandexFotkiPhot
 
         if (updateFile)
         {
-            qCDebug(KIPIPLUGINS_LOG) << "METADATA + IMAGE: " << imgPath;
+            qCDebug(KIPIPLUGINS_LOG) << "METADATA + IMAGE: " << url;
         }
         else
         {
-            qCDebug(KIPIPLUGINS_LOG) << "METADATA: " << imgPath;
+            qCDebug(KIPIPLUGINS_LOG) << "METADATA: " << url;
         }
     }
 
@@ -565,7 +564,8 @@ void YandexFotkiWindow::updateNextPhoto()
                     rawdec->loadRawPreview(QUrl::fromLocalFile(photo.originalUrl()), image);
                 }
             }
-            else
+
+            if (image.isNull())
             {
                 image.load(photo.originalUrl());
             }
@@ -591,15 +591,16 @@ void YandexFotkiWindow::updateNextPhoto()
                 }
 
                 // copy meta data to temporary image
-                KPMetadata meta;
 
-                if (image.save(photo.localUrl(), "JPEG", m_imageQualitySpin->value()) &&
-                    meta.load(photo.originalUrl()))
+                if (image.save(photo.localUrl(), "JPEG", m_imageQualitySpin->value()))
                 {
-                    meta.setImageDimensions(image.size());
-                    meta.setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
-                    meta.save(photo.localUrl());
-                    prepared = true;
+                    if (m_meta && m_meta->load(QUrl::fromLocalFile(photo.originalUrl())))
+                    {
+                        m_meta->setImageDimensions(image.size());
+                        m_meta->setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
+                        m_meta->save(QUrl::fromLocalFile(photo.localUrl()));
+                        prepared = true;
+                    }
                 }
             }
 
@@ -796,14 +797,12 @@ void YandexFotkiWindow::slotUpdatePhotoDone(YandexFotkiPhoto& photo)
 {
     qCDebug(KIPIPLUGINS_LOG) << "photoUploaded" << photo;
 
-    KPMetadata meta;
-
-    if (meta.supportXmp() && meta.canWriteXmp(photo.originalUrl()) &&
-        meta.load(photo.originalUrl()))
+    if (m_meta && m_meta->supportXmp() && m_meta->canWriteXmp(QUrl::fromLocalFile(photo.originalUrl())) &&
+        m_meta->load(QUrl::fromLocalFile(photo.originalUrl())))
     {
         // ignore errors here
-        if (meta.setXmpTagString(XMP_SERVICE_ID, photo.urn(), false) &&
-            meta.save(photo.originalUrl()))
+        if (m_meta->setXmpTagString(QLatin1String(XMP_SERVICE_ID), photo.urn()) &&
+            m_meta->save(QUrl::fromLocalFile(photo.originalUrl())))
         {
             qCDebug(KIPIPLUGINS_LOG) << "MARK: " << photo.originalUrl();
         }
