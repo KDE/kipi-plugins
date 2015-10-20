@@ -56,7 +56,6 @@
 
 // Libkipi includes
 
-#include <KIPI/Interface>
 #include <KIPI/PluginLoader>
 
 // local includes
@@ -67,8 +66,6 @@
 #include "gsitem.h"
 #include "mpform_gdrive.h"
 #include "kipiplugins_debug.h"
-
-using namespace KIPI;
 
 namespace KIPIGoogleServicesPlugin
 {
@@ -83,11 +80,17 @@ GDTalker::GDTalker(QWidget* const parent)
 {
     m_rootid          = QStringLiteral("root");
     m_rootfoldername  = QStringLiteral("GoogleDrive Root");
+    
+    PluginLoader* const pl = PluginLoader::instance();
+
+    if (pl)
+    {
+        m_iface = pl->interface();
+    }
 }
 
 GDTalker::~GDTalker()
 {
-
 }
 
 /** Gets username
@@ -146,7 +149,7 @@ void GDTalker::listFolders()
  */
 void GDTalker::createFolder(const QString& title,const QString& id)
 {
-    if(m_job)
+    if (m_job)
     {
         m_job->kill();
         m_job = 0;
@@ -199,24 +202,18 @@ bool GDTalker::addPhoto(const QString& imgPath,const GSPhoto& info,const QString
     QString path = imgPath;
     QImage image;
 
-    PluginLoader* const pl = PluginLoader::instance();
-
-    if (pl)
+    if (m_iface)
     {
-        Interface* const iface = pl->interface();
-        
-        if (iface)
-        {
-            QPointer<RawProcessor> rawdec = iface->createRawProcessor();
+        QPointer<RawProcessor> rawdec = m_iface->createRawProcessor();
 
-            // check if its a RAW file.
-            if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(imgPath)))
-            {
-                rawdec->loadRawPreview(QUrl::fromLocalFile(imgPath), image);
-            }
+        // check if its a RAW file.
+        if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(imgPath)))
+        {
+            rawdec->loadRawPreview(QUrl::fromLocalFile(imgPath), image);
         }
-    } 
-    else
+    }
+    
+    if (image.isNull())
     {
         image.load(imgPath);
     }
@@ -232,7 +229,7 @@ bool GDTalker::addPhoto(const QString& imgPath,const GSPhoto& info,const QString
 
     if (rescale)
     {
-        if(image.width() > maxDim || image.height() > maxDim)
+        if (image.width() > maxDim || image.height() > maxDim)
             image = image.scaled(maxDim,maxDim,Qt::KeepAspectRatio,Qt::SmoothTransformation);
         
         imgQualityToApply = imageQuality;
@@ -285,7 +282,7 @@ void GDTalker::slotResult(KJob* kjob)
     m_job = 0;
     KIO::Job* const job = static_cast<KIO::Job*>(kjob);
 
-    if(job->error())
+    if (job->error())
     {
         emit signalBusy(false);
         KIO::JobUiDelegate* const job_ui = static_cast<KIO::JobUiDelegate*>(job->ui());
@@ -294,9 +291,9 @@ void GDTalker::slotResult(KJob* kjob)
         return;
     }
 
-    switch(m_state)
+    switch (m_state)
     {
-        case(GD_LOGOUT):
+        case (GD_LOGOUT):
             break;
         case (GD_LISTFOLDERS):
             qCDebug(KIPIPLUGINS_LOG) << "In GD_LISTFOLDERS";
@@ -324,7 +321,7 @@ void GDTalker::parseResponseUserName(const QByteArray& data)
     QJsonParseError err;
     QJsonDocument doc = QJsonDocument::fromJson(data, &err);
     
-    if(err.error != QJsonParseError::NoError)
+    if (err.error != QJsonParseError::NoError)
     {
         emit signalBusy(false);
         return;
@@ -346,7 +343,7 @@ void GDTalker::parseResponseListFolders(const QByteArray& data)
     QJsonParseError err;
     QJsonDocument doc = QJsonDocument::fromJson(data, &err);
     
-    if(err.error != QJsonParseError::NoError)
+    if (err.error != QJsonParseError::NoError)
     {
         emit signalBusy(false);
         emit signalListAlbumsDone(0,i18n("Failed to list folders"),QList<GSFolder>());
@@ -381,7 +378,7 @@ void GDTalker::parseResponseCreateFolder(const QByteArray& data)
     QJsonParseError err;
     QJsonDocument doc = QJsonDocument::fromJson(data, &err);
     
-    if(err.error != QJsonParseError::NoError)
+    if (err.error != QJsonParseError::NoError)
     {
         emit signalBusy(false);
         return;
@@ -391,12 +388,12 @@ void GDTalker::parseResponseCreateFolder(const QByteArray& data)
     QString temp = jsonObject[QStringLiteral("alternateLink")].toString();
     bool success        = false;    
     
-    if(!(QString::compare(temp, QStringLiteral(""), Qt::CaseInsensitive) == 0))
+    if (!(QString::compare(temp, QStringLiteral(""), Qt::CaseInsensitive) == 0))
         success = true;
 
     emit signalBusy(false);
 
-    if(!success)
+    if (!success)
     {
         emit signalCreateFolderDone(0,i18n("Failed to create folder"));
     }
@@ -411,7 +408,7 @@ void GDTalker::parseResponseAddPhoto(const QByteArray& data)
     QJsonParseError err;
     QJsonDocument doc = QJsonDocument::fromJson(data, &err);
     
-    if(err.error != QJsonParseError::NoError)
+    if (err.error != QJsonParseError::NoError)
     {
         emit signalBusy(false);
         return;
@@ -422,12 +419,12 @@ void GDTalker::parseResponseAddPhoto(const QByteArray& data)
     QString photoId = jsonObject[QStringLiteral("id")].toString();
     bool success        = false;      
     
-    if(!(QString::compare(altLink, QStringLiteral(""), Qt::CaseInsensitive) == 0))
+    if (!(QString::compare(altLink, QStringLiteral(""), Qt::CaseInsensitive) == 0))
         success = true;
 
     emit signalBusy(false);
 
-    if(!success)
+    if (!success)
     {
         emit signalAddPhotoDone(0,i18n("Failed to upload photo"),QStringLiteral("-1"));
     }

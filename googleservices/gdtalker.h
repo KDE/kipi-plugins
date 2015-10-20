@@ -34,10 +34,16 @@
 
 #include <kio/job.h>
 
+// Libkipi includes
+
+#include <KIPI/Interface>
+
 //local includes
 
 #include "gsitem.h"
 #include "authorize.h"
+
+using namespace KIPI;
 
 namespace KIPIGoogleServicesPlugin
 {
@@ -94,6 +100,7 @@ private:
     QString      m_rootfoldername;
     QString      m_username;
     State        m_state;
+    Interface*   m_iface;
 };
 
 } // namespace KIPIGoogleServicesPlugin
