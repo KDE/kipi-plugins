@@ -30,12 +30,6 @@
 #include <QImage>
 #include <QString>
 
-// Local includes
-
-#include "kpmetadata.h"
-
-using namespace KIPIPlugins;
-
 namespace KIPIViewerPlugin
 {
 

@@ -25,9 +25,9 @@
 
 // Qt includes
 
-#include <QMatrix>
 #include <QFileInfo>
 #include <QUrl>
+#include <QPointer>
 
 // Libkipi includes
 
@@ -41,6 +41,7 @@
 #include "timer.h"
 
 using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIViewerPlugin
 {
@@ -66,10 +67,10 @@ public:
         display_y      = 0;
         texnr          = 0;
         rotate_idx     = 0;
-        rotate_list[0] = KPMetadata::ORIENTATION_ROT_90;
-        rotate_list[1] = KPMetadata::ORIENTATION_ROT_180;
-        rotate_list[2] = KPMetadata::ORIENTATION_ROT_270;
-        rotate_list[3] = KPMetadata::ORIENTATION_ROT_180;
+        rotate_list[0] = MetadataProcessor::ROT_90;
+        rotate_list[1] = MetadataProcessor::ROT_180;
+        rotate_list[2] = MetadataProcessor::ROT_270;
+        rotate_list[3] = MetadataProcessor::ROT_180;
 
         PluginLoader* const pl = PluginLoader::instance();
 
@@ -79,16 +80,16 @@ public:
         } 
     }
 
-    float                        rdx, rdy, z, ux, uy, rtx, rty;
-    float                        vtop, vbottom, vleft, vright;
-    int                          display_x, display_y;
-    GLuint                       texnr;
-    QString                      filename;
-    QImage                       qimage, glimage;
-    QSize                        initial_size;
-    KPMetadata::ImageOrientation rotate_list[4];
-    int                          rotate_idx;
-    Interface*                   iface;
+    float                              rdx, rdy, z, ux, uy, rtx, rty;
+    float                              vtop, vbottom, vleft, vright;
+    int                                display_x, display_y;
+    GLuint                             texnr;
+    QString                            filename;
+    QImage                             qimage, glimage;
+    QSize                              initial_size;
+    MetadataProcessor::ExifOrientation rotate_list[4];
+    int                                rotate_idx;
+    Interface*                         iface;
 };
 
 Texture::Texture()
@@ -143,7 +144,8 @@ bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
             rawdec->loadRawPreview(QUrl::fromLocalFile(d->filename), d->qimage);
         }
     }
-    else
+    
+    if (d->qimage.isNull())
     {
         // use the standard loader
         d->qimage = QImage(d->filename);
@@ -153,10 +155,8 @@ bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
 
     KPImageInfo info(QUrl::fromLocalFile(d->filename));
 
-    if ( info.orientation() != KPMetadata::ORIENTATION_UNSPECIFIED )
+    if ( info.orientation() != MetadataProcessor::UNSPECIFIED )
     {
-        QMatrix matrix = RotationMatrix::toMatrix((KPMetadata::ImageOrientation)info.orientation());
-        d->qimage      = d->qimage.transformed(matrix);
     }
 
     if (d->qimage.isNull())
@@ -452,8 +452,14 @@ bool Texture::setSize(QSize size)
  */
 void Texture::rotate()
 {
-    QMatrix matrix = RotationMatrix::toMatrix(d->rotate_list[d->rotate_idx%4]);
-    d->qimage      = d->qimage.transformed(matrix);
+    if (d->iface)
+    {
+        QPointer<MetadataProcessor> meta = d->iface->createMetadataProcessor();
+        
+        if (meta)
+            meta->rotateExifQImage(d->qimage, d->rotate_list[d->rotate_idx%4]);
+    }
+
     loadInternal();
 
     //save new rotation in exif header

@@ -25,10 +25,12 @@
 #define VIEWERWIDGET_H
 
 // Local includes
+
 #include "texture.h"
 #include "global.h"
 
 // Qt includes
+
 #include <QCursor>
 #include <QDir>
 #include <QKeyEvent>
@@ -36,8 +38,6 @@
 #include <QTimer>
 #include <QWheelEvent>
 #include <QUrl>
-
-using namespace KIPI;
 
 namespace KIPIViewerPlugin
 {

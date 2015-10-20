@@ -20,17 +20,16 @@ add_library(kipiplugin_imageviewer MODULE ${kipiplugin_imageviewer_PART_SRCS})
 
 target_link_libraries(kipiplugin_imageviewer
                       PRIVATE
-                      KF5::Parts
                       Qt5::OpenGL
-                      ${OPENGL_LIBRARIES}
+                      KF5::Parts
                       KF5::Kipi
-                      KF5::KExiv2
+                      KF5kipiplugins
+
+                      ${OPENGL_LIBRARIES}
 
                       # For Linux Only.
                       ${X11_LIBRARIES}
                       ${X11_Xrandr_LIB}
-
-                      KF5kipiplugins
                      )
 
 configure_file(kipiplugin_imageviewer.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_imageviewer.desktop)
