@@ -53,10 +53,10 @@
 // Local includes
 
 #include "rajcesession.h"
-#include "rajcelogindialog.h"
 #include "newalbumdialog.h"
 #include "kpimageslist.h"
 #include "kpsettingswidget.h"
+#include "kplogindialog.h"
 
 namespace KIPIRajcePlugin
 {
@@ -287,7 +287,7 @@ void RajceWidget::progressStarted(unsigned commandType)
 
 void RajceWidget::changeUserClicked()
 {
-    RajceLoginDialog* const dlg = new RajceLoginDialog(this, m_session->state().username());
+    KIPIPlugins::KPLoginDialog* const dlg = new KIPIPlugins::KPLoginDialog(this, QStringLiteral("Rajce.net"));
 
     if (dlg->exec() == QDialog::Accepted)
     {
@@ -296,7 +296,7 @@ void RajceWidget::changeUserClicked()
         connect(m_session, SIGNAL(busyFinished(uint)),
                 this, SLOT(loadAlbums()));
 
-        m_session->login(dlg->username(), dlg->password());
+        m_session->login(dlg->login(), dlg->password());
     }
 
     delete dlg;

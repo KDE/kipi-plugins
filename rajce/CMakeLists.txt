@@ -13,7 +13,6 @@ set(kipiplugin_rajce_PART_SRCS
     newalbumdialog.cpp
     sessionstate.cpp
     album.cpp
-    rajcelogindialog.cpp
     rajcesession.cpp
     rajcewidget.cpp
     plugin_rajce.cpp
