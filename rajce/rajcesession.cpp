@@ -47,7 +47,6 @@
 #include "kipiplugins_debug.h"
 #include "mpform.h"
 #include "kpversion.h"
-#include "kpmetadata.h"
 #include "kputil.h"
 
 using namespace KIPI;
@@ -93,14 +92,24 @@ PreparedImage _prepareImageForUpload(const QString& saveDir, const QImage& img, 
     qCDebug(KIPIPLUGINS_LOG) << "Saving thumb to temp file: " << ret.thumbPath;
     thumb.save(ret.thumbPath, "JPEG", jpgQuality);
 
-    // copy meta data to temporary image
-    KPMetadata meta;
+    PluginLoader* const pl = PluginLoader::instance();
 
-    if (meta.load(imagePath))
+    if (pl)
     {
-        meta.setImageDimensions(image.size());
-        meta.setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
-        meta.save(ret.scaledImagePath);
+        Interface* const iface = pl->interface();
+        
+        if (iface)
+        {
+            // copy meta data to temporary image
+            QPointer<MetadataProcessor> meta = iface->createMetadataProcessor();
+
+            if (meta->load(QUrl::fromLocalFile(imagePath)))
+            {
+                meta->setImageDimensions(image.size());
+                meta->setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
+                meta->save(QUrl::fromLocalFile(ret.scaledImagePath));
+            }
+        }
     }
 
     return ret;
@@ -235,23 +244,24 @@ protected:
 
 private:
 
-    int      m_jpgQuality;
+    int        m_jpgQuality;
 
-    unsigned m_desiredDimension;
-    unsigned m_maxDimension;
+    unsigned   m_desiredDimension;
+    unsigned   m_maxDimension;
 
-    QString  m_tmpDir;
-    QString  m_imagePath;
+    QString    m_tmpDir;
+    QString    m_imagePath;
 
-    QImage   m_image;
+    QImage     m_image;
 
-    MPForm*  m_form;
+    MPForm*    m_form;
 };
 
 /// Commands impls
 
 RajceCommand::RajceCommand(const QString& name, RajceCommandType type)
-    : m_name(name), m_commandType(type)
+    : m_name(name),
+      m_commandType(type)
 {
 }
 
@@ -579,7 +589,8 @@ AddPhotoCommand::AddPhotoCommand(const QString& tmpDir, const QString& path, uns
             }
         }
     }
-    else
+
+    if (m_image.isNull())
     {
         m_image.load(path);
     }
@@ -629,12 +640,9 @@ QString AddPhotoCommand::additionalXml() const
     metadata[QStringLiteral("FileSize")]              = QString::number(f.size());
 
     //TODO extract these from exif
-    //    KPMetadata meta;
-    //    if (meta.load(m_imagePath)) {
     metadata[QStringLiteral("Title")]           = QStringLiteral("");
     metadata[QStringLiteral("KeywordSet")]      = QStringLiteral("");
     metadata[QStringLiteral("PeopleRegionSet")] = QStringLiteral("");
-    //    }
 
     qsrand((uint)QTime::currentTime().msec());
     QString id = QString::number(qrand());
