@@ -30,13 +30,13 @@
 #include <QFont>
 #include <QColor>
 #include <QUrl>
+#include <QPointer>
 
-namespace KIPIPlugins
-{
-    class KPMetadata;
-}
+// Libkipi includes
 
-using namespace KIPIPlugins;
+#include <KIPI/Interface>
+
+using namespace KIPI;
 
 namespace KIPIPrintImagesPlugin
 {
@@ -149,7 +149,7 @@ public:
     double scaleWidth(double unitToInches);
     double scaleHeight(double unitToInches);
 
-    KPMetadata* metaIface();
+    MetadataProcessor* metaIface();
 
 public:
 
@@ -168,13 +168,14 @@ public:
 
 private:
 
-    void   loadCache();
+    void loadCache();
 
 private:
 
-    QPixmap*    m_thumbnail;
-    QSize*      m_size;
-    KPMetadata* m_metaIface;
+    QPixmap*                    m_thumbnail;
+    QSize*                      m_size;
+    Interface*                  m_iface;
+    QPointer<MetadataProcessor> m_meta;
 };
 
 }  // NameSpace KIPIPrintImagesPlugin

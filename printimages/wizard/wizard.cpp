@@ -66,8 +66,8 @@
 
 #include "kpwizardpage.h"
 #include "kpimageslist.h"
+#include "kpimageinfo.h"
 #include "kpaboutdata.h"
-#include "kpmetadata.h"
 #include "tphoto.h"
 #include "utils.h"
 #include "templateicon.h"
@@ -894,7 +894,7 @@ QString Wizard::captionFormatter(TPhoto* const photo) const
 
     QFileInfo fi(photo->filename.path());
     QString resolution;
-    QSize imageSize =  photo->metaIface()->getImageDimensions();
+    QSize imageSize = photo->metaIface()->getImageDimensions();
 
     if (imageSize.isValid())
     {
@@ -911,14 +911,16 @@ QString Wizard::captionFormatter(TPhoto* const photo) const
     // %r resolution
     // %a aperture
     // %l focal length
+    
+    KPImageInfo info(photo->filename);
     format.replace(QString::fromUtf8("%f"), fi.fileName());
-    format.replace(QString::fromUtf8("%c"), photo->metaIface()->getExifComment());
-    format.replace(QString::fromUtf8("%d"), QLocale().toString(photo->metaIface()->getImageDateTime(), QLocale::ShortFormat));
-    format.replace(QString::fromUtf8("%t"), photo->metaIface()->getExifTagString("Exif.Photo.ExposureTime"));
-    format.replace(QString::fromUtf8("%i"), photo->metaIface()->getExifTagString("Exif.Photo.ISOSpeedRatings"));
+    format.replace(QString::fromUtf8("%c"), info.description());
+    format.replace(QString::fromUtf8("%d"), QLocale().toString(info.date(), QLocale::ShortFormat));
+    format.replace(QString::fromUtf8("%t"), photo->metaIface()->getExifTagString(QLatin1String("Exif.Photo.ExposureTime")));
+    format.replace(QString::fromUtf8("%i"), photo->metaIface()->getExifTagString(QLatin1String("Exif.Photo.ISOSpeedRatings")));
     format.replace(QString::fromUtf8("%r"), resolution);
-    format.replace(QString::fromUtf8("%a"), photo->metaIface()->getExifTagString("Exif.Photo.FNumber"));
-    format.replace(QString::fromUtf8("%l"), photo->metaIface()->getExifTagString("Exif.Photo.FocalLength"));
+    format.replace(QString::fromUtf8("%a"), photo->metaIface()->getExifTagString(QLatin1String("Exif.Photo.FNumber")));
+    format.replace(QString::fromUtf8("%l"), photo->metaIface()->getExifTagString(QLatin1String("Exif.Photo.FocalLength")));
 
     return format;
 }
@@ -1068,11 +1070,12 @@ bool Wizard::paintOnePage(QPainter& p, const QList<TPhoto*>& photos, const QList
             int exifOrientation = photo->metaIface()->getImageOrientation();
             int orientatation   = photo->rotation;
 
-            //ORIENTATION_ROT_90_HFLIP .. ORIENTATION_ROT_270
-            if (exifOrientation == KPMetadata::ORIENTATION_ROT_90_HFLIP ||
-                exifOrientation == KPMetadata::ORIENTATION_ROT_90       ||
-                exifOrientation == KPMetadata::ORIENTATION_ROT_90_VFLIP ||
-                exifOrientation == KPMetadata::ORIENTATION_ROT_270)
+            // ROT_90_HFLIP .. ROT_270
+            
+            if (exifOrientation == MetadataProcessor::ROT_90_HFLIP ||
+                exifOrientation == MetadataProcessor::ROT_90       ||
+                exifOrientation == MetadataProcessor::ROT_90_VFLIP ||
+                exifOrientation == MetadataProcessor::ROT_270)
             {
                 orientatation = (photo->rotation + 270) % 360;   // -90 degrees
             }
