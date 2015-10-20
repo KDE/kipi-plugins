@@ -51,7 +51,6 @@
 #include "kpimageslist.h"
 #include "kpaboutdata.h"
 #include "kpimageinfo.h"
-#include "kpmetadata.h"
 #include "kpversion.h"
 #include "kpprogresswidget.h"
 #include "fbitem.h"
@@ -606,18 +605,22 @@ bool FbWindow::prepareImageForUpload(const QString& imgPath, bool isRAW, QString
     image.save(m_tmpPath, "JPEG", d->m_imageQualitySpB->value());
 
     // copy meta data to temporary image
-    KPMetadata meta;
+    
+    if (iface())
+    {
+        QPointer<MetadataProcessor> meta = iface()->createMetadataProcessor();
 
-    if (meta.load(imgPath))
-    {
-        caption = getImageCaption(imgPath);
-        meta.setImageDimensions(image.size());
-        meta.setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
-        meta.save(m_tmpPath);
-    }
-    else
-    {
-        caption.clear();
+        if (meta && meta->load(QUrl::fromLocalFile(imgPath)))
+        {
+            caption = getImageCaption(imgPath);
+            meta->setImageDimensions(image.size());
+            meta->setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
+            meta->save(QUrl::fromLocalFile(m_tmpPath));
+        }
+        else
+        {
+            caption.clear();
+        }
     }
 
     return true;
