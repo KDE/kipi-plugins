@@ -51,7 +51,6 @@
 
 #include "calsettings.h"
 #include "kpimagedialog.h"
-#include "kpmetadata.h"
 #include "kipiplugins_debug.h"
 
 using namespace KIPIPlugins;
