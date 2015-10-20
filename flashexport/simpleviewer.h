@@ -153,6 +153,7 @@ private:
     bool extractFile(const KArchiveEntry* entry) const;
 
     static bool cmpUrl(const QUrl& url1, const QUrl& url2);
+    static bool cmpUrlByName(const QUrl& url1, const QUrl& url2);
 
 Q_SIGNALS:
 

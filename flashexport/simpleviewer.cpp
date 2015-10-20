@@ -29,6 +29,7 @@
 #include <QByteArray>
 #include <QDataStream>
 #include <QDir>
+#include <QPointer>
 #include <QDomText>
 #include <QFile>
 #include <QPointer>
@@ -44,11 +45,14 @@
 #include <kjobwidgets.h>
 #include <klocalizedstring.h>
 
+// Libkipi includes
+
+#include <KIPI/PluginLoader>
+
 // Local includes
 
 #include "kpversion.h"
 #include "kpimageinfo.h"
-#include "kpmetadata.h"
 #include "kipiplugins_debug.h"
 #include "kputil.h"
 
@@ -80,6 +84,11 @@ public:
         settings     = 0;
         width        = 0;
         height       = 0;
+        
+        if (interface)
+        {
+            meta = interface->createMetadataProcessor();
+        }
     }
 
     bool                              canceled;
@@ -104,6 +113,7 @@ public:
     QTemporaryDir*                    tempDir;
 
     Interface*                        interface;
+    QPointer<MetadataProcessor>       meta;
 
     KPBatchProgressWidget*            progressWdg;
 
@@ -129,7 +139,7 @@ void SimpleViewer::appendPluginFiles(int pluginType)
 {
     qCDebug(KIPIPLUGINS_LOG) << "Value of plugin type in append files" << pluginType;
 
-    switch(pluginType)
+    switch (pluginType)
     {
         case 0:
             d->simpleViewerFiles.clear();
@@ -340,24 +350,44 @@ bool SimpleViewer::createExportDirectories() const
 
 bool SimpleViewer::cmpUrl(const QUrl& url1, const QUrl& url2)
 {
-    KPMetadata meta;
-    meta.load(url1.path());
-    QDateTime clock1 = meta.getImageDateTime();
+    QPointer<MetadataProcessor> meta = 0;
+    PluginLoader* const pl           = PluginLoader::instance();
+    
+    if (pl)
+    {
+        Interface* const iface = pl->interface();
+        
+        if (iface)
+            meta = iface->createMetadataProcessor();
+    }
+    
+    if (!meta)
+        return cmpUrlByName(url1, url2);
+    
+    if (!meta->load(url1))
+        return cmpUrlByName(url1, url2);
+    
+    QDateTime clock1 = meta->getImageDateTime();
 
-    meta.load(url2.path());
-    QDateTime clock2 = meta.getImageDateTime();
+    if (!meta->load(url2))
+        return cmpUrlByName(url1, url2);
+
+    QDateTime clock2 = meta->getImageDateTime();
 
     if (clock1.isValid() || clock2.isValid())
     {
-        return clock1 < clock2;
+        return (clock1 < clock2);
     }
-    else
-    {
-        QString name1 = url1.fileName();
-        QString name2 = url2.fileName();
 
-        return (name1 < name2) ;
-    }
+    return cmpUrlByName(url1, url2);
+}
+
+bool SimpleViewer::cmpUrlByName(const QUrl& url1, const QUrl& url2)
+{
+    QString name1 = url1.fileName();
+    QString name2 = url2.fileName();
+
+    return (name1 < name2);
 }
 
 bool SimpleViewer::exportImages()
@@ -492,7 +522,6 @@ bool SimpleViewer::exportImages()
 void SimpleViewer::processQUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
                                    QDomElement& galleryElem, QDomElement& photosElem)
 {
-    KPMetadata meta;
     QImage     image;
     QImage     thumbnail;
     QString    tmp;
@@ -535,7 +564,8 @@ void SimpleViewer::processQUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
                 rawdec->loadRawPreview(url, image);
             }
         }
-        else
+
+        if (image.isNull())
         {
             image.load(url.path());
         }
@@ -566,38 +596,40 @@ void SimpleViewer::processQUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
             continue;
         }
 
-        meta.load(url.path());
-        bool rotated = false;
-        newName      = QStringLiteral("%1.%2").arg(tmp.sprintf("%03i", index)).arg(QStringLiteral("jpg"));
-
-        if (d->settings->plugType == 0)
+        if (d->meta && d->meta->load(url))
         {
-            QUrl thumbnailPath(thumbsDir);
-            thumbnailPath.setPath(thumbnailPath.path() + newName);
+            bool rotated = false;
+            newName      = QStringLiteral("%1.%2").arg(tmp.sprintf("%03i", index)).arg(QStringLiteral("jpg"));
+
+            if (d->settings->plugType == 0)
+            {
+                QUrl thumbnailPath(thumbsDir);
+                thumbnailPath.setPath(thumbnailPath.path() + newName);
+
+                if (resizeImages && fixOrientation)
+                    d->meta->rotateExifQImage(thumbnail, d->meta->getImageOrientation());
+
+                thumbnail.save(thumbnailPath.path(), "JPEG");
+            }
+
+            QUrl imagePath(imagesDir);
+            imagePath.setPath(imagePath.path() + newName);
 
             if (resizeImages && fixOrientation)
-                meta.rotateExifQImage(thumbnail, meta.getImageOrientation());
+                rotated = d->meta->rotateExifQImage(image, d->meta->getImageOrientation());
 
-            thumbnail.save(thumbnailPath.path(), "JPEG");
+            image.save(imagePath.path(), "JPEG");
+
+            // Backup metadata from original image.
+            d->meta->setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
+            d->meta->setImageDimensions(image.size());
+
+            if (rotated)
+                d->meta->setImageOrientation(MetadataProcessor::NORMAL);
+
+            d->meta->save(imagePath);
         }
-
-        QUrl imagePath(imagesDir);
-        imagePath.setPath(imagePath.path() + newName);
-
-        if (resizeImages && fixOrientation)
-            rotated = meta.rotateExifQImage(image, meta.getImageOrientation());
-
-        image.save(imagePath.path(), "JPEG");
-
-        // Backup metadata from original image.
-        meta.setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
-        meta.setImageDimensions(image.size());
-
-        if (rotated)
-            meta.setImageOrientation(KPMetadata::ORIENTATION_NORMAL);
-
-        meta.save(imagePath.path());
-
+        
         d->width  = image.width();
         d->height = image.height();
 
