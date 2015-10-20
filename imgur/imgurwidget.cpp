@@ -28,6 +28,7 @@
 #include <QGroupBox>
 #include <QApplication>
 #include <QStyle>
+#include <QPointer>
 
 // KDE includes
 
@@ -35,12 +36,12 @@
 
 // Libkipi includes
 
+#include <KIPI/Interface>
 #include <KIPI/PluginLoader>
 
 // Local includes
 
 #include "kipiplugins_debug.h"
-#include "kpmetadata.h"
 #include "plugin_imgur.h"
 
 namespace KIPIImgurPlugin
@@ -57,6 +58,13 @@ public:
         progressBar    = 0;
         processedCount = 0;
 
+        PluginLoader* const pl = PluginLoader::instance();
+
+        if (pl)
+        {
+            iface = pl->interface();
+        }
+
 #ifdef OAUTH_ENABLED
         changeUserBtn  = 0;
 #endif //OAUTH_ENABLED
@@ -66,6 +74,7 @@ public:
     ImgurImagesList*  imagesList;
     KPProgressWidget* progressBar;
     int               processedCount;
+    Interface*        iface;
 
 #ifdef OAUTH_ENABLED
     KPushButton*      changeUserBtn;
@@ -226,15 +235,21 @@ void ImgurWidget::slotImageUploadStart(const QUrl& imgPath)
 
 void ImgurWidget::slotImageUploadSuccess(const QUrl& imgPath, const ImgurSuccess& success)
 {
-    const QString path = imgPath.toLocalFile();
-
     // we add tags to the image
-    KPMetadata meta(path);
-    meta.setXmpTagString("Xmp.kipi.ImgurHash", success.image.hash);
-    meta.setXmpTagString("Xmp.kipi.ImgurDeleteHash", success.image.deletehash);
-    bool saved = meta.applyChanges();
+    
+    if (d->iface)
+    {
+        QPointer<MetadataProcessor> meta = d->iface->createMetadataProcessor();
 
-    qCDebug(KIPIPLUGINS_LOG) << "Metadata" << (saved ? "Saved" : "Not Saved") << "to" << path;
+        if (meta && meta->load(imgPath))
+        {
+            meta->setXmpTagString(QLatin1String("Xmp.kipi.ImgurHash"),       success.image.hash);
+            meta->setXmpTagString(QLatin1String("Xmp.kipi.ImgurDeleteHash"), success.image.deletehash);
+            bool saved = meta->applyChanges();
+            qCDebug(KIPIPLUGINS_LOG) << "Metadata" << (saved ? "Saved" : "Not Saved") << "to" << imgPath;
+        }
+    }
+    
     qCDebug(KIPIPLUGINS_LOG) << "URL" << ImgurConnection::pageURL(success.image.hash);
     qCDebug(KIPIPLUGINS_LOG) << "Delete URL" << ImgurConnection::deleteURL(success.image.deletehash);
 

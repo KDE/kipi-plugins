@@ -25,6 +25,7 @@
 // Qt includes
 
 #include <QLabel>
+#include <QPointer>
 #include <QDesktopServices>
 
 // KDE includes
@@ -34,7 +35,6 @@
 // Local includes
 
 #include "kipiplugins_debug.h"
-#include "kpmetadata.h"
 
 namespace KIPIImgurPlugin
 {
@@ -89,36 +89,42 @@ void ImgurImagesList::slotAddImages(const QList<QUrl>& list)
         QUrl imageUrl = *it;
         found         = false;
 
-        KPMetadata meta(imageUrl.toLocalFile());
-
-        const QString sUrl       = meta.getXmpTagString("Xmp.kipi.Imgur.Hash");
-        const QString sDeleteUrl = meta.getXmpTagString("Xmp.kipi.Imgur.Delete");
-
-        for (int i = 0; i < listView()->topLevelItemCount(); ++i)
+        if (iface())
         {
-            ImgurImageListViewItem* const currItem = dynamic_cast<ImgurImageListViewItem*>(listView()->topLevelItem(i));
+            QPointer<MetadataProcessor> meta = iface()->createMetadataProcessor();
 
-            if (currItem && currItem->url() == imageUrl)
+            if (meta && meta->load(imageUrl))
             {
-                found = true;
+                const QString sUrl       = meta->getXmpTagString(QLatin1String("Xmp.kipi.Imgur.Hash"));
+                const QString sDeleteUrl = meta->getXmpTagString(QLatin1String("Xmp.kipi.Imgur.Delete"));
 
-                if (!sUrl.isEmpty())
+                for (int i = 0; i < listView()->topLevelItemCount(); ++i)
                 {
-                    currItem->setUrl(sUrl);
+                    ImgurImageListViewItem* const currItem = dynamic_cast<ImgurImageListViewItem*>(listView()->topLevelItem(i));
+
+                    if (currItem && currItem->url() == imageUrl)
+                    {
+                        found = true;
+
+                        if (!sUrl.isEmpty())
+                        {
+                            currItem->setUrl(sUrl);
+                        }
+
+                        if (!sDeleteUrl.isEmpty())
+                        {
+                            currItem->setDeleteUrl(sDeleteUrl);
+                        }
+
+                        break;
+                    }
                 }
 
-                if (!sDeleteUrl.isEmpty())
+                if (!found)
                 {
-                    currItem->setDeleteUrl(sDeleteUrl);
+                    new ImgurImageListViewItem(listView(), imageUrl);
                 }
-
-                break;
             }
-        }
-
-        if (!found)
-        {
-            new ImgurImageListViewItem(listView(), imageUrl);
         }
     }
 
@@ -173,7 +179,7 @@ void ImgurImagesList::slotDoubleClick(QTreeWidgetItem* element, int i)
 ImgurImageListViewItem::ImgurImageListViewItem(KPImagesListView* const view, const QUrl& url)
     : KPImagesListViewItem(view, url)
 {
-    const QColor blue = QColor (0,0,255);
+    const QColor blue = QColor (0, 0, 255);
 
     setTextColor(3, blue);
     setTextColor(4, blue);

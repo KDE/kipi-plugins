@@ -220,13 +220,13 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
 
     QJsonParseError err;
     QJsonDocument doc = QJsonDocument::fromJson(data, &err);
-    bool ok = (err.error == QJsonParseError::NoError);
+    bool ok           = (err.error == QJsonParseError::NoError);
     
-    if(ok)
+    if (ok)
     {
         QJsonObject jsonObject = doc.object();
         
-        if(jsonObject.contains(QStringLiteral("upload")))
+        if (jsonObject.contains(QStringLiteral("upload")))
         {
             ImgurSuccess success;
             QJsonObject obj1 = jsonObject[QStringLiteral("upload")].toObject();
@@ -270,7 +270,6 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
             success.links.large_thumbnail = QUrl(obj3[QStringLiteral("largeThumbnail")].toString());
             
             emit signalSuccess(m_currentUrl, success);
-            
         }
         
         if (jsonObject.contains(QStringLiteral("error")))
@@ -308,7 +307,6 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
             emit signalError(m_currentUrl, error);
             qCDebug(KIPIPLUGINS_LOG) << "Imgur Error:" << error.message;
         }
-        
     }
     else
     {
