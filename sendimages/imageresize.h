@@ -29,11 +29,16 @@
 #include <QMutex>
 #include <QUrl>
 
+// Libkipi includes
+
+#include <KIPI/Interface>
+
 // Local includes
 
 #include "kpthreadmanager.h"
 #include "emailsettings.h"
 
+using namespace KIPI;
 using namespace KIPIPlugins;
 
 namespace KIPISendimagesPlugin
@@ -69,7 +74,8 @@ private:
 
 private:
 
-    QMutex m_mutex;
+    QMutex     m_mutex;
+    Interface* m_iface;
 };
 
 // ----------------------------------------------------------------------------------------------------

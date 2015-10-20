@@ -21,7 +21,6 @@ target_link_libraries(kipiplugin_sendimages
                       KF5::Parts
                       KF5::Service
                       KF5::Kipi
-                      KF5::KExiv2
 
                       KF5kipiplugins
 )

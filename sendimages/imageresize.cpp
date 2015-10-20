@@ -26,6 +26,7 @@
 // Qt includes
 
 #include <QDir>
+#include <QPointer>
 #include <QImage>
 #include <QFile>
 #include <QFileInfo>
@@ -40,16 +41,13 @@
 
 // Libkipi includes
 
-#include <KIPI/Interface>
 #include <KIPI/PluginLoader>
 
 // Local includes
 
 #include "kpversion.h"
-#include "kpmetadata.h"
 #include "kipiplugins_debug.h"
 
-using namespace KIPI;
 using namespace KIPIPlugins;
 
 namespace KIPISendimagesPlugin
@@ -59,6 +57,14 @@ Task::Task(int* count)
     : KPJob()
 {
     m_count = count;
+    
+    
+    PluginLoader* const pl = PluginLoader::instance();
+
+    if (pl)
+    {
+        m_iface = pl->interface();
+    }
 }
 
 Task::~Task()
@@ -123,25 +129,19 @@ bool Task::imageResize(const EmailSettings& settings, const QUrl& orgUrl,
     }
 
     QImage img;
-
-    PluginLoader* const pl = PluginLoader::instance();
-
-    if (pl)
-    {
-        Interface* const iface = pl->interface();
         
-        if (iface)
-        {
-            QPointer<RawProcessor> rawdec = iface->createRawProcessor();
+    if (m_iface)
+    {
+        QPointer<RawProcessor> rawdec = m_iface->createRawProcessor();
 
-            // check if its a RAW file.
-            if (rawdec && rawdec->isRawFile(orgUrl))
-            {
-                rawdec->loadRawPreview(orgUrl, img);
-            }
+        // check if its a RAW file.
+        if (rawdec && rawdec->isRawFile(orgUrl))
+        {
+            rawdec->loadRawPreview(orgUrl, img);
         }
-    } 
-    else
+    }
+
+    if (img.isNull())
     {
         img.load(orgUrl.path());
     }
@@ -187,40 +187,43 @@ bool Task::imageResize(const EmailSettings& settings, const QUrl& orgUrl,
 
         QString destPath = destName;
 
-        KPMetadata meta;
-        meta.load(orgUrl.path());
-        meta.setImageProgramId(QLatin1String("Kipi-plugins"), QLatin1String(kipiplugins_version));
-        meta.setImageDimensions(img.size());
-
-        if (emailSettings.format() == QLatin1String("JPEG"))
+        if (m_iface)
         {
-            if ( !img.save(destPath,
-                           emailSettings.format().toLatin1().constData(),
-                           emailSettings.imageCompression) )
+            QPointer<MetadataProcessor> meta = m_iface->createMetadataProcessor();
+        
+            if (meta && meta->load(orgUrl))
             {
-                err = i18n("Cannot save resized image (JPEG). Aborting.");
-                return false;
-            }
-            else
-            {
-                meta.save(destPath);
+                meta->setImageProgramId(QLatin1String("Kipi-plugins"), QLatin1String(kipiplugins_version));
+                meta->setImageDimensions(img.size());
+
+                if (emailSettings.format() == QLatin1String("JPEG"))
+                {
+                    if ( !img.save(destPath, emailSettings.format().toLatin1().constData(), emailSettings.imageCompression) )
+                    {
+                        err = i18n("Cannot save resized image (JPEG). Aborting.");
+                        return false;
+                    }
+                    else
+                    {
+                        meta->save(QUrl::fromLocalFile(destPath));
+                    }
+                }
+                else if (emailSettings.format() == QLatin1String("PNG"))
+                {
+                    if ( !img.save(destPath, emailSettings.format().toLatin1().constData()) )
+                    {
+                        err = i18n("Cannot save resized image (PNG). Aborting.");
+                        return false;
+                    }
+                    else
+                    {
+                        meta->save(QUrl::fromLocalFile(destPath));
+                    }
+                }
+
+                return true;
             }
         }
-        else if (emailSettings.format() == QLatin1String("PNG"))
-        {
-            if ( !img.save(destPath,
-                           emailSettings.format().toLatin1().constData()) )
-            {
-                err = i18n("Cannot save resized image (PNG). Aborting.");
-                return false;
-            }
-            else
-            {
-                meta.save(destPath);
-            }
-        }
-
-        return true;
     }
 
     return false;
