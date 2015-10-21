@@ -31,27 +31,23 @@
 #include <QList>
 #include <QFileInfo>
 
-// KDE includes
-
-#include "kipiplugins_debug.h"
-
 // Libkipi includes
 
-#include <KIPI/Interface>
 #include <KIPI/PluginLoader>
 
 // Local includes
 
 #include "commoncontainer.h"
 #include "kpimageinfo.h"
+#include "kipiplugins_debug.h"
 
-using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIAdvancedSlideshowPlugin
 {
 
 LoadThread::LoadThread(LoadedImages* const loadedImages, QMutex* const imageLock, const QUrl& path,
-                       KPMetadata::ImageOrientation orientation, int width, int height)
+                       int orientation, int width, int height)
     : QThread()
 {
     m_path         = path;
@@ -60,6 +56,14 @@ LoadThread::LoadThread(LoadedImages* const loadedImages, QMutex* const imageLock
     m_sheight      = height;
     m_imageLock    = imageLock;
     m_loadedImages = loadedImages;
+    m_iface        = 0;
+
+    PluginLoader* const pl = PluginLoader::instance();
+
+    if (pl)
+    {
+        m_iface = pl->interface();
+    }
 }
 
 LoadThread::~LoadThread()
@@ -72,34 +76,33 @@ void LoadThread::run()
 
     // check if it's a RAW file.
     
-    PluginLoader* const pl = PluginLoader::instance();
-
-    if (pl)
+    if (m_iface)
     {
-        Interface* const iface = pl->interface();
-        
-        if (iface)
-        {
-            QPointer<RawProcessor> rawdec = iface->createRawProcessor();
+        QPointer<RawProcessor> rawdec = m_iface->createRawProcessor();
 
-            // check if its a RAW file.
-            if (rawdec && rawdec->isRawFile(m_path))
-            {
-                rawdec->loadRawPreview(m_path, newImage);
-            }
+        // check if its a RAW file.
+        if (rawdec && rawdec->isRawFile(m_path))
+        {
+            rawdec->loadRawPreview(m_path, newImage);
         }
-    } 
-    else
+    }
+
+    if (newImage.isNull())
     {
         // use the standard loader
         newImage = QImage(m_path.toLocalFile());
     }
 
     // Rotate according to orientation flag
-    if ( m_orientation != KPMetadata::ORIENTATION_UNSPECIFIED )
+    if ( m_orientation != MetadataProcessor::UNSPECIFIED )
     {
-        QMatrix matrix = RotationMatrix::toMatrix(m_orientation);
-        newImage       = newImage.transformed(matrix);
+        if (m_iface)
+        {
+            QPointer<MetadataProcessor> meta = m_iface->createMetadataProcessor();
+
+            if (meta)
+                meta->rotateExifQImage(newImage, m_orientation);
+        }
     }
 
     newImage = newImage.scaled(m_swidth, m_sheight, Qt::KeepAspectRatio, Qt::SmoothTransformation);
@@ -124,15 +127,15 @@ SlideShowLoader::SlideShowLoader(FileList& pathList, uint cacheSize, int width, 
     m_imageLock      = new QMutex();
     m_threadLock     = new QMutex();
     m_sharedData     = sharedData;
-
-    QUrl                         filePath;
-    KPMetadata::ImageOrientation orientation;
+    
+    QUrl filePath;
+    int  orientation;
 
     for (uint i = 0; i < uint(m_cacheSize / 2) && i < uint(m_pathList.count()); ++i)
     {
         filePath    = QUrl(m_pathList[i].first);
         KPImageInfo info(filePath);
-        orientation = (KPMetadata::ImageOrientation)info.orientation();
+        orientation = info.orientation();
 
         LoadThread* const newThread = new LoadThread(m_loadedImages, m_imageLock,
                                                      filePath, orientation, m_swidth, m_sheight);
@@ -147,7 +150,7 @@ SlideShowLoader::SlideShowLoader(FileList& pathList, uint cacheSize, int width, 
         int toLoad  = (m_currIndex - i) % m_pathList.count();
         filePath    = QUrl(m_pathList[toLoad].first);
         KPImageInfo info(filePath);
-        orientation = (KPMetadata::ImageOrientation)info.orientation();
+        orientation = info.orientation();
 
         LoadThread* const newThread = new LoadThread(m_loadedImages, m_imageLock,
                                                      filePath, orientation, m_swidth, m_sheight);
@@ -207,9 +210,9 @@ void SlideShowLoader::next()
     m_imageLock->unlock();
     m_threadLock->unlock();
 
-    QUrl filePath                            = QUrl::fromLocalFile((m_pathList[newBorn].first));
+    QUrl filePath   = QUrl::fromLocalFile((m_pathList[newBorn].first));
     KPImageInfo info(filePath);
-    KPMetadata::ImageOrientation orientation = (KPMetadata::ImageOrientation)info.orientation();
+    int orientation = info.orientation();
 
     LoadThread* const newThread = new LoadThread(m_loadedImages, m_imageLock, filePath, orientation, m_swidth, m_sheight);
 
@@ -248,9 +251,9 @@ void SlideShowLoader::prev()
     m_imageLock->unlock();
     m_threadLock->unlock();
 
-    QUrl filePath                            = QUrl::fromLocalFile(m_pathList[newBorn].first);
+    QUrl filePath   = QUrl::fromLocalFile(m_pathList[newBorn].first);
     KPImageInfo info(filePath);
-    KPMetadata::ImageOrientation orientation = (KPMetadata::ImageOrientation)info.orientation();
+    int orientation = info.orientation();
 
     LoadThread* const newThread = new LoadThread(m_loadedImages, m_imageLock, filePath, orientation, m_swidth, m_sheight);
 
@@ -295,9 +298,9 @@ void SlideShowLoader::checkIsIn(int index)
     }
     else
     {
-        QUrl filePath                            = QUrl(m_pathList[index].first);
+        QUrl filePath   = QUrl(m_pathList[index].first);
         KPImageInfo info(filePath);
-        KPMetadata::ImageOrientation orientation = (KPMetadata::ImageOrientation)info.orientation();
+        int orientation = info.orientation();
 
         LoadThread* const newThread = new LoadThread(m_loadedImages, m_imageLock, filePath, orientation, m_swidth, m_sheight);
 

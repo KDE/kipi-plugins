@@ -32,19 +32,16 @@
 #include <QImage>
 #include <QThread>
 #include <QPair>
-
-// KDE includes
-
 #include <QUrl>
 
-// Local includes
+// Libkipi includes
 
-#include "kpmetadata.h"
+#include <KIPI/Interface>
 
 typedef QPair<QString, int>  FileAnglePair;
 typedef QList<FileAnglePair> FileList;
 
-using namespace KIPIPlugins;
+using namespace KIPI;
 
 namespace KIPIAdvancedSlideshowPlugin
 {
@@ -59,7 +56,7 @@ class LoadThread : public QThread
 public:
 
     LoadThread(LoadedImages* const loadedImages, QMutex* const imageLock, const QUrl& path,
-               KPMetadata::ImageOrientation orientation, int width, int height);
+               int orientation, int width, int height);
     ~LoadThread();
 
 protected:
@@ -68,13 +65,14 @@ protected:
 
 private:
 
-    QMutex*                      m_imageLock;
-    LoadedImages*                m_loadedImages;
-    QUrl                         m_path;
-    QString                      m_filename;
-    KPMetadata::ImageOrientation m_orientation;
-    int                          m_swidth;
-    int                          m_sheight;
+    QMutex*       m_imageLock;
+    LoadedImages* m_loadedImages;
+    QUrl          m_path;
+    QString       m_filename;
+    int           m_orientation;
+    int           m_swidth;
+    int           m_sheight;
+    Interface*    m_iface;
 };
 
 // ----------------------------------------------------------------------------
