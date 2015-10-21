@@ -57,6 +57,7 @@ public:
         imagesList     = 0;
         progressBar    = 0;
         processedCount = 0;
+        iface          = 0;
 
         PluginLoader* const pl = PluginLoader::instance();
 
@@ -236,7 +237,7 @@ void ImgurWidget::slotImageUploadStart(const QUrl& imgPath)
 void ImgurWidget::slotImageUploadSuccess(const QUrl& imgPath, const ImgurSuccess& success)
 {
     // we add tags to the image
-    
+
     if (d->iface)
     {
         QPointer<MetadataProcessor> meta = d->iface->createMetadataProcessor();
@@ -249,7 +250,7 @@ void ImgurWidget::slotImageUploadSuccess(const QUrl& imgPath, const ImgurSuccess
             qCDebug(KIPIPLUGINS_LOG) << "Metadata" << (saved ? "Saved" : "Not Saved") << "to" << imgPath;
         }
     }
-    
+
     qCDebug(KIPIPLUGINS_LOG) << "URL" << ImgurConnection::pageURL(success.image.hash);
     qCDebug(KIPIPLUGINS_LOG) << "Delete URL" << ImgurConnection::deleteURL(success.image.deletehash);
 
