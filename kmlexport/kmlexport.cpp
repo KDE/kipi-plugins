@@ -50,21 +50,19 @@ extern "C"
 
 // Libkipi includes
 
-#include <KIPI/Interface>
-#include <KIPI/Plugin>
+#include <KIPI/PluginLoader>
 #include <KIPI/ImageCollection>
 
 // Local includes
 
 #include "kpbatchprogressdialog.h"
 #include "kpimageinfo.h"
-#include "kpmetadata.h"
 
 namespace KIPIKMLExportPlugin
 {
 
 KmlExport::KmlExport(bool hostFeatureImagesHasComments, bool hostFeatureImagesHasTime,
-                     const QString& hostAlbumName, const KIPI::ImageCollection& hostSelection)
+                     const QString& hostAlbumName, const ImageCollection& hostSelection)
 {
     m_localTarget        = true;
     m_optimize_googlemap = false;
@@ -78,7 +76,19 @@ KmlExport::KmlExport(bool hostFeatureImagesHasComments, bool hostFeatureImagesHa
     m_GPXOpacity         = 64;
     m_GPXAltitudeMode    = 0;
     m_kmlDocument        = 0;
+    m_iface              = 0;
+    m_meta               = 0;
 
+    PluginLoader* const pl = PluginLoader::instance();
+
+    if (pl)
+    {
+        m_iface = pl->interface();
+        
+        if (m_iface)
+            m_meta = m_iface->createMetadataProcessor();
+    } 
+    
     m_hostFeatureImagesHasComments = hostFeatureImagesHasComments;
     m_hostFeatureImagesHasTime = hostFeatureImagesHasTime;
     m_hostAlbumName = hostAlbumName;
@@ -121,7 +131,7 @@ QImage KmlExport::generateSquareThumbnail(const QImage& fullImage, int size) con
     QPixmap croppedPix(size, size);
     QPainter painter(&croppedPix);
 
-    int sx=0, sy=0;
+    int sx = 0, sy = 0;
 
     if (image.width()>size)
     {
@@ -201,10 +211,9 @@ void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum 
 
     // Process images
 
-    if ( info.orientation() != KPMetadata::ORIENTATION_UNSPECIFIED )
+    if ( m_meta && info.orientation() != MetadataProcessor::UNSPECIFIED )
     {
-        QMatrix matrix = RotationMatrix::toMatrix((KPMetadata::ImageOrientation)info.orientation());
-        image          = image.transformed( matrix );
+         m_meta->rotateExifQImage(image, info.orientation());
     }
 
     image = image.scaled(m_size, m_size, Qt::KeepAspectRatioByExpanding);
@@ -241,7 +250,6 @@ void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum 
         //logInfo(i18n("Creation of picture '%1'").arg(fullFileName));
 
         double     alt, lat, lng;
-        KPMetadata meta;
 
         if (info.hasGeolocationInfo())
         {
@@ -249,10 +257,9 @@ void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum 
             lng = info.longitude();
             alt = info.altitude();
         }
-        else
+        else if (m_meta && m_meta->load(imageURL))
         {
-            meta.load(imageURL.path());
-            meta.getGPSInfo(alt, lat, lng);
+            m_meta->getGPSInfo(alt, lat, lng);
         }
 
         QDomElement kmlPlacemark = addKmlElement(kmlAlbum, QLatin1String("Placemark"));
@@ -290,6 +297,7 @@ void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum 
         addKmlTextElement(kmlGeometry, QLatin1String("extrude"), QLatin1String("1"));
 
         // we try to load exif value if any otherwise, try the application db
+
         /** we need to take the DateTimeOriginal
           * if we refer to http://www.exif.org/Exif2-2.PDF
           * (standard)DateTime: is The date and time of image creation. In this standard it is the date and time the file was changed
@@ -304,10 +312,13 @@ void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum 
           * - a panorama created from several pictures, the right time is the DateTimeOriginal (average of DateTimeOriginal actually)
           *          The (standard)DateTime is the creation date of the panorama.
           * it's seems the time to take into acccount is the DateTimeOriginal.
-          * but the KPMetadata::getImageDateTime() return the (standard)DateTime first
-          * KPMetadata seems to take Original dateTime first so it shoul be alright now.
+          * but the MetadataProcessor::getImageDateTime() return the (standard)DateTime first
+          * MetadataProcessor seems to take Original dateTime first so it shoul be alright now.
           */
-        QDateTime datetime = meta.getImageDateTime();
+        QDateTime datetime;
+        
+        if (m_meta)
+            m_meta->getImageDateTime();
 
         if (datetime.isValid())
         {
@@ -460,7 +471,6 @@ void KmlExport::generate()
         addTrack(kmlAlbum);
     }
 
-    KPMetadata meta;
     QList<QUrl> images = m_hostSelection.images();
     int defectImage   = 0;
     int pos           = 1;
@@ -480,10 +490,9 @@ void KmlExport::generate()
             lng = info.longitude();
             alt = info.altitude();
         }
-        else
+        else if (m_meta && m_meta->load(url))
         {
-            meta.load(url.path());
-            hasGPSInfo = meta.getGPSInfo(alt, lat, lng);
+            hasGPSInfo = m_meta->getGPSInfo(alt, lat, lng);
         }
 
         if ( hasGPSInfo )

@@ -155,7 +155,7 @@ bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
 
     KPImageInfo info(QUrl::fromLocalFile(d->filename));
 
-    if ( info.orientation() != MetadataProcessor::UNSPECIFIED )
+    if (d->iface && info.orientation() != MetadataProcessor::UNSPECIFIED )
     {
         QPointer<MetadataProcessor> meta = d->iface->createMetadataProcessor();
         

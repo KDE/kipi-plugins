@@ -94,15 +94,13 @@ void LoadThread::run()
     }
 
     // Rotate according to orientation flag
-    if ( m_orientation != MetadataProcessor::UNSPECIFIED )
-    {
-        if (m_iface)
-        {
-            QPointer<MetadataProcessor> meta = m_iface->createMetadataProcessor();
 
-            if (meta)
-                meta->rotateExifQImage(newImage, m_orientation);
-        }
+    if ( m_iface &&  m_orientation != MetadataProcessor::UNSPECIFIED )
+    {
+        QPointer<MetadataProcessor> meta = m_iface->createMetadataProcessor();
+
+        if (meta)
+            meta->rotateExifQImage(newImage, m_orientation);
     }
 
     newImage = newImage.scaled(m_swidth, m_sheight, Qt::KeepAspectRatio, Qt::SmoothTransformation);

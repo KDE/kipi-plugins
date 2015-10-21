@@ -29,10 +29,12 @@
 #include <QColor>
 #include <QDir>
 #include <QDomDocument>
+#include <QPointer>
 
 // Libkipi includes
 
 #include <KIPI/ImageCollection>
+#include <KIPI/Interface>
 
 // Local includes
 
@@ -61,7 +63,7 @@ class KmlExport
 public:
 
     KmlExport(bool hostFeatureImagesHasComments, bool hostFeatureImagesHasTime,
-              const QString& hostAlbumName, const KIPI::ImageCollection& hostSelection);
+              const QString& hostAlbumName, const ImageCollection& hostSelection);
 
     ~KmlExport();
 
@@ -98,47 +100,6 @@ public:
     void   addTrack(QDomElement& kmlAlbum);
     void   generate();
     int    getConfig();
-
-private:
-
-    bool             m_localTarget;
-    bool             m_optimize_googlemap;
-    bool             m_GPXtracks;
-
-    int              m_iconSize;
-    int              m_googlemapSize;
-    int              m_size;
-    int              m_altitudeMode;
-    int              m_TimeZone;
-    int              m_LineWidth;
-    int              m_GPXOpacity;
-    int              m_GPXAltitudeMode;
-
-    /** directory used in kmldocument structure */
-    QString          m_imageDirBasename;
-    QString          m_GPXFile;
-    QString          m_UrlDestDir;
-
-    /**
-     * Temporary directory where everything will be created.
-     * m_imageDir is nested in m_tempDestDir.
-     */
-    QDir             m_tempDestDir;
-    QDir             m_imageDir;
-
-    /** directory selected by user*/
-    QString          m_baseDestDir;
-
-    QString          m_imgdir;
-    QString          m_KMLFileName;
-
-    QColor           m_GPXColor;
-
-    // Information received from the KIPI interface
-    bool             m_hostFeatureImagesHasComments;
-    bool             m_hostFeatureImagesHasTime;
-    QString          m_hostAlbumName;
-    ImageCollection  m_hostSelection;
 
 private:
 
@@ -196,13 +157,54 @@ private:
 
 private:
 
+    bool                        m_localTarget;
+    bool                        m_optimize_googlemap;
+    bool                        m_GPXtracks;
+
+    int                         m_iconSize;
+    int                         m_googlemapSize;
+    int                         m_size;
+    int                         m_altitudeMode;
+    int                         m_TimeZone;
+    int                         m_LineWidth;
+    int                         m_GPXOpacity;
+    int                         m_GPXAltitudeMode;
+
+    /** directory used in kmldocument structure */
+    QString                     m_imageDirBasename;
+    QString                     m_GPXFile;
+    QString                     m_UrlDestDir;
+
+    /**
+     * Temporary directory where everything will be created.
+     * m_imageDir is nested in m_tempDestDir.
+     */
+    QDir                        m_tempDestDir;
+    QDir                        m_imageDir;
+
+    /** directory selected by user*/
+    QString                     m_baseDestDir;
+
+    QString                     m_imgdir;
+    QString                     m_KMLFileName;
+
+    QColor                      m_GPXColor;
+
+    // Information received from the KIPI interface
+    bool                        m_hostFeatureImagesHasComments;
+    bool                        m_hostFeatureImagesHasTime;
+    QString                     m_hostAlbumName;
+    ImageCollection             m_hostSelection;
+    Interface*                  m_iface;
+    QPointer<MetadataProcessor> m_meta;
+    
     /*! the root document, used to create all QDomElements */
-    QDomDocument*          m_kmlDocument;
+    QDomDocument*               m_kmlDocument;
 
     /*! the GPS parsed data */
-    KMLGPSDataParser       m_gpxParser;
+    KMLGPSDataParser            m_gpxParser;
 
-    KPBatchProgressDialog* m_progressDialog;
+    KPBatchProgressDialog*      m_progressDialog;
 };
 
 } // namespace KIPIKMLExportPlugin
