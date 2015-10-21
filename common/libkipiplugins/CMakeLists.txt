@@ -12,7 +12,6 @@ include_directories(${JPEG_INCLUDE_DIR} ${PNG_INCLUDE_DIR} ${TIFF_INCLUDE_DIR})
 set(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kipiplugins_debug.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kputil.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpimageinfo.cpp
-                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/kphostsettings.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpbinaryiface.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpversion.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpaboutdata.cpp
