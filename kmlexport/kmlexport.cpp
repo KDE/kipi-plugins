@@ -84,11 +84,11 @@ KmlExport::KmlExport(bool hostFeatureImagesHasComments, bool hostFeatureImagesHa
     if (pl)
     {
         m_iface = pl->interface();
-        
+
         if (m_iface)
             m_meta = m_iface->createMetadataProcessor();
-    } 
-    
+    }
+
     m_hostFeatureImagesHasComments = hostFeatureImagesHasComments;
     m_hostFeatureImagesHasTime = hostFeatureImagesHasTime;
     m_hostAlbumName = hostAlbumName;
@@ -249,7 +249,7 @@ void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum 
     {
         //logInfo(i18n("Creation of picture '%1'").arg(fullFileName));
 
-        double     alt, lat, lng;
+        double alt = 0.0, lat = 0.0, lng = 0.0;
 
         if (info.hasGeolocationInfo())
         {
