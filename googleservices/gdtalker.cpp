@@ -68,18 +68,19 @@
 
 namespace KIPIGoogleServicesPlugin
 {
-  
+
 static bool gdriveLessThan(GSFolder& p1, GSFolder& p2)
 {
     return (p1.title.toLower() < p2.title.toLower());
-}  
+}
 
 GDTalker::GDTalker(QWidget* const parent)
     : Authorize(parent, QStringLiteral("https://www.googleapis.com/auth/drive")), m_state(GD_LOGOUT)
 {
     m_rootid          = QStringLiteral("root");
     m_rootfoldername  = QStringLiteral("GoogleDrive Root");
-    
+    m_iface           = 0;
+
     PluginLoader* const pl = PluginLoader::instance();
 
     if (pl)
@@ -211,7 +212,7 @@ bool GDTalker::addPhoto(const QString& imgPath,const GSPhoto& info,const QString
             rawdec->loadRawPreview(QUrl::fromLocalFile(imgPath), image);
         }
     }
-    
+
     if (image.isNull())
     {
         image.load(imgPath);
@@ -223,14 +224,14 @@ bool GDTalker::addPhoto(const QString& imgPath,const GSPhoto& info,const QString
     }
 
     path = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QStringLiteral("/") + QFileInfo(imgPath).baseName().trimmed() + QStringLiteral(".jpg");
-    
+
     int imgQualityToApply = 100;
 
     if (rescale)
     {
         if (image.width() > maxDim || image.height() > maxDim)
             image = image.scaled(maxDim,maxDim,Qt::KeepAspectRatio,Qt::SmoothTransformation);
-        
+
         imgQualityToApply = imageQuality;
     }
 
@@ -247,7 +248,7 @@ bool GDTalker::addPhoto(const QString& imgPath,const GSPhoto& info,const QString
             meta->save(QUrl::fromLocalFile(path));
         }
     }
-   
+
     if (!form.addFile(path))
     {
         emit signalBusy(false);
@@ -322,13 +323,13 @@ void GDTalker::parseResponseUserName(const QByteArray& data)
 {
     QJsonParseError err;
     QJsonDocument doc = QJsonDocument::fromJson(data, &err);
-    
+
     if (err.error != QJsonParseError::NoError)
     {
         emit signalBusy(false);
         return;
     }
-    
+
     QJsonObject jsonObject = doc.object();
     qCDebug(KIPIPLUGINS_LOG)<<"User Name is: " << jsonObject[QStringLiteral("name")].toString();
     QString temp = jsonObject[QStringLiteral("name")].toString();
@@ -344,24 +345,23 @@ void GDTalker::parseResponseListFolders(const QByteArray& data)
     qCDebug(KIPIPLUGINS_LOG) << data;
     QJsonParseError err;
     QJsonDocument doc = QJsonDocument::fromJson(data, &err);
-    
+
     if (err.error != QJsonParseError::NoError)
     {
         emit signalBusy(false);
         emit signalListAlbumsDone(0,i18n("Failed to list folders"),QList<GSFolder>());
         return;
     }
-    
+
     QJsonObject jsonObject = doc.object();
     QJsonArray jsonArray = jsonObject[QStringLiteral("items")].toArray();
-    
+
     QList<GSFolder> albumList;
     GSFolder fps;
     fps.id = m_rootid;
     fps.title = m_rootfoldername;
     albumList.append(fps);
 
-    
     foreach (const QJsonValue & value, jsonArray) 
     {
         QJsonObject obj = value.toObject();
@@ -379,17 +379,17 @@ void GDTalker::parseResponseCreateFolder(const QByteArray& data)
 {
     QJsonParseError err;
     QJsonDocument doc = QJsonDocument::fromJson(data, &err);
-    
+
     if (err.error != QJsonParseError::NoError)
     {
         emit signalBusy(false);
         return;
     }
-    
+
     QJsonObject jsonObject = doc.object();
-    QString temp = jsonObject[QStringLiteral("alternateLink")].toString();
-    bool success        = false;    
-    
+    QString temp           = jsonObject[QStringLiteral("alternateLink")].toString();
+    bool success           = false;
+
     if (!(QString::compare(temp, QStringLiteral(""), Qt::CaseInsensitive) == 0))
         success = true;
 
@@ -409,18 +409,18 @@ void GDTalker::parseResponseAddPhoto(const QByteArray& data)
 {
     QJsonParseError err;
     QJsonDocument doc = QJsonDocument::fromJson(data, &err);
-    
+
     if (err.error != QJsonParseError::NoError)
     {
         emit signalBusy(false);
         return;
-    }    
-    
+    }
+
     QJsonObject jsonObject = doc.object();
-    QString altLink = jsonObject[QStringLiteral("alternateLink")].toString();
-    QString photoId = jsonObject[QStringLiteral("id")].toString();
-    bool success        = false;      
-    
+    QString altLink        = jsonObject[QStringLiteral("alternateLink")].toString();
+    QString photoId        = jsonObject[QStringLiteral("id")].toString();
+    bool success           = false;
+
     if (!(QString::compare(altLink, QStringLiteral(""), Qt::CaseInsensitive) == 0))
         success = true;
 
