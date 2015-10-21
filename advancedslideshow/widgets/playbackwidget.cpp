@@ -28,9 +28,6 @@
 #include <QTime>
 #include <QUrl>
 #include <QKeyEvent>
-
-// KDE includes
-
 #include <QIcon>
 
 // Local includes
@@ -45,14 +42,15 @@ PlaybackWidget::PlaybackWidget(QWidget* const parent, QList<QUrl>& urls, SharedC
 {
     setupUi(this);
 
-    m_sharedData  = sharedData;
-    m_currIndex   = 0;
-    m_mediaObject = 0;
-    m_audioOutput = 0;
-    m_urlList     = urls;
-    m_stopCalled  = false;
-    m_canHide     = true;
-    m_isZeroTime  = false;
+    m_sharedData   = sharedData;
+    m_currIndex    = 0;
+    m_mediaObject  = 0;
+    m_volumeSlider = 0;
+    m_audioOutput  = 0;
+    m_urlList      = urls;
+    m_stopCalled   = false;
+    m_canHide      = true;
+    m_isZeroTime   = false;
 
     m_soundLabel->setPixmap(QIcon::fromTheme(QStringLiteral("speaker")).pixmap(64, 64));
 
@@ -86,7 +84,6 @@ PlaybackWidget::PlaybackWidget(QWidget* const parent, QList<QUrl>& urls, SharedC
 
     // Waiting for files to be enqueued.
     m_playButton->setEnabled(false);
-
     m_prevButton->setEnabled(false);
 
     // Phonon
@@ -105,7 +102,7 @@ PlaybackWidget::PlaybackWidget(QWidget* const parent, QList<QUrl>& urls, SharedC
 
     m_audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
     Phonon::createPath(m_mediaObject, m_audioOutput);
-    
+
     m_volumeSlider = new Phonon::VolumeSlider(m_volumeWidget);
     QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Preferred);
     sizePolicy1.setHorizontalStretch(0);
