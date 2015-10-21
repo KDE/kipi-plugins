@@ -48,7 +48,6 @@ set(ECM_MIN_VERSION     "1.7.0")
 set(KF5_VERSION         "5.1.0")
 set(REQUIRED_QT_VERSION "5.2.0")
 set(KIPI_MIN_VERSION    "5.0.0")
-set(KEXIV2_MIN_VERSION  "5.0.0")
 cmake_minimum_required(VERSION ${CMAKE_MIN_VERSION})
 
 ############## ECM setup ######################
@@ -229,7 +228,6 @@ if(KF5Kipi_FOUND)
                             ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/widgets
                             ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/tools
                             ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/tools/imageio
-                            ${KF5KExiv2_INCLUDE_DIRS}
                             ${KF5Kipi_INCLUDE_DIRS}
                         )
 
