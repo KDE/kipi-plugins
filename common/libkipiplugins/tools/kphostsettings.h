@@ -31,7 +31,6 @@
 // Local includes
 
 #include "kipiplugins_export.h"
-#include "kpmetasettings.h"
 
 namespace KIPIPlugins
 {
@@ -75,10 +74,6 @@ public:
      */
     QString audioExtensions() const;
     bool    hasAudioExtensions() const;
-
-    /** Return metadata settings container from KIPI host application.
-     */
-    KPMetaSettings metadataSettings() const;
 
 private:
 

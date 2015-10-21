@@ -27,15 +27,13 @@
 
 #include <QFile>
 
+// Libkipi includes
+
+#include <KIPI/PluginLoader>
+
 // KDE includes
 
 #include <klocalizedstring.h>
-
-// Local includes
-
-#include "kpmetadata.h"
-
-using namespace KIPIPlugins;
 
 namespace KIPIPanoramaPlugin
 {
@@ -43,25 +41,51 @@ namespace KIPIPanoramaPlugin
 CreatePtoTask::CreatePtoTask(const QString& workDirPath, PanoramaFileType fileType,
                              QUrl& ptoUrl, const QList<QUrl>& inputFiles, const ItemUrlsMap& preProcessedMap,
                              bool addGPlusMetadata, const QString& huginVersion)
-    : Task(CREATEPTO, workDirPath), ptoUrl(ptoUrl), preProcessedMap(&preProcessedMap),
-      fileType(addGPlusMetadata ? JPEG : fileType), inputFiles(inputFiles),
-      addGPlusMetadata(addGPlusMetadata), huginVersion(huginVersion)
-{}
+    : Task(CREATEPTO,
+      workDirPath),
+      ptoUrl(ptoUrl),
+      preProcessedMap(&preProcessedMap),
+      fileType(addGPlusMetadata ? JPEG : fileType),
+      inputFiles(inputFiles),
+      addGPlusMetadata(addGPlusMetadata),
+      huginVersion(huginVersion),
+      m_iface(0),
+      m_meta(0)
+{    
+    PluginLoader* const pl = PluginLoader::instance();
+
+    if (pl)
+    {
+        m_iface = pl->interface();
+        
+        if (m_iface)
+            m_meta = m_iface->createMetadataProcessor();
+    }   
+}
 
 CreatePtoTask::~CreatePtoTask()
-{}
+{
+}
 
 void CreatePtoTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 {
+    if (!m_meta)
+    {
+        successFlag = false;
+        return;
+    }
+
     ptoUrl = tmpDir.resolved(QUrl::fromLocalFile(QStringLiteral("pano_base.pto")));
 
     QFile pto(ptoUrl.toLocalFile());
+
     if (pto.exists())
     {
         errString = i18n("PTO file already created in the temporary directory.");
         successFlag = false;
         return;
     }
+
     if (!pto.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text))
     {
         errString = i18n("PTO file cannot be created in the temporary directory.");
@@ -71,6 +95,7 @@ void CreatePtoTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 
     // 1. Project parameters
     PTOType panoBase(huginVersion);
+
     if (addGPlusMetadata)
     {
         panoBase.project.projection = PTOType::Project::EQUIRECTANGULAR;
@@ -79,8 +104,10 @@ void CreatePtoTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
     {
         panoBase.project.projection = PTOType::Project::CYLINDRICAL;
     }
+
     panoBase.project.fieldOfView = 0;
     panoBase.project.hdr = false;
+
     switch (fileType)
     {
         case JPEG:
@@ -98,28 +125,30 @@ void CreatePtoTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
             // TODO HDR
             break;
     }
-//     panoBase.project.bitDepth = PTOType::Project::FLOAT;
-//     panoBase.project.crop.setLeft(X_left);
-//     panoBase.project.crop.setRight(X_right);
-//     panoBase.project.crop.setTop(X_top);
-//     panoBase.project.crop.setBottom(X_bottom);
+
+//  panoBase.project.bitDepth = PTOType::Project::FLOAT;
+//  panoBase.project.crop.setLeft(X_left);
+//  panoBase.project.crop.setRight(X_right);
+//  panoBase.project.crop.setTop(X_top);
+//  panoBase.project.crop.setBottom(X_bottom);
     panoBase.project.photometricReferenceId = 0;
 
     // 2. Images
     panoBase.images.reserve(inputFiles.size());
     panoBase.images.resize(inputFiles.size());
     int i = 0;
+
     for (i = 0; i < inputFiles.size(); ++i)
     {
         QUrl inputFile(inputFiles.at(i));
         QUrl preprocessedUrl(preProcessedMap->value(inputFile).preprocessedUrl);
-        KPMetadata meta;
-        meta.load(preprocessedUrl.toLocalFile());
-        QSize size = meta.getPixelSize();
+        m_meta->load(preprocessedUrl);
+        QSize size = m_meta->getPixelSize();
 
         panoBase.images[i] = PTOType::Image();
         panoBase.images[i].lensProjection = PTOType::Image::RECTILINEAR;
         panoBase.images[i].size = size;
+
         if (i > 0)
         {
             // We suppose that the pictures are all taken with the same camera and lens
@@ -202,6 +231,7 @@ void CreatePtoTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
             // TODO: HDR
             break;
     }
+
     panoBase.createFile(ptoUrl.toLocalFile());
 
     successFlag = true;

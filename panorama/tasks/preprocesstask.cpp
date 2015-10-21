@@ -38,10 +38,6 @@
 // Local includes
 
 #include "kipiplugins_debug.h"
-#include "kpmetadata.h"
-#include "kpversion.h"
-
-using namespace KIPIPlugins;
 
 namespace KIPIPanoramaPlugin
 {
@@ -51,16 +47,23 @@ PreProcessTask::PreProcessTask(const QString& workDirPath, int id, ItemPreproces
     : Task(PREPROCESS_INPUT,
       workDirPath),
       id(id),
-      iface(0),
       fileUrl(sourceUrl),
-      preProcessedUrl(targetUrls)
-     
+      preProcessedUrl(targetUrls),
+      m_iface(0),     
+      m_meta(0),
+      m_rawdec(0)
 {
     PluginLoader* const pl = PluginLoader::instance();
 
     if (pl)
     {
-        iface = pl->interface();
+        m_iface = pl->interface();
+                
+        if (m_iface)
+        {
+            m_meta   = m_iface->createMetadataProcessor();
+            m_rawdec = m_iface->createRawProcessor();
+        }
     }
 }
 
@@ -72,28 +75,23 @@ void PreProcessTask::requestAbort()
 {
     Task::requestAbort();
 
-    if (!rawProcess.isNull())
+    if (!m_rawdec.isNull())
     {
-        rawProcess->cancel();
+        m_rawdec->cancel();
     }
 }
 
 void PreProcessTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 {
-    if (iface)
+    // check if its a RAW file.
+    if (m_rawdec && m_rawdec->isRawFile(fileUrl))
     {
-        QPointer<RawProcessor> rawdec = iface->createRawProcessor();
+        preProcessedUrl.preprocessedUrl = tmpDir;
 
-        // check if its a RAW file.
-        if (rawdec && rawdec->isRawFile(fileUrl))
+        if (!convertRaw())
         {
-            preProcessedUrl.preprocessedUrl = tmpDir;
-
-            if (!convertRaw())
-            {
-                successFlag = false;
-                return;
-            }
+            successFlag = false;
+            return;
         }
     }
     else
@@ -129,13 +127,15 @@ bool PreProcessTask::computePreview(const QUrl& inUrl)
         bool saved     = preview.save(outUrl.toLocalFile(), "JPEG");
 
         // save exif information also to preview image for auto rotation
-        if (saved)
+        if (saved && m_meta)
         {
-            KPMetadata metaIn(inUrl.toLocalFile());
-            KPMetadata metaOut(outUrl.toLocalFile());
-            metaOut.setImageOrientation(metaIn.getImageOrientation());
-            metaOut.setImageDimensions(QSize(preview.width(), preview.height()));
-            metaOut.applyChanges();
+            m_meta->load(inUrl);
+            int orientation = m_meta->getImageOrientation();
+            
+            m_meta->load(outUrl);
+            m_meta->setImageOrientation(orientation);
+            m_meta->setImageDimensions(QSize(preview.width(), preview.height()));
+            m_meta->applyChanges();
         }
 
         qCDebug(KIPIPLUGINS_LOG) << "Preview Image url: " << outUrl << ", saved: " << saved;
@@ -151,6 +151,11 @@ bool PreProcessTask::computePreview(const QUrl& inUrl)
 
 bool PreProcessTask::convertRaw()
 {
+    if (!m_meta)
+    {
+        return false;
+    }
+
     const QUrl& inUrl = fileUrl;
     QUrl& outUrl      = preProcessedUrl.preprocessedUrl;
     bool decoded      = false;
@@ -158,10 +163,9 @@ bool PreProcessTask::convertRaw()
     int        width, height, rgbmax;
     QByteArray imageData;
 
-    if (iface)
+    if (m_rawdec)
     {
-        rawProcess = iface->createRawProcessor();    
-        decoded    = rawProcess->decodeRawImage(inUrl, imageData, width, height, rgbmax);
+        decoded = m_rawdec->decodeRawImage(inUrl, imageData, width, height, rgbmax);
     }            
 
     if (decoded)
@@ -187,39 +191,38 @@ bool PreProcessTask::convertRaw()
             return false;
         }
 
-        KPMetadata metaIn, metaOut;
-        metaIn.load(inUrl.toLocalFile());
-        KPMetadata::MetaDataMap m = metaIn.getExifTagsDataList(QStringList(QStringLiteral("Photo")), true);
-        KPMetadata::MetaDataMap::iterator it;
-
-        for (it = m.begin(); it != m.end(); ++it)
-        {
-            metaIn.removeExifTag(it.key().toLatin1().constData(), false);
-        }
-
-        metaOut.setData(metaIn.data());
-        metaOut.setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
-        metaOut.setImageDimensions(QSize(width, height));
-        metaOut.setExifTagString("Exif.Image.DocumentName", inUrl.fileName());
-        metaOut.setXmpTagString("Xmp.tiff.Make",  metaOut.getExifTagString("Exif.Image.Make"));
-        metaOut.setXmpTagString("Xmp.tiff.Model", metaOut.getExifTagString("Exif.Image.Model"));
-        metaOut.setImageOrientation(KPMetadata::ORIENTATION_NORMAL);
+        m_meta->load(inUrl);
+        m_meta->removeExifTags(QStringList() << QStringLiteral("Photo"));
+        QByteArray exif = m_meta->getExif();
+        QByteArray iptc = m_meta->getIptc();
+        QByteArray xmp  = m_meta->getXmp();
+        QString make    = m_meta->getExifTagString(QLatin1String("Exif.Image.Make"));
+        QString model   = m_meta->getExifTagString(QLatin1String("Exif.Image.Model"));
 
         QFileInfo fi(inUrl.toLocalFile());
         outUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName().replace(QLatin1String("."), QLatin1String("_")) + QStringLiteral(".tif")));
 
         // wImageIface.setCancel(&isAbortedFlag);
         
-        if (iface && !iface->saveImage(outUrl, QLatin1String("TIF"),
-                                       imageData, width, height,
-                                       true, false,
-                                       &isAbortedFlag))
+        if (m_iface && !m_iface->saveImage(outUrl, QLatin1String("TIF"),
+                                           imageData, width, height,
+                                           true, false,
+                                           &isAbortedFlag))
         {
             errString = i18n("Tiff image creation failed.");
             return false;
         }
-        
-        metaOut.save(outUrl.toLocalFile());
+
+        m_meta->load(outUrl);
+        m_meta->setExif(exif);
+        m_meta->setIptc(iptc);
+        m_meta->setXmp(xmp);
+        m_meta->setImageDimensions(QSize(width, height));
+        m_meta->setExifTagString(QLatin1String("Exif.Image.DocumentName"), inUrl.fileName());
+        m_meta->setXmpTagString(QLatin1String("Xmp.tiff.Make"),  make);
+        m_meta->setXmpTagString(QLatin1String("Xmp.tiff.Model"), model);
+        m_meta->setImageOrientation(MetadataProcessor::NORMAL);
+        m_meta->applyChanges();
     }
     else
     {

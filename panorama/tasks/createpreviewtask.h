@@ -23,24 +23,26 @@
 #ifndef CREATEPREVIEWTASK_H
 #define CREATEPREVIEWTASK_H
 
+// Qt includes
+
+#include <QPointer>
+
+// Libkipi includes
+
+#include <KIPI/Interface>
+
 // Local includes
 
 #include "task.h"
 #include "ptotype/ptotype.h"
 
-
+using namespace KIPI;
 
 namespace KIPIPanoramaPlugin
 {
 
 class CreatePreviewTask : public Task
 {
-
-private:
-
-    QUrl&                               previewPtoUrl;
-    QSharedPointer<const PTOType>       ptoData;
-    const ItemUrlsMap                   preProcessedUrlsMap;
 
 public:
 
@@ -52,6 +54,13 @@ protected:
 
     void run(ThreadWeaver::JobPointer self, ThreadWeaver::Thread *thread) override;
 
+private:
+
+    QUrl&                               previewPtoUrl;
+    QSharedPointer<const PTOType>       ptoData;
+    const ItemUrlsMap                   preProcessedUrlsMap;
+    Interface*                          m_iface;
+    QPointer<MetadataProcessor>         m_meta;
 };
 
 }  // namespace KIPIPanoramaPlugin

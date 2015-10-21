@@ -148,20 +148,4 @@ bool KPHostSettings::hasAudioExtensions() const
     return d->hasSetting(QLatin1String("AudioExtensions"));
 }
 
-KIPIPlugins::KPMetaSettings KPHostSettings::metadataSettings() const
-{
-    KPMetaSettings meta; // if no valid data, default setting is returned.
-
-    if (d->hasValidData())
-    {
-        meta.writeRawFiles         = d->setting(QLatin1String("WriteMetadataToRAW")).toBool();
-        meta.updateFileTimeStamp   = d->setting(QLatin1String("WriteMetadataUpdateFiletimeStamp")).toBool();
-        meta.useXMPSidecar4Reading = d->setting(QLatin1String("UseXMPSidecar4Reading")).toBool();
-        meta.metadataWritingMode   = (KPMetadata::MetadataWritingMode)d->setting(QLatin1String("MetadataWritingMode")).toInt();
-    }
-
-    qCDebug(KIPIPLUGINS_LOG) << meta;
-    return meta;
-}
-
 }  // namespace KIPIPlugins

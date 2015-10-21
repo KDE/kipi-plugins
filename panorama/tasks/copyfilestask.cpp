@@ -25,6 +25,7 @@
 // Qt includes
 
 #include <QFileInfo>
+#include <QDateTime>
 
 // KDE includes
 
@@ -32,16 +33,11 @@
 
 // Libkipi includes
 
-#include <KIPI/Interface>
 #include <KIPI/PluginLoader>
 
 // Local includes
 
 #include "kipiplugins_debug.h"
-#include "kpmetadata.h"
-
-using namespace KIPI;
-using namespace KIPIPlugins;
 
 namespace KIPIPanoramaPlugin
 {
@@ -54,8 +50,19 @@ CopyFilesTask::CopyFilesTask(const QString& workDirPath, const QUrl& panoUrl, co
       ptoUrl(ptoUrl),
       urlList(&urls),
       savePTO(sPTO),
-      addGPlusMetadata(GPlusMetadata)
-{
+      addGPlusMetadata(GPlusMetadata),
+      m_iface(0),
+      m_meta(0)
+{    
+    PluginLoader* const pl = PluginLoader::instance();
+
+    if (pl)
+    {
+        m_iface = pl->interface();
+        
+        if (m_iface)
+            m_meta = m_iface->createMetadataProcessor();
+    }
 }
 
 CopyFilesTask::~CopyFilesTask()
@@ -116,50 +123,61 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
     {
         qCDebug(KIPIPLUGINS_LOG) << i.key();
 
-        KPMetadata metaSrc(i.key().toLocalFile());
-
-        if(metaSrc.getGPSInfo(alt, lat, lng))
+        if (m_meta)
         {
-            qCDebug(KIPIPLUGINS_LOG) << "GPS info found and saved in " << panoUrl;
-            KPMetadata metaDst(panoUrl.toLocalFile());
-            metaDst.setGPSInfo(alt, lat, lng);
-            metaDst.applyChanges();
-            break;
+            m_meta->load(i.key());
+
+            if (m_meta->getGPSInfo(alt, lat, lng))
+            {
+                qCDebug(KIPIPLUGINS_LOG) << "GPS info found and saved in " << panoUrl;
+                m_meta->load(panoUrl);
+                m_meta->setGPSInfo(alt, lat, lng);
+                m_meta->applyChanges();
+                break;
+            }
         }
     }
 
     // Restore usual and common metadata from first shot.
 
-    KPMetadata metaSrc(urlList->constBegin().key().toLocalFile());
-    KPMetadata metaDst(panoUrl.toLocalFile());
-    metaDst.setIptc(metaSrc.getIptc());
-    metaDst.setXmp(metaSrc.getXmp());
-    metaDst.setXmpTagString("Xmp.tiff.Make",  metaSrc.getExifTagString("Exif.Image.Make"));
-    metaDst.setXmpTagString("Xmp.tiff.Model", metaSrc.getExifTagString("Exif.Image.Model"));
-    metaDst.setImageDateTime(metaSrc.getImageDateTime(), true);
-
-    QString filesList;
-
-    for (ItemUrlsMap::const_iterator i = urlList->constBegin(); i != urlList->constEnd(); ++i)
-        filesList.append(i.key().fileName() + QStringLiteral(" ; "));
-
-    filesList.truncate(filesList.length()-3);
-
-    metaDst.setXmpTagString("Xmp.kipi.PanoramaInputFiles", filesList, false);
-    metaDst.setImageDateTime(QDateTime::currentDateTime());
-
-    // NOTE : See https://developers.google.com/photo-sphere/metadata/ for details
-    if (addGPlusMetadata)
+    if (m_meta)
     {
-        qCDebug(KIPIPLUGINS_LOG) << "Adding PhotoSphere metadata...";
-        metaDst.registerXmpNameSpace(QStringLiteral("http://ns.google.com/photos/1.0/panorama/"), QStringLiteral("GPano"));
-        metaDst.setXmpTagString("Xmp.GPano.UsePanoramaViewer", QStringLiteral("True"));
-        metaDst.setXmpTagString("Xmp.GPano.StitchingSoftware", QStringLiteral("Panorama Kipi Plugin with Hugin"));
-        metaDst.setXmpTagString("Xmp.GPano.ProjectionType",    QStringLiteral("equirectangular"));
+        m_meta->load(urlList->constBegin().key());
+        QByteArray iptc = m_meta->getIptc();
+        QByteArray xmp  = m_meta->getXmp();
+        QString make    = m_meta->getExifTagString(QLatin1String("Exif.Image.Make"));
+        QString model   = m_meta->getExifTagString(QLatin1String("Exif.Image.Model"));
+        QDateTime dt    = m_meta->getImageDateTime();
+
+        m_meta->load(panoUrl);
+        m_meta->setIptc(iptc);
+        m_meta->setXmp(xmp);
+        m_meta->setXmpTagString(QLatin1String("Xmp.tiff.Make"),  make);
+        m_meta->setXmpTagString(QLatin1String("Xmp.tiff.Model"), model);
+        m_meta->setImageDateTime(dt);
+
+        QString filesList;
+
+        for (ItemUrlsMap::const_iterator i = urlList->constBegin(); i != urlList->constEnd(); ++i)
+            filesList.append(i.key().fileName() + QStringLiteral(" ; "));
+
+        filesList.truncate(filesList.length()-3);
+
+        m_meta->setXmpTagString(QLatin1String("Xmp.kipi.PanoramaInputFiles"), filesList);
+
+        // NOTE : See https://developers.google.com/photo-sphere/metadata/ for details
+        if (addGPlusMetadata)
+        {
+            qCDebug(KIPIPLUGINS_LOG) << "Adding PhotoSphere metadata...";
+            m_meta->registerXmpNameSpace(QStringLiteral("http://ns.google.com/photos/1.0/panorama/"), QStringLiteral("GPano"));
+            m_meta->setXmpTagString(QLatin1String("Xmp.GPano.UsePanoramaViewer"), QStringLiteral("True"));
+            m_meta->setXmpTagString(QLatin1String("Xmp.GPano.StitchingSoftware"), QStringLiteral("Panorama Kipi Plugin with Hugin"));
+            m_meta->setXmpTagString(QLatin1String("Xmp.GPano.ProjectionType"),    QStringLiteral("equirectangular"));
+        }
+
+        m_meta->applyChanges();
     }
-
-    metaDst.applyChanges();
-
+    
     qCDebug(KIPIPLUGINS_LOG) << "Copying panorama file...";
 
     if (!panoFile.copy(finalPanoUrl.toLocalFile()) || !panoFile.remove())
@@ -188,16 +206,10 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
         qCDebug(KIPIPLUGINS_LOG) << "Copying converted RAW files...";
 
         QPointer<RawProcessor> rawdec = 0;
-        PluginLoader* const pl        = PluginLoader::instance();
 
-        if (pl)
+        if (m_iface)
         {
-            Interface* const iface = pl->interface();
-            
-            if (iface)
-            {
-                rawdec = iface->createRawProcessor();
-            }
+            rawdec = m_iface->createRawProcessor();
         }
         
         for (ItemUrlsMap::const_iterator i = urlList->constBegin(); i != urlList->constEnd(); ++i)

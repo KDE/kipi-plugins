@@ -30,12 +30,13 @@
 
 #include <klocalizedstring.h>
 
+// Libkipi includes
+
+#include <KIPI/PluginLoader>
+
 // Local includes
 
 #include "kipiplugins_debug.h"
-#include "kpmetadata.h"
-
-using namespace KIPIPlugins;
 
 namespace KIPIPanoramaPlugin
 {
@@ -45,8 +46,19 @@ CreatePreviewTask::CreatePreviewTask(const QString& workDirPath, QSharedPointer<
     : Task(CREATEMKPREVIEW, workDirPath),
       previewPtoUrl(previewPtoUrl),
       ptoData(inputPTO),
-      preProcessedUrlsMap(preProcessedUrlsMap)
-{
+      preProcessedUrlsMap(preProcessedUrlsMap),
+      m_iface(0),
+      m_meta(0)
+{    
+    PluginLoader* const pl = PluginLoader::instance();
+
+    if (pl)
+    {
+        m_iface = pl->interface();
+        
+        if (m_iface)
+            m_meta = m_iface->createMetadataProcessor();
+    }
 }
 
 CreatePreviewTask::~CreatePreviewTask()
@@ -55,6 +67,12 @@ CreatePreviewTask::~CreatePreviewTask()
 
 void CreatePreviewTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 {
+    if (!m_meta)
+    {
+        successFlag = false;
+        return;
+    }
+    
     PTOType data(*ptoData);
 
     if (data.images.size() != preProcessedUrlsMap.size())
@@ -65,9 +83,13 @@ void CreatePreviewTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
         return;
     }
 
-    KPMetadata metaIn(preProcessedUrlsMap.begin().value().preprocessedUrl.toLocalFile());
-    KPMetadata metaOut(preProcessedUrlsMap.begin().value().previewUrl.toLocalFile());
-    double scalingFactor             = ((double) metaOut.getPixelSize().width()) / ((double) metaIn.getPixelSize().width());
+    m_meta->load(preProcessedUrlsMap.begin().value().preprocessedUrl);
+    double wIn  = (double)m_meta->getPixelSize().width();
+    
+    m_meta->load(preProcessedUrlsMap.begin().value().previewUrl);
+    double wOut = (double)m_meta->getPixelSize().width();
+    
+    double scalingFactor = wOut / wIn;
 
     data.project.fileFormat.fileType = PTOType::Project::FileFormat::JPEG;
     data.project.fileFormat.quality  = 90;
@@ -80,7 +102,7 @@ void CreatePreviewTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
         QUrl imgUrl = tmpDir.resolved(QUrl::fromLocalFile(image.fileName));
 
         ItemUrlsMap::const_iterator it;
-        const ItemUrlsMap* ppum = &preProcessedUrlsMap;
+        const ItemUrlsMap* const ppum = &preProcessedUrlsMap;
 
         for (it = ppum->constBegin(); it != ppum->constEnd() && it.value().preprocessedUrl.toLocalFile() != imgUrl.toLocalFile(); ++it);
 
@@ -94,8 +116,8 @@ void CreatePreviewTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
         }
 
         image.fileName = it.value().previewUrl.toLocalFile();
-        KPMetadata metaImage(image.fileName);
-        image.size     = metaImage.getPixelSize();
+        m_meta->load(QUrl::fromLocalFile(image.fileName));
+        image.size     = m_meta->getPixelSize();
         image.optimisationParameters.clear();
     }
 

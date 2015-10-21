@@ -115,8 +115,6 @@ DETECT_LIBKIPI(${KIPI_MIN_VERSION})
 
 if(KF5Kipi_FOUND)
 
-    DETECT_LIBKEXIV2(${KEXIV2_MIN_VERSION})
-
     # -- Optional dependencies detection required by some plugins -------------------------------------
 
     DETECT_LIBMEDIAWIKI(5.0.0)                                                 # For Mediawiki.
@@ -168,7 +166,7 @@ if(KF5Kipi_FOUND)
 
      message(STATUS "")
 
-     if(Qt5_FOUND AND KF5_FOUND AND KF5Kipi_FOUND AND KF5KExiv2_FOUND)
+     if(Qt5_FOUND AND KF5_FOUND AND KF5Kipi_FOUND)
          set(KIPI_COMPILE_MESSAGE "kipi-plugins will be compiled")
          FILL_WITH_DOTS(KIPI_COMPILE_MESSAGE)
          message(STATUS " ${KIPI_COMPILE_MESSAGE} YES")

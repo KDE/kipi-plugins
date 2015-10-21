@@ -23,11 +23,19 @@
 #ifndef CREATEPTOTASK_H
 #define CREATEPTOTASK_H
 
+// Qt includes
+
+#include <QPointer>
+
+// Libkipi includes
+
+#include <KIPI/Interface>
+
 // Local includes
 
 #include "task.h"
 
-
+using namespace KIPI;
 
 namespace KIPIPanoramaPlugin
 {
@@ -35,26 +43,27 @@ namespace KIPIPanoramaPlugin
 class CreatePtoTask : public Task
 {
 
-private:
-
-    QUrl&                               ptoUrl;
-    const ItemUrlsMap* const            preProcessedMap;
-    const PanoramaFileType              fileType;
-    const QList<QUrl>&            inputFiles;
-    const bool                          addGPlusMetadata;
-    const QString&                      huginVersion;
-
 public:
 
-    CreatePtoTask(const QString& workDirPath, KIPIPanoramaPlugin::PanoramaFileType fileType,
-                  QUrl& ptoUrl, const QList<QUrl>& inputFiles, const KIPIPanoramaPlugin::ItemUrlsMap& preProcessedMap,
+    CreatePtoTask(const QString& workDirPath, PanoramaFileType fileType,
+                  QUrl& ptoUrl, const QList<QUrl>& inputFiles, const ItemUrlsMap& preProcessedMap,
                   bool addGPlusMetadata, const QString& huginVersion);
     ~CreatePtoTask();
 
 protected:
 
-    void run(ThreadWeaver::JobPointer self, ThreadWeaver::Thread *thread) override;
+    void run(ThreadWeaver::JobPointer self, ThreadWeaver::Thread* thread) override;
 
+private:
+
+    QUrl&                       ptoUrl;
+    const ItemUrlsMap* const    preProcessedMap;
+    const PanoramaFileType      fileType;
+    const QList<QUrl>&          inputFiles;
+    const bool                  addGPlusMetadata;
+    const QString&              huginVersion;
+    Interface*                  m_iface;
+    QPointer<MetadataProcessor> m_meta;
 };
 
 }  // namespace KIPIPanoramaPlugin

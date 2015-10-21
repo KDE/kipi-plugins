@@ -23,17 +23,35 @@
 #ifndef COPYFILESTASK_H
 #define COPYFILESTASK_H
 
+// Qt includes
+
+#include <QPointer>
+
+// Libkipi includes
+
+#include <KIPI/Interface>
+
 // Local includes
 
 #include "task.h"
 
-
+using namespace KIPI;
 
 namespace KIPIPanoramaPlugin
 {
 
 class CopyFilesTask : public Task
 {
+
+public:
+
+    CopyFilesTask(const QString& workDirPath, const QUrl& panoUrl, const QUrl& finalPanoUrl,
+                    const QUrl& ptoUrl, const ItemUrlsMap& urls, bool sPTO, bool GPlusMetadata);
+    ~CopyFilesTask();
+
+protected:
+
+    void run(ThreadWeaver::JobPointer self, ThreadWeaver::Thread *thread) override;
 
 private:
 
@@ -43,16 +61,9 @@ private:
     const ItemUrlsMap* const            urlList;
     const bool                          savePTO;
     const bool                          addGPlusMetadata;
-
-public:
-
-    CopyFilesTask(const QString& workDirPath, const QUrl& panoUrl, const QUrl& finalPanoUrl,
-                  const QUrl& ptoUrl, const ItemUrlsMap& urls, bool sPTO, bool GPlusMetadata);
-    ~CopyFilesTask();
-
-protected:
-
-    void run(ThreadWeaver::JobPointer self, ThreadWeaver::Thread *thread) override;
+    
+    Interface*                          m_iface;
+    QPointer<MetadataProcessor>         m_meta;
 };
 
 }  // namespace KIPIPanoramaPlugin

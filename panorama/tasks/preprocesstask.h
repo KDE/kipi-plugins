@@ -66,10 +66,11 @@ private:
     
 private:
 
-    Interface*                  iface;
     const QUrl                  fileUrl;
     ItemPreprocessedUrls&       preProcessedUrl;
-    QPointer<RawProcessor>      rawProcess;
+    Interface*                  m_iface;
+    QPointer<MetadataProcessor> m_meta;
+    QPointer<RawProcessor>      m_rawdec;
 };
 
 }  // namespace KIPIPanoramaPlugin

@@ -17,7 +17,6 @@ target_link_libraries(imageselector
                       Qt5::Core
 
                       KF5::Kipi
-                      KF5::KExiv2
 
                       KF5kipiplugins
 )
