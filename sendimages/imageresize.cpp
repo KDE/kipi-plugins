@@ -57,8 +57,8 @@ Task::Task(int* count)
     : KPJob()
 {
     m_count = count;
-    
-    
+    m_iface = 0;
+
     PluginLoader* const pl = PluginLoader::instance();
 
     if (pl)
@@ -129,7 +129,7 @@ bool Task::imageResize(const EmailSettings& settings, const QUrl& orgUrl,
     }
 
     QImage img;
-        
+
     if (m_iface)
     {
         QPointer<RawProcessor> rawdec = m_iface->createRawProcessor();
@@ -190,7 +190,7 @@ bool Task::imageResize(const EmailSettings& settings, const QUrl& orgUrl,
         if (m_iface)
         {
             QPointer<MetadataProcessor> meta = m_iface->createMetadataProcessor();
-        
+
             if (meta && meta->load(orgUrl))
             {
                 meta->setImageProgramId(QLatin1String("Kipi-plugins"), QLatin1String(kipiplugins_version));
