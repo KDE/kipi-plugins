@@ -70,7 +70,6 @@ endforeach()
 add_library(libpanorama STATIC ${panorama_common_SRCS})
 
 target_link_libraries(libpanorama
-                      KF5::Parts
                       KF5::Kipi
                       KF5::ConfigCore
                       KF5::ThreadWeaver

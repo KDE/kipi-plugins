@@ -55,11 +55,9 @@ target_link_libraries(libexpoblending
     PRIVATE
         Qt5::Widgets
 
-        KF5::Parts
+        KF5::KIOFileWidgets
         KF5::Kipi
         KF5::ConfigCore
-
-        KF5kipiplugins
 )
 
 # =======================================================

@@ -99,7 +99,6 @@ if(BUILD_TESTING)
 endif()
 
 find_package(KF5 REQUIRED COMPONENTS
-             Parts
              Config
              WindowSystem
              XmlGui

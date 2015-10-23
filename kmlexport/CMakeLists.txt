@@ -17,7 +17,7 @@ add_library(kipiplugin_kmlexport MODULE ${kipiplugin_kmlexport_PART_SRCS})
 
 target_link_libraries(kipiplugin_kmlexport
                       PRIVATE
-                      KF5::Parts
+                      KF5::KIOCore
                       KF5::Kipi
                       KF5kipiplugins
                      )

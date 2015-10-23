@@ -68,7 +68,6 @@ target_link_libraries(kipiplugin_advancedslideshow
                       Qt5::Svg
 
                       KF5::Kipi
-                      KF5::Parts
                       KF5::KIOFileWidgets
                       KF5kipiplugins
 
