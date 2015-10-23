@@ -19,10 +19,7 @@ install(DIRECTORY pics
         DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_expoblending
        )
 
-# =======================================================
-# Common source code
-
-set(expoblending_common_SRCS
+set(kipiplugin_expoblending_PART_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/manager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/actionthread.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/enfusebinary.cpp
@@ -35,45 +32,25 @@ set(expoblending_common_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/blendingdlg/enfusesettings.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/blendingdlg/bracketstack.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/blendingdlg/enfusestack.cpp
-   )
-
-# Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (bug: #269903)
-foreach(_currentfile ${expoblending_common_SRCS})
-    if(NOT MSVC)
-        set_source_files_properties(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")
-    endif()
-endforeach()
-
-add_library(libexpoblending STATIC ${expoblending_common_SRCS})
-
-target_link_libraries(libexpoblending
-    PUBLIC
-        Qt5::Core
-        Qt5::Concurrent
-        KF5kipiplugins
-
-    PRIVATE
-        Qt5::Widgets
-
-        KF5::KIOFileWidgets
-        KF5::Kipi
-        KF5::ConfigCore
+    ${CMAKE_CURRENT_SOURCE_DIR}/plugin/plugin_expoblending.cpp
 )
-
-# =======================================================
-# ExpoBlending plugin
-
-set(kipiplugin_expoblending_PART_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/plugin_expoblending.cpp)
 
 add_library(kipiplugin_expoblending MODULE ${kipiplugin_expoblending_PART_SRCS})
 
 target_link_libraries(kipiplugin_expoblending
-    PRIVATE
-        libexpoblending
-        KF5::XmlGui
-        KF5::ConfigCore
-        KF5::I18n
-)
+                      PRIVATE
+                      Qt5::Core
+                      Qt5::Concurrent
+                      Qt5::Widgets
+
+                      KF5kipiplugins
+
+                      KF5::KIOFileWidgets
+                      KF5::ConfigCore
+                      KF5::XmlGui
+                      KF5::I18n
+                      KF5::Kipi
+                     )
 
 configure_file(plugin/kipiplugin_expoblending.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_expoblending.desktop)
 
