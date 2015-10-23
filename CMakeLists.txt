@@ -87,12 +87,16 @@ find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS
              Gui
              Xml
              XmlPatterns
-             Test
              Svg
              Concurrent
              WebKitWidgets
              OPTIONAL_COMPONENTS OpenGL
 )
+
+if(BUILD_TESTING)
+    find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS
+                 Test)
+endif()
 
 find_package(KF5 REQUIRED COMPONENTS
              Parts
