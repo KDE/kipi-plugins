@@ -29,6 +29,7 @@
 #include <QApplication>
 #include <QStyle>
 #include <QPointer>
+#include <QPushButton>
 
 // KDE includes
 
@@ -78,7 +79,7 @@ public:
     Interface*        iface;
 
 #ifdef OAUTH_ENABLED
-    KPushButton*      changeUserBtn;
+    QPushButton*      changeUserBtn;
 #endif //OAUTH_ENABLED
 };
 
@@ -127,9 +128,9 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
     //QLabel* userNameLbl             = new QLabel(i18nc("imgur account settings", "Name:"), accountBox);
     //QLabel* userNameDisplayLbl    = new QLabel(d->loggedUser, accountBox);
 
-    d->changeUserBtn = new KPushButton(KGuiItem(i18n("Request authorization"), QStringLiteral("system-switch-user"),
-                                       i18n("Set permissions for the current application to upload images to Imgur.")),
-                                       accountBox);
+    d->changeUserBtn = new QPushButton(i18n("Request authorization"), accountBox);
+    d->changeUserBtn->setIcon(QIcon::fromTheme(QStringLiteral("system-switch-user")));
+    d->changeUserBtn->setToolTip(i18n("Set permissions for the current application to upload images to Imgur."));
 
     //accountBoxLayout->addWidget(userNameLbl,            0, 0, 1, 2);
     //accountBoxLayout->addWidget(userNameDisplayLbl,     0, 2, 1, 2);
@@ -279,6 +280,8 @@ KPProgressWidget* ImgurWidget::progressBar() const
 
 void ImgurWidget::slotAuthenticated(bool authenticated, const QString& message)
 {
+    Q_UNUSED(message);
+
 #ifdef OAUTH_ENABLED
     //qCDebug(KIPIPLUGINS_LOG) << "Disable the button.";
     if (authenticated)
@@ -290,7 +293,6 @@ void ImgurWidget::slotAuthenticated(bool authenticated, const QString& message)
     //emit signalEnableAuthentication(!authenticated);
 #else //OAUTH_ENABLED
     Q_UNUSED(authenticated);
-    Q_UNUSED(message);
 #endif //OAUTH_ENABLED
 }
 
