@@ -26,10 +26,6 @@
 
 #include <QImageReader>
 
-// QtKOAuth includes
-
-#include <QtKOAuth>
-
 // Local includes
 
 #include "kipiplugins_debug.h"
