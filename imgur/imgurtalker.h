@@ -53,8 +53,6 @@ using namespace KIPI;
 namespace KIPIImgurPlugin
 {
 
-// ----------------------------------------------------------------------
-
 class ImgurTalker : public QWidget
 {
     Q_OBJECT

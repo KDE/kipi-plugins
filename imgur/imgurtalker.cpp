@@ -214,73 +214,73 @@ bool ImgurTalker::parseResponseImageRemove(const QByteArray& data)
 bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
 {
     qCDebug(KIPIPLUGINS_LOG)<<"Upload Image data is "<<data;
-    
+
     if (data.isEmpty())
         return false;
 
     QJsonParseError err;
     QJsonDocument doc = QJsonDocument::fromJson(data, &err);
     bool ok           = (err.error == QJsonParseError::NoError);
-    
+
     if (ok)
     {
         QJsonObject jsonObject = doc.object();
-        
+
         if (jsonObject.contains(QStringLiteral("upload")))
         {
             ImgurSuccess success;
             QJsonObject obj1 = jsonObject[QStringLiteral("upload")].toObject();
             QJsonObject obj2 = obj1[QStringLiteral("image")].toObject();
             QJsonObject obj3 = obj1[QStringLiteral("links")].toObject();
-            
+
             success.image.name = obj2[QStringLiteral("name")].toString();
             qCDebug(KIPIPLUGINS_LOG)<<"Name is "<<success.image.name;
-                    
+
             success.image.title = obj2[QStringLiteral("title")].toString();
-                    
+
             success.image.caption = obj2[QStringLiteral("caption")].toString();
-                    
+
             success.image.hash = obj2[QStringLiteral("hash")].toString();
-                   
+
             success.image.deletehash = obj2[QStringLiteral("deletehash")].toString();
-                   
+
             success.image.type = obj2[QStringLiteral("type")].toString();
-                    
+
             success.image.animated = (obj2[QStringLiteral("animated")].toString() == QStringLiteral("true"));
-                   
+
             success.image.width = obj2[QStringLiteral("width")].toString().toInt();
-                    
+
             success.image.height = obj2[QStringLiteral("height")].toString().toInt();
-                    
+
             success.image.size = obj2[QStringLiteral("size")].toString().toInt();
-                    
+
             success.image.views = obj2[QStringLiteral("views")].toString().toInt();
-                   
+
             success.image.bandwidth = obj2[QStringLiteral("bandwidth")].toString().toLongLong();
-            
+
             success.links.original = QUrl(obj3[QStringLiteral("original")].toString());
             qCDebug(KIPIPLUGINS_LOG)<<"Link original is "<<success.links.original;
-                    
+
             success.links.imgur_page = QUrl(obj3[QStringLiteral("imgur_page")].toString());
 
             success.links.delete_page = QUrl(obj3[QStringLiteral("delete_page")].toString());
-                    
+
             success.links.small_square = QUrl(obj3[QStringLiteral("small_square")].toString());
-                    
+
             success.links.large_thumbnail = QUrl(obj3[QStringLiteral("largeThumbnail")].toString());
-            
+
             emit signalSuccess(m_currentUrl, success);
         }
-        
+
         if (jsonObject.contains(QStringLiteral("error")))
         {
             ImgurError error;
             QJsonObject obj = jsonObject[QStringLiteral("error")].toObject();
-            
+
             error.message   = obj[QStringLiteral("message")].toString();
-                
+
             error.request = obj[QStringLiteral("request")].toString();
-                
+
             error.parameters = obj[QStringLiteral("parameters")].toString();
 
             if (QString::compare(obj[QStringLiteral("method")].toString(),
@@ -313,9 +313,9 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
         ImgurError error;
         error.message = i18n("Parse error");
         emit signalError (m_currentUrl, error);
-        qCDebug(KIPIPLUGINS_LOG) << "Parse Error";        
+        qCDebug(KIPIPLUGINS_LOG) << "Parse Error";
     }
-    
+
     return ok;
 }
 

@@ -86,11 +86,11 @@ public:
 };
 
 /*
-QString ImgurConnection::uploadURL = QString ("https://api.imgur.com/2/upload.json");
-QString ImgurConnection::deleteURL = QString ("https://api.imgur.com/2/delete.json");
-QString ImgurConnection::OAuthTokenEndPoint = QString ("https://api.imgur.com/oauth/request_token");
-QString ImgurConnection::OAuthAccessEndPoint = QString ("https://api.imgur.com/oauth/access_token");
-QString ImgurConnection::OAuthAuthorizationEndPoint = QString ("https://api.imgur.com/oauth/authorize");
+QString ImgurConnection::uploadURL = QStringLiteral("https://api.imgur.com/2/upload.json");
+QString ImgurConnection::deleteURL = QStringLiteral("https://api.imgur.com/2/delete.json");
+QString ImgurConnection::OAuthTokenEndPoint = QStringLiteral("https://api.imgur.com/oauth/request_token");
+QString ImgurConnection::OAuthAccessEndPoint = QStringLiteral("https://api.imgur.com/oauth/access_token");
+QString ImgurConnection::OAuthAuthorizationEndPoint = QStringLiteral("https://api.imgur.com/oauth/authorize");
 */
 
 struct ImgurError
@@ -142,7 +142,7 @@ struct ImgurSuccess
         QString    hash;
         QString    deletehash;
         QDateTime  datetime;
-        QString    type; // maybe enum
+        QString    type;       // maybe enum
         bool       animated;
         uint       width;
         uint       height;

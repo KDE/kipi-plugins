@@ -109,7 +109,7 @@ bool MPForm::addFile(const QString& name, const QString& path)
     QMimeDatabase db;
     QMimeType ptr = db.mimeTypeForUrl(QUrl::fromLocalFile(path));
     QString mime  = ptr.name();
-    
+
     if (mime.isEmpty())
     {
         // if we ourselves can't determine the mime of the local file,
@@ -137,7 +137,7 @@ bool MPForm::addFile(const QString& name, const QString& path)
     str += name.toLatin1();
     str += "\"; ";
     str += "filename=\"";
-    str += QFile::encodeName(QUrl(path).fileName());
+    str += QFile::encodeName(QUrl::fromLocalFile(path).fileName());
     str += "\"\r\n";
     str += "Content-Length: ";
     str += file_size.toLatin1();

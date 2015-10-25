@@ -41,7 +41,7 @@ public:
 
     Private()
     {
-        userAgent                            = QString("KIPI-Plugins-ImgurExport" + QLatin1String("/") + kipipluginsVersion());
+        userAgent                            = QLatin1String("KIPI-Plugins-ImgurExport") + QLatin1String("/") + kipipluginsVersion();
         const char _imgurApiConsumerKey[]    = _IMGUR_API_CONSUMER_KEY;
         consumerKey                          = QByteArray( _imgurApiConsumerKey );
         const char _imgurApiConsumerSecret[] = _IMGUR_API_CONSUMER_SECRET;
@@ -145,12 +145,12 @@ void ImgurTalkerAuth::imageUpload (const QUrl& filePath)
     d->OAuthRequest->setTokenSecret( d->oauthTokenSecret.data() );
 
     KQOAuthParameters params;
-    params.insert("name", filePath.fileName());
-    params.insert("title", filePath.fileName());
-    params.insert("content-type", contentType.data());
-    params.insert("content-length", QString("Content-Length: %1").arg(imageData.toBase64().length()));
-    params.insert("UserAgent", d->userAgent);
-    params.insert("image", imageData.toBase64());
+    params.insert(QLatin1String("name"),           filePath.fileName());
+    params.insert(QLatin1String("title"),          filePath.fileName());
+    params.insert(QLatin1String("content-type"),   contentType.data());
+    params.insert(QLatin1String("content-length"), QString::fromUtf8("Content-Length: %1").arg(imageData.toBase64().length()));
+    params.insert(QLatin1String("UserAgent"),      d->userAgent);
+    params.insert(QLatin1String("image"),          imageData.toBase64());
 
     d->OAuthRequest->setAdditionalParameters(params);
     d->OAuthService->executeRequest(d->OAuthRequest);
