@@ -91,7 +91,10 @@ find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS
              Concurrent
              WebKitWidgets
              Network
-             OPTIONAL_COMPONENTS OpenGL
+)
+
+find_package(Qt5 ${REQUIRED_QT_VERSION} OPTIONAL_COMPONENTS
+             OpenGL
 )
 
 if(BUILD_TESTING)
