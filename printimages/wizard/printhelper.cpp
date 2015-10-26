@@ -225,7 +225,7 @@ void PrintHelper::print(const QList<QUrl>& fileList)
     PrintOptionsPage* const optionsPage = new PrintOptionsPage(d->mParent, &d->m_photos);
     optionsPage->loadConfig();
 
-    std::auto_ptr<PrintHelperDialog> dialog(new PrintHelperDialog(&printer, optionsPage, d->mParent));
+    QPointer<PrintHelperDialog> dialog(new PrintHelperDialog(&printer, optionsPage, d->mParent));
 
     dialog->setOptionTabs(QList<QWidget*>() << optionsPage);
 
@@ -233,11 +233,9 @@ void PrintHelper::print(const QList<QUrl>& fileList)
     connect(dialog, SIGNAL(accepted(QPrinter*)),
             optionsPage, SLOT(ogChanges(QPrinter*)));
 
-    std::auto_ptr<QPrintDialog> dialog(
-        KdePrint::createPrintDialog(&printer,
-                                    QList<QWidget*>() << optionsPage,
-                                    d->mParent)
-    );
+    QPointer<QPrintDialog> dialog(KdePrint::createPrintDialog(&printer,
+                                                              QList<QWidget*>() << optionsPage,
+                                                              d->mParent));
 #endif
 
     dialog->setWindowTitle(i18n("Kipi-plugins image printing"));
