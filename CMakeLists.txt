@@ -106,9 +106,9 @@ find_package(KF5 REQUIRED COMPONENTS
              I18n
              KIO
              Service                          # for SendImages (KToolInvocation)
-             ThreadWeaver                     # for Panorama
-             Archive                          # for FlashExport
              IconThemes                       # for GoogleServices (KIO/PixmapLoader)
+             OPTIONAL_COMPONENTS Archive      # for FlashExport
+             OPTIONAL_COMPONENTS ThreadWeaver # for Panorama
              OPTIONAL_COMPONENTS CalendarCore # for Calendar
 )
 
@@ -150,11 +150,13 @@ if(KF5Kipi_FOUND)
 
     # Optional shared libraries results.
 
-    PRINT_OPTIONAL_LIBRARY_STATUS("libmediawiki"   "https://projects.kde.org/projects/extragear/libs/libmediawiki"   "(version >= 5.0.0)"                  "Kipi-plugins will be compiled without libmediawiki support."   KF5MediaWiki_FOUND)
-    PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte"  "https://projects.kde.org/projects/extragear/libs/libkvkontakte"  "(version >= 4.70.0)"                 "Kipi-plugins will be compiled without libkvkontakte support."  KF5Vkontakte_FOUND)
-    PRINT_OPTIONAL_LIBRARY_STATUS("libkcalcore"    "https://projects.kde.org/projects/kde/pim/kcalcore"              "(version >= 4.81.0)"                 "Kipi-plugins will be compiled without libkcalcore support."    KF5CalendarCore_FOUND)
-    PRINT_OPTIONAL_LIBRARY_STATUS("libphonon"      "https://projects.kde.org/projects/kdesupport/phonon"             "(version >= 4.81.0)"                 "Kipi-plugins will be compiled without libphonon support."      Phonon4Qt5_FOUND)
-    PRINT_OPTIONAL_LIBRARY_STATUS("libqtkoauth"    "https://github.com/kypeli/kQOAuth"                               "(version >= 0.97)"                   "Kipi-plugins will be compiled without libqtkoauth support."    QTKOAUTH_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libkarchive"     "https://projects.kde.org/projects/frameworks/karchive"           "(version >= 5.0.0)"                  "Kipi-plugins will be compiled without libkarchive support."     KF5Archive_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libthreadweaver" "https://projects.kde.org/projects/frameworks/threadweaver"       "(version >= 5.0.0)"                  "Kipi-plugins will be compiled without libthreadweaver support." KF5ThreadWeaver_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libmediawiki"    "https://projects.kde.org/projects/extragear/libs/libmediawiki"   "(version >= 5.0.0)"                  "Kipi-plugins will be compiled without libmediawiki support."    KF5MediaWiki_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte"   "https://projects.kde.org/projects/extragear/libs/libkvkontakte"  "(version >= 4.70.0)"                 "Kipi-plugins will be compiled without libkvkontakte support."   KF5Vkontakte_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libkcalcore"     "https://projects.kde.org/projects/kde/pim/kcalcore"              "(version >= 4.81.0)"                 "Kipi-plugins will be compiled without libkcalcore support."     KF5CalendarCore_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libphonon"       "https://projects.kde.org/projects/kdesupport/phonon"             "(version >= 5.0.0)"                  "Kipi-plugins will be compiled without libphonon support."       Phonon4Qt5_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libqtkoauth"     "https://github.com/kypeli/kQOAuth"                               "(version >= 0.97)"                   "Kipi-plugins will be compiled without libqtkoauth support."     QTKOAUTH_FOUND)
 
     PRINT_OPTIONAL_LIBRARY_STATUS("native Opengl support"  "" "" "Kipi-plugins will be compiled without native OpenGL support."  OPENGL_FOUND AND OPENGL_GLU_FOUND)
     PRINT_OPTIONAL_QTMODULE_STATUS("Qt5 OpenGL"            Qt5OpenGL_FOUND)
@@ -194,11 +196,12 @@ if(KF5Kipi_FOUND)
      endif()
 
     PRINT_COMPONENT_COMPILE_STATUS("ImageViewer"        BUILD_VIEWERS)
-    PRINT_COMPONENT_COMPILE_STATUS("Panorama"           FLEX_FOUND AND BISON_FOUND)
+    PRINT_COMPONENT_COMPILE_STATUS("Panorama"           FLEX_FOUND AND BISON_FOUND AND KF5ThreadWeaver_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("VKontakte"          KF5Vkontakte_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("Mediawiki"          KF5MediaWiki_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("AdvancedSlideshow"  BUILD_VIEWERS)
     PRINT_COMPONENT_COMPILE_STATUS("Calendar"           KF5CalendarCore_FOUND)
+    PRINT_COMPONENT_COMPILE_STATUS("FlashExport"        KF5Archive_FOUND)
 
     # ==================================================================================================
 
@@ -256,7 +259,6 @@ if(KF5Kipi_FOUND)
         add_subdirectory(printimages)
         add_subdirectory(kmlexport)
         add_subdirectory(sendimages)
-        add_subdirectory(flashexport)
         add_subdirectory(expoblending)
         add_subdirectory(flickr)
         add_subdirectory(smug)
@@ -270,8 +272,8 @@ if(KF5Kipi_FOUND)
         add_subdirectory(imgur)
         add_subdirectory(facebook)
 
-        if (BUILD_TESTING)
-            add_subdirectory(tests)
+        if(KF5Archive_FOUND)
+            add_subdirectory(flashexport)
         endif()
 
         if(BUILD_VIEWERS)
@@ -279,7 +281,7 @@ if(KF5Kipi_FOUND)
             add_subdirectory(imageviewer)
         endif()
 
-        if(FLEX_FOUND AND BISON_FOUND)
+        if(FLEX_FOUND AND BISON_FOUND AND KF5ThreadWeaver_FOUND)
             add_subdirectory(panorama)
         endif()
 
@@ -293,6 +295,10 @@ if(KF5Kipi_FOUND)
 
         if(KF5Vkontakte_FOUND)
             add_subdirectory(vkontakte)
+        endif()
+
+        if (BUILD_TESTING)
+            add_subdirectory(tests)
         endif()
 
     endif()
