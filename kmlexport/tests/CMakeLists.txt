@@ -4,6 +4,8 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
+cmake_policy(SET CMP0063 NEW)
+
 add_executable(test_kmlexport_gpxparsing
                test_kmlexport_gpxparsing.cpp
 )
