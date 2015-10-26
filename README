@@ -46,7 +46,7 @@ Enblend         >= 3.0.0 (runtime dependency)   http://enblend.sourceforge.net
 
 Optional:
 
-libthreadweaver >= 5.0.0                        https://projects.kde.org/projects/frameworks/threadweaver                    
+libthreadweaver >= 5.0.0                        https://projects.kde.org/projects/frameworks/threadweaver
 libkarchive     >= 5.0.0                        https://projects.kde.org/projects/frameworks/karchive
 libphonon       >= 5.0.0                        https://projects.kde.org/projects/kdesupport/phonon
 libkcalcore     >= 5.0.0                        https://projects.kde.org/projects/kde/pim/kcalcore
@@ -56,7 +56,7 @@ libxslt         >= 1.1.0                        http://xmlsoft.org/XSLT
 libxml2         >= 2.7.0                        http://xmlsoft.org
 libX11          >= 1.1.5                        http://www.x11.org
 libqtopengl     >= 4.3.0                        http://www.qtsoftware.com
-libmesa         >= 7.0.4                        http://mesa3d.sourceforge.net
+libmesa         >= 11.0                         http://mesa3d.sourceforge.net
 libqtkoauth     >= 0.97                         https://github.com/kypeli/kQOAuth
 flex            >= 2.5.0                        http://flex.sourceforge.net
 bison           >= 2.5.0                        http://www.gnu.org/software/bison/bison.html
