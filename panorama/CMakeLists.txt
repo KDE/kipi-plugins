@@ -5,7 +5,9 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-cmake_policy(SET CMP0063 NEW)
+if (POLICY CMP0063)
+    cmake_policy(SET CMP0063 NEW)
+endif (POLICY CMP0063)
 
 add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_panorama\")
 
