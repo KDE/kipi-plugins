@@ -34,7 +34,27 @@
 
 // QtKOAuth includes
 
+// Pragma directives to reduce warnings from QtKOAuth header files.
+#if not defined(__APPLE__) && defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wpedantic"
+#endif
+
+#if defined(__APPLE__) && defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpedantic"
+#endif
+
 #include <QtKOAuth>
+
+// Restore warnings
+#if not defined(__APPLE__) && defined(__GNUC__)
+#pragma GCC diagnostic pop
+#endif
+
+#if defined(__APPLE__) && defined(__clang__)
+#pragma clang diagnostic pop
+#endif
 
 // Libkipi includes
 
