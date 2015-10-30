@@ -232,8 +232,8 @@ void ImgurTalkerAuth::slotAccessTokenReceived(const QString& token, const QStrin
 {
     qCDebug(KIPIPLUGINS_LOG) << "Access token received: " << token << tokenSecret;
 
-    d->oauthToken       = token.toAscii();
-    d->oauthTokenSecret = tokenSecret.toAscii();
+    d->oauthToken       = token.toLatin1();
+    d->oauthTokenSecret = tokenSecret.toLatin1();
 
     emit signalAuthenticated(true, i18n("OK"));
     emit signalBusy(false);
