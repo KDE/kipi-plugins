@@ -32,10 +32,6 @@
 #include <QSettings>
 #include <QUrl>
 
-// KDE includes
-
-#include <kio/jobclasses.h>
-
 // QtKOAuth includes
 
 #include <QtKOAuth>
@@ -54,11 +50,6 @@ using namespace KIPI;
 namespace KIPIImgurPlugin
 {
 
-// QtOauth
-
-//class KQOAuthManager;
-//class KQOAuthRequest;
-
 class ImgurTalkerAuth : public ImgurTalker
 {
     Q_OBJECT
@@ -73,10 +64,11 @@ public:
 
 Q_SIGNALS:
 
-    void signalAuthenticated(bool authenticated, const QString& message = "");
+    void signalAuthenticated(bool authenticated, const QString& message = QString());
 
 private:
-    bool            parseLoginResponse(const QByteArray& data);
+
+    bool               parseLoginResponse(const QByteArray& data);
     static const char* getAuthError(KQOAuthManager::KQOAuthError error);
 
 private Q_SLOTS:

@@ -31,10 +31,6 @@
 #include <QSettings>
 #include <QUrl>
 
-// KDE includes
-
-#include <kio/jobclasses.h>
-
 // Libkipi includes
 
 #include <KIPI/Interface>
@@ -47,6 +43,8 @@ namespace KIO
 {
     class Job;
 }
+
+class KJob;
 
 using namespace KIPI;
 
