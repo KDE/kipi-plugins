@@ -102,17 +102,22 @@ if(BUILD_TESTING)
                  Test)
 endif()
 
-find_package(KF5 REQUIRED COMPONENTS
+find_package(KF5 ${KF5_VERSION}
+             REQUIRED COMPONENTS
              Config
              WindowSystem
              XmlGui
              I18n
              KIO
-             Service                          # for SendImages (KToolInvocation)
-             IconThemes                       # for GoogleServices (KIO/PixmapLoader)
-             OPTIONAL_COMPONENTS Archive      # for FlashExport
-             OPTIONAL_COMPONENTS ThreadWeaver # for Panorama
-             OPTIONAL_COMPONENTS CalendarCore # for Calendar
+             Service      # for SendImages (KToolInvocation)
+             IconThemes   # for GoogleServices (KIO/PixmapLoader)
+)
+
+find_package(KF5 ${KF5_VERSION}
+             OPTIONAL_COMPONENTS
+             Archive      # for FlashExport
+             ThreadWeaver # for Panorama
+             CalendarCore # for Calendar
 )
 
 # Dependencies detection required by all plugins
