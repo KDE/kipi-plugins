@@ -45,8 +45,8 @@ set(KIPIPLUGINS_LIB_SO_VERSION_STRING
 
 set(CMAKE_MIN_VERSION   "2.8.12")
 set(ECM_MIN_VERSION     "1.7.0")
-set(KF5_VERSION         "5.1.0")
-set(REQUIRED_QT_VERSION "5.2.0")
+set(KF5_MIN_VERSION     "5.1.0")
+set(QT_MIN_VERSION      "5.2.0")
 set(KIPI_MIN_VERSION    "5.0.0")
 cmake_minimum_required(VERSION ${CMAKE_MIN_VERSION})
 
@@ -80,7 +80,7 @@ include(MacroLocalLibs)
 
 ############## Find Packages ###################
 
-find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS
+find_package(Qt5 ${QT_MIN_VERSION} REQUIRED NO_MODULE COMPONENTS
              Core
              Widgets
              PrintSupport
@@ -93,16 +93,16 @@ find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS
              Network
 )
 
-find_package(Qt5 ${REQUIRED_QT_VERSION} OPTIONAL_COMPONENTS
+find_package(Qt5 ${QT_MIN_VERSION} OPTIONAL_COMPONENTS
              OpenGL
 )
 
 if(BUILD_TESTING)
-    find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS
+    find_package(Qt5 ${QT_MIN_VERSION} REQUIRED NO_MODULE COMPONENTS
                  Test)
 endif()
 
-find_package(KF5 ${KF5_VERSION}
+find_package(KF5 ${KF5_MIN_VERSION}
              REQUIRED COMPONENTS
              Config
              WindowSystem
@@ -113,7 +113,7 @@ find_package(KF5 ${KF5_VERSION}
              IconThemes   # for GoogleServices (KIO/PixmapLoader)
 )
 
-find_package(KF5 ${KF5_VERSION}
+find_package(KF5 ${KF5_MIN_VERSION}
              OPTIONAL_COMPONENTS
              Archive      # for FlashExport
              ThreadWeaver # for Panorama
@@ -153,14 +153,14 @@ if(KF5Kipi_FOUND)
     # Require shared libraries results.
 
     PRINT_LIBRARY_STATUS("libqt"     "http://www.qtsoftware.com"                                        "(version >= ${QT_MIN_VERSION})"     Qt5_FOUND)
-    PRINT_LIBRARY_STATUS("libkde"    "http://www.kde.org"                                               "(version >= ${KDE_MIN_VERSION})"    KF5_FOUND)
+    PRINT_LIBRARY_STATUS("libkde"    "http://www.kde.org"                                               "(version >= ${KF5_MIN_VERSION})"    KF5_FOUND)
     PRINT_LIBRARY_STATUS("libkipi"   "https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi"   "(version >= ${KIPI_MIN_VERSION}))"  KF5Kipi_FOUND)
 
     # Optional shared libraries results.
 
-    PRINT_OPTIONAL_LIBRARY_STATUS("libkarchive"     "https://projects.kde.org/projects/frameworks/karchive"           "(version >= 5.0.0)"                  "Kipi-plugins will be compiled without libkarchive support."     KF5Archive_FOUND)
-    PRINT_OPTIONAL_LIBRARY_STATUS("libthreadweaver" "https://projects.kde.org/projects/frameworks/threadweaver"       "(version >= 5.0.0)"                  "Kipi-plugins will be compiled without libthreadweaver support." KF5ThreadWeaver_FOUND)
-    PRINT_OPTIONAL_LIBRARY_STATUS("libmediawiki"    "https://projects.kde.org/projects/extragear/libs/libmediawiki"   "(version >= 5.0.0)"                  "Kipi-plugins will be compiled without libmediawiki support."    KF5MediaWiki_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libkarchive"     "https://projects.kde.org/projects/frameworks/karchive"           "(version >= ${KF5_MIN_VERSION})"                  "Kipi-plugins will be compiled without libkarchive support."     KF5Archive_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libthreadweaver" "https://projects.kde.org/projects/frameworks/threadweaver"       "(version >= ${KF5_MIN_VERSION})"                  "Kipi-plugins will be compiled without libthreadweaver support." KF5ThreadWeaver_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libmediawiki"    "https://projects.kde.org/projects/extragear/libs/libmediawiki"   "(version >= ${KF5_MIN_VERSION})"                  "Kipi-plugins will be compiled without libmediawiki support."    KF5MediaWiki_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte"   "https://projects.kde.org/projects/extragear/libs/libkvkontakte"  "(version >= 4.70.0)"                 "Kipi-plugins will be compiled without libkvkontakte support."   KF5Vkontakte_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libkcalcore"     "https://projects.kde.org/projects/kde/pim/kcalcore"              "(version >= 4.81.0)"                 "Kipi-plugins will be compiled without libkcalcore support."     KF5CalendarCore_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libphonon"       "https://projects.kde.org/projects/kdesupport/phonon"             "(version >= 4.8.3)"                  "Kipi-plugins will be compiled without libphonon support."       Phonon4Qt5_FOUND)
