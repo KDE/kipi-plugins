@@ -47,6 +47,8 @@ public:
         const char _imgurApiConsumerSecret[] = _IMGUR_API_CONSUMER_SECRET;
         consumerSecret                       = QByteArray( _imgurApiConsumerSecret );
         continueUpload                       = true;
+        OAuthService                         = 0;
+        OAuthRequest                         = 0;
     }
 
     QString         userAgent;
