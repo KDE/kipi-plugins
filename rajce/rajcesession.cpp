@@ -718,7 +718,7 @@ QByteArray AddPhotoCommand::encode() const
 /// RajceSession impl
 
 RajceSession::RajceSession(QWidget* const parent, const QString& tmpDir)
-    : QObject(parent), m_queueAccess(), m_tmpDir(tmpDir), m_currentJob(0)
+    : QObject(parent), m_queueAccess(QMutex::Recursive), m_tmpDir(tmpDir), m_currentJob(0)
 {
 }
 
