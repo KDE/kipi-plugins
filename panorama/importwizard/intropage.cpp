@@ -50,6 +50,7 @@
 #include "nonabinary.h"
 #include "panomodifybinary.h"
 #include "pto2mkbinary.h"
+#include "huginexecutorbinary.h"
 #include "kputil.h"
 
 namespace KIPIPanoramaPlugin
@@ -120,6 +121,7 @@ IntroPage::IntroPage(Manager* const mngr, KPWizardDialog* const dlg)
     d->binariesWidget->addBinary(d->mngr->nonaBinary());
     d->binariesWidget->addBinary(d->mngr->panoModifyBinary());
     d->binariesWidget->addBinary(d->mngr->pto2MkBinary());
+    d->binariesWidget->addBinary(d->mngr->huginExecutorBinary());
 
 #ifdef Q_WS_MAC
     d->binariesWidget->addDirectory("/Applications/Hugin/HuginTools");    // Hugin bundle PKG install

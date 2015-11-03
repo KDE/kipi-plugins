@@ -51,6 +51,7 @@
 #include "nonabinary.h"
 #include "panomodifybinary.h"
 #include "pto2mkbinary.h"
+#include "huginexecutorbinary.h"
 #include <ptofile.h>
 
 namespace KIPIPanoramaPlugin
@@ -127,6 +128,7 @@ struct Manager::Private
     NonaBinary                     nonaBinary;
     PanoModifyBinary               panoModifyBinary;
     Pto2MkBinary                   pto2MkBinary;
+    HuginExecutorBinary            huginExecutorBinary;
 
     ImportWizardDlg*               wizard;
 
@@ -158,7 +160,8 @@ bool Manager::checkBinaries()
            d->enblendBinary.recheckDirectories()       &&
            d->makeBinary.recheckDirectories()          &&
            d->nonaBinary.recheckDirectories()          &&
-           d->pto2MkBinary.recheckDirectories());
+           d->pto2MkBinary.recheckDirectories()        &&
+           d->huginExecutorBinary.recheckDirectories());
 }
 
 void Manager::setGPano(bool gPano)
@@ -239,6 +242,11 @@ PanoModifyBinary& Manager::panoModifyBinary() const
 Pto2MkBinary& Manager::pto2MkBinary() const
 {
     return d->pto2MkBinary;
+}
+
+HuginExecutorBinary& Manager::huginExecutorBinary() const
+{
+    return d->huginExecutorBinary;
 }
 
 QUrl& Manager::basePtoUrl() const

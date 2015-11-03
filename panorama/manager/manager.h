@@ -55,6 +55,7 @@ class MakeBinary;
 class NonaBinary;
 class PanoModifyBinary;
 class Pto2MkBinary;
+class HuginExecutorBinary;
 
 class Manager : public QObject
 {
@@ -125,6 +126,7 @@ public:
     NonaBinary&             nonaBinary()          const;
     PanoModifyBinary&       panoModifyBinary()    const;
     Pto2MkBinary&           pto2MkBinary()        const;
+    HuginExecutorBinary&    huginExecutorBinary() const;
 
     void run();
 

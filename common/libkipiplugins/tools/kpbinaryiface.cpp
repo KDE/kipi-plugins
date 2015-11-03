@@ -42,10 +42,36 @@
 namespace KIPIPlugins
 {
 
+KPBinaryIface::KPBinaryIface(const QString& binaryName, const QString& projectName, const QString& url,
+                             const QString& pluginName, const QStringList& args)
+    : m_checkVersion(false),
+      m_headerStarts(QLatin1String("")),
+      m_headerLine(0),
+      m_minimalVersion(QLatin1String("")),
+      m_configGroup(pluginName + QLatin1String(" Settings")),
+      m_binaryBaseName(goodBaseName(binaryName)),
+      m_binaryArguments(args),
+      m_projectName(projectName),
+      m_url(QUrl(url)),
+      m_isFound(false),
+      m_developmentVersion(false),
+      m_version(QLatin1String("")),
+      m_pathDir(QLatin1String("")),
+      m_pathWidget(0),
+      m_binaryLabel(0),
+      m_versionLabel(0),
+      m_pathButton(0),
+      m_downloadButton(0),
+      m_lineEdit(0),
+      m_statusIcon(0)
+{
+}
+
 KPBinaryIface::KPBinaryIface(const QString& binaryName, const QString& minimalVersion, const QString& header,
                              const int headerLine, const QString& projectName, const QString& url,
                              const QString& pluginName, const QStringList& args)
-    : m_headerStarts(header),
+    : m_checkVersion(true),
+      m_headerStarts(header),
       m_headerLine(headerLine),
       m_minimalVersion(minimalVersion),
       m_configGroup(pluginName + QLatin1String(" Settings")), 
@@ -78,6 +104,9 @@ const QString& KPBinaryIface::version() const
 
 bool KPBinaryIface::versionIsRight() const
 {
+    if (!m_checkVersion)
+        return true;
+
     QRegExp reg(QLatin1String("^(\\d*[.]\\d*)"));
     version().indexOf(reg);
     float floatVersion = reg.capturedTexts()[0].toFloat();
@@ -230,19 +259,30 @@ bool KPBinaryIface::checkDir(const QString& possibleDir)
     {
         m_isFound = true;
 
-        QString stdOut = QString::fromUtf8(process.readAllStandardOutput());
+        if (m_checkVersion)
+        {
+            QString stdOut = QString::fromUtf8(process.readAllStandardOutput());
 
-        if (parseHeader(stdOut))
+            if (parseHeader(stdOut))
+            {
+                m_pathDir = possibleDir;
+                writeConfig();
+
+                qCDebug(KIPIPLUGINS_LOG) << "Found " << path() << " version: " << version();
+                ret = true;
+            }
+            else
+            {
+                // TODO: do something if the version is not right or not found
+            }
+        }
+        else
         {
             m_pathDir = possibleDir;
             writeConfig();
 
-            qCDebug(KIPIPLUGINS_LOG) << "Found " << path() << " version: " << version();
+            qCDebug(KIPIPLUGINS_LOG) << "Found " << path();
             ret = true;
-        }
-        else
-        {
-            // TODO: do something if the version is not right or not found
         }
     }
 

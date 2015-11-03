@@ -48,6 +48,11 @@ class KIPIPLUGINS_EXPORT KPBinaryIface : public QObject
 
 public:
 
+    KPBinaryIface(const QString& binaryName,
+                  const QString& projectName,
+                  const QString& url,
+                  const QString& pluginName,
+                  const QStringList& args = QStringList());
     KPBinaryIface(const QString& binaryName, 
                   const QString& minimalVersion, 
                   const QString& header,
@@ -109,6 +114,7 @@ protected:
 
 protected:
 
+    const bool          m_checkVersion;
     const QString       m_headerStarts;
     const int           m_headerLine;
     const QString       m_minimalVersion;
