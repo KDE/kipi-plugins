@@ -2,6 +2,7 @@
 UntranslatedGenericName=Google Services
 Name=Google Services
 Name[ca]=Google Services
+Name[ca@valencia]=Google Services
 Name[cs]=Služby Google
 Name[de]=Google Services
 Name[el]=Google Services
@@ -21,6 +22,7 @@ Name[uk]=Служби Google
 Name[x-test]=xxGoogle Servicesxx
 Comment=A tool to manage images with a remote Google web service
 Comment[ca]=Una eina per gestionar imatges amb el servei web remot de Google
+Comment[ca@valencia]=Una eina per gestionar imatges amb el servei web remot de Google
 Comment[cs]=Nástroj pro správu obrázků vzdálené webové služby Google
 Comment[de]=Ein Werkzeug, um Bilder zu einem entfernten Google-Webdienst zu verwalten.
 Comment[el]=Εργαλείο διαχείρισης εικόνων σε μια απομακρυσμένη υπηρεσία ιστού της Google
