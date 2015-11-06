@@ -27,12 +27,11 @@
 
 #include <QDesktopWidget>
 #include <QPointer>
-#include <QtCore/QUrl>
-#include <QtCore/QList>
-#include <QtCore/QDir>
-#include <QtCore/QMimeDatabase>
-#include <QtCore/QMimeType>
-#include <QtCore/QStandardPaths>
+#include <QUrl>
+#include <QList>
+#include <QMimeDatabase>
+#include <QMimeType>
+#include <QStandardPaths>
 
 // KDE includes
 
@@ -180,7 +179,7 @@ ViewerWidget::ViewerWidget()
     else if ( selection.images().count()==1 )
     {
         qCDebug(KIPIPLUGINS_LOG) << "one image selected, load entire album and start with selected image" ;
-        selectedImage = selection.images().first().path();
+        selectedImage = selection.images().first().toLocalFile();
         myfiles       = album.images();
     }
     else if ( selection.images().count()>1 )
@@ -194,7 +193,7 @@ ViewerWidget::ViewerWidget()
     {
         // find selected image in album in order to determine the first displayed image
         // in case one image was selected and the entire album was loaded
-        QString s = QDir::cleanPath(it->path());
+        QString s = it->toLocalFile();
 
         if ( s == selectedImage )
         {

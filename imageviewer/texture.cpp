@@ -131,8 +131,9 @@ int Texture::width() const
 bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
 {
     d->filename     = fn;
-    d->initial_size = size;
     d->texnr        = tn;
+    d->initial_size = size;
+    d->qimage       = QImage();
 
     if (d->iface)
     {
@@ -144,7 +145,7 @@ bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
             rawdec->loadRawPreview(QUrl::fromLocalFile(d->filename), d->qimage);
         }
     }
-    
+
     if (d->qimage.isNull())
     {
         // use the standard loader
