@@ -262,10 +262,10 @@ public:
         fdMode    = QFileDialog::ExistingFile;
         fdOptions = QFileDialog::DontUseNativeDialog;
     }
- 
+
     QLineEdit*            edit;
     QPushButton*          btn;
-    
+
     QFileDialog::FileMode fdMode;
     QString               fdFilter;
     QString               fdTitle;
@@ -279,7 +279,7 @@ KPFileSelector::KPFileSelector(QWidget* const parent)
     d->edit    = new QLineEdit(this);
     d->btn     = new QPushButton(i18n("Browse..."), this);
     setStretchFactor(d->edit, 10);
-    
+
     connect(d->btn, SIGNAL(clicked()),
             this, SLOT(slotBtnClicked()));
 }
@@ -322,7 +322,7 @@ void KPFileSelector::slotBtnClicked()
         return;
     }
 
-    QFileDialog* const fileDlg = new QFileDialog(this);
+    QFileDialog* const fileDlg = new QFileDialog();
     fileDlg->setOptions(d->fdOptions);
     fileDlg->setDirectory(QFileInfo(d->edit->text()).filePath());
     fileDlg->setFileMode(d->fdMode);
@@ -345,7 +345,7 @@ void KPFileSelector::slotBtnClicked()
             emit signalUrlSelected(QUrl::fromLocalFile(sel.first()));
         }
     }
-    
+
     delete fileDlg;
 }
 
@@ -358,7 +358,7 @@ public:
     Private()
     {
     }
- 
+
     QColor color;
 };
 
@@ -382,12 +382,12 @@ void KPColorSelector::setColor(const QColor& color)
         d->color = color;
         update();
     }
-}    
+}
 
 QColor KPColorSelector::color() const
 {
     return d->color;
-}    
+}
 
 void KPColorSelector::slotBtnClicked()
 {
@@ -429,11 +429,11 @@ void KPColorSelector::paintEvent(QPaintEvent*)
 
     QColor fillCol = isEnabled() ? d->color : palette().color(backgroundRole());
     qDrawShadePanel(&painter, x, y, w, h, palette(), true, 1, 0);
-    
+
     if (fillCol.isValid())
     {
         const QRect rect(x + 1, y + 1, w - 2, h - 2);
-        
+
         if (fillCol.alpha() < 255)
         {
             QPixmap chessboardPattern(16, 16);
@@ -463,11 +463,11 @@ void KPColorSelector::paintEvent(QPaintEvent*)
 // -------------------------------------------------------------------------------------------
 
 KPRandomGenerator::KPRandomGenerator()
-{    
+{
 }
 
 KPRandomGenerator::~KPRandomGenerator()
-{    
+{
 }
 
 QString KPRandomGenerator::randomString(const int& length)

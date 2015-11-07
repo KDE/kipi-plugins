@@ -124,8 +124,8 @@ public:
     explicit KPFileSelector(QWidget* const parent=0);
     virtual ~KPFileSelector();
 
-    QLineEdit* lineEdit()   const;
-    
+    QLineEdit* lineEdit() const;
+
     void setFileDlgMode(QFileDialog::FileMode mode);
     void setFileDlgFilter(const QString& filter);
     void setFileDlgTitle(const QString& title);
@@ -158,7 +158,7 @@ public:
 
     explicit KPColorSelector(QWidget* const parent=0);
     virtual ~KPColorSelector();
-    
+
     void setColor(const QColor& color);
     QColor color() const;
 
@@ -173,7 +173,7 @@ private Q_SLOTS:
 private:
 
     void paintEvent(QPaintEvent*);
-    
+
 private:
 
     class Private;
@@ -188,10 +188,10 @@ private:
 class KIPIPLUGINS_EXPORT KPRandomGenerator
 {
 public:
-    
+
     KPRandomGenerator();
     ~KPRandomGenerator();
-    
+
     static QString randomString(const int& length);
 };
 
