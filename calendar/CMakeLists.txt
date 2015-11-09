@@ -31,6 +31,7 @@ include_directories(${KDEPIMLIBS_INCLUDE_DIR}
 
 target_link_libraries(kipiplugin_calendar
                       KF5::Kipi
+                      KF5::I18n
                       KF5::CalendarCore 
                       KF5kipiplugins
                      )

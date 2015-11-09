@@ -21,12 +21,14 @@ set(kipiplugin_wikimedia_PART_SRCS
 add_library(kipiplugin_wikimedia MODULE ${kipiplugin_wikimedia_PART_SRCS} ${ui_src})
 
 target_link_libraries(kipiplugin_wikimedia
+                      KF5::Kipi
+                      KF5::I18n
+                      KF5::KIOCore
+                      KF5::WindowSystem
+
                       KF5kipiplugins
 
                       ${LIBMEDIAWIKI_LIBRARIES}
-                      KF5::Kipi
-                      KF5::KIOCore
-                      KF5::WindowSystem
                      )
 
 configure_file(kipiplugin_wikimedia.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_wikimedia.desktop)

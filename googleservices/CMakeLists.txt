@@ -24,13 +24,14 @@ set(kipiplugin_googleservices_PART_SRCS
 add_library(kipiplugin_googleservices MODULE ${kipiplugin_googleservices_PART_SRCS})
 
 target_link_libraries(kipiplugin_googleservices
-    PRIVATE
-        KF5::Kipi
-        KF5::KIOCore
-        KF5::KIOWidgets
-        KF5::WindowSystem
-        KF5::IconThemes
-        KF5kipiplugins
+                      PRIVATE
+                      KF5::Kipi
+                      KF5::I18n
+                      KF5::KIOCore
+                      KF5::KIOWidgets
+                      KF5::WindowSystem
+                      KF5::IconThemes
+                      KF5kipiplugins
 )
 
 configure_file(kipiplugin_googleservices.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_googleservices.desktop)

@@ -23,6 +23,7 @@ target_link_libraries(kipiplugin_facebook
                       PRIVATE
                       KF5kipiplugins
                       KF5::Kipi
+                      KF5::I18n
                       KF5::KIOCore
                       KF5::KIOWidgets
                       KF5::WindowSystem

@@ -23,12 +23,14 @@ set(kipiplugin_yandexfotki_PART_SRCS
 add_library(kipiplugin_yandexfotki MODULE ${kipiplugin_yandexfotki_PART_SRCS})
 
 target_link_libraries(kipiplugin_yandexfotki
-    PRIVATE
-        KF5::Kipi
-        KF5::KIOCore
-        KF5::KIOFileWidgets
-        KF5::WindowSystem
-        KF5kipiplugins
+                      PRIVATE
+                      KF5::Kipi
+                      KF5::I18n
+                      KF5::KIOCore
+                      KF5::KIOFileWidgets
+                      KF5::WindowSystem
+
+                      KF5kipiplugins
 )
 
 configure_file(kipiplugin_yandexfotki.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_yandexfotki.desktop)

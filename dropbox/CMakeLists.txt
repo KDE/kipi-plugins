@@ -22,6 +22,7 @@ add_library(kipiplugin_dropbox MODULE ${kipiplugin_dropbox_PART_SRCS})
 target_link_libraries(kipiplugin_dropbox
                       PRIVATE
                       KF5::Kipi
+                      KF5::I18n
                       KF5::KIOCore
                       KF5::KIOWidgets
                       KF5::WindowSystem

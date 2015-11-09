@@ -22,6 +22,7 @@ target_link_libraries(kipiplugin_imageviewer
                       PRIVATE
                       Qt5::OpenGL
 
+                      KF5::I18n
                       KF5::Kipi
                       KF5kipiplugins
 
