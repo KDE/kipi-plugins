@@ -148,6 +148,8 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     : QScrollArea(parent),
       d(new Private)
 {
+    const int spacing = QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
+
     QWidget* const panel    = new QWidget(viewport());
     setWidget(panel);
     setWidgetResizable(true);
@@ -195,8 +197,8 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     d->useCustomDateTodayBtn->setIcon(QIcon::fromTheme(QLatin1String("go-jump-today")));
     d->useCustomDateTodayBtn->setToolTip(i18n("Reset to current date"));
 
-    useGBLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    useGBLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    useGBLayout->setContentsMargins(spacing, spacing, spacing, spacing);
+    useGBLayout->setSpacing(spacing);
     useGBLayout->setColumnStretch(1, 1);
     useGBLayout->setColumnStretch(2, 1);
     useGBLayout->addWidget(d->useApplDateBtn,         0, 0, 1, 1);
@@ -233,8 +235,8 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     d->adjTimeInput->setDisplayFormat(QLatin1String("hh:mm:ss"));
     d->adjDetByClockPhotoBtn    = new QPushButton(i18n("Determine difference from clock photo"));
 
-    adjustGBLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    adjustGBLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    adjustGBLayout->setContentsMargins(spacing, spacing, spacing, spacing);
+    adjustGBLayout->setSpacing(spacing);
     adjustGBLayout->setColumnStretch(0, 1);
     adjustGBLayout->setColumnStretch(1, 1);
     adjustGBLayout->setColumnStretch(3, 1);
@@ -259,8 +261,8 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     d->updXMPDateCheck          = new QCheckBox(i18n("XMP"),                d->updateSettingsBox);
     d->updFileNameCheck         = new QCheckBox(i18n("Filename"),           d->updateSettingsBox);
 
-    updateGBLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    updateGBLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    updateGBLayout->setContentsMargins(spacing, spacing, spacing, spacing);
+    updateGBLayout->setSpacing(spacing);
     updateGBLayout->setColumnStretch(0, 1);
     updateGBLayout->setColumnStretch(1, 1);
     updateGBLayout->addWidget(d->updAppDateCheck,     0, 0, 1, 1);

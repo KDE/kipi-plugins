@@ -56,8 +56,7 @@ namespace KIPIPhotoLayoutsEditor
                 m_layout->addWidget(m_up_btn);
                 m_layout->addWidget(m_dwn_btn);
                 this->setLayout(m_layout);
-                m_layout->setContentsMargins(0,0,0,0);
-                m_layout->setMargin(0);
+                m_layout->setContentsMargins(QMargins());
                 m_layout->setSpacing(0);
                 m_layout->update();
 

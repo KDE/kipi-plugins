@@ -72,6 +72,8 @@ KPWizardPage::KPWizardPage(KPWizardDialog* const dlg, const QString& title)
 {
     setTitle(title);
 
+    const int spacing = QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
+
     QScrollArea* const sv = new QScrollArea(this);
     QWidget* const panel  = new QWidget(sv->viewport());
     sv->setWidget(panel);
@@ -94,8 +96,8 @@ KPWizardPage::KPWizardPage(KPWizardDialog* const dlg, const QString& title)
     vboxLay->addWidget(space);
     vboxLay->addWidget(d->leftBottomPix);
     vboxLay->setStretchFactor(space, 10);
-    vboxLay->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    vboxLay->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    vboxLay->setContentsMargins(spacing, spacing, spacing, spacing);
+    vboxLay->setSpacing(spacing);
 
     QFrame* const vline = new QFrame(panel);
     vline->setLineWidth(1);
@@ -107,8 +109,8 @@ KPWizardPage::KPWizardPage(KPWizardDialog* const dlg, const QString& title)
 
     d->hlay->addWidget(d->leftView);
     d->hlay->addWidget(vline);
-    d->hlay->setMargin(0);
-    d->hlay->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    d->hlay->setContentsMargins(QMargins());
+    d->hlay->setSpacing(spacing);
     
     QVBoxLayout* const layout = new QVBoxLayout;
     layout->addWidget(sv);

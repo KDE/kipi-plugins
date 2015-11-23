@@ -64,12 +64,14 @@ SwLogin::SwLogin(QWidget* const parent)
     m_passwordEdt->setEchoMode( QLineEdit::Password );
     m_passwordEdt->setWhatsThis(i18n("Password of Muvee account (required)."));
 
+    const int spacing = QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
+
     QFormLayout* const loginBoxLayout = new QFormLayout;
     loginBoxLayout->addRow(i18nc("login settings", "Email:"),    m_emailEdt);
     loginBoxLayout->addRow(i18nc("login settings", "Password:"), m_passwordEdt);
     loginBoxLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
-    loginBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    loginBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    loginBoxLayout->setContentsMargins(spacing, spacing, spacing, spacing);
+    loginBoxLayout->setSpacing(spacing);
     mainWidget->setLayout(loginBoxLayout);
 }
 

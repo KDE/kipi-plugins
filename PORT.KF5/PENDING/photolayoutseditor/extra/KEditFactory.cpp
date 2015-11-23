@@ -254,7 +254,7 @@ QWidget * KSliderEditFactory::createEditor(QtIntPropertyManager * manager, QtPro
     spinbox->setMinimum(manager->minimum(property));
     spinbox->setValue(manager->value(property));
     QHBoxLayout* layout = new QHBoxLayout();
-    layout->setMargin(0);
+    layout->setContentsMargins(QMargins());
     layout->setSpacing(0);
     layout->addWidget(slider,1);
     layout->addWidget(spinbox,0);

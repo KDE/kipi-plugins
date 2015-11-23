@@ -59,6 +59,8 @@ SmugNewAlbum::SmugNewAlbum(QWidget* const parent)
 
     // ------------------------------------------------------------------------
 
+    const int spacing = QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
+
     QGroupBox* const albumBox = new QGroupBox(i18n("Album"), this);
     albumBox->setWhatsThis(i18n("These are basic settings for the new SmugMug album."));
 
@@ -87,8 +89,8 @@ SmugNewAlbum::SmugNewAlbum(QWidget* const parent)
     albumBoxLayout->addRow(i18nc("new smug album dialog", "Description:"), m_descEdt);
     albumBoxLayout->addRow(i18nc("new smug album dialog", "Template:"), m_templateCoB);
     albumBoxLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
-    albumBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    albumBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    albumBoxLayout->setContentsMargins(spacing, spacing, spacing, spacing);
+    albumBoxLayout->setSpacing(spacing);
     albumBox->setLayout(albumBoxLayout);
 
     // ------------------------------------------------------------------------
@@ -116,8 +118,8 @@ SmugNewAlbum::SmugNewAlbum(QWidget* const parent)
     privBoxLayout->addRow(i18n("Privacy:"), radioLayout);
     privBoxLayout->addRow(i18n("Password:"), m_passwdEdt);
     privBoxLayout->addRow(i18n("Password Hint:"), m_hintEdt);
-    privBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    privBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    privBoxLayout->setContentsMargins(spacing, spacing, spacing, spacing);
+    privBoxLayout->setSpacing(spacing);
     m_privBox->setLayout(privBoxLayout);
 
     // ------------------------------------------------------------------------
@@ -133,8 +135,8 @@ SmugNewAlbum::SmugNewAlbum(QWidget* const parent)
     mainLayout->addWidget(albumBox);
     mainLayout->addWidget(m_privBox);
     mainLayout->addWidget(buttonBox);
-    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    mainLayout->setMargin(0);
+    mainLayout->setContentsMargins(QMargins());
+    mainLayout->setSpacing(spacing);
     setLayout(mainLayout);
 }
 

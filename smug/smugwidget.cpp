@@ -61,6 +61,8 @@ SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool
 {
     setObjectName(QStringLiteral("SmugWidget"));
 
+    const int spacing = QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
+
     QHBoxLayout* const mainLayout = new QHBoxLayout(this);
 
     // -------------------------------------------------------------------
@@ -108,8 +110,8 @@ SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool
     accountBoxLayout->addWidget(m_emailLbl,             3, 0, 1, 1);
     accountBoxLayout->addWidget(m_email,                3, 1, 1, 1);
     accountBoxLayout->addWidget(m_changeUserBtn,        4, 1, 1, 1);
-    accountBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    accountBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    accountBoxLayout->setContentsMargins(spacing, spacing, spacing, spacing);
+    accountBoxLayout->setSpacing(spacing);
 
     // ------------------------------------------------------------------------
 
@@ -190,8 +192,8 @@ SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool
     optionsBoxLayout->addWidget(dimensionLbl,       2, 1, 1, 1);
     optionsBoxLayout->addWidget(m_dimensionSpB,     2, 2, 1, 1);
     optionsBoxLayout->setRowStretch(3, 10);
-    optionsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    optionsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    optionsBoxLayout->setContentsMargins(spacing, spacing, spacing, spacing);
+    optionsBoxLayout->setSpacing(spacing);
 
     m_progressBar = new KIPIPlugins::KPProgressWidget(settingsBox);
     m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
@@ -205,15 +207,15 @@ SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool
     settingsBoxLayout->addWidget(uploadBox);
     settingsBoxLayout->addWidget(optionsBox);
     settingsBoxLayout->addWidget(m_progressBar);
-    settingsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    settingsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    settingsBoxLayout->setSpacing(spacing);
+    settingsBoxLayout->setContentsMargins(spacing, spacing, spacing, spacing);
 
     // ------------------------------------------------------------------------
 
     mainLayout->addWidget(m_imgList);
     mainLayout->addWidget(settingsBox);
-    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    mainLayout->setMargin(0);
+    mainLayout->setSpacing(spacing);
+    mainLayout->setContentsMargins(QMargins());
 
     updateLabels();  // use empty labels until login
 

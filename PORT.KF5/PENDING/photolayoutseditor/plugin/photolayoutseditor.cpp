@@ -382,8 +382,8 @@ void PhotoLayoutsEditor::createWidgets()
     // Central widget (widget with canvas)
     d->centralWidget = new QWidget(this);
     d->centralWidget->setLayout(new QHBoxLayout(d->centralWidget));
+    d->centralWidget->layout()->setContentsMargins(QMargins());
     d->centralWidget->layout()->setSpacing(0);
-    d->centralWidget->layout()->setMargin(0);
     this->setCentralWidget(d->centralWidget);
 
     d->statusBar = new PLEStatusBar(this);

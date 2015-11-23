@@ -92,8 +92,8 @@ KmlWindow::KmlWindow(QWidget* const parent,
 
     buttonGroupTargetTypeLayout->addWidget( LocalTargetRadioButton_,     0, 0, 1, 1);
     buttonGroupTargetTypeLayout->addWidget( GoogleMapTargetRadioButton_, 1, 0, 1, 1);
-    buttonGroupTargetTypeLayout->setAlignment( Qt::AlignTop );
-    buttonGroupTargetTypeLayout->setMargin(0);
+    buttonGroupTargetTypeLayout->setContentsMargins(QMargins());
+    buttonGroupTargetTypeLayout->setAlignment(Qt::AlignTop);
 
     // --------------------------------------------------------------
     // target preference, suite
@@ -133,8 +133,8 @@ KmlWindow::KmlWindow(QWidget* const parent,
     TargetPreferenceGroupBoxLayout->addWidget(DestinationUrl_,            4, 2, 1, 3);
     TargetPreferenceGroupBoxLayout->addWidget(FileNameLabel_,             5, 0, 1, 1);
     TargetPreferenceGroupBoxLayout->addWidget(FileName_,                  5, 1, 1, 4);
+    TargetPreferenceGroupBoxLayout->setContentsMargins(QMargins());
     TargetPreferenceGroupBoxLayout->setAlignment(Qt::AlignTop);
-    TargetPreferenceGroupBoxLayout->setMargin(0);
 
     // --------------------------------------------------------------
     // Sizes
@@ -153,8 +153,8 @@ KmlWindow::KmlWindow(QWidget* const parent,
     SizeGroupBoxLayout->addWidget(IconSizeInput_,  0, 1, 1, 1);
     SizeGroupBoxLayout->addWidget(ImageSizeLabel,  0, 2, 1, 1);
     SizeGroupBoxLayout->addWidget(ImageSizeInput_, 0, 3, 1, 1);
+    SizeGroupBoxLayout->setContentsMargins(QMargins());
     SizeGroupBoxLayout->setAlignment(Qt::AlignTop);
-    SizeGroupBoxLayout->setMargin(0);
 
     // --------------------------------------------------------------
     // GPX Tracks
@@ -218,7 +218,7 @@ KmlWindow::KmlWindow(QWidget* const parent,
     GPXTracksOpacityInput_ = new QSpinBox(GPXTracksGroupBox);
     GPXTracksOpacityInput_->setRange(0, 100);
     GPXTracksOpacityInput_->setSingleStep(1);
-    GPXTracksOpacityInput_->setValue(100 );
+    GPXTracksOpacityInput_->setValue(100);
 
     GPXAltitudeLabel_ = new QLabel(i18n("Track Altitude:"), GPXTracksGroupBox);
     GPXAltitudeCB_    = new QComboBox(GPXTracksGroupBox);
@@ -249,15 +249,15 @@ KmlWindow::KmlWindow(QWidget* const parent,
     GPXTracksGroupBoxLayout->addWidget( GPXTracksOpacityInput_, 4, 2, 1, 3);
     GPXTracksGroupBoxLayout->addWidget( GPXAltitudeLabel_,      5, 0, 1, 1);
     GPXTracksGroupBoxLayout->addWidget( GPXAltitudeCB_,         5, 1, 1, 3);
-    GPXTracksGroupBoxLayout->setAlignment( Qt::AlignTop );
-    GPXTracksGroupBoxLayout->setMargin(0);
+    GPXTracksGroupBoxLayout->setContentsMargins(QMargins());
+    GPXTracksGroupBoxLayout->setAlignment(Qt::AlignTop);
 
     // --------------------------------------------------------------
 
     KMLExportConfigLayout->addWidget( TargetPreferenceGroupBox, 0, 0);
     KMLExportConfigLayout->addWidget( SizeGroupBox,             1, 0);
     KMLExportConfigLayout->addWidget( GPXTracksGroupBox,        2, 0);
-    KMLExportConfigLayout->setMargin(0);
+    KMLExportConfigLayout->setContentsMargins(QMargins());
 
     // --------------------------------------------------------------
 

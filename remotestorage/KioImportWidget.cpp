@@ -61,8 +61,8 @@ KioImportWidget::KioImportWidget(QWidget* const parent, Interface* const interfa
 
     layout->addWidget(m_imageList);
     layout->addWidget(m_uploadWidget);
+    layout->setContentsMargins(QMargins());
     layout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    layout->setMargin(0);
 }
 
 KioImportWidget::~KioImportWidget()

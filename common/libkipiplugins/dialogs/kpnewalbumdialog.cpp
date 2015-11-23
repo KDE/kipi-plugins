@@ -96,7 +96,9 @@ KPNewAlbumDialog::KPNewAlbumDialog(QWidget* const parent, const QString& pluginN
     d->mainWidget->setMinimumSize(500, 500);
     setWindowTitle(QString(d->m_pluginName + QStringLiteral(" New Album")));
     setModal(false);
-    
+
+    const int spacing = QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
+
     d->buttonBox->addButton(QDialogButtonBox::Ok);
     d->buttonBox->addButton(QDialogButtonBox::Cancel);
     d->buttonBox->button(QDialogButtonBox::Cancel)->setDefault(true);
@@ -122,7 +124,7 @@ KPNewAlbumDialog::KPNewAlbumDialog(QWidget* const parent, const QString& pluginN
     d->m_descEdt->setToolTip(i18n("Description of the album that will be created (optional)."));
 
     d->m_locEdt->setToolTip(i18n("Location of the album that will be created (optional).")); 
-    
+
     d->albumBoxLayout->addWidget(d->titleLabel, 0, 0);
     d->albumBoxLayout->addWidget(d->m_titleEdt, 0, 1);
     d->albumBoxLayout->addWidget(d->dateLabel,  1, 0);
@@ -131,13 +133,13 @@ KPNewAlbumDialog::KPNewAlbumDialog(QWidget* const parent, const QString& pluginN
     d->albumBoxLayout->addWidget(d->m_descEdt,  2, 1);
     d->albumBoxLayout->addWidget(d->locLabel,   3, 0);
     d->albumBoxLayout->addWidget(d->m_locEdt,   3, 1);
-    d->albumBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    d->albumBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    
+    d->albumBoxLayout->setContentsMargins(spacing, spacing, spacing, spacing);
+    d->albumBoxLayout->setSpacing(spacing);
+
     d->mainLayout->addWidget(d->albumBox);
     d->mainLayout->addWidget(d->buttonBox);
-    d->mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    d->mainLayout->setMargin(0);
+    d->mainLayout->setContentsMargins(QMargins());
+    d->mainLayout->setSpacing(spacing);
     d->mainWidget->setLayout(d->mainLayout);
 }
 

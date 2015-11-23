@@ -639,12 +639,14 @@ void KPImagesList::setControlButtonsPlacement(ControlButtonPlacement placement)
 {
     delete layout();
 
+    const int spacing = QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
+
     QGridLayout* const mainLayout = new QGridLayout;
     mainLayout->addWidget(d->listView, 1, 1, 1, 1);
     mainLayout->setRowStretch(1, 10);
     mainLayout->setColumnStretch(1, 10);
-    mainLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    mainLayout->setContentsMargins(spacing, spacing, spacing, spacing);
+    mainLayout->setSpacing(spacing);
 
     // --------------------------------------------------------
 

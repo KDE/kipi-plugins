@@ -139,6 +139,8 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
 
     //----------------------------------------------------------
 
+    const int spacing = QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
+
     d->m_imgList->setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
     d->m_imgList->setAllowRAW(true);
     d->m_imgList->loadImagesFromCurrentSelection();
@@ -167,8 +169,8 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
     d->m_accountBoxLayout->addWidget(userNameLbl,             0, 0, 1, 2);
     d->m_accountBoxLayout->addWidget(d->m_userNameDisplayLbl, 0, 2, 1, 2);
     d->m_accountBoxLayout->addWidget(d->m_changeUserBtn,      1, 0, 1, 4);
-    d->m_accountBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    d->m_accountBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    d->m_accountBoxLayout->setContentsMargins(spacing, spacing, spacing, spacing);
+    d->m_accountBoxLayout->setSpacing(spacing);
 
     //-------------------------------------------------------------
 
@@ -239,8 +241,8 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
     d->m_optionsBoxLayout->addWidget(dimensionLbl,         2, 1, 1, 1);
     d->m_optionsBoxLayout->addWidget(d->m_dimensionSpB,    2, 2, 1, 1);
     d->m_optionsBoxLayout->setRowStretch(3,10);
-    d->m_optionsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    d->m_optionsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    d->m_optionsBoxLayout->setSpacing(spacing);
+    d->m_optionsBoxLayout->setContentsMargins(spacing, spacing, spacing, spacing);
 
     d->m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     d->m_progressBar->hide();
@@ -254,15 +256,15 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
     d->m_settingsBoxLayout->addWidget(d->m_uploadBox);
     d->m_settingsBoxLayout->addWidget(d->m_optionsBox);
     d->m_settingsBoxLayout->addWidget(d->m_progressBar);
-    d->m_settingsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    d->m_settingsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    d->m_settingsBoxLayout->setSpacing(spacing);
+    d->m_settingsBoxLayout->setContentsMargins(spacing, spacing, spacing, spacing);
 
     //--------------------------------------------------------
 
     d->mainLayout->addWidget(d->m_imgList);
     d->mainLayout->addWidget(d->settingsScrollArea);
-    d->mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    d->mainLayout->setMargin(0);
+    d->mainLayout->setContentsMargins(QMargins());
+    d->mainLayout->setSpacing(spacing);
 
     //-------------------------------------------------------
 

@@ -114,7 +114,7 @@ FinalPage::FinalPage(QWidget* const parent)
     mainLayout->addWidget(d->startButton);
     mainLayout->addWidget(d->stopButton);
     mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    mainLayout->setMargin(0);
+    mainLayout->setContentsMargins(QMargins());
 
     // ------------------------------------------------------------------------
 }

@@ -66,6 +66,8 @@ SwWidget::SwWidget(QWidget* const parent, KIPI::Interface* const iface)
 
     // -------------------------------------------------------------------
 
+    const int spacing = QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
+
     m_imgList  = new KIPIPlugins::KPImagesList(this);
     m_imgList->setControlButtonsPlacement(KIPIPlugins::KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
@@ -96,8 +98,8 @@ SwWidget::SwWidget(QWidget* const parent, KIPI::Interface* const iface)
     accountBoxLayout->addWidget(userNameLbl,            0, 0, 1, 2);
     accountBoxLayout->addWidget(m_userNameDisplayLbl,   0, 2, 1, 2);
     accountBoxLayout->addWidget(m_changeUserBtn,        1, 0, 1, 4);
-    accountBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    accountBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    accountBoxLayout->setContentsMargins(spacing, spacing, spacing, spacing);
+    accountBoxLayout->setSpacing(spacing);
 
     // ------------------------------------------------------------------------
 
@@ -160,8 +162,8 @@ SwWidget::SwWidget(QWidget* const parent, KIPI::Interface* const iface)
     optionsBoxLayout->addWidget(dimensionLbl,       2, 1, 1, 1);
     optionsBoxLayout->addWidget(m_dimensionSpB,     2, 2, 1, 1);
     optionsBoxLayout->setRowStretch(3, 10);
-    optionsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    optionsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    optionsBoxLayout->setSpacing(spacing);
+    optionsBoxLayout->setContentsMargins(spacing, spacing, spacing, spacing);
 
     // ------------------------------------------------------------------------
 
@@ -170,15 +172,15 @@ SwWidget::SwWidget(QWidget* const parent, KIPI::Interface* const iface)
     settingsBoxLayout->addWidget(albBox);
     settingsBoxLayout->addWidget(uploadBox);
     settingsBoxLayout->addWidget(optionsBox);
-    settingsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    settingsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    settingsBoxLayout->setSpacing(spacing);
+    settingsBoxLayout->setContentsMargins(spacing, spacing, spacing, spacing);
 
     // ------------------------------------------------------------------------
 
     mainLayout->addWidget(m_imgList);
     mainLayout->addWidget(settingsBox);
-    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    mainLayout->setMargin(0);
+    mainLayout->setSpacing(spacing);
+    mainLayout->setContentsMargins(QMargins());
 
     updateLabels();  // use empty labels until login
 

@@ -95,10 +95,10 @@ KPLoginDialog::KPLoginDialog(QWidget* const parent, const QString& prompt,
     btnLayout->addItem(new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
     btnLayout->addWidget(okBtn);
     btnLayout->addWidget(cancelBtn);
-    btnLayout->setMargin(0);
+    btnLayout->setContentsMargins(QMargins());
     btnLayout->setSpacing(5);
 
-    vbox->setMargin(5);
+    vbox->setContentsMargins(5, 5, 5, 5);
     vbox->setSpacing(5);
     vbox->setObjectName(QStringLiteral("vbox"));
     vbox->addWidget(m_headerLabel);

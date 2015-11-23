@@ -78,8 +78,8 @@ MainDialog::MainDialog(QWidget* const parent, SharedContainer* const sharedData)
     m_ImagesFilesListBox->listView()->header()->hide();
 
     listBoxContainerLayout->addWidget(m_ImagesFilesListBox);
+    listBoxContainerLayout->setContentsMargins(QMargins());
     listBoxContainerLayout->setSpacing(0);
-    listBoxContainerLayout->setMargin(0);
     m_ImagesFilesListBoxContainer->setLayout(listBoxContainerLayout);
 
     // --------------------------------------------------------

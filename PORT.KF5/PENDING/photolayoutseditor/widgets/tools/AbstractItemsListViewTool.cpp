@@ -410,8 +410,8 @@ AbstractListToolViewDelegate::AbstractListToolViewDelegate(AbstractMovableModel 
 {
     // GUI setup
     QHBoxLayout * layout = new QHBoxLayout();
+    layout->setContentsMargins(QMargins());
     layout->setSpacing(0);
-    layout->setMargin(0);
     this->setLayout(layout);
     QStringList registeredDrawers = parent->options();
     QComboBox * comboBox = new QComboBox(this);

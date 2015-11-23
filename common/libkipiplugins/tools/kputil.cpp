@@ -76,8 +76,8 @@ KPHBox::KPHBox(QWidget* const parent)
     : QFrame(parent)
 {
     QHBoxLayout* const layout = new QHBoxLayout(this);
+    layout->setContentsMargins(QMargins());
     layout->setSpacing(0);
-    layout->setMargin(0);
     setLayout(layout);
 }
 
@@ -85,8 +85,8 @@ KPHBox::KPHBox(bool /*vertical*/, QWidget* const parent)
     : QFrame(parent)
 {
     QVBoxLayout* const layout = new QVBoxLayout(this);
+    layout->setContentsMargins(QMargins());
     layout->setSpacing(0);
-    layout->setMargin(0);
     setLayout(layout);
 }
 
@@ -152,9 +152,14 @@ void KPHBox::setSpacing(int spacing)
     layout()->setSpacing(spacing);
 }
 
-void KPHBox::setMargin(int margin)
+void KPHBox::setContentsMargins(const QMargins& margins)
 {
-    layout()->setMargin(margin);
+    layout()->setContentsMargins(margins);
+}
+
+void KPHBox::setContentsMargins(int left, int top, int right, int bottom)
+{
+    layout()->setContentsMargins(left, top, right, bottom);
 }
 
 void KPHBox::setStretchFactor(QWidget* const widget, int stretch)

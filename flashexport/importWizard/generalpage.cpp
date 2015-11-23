@@ -84,6 +84,8 @@ GeneralPage::GeneralPage(KPWizardDialog* const dlg)
     : KPWizardPage(dlg, i18n("General Settings")),
       d(new Private)
 {
+    const int spacing = QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
+
     KPVBox* vbox             = new KPVBox(this);
 
     // ------------------------------------------------------------------------
@@ -93,8 +95,8 @@ GeneralPage::GeneralPage(KPWizardDialog* const dlg)
     d->title                = new QLineEdit(this);
     d->title->setWhatsThis(i18n("Enter here the gallery title"));
 
-    vlay->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    vlay->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    vlay->setContentsMargins(spacing, spacing, spacing, spacing);
+    vlay->setSpacing(spacing);
     vlay->addWidget(d->title);
 
     // ------------------------------------------------------------------------
@@ -105,8 +107,8 @@ GeneralPage::GeneralPage(KPWizardDialog* const dlg)
     d->exportUrl->lineEdit()->setText(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + QLatin1String("/simpleviewer"));
     d->exportUrl->setFileDlgMode(QFileDialog::Directory);
 
-    vlay2->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    vlay2->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    vlay2->setContentsMargins(spacing, spacing, spacing, spacing);
+    vlay2->setSpacing(spacing);
     vlay2->addWidget(d->exportUrl);
 
     // ------------------------------------------------------------------------
@@ -158,9 +160,9 @@ GeneralPage::GeneralPage(KPWizardDialog* const dlg)
     grid->addWidget(d->fixOrientation,     1, 1, 1, 1);
     grid->addWidget(hbox,                  2, 1, 1, 1);
     grid->addWidget(hbox2,                 3, 0, 1, 2);
-    grid->setColumnMinimumWidth(0, QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    grid->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    grid->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    grid->setColumnMinimumWidth(0, spacing);
+    grid->setContentsMargins(spacing, spacing, spacing, spacing);
+    grid->setSpacing(spacing);
 
     // ------------------------------------------------------------------------
 
@@ -188,8 +190,8 @@ GeneralPage::GeneralPage(KPWizardDialog* const dlg)
                                           "gallery will be opened in Konqueror automatically."));
 
 
-    vlay4->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    vlay4->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    vlay4->setContentsMargins(spacing, spacing, spacing, spacing);
+    vlay4->setSpacing(spacing);
     vlay4->addWidget(d->showComments);
     vlay4->addWidget(d->rightClick);
     vlay4->addWidget(d->openInKonqueror);

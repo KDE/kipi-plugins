@@ -67,6 +67,8 @@ PIWidget::PIWidget(QWidget* const parent /* = 0 */)
     : QWidget(parent),
       d(new Private)
 {
+    const int spacing = QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
+
     // list of currently selected images
     d->imagesList = new PIImgList(this);
     d->imagesList->loadImagesFromCurrentSelection();
@@ -90,15 +92,15 @@ PIWidget::PIWidget(QWidget* const parent /* = 0 */)
     infoBoxLayout->addWidget(d->info);
     infoBoxLayout->addStretch(10);
     infoBoxLayout->setAlignment(d->photivoLink, Qt::AlignTop);
-    infoBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    infoBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    infoBoxLayout->setContentsMargins(spacing, spacing, spacing, spacing);
+    infoBoxLayout->setSpacing(spacing);
 
     // horizontal layout: image list on the left side; link and info on the right
     QHBoxLayout* mainLayout = new QHBoxLayout(this);
     mainLayout->addWidget(d->imagesList);
     mainLayout->addWidget(infoBox);
-    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    mainLayout->setMargin(0);
+    mainLayout->setSpacing(spacing);
+    mainLayout->setContentsMargins(QMargins());
 
     // update image info after selected image has changed
     connect(d->imagesList->listView(), SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),

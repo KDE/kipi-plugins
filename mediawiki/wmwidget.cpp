@@ -174,6 +174,8 @@ WmWidget::WmWidget(QWidget* const parent)
 {
     setObjectName(QLatin1String("WmWidget"));
 
+    const int spacing = QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
+
     QVBoxLayout* const mainLayout = new QVBoxLayout(this);
 
     // -------------------------------------------------------------------
@@ -245,7 +247,7 @@ WmWidget::WmWidget(QWidget* const parent)
     QLabel* const longitudeLabel = new QLabel(d->fileBox);
     longitudeLabel->setText(i18n("Longitude:"));
 
-    uploadBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    uploadBoxLayout->setSpacing(spacing);
     uploadBoxLayout->addWidget(d->fileBox, 0, Qt::AlignTop);
 
     fileBoxLayout->addWidget(titleLabel,       1, 0, 1, 1);
@@ -506,8 +508,8 @@ WmWidget::WmWidget(QWidget* const parent)
     optionsBoxLayout->addWidget(d->removeMetaChB,   3, 0, 1, 2);
     optionsBoxLayout->addWidget(d->removeGeoChB,    4, 0, 1, 2);
     optionsBoxLayout->setRowStretch(3, 10);
-    optionsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    optionsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    optionsBoxLayout->setSpacing(spacing);
+    optionsBoxLayout->setContentsMargins(spacing, spacing, spacing, spacing);
 
     // ------------------------------------------------------------------------
 
@@ -531,9 +533,9 @@ WmWidget::WmWidget(QWidget* const parent)
 
     mainLayout->addWidget(d->headerLbl);
     mainLayout->addWidget(wrapper);
-    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    mainLayout->setSpacing(spacing);
     mainLayout->addWidget(d->progressBar);
-    mainLayout->setMargin(0);
+    mainLayout->setContentsMargins(QMargins());
 
     updateLabels();  // use empty labels until login
 

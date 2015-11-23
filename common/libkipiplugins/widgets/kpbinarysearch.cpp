@@ -133,8 +133,8 @@ void KPBinarySearch::addBinary(KPBinaryIface& binary)
 
     QGridLayout* const layout = qobject_cast<QGridLayout*>(parentWidget()->layout());
     layout->addWidget(d->downloadLabel, layout->rowCount(), 0);
+    d->downloadLabel->setContentsMargins(20, 20, 20, 20);
     d->downloadLabel->setWordWrap(true);
-    d->downloadLabel->setMargin(20);
     d->downloadLabel->hide();
 }
 

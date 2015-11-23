@@ -82,6 +82,8 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     : QWidget(parent),
       d(new Private)
 {
+    const int spacing = QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
+
     QGridLayout* const grid = new QGridLayout(this);
 
     // --------------------------------------------------------
@@ -210,8 +212,8 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     grid2->addWidget(d->imageCompression,      2, 1, 1, 2);
     grid2->setRowStretch(4, 10);
     grid2->setColumnStretch(2, 10);
-    grid2->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    grid2->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    grid2->setContentsMargins(spacing, spacing, spacing, spacing);
+    grid2->setSpacing(spacing);
     grid2->setAlignment(Qt::AlignTop);
 
     // --------------------------------------------------------
@@ -225,8 +227,8 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     grid->addWidget(groupBox,               4, 0, 1, 4);
     grid->setRowStretch(5, 10);
     grid->setColumnStretch(3, 10);
-    grid->setMargin(0);
-    grid->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    grid->setContentsMargins(QMargins());
+    grid->setSpacing(spacing);
 
     //---------------------------------------------
 

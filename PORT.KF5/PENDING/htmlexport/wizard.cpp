@@ -88,7 +88,7 @@ public:
         : QWidget(dialog)
     {
         this->setupUi(this);
-        layout()->setMargin(0);
+        layout()->setContentsMargins(QMargins());
         mPage = dialog->addPage(this, title);
     }
 
@@ -167,7 +167,7 @@ struct Wizard::Private
         // Create layout. We need to recreate it every time, to get rid of
         // spacers
         QGridLayout* layout = new QGridLayout(content);
-        layout->setMargin(0);
+        layout->setContentsMargins(QMargins());
         layout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
         // Create widgets

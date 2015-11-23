@@ -256,7 +256,7 @@ RemoveRedEyesWindow::RemoveRedEyesWindow()
     imagesTabLayout->addWidget(d->imageList, 0, 0, 1, 1);
     imagesTabLayout->addWidget(summaryBox,   1, 0, 1, 1);
     imagesTabLayout->setRowStretch(0, 10);
-    imagesTabLayout->setMargin(0);
+    imagesTabLayout->setContentsMargins(QMargins());
     imagesTabLayout->setSpacing(0);
     imagesTab->setLayout(imagesTabLayout);
 

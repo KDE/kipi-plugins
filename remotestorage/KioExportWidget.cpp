@@ -81,7 +81,7 @@ KioExportWidget::KioExportWidget(QWidget* const parent)
     layout->addWidget(m_targetSearchButton);
     layout->addWidget(m_imageList);
     layout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    layout->setMargin(0);
+    layout->setContentsMargins(QMargins());
 
     // ------------------------------------------------------------------------
 

@@ -49,7 +49,9 @@ NewAlbumDlg::NewAlbumDlg(QWidget* const parent, const QString& serviceName, cons
     : KPNewAlbumDialog(parent,pluginName)
 {
     m_serviceName = serviceName;
-    
+
+    const int spacing = QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
+
     QGroupBox* const privBox = new QGroupBox(i18n("Access Level"), getMainWidget());
     privBox->setWhatsThis(i18n("These are security and privacy settings for the new Google Photos/PicasaWeb album."));
 
@@ -68,8 +70,8 @@ NewAlbumDlg::NewAlbumDlg(QWidget* const parent, const QString& serviceName, cons
 
     QFormLayout* const privBoxLayout = new QFormLayout;
     privBoxLayout->addRow(i18n("Privacy:"), radioLayout);
-    privBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    privBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    privBoxLayout->setContentsMargins(spacing, spacing, spacing, spacing);
+    privBoxLayout->setSpacing(spacing);
     privBox->setLayout(privBoxLayout);
     
     if(!(QString::compare(m_serviceName, QStringLiteral("googledriveexport"), Qt::CaseInsensitive) == 0))

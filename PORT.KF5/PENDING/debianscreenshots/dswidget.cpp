@@ -169,7 +169,7 @@ DsWidget::DsWidget(QWidget* const parent)
     mainLayout->addWidget(m_imgList);
     mainLayout->addWidget(settingsBox);
     mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    mainLayout->setMargin(0);
+    mainLayout->setContentsMargins(QMargins());
 }
 
 DsWidget::~DsWidget()

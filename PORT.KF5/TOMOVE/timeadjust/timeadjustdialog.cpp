@@ -120,7 +120,7 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
     mainLayout->addWidget(d->progressBar,  1, 1, 1, 1);
     mainLayout->setColumnStretch(0, 10);
     mainLayout->setRowStretch(0, 10);
-    mainLayout->setMargin(0);
+    mainLayout->setContentsMargins(QMargins());
 
     // -- About data and help button ----------------------------------------
 

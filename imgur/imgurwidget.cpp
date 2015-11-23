@@ -87,6 +87,8 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
     : QWidget(parent),
       d(new Private)
 {
+    const int spacing = QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
+
     QGridLayout* const mainLayout = new QGridLayout(this);
     d->imagesList                 = new ImgurImagesList(this);
     d->imagesList->loadImagesFromCurrentSelection();
@@ -136,8 +138,8 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
     //accountBoxLayout->addWidget(userNameDisplayLbl,     0, 2, 1, 2);
     accountBoxLayout->addWidget(d->changeUserBtn,        2, 0, 1, 2);
 
-    accountBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    accountBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    accountBoxLayout->setContentsMargins(spacing, spacing, spacing, spacing);
+    accountBoxLayout->setSpacing(spacing);
 #endif //OAUTH_ENABLED
 
     // ------------------------------------------------------------------------
@@ -154,15 +156,15 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
     settingsBoxLayout->addStretch(10);
     //settingsBoxLayout->setAlignment(d->textLbl, Qt::AlignTop);
     settingsBoxLayout->setAlignment(d->progressBar, Qt::AlignBottom);
-    settingsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    settingsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    settingsBoxLayout->setContentsMargins(spacing, spacing, spacing, spacing);
+    settingsBoxLayout->setSpacing(spacing);
 
     // -------------------------------------------------------------------------
 
     mainLayout->addWidget(d->imagesList, 0, 0, 2, 1);
     mainLayout->addWidget(settingsBox, 0, 1, Qt::AlignTop);
-    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    mainLayout->setMargin(0);
+    mainLayout->setContentsMargins(QMargins());
+    mainLayout->setSpacing(spacing);
 
     connect(d->imagesList, SIGNAL(signalAddItems(QList<QUrl>)),
             this, SLOT(slotAddItems(QList<QUrl>)));

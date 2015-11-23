@@ -45,6 +45,9 @@ FlickrLogin::FlickrLogin(QWidget* const parent, const QString& header,
     : QDialog(parent)
 {
     setWindowTitle(header);
+
+    const int spacing = QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
+
     QDialogButtonBox* const buttonBox = new QDialogButtonBox(QDialogButtonBox::Help|QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
     QVBoxLayout* const mainLayout     = new QVBoxLayout(this);
     setLayout(mainLayout);
@@ -87,15 +90,15 @@ FlickrLogin::FlickrLogin(QWidget* const parent, const QString& header,
     centerLayout->addWidget(m_passwdEdit, 1, 1);
     centerLayout->addWidget(nameLabel,    0, 0);
     centerLayout->addWidget(passwdLabel,  1, 0);
-    centerLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    centerLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    centerLayout->setContentsMargins(spacing, spacing, spacing, spacing);
+    centerLayout->setSpacing(spacing);
 
     mainLayout->addWidget(m_headerLabel);
     mainLayout->addWidget(hline);
     mainLayout->addWidget(buttonBox);
     mainLayout->addLayout(centerLayout);
-    mainLayout->setMargin(0);
-    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    mainLayout->setContentsMargins(QMargins());
+    mainLayout->setSpacing(spacing);
 
     resize(QSize(300, 150).expandedTo(minimumSizeHint()));
 

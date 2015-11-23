@@ -234,11 +234,11 @@ ToolsDockWidget::ToolsDockWidget(QWidget * parent) :
     connect(m_tool_border,SIGNAL(toggled(bool)),this,SLOT(setBordersWidgetVisible(bool)));
 
     // Spacer
+    d->formLayout->setContentsMargins(QMargins());
     d->formLayout->setSpacing(0);
-    d->formLayout->setMargin(0);
 
+    layout->setContentsMargins(QMargins());
     layout->setSpacing(0);
-    layout->setMargin(0);
     widget->setLayout(layout);
     //widget->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
     this->setWidget(widget);

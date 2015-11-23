@@ -89,7 +89,7 @@ public:
         : QWidget(parent)
     {
         this->setupUi(this);
-        layout()->setMargin(0);
+        layout()->setContentsMargins(QMargins());
     }
 };
 
@@ -282,7 +282,7 @@ Wizard::Wizard(QWidget* const parent)
     }
 
     QVBoxLayout* printListLayout = new QVBoxLayout;
-    printListLayout->setMargin(0);
+    printListLayout->setContentsMargins(QMargins());
     printListLayout->setSpacing(0);
 
     d->m_imagesFilesListBox = new KPImagesList(d->m_photoUi->mPrintList, 32);

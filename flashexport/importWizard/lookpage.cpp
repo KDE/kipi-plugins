@@ -122,6 +122,8 @@ void LookPage::setPageContent(int plugType)
        delete d->vbox;
     }
 
+    const int spacing = QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
+
     d->vbox = new KPVBox(this);
     /* Every plugin have it's own settings
     * Keep a page for every plugin for a easier maintenance
@@ -167,8 +169,8 @@ void LookPage::setPageContent(int plugType)
             d->thumbnailPosition->setCurrentIndex(SimpleViewerSettingsContainer::RIGHT);
             label3->setBuddy(d->thumbnailPosition);
 
-            vlay->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-            vlay->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+            vlay->setContentsMargins(spacing, spacing, spacing, spacing);
+            vlay->setSpacing(spacing);
             vlay->addWidget(hbox);
             vlay->addWidget(hbox2);
             vlay->addWidget(hbox3);
@@ -198,8 +200,8 @@ void LookPage::setPageContent(int plugType)
             d->frameColor->setWhatsThis(i18n("Color of image frame, viewed icon, load bars, thumbnail arrows"));
             label6->setBuddy(d->frameColor);
 
-            vlay2->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-            vlay2->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+            vlay2->setContentsMargins(spacing, spacing, spacing, spacing);
+            vlay2->setSpacing(spacing);
             vlay2->addWidget(hbox4);
             vlay2->addWidget(hbox5);
             vlay2->addWidget(hbox6);
@@ -227,8 +229,8 @@ void LookPage::setPageContent(int plugType)
             d->stagePadding->setWhatsThis(i18n("Distance between image and thumbnails in pixels."));
             label8->setBuddy(d->stagePadding);
 
-            vlay3->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-            vlay3->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+            vlay3->setContentsMargins(spacing, spacing, spacing, spacing);
+            vlay3->setSpacing(spacing);
             vlay3->addWidget(hbox7);
             vlay3->addWidget(hbox8);
 
@@ -249,8 +251,8 @@ void LookPage::setPageContent(int plugType)
             d->displayTime->setWhatsThis(i18n("Number of seconds each image will display in auto-play mode."));
             label->setBuddy(d->displayTime);
 
-            vlay->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-            vlay->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+            vlay->setContentsMargins(spacing, spacing, spacing, spacing);
+            vlay->setSpacing(spacing);
             vlay->addWidget(hbox);
 
             //---Colors Options -----------------------------------------------
@@ -271,8 +273,8 @@ void LookPage::setPageContent(int plugType)
             d->frameColor->setWhatsThis(i18n("Color of image frame, viewed icon, load bars, thumbnail arrows"));
             label3->setBuddy(d->frameColor);
 
-            vlay2->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-            vlay2->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+            vlay2->setContentsMargins(spacing, spacing, spacing, spacing);
+            vlay2->setSpacing(spacing);
             vlay2->addWidget(hbox2);
             vlay2->addWidget(hbox3);
 
@@ -299,8 +301,8 @@ void LookPage::setPageContent(int plugType)
             d->imagePadding->setWhatsThis(i18n("Distance between images in pixels"));
             label5->setBuddy(d->imagePadding);
 
-            vlay3->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-            vlay3->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+            vlay3->setContentsMargins(spacing, spacing, spacing, spacing);
+            vlay3->setSpacing(spacing);
             vlay3->addWidget(hbox4);
             vlay3->addWidget(hbox5);
 
@@ -341,8 +343,8 @@ void LookPage::setPageContent(int plugType)
                                             "the images' orientations will be set according "
                                             "to their Exif information."));
 
-            vlay->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-            vlay->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+            vlay->setContentsMargins(spacing, spacing, spacing, spacing);
+            vlay->setSpacing(spacing);
             vlay->addWidget(hbox);
             vlay->addWidget(hbox2);
             vlay->addWidget(d->showFlipButton);
@@ -381,8 +383,8 @@ void LookPage::setPageContent(int plugType)
             d->backColor->setWhatsThis(i18n("Image's back color when pressing flip button"));
             label6->setBuddy(d->bkgndOuterColor);
 
-            vlay2->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-            vlay2->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+            vlay2->setContentsMargins(spacing, spacing, spacing, spacing);
+            vlay2->setSpacing(spacing);
             vlay2->addWidget(hbox3);
             vlay2->addWidget(hbox4);
             vlay2->addWidget(hbox5);
@@ -414,8 +416,8 @@ void LookPage::setPageContent(int plugType)
             d->thumbnailColumns->setWhatsThis(i18n("Number of thumbnails columns"));
             label2->setBuddy(d->thumbnailColumns);
 
-            vlay->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-            vlay->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+            vlay->setContentsMargins(spacing, spacing, spacing, spacing);
+            vlay->setSpacing(spacing);
             vlay->addWidget(hbox);
             vlay->addWidget(hbox2);
 
@@ -445,8 +447,8 @@ void LookPage::setPageContent(int plugType)
             d->frameColor->setWhatsThis(i18n("Color of image frame, viewed icon, load bars, thumbnail arrows"));
             label5->setBuddy(d->frameColor);
 
-            vlay2->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-            vlay2->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+            vlay2->setContentsMargins(spacing, spacing, spacing, spacing);
+            vlay2->setSpacing(spacing);
             vlay2->addWidget(hbox3);
             vlay2->addWidget(hbox4);
             vlay2->addWidget(hbox5);
@@ -483,8 +485,8 @@ void LookPage::setPageContent(int plugType)
             d->frameWidth->setWhatsThis(i18n("The frame width"));
             label8->setBuddy(d->frameWidth);
 
-            vlay3->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-            vlay3->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+            vlay3->setContentsMargins(spacing, spacing, spacing, spacing);
+            vlay3->setSpacing(spacing);
             vlay3->addWidget(hbox6);
             vlay3->addWidget(hbox7);
             vlay3->addWidget(hbox8);

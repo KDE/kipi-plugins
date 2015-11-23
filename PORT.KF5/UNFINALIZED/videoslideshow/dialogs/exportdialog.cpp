@@ -121,7 +121,7 @@ ExportDialog::ExportDialog(const ImageCollection& images)
     mainLayout->addWidget(d->listView,            0, 0, 3, 1);
     mainLayout->addWidget(d->settingsBox,         0, 1, 1, 1);
     mainLayout->addWidget(d->progressBar,         1, 1, 1, 1);
-    mainLayout->setMargin(0);
+    mainLayout->setContentsMargins(QMargins());
     mainLayout->setSpacing(spacingHint());
     mainLayout->setColumnStretch(0, 10);
 

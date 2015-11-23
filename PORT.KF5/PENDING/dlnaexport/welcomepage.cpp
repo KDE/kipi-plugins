@@ -97,7 +97,7 @@ WelcomePage::WelcomePage(QWidget* const parent)
     mainLayout->addWidget(d->titleLbl,                       2, 0, 1, 2, Qt::AlignCenter);
     mainLayout->addWidget(d->descLbl,                        3, 0, 5, 2);
     mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    mainLayout->setMargin(0);
+    mainLayout->setContentsMargins(QMargins());
 }
 
 WelcomePage::~WelcomePage()

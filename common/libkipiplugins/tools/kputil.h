@@ -60,8 +60,9 @@ public:
     explicit KPHBox(QWidget* const parent=0);
     virtual ~KPHBox();
 
-    void setMargin(int margin);
     void setSpacing(int space);
+    void setContentsMargins(const QMargins& margins);
+    void setContentsMargins(int left, int top, int right, int bottom);
     void setStretchFactor(QWidget* const widget, int stretch);
 
     virtual QSize sizeHint() const;

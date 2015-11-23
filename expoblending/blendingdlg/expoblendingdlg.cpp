@@ -213,7 +213,7 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
 
     grid->addWidget(d->previewWidget, 0, 0, 3, 1);
     grid->addWidget(rightColumn,      0, 1, 3, 1);
-    grid->setMargin(0);
+    grid->setContentsMargins(QMargins());
     grid->setColumnStretch(0, 10);
     grid->setColumnStretch(1, 5);
 

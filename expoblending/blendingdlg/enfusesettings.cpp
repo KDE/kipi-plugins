@@ -113,6 +113,8 @@ EnfuseSettingsWidget::EnfuseSettingsWidget(QWidget* const parent)
 {
     setAttribute(Qt::WA_DeleteOnClose);
 
+    const int spacing = QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
+
     QGridLayout* grid = new QGridLayout(this);
 
     // ------------------------------------------------------------------------
@@ -202,8 +204,8 @@ EnfuseSettingsWidget::EnfuseSettingsWidget(QWidget* const parent)
     grid->addWidget(d->contrastInput,   5, 1, 1, 1);
     grid->addWidget(d->ciecam02CB,      6, 0, 1, 2);
     grid->setRowStretch(7, 10);
-    grid->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    grid->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    grid->setContentsMargins(spacing, spacing, spacing, spacing);
+    grid->setSpacing(spacing);
 
     // ------------------------------------------------------------------------
 

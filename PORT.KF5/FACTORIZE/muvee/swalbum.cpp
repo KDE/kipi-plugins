@@ -62,11 +62,13 @@ SwNewAlbum::SwNewAlbum(QWidget* const parent)
     m_titleEdt = new KLineEdit;
     m_titleEdt->setWhatsThis(i18n("Title of the album that will be created (required)."));
 
+    const int spacing = QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
+
     QFormLayout* const albumBoxLayout = new QFormLayout;
     albumBoxLayout->addRow(i18nc("album edit", "Title:"), m_titleEdt);
     albumBoxLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
-    albumBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    albumBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    albumBoxLayout->setContentsMargins(spacing, spacing, spacing, spacing);
+    albumBoxLayout->setSpacing(spacing);
     mainWidget->setLayout(albumBoxLayout);
 }
 

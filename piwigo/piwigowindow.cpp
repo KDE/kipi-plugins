@@ -118,7 +118,7 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
     // ---------------------------------------------------------------------------
 
     QLabel* const logo = new QLabel();
-    logo->setMargin(0);
+    logo->setContentsMargins(QMargins());
     logo->setScaledContents(false);
     logo->setOpenExternalLinks(true);
     logo->setTextFormat(Qt::RichText);
