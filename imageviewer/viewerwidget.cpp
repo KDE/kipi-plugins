@@ -460,14 +460,21 @@ void ViewerWidget::keyPressEvent(QKeyEvent* k)
         case Qt::Key_Minus:
             middlepoint = QPoint(width()/2,height()/2);
 
-            if (d->texture->setSize( d->zoomsize ))
+            if (d->texture->setSize(d->zoomsize))
+            {
                 downloadTexture(d->texture); //load full resolution image
+            }
 
             zoom(1, middlepoint, d->zoomfactor_keyboard);
             break;
 
         // zoom to original size
         case Qt::Key_O:
+            if (d->texture->setSize(QSize(0, 0)))
+            {
+                downloadTexture(d->texture); //load full resolution image
+            }
+
             d->texture->zoomToOriginal();
             updateGL();
             break;
