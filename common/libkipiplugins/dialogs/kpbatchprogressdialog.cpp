@@ -257,6 +257,7 @@ KPBatchProgressDialog::KPBatchProgressDialog(QWidget* const /*parent*/, const QS
 
 KPBatchProgressDialog::~KPBatchProgressDialog()
 {
+    delete d;
 }
 
 KPBatchProgressWidget* KPBatchProgressDialog::progressWidget() const
