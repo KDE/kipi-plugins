@@ -49,7 +49,7 @@ Optional:
 libthreadweaver >= 5.0.0                        https://projects.kde.org/projects/frameworks/threadweaver
 libkarchive     >= 5.0.0                        https://projects.kde.org/projects/frameworks/karchive
 libphonon       >= 5.0.0                        https://projects.kde.org/projects/kdesupport/phonon
-libkcalcore     >= 5.0.0                        https://projects.kde.org/projects/kde/pim/kcalcore
+libkcalcore     >= 4.81.0                       https://projects.kde.org/projects/kde/pim/kcalcore
 libmediawiki    >= 5.0.0                        https://projects.kde.org/projects/extragear/libs/libmediawiki
 libkvkontakte   >= 4.70.0                       https://projects.kde.org/projects/extragear/libs/libkvkontakte
 libxslt         >= 1.1.0                        http://xmlsoft.org/XSLT
