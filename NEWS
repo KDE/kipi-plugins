@@ -52,4 +52,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 034 ==> 215037 - Batch RAW converter crashed after open with NEF file.
 035 ==> 246437 - digiKam crashes when loading a raw file.
 036 ==> 342687 - Panorama file time-stamps should be the same than the stitched pictures [patch].
-037 ==> 
+037 ==> 356673 - MediaWiki export doesn't work.
+038 ==> 
