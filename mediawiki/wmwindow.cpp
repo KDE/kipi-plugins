@@ -9,7 +9,7 @@
  * Copyright (C) 2011      by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
  * Copyright (C) 2011-2016 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2012      by Parthasarathy Gopavarapu <gparthasarathy93 at gmail dot com>
- * Copyright (C) 2012-2013 by Peter Potrowl <peter dot potrowl at gmail dot com>
+ * Copyright (C) 2012-2016 by Peter Potrowl <peter dot potrowl at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -37,6 +37,7 @@
 #include <QComboBox>
 #include <QPushButton>
 #include <QMessageBox>
+#include <QDir>
 
 // KDE includes
 
@@ -230,6 +231,13 @@ void WMWindow::slotProgressCanceled()
 
 bool WMWindow::prepareImageForUpload(const QString& imgPath)
 {
+    // Create temporary directory if it does not exist
+
+    if (!QDir(d->tmpDir).exists())
+    {
+        QDir().mkdir(d->tmpDir);
+    }
+
     // Get temporary file name
 
     d->tmpPath = d->tmpDir + QFileInfo(imgPath).baseName().trimmed() + QLatin1String(".jpg");
@@ -250,7 +258,7 @@ bool WMWindow::prepareImageForUpload(const QString& imgPath)
                 rawdec->loadRawPreview(QUrl::fromLocalFile(imgPath), image);
             }
         }
-        
+
         if (image.isNull())
         {
             image.load(imgPath);
@@ -279,7 +287,7 @@ bool WMWindow::prepareImageForUpload(const QString& imgPath)
     }
 
     if (iface())
-    {            
+    {
         // NOTE : In case of metadata are saved to tmp file, we will override MetadataProcessor settings from KIPI host
         // to write metadata to image file rather than sidecar file, to be effective with remote web service.
 
@@ -308,7 +316,7 @@ bool WMWindow::prepareImageForUpload(const QString& imgPath)
             meta->save(QUrl::fromLocalFile(d->tmpPath), true);
         }
     }
-   
+
     return true;
 }
 
@@ -361,7 +369,7 @@ void WMWindow::slotDoLogin(const QString& login, const QString& pass, const QStr
     d->mediawiki          = new MediaWiki(wikiUrl);
     Login* const loginJob = new Login(*d->mediawiki, login, pass);
 
-    connect(loginJob, SIGNAL(result(KJob*)), 
+    connect(loginJob, SIGNAL(result(KJob*)),
             this, SLOT(slotLoginHandle(KJob*)));
 
     loginJob->start();
