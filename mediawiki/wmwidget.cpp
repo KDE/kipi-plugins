@@ -11,7 +11,7 @@
  * Copyright (C) 2012      by Parthasarathy Gopavarapu <gparthasarathy93 at gmail dot com>
  * Copyright (C) 2012      by Nathan Damie <nathan dot damie at gmail dot com>
  * Copyright (C) 2012      by Iliya Ivanov <ilko2002 at abv dot bg>
- * Copyright (C) 2012-2013 by Peter Potrowl <peter dot potrowl at gmail dot com>
+ * Copyright (C) 2012-2016 by Peter Potrowl <peter dot potrowl at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -271,7 +271,7 @@ WmWidget::WmWidget(QWidget* const parent)
     config->setWidgetResizable(true);
 
     // --------------------- Account area ----------------------------------
-    
+
     d->userGBox = new QGroupBox(panel2);
     d->userGBox->setTitle(i18n("Account"));
     d->userGBox->setWhatsThis(i18n("This is the login form to your MediaWiki account."));
@@ -287,17 +287,17 @@ WmWidget::WmWidget(QWidget* const parent)
     d->passwdEdit                 = new QLineEdit(d->userGBox);
     d->passwdEdit->setEchoMode(QLineEdit::Password);
 
-    d->wikiSelect->addItem(i18n("Wikimedia Commons"),  QLatin1String("http://commons.wikimedia.org/w/api.php"));
-    d->wikiSelect->addItem(i18n("Wikimedia Meta"),     QLatin1String("http://meta.wikimedia.org/w/api.php"));
-    d->wikiSelect->addItem(i18n("Wikipedia"),          QLatin1String("http://en.wikipedia.org/w/api.php"));
-    d->wikiSelect->addItem(i18n("Wikibooks"),          QLatin1String("http://en.wikibooks.org/w/api.php"));
-    d->wikiSelect->addItem(i18n("Wikinews"),           QLatin1String("http://en.wikinews.org/w/api.php"));
-    d->wikiSelect->addItem(i18n("Wikiquote"),          QLatin1String("http://en.wikiquote.org/w/api.php"));
-    d->wikiSelect->addItem(i18n("Wikisource"),         QLatin1String("http://en.wikinews.org/w/api.php"));
-    d->wikiSelect->addItem(i18n("Wiktionary"),         QLatin1String("http://en.wiktionary.org/w/api.php"));
-    d->wikiSelect->addItem(i18n("MediaWiki"),          QLatin1String("http://www.mediawiki.org/w/api.php"));
-    d->wikiSelect->addItem(i18n("Wikia Foto"),         QLatin1String("http://foto.wikia.com/api.php"));
-    d->wikiSelect->addItem(i18n("Wikia Uncyclopedia"), QLatin1String("http://uncyclopedia.wikia.com/api.php"));
+    d->wikiSelect->addItem(i18n("Wikimedia Commons"),  QLatin1String("https://commons.wikimedia.org/w/api.php"));
+    d->wikiSelect->addItem(i18n("Wikimedia Meta"),     QLatin1String("https://meta.wikimedia.org/w/api.php"));
+    d->wikiSelect->addItem(i18n("Wikipedia"),          QLatin1String("https://en.wikipedia.org/w/api.php"));
+    d->wikiSelect->addItem(i18n("Wikibooks"),          QLatin1String("https://en.wikibooks.org/w/api.php"));
+    d->wikiSelect->addItem(i18n("Wikinews"),           QLatin1String("https://en.wikinews.org/w/api.php"));
+    d->wikiSelect->addItem(i18n("Wikiquote"),          QLatin1String("https://en.wikiquote.org/w/api.php"));
+    d->wikiSelect->addItem(i18n("Wikisource"),         QLatin1String("https://en.wikinews.org/w/api.php"));
+    d->wikiSelect->addItem(i18n("Wiktionary"),         QLatin1String("https://en.wiktionary.org/w/api.php"));
+    d->wikiSelect->addItem(i18n("MediaWiki"),          QLatin1String("https://www.mediawiki.org/w/api.php"));
+    d->wikiSelect->addItem(i18n("Wikia Foto"),         QLatin1String("https://foto.wikia.com/api.php"));
+    d->wikiSelect->addItem(i18n("Wikia Uncyclopedia"), QLatin1String("https://uncyclopedia.wikia.com/api.php"));
 
     d->wikiSelect->setEditable(false);
 
@@ -358,10 +358,10 @@ WmWidget::WmWidget(QWidget* const parent)
     loginBoxLayout->setObjectName(QLatin1String("loginBoxLayout"));
 
     // --------------------- Login info area ----------------------------------
-    
+
     d->loginGBox = new QGroupBox(panel2);
     d->loginGBox->setTitle(i18n("Login Information"));
-    
+
     QGridLayout* const linfoBoxLayout = new QGridLayout(d->loginGBox);
     d->loginGBox->setLayout(linfoBoxLayout);
 
@@ -402,9 +402,9 @@ WmWidget::WmWidget(QWidget* const parent)
     d->licenseComboBox       = new QComboBox(textGBox);
     d->licenseComboBox->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
 
-    d->licenseComboBox->addItem(i18n("Own work, multi-license with CC-BY-SA-3.0 and GFDL"), 
+    d->licenseComboBox->addItem(i18n("Own work, multi-license with CC-BY-SA-3.0 and GFDL"),
                                        QLatin1String("{{self|cc-by-sa-3.0|GFDL|migration=redundant}}"));
-    d->licenseComboBox->addItem(i18n("Own work, multi-license with CC-BY-SA-3.0 and older"), 
+    d->licenseComboBox->addItem(i18n("Own work, multi-license with CC-BY-SA-3.0 and older"),
                                        QLatin1String("{{self|cc-by-sa-3.0,2.5,2.0,1.0}}"));
     d->licenseComboBox->addItem(i18n("Creative Commons Attribution-Share Alike 3.0"),
                                        QLatin1String("{{self|cc-by-sa-3.0}}"));
@@ -467,10 +467,10 @@ WmWidget::WmWidget(QWidget* const parent)
     QGroupBox* const optGBox = new QGroupBox(panel2);
     optGBox->setTitle(i18n("Options"));
     optGBox->setWhatsThis(i18n("These are options that will be applied to photos before upload."));
-   
+
     QGridLayout* const optionsBoxLayout = new QGridLayout(optGBox);
     optGBox->setLayout(optionsBoxLayout);
-    
+
     d->resizeChB = new QCheckBox(optGBox);
     d->resizeChB->setText(i18n("Resize photos before uploading"));
     d->resizeChB->setChecked(false);
@@ -659,7 +659,7 @@ KPProgressWidget* WmWidget::progressBar() const
 
 void WmWidget::updateLabels(const QString& userName, const QString& wikiName, const QString& url)
 {
-    QString web = QLatin1String("http://www.mediawiki.org");
+    QString web = QLatin1String("https://www.mediawiki.org");
 
     if (url.isEmpty())
     {
@@ -773,7 +773,7 @@ void WmWidget::loadImageInfo(const QUrl& url)
     QString latitude;
     QString longitude;
 
-    for (int i = 0; i < keywar.size(); i++) 
+    for (int i = 0; i < keywar.size(); i++)
     {
         if (i == keywar.size() - 1)
         {
@@ -825,7 +825,7 @@ void WmWidget::slotLoadImagesDesc(QTreeWidgetItem* item)
 
     QMap<QString, QString> imageMetaData;
 
-    if (!d->imagesDescInfo.contains(l_item->url().path())) 
+    if (!d->imagesDescInfo.contains(l_item->url().path()))
     {
         loadImageInfo(l_item->url());
     }
