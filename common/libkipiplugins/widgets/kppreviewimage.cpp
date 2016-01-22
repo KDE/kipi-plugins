@@ -592,22 +592,23 @@ bool KPPreviewImage::load(const QUrl& file) const
     QImage image;
 
     PluginLoader* const pl = PluginLoader::instance();
+    QPointer<RawProcessor> rawdec;
 
     if (pl)
     {
         Interface* const iface = pl->interface();
-        
+
         if (iface)
         {
-            QPointer<RawProcessor> rawdec = iface->createRawProcessor();
-
-            // check if its a RAW file.
-            if (rawdec && rawdec->isRawFile(file))
-            {
-                rawdec->loadRawPreview(file, image);
-            }
+            rawdec = iface->createRawProcessor();
         }
-    } 
+    }
+
+    // check if its a RAW file.
+    if (rawdec && rawdec->isRawFile(file))
+    {
+        rawdec->loadRawPreview(file, image);
+    }
     else
     {
         image.load(file.toLocalFile());
