@@ -101,15 +101,24 @@ KPThreadManager::~KPThreadManager()
     // wait for the thread to finish
     wait();
 
+    // wait for the jobs to finish
+    d->pool->waitForDone();
+
     // Cleanup all jobs from memory
     foreach(KPJob* const job, d->todo.keys())
+    {
         delete(job);
+    }
 
     foreach(KPJob* const job, d->pending.keys())
+    {
         delete(job);
+    }
 
     foreach(KPJob* const job, d->processed.keys())
+    {
         delete(job);
+    }
 
     delete d;
 }
