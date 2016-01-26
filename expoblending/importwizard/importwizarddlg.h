@@ -60,11 +60,11 @@ public:
 
     Manager* manager() const;
 
+    virtual bool validateCurrentPage();
+
 private Q_SLOTS:
 
-    void next();
-    void back();
-
+    void slotCurrentIdChanged(int);
     void slotIntroPageIsValid(bool);
     void slotItemsPageIsValid(bool);
     void slotPreProcessed(const ItemUrlsMap&);

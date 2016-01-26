@@ -81,7 +81,7 @@ struct ActionThread::Private
         if (pl)
         {
             iface = pl->interface();
-            
+
             if (iface)
                 meta = iface->createMetadataProcessor();
         } 
@@ -129,7 +129,7 @@ struct ActionThread::Private
     // Preprocessing
     QList<QUrl>                     mixedUrls;     // Original non-RAW + Raw converted urls to align.
     ItemUrlsMap                     preProcessedUrlsMap;
-    
+
     Interface*                      iface;
     MetadataProcessor*              meta;
 };
@@ -138,6 +138,11 @@ ActionThread::ActionThread(QObject* const parent)
     : QThread(parent),
       d(new Private)
 {
+    QString prefix = QDir::tempPath() + QLatin1Char('/') +
+                     QLatin1String("kipi-expoblending-tmp-XXXXXX");
+
+    d->preprocessingTmpDir = QSharedPointer<QTemporaryDir>(new QTemporaryDir(prefix));
+
     qRegisterMetaType<ActionData>();
 }
 
@@ -430,11 +435,17 @@ void ActionThread::run()
                     result = startEnfuse(t->urls, destUrl, t->enfuseSettings, t->binaryPath, errors);
 
                     // We will take first image metadata from stack to restore Exif, Iptc, and Xmp.
-                    
+
                     if (d->meta && d->meta->load(t->urls[0]))
                     {
-                        result = result & d->meta->setXmpTagString(QLatin1String("Xmp.kipi.EnfuseInputFiles"), t->enfuseSettings.inputImagesList());
-                        result = result & d->meta->setXmpTagString(QLatin1String("Xmp.kipi.EnfuseSettings"),   t->enfuseSettings.asCommentString().replace(QChar::fromLatin1('\n'), QLatin1String(" ; ")));
+                        result = result & d->meta->setXmpTagString(QLatin1String("Xmp.kipi.EnfuseInputFiles"),
+                                                                   t->enfuseSettings.inputImagesList());
+
+                        result = result & d->meta->setXmpTagString(QLatin1String("Xmp.kipi.EnfuseSettings"),
+                                                                   t->enfuseSettings.asCommentString().
+                                                                   replace(QChar::fromLatin1('\n'),
+                                                                   QLatin1String(" ; ")));
+
                         d->meta->setImageDateTime(QDateTime::currentDateTime());
 
                         if (t->enfuseSettings.outputFormat != KPSaveSettingsWidget::OUTPUT_JPEG)
@@ -536,13 +547,6 @@ bool ActionThread::startPreProcessing(const QList<QUrl>& inUrls,
                                       bool align,
                                       const QString& alignPath, QString& errors)
 {
-    QString prefix = QDir::tempPath() +
-                     QChar::fromLatin1('/') +
-                     QString::fromUtf8("kipi-expoblending-tmp-") +
-                     QString::number(QDateTime::currentDateTime().toTime_t());
-
-    d->preprocessingTmpDir = QSharedPointer<QTemporaryDir>(new QTemporaryDir(prefix));
-
     // Pre-process RAW files if necessary. Parallelized with OpemMP if available.
     d->mixedUrls.clear();
     d->preProcessedUrlsMap.clear();
@@ -690,7 +694,7 @@ bool ActionThread::computePreview(const QUrl& inUrl, QUrl& outUrl)
             if (d->meta && d->meta->load(inUrl))
             {
                 int orientation = d->meta->getImageOrientation();
-                
+
                 if (d->meta->load(outUrl))
                 {
                     d->meta->setImageOrientation(orientation);
@@ -768,7 +772,7 @@ bool ActionThread::convertRaw(const QUrl& inUrl, QUrl& outUrl)
                 + QChar::fromLatin1('.')
                 + fi.completeBaseName().replace(QChar::fromLatin1('.'), QChar::fromLatin1('_'))
                 + QStringLiteral(".tif"));
-            
+
             if (d->iface && !d->iface->saveImage(outUrl, QLatin1String("TIF"),
                                                 imageData, width, height,
                                                 true, false,
@@ -846,7 +850,7 @@ bool ActionThread::startEnfuse(const QList<QUrl>& inUrls, QUrl& outUrl,
     args << QStringLiteral("-o");
     args << outUrl.toLocalFile();
 
-    for (const QUrl& url: inUrls)
+    foreach(const QUrl& url, inUrls)
     {
         args << url.toLocalFile();
     }
@@ -915,10 +919,10 @@ float ActionThread::getAverageSceneLuminance(const QUrl& url)
 {
     if (!d->meta)
         return -1;
-        
+
     if (!d->meta->load(url))
-        return -1;    
-        
+        return -1;
+
     if (!d->meta->hasExif())
         return -1;
 

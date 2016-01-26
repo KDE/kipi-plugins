@@ -117,7 +117,7 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KPWizardDialog* const 
     d->detailsBtn->setText(i18nc("@action:button", "Details..."));
     d->detailsBtn->hide();
     hbox->setStretchFactor(new QWidget(hbox), 10);
-    
+
     vbox->setStretchFactor(new QWidget(vbox), 2);
 
     d->progressLabel = new QLabel(vbox);

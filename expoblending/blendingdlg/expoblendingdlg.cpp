@@ -51,6 +51,7 @@ extern "C"
 #include <QMenu>
 #include <QMessageBox>
 #include <QGroupBox>
+#include <QWindow>
 
 // KDE includes
 
@@ -171,14 +172,14 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
     enfuse->setTitle(i18n("Enfuse Settings"));
     QVBoxLayout* const elay = new QVBoxLayout(enfuse);
     enfuse->setLayout(elay);
-    
+
     d->enfuseSettingsBox            = new EnfuseSettingsWidget(enfuse);
     elay->addWidget(d->enfuseSettingsBox);
 
     panel->addWidget(enfuse, 1);
 
     // ---------------------------------------------------------------
-    
+
     QGroupBox* const save = new QGroupBox(rightColumn);
     save->setTitle(i18n("Save Settings"));
     QVBoxLayout* const slay = new QVBoxLayout(enfuse);
@@ -203,7 +204,7 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
     panel->addWidget(save, 1);
 
     // ---------------------------------------------------------------
-    
+
     d->enfuseStack = new EnfuseStackList(rightColumn->viewport());
     panel->addWidget(d->enfuseStack, 1);
 
@@ -369,8 +370,10 @@ void ExpoBlendingDlg::readSettings()
 
     d->templateFileName->insert(group.readEntry("Template File Name", QStringLiteral("enfuse")));
 
+    winId();
     KConfigGroup group2 = config.group("ExpoBlending Dialog");
     KWindowConfig::restoreWindowSize(windowHandle(), group2);
+    resize(windowHandle()->size());
 }
 
 void ExpoBlendingDlg::saveSettings()
@@ -398,9 +401,9 @@ void ExpoBlendingDlg::slotPreview()
     ItemUrlsMap map = d->mngr->preProcessedMap();
     QList<QUrl> preprocessedList;
 
-    for (const QUrl& url: selectedUrl)
+    foreach(const QUrl& url, selectedUrl)
     {
-        ItemPreprocessedUrls preprocessedUrls = *(map.find(url));
+        ItemPreprocessedUrls preprocessedUrls = map.value(url);
         preprocessedList.append(preprocessedUrls.previewUrl);
     }
 
@@ -423,13 +426,13 @@ void ExpoBlendingDlg::slotProcess()
     ItemUrlsMap map = d->mngr->preProcessedMap();
     QList<QUrl> preprocessedList;
 
-    for (const EnfuseSettings& settings: list)
+    foreach(const EnfuseSettings& settings, list)
     {
         preprocessedList.clear();
 
-        for (const QUrl& url: settings.inputUrls)
+        foreach(const QUrl& url, settings.inputUrls)
         {
-            ItemPreprocessedUrls preprocessedUrls = *(map.find(url));
+            ItemPreprocessedUrls preprocessedUrls = map.value(url);
             preprocessedList.append(preprocessedUrls.preprocessedUrl);
         }
 
@@ -481,7 +484,7 @@ void ExpoBlendingDlg::saveItem(const QUrl& temp, const EnfuseSettings& settings)
 
     if (!newUrl.isEmpty())
     {
-        if (QFile::rename(temp.toLocalFile(), newUrl.toLocalFile()) != 0)
+        if (!QFile::rename(temp.toLocalFile(), newUrl.toLocalFile()))
         {
             QMessageBox::critical(this, QString(), i18n("Failed to save image to %1.", newUrl.toLocalFile()));
             d->enfuseStack->setOnItem(settings.previewUrl, false);

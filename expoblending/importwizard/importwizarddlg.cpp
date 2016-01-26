@@ -56,7 +56,8 @@ struct ImportWizardDlg::ImportWizardDlgPriv
           introPage(0),
           itemsPage(0),
           preProcessingPage(0),
-          lastPage(0)
+          lastPage(0),
+          preProcessed(false)
     {
     }
 
@@ -66,6 +67,8 @@ struct ImportWizardDlg::ImportWizardDlgPriv
     ItemsPage*         itemsPage;
     PreProcessingPage* preProcessingPage;
     LastPage*          lastPage;
+
+    bool               preProcessed;
 };
 
 ImportWizardDlg::ImportWizardDlg(Manager* const mngr, QWidget* const parent)
@@ -101,6 +104,9 @@ ImportWizardDlg::ImportWizardDlg(Manager* const mngr, QWidget* const parent)
     connect(d->preProcessingPage, SIGNAL(signalPreProcessed(ItemUrlsMap)),
             this, SLOT(slotPreProcessed(ItemUrlsMap)));
 
+    connect(this, SIGNAL(currentIdChanged(int)),
+            this, SLOT(slotCurrentIdChanged(int)));
+
     d->introPage->setComplete(d->introPage->binariesFound());
 }
 
@@ -119,35 +125,33 @@ QList<QUrl> ImportWizardDlg::itemUrls() const
     return d->itemsPage->itemUrls();
 }
 
-void ImportWizardDlg::next()
+bool ImportWizardDlg::validateCurrentPage()
 {
     if (currentPage() == d->itemsPage)
     {
         d->mngr->setItemsList(d->itemsPage->itemUrls());
     }
-    else if (currentPage() == d->preProcessingPage)
+    else if (currentPage() == d->preProcessingPage && !d->preProcessed)
     {
         // Do not give access to Next button during alignment process.
         d->preProcessingPage->setComplete(false);
         d->preProcessingPage->process();
+        d->preProcessed = true;
         // Next is handled with signals/slots
-        return;
+        return false;
     }
 
-    KPWizardDialog::next();
+    return true;
 }
 
-void ImportWizardDlg::back()
+void ImportWizardDlg::slotCurrentIdChanged(int id)
 {
-    if (currentPage() == d->preProcessingPage)
+    if (page(id) != d->lastPage && d->preProcessed)
     {
+        d->preProcessed = false;
         d->preProcessingPage->cancel();
-        KPWizardDialog::back();
         d->preProcessingPage->setComplete(true);
-        return;
     }
-
-    KPWizardDialog::back();
 }
 
 void ImportWizardDlg::slotIntroPageIsValid(bool binariesFound)
@@ -161,12 +165,13 @@ void ImportWizardDlg::slotPreProcessed(const ItemUrlsMap& map)
     {
         // pre-processing failed.
         d->preProcessingPage->setComplete(false);
+        d->preProcessed = false;
     }
     else
     {
         // pre-processing Done.
         d->mngr->setPreProcessedMap(map);
-        KPWizardDialog::next();
+        next();
     }
 }
 
