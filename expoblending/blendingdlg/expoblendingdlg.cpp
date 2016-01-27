@@ -484,6 +484,12 @@ void ExpoBlendingDlg::saveItem(const QUrl& temp, const EnfuseSettings& settings)
 
     if (!newUrl.isEmpty())
     {
+        // remove newUrl file if it exist
+        if (temp.toLocalFile() != newUrl.toLocalFile() && QFile::exists(temp.toLocalFile()) && QFile::exists(newUrl.toLocalFile()))
+        {
+            QFile::remove(newUrl.toLocalFile());
+        }
+
         if (!QFile::rename(temp.toLocalFile(), newUrl.toLocalFile()))
         {
             QMessageBox::critical(this, QString(), i18n("Failed to save image to %1.", newUrl.toLocalFile()));
