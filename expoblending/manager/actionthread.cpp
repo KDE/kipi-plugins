@@ -73,6 +73,7 @@ struct ActionThread::Private
         : cancel(false),
           align(false),
           enfuseVersion4x(true),
+          preprocessingTmpDir(0),
           iface(0),
           meta(0)
     {
@@ -117,7 +118,7 @@ struct ActionThread::Private
      */
     QList<QPointer<RawProcessor> >  rawProcesses;
 
-    QSharedPointer<QTemporaryDir>   preprocessingTmpDir;
+    QTemporaryDir*                  preprocessingTmpDir;
 
     /**
      * List of results files produced by enfuse that may need cleaning.
@@ -138,11 +139,6 @@ ActionThread::ActionThread(QObject* const parent)
     : QThread(parent),
       d(new Private)
 {
-    QString prefix = QDir::tempPath() + QLatin1Char('/') +
-                     QLatin1String("kipi-expoblending-tmp-XXXXXX");
-
-    d->preprocessingTmpDir = QSharedPointer<QTemporaryDir>(new QTemporaryDir(prefix));
-
     qRegisterMetaType<ActionData>();
 }
 
@@ -160,6 +156,7 @@ ActionThread::~ActionThread()
 
     cleanUpResultFiles();
 
+    delete d->preprocessingTmpDir;
     delete d;
 }
 
@@ -173,7 +170,7 @@ void ActionThread::cleanUpResultFiles()
     // Cleanup all tmp files created by Enfuse process.
     QMutexLocker(&d->enfuseTmpUrlsMutex);
 
-    for (QUrl& url: d->enfuseTmpUrls)
+    foreach(const QUrl& url, d->enfuseTmpUrls)
     {
         qCDebug(KIPIPLUGINS_LOG) << "Removing temp file " << url.toLocalFile();
         QFile(url.toLocalFile()).remove();
@@ -189,7 +186,7 @@ void ActionThread::setPreProcessingSettings(bool align)
 
 void ActionThread::identifyFiles(const QList<QUrl>& urlList)
 {
-    for (const QUrl& url: urlList)
+    foreach(const QUrl& url, urlList)
     {
         Private::Task* const t = new Private::Task;
         t->action              = IDENTIFY;
@@ -501,7 +498,7 @@ void ActionThread::preProcessingMultithreaded(const QUrl& url, volatile bool& er
         QPointer<RawProcessor> rawdec = d->iface->createRawProcessor();
         isRAW                         = (rawdec && rawdec->isRawFile(url));
     }
-    
+
     if (isRAW)
     {
         QUrl preprocessedUrl, previewUrl;
@@ -547,6 +544,13 @@ bool ActionThread::startPreProcessing(const QList<QUrl>& inUrls,
                                       bool align,
                                       const QString& alignPath, QString& errors)
 {
+    delete d->preprocessingTmpDir;
+
+    QString prefix = QDir::tempPath() + QLatin1Char('/') +
+                     QLatin1String("kipi-expoblending-tmp-XXXXXX");
+
+    d->preprocessingTmpDir = new QTemporaryDir(prefix);
+
     // Pre-process RAW files if necessary. Parallelized with OpemMP if available.
     d->mixedUrls.clear();
     d->preProcessedUrlsMap.clear();
@@ -589,7 +593,7 @@ bool ActionThread::startPreProcessing(const QList<QUrl>& inUrls,
         args << QStringLiteral("-v");
         args << QStringLiteral("-a");
         args << QStringLiteral("aligned");
-        for (const QUrl& url: d->mixedUrls)
+        foreach(const QUrl& url, d->mixedUrls)
         {
             args << url.toLocalFile();
         }
@@ -612,7 +616,7 @@ bool ActionThread::startPreProcessing(const QList<QUrl>& inUrls,
         QString temp;
         d->preProcessedUrlsMap.clear();
 
-        for (const QUrl& url: inUrls)
+        foreach(const QUrl& url, inUrls)
         {
             QUrl previewUrl;
             QUrl alignedUrl = QUrl::fromLocalFile(
@@ -631,7 +635,7 @@ bool ActionThread::startPreProcessing(const QList<QUrl>& inUrls,
             i++;
         }
 
-        for (const QUrl& inputUrl: d->preProcessedUrlsMap.keys())
+        foreach(const QUrl& inputUrl, d->preProcessedUrlsMap.keys())
         {
             qCDebug(KIPIPLUGINS_LOG) << "Pre-processed output urls map: "
                                      << inputUrl << "=>"
@@ -658,7 +662,7 @@ bool ActionThread::startPreProcessing(const QList<QUrl>& inUrls,
     }
     else
     {
-        for (const QUrl& inputUrl: d->preProcessedUrlsMap.keys())
+        foreach(const QUrl& inputUrl, d->preProcessedUrlsMap.keys())
         {
             qCDebug(KIPIPLUGINS_LOG) << "Pre-processed output urls map: "
                                      << inputUrl << "=>"

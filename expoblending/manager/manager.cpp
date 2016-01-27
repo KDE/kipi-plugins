@@ -68,7 +68,7 @@ Manager::Manager(QObject* const parent)
     : QObject(parent),
       d(new ManagerPriv)
 {
-    d->thread                               = new ActionThread(this);
+    d->thread = new ActionThread(this);
 
     connect(&d->enfuseBinary, SIGNAL(signalEnfuseVersion(double)),
             this, SLOT(slotSetEnfuseVersion(double)));
