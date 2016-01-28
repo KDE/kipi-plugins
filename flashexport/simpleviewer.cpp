@@ -40,8 +40,9 @@
 
 // KDE includes
 
-#include <kio/copyjob.h>
 #include <kio/job.h>
+#include <kio/copyjob.h>
+#include <kio/deletejob.h>
 #include <kjobwidgets.h>
 #include <klocalizedstring.h>
 
@@ -275,7 +276,7 @@ void SimpleViewer::slotProcess()
                                        QMessageBox::StandardButtons(QMessageBox::Yes | QMessageBox::No));
         if (ret == QMessageBox::Yes)
         {
-            auto deleteJob = KIO::file_delete(d->settings->exportUrl);
+            auto deleteJob = KIO::del(d->settings->exportUrl);
             KJobWidgets::setWindow(deleteJob, QApplication::activeWindow());
             deleteJob->exec();
         }
@@ -1009,8 +1010,11 @@ bool SimpleViewer::copySimpleViewer() const
         files.append(QUrl::fromLocalFile(dir.absolutePath() + QLatin1Char('/') + *it));
     }
 
-    // TODO: catch errors
-    /*KIO::CopyJob *copyJob =*/ KIO::copy(files, d->settings->exportUrl, KIO::HideProgressInfo);
+    auto copyJob = KIO::copy(files, QUrl::fromLocalFile(d->tempDir->path()), KIO::HideProgressInfo);
+    KJobWidgets::setWindow(copyJob, 0);
+
+    if (!copyJob->exec())
+        return false;
 
     d->progressWdg->addedAction(i18n("Flash files copied..."), SuccessMessage);
 
@@ -1024,7 +1028,7 @@ bool SimpleViewer::upload() const
 
     d->progressWdg->addedAction(i18n("Uploading gallery..."), StartingMessage);
 
-    auto dircopyJob = KIO::copy(QUrl::fromLocalFile(d->tempDir->path() + QLatin1String("/./")), d->settings->exportUrl);
+    auto dircopyJob = KIO::copyAs(QUrl::fromLocalFile(d->tempDir->path()), d->settings->exportUrl, KIO::Overwrite);
     KJobWidgets::setWindow(dircopyJob, 0);
 
     if (!dircopyJob->exec())

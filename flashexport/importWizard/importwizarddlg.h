@@ -72,6 +72,8 @@ public:
 
 private Q_SLOTS:
 
+    void slotCurrentIdChanged(int);
+
     //will activate the next button if a url was selected.
     void slotActivate();
 

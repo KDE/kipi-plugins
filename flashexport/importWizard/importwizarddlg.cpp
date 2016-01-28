@@ -36,6 +36,7 @@
 #include <kjobwidgets.h>
 #include <kconfig.h>
 #include <kio/job.h>
+#include <kio/deletejob.h>
 #include <kconfiggroup.h>
 
 // Libkipi includes
@@ -123,6 +124,9 @@ ImportWizardDlg::ImportWizardDlg(FlashManager* const mngr, QWidget* const parent
     connect(d->simple, SIGNAL(signalProcessingDone()),
             this, SLOT(slotFinishEnable()));
 
+    connect(this, SIGNAL(currentIdChanged(int)),
+            this, SLOT(slotCurrentIdChanged(int)));
+
     // ---------------------------------------------------------------
 
     resize(600, 500);
@@ -200,12 +204,7 @@ bool ImportWizardDlg::validateCurrentPage()
         d->simple->startExport();
         return false;
     }
-/*
-    if (currentPage() == d->progressPage)
-    {
-        d->simple->slotCancel();
-    }
-*/
+
     return true;
 }
 
@@ -229,6 +228,15 @@ int ImportWizardDlg::nextId() const
     return KPWizardDialog::nextId();
 }
 
+void ImportWizardDlg::slotCurrentIdChanged(int id)
+{
+    if (page(id) == d->generalPage && d->exporting)
+    {
+        d->exporting = false;
+        d->simple->slotCancel();
+    }
+}
+
 bool ImportWizardDlg::checkIfFolderExist()
 {
     KIO::StatJob* const job = KIO::stat(d->settings->exportUrl, KIO::StatJob::DestinationSide, 0);
@@ -248,7 +256,7 @@ bool ImportWizardDlg::checkIfFolderExist()
         {
             case QMessageBox::Yes:
             {
-                auto deleteJob = KIO::file_delete(d->settings->exportUrl);
+                auto deleteJob = KIO::del(d->settings->exportUrl);
                 KJobWidgets::setWindow(deleteJob, QApplication::activeWindow());
 
                 if (!deleteJob->exec())
