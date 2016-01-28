@@ -73,7 +73,7 @@ public:
 
     Private() :
         maxThumbSize(45),
-        viewer(QStringLiteral("simpleviewer.swf"))
+        viewer(QLatin1String("simpleviewer.swf"))
     {
         totalActions = 0;
         action       = 0;
@@ -84,11 +84,6 @@ public:
         settings     = 0;
         width        = 0;
         height       = 0;
-        
-        if (interface)
-        {
-            meta = interface->createMetadataProcessor();
-        }
     }
 
     bool                              canceled;
@@ -125,8 +120,14 @@ SimpleViewer::SimpleViewer(Interface* const interface, QObject* const parent)
       d(new Private)
 {
     d->interface = interface;
-    d->hostName  = QStringLiteral("Kipi-plugins");
-    d->hostUrl   = QStringLiteral("https://projects.kde.org/projects/extragear/graphics/kipi-plugins");
+
+    if (d->interface)
+    {
+        d->meta = interface->createMetadataProcessor();
+    }
+
+    d->hostName  = QLatin1String("Kipi-plugins");
+    d->hostUrl   = QLatin1String("https://projects.kde.org/projects/extragear/graphics/kipi-plugins");
 }
 
 SimpleViewer::~SimpleViewer()
@@ -143,36 +144,36 @@ void SimpleViewer::appendPluginFiles(int pluginType)
     {
         case 0:
             d->simpleViewerFiles.clear();
-            d->simpleViewerFiles.append(QStringLiteral("web/svcore/swf/simpleviewer.swf"));
-            d->simpleViewerFiles.append(QStringLiteral("web/svcore/js/swfobject.js"));
-            d->dataLocal = makeWritableDir(QStringLiteral("kipiplugin_flashexport/simpleviewer/")).absolutePath() + QStringLiteral("/");
+            d->simpleViewerFiles.append(QLatin1String("web/svcore/swf/simpleviewer.swf"));
+            d->simpleViewerFiles.append(QLatin1String("web/svcore/js/swfobject.js"));
+            d->dataLocal = makeWritableDir(QLatin1String("kipiplugin_flashexport/simpleviewer/")).absolutePath() + QLatin1String("/");
             d->dataDir   = QStandardPaths::locate(QStandardPaths::GenericDataLocation,
-                                                  QStringLiteral("kipiplugin_flashexport/simpleviewer/"));
+                                                  QLatin1String("kipiplugin_flashexport/simpleviewer/"), QStandardPaths::LocateDirectory);
             qCDebug(KIPIPLUGINS_LOG) << "Data dir when set is " << d->dataDir;
             break;
         case 1:
             d->simpleViewerFiles.clear();
-            d->simpleViewerFiles.append(QStringLiteral("autoviewer.swf"));
-            d->simpleViewerFiles.append(QStringLiteral("swfobject.js"));
-            d->dataLocal = makeWritableDir(QStringLiteral("kipiplugin_flashexport/autoviewer/")).absolutePath() + QStringLiteral("/");
+            d->simpleViewerFiles.append(QLatin1String("autoviewer.swf"));
+            d->simpleViewerFiles.append(QLatin1String("swfobject.js"));
+            d->dataLocal = makeWritableDir(QLatin1String("kipiplugin_flashexport/autoviewer/")).absolutePath() + QLatin1String("/");
             d->dataDir   = QStandardPaths::locate(QStandardPaths::GenericDataLocation,
-                                                  QStringLiteral("kipiplugin_flashexport/autoviewer/"));
+                                                  QLatin1String("kipiplugin_flashexport/autoviewer/"), QStandardPaths::LocateDirectory);
             break;
         case 2:
             d->simpleViewerFiles.clear();
-            d->simpleViewerFiles.append(QStringLiteral("TiltViewer.swf"));
-            d->simpleViewerFiles.append(QStringLiteral("swfobject.js"));
-            d->dataLocal = makeWritableDir(QStringLiteral("kipiplugin_flashexport/tiltviewer/")).absolutePath() + QStringLiteral("/");
+            d->simpleViewerFiles.append(QLatin1String("TiltViewer.swf"));
+            d->simpleViewerFiles.append(QLatin1String("swfobject.js"));
+            d->dataLocal = makeWritableDir(QLatin1String("kipiplugin_flashexport/tiltviewer/")).absolutePath() + QLatin1String("/");
             d->dataDir   = QStandardPaths::locate(QStandardPaths::GenericDataLocation,
-                                                  QStringLiteral("kipiplugin_flashexport/tiltviewer/"));
+                                                  QLatin1String("kipiplugin_flashexport/tiltviewer/"), QStandardPaths::LocateDirectory);
             break;
         case 3:
             d->simpleViewerFiles.clear();
-            d->simpleViewerFiles.append(QStringLiteral("viewer.swf"));
-            d->simpleViewerFiles.append(QStringLiteral("swfobject.js"));
-            d->dataLocal = makeWritableDir(QStringLiteral("kipiplugin_flashexport/postcardviewer/")).absolutePath() + QStringLiteral("/");
+            d->simpleViewerFiles.append(QLatin1String("viewer.swf"));
+            d->simpleViewerFiles.append(QLatin1String("swfobject.js"));
+            d->dataLocal = makeWritableDir(QLatin1String("kipiplugin_flashexport/postcardviewer/")).absolutePath() + QLatin1String("/");
             d->dataDir   = QStandardPaths::locate(QStandardPaths::GenericDataLocation,
-                                                  QStringLiteral("kipiplugin_flashexport/postcardviewer/"));
+                                                  QLatin1String("kipiplugin_flashexport/postcardviewer/"), QStandardPaths::LocateDirectory);
             break;
         default:
             break;
@@ -294,8 +295,11 @@ void SimpleViewer::slotProcess()
 bool SimpleViewer::createExportDirectories() const
 {
     delete d->tempDir;
-    d->tempDir = new QTemporaryDir(makeTemporaryDir("kipi-flashexport").absolutePath());
-    d->tempDir->setAutoRemove(true);
+
+    QString prefix = QDir::tempPath() + QLatin1Char('/') +
+                     QLatin1String("kipi-flashexport-tmp-XXXXXX");
+
+    d->tempDir = new QTemporaryDir(prefix);
 
     d->progressWdg->addedAction(i18n("Creating directories..."), StartingMessage);
 
@@ -314,8 +318,8 @@ bool SimpleViewer::createExportDirectories() const
 
     if (d->settings->plugType == 0)
     {
-        QUrl thumbsDir = QUrl(d->tempDir->path());
-        thumbsDir.setPath(thumbsDir.path() + QStringLiteral("/thumbs"));
+        QUrl thumbsDir = QUrl::fromLocalFile(d->tempDir->path());
+        thumbsDir.setPath(thumbsDir.path() + QLatin1String("/thumbs"));
 
         auto mkdirJob2 = KIO::mkdir(thumbsDir);
         KJobWidgets::setWindow(mkdirJob2, QApplication::activeWindow());
@@ -323,13 +327,13 @@ bool SimpleViewer::createExportDirectories() const
         if (!mkdirJob2->exec())
         {
             d->progressWdg->addedAction(i18n("Could not create folder '%1'", thumbsDir.url()),
-                                   ErrorMessage);
+                                        ErrorMessage);
             return false;
         }
     }
 
-    QUrl imagesDir = QUrl(d->tempDir->path());
-
+    QUrl imagesDir = QUrl::fromLocalFile(d->tempDir->path());
+    imagesDir.setPath(imagesDir.path() + QLatin1String("/images"));
     qCDebug(KIPIPLUGINS_LOG) << "image folder url is" << imagesDir.url();
 
     auto mkdirJob3 = KIO::mkdir(imagesDir);
@@ -352,21 +356,21 @@ bool SimpleViewer::cmpUrl(const QUrl& url1, const QUrl& url2)
 {
     QPointer<MetadataProcessor> meta = 0;
     PluginLoader* const pl           = PluginLoader::instance();
-    
+
     if (pl)
     {
         Interface* const iface = pl->interface();
-        
+
         if (iface)
             meta = iface->createMetadataProcessor();
     }
-    
+
     if (!meta)
         return cmpUrlByName(url1, url2);
-    
+
     if (!meta->load(url1))
         return cmpUrlByName(url1, url2);
-    
+
     QDateTime clock1 = meta->getImageDateTime();
 
     if (!meta->load(url2))
@@ -397,99 +401,97 @@ bool SimpleViewer::exportImages()
 
     d->progressWdg->addedAction(i18n("Creating images and thumbnails..."), StartingMessage);
 
-    QUrl xmlFile(d->tempDir->path());
-
-    QFile file(xmlFile.path());
+    QFile file(d->tempDir->path() + QLatin1String("/gallery.xml"));
     file.open(QIODevice::WriteOnly);
 
     // header of gallery.xml
     QDomElement  galleryElem;
     QDomElement  photosElem;
     QDomDocument xmlDoc;
-    xmlDoc.appendChild(xmlDoc.createProcessingInstruction( QStringLiteral("xml"),
-                       QStringLiteral("version=\"1.0\" encoding=\"UTF-8\"") ) );
+    xmlDoc.appendChild(xmlDoc.createProcessingInstruction( QLatin1String("xml"),
+                       QLatin1String("version=\"1.0\" encoding=\"UTF-8\"") ) );
 
     switch (d->settings->plugType)
     {
         case 0:
         {
-            galleryElem = xmlDoc.createElement(QStringLiteral("simpleviewerGallery"));
+            galleryElem = xmlDoc.createElement(QLatin1String("simpleviewerGallery"));
             xmlDoc.appendChild( galleryElem );
-            galleryElem.setAttribute(QStringLiteral("enableRightClickOpen"),
+            galleryElem.setAttribute(QLatin1String("enableRightClickOpen"),
                                      d->settings->enableRightClickToOpen());
-            galleryElem.setAttribute(QStringLiteral("maxImageWidth"),
+            galleryElem.setAttribute(QLatin1String("maxImageWidth"),
                                      d->settings->maxImageDimension);
-            galleryElem.setAttribute(QStringLiteral("maxImageHeight"),
+            galleryElem.setAttribute(QLatin1String("maxImageHeight"),
                                      d->settings->maxImageDimension);
-            galleryElem.setAttribute(QStringLiteral("textColor"),
-                                     d->settings->textColor.name().replace(QLatin1Char('#'), QStringLiteral("0x")));
-            galleryElem.setAttribute(QStringLiteral("frameColor"),
-                                     d->settings->frameColor.name().replace(QLatin1Char('#'), QStringLiteral("0x")));
-            galleryElem.setAttribute(QStringLiteral("bgColor"),
-                                     d->settings->backgroundColor.name().replace(QLatin1Char('#'), QStringLiteral("0x")));
-            galleryElem.setAttribute(QStringLiteral("frameWidth"),
+            galleryElem.setAttribute(QLatin1String("textColor"),
+                                     d->settings->textColor.name().replace(QLatin1Char('#'), QLatin1String("0x")));
+            galleryElem.setAttribute(QLatin1String("frameColor"),
+                                     d->settings->frameColor.name().replace(QLatin1Char('#'), QLatin1String("0x")));
+            galleryElem.setAttribute(QLatin1String("bgColor"),
+                                     d->settings->backgroundColor.name().replace(QLatin1Char('#'), QLatin1String("0x")));
+            galleryElem.setAttribute(QLatin1String("frameWidth"),
                                      d->settings->frameWidth);
-            galleryElem.setAttribute(QStringLiteral("stagePadding"),
+            galleryElem.setAttribute(QLatin1String("stagePadding"),
                                      d->settings->stagePadding);
-            galleryElem.setAttribute(QStringLiteral("thumbnailColumns"),
+            galleryElem.setAttribute(QLatin1String("thumbnailColumns"),
                                      d->settings->thumbnailColumns);
-            galleryElem.setAttribute(QStringLiteral("thumbnailRows"),
+            galleryElem.setAttribute(QLatin1String("thumbnailRows"),
                                      d->settings->thumbnailRows);
-            galleryElem.setAttribute(QStringLiteral("navPosition"),
+            galleryElem.setAttribute(QLatin1String("navPosition"),
                                      d->settings->thumbPosition());
-            galleryElem.setAttribute(QStringLiteral("title"),                d->settings->title);
-            galleryElem.setAttribute(QStringLiteral("imagePath"),            QStringLiteral("images/"));
-            galleryElem.setAttribute(QStringLiteral("thumbPath"),            QStringLiteral("thumbs/"));
+            galleryElem.setAttribute(QLatin1String("title"),                d->settings->title);
+            galleryElem.setAttribute(QLatin1String("imagePath"),            QLatin1String("images/"));
+            galleryElem.setAttribute(QLatin1String("thumbPath"),            QLatin1String("thumbs/"));
             break;
         }
         case 1:
         {
-            galleryElem = xmlDoc.createElement(QStringLiteral("gallery"));
+            galleryElem = xmlDoc.createElement(QLatin1String("gallery"));
             xmlDoc.appendChild( galleryElem );
-            galleryElem.setAttribute(QStringLiteral("enableRightClickOpen"),
+            galleryElem.setAttribute(QLatin1String("enableRightClickOpen"),
                                      d->settings->enableRightClickToOpen());
-            galleryElem.setAttribute(QStringLiteral("imagePadding"),
+            galleryElem.setAttribute(QLatin1String("imagePadding"),
                                      d->settings->imagePadding);
-            galleryElem.setAttribute(QStringLiteral("displayTime"),
+            galleryElem.setAttribute(QLatin1String("displayTime"),
                                      d->settings->displayTime);
-            galleryElem.setAttribute(QStringLiteral("frameWidth"),
+            galleryElem.setAttribute(QLatin1String("frameWidth"),
                                      d->settings->frameWidth);
-            galleryElem.setAttribute(QStringLiteral("frameColor"),
-                                     d->settings->frameColor.name().replace(QLatin1Char('#'), QStringLiteral("0x")));
-            galleryElem.setAttribute(QStringLiteral("bgColor"),
-                                     d->settings->backgroundColor.name().replace(QLatin1Char('#'), QStringLiteral("0x")));
+            galleryElem.setAttribute(QLatin1String("frameColor"),
+                                     d->settings->frameColor.name().replace(QLatin1Char('#'), QLatin1String("0x")));
+            galleryElem.setAttribute(QLatin1String("bgColor"),
+                                     d->settings->backgroundColor.name().replace(QLatin1Char('#'), QLatin1String("0x")));
             break;
         }
         case 2:
         {
-            galleryElem = xmlDoc.createElement(QStringLiteral("tiltviewergallery"));
+            galleryElem = xmlDoc.createElement(QLatin1String("tiltviewergallery"));
             xmlDoc.appendChild( galleryElem );
-            photosElem  = xmlDoc.createElement(QStringLiteral("photos"));
+            photosElem  = xmlDoc.createElement(QLatin1String("photos"));
             galleryElem.appendChild( photosElem);
             break;
         }
         case 3:
         {
-            galleryElem = xmlDoc.createElement(QStringLiteral("gallery"));
+            galleryElem = xmlDoc.createElement(QLatin1String("gallery"));
             xmlDoc.appendChild( galleryElem );
-            galleryElem.setAttribute(QStringLiteral("enableRightClickOpen"),
+            galleryElem.setAttribute(QLatin1String("enableRightClickOpen"),
                                      d->settings->enableRightClickToOpen());
-            galleryElem.setAttribute(QStringLiteral("cellDimension"),
+            galleryElem.setAttribute(QLatin1String("cellDimension"),
                                      d->settings->cellDimension);
-            galleryElem.setAttribute(QStringLiteral("columns"),
+            galleryElem.setAttribute(QLatin1String("columns"),
                                      d->settings->thumbnailColumns);
-            galleryElem.setAttribute(QStringLiteral("captionColor"),
-                                     d->settings->textColor.name().replace(QLatin1Char('#'), QStringLiteral("0x")));
-            galleryElem.setAttribute(QStringLiteral("zoomInPerc"),
+            galleryElem.setAttribute(QLatin1String("captionColor"),
+                                     d->settings->textColor.name().replace(QLatin1Char('#'), QLatin1String("0x")));
+            galleryElem.setAttribute(QLatin1String("zoomInPerc"),
                                      d->settings->zoomInPerc);
-            galleryElem.setAttribute(QStringLiteral("zoomOutPerc"),
+            galleryElem.setAttribute(QLatin1String("zoomOutPerc"),
                                      d->settings->zoomOutPerc);
-            galleryElem.setAttribute(QStringLiteral("frameWidth"),
+            galleryElem.setAttribute(QLatin1String("frameWidth"),
                                      d->settings->frameWidth);
-            galleryElem.setAttribute(QStringLiteral("frameColor"),
-                                     d->settings->frameColor.name().replace(QLatin1Char('#'), QStringLiteral("0x")));
-            galleryElem.setAttribute(QStringLiteral("bgColor"),
-                                     d->settings->backgroundColor.name().replace(QLatin1Char('#'), QStringLiteral("0x")));
+            galleryElem.setAttribute(QLatin1String("frameColor"),
+                                     d->settings->frameColor.name().replace(QLatin1Char('#'), QLatin1String("0x")));
+            galleryElem.setAttribute(QLatin1String("bgColor"),
+                                     d->settings->backgroundColor.name().replace(QLatin1Char('#'), QLatin1String("0x")));
             break;
         }
 
@@ -503,13 +505,13 @@ bool SimpleViewer::exportImages()
             !d->canceled && (it != d->settings->collections.constEnd()) ; ++it )
         {
             QList<QUrl> images = (*it).images();
-            processQUrlList(images,xmlDoc,galleryElem,photosElem);
+            processQUrlList(images, xmlDoc, galleryElem, photosElem);
         }
     }
     else
     {
         QList<QUrl> images = d->settings->imageDialogList;
-        processQUrlList(images,xmlDoc,galleryElem,photosElem);
+        processQUrlList(images, xmlDoc, galleryElem, photosElem);
     }
 
     QByteArray data(xmlDoc.toByteArray());
@@ -532,11 +534,11 @@ void SimpleViewer::processQUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
     bool resizeImages   = d->settings->resizeExportImages;
     bool fixOrientation = d->settings->fixOrientation;
 
-    QUrl thumbsDir(d->tempDir->path());
-    thumbsDir.setPath(thumbsDir.path() + QStringLiteral("/thumbs"));
+    QUrl thumbsDir = QUrl::fromLocalFile(d->tempDir->path());
+    thumbsDir.setPath(thumbsDir.path() + QLatin1String("/thumbs/"));
 
-    QUrl imagesDir(d->tempDir->path());
-    imagesDir.setPath(imagesDir.path() + QStringLiteral("/images"));
+    QUrl imagesDir = QUrl::fromLocalFile(d->tempDir->path());
+    imagesDir.setPath(imagesDir.path() + QLatin1String("/images/"));
 
     qSort(images.begin(), images.end(), cmpUrl);
 
@@ -545,13 +547,16 @@ void SimpleViewer::processQUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
     {
         QApplication::processEvents();
         QUrl url = *it;
-        QFileInfo fi(url.path());
+        QFileInfo fi(url.toLocalFile());
 
         //video can't be exported, need to add for all video files
-        if (fi.suffix().toUpper() == QStringLiteral("MOV"))
+        if (fi.suffix().toUpper() == QLatin1String("MOV"))
             continue;
 
         d->progressWdg->addedAction(i18n("Processing %1", url.fileName()), StartingMessage);
+
+        // Clear image.
+        image = QImage();
 
         // Check if RAW file.
         if (d->interface)
@@ -567,7 +572,7 @@ void SimpleViewer::processQUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
 
         if (image.isNull())
         {
-            image.load(url.path());
+            image.load(url.toLocalFile());
         }
 
         if (image.isNull())
@@ -584,7 +589,7 @@ void SimpleViewer::processQUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
             if (!createThumbnail(image, thumbnail))
             {
                 d->progressWdg->addedAction(i18n("Could not create thumbnail from '%1'", url.fileName()),
-                                        WarningMessage);
+                                            WarningMessage);
                 continue;
             }
         }
@@ -599,7 +604,7 @@ void SimpleViewer::processQUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
         if (d->meta && d->meta->load(url))
         {
             bool rotated = false;
-            newName      = QStringLiteral("%1.%2").arg(tmp.sprintf("%03i", index)).arg(QStringLiteral("jpg"));
+            newName      = QString::fromUtf8("%1.%2").arg(tmp.sprintf("%03i", index)).arg(QLatin1String("jpg"));
 
             if (d->settings->plugType == 0)
             {
@@ -609,7 +614,7 @@ void SimpleViewer::processQUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
                 if (resizeImages && fixOrientation)
                     d->meta->rotateExifQImage(thumbnail, d->meta->getImageOrientation());
 
-                thumbnail.save(thumbnailPath.path(), "JPEG");
+                thumbnail.save(thumbnailPath.toLocalFile(), "JPEG");
             }
 
             QUrl imagePath(imagesDir);
@@ -618,10 +623,10 @@ void SimpleViewer::processQUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
             if (resizeImages && fixOrientation)
                 rotated = d->meta->rotateExifQImage(image, d->meta->getImageOrientation());
 
-            image.save(imagePath.path(), "JPEG");
+            image.save(imagePath.toLocalFile(), "JPEG");
 
             // Backup metadata from original image.
-            d->meta->setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
+            d->meta->setImageProgramId(QLatin1String("Kipi-plugins"), kipipluginsVersion());
             d->meta->setImageDimensions(image.size());
 
             if (rotated)
@@ -629,7 +634,7 @@ void SimpleViewer::processQUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
 
             d->meta->save(imagePath);
         }
-        
+
         d->width  = image.width();
         d->height = image.height();
 
@@ -716,8 +721,8 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
     {
         QStringList tagList = info.keywords();
 
-        if (!tagList.join(QStringLiteral(" ")).isEmpty())
-            keywords = QStringLiteral("\nTags: ") + tagList.join(QStringLiteral(", "));
+        if (!tagList.join(QLatin1String(" ")).isEmpty())
+            keywords = QLatin1String("\nTags: ") + tagList.join(QLatin1String(", "));
     }
     else
     {
@@ -729,14 +734,14 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
         case 0: //Simpleviewer
         {
 
-            QDomElement img      = xmlDoc.createElement(QStringLiteral("image"));
+            QDomElement img      = xmlDoc.createElement(QLatin1String("image"));
             galleryElem.appendChild(img);
-            img.setAttribute(QStringLiteral("imageURL"), QStringLiteral("images/")+newName);
-            img.setAttribute(QStringLiteral("thumbURL"), QStringLiteral("thumbs/")+newName);
-            img.setAttribute(QStringLiteral("linkURL"), QString());
-            img.setAttribute(QStringLiteral("targetURL"), QString());
+            img.setAttribute(QLatin1String("imageURL"),  QLatin1String("images/") + newName);
+            img.setAttribute(QLatin1String("thumbURL"),  QLatin1String("thumbs/") + newName);
+            img.setAttribute(QLatin1String("linkURL"),   QString());
+            img.setAttribute(QLatin1String("targetURL"), QString());
 
-            QDomElement caption1 = xmlDoc.createElement(QStringLiteral("caption"));
+            QDomElement caption1 = xmlDoc.createElement(QLatin1String("caption"));
             img.appendChild(caption1);
 
             QDomText captiontxt1 = xmlDoc.createTextNode(comment+keywords);
@@ -746,28 +751,28 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
 
         case 1: //Autoviewer
         {
-            QDomElement img        = xmlDoc.createElement(QStringLiteral("image"));
+            QDomElement img        = xmlDoc.createElement(QLatin1String("image"));
 
             galleryElem.appendChild(img);
 
-            QDomElement urlElem    = xmlDoc.createElement(QStringLiteral("url"));
+            QDomElement urlElem    = xmlDoc.createElement(QLatin1String("url"));
             img.appendChild(urlElem);
-            QDomText    urlText    = xmlDoc.createTextNode(QStringLiteral("images/") + newName);
+            QDomText    urlText    = xmlDoc.createTextNode(QLatin1String("images/") + newName);
             urlElem.appendChild(urlText);
 
-            QDomElement caption2   = xmlDoc.createElement(QStringLiteral("caption"));
+            QDomElement caption2   = xmlDoc.createElement(QLatin1String("caption"));
             img.appendChild( caption2 );
             QDomText captiontxt2   = xmlDoc.createTextNode(comment+keywords);
             caption2.appendChild(captiontxt2);
 
-            QDomElement widthElem  = xmlDoc.createElement(QStringLiteral("width"));
+            QDomElement widthElem  = xmlDoc.createElement(QLatin1String("width"));
             img.appendChild(widthElem);
 
             QDomText    widthText  = xmlDoc.createTextNode(QString::number(d->width));
 
             widthElem.appendChild(widthText);
 
-            QDomElement heightElem = xmlDoc.createElement(QStringLiteral("height"));
+            QDomElement heightElem = xmlDoc.createElement(QLatin1String("height"));
             img.appendChild(heightElem);
 
             QDomText    heightText = xmlDoc.createTextNode(QString::number(d->height));
@@ -777,17 +782,17 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
 
         case 2: //TiltWiever
         {
-            QDomElement img       = xmlDoc.createElement(QStringLiteral("photo"));
+            QDomElement img       = xmlDoc.createElement(QLatin1String("photo"));
             galleryElem.appendChild(img);
-            img.setAttribute(QStringLiteral("imageurl"), QStringLiteral("images/")+newName);
-            img.setAttribute(QStringLiteral("linkurl"), QString());
+            img.setAttribute(QLatin1String("imageurl"), QLatin1String("images/") + newName);
+            img.setAttribute(QLatin1String("linkurl"), QString());
 
-            QDomElement titleElem = xmlDoc.createElement(QStringLiteral("title"));
+            QDomElement titleElem = xmlDoc.createElement(QLatin1String("title"));
             img.appendChild(titleElem);
             QDomText    titleText = xmlDoc.createTextNode(newName);
             titleElem.appendChild(titleText);
 
-            QDomElement caption1  = xmlDoc.createElement(QStringLiteral("description"));
+            QDomElement caption1  = xmlDoc.createElement(QLatin1String("description"));
             img.appendChild(caption1);
 
             QDomText captiontxt1  = xmlDoc.createTextNode(comment+keywords);
@@ -797,15 +802,15 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
 
         case 3: //PostcardViewer
         {
-            QDomElement img      = xmlDoc.createElement(QStringLiteral("image"));
+            QDomElement img      = xmlDoc.createElement(QLatin1String("image"));
             galleryElem.appendChild(img);
 
-            QDomElement urlElem  = xmlDoc.createElement(QStringLiteral("url"));
+            QDomElement urlElem  = xmlDoc.createElement(QLatin1String("url"));
             img.appendChild(urlElem);
-            QDomText    urlText  = xmlDoc.createTextNode(QStringLiteral("images/") + newName);
+            QDomText    urlText  = xmlDoc.createTextNode(QLatin1String("images/") + newName);
             urlElem.appendChild(urlText);
 
-            QDomElement caption2 = xmlDoc.createElement(QStringLiteral("caption"));
+            QDomElement caption2 = xmlDoc.createElement(QLatin1String("caption"));
             img.appendChild( caption2 );
             QDomText captiontxt2 = xmlDoc.createTextNode(comment+keywords);
             caption2.appendChild(captiontxt2);
@@ -829,7 +834,7 @@ bool SimpleViewer::createIndex() const
         case 0:
         {
             QString indexTemplateName = QStandardPaths::locate(QStandardPaths::GenericDataLocation,
-                                                               QStringLiteral("kipiplugin_flashexport/index.template"));
+                                                               QLatin1String("kipiplugin_flashexport/index.template"));
             if (indexTemplateName.isEmpty())
             {
                 //TODO: errormsg
@@ -843,13 +848,13 @@ bool SimpleViewer::createIndex() const
             QString indexTemplate = in.readAll();
             infile.close();
 
-            indexTemplate.replace(QStringLiteral("{TITLE}"),    d->settings->title);
-            indexTemplate.replace(QStringLiteral("{COLOR}"),    d->settings->textColor.name());
-            indexTemplate.replace(QStringLiteral("{BGCOLOR}"),  d->settings->backgroundColor.name());
-            indexTemplate.replace(QStringLiteral("{HOSTURL}"),  d->hostUrl);
-            indexTemplate.replace(QStringLiteral("{HOSTNAME}"), d->hostName);
+            indexTemplate.replace(QLatin1String("{TITLE}"),    d->settings->title);
+            indexTemplate.replace(QLatin1String("{COLOR}"),    d->settings->textColor.name());
+            indexTemplate.replace(QLatin1String("{BGCOLOR}"),  d->settings->backgroundColor.name());
+            indexTemplate.replace(QLatin1String("{HOSTURL}"),  d->hostUrl);
+            indexTemplate.replace(QLatin1String("{HOSTNAME}"), d->hostName);
 
-            QFile outfile(d->tempDir->path() + QStringLiteral("/index.html"));
+            QFile outfile(d->tempDir->path() + QLatin1String("/index.html"));
             outfile.open(QIODevice::WriteOnly);
             QTextStream out(&outfile);
             out << indexTemplate;
@@ -860,7 +865,7 @@ bool SimpleViewer::createIndex() const
         case 1:
         {
             QString indexTemplateName = QStandardPaths::locate(QStandardPaths::GenericDataLocation,
-                                                               QStringLiteral("kipiplugin_flashexport/index2.template"));
+                                                               QLatin1String("kipiplugin_flashexport/index2.template"));
             if (indexTemplateName.isEmpty())
             {
                 //TODO: errormsg
@@ -874,13 +879,13 @@ bool SimpleViewer::createIndex() const
             QString indexTemplate = in.readAll();
             infile.close();
 
-            indexTemplate.replace(QStringLiteral("{TITLE}"),    d->settings->title);
-            indexTemplate.replace(QStringLiteral("{COLOR}"),    d->settings->textColor.name());
-            indexTemplate.replace(QStringLiteral("{BGCOLOR}"),  d->settings->backgroundColor.name());
+            indexTemplate.replace(QLatin1String("{TITLE}"),    d->settings->title);
+            indexTemplate.replace(QLatin1String("{COLOR}"),    d->settings->textColor.name());
+            indexTemplate.replace(QLatin1String("{BGCOLOR}"),  d->settings->backgroundColor.name());
             //indexTemplate.replace("{HOSTNAME}", d->hostName);
             //indexTemplate.replace("{HOSTURL}",  d->hostUrl);
 
-            QFile outfile(d->tempDir->path() + QStringLiteral("/index.html"));
+            QFile outfile(d->tempDir->path() + QLatin1String("/index.html"));
             outfile.open(QIODevice::WriteOnly);
             QTextStream out(&outfile);
             out << indexTemplate;
@@ -891,7 +896,7 @@ bool SimpleViewer::createIndex() const
         case 2:
         {
             QString indexTemplateName = QStandardPaths::locate(QStandardPaths::GenericDataLocation,
-                                                               QStringLiteral("kipiplugin_flashexport/index3.template"));
+                                                               QLatin1String("kipiplugin_flashexport/index3.template"));
             if (indexTemplateName.isEmpty())
             {
                 //TODO: errormsg
@@ -905,39 +910,39 @@ bool SimpleViewer::createIndex() const
             QString indexTemplate = in.readAll();
             infile.close();
 
-            indexTemplate.replace(QStringLiteral("{TITLE}"),    d->settings->title);
-            indexTemplate.replace(QStringLiteral("{COLOR}"),    d->settings->textColor.name());
+            indexTemplate.replace(QLatin1String("{TITLE}"),    d->settings->title);
+            indexTemplate.replace(QLatin1String("{COLOR}"),    d->settings->textColor.name());
 
             if (d->settings->useReloadButton)
-                indexTemplate.replace(QStringLiteral("{RELOADBUTTON}"), QStringLiteral("true"));
+                indexTemplate.replace(QLatin1String("{RELOADBUTTON}"), QLatin1String("true"));
             else
-                indexTemplate.replace(QStringLiteral("{RELOADBUTTON}"), QStringLiteral("false"));
+                indexTemplate.replace(QLatin1String("{RELOADBUTTON}"), QLatin1String("false"));
 
             if (d->settings->showFlipButton)
-                indexTemplate.replace(QStringLiteral("{FLIPBUTTON}"), QStringLiteral("true"));
+                indexTemplate.replace(QLatin1String("{FLIPBUTTON}"), QLatin1String("true"));
             else
-                indexTemplate.replace(QStringLiteral("{FLIPBUTTON}"), QStringLiteral("false"));
+                indexTemplate.replace(QLatin1String("{FLIPBUTTON}"), QLatin1String("false"));
 
-            indexTemplate.replace(QStringLiteral("{SIZE}"),
+            indexTemplate.replace(QLatin1String("{SIZE}"),
                                   QString::number(d->settings->maxImageDimension));
-            indexTemplate.replace(QStringLiteral("{COLUMN}"),
+            indexTemplate.replace(QLatin1String("{COLUMN}"),
                                   QString::number(d->settings->thumbnailColumns));
-            indexTemplate.replace(QStringLiteral("{ROW}"),
+            indexTemplate.replace(QLatin1String("{ROW}"),
                                   QString::number(d->settings->thumbnailRows));
-            indexTemplate.replace(QStringLiteral("{FRAMECOLOR}"),
+            indexTemplate.replace(QLatin1String("{FRAMECOLOR}"),
                                   d->settings->frameColor.name().replace(
-                                      QLatin1Char('#'), QStringLiteral("0x")));
-            indexTemplate.replace(QStringLiteral("{BACKINCOLOR}"),
+                                      QLatin1Char('#'), QLatin1String("0x")));
+            indexTemplate.replace(QLatin1String("{BACKINCOLOR}"),
                                   d->settings->bkgndInnerColor.name().replace(
-                                      QLatin1Char('#'), QStringLiteral("0x")));
-            indexTemplate.replace(QStringLiteral("{BACKCOLOR}"),
+                                      QLatin1Char('#'), QLatin1String("0x")));
+            indexTemplate.replace(QLatin1String("{BACKCOLOR}"),
                                   d->settings->backColor.name().replace(
-                                      QLatin1Char('#'), QStringLiteral("0x")));
-            indexTemplate.replace(QStringLiteral("{BACKOUTCOLOR}"),
+                                      QLatin1Char('#'), QLatin1String("0x")));
+            indexTemplate.replace(QLatin1String("{BACKOUTCOLOR}"),
                                   d->settings->bkgndOuterColor.name().replace(
-                                      QLatin1Char('#'), QStringLiteral("0x")));
+                                      QLatin1Char('#'), QLatin1String("0x")));
 
-            QFile outfile(d->tempDir->path() + QStringLiteral("/index.html"));
+            QFile outfile(d->tempDir->path() + QLatin1String("/index.html"));
             outfile.open(QIODevice::WriteOnly);
             QTextStream out(&outfile);
             out << indexTemplate;
@@ -947,7 +952,7 @@ bool SimpleViewer::createIndex() const
         case 3:
         {
             QString indexTemplateName = QStandardPaths::locate(QStandardPaths::GenericDataLocation,
-                                                               QStringLiteral("kipiplugin_flashexport/index4.template"));
+                                                               QLatin1String("kipiplugin_flashexport/index4.template"));
             if (indexTemplateName.isEmpty())
             {
                 //TODO: errormsg
@@ -961,11 +966,11 @@ bool SimpleViewer::createIndex() const
             QString indexTemplate = in.readAll();
             infile.close();
 
-            indexTemplate.replace(QStringLiteral("{TITLE}"),    d->settings->title);
-            indexTemplate.replace(QStringLiteral("{COLOR}"),    d->settings->textColor.name());
-            indexTemplate.replace(QStringLiteral("{BGCOLOR}"),  d->settings->backgroundColor.name());
+            indexTemplate.replace(QLatin1String("{TITLE}"),    d->settings->title);
+            indexTemplate.replace(QLatin1String("{COLOR}"),    d->settings->textColor.name());
+            indexTemplate.replace(QLatin1String("{BGCOLOR}"),  d->settings->backgroundColor.name());
 
-            QFile outfile(d->tempDir->path() + QStringLiteral("/index.html"));
+            QFile outfile(d->tempDir->path() + QLatin1String("/index.html"));
             outfile.open(QIODevice::WriteOnly);
             QTextStream out(&outfile);
             out << indexTemplate;
@@ -991,7 +996,7 @@ bool SimpleViewer::copySimpleViewer() const
     d->progressWdg->addedAction(i18n("Copying flash files..."), StartingMessage);
 
     // Due to its license, simpleviewer is installed in $KDEHOME
-    QList<QUrl>  files;
+    QList<QUrl> files;
     QStringList entries;
     QDir        dir;
 
@@ -1001,7 +1006,7 @@ bool SimpleViewer::copySimpleViewer() const
 
     for (QStringList::ConstIterator it = entries.constBegin(); it != entries.constEnd(); ++it)
     {
-        files.append(QUrl(dir.absolutePath() + QLatin1Char('/') + *it));
+        files.append(QUrl::fromLocalFile(dir.absolutePath() + QLatin1Char('/') + *it));
     }
 
     // TODO: catch errors
@@ -1019,9 +1024,8 @@ bool SimpleViewer::upload() const
 
     d->progressWdg->addedAction(i18n("Uploading gallery..."), StartingMessage);
 
-    auto dircopyJob = KIO::copy(QUrl(d->tempDir->path() + QStringLiteral("./")), d->settings->exportUrl);
+    auto dircopyJob = KIO::copy(QUrl::fromLocalFile(d->tempDir->path() + QLatin1String("/./")), d->settings->exportUrl);
     KJobWidgets::setWindow(dircopyJob, 0);
-    dircopyJob->exec();
 
     if (!dircopyJob->exec())
         return false;

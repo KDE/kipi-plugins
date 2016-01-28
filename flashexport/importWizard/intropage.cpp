@@ -106,7 +106,7 @@ IntroPage::IntroPage(KPWizardDialog* const dlg)
     getImageLabel->setBuddy(d->imageGetOption);
 
     setPageWidget(vbox);
-    setLeftBottomPix(QIcon::fromTheme(QStringLiteral("kipi-flash")).pixmap(128));
+    setLeftBottomPix(QIcon::fromTheme(QLatin1String("kipi-flash")).pixmap(128));
 }
 
 IntroPage::~IntroPage()

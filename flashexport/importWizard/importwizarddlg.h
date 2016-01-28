@@ -58,19 +58,19 @@ public:
     ~ImportWizardDlg();
 
     FlashManager* manager() const;
-    bool checkIfPluginInstalled();
-    
+    bool checkIfPluginInstalled() const;
+
     // Read settings from configuration file
     void readSettings();
     //Write settings to configuration file and pass them for processing.
     void saveSettings();
-    
+
     bool checkIfFolderExist();
 
+    virtual bool validateCurrentPage();
+    virtual int nextId() const;
+
 private Q_SLOTS:
-    
-    void next();
-    void back();
 
     //will activate the next button if a url was selected.
     void slotActivate();

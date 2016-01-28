@@ -88,13 +88,13 @@ void Plugin_FlashExport::setupActions()
 
     m_action = new QAction(this);
     m_action->setText(i18n("Export to F&lash..."));
-    m_action->setIcon(QIcon::fromTheme(QStringLiteral("kipi-flash")));
+    m_action->setIcon(QIcon::fromTheme(QLatin1String("kipi-flash")));
     m_action->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::Key_L));
 
     connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction(QStringLiteral("flashexport"), m_action);
+    addAction(QLatin1String("flashexport"), m_action);
 }
 
 void Plugin_FlashExport::slotActivate()

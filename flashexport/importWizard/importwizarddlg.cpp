@@ -62,15 +62,16 @@ public:
 
     Private()
     {
-        mngr              = 0;
-        simple            = 0;
-        introPage         = 0;
-        firstrunPage      = 0;
-        selectionPage     = 0;
-        lookPage          = 0;
-        generalPage       = 0;
-        progressPage      = 0;
-        settings          = 0;
+        mngr          = 0;
+        simple        = 0;
+        introPage     = 0;
+        firstrunPage  = 0;
+        selectionPage = 0;
+        lookPage      = 0;
+        generalPage   = 0;
+        progressPage  = 0;
+        settings      = 0;
+        exporting     = false;
     }
 
     FlashManager*                  mngr;
@@ -83,6 +84,8 @@ public:
     LookPage*                      lookPage;
     GeneralPage*                   generalPage;
     ProgressPage*                  progressPage;
+
+    bool                           exporting;
 };
 
 ImportWizardDlg::ImportWizardDlg(FlashManager* const mngr, QWidget* const parent)
@@ -133,7 +136,7 @@ ImportWizardDlg::~ImportWizardDlg()
 void ImportWizardDlg::slotActivate()
 {
     qCDebug(KIPIPLUGINS_LOG) << "Installing " << d->firstrunPage->getUrl();
-    
+
     if (d->mngr->installPlugin(d->firstrunPage->getUrl()))
     {
         d->firstrunPage->setComplete(true);
@@ -151,6 +154,7 @@ void ImportWizardDlg::slotActivate()
 void ImportWizardDlg::slotFinishEnable()
 {
     d->progressPage->setComplete(true);
+    d->exporting = false;
 }
 
 FlashManager* ImportWizardDlg::manager() const
@@ -158,7 +162,7 @@ FlashManager* ImportWizardDlg::manager() const
     return d->mngr;
 }
 
-void ImportWizardDlg::next()
+bool ImportWizardDlg::validateCurrentPage()
 {
     if (currentPage() == d->introPage)
     {
@@ -169,19 +173,6 @@ void ImportWizardDlg::next()
         d->selectionPage->setPageContent(d->settings->imgGetOption);
     }
 
-    // Using KPWizardDialog::next twice to skip firstrun page if
-    // plugin is already installed
-    if (checkIfPluginInstalled())
-    {
-        if (currentPage() == d->introPage)
-            KPWizardDialog::next();
-    }
-    else
-    {
-        //next must be disabled until receive Url via slotActivate.
-        d->firstrunPage->setComplete(false);
-    }
-    
     // Must have at least one collection (or some images) to proceed.
     if (currentPage() == d->selectionPage)
     {
@@ -189,36 +180,53 @@ void ImportWizardDlg::next()
         {
             QMessageBox::information(this, i18n("Problem to export collection"),
                                      i18n("You must select at least one collection to export."));
-            return;
+            return false;
         }
     }
 
-    if (currentPage() == d->generalPage)
+    if (currentPage() == d->generalPage && !d->exporting)
     {
         saveSettings();
         // Disable Finish button while exporting
         d->progressPage->setComplete(false);
 
         if (!checkIfFolderExist())
-            return;
+        {
+            return false;
+        }
 
-        KPWizardDialog::next();
+        d->exporting = true;
+        next();
         d->simple->startExport();
-        return;
+        return false;
     }
-
-    KPWizardDialog::next();
+/*
+    if (currentPage() == d->progressPage)
+    {
+        d->simple->slotCancel();
+    }
+*/
+    return true;
 }
 
-void ImportWizardDlg::back()
+int ImportWizardDlg::nextId() const
 {
-    if (checkIfPluginInstalled() && currentPage() == d->selectionPage)
-        KPWizardDialog::back();
+    // Using KPWizardDialog::nextId() to skip firstrun page if
+    // plugin is already installed
+    if (checkIfPluginInstalled())
+    {
+        if (currentPage() == d->introPage)
+        {
+            return currentId() + 2;
+        }
+    }
+    else
+    {
+        //next must be disabled until receive Url via slotActivate.
+        d->firstrunPage->setComplete(false);
+    }
 
-    if (currentPage() == d->progressPage)
-        d->simple->slotCancel();
-
-    KPWizardDialog::back();
+    return KPWizardDialog::nextId();
 }
 
 bool ImportWizardDlg::checkIfFolderExist()
@@ -268,35 +276,35 @@ bool ImportWizardDlg::checkIfFolderExist()
     return true;
 }
 
-bool ImportWizardDlg::checkIfPluginInstalled()
-{ 
+bool ImportWizardDlg::checkIfPluginInstalled() const
+{
     switch(d->settings->plugType)
     {
         case 0:
             return ! QStandardPaths::locate(QStandardPaths::GenericDataLocation,
-                                            QStringLiteral("kipiplugin_flashexport/simpleviewer/simpleviewer.swf")).isEmpty();
+                                            QLatin1String("kipiplugin_flashexport/simpleviewer/simpleviewer.swf")).isEmpty();
             break;
         case 1:
             return ! QStandardPaths::locate(QStandardPaths::GenericDataLocation,
-                                            QStringLiteral("kipiplugin_flashexport/autoviewer/autoviewer.swf")).isEmpty();
+                                            QLatin1String("kipiplugin_flashexport/autoviewer/autoviewer.swf")).isEmpty();
             break;
         case 2:
             return ! QStandardPaths::locate(QStandardPaths::GenericDataLocation,
-                                            QStringLiteral("kipiplugin_flashexport/tiltviewer/TiltViewer.swf")).isEmpty();
+                                            QLatin1String("kipiplugin_flashexport/tiltviewer/TiltViewer.swf")).isEmpty();
             break;
         case 3:
             return ! QStandardPaths::locate(QStandardPaths::GenericDataLocation,
-                                            QStringLiteral("kipiplugin_flashexport/postcardviewer/viewer.swf")).isEmpty();
+                                            QLatin1String("kipiplugin_flashexport/postcardviewer/viewer.swf")).isEmpty();
             break;
         default:
             qCDebug(KIPIPLUGINS_LOG) << "Unknown plugin type";
             return false;
     }
-
 }
+
 void ImportWizardDlg::readSettings()
 {
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QLatin1String("kipirc"));
     KConfigGroup group = config.group("FlashExport Settings");
 
     d->settings->thumbnailRows        = group.readEntry("ThumbnailRows", 3);
@@ -305,7 +313,7 @@ void ImportWizardDlg::readSettings()
     d->settings->frameColor           = group.readEntry("FrameColor", QColor("#ffffff"));
     d->settings->frameWidth           = group.readEntry("FrameWidth", 1);
     d->settings->title                = group.readEntry("Title", QString());
-    d->settings->exportUrl            = group.readEntry("ExportUrl", QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + QStringLiteral("/simpleviewer")));
+    d->settings->exportUrl            = group.readEntry("ExportUrl", QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + QLatin1String("/simpleviewer")));
     d->settings->resizeExportImages   = group.readEntry("ResizeExportImages", true);
     d->settings->imagesExportSize     = group.readEntry("ImagesExportSize", 640);
     d->settings->showComments         = group.readEntry("ShowComments", true);
@@ -346,7 +354,7 @@ void ImportWizardDlg::saveSettings()
     d->generalPage->settings(d->settings);
     d->lookPage->settings(d->settings);
 
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QLatin1String("kipirc"));
     KConfigGroup group = config.group("FlashExport Settings");
 
     group.writeEntry("ThumbnailRows", d->settings->thumbnailRows);

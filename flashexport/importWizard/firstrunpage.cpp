@@ -97,12 +97,12 @@ FirstRunPage::FirstRunPage(KPWizardDialog* const dlg)
     d->urlRequester->lineEdit()->setText(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
     d->urlRequester->setFileDlgTitle(i18n("Select downloaded archive"));
     d->urlRequester->setFileDlgMode(QFileDialog::ExistingFile);
-    
+
     connect(d->urlRequester, SIGNAL(signalUrlSelected(QUrl)),
             this, SLOT(slotUrlSelected(QUrl)));
 
     setPageWidget(vbox);
-    setLeftBottomPix(QIcon::fromTheme(QStringLiteral("kipi-flash")).pixmap(128));
+    setLeftBottomPix(QIcon::fromTheme(QLatin1String("kipi-flash")).pixmap(128));
     setComplete(false);
 }
 

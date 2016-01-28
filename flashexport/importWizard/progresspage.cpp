@@ -51,7 +51,7 @@ ProgressPage::ProgressPage(FlashManager* const mngr, KPWizardDialog* const dlg)
     progresswdg->show();
 
     setPageWidget(progresswdg);
-    setLeftBottomPix(QIcon::fromTheme(QStringLiteral("kipi-flash")).pixmap(128));
+    setLeftBottomPix(QIcon::fromTheme(QLatin1String("kipi-flash")).pixmap(128));
 }
 
 ProgressPage::~ProgressPage()

@@ -46,29 +46,29 @@ public:
                             "(c) 2011, Veaceslav Munteanu"))
 
     {
-        setHandbookEntry(QStringLiteral("flashexport"));
+        setHandbookEntry(QLatin1String("flashexport"));
 
         addAuthor(i18n("Joern Ahrens"),
                   i18n("Author"),
-                  QStringLiteral("joern dot ahrens at kdemail dot net"));
+                  QLatin1String("joern dot ahrens at kdemail dot net"));
 
         addAuthor(i18n("Gilles Caulier"),
                   i18n("Developer and maintainer"),
-                  QStringLiteral("caulier dot gilles at gmail dot com"));
+                  QLatin1String("caulier dot gilles at gmail dot com"));
 
         addAuthor(i18n("Veaceslav Munteanu"),
                   i18n("Developer and maintainer"),
-                  QStringLiteral("slavuttici at gmail dot com"));
+                  QLatin1String("slavuttici at gmail dot com"));
 
         addCredit(i18n("Felix Turner"),
                   i18n("Author of the Simple Viewer Flash component"),
                   QString(),
-                  QStringLiteral("http://www.simpleviewer.net"));
+                  QLatin1String("http://www.simpleviewer.net"));
 
         addCredit(i18n("Mikkel B. Stegmann"),
                   i18n("Basis for the index.html template"),
                   QString(),
-                  QStringLiteral("http://www.stegmann.dk/mikkel/porta"));
+                  QLatin1String("http://www.stegmann.dk/mikkel/porta"));
     }
 
     ~FlashExportAboutData()

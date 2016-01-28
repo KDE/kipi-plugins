@@ -91,7 +91,7 @@ void SelectionPage::setPageContent(int choice)
     }
 
     setPageWidget(d->vbox);
-    setLeftBottomPix(QIcon::fromTheme(QStringLiteral("kipi-flash")).pixmap(128));
+    setLeftBottomPix(QIcon::fromTheme(QLatin1String("kipi-flash")).pixmap(128));
 }
 
 SelectionPage::~SelectionPage()

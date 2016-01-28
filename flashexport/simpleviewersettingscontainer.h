@@ -131,10 +131,10 @@ public:
         switch(imgGetOption)
         {
             case COLLECTION:
-                return QStringLiteral("Collections");
+                return QLatin1String("Collections");
                 break;
             case IMAGEDIALOG:
-                return QStringLiteral("Image Dialog");
+                return QLatin1String("Image Dialog");
         }
     };
 
@@ -143,19 +143,19 @@ public:
         switch(plugType)
         {
             case SIMPLE:
-                return QStringLiteral("SimpleViewer");
+                return QLatin1String("SimpleViewer");
                 break;
 
             case AUTO:
-                return QStringLiteral("AutoViewer");
+                return QLatin1String("AutoViewer");
                 break;
 
             case TILT:
-                return QStringLiteral("TiltViewer");
+                return QLatin1String("TiltViewer");
                 break;
 
             case POSTCARD:
-                return QStringLiteral("PostcardViewer");
+                return QLatin1String("PostcardViewer");
         }
     };
 
@@ -164,19 +164,19 @@ public:
         switch(thumbnailPosition)
         {
             case RIGHT:
-                return QStringLiteral("right");
+                return QLatin1String("right");
                 break;
 
             case LEFT:
-                return QStringLiteral("left");
+                return QLatin1String("left");
                 break;
 
             case TOP:
-                return QStringLiteral("top");
+                return QLatin1String("top");
                 break;
 
             default: // BOTTOM
-                return QStringLiteral("bottom");
+                return QLatin1String("bottom");
                 break;
         }
     };
@@ -184,9 +184,9 @@ public:
     QString enableRightClickToOpen() const
     {
         if (enableRightClickOpen)
-            return QStringLiteral("true");
+            return QLatin1String("true");
 
-        return QStringLiteral("false");
+        return QLatin1String("false");
     };
 
 public:

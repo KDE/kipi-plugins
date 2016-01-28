@@ -200,7 +200,7 @@ GeneralPage::GeneralPage(KPWizardDialog* const dlg)
     // ------------------------------------------------------------------------
 
     setPageWidget(vbox);
-    setLeftBottomPix(QIcon::fromTheme(QStringLiteral("kipi-flash")).pixmap(128));
+    setLeftBottomPix(QIcon::fromTheme(QLatin1String("kipi-flash")).pixmap(128));
 }
 
 GeneralPage::~GeneralPage()
