@@ -39,14 +39,14 @@ class AlignBinary : public KPBinaryIface
 public:
 
     AlignBinary()
-        : KPBinaryIface(QStringLiteral("align_image_stack"),
-                        QStringLiteral("0.8"),
-                        QStringLiteral("align_image_stack version "),
+        : KPBinaryIface(QLatin1String("align_image_stack"),
+                        QLatin1String("0.8"),
+                        QLatin1String("align_image_stack version "),
                         1, 
-                        QStringLiteral("Hugin"),
-                        QStringLiteral("http://hugin.sourceforge.net"),
-                        QStringLiteral("ExpoBlending"),
-                        QStringList(QStringLiteral("-h"))
+                        QLatin1String("Hugin"),
+                        QLatin1String("http://hugin.sourceforge.net"),
+                        QLatin1String("ExpoBlending"),
+                        QStringList(QLatin1String("-h"))
                        )
         {
             setup();

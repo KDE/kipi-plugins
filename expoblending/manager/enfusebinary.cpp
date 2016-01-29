@@ -39,7 +39,7 @@ bool EnfuseBinary::parseHeader(const QString& output)
 {
     // Work around Enfuse <= 3.2
     // The output look like this : ==== enfuse, version 3.2 ====
-    QString headerStartsOld = QStringLiteral("==== enfuse, version ");
+    QString headerStartsOld = QLatin1String("==== enfuse, version ");
     QString firstLine = output.section(QChar::fromLatin1('\n'), m_headerLine, m_headerLine);
 
     qCDebug(KIPIPLUGINS_LOG) << path() << " help header line: \n" << firstLine;

@@ -68,7 +68,7 @@ EnfuseStackItem::EnfuseStackItem(QTreeWidget* const parent)
 {
     setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsUserCheckable);
     setCheckState(0, Qt::Unchecked);
-    setThumbnail(QIcon::fromTheme(QStringLiteral("image-x-generic")).pixmap(treeWidget()->iconSize().width(), QIcon::Disabled));
+    setThumbnail(QIcon::fromTheme(QLatin1String("image-x-generic")).pixmap(treeWidget()->iconSize().width(), QIcon::Disabled));
     d->asValidThumb = false;
 }
 
@@ -210,14 +210,14 @@ void EnfuseStackList::slotContextMenu(const QPoint& p)
 
     if (item)
     {
-        QAction* const rmItem = new QAction(QIcon::fromTheme(QStringLiteral("dialog-close")), i18nc("@item:inmenu", "Remove item"), this);
+        QAction* const rmItem = new QAction(QIcon::fromTheme(QLatin1String("dialog-close")), i18nc("@item:inmenu", "Remove item"), this);
         connect(rmItem, SIGNAL(triggered(bool)),
                 this, SLOT(slotRemoveItem()));
         popmenu.addAction(rmItem);
         popmenu.addSeparator();
     }
 
-    QAction* const rmAll = new QAction(QIcon::fromTheme(QStringLiteral("edit-delete-shred")), i18nc("@item:inmenu", "Clear all"), this);
+    QAction* const rmAll = new QAction(QIcon::fromTheme(QLatin1String("edit-delete-shred")), i18nc("@item:inmenu", "Clear all"), this);
     connect(rmAll, SIGNAL(triggered(bool)),
             this, SLOT(clear()));
 
@@ -376,7 +376,7 @@ void EnfuseStackList::processedItem(const QUrl& url, bool success)
     EnfuseStackItem* const item = findItemByUrl(url);
 
     if (item)
-        item->setProcessedIcon(QIcon::fromTheme(success ? QStringLiteral("dialog-ok") : QStringLiteral("dialog-cancel")));
+        item->setProcessedIcon(QIcon::fromTheme(success ? QLatin1String("dialog-ok") : QLatin1String("dialog-cancel")));
 }
 
 void EnfuseStackList::setTemplateFileName(KPSaveSettingsWidget::OutputFormat frm, const QString& string)

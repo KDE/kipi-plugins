@@ -50,7 +50,7 @@ BracketStackItem::BracketStackItem(QTreeWidget* const parent)
 {
     setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsUserCheckable);
     setCheckState(0, Qt::Unchecked);
-    setThumbnail(QIcon::fromTheme(QStringLiteral("image-x-generic")).pixmap(treeWidget()->iconSize().width(), QIcon::Disabled));
+    setThumbnail(QIcon::fromTheme(QLatin1String("image-x-generic")).pixmap(treeWidget()->iconSize().width(), QIcon::Disabled));
 }
 
 BracketStackItem::~BracketStackItem()
@@ -246,7 +246,7 @@ void BracketStackList::slotThumbnail(const QUrl& url, const QPixmap& pix)
         if (item->url() == url)
         {
             if (pix.isNull())
-                item->setThumbnail(QIcon::fromTheme(QStringLiteral("image-x-generic")).pixmap(iconSize().width(), QIcon::Disabled));
+                item->setThumbnail(QIcon::fromTheme(QLatin1String("image-x-generic")).pixmap(iconSize().width(), QIcon::Disabled));
             else
                 item->setThumbnail(pix.scaled(iconSize().width(), iconSize().height(), Qt::KeepAspectRatio));
 

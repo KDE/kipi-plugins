@@ -130,18 +130,18 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
     setWindowTitle(i18n("Exposure Blending"));
 
     startButton()->setText(i18nc("@action:button", "&Save"));
-    startButton()->setIcon(QIcon::fromTheme(QStringLiteral("document-save")));
+    startButton()->setIcon(QIcon::fromTheme(QLatin1String("document-save")));
     startButton()->setToolTip(i18nc("@info:tooltip", "Process and save selected items."));
 
     d->previewButton = new QPushButton(this);
     d->previewButton->setText(i18nc("@action:button", "&Preview"));
-    d->previewButton->setIcon(QIcon::fromTheme(QStringLiteral("system-run")));
+    d->previewButton->setIcon(QIcon::fromTheme(QLatin1String("system-run")));
     d->previewButton->setToolTip(i18nc("@info:tooltip", "Process a preview of bracketed images stack with current settings."));
     addButton(d->previewButton, QDialogButtonBox::ActionRole);
 
     QPushButton* const defaultButton = new QPushButton(this);
     defaultButton->setText(i18nc("@action:button", "&Default"));
-    defaultButton->setIcon(QIcon::fromTheme(QStringLiteral("document-revert")));
+    defaultButton->setIcon(QIcon::fromTheme(QLatin1String("document-revert")));
     defaultButton->setToolTip(i18nc("@info:tooltip", "Revert current settings to default values."));
     addButton(defaultButton, QDialogButtonBox::ResetRole);
 
@@ -357,18 +357,18 @@ void ExpoBlendingDlg::slotDefault()
 {
     d->enfuseSettingsBox->resetToDefault();
     d->saveSettingsBox->resetToDefault();
-    d->templateFileName->setText(QStringLiteral("enfuse"));
+    d->templateFileName->setText(QLatin1String("enfuse"));
 }
 
 void ExpoBlendingDlg::readSettings()
 {
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QLatin1String("kipirc"));
     KConfigGroup group = config.group("ExpoBlending Settings");
 
     d->enfuseSettingsBox->readSettings(group);
     d->saveSettingsBox->readSettings(group);
 
-    d->templateFileName->setText(group.readEntry("Template File Name", QStringLiteral("enfuse")));
+    d->templateFileName->setText(group.readEntry("Template File Name", QString::fromLatin1("enfuse")));
 
     winId();
     KConfigGroup group2 = config.group("ExpoBlending Dialog");
@@ -378,7 +378,7 @@ void ExpoBlendingDlg::readSettings()
 
 void ExpoBlendingDlg::saveSettings()
 {
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QLatin1String("kipirc"));
     KConfigGroup group = config.group("ExpoBlending Settings");
 
     d->enfuseSettingsBox->writeSettings(group);

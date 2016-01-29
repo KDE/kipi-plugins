@@ -105,7 +105,7 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KPWizardDialog* const 
     d->title->setWordWrap(true);
     d->title->setOpenExternalLinks(true);
 
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QLatin1String("kipirc"));
     KConfigGroup group = config.group("ExpoBlending Settings");
     d->alignCheckBox   = new QCheckBox(i18nc("@option:check", "Align bracketed images"), vbox);
     d->alignCheckBox->setChecked(group.readEntry("Auto Alignment", true));
@@ -144,7 +144,7 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KPWizardDialog* const 
 
 PreProcessingPage::~PreProcessingPage()
 {
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QLatin1String("kipirc"));
     KConfigGroup group = config.group("ExpoBlending Settings");
     group.writeEntry("Auto Alignment", d->alignCheckBox->isChecked());
     config.sync();
