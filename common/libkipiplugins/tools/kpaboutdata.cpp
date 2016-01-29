@@ -51,17 +51,17 @@ KPAboutData::KPAboutData(const KLocalizedString& pluginName,
                          const KLocalizedString& pluginDescription,
                          const KLocalizedString& copyrightStatement)
     : QObject(),
-      KAboutData(QStringLiteral("kipiplugins"),  // Name without minus separator for KDE bug report.
+      KAboutData(QString::fromLatin1("kipiplugins"),  // Name without minus separator for KDE bug report.
                  pluginName.toString(),
                  kipipluginsVersion(),
                  pluginDescription.toString(),
                  licenseType,
                  copyrightStatement.toString(),
-                 QStringLiteral(),
-                 QStringLiteral("http://www.digikam.org"))
+                 QString(),
+                 QString::fromLatin1("http://www.digikam.org"))
 {
     QString directory = QStandardPaths::locate(QStandardPaths::GenericDataLocation,
-                                               QStringLiteral("kf5/kipi/pics/kipi-plugins_logo.png"));
+                                               QString::fromLatin1("kf5/kipi/pics/kipi-plugins_logo.png"));
 
     // set the kipiplugins logo inside the about dialog
     setProgramLogo(QImage(directory));
@@ -99,7 +99,7 @@ void KPAboutData::setHelpButton(QPushButton* const help)
     KHelpMenu* const helpMenu = new KHelpMenu(help, *(this), false);
 
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* const handbook   = new QAction(QIcon::fromTheme(QStringLiteral("help-contents")), i18n("Handbook"), helpMenu);
+    QAction* const handbook   = new QAction(QIcon::fromTheme(QString::fromLatin1("help-contents")), i18n("Handbook"), helpMenu);
 
     connect(handbook, &QAction::triggered,
             this, &KPAboutData::slotHelp);
@@ -110,7 +110,7 @@ void KPAboutData::setHelpButton(QPushButton* const help)
 
 void KPAboutData::slotHelp()
 {
-    KHelpClient::invokeHelp(m_handbookEntry, QStringLiteral("kipi-plugins"));
+    KHelpClient::invokeHelp(m_handbookEntry, QString::fromLatin1("kipi-plugins"));
 }
 
 }   // namespace KIPIPlugins

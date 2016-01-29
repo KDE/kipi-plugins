@@ -232,7 +232,7 @@ void KPPreviewManager::setSelectionArea(const QRectF& rectangle)
 
 void KPPreviewManager::setText(const QString& text, const QColor& color)
 {
-    d->textLabel->setText(QStringLiteral("<qt text=\"%1\">%2</qt>").arg(color.name()).arg(text));
+    d->textLabel->setText(QString::fromLatin1("<qt text=\"%1\">%2</qt>").arg(color.name()).arg(text));
     setCurrentIndex(MessageMode);
 }
 

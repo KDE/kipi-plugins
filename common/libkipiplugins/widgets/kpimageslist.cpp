@@ -105,7 +105,7 @@ KPImagesListViewItem::KPImagesListViewItem(KPImagesListView* const view, const Q
     
     d->view      = view;
     int iconSize = d->view->iconSize().width();
-    setThumb(QIcon::fromTheme(QStringLiteral("image-x-generic")).pixmap(iconSize, iconSize, QIcon::Disabled), false);
+    setThumb(QIcon::fromTheme(QString::fromLatin1("image-x-generic")).pixmap(iconSize, iconSize, QIcon::Disabled), false);
     
     qCDebug(KIPIPLUGINS_LOG) << "Creating new ImageListViewItem with url " << d->url
                              << " for list view " << d->view;
@@ -543,13 +543,13 @@ KPImagesList::KPImagesList(QWidget* const parent, int iconSize)
 
     // --------------------------------------------------------
 
-    d->addButton      = new CtrlButton(QIcon::fromTheme(QStringLiteral("list-add")).pixmap(16, 16),        this);
-    d->removeButton   = new CtrlButton(QIcon::fromTheme(QStringLiteral("list-remove")).pixmap(16, 16),     this);
-    d->moveUpButton   = new CtrlButton(QIcon::fromTheme(QStringLiteral("arrow-up")).pixmap(16, 16),        this);
-    d->moveDownButton = new CtrlButton(QIcon::fromTheme(QStringLiteral("arrow-down")).pixmap(16, 16),      this);
-    d->clearButton    = new CtrlButton(QIcon::fromTheme(QStringLiteral("edit-clear-list")).pixmap(16, 16), this);
-    d->loadButton     = new CtrlButton(QIcon::fromTheme(QStringLiteral("document-open")).pixmap(16, 16),   this);
-    d->saveButton     = new CtrlButton(QIcon::fromTheme(QStringLiteral("document-save")).pixmap(16, 16),   this);
+    d->addButton      = new CtrlButton(QIcon::fromTheme(QString::fromLatin1("list-add")).pixmap(16, 16),        this);
+    d->removeButton   = new CtrlButton(QIcon::fromTheme(QString::fromLatin1("list-remove")).pixmap(16, 16),     this);
+    d->moveUpButton   = new CtrlButton(QIcon::fromTheme(QString::fromLatin1("arrow-up")).pixmap(16, 16),        this);
+    d->moveDownButton = new CtrlButton(QIcon::fromTheme(QString::fromLatin1("arrow-down")).pixmap(16, 16),      this);
+    d->clearButton    = new CtrlButton(QIcon::fromTheme(QString::fromLatin1("edit-clear-list")).pixmap(16, 16), this);
+    d->loadButton     = new CtrlButton(QIcon::fromTheme(QString::fromLatin1("document-open")).pixmap(16, 16),   this);
+    d->saveButton     = new CtrlButton(QIcon::fromTheme(QString::fromLatin1("document-save")).pixmap(16, 16),   this);
 
     d->addButton->setToolTip(i18n("Add new images to the list"));
     d->removeButton->setToolTip(i18n("Remove selected images from the list"));
@@ -1001,12 +1001,12 @@ void KPImagesList::slotLoadItems()
 
     while (!xmlReader.atEnd())
     {
-        if (xmlReader.isStartElement() && xmlReader.name() == QStringLiteral("Image"))
+        if (xmlReader.isStartElement() && xmlReader.name() == QString::fromLatin1("Image"))
         {
             // get all attributes and its value of a tag in attrs variable.
             QXmlStreamAttributes attrs = xmlReader.attributes();
             // get value of each attribute from QXmlStreamAttributes
-            QStringRef url = attrs.value(QStringLiteral("url"));
+            QStringRef url = attrs.value(QString::fromLatin1("url"));
 
             if (url.isEmpty())
             {
@@ -1025,12 +1025,12 @@ void KPImagesList::slotLoadItems()
                 emit signalXMLLoadImageElement(xmlReader);
             }
         }
-        else if (xmlReader.isStartElement() && xmlReader.name() != QStringLiteral("Images"))
+        else if (xmlReader.isStartElement() && xmlReader.name() != QString::fromLatin1("Images"))
         {
             // unmanaged start element (it should be plugins one)
             emit signalXMLCustomElements(xmlReader);
         }
-        else if (xmlReader.isEndElement() && xmlReader.name() == QStringLiteral("Images"))
+        else if (xmlReader.isEndElement() && xmlReader.name() == QString::fromLatin1("Images"))
         {
             // if EndElement is Images return
             return;
@@ -1065,7 +1065,7 @@ void KPImagesList::slotSaveItems()
     xmlWriter.setAutoFormatting(true);
     xmlWriter.writeStartDocument();
 
-    xmlWriter.writeStartElement(QStringLiteral("Images"));
+    xmlWriter.writeStartElement(QString::fromLatin1("Images"));
 
     QTreeWidgetItemIterator it(listView());
 
@@ -1075,9 +1075,9 @@ void KPImagesList::slotSaveItems()
 
         if (lvItem)
         {
-            xmlWriter.writeStartElement(QStringLiteral("Image"));
+            xmlWriter.writeStartElement(QString::fromLatin1("Image"));
 
-            xmlWriter.writeAttribute(QStringLiteral("url"), lvItem->url().toDisplayString());
+            xmlWriter.writeAttribute(QString::fromLatin1("url"), lvItem->url().toDisplayString());
 
             //emit xmlWriter, item?
             emit signalXMLSaveItem(xmlWriter, lvItem);
@@ -1196,8 +1196,8 @@ void KPImagesList::processed(const QUrl& url, bool success)
     if (item)
     {
         d->processItems.removeAll(url);
-        item->setProcessedIcon(QIcon::fromTheme(success ? QStringLiteral("dialog-ok")
-                                                        : QStringLiteral("dialog-cancel")).pixmap(16, 16));
+        item->setProcessedIcon(QIcon::fromTheme(success ? QString::fromLatin1("dialog-ok")
+                                                        : QString::fromLatin1("dialog-cancel")).pixmap(16, 16));
         item->setState(success ? KPImagesListViewItem::Success
                                : KPImagesListViewItem::Failed);
 

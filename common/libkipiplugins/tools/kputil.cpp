@@ -62,7 +62,7 @@ namespace KIPIPlugins
 
 QDir makeTemporaryDir(const char* prefix)
 {
-    QString subDir = QStringLiteral("%1-%2").arg(QString::fromUtf8(prefix)).arg(getpid());
+    QString subDir = QString::fromLatin1("%1-%2").arg(QString::fromUtf8(prefix)).arg(getpid());
     QString path   = QDir(QDir::tempPath()).filePath(subDir);
 
     QDir().mkpath(path);
@@ -478,7 +478,7 @@ KPRandomGenerator::~KPRandomGenerator()
 QString KPRandomGenerator::randomString(const int& length)
 {
    const QString possibleCharacters(
-       QStringLiteral("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"));
+       QString::fromLatin1("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"));
 
    QString randomString;
    qsrand((uint)QTime::currentTime().msec());

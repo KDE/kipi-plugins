@@ -135,7 +135,7 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
       d(new Private(this,iface,pluginName))
 {
     d->m_pluginName = pluginName;
-    setObjectName(d->m_pluginName + QStringLiteral(" Widget"));
+    setObjectName(d->m_pluginName + QString::fromLatin1(" Widget"));
 
     //----------------------------------------------------------
 
@@ -162,7 +162,7 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
 
     QLabel* const userNameLbl = new QLabel(i18nc("account settings","Name:"),d->m_accountBox);
     d->m_changeUserBtn->setText(i18n("Change Account"));
-    d->m_changeUserBtn->setIcon(QIcon::fromTheme(QStringLiteral("system-switch-user")).pixmap(16));
+    d->m_changeUserBtn->setIcon(QIcon::fromTheme(QString::fromLatin1("system-switch-user")).pixmap(16));
     d->m_changeUserBtn->setToolTip(i18n("Change %1 account for transfer",d->m_pluginName));
       
 
@@ -181,11 +181,11 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
     d->m_albumsCoB->setEditable(false);
 
     d->m_newAlbumBtn->setText(i18n("New Album"));
-    d->m_newAlbumBtn->setIcon(QIcon::fromTheme(QStringLiteral("list-add")).pixmap(16));
+    d->m_newAlbumBtn->setIcon(QIcon::fromTheme(QString::fromLatin1("list-add")).pixmap(16));
     d->m_newAlbumBtn->setToolTip(i18n("Create new %1 folder",d->m_pluginName));
 
     d->m_reloadAlbumsBtn->setText(i18nc("album list","Reload"));
-    d->m_reloadAlbumsBtn->setIcon(QIcon::fromTheme(QStringLiteral("view-refresh")).pixmap(16));
+    d->m_reloadAlbumsBtn->setIcon(QIcon::fromTheme(QString::fromLatin1("view-refresh")).pixmap(16));
     d->m_reloadAlbumsBtn->setToolTip(i18n("Reload album list"));    
 
     d->m_albumsBoxLayout->addWidget(albLbl,               0, 0, 1, 1);
@@ -196,12 +196,12 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
     //----------------------------------------------------------
     
     d->m_sizeBox->setWhatsThis(i18n("This is the maximum dimension of the images. Images larger than this will be scaled down."));
-    d->m_dlDimensionCoB->addItem(i18n("Original Size"), QStringLiteral("d"));
-    d->m_dlDimensionCoB->addItem(i18n("1600 px"), QStringLiteral("1600"));
-    d->m_dlDimensionCoB->addItem(i18n("1440 px"), QStringLiteral("1440"));
-    d->m_dlDimensionCoB->addItem(i18n("1280 px"), QStringLiteral("1280"));
-    d->m_dlDimensionCoB->addItem(i18n("1152 px"), QStringLiteral("1152"));
-    d->m_dlDimensionCoB->addItem(i18n("1024 px"), QStringLiteral("1024"));
+    d->m_dlDimensionCoB->addItem(i18n("Original Size"), QString::fromLatin1("d"));
+    d->m_dlDimensionCoB->addItem(i18n("1600 px"), QString::fromLatin1("1600"));
+    d->m_dlDimensionCoB->addItem(i18n("1440 px"), QString::fromLatin1("1440"));
+    d->m_dlDimensionCoB->addItem(i18n("1280 px"), QString::fromLatin1("1280"));
+    d->m_dlDimensionCoB->addItem(i18n("1152 px"), QString::fromLatin1("1152"));
+    d->m_dlDimensionCoB->addItem(i18n("1024 px"), QString::fromLatin1("1024"));
     d->m_dlDimensionCoB->setCurrentIndex(0);
     d->m_sizeBoxLayout->addWidget(d->m_dlDimensionCoB);
     

@@ -183,13 +183,13 @@ void KPSaveSettingsWidget::writeSettings(KConfigGroup& group)
 void KPSaveSettingsWidget::slotPopulateImageFormat(bool sixteenBits)
 {
     d->formatComboBox->clear();
-    d->formatComboBox->insertItem( OUTPUT_PNG,  QStringLiteral("PNG") );
-    d->formatComboBox->insertItem( OUTPUT_TIFF, QStringLiteral("TIFF") );
+    d->formatComboBox->insertItem( OUTPUT_PNG,  QString::fromLatin1("PNG") );
+    d->formatComboBox->insertItem( OUTPUT_TIFF, QString::fromLatin1("TIFF") );
 
     if (!sixteenBits)
     {
-        d->formatComboBox->insertItem( OUTPUT_JPEG, QStringLiteral("JPEG") );
-        d->formatComboBox->insertItem( OUTPUT_PPM,  QStringLiteral("PPM") );
+        d->formatComboBox->insertItem( OUTPUT_JPEG, QString::fromLatin1("JPEG") );
+        d->formatComboBox->insertItem( OUTPUT_PPM,  QString::fromLatin1("PPM") );
     }
 
     emit signalSaveFormatChanged();
@@ -207,16 +207,16 @@ QString KPSaveSettingsWidget::typeMime() const
     switch(fileFormat())
     {
         case OUTPUT_JPEG:
-            mime = QStringLiteral("image/jpeg");
+            mime = QString::fromLatin1("image/jpeg");
             break;
         case OUTPUT_TIFF:
-            mime = QStringLiteral("image/tiff");
+            mime = QString::fromLatin1("image/tiff");
             break;
         case OUTPUT_PPM:
-            mime = QStringLiteral("image/ppm");
+            mime = QString::fromLatin1("image/ppm");
             break;
         case OUTPUT_PNG:
-            mime = QStringLiteral("image/png");
+            mime = QString::fromLatin1("image/png");
             break;
     }
 
@@ -230,16 +230,16 @@ QString KPSaveSettingsWidget::extensionForFormat(KPSaveSettingsWidget::OutputFor
     switch(format)
     {
         case OUTPUT_JPEG:
-            ext = QStringLiteral(".jpg");
+            ext = QString::fromLatin1(".jpg");
             break;
         case OUTPUT_TIFF:
-            ext = QStringLiteral(".tif");
+            ext = QString::fromLatin1(".tif");
             break;
         case OUTPUT_PPM:
-            ext = QStringLiteral(".ppm");
+            ext = QString::fromLatin1(".ppm");
             break;
         case OUTPUT_PNG:
-            ext = QStringLiteral(".png");
+            ext = QString::fromLatin1(".png");
             break;
     }
 

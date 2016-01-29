@@ -61,7 +61,7 @@ KPLoginDialog::KPLoginDialog(QWidget* const parent, const QString& prompt,
     m_headerLabel->setText(prompt);
 
     QFrame* const hline = new QFrame(this);
-    hline->setObjectName(QStringLiteral("hline"));
+    hline->setObjectName(QString::fromLatin1("hline"));
     hline->setFrameShape( QFrame::HLine );
     hline->setFrameShadow( QFrame::Sunken );
     hline->setFrameShape( QFrame::HLine );
@@ -100,7 +100,7 @@ KPLoginDialog::KPLoginDialog(QWidget* const parent, const QString& prompt,
 
     vbox->setContentsMargins(5, 5, 5, 5);
     vbox->setSpacing(5);
-    vbox->setObjectName(QStringLiteral("vbox"));
+    vbox->setObjectName(QString::fromLatin1("vbox"));
     vbox->addWidget(m_headerLabel);
     vbox->addWidget(hline);
     vbox->addLayout(centerLayout);

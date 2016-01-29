@@ -175,7 +175,7 @@ KPToolDialog::KPToolDialog(QWidget* const parent)
 {
     d->buttonBox   = new QDialogButtonBox(QDialogButtonBox::Close | QDialogButtonBox::Help, this);
     d->startButton = new QPushButton(i18nc("@action:button", "&Start"), this);
-    d->startButton->setIcon(QIcon::fromTheme(QStringLiteral("media-playback-start")));
+    d->startButton->setIcon(QIcon::fromTheme(QString::fromLatin1("media-playback-start")));
     d->buttonBox->addButton(d->startButton, QDialogButtonBox::ActionRole);
     d->buttonBox->button(QDialogButtonBox::Close)->setDefault(true);
 
@@ -218,14 +218,14 @@ void KPToolDialog::setRejectButtonMode(QDialogButtonBox::StandardButton button)
     if (button == QDialogButtonBox::Close)
     {
         d->buttonBox->button(QDialogButtonBox::Close)->setText(i18n("Close"));
-        d->buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon::fromTheme(QStringLiteral("dialog-close")));
+        d->buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon::fromTheme(QString::fromLatin1("dialog-close")));
         d->buttonBox->button(QDialogButtonBox::Close)->setToolTip(i18n("Close window"));
         d->propagateReject = true;
     }
     else if (button == QDialogButtonBox::Cancel)
     {
         d->buttonBox->button(QDialogButtonBox::Close)->setText(i18n("Cancel"));
-        d->buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon::fromTheme(QStringLiteral("dialog-cancel")));
+        d->buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon::fromTheme(QString::fromLatin1("dialog-cancel")));
         d->buttonBox->button(QDialogButtonBox::Close)->setToolTip(i18n("Cancel current operation"));
         d->propagateReject = false;
     }
