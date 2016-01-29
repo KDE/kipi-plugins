@@ -155,6 +155,7 @@ void Manager::cleanUp()
 
 void Manager::startWizard()
 {
+    delete d->wizard;
     d->wizard = new ImportWizardDlg(this);
     d->wizard->show();
 
@@ -165,6 +166,8 @@ void Manager::startWizard()
 void Manager::slotStartDialog()
 {
     d->inputUrls = d->wizard->itemUrls();
+
+    delete d->dlg;
     d->dlg = new ExpoBlendingDlg(this);
     d->dlg->show();
 }

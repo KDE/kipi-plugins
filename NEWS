@@ -53,4 +53,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 035 ==> 246437 - digiKam crashes when loading a raw file.
 036 ==> 342687 - Panorama file time-stamps should be the same than the stitched pictures [patch].
 037 ==> 356673 - MediaWiki export doesn't work.
-038 ==> 
+038 ==> 353626 - Processing of bracketed images fails after the first set is done.
+039 ==> 

@@ -357,7 +357,7 @@ void ExpoBlendingDlg::slotDefault()
 {
     d->enfuseSettingsBox->resetToDefault();
     d->saveSettingsBox->resetToDefault();
-    d->templateFileName->insert(QStringLiteral("enfuse"));
+    d->templateFileName->setText(QStringLiteral("enfuse"));
 }
 
 void ExpoBlendingDlg::readSettings()
@@ -368,7 +368,7 @@ void ExpoBlendingDlg::readSettings()
     d->enfuseSettingsBox->readSettings(group);
     d->saveSettingsBox->readSettings(group);
 
-    d->templateFileName->insert(group.readEntry("Template File Name", QStringLiteral("enfuse")));
+    d->templateFileName->setText(group.readEntry("Template File Name", QStringLiteral("enfuse")));
 
     winId();
     KConfigGroup group2 = config.group("ExpoBlending Dialog");
