@@ -55,7 +55,7 @@ DBNewAlbum::~DBNewAlbum()
 
 void DBNewAlbum::getFolderTitle(DBFolder& folder)
 {
-    folder.title = QStringLiteral("/") + getTitleEdit()->text();
+    folder.title = QString::fromLatin1("/") + getTitleEdit()->text();
     qCDebug(KIPIPLUGINS_LOG) << "getFolderTitle " << folder.title;
 }
 

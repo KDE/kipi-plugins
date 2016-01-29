@@ -68,12 +68,12 @@ DropboxWidget::~DropboxWidget()
 
 void DropboxWidget::updateLabels(const QString& name, const QString& url)
 {
-    QString web(QStringLiteral("https://www.dropbox.com/"));
+    QString web(QString::fromLatin1("https://www.dropbox.com/"));
 
     if (!url.isEmpty())
         web = url;
 
-    getHeaderLbl()->setText(QStringLiteral(
+    getHeaderLbl()->setText(QString::fromLatin1(
         "<b><h2><a href='%1'>"
         "<font color=\"#9ACD32\">Dropbox</font>"
         "</a></h2></b>").arg(web));
@@ -84,7 +84,7 @@ void DropboxWidget::updateLabels(const QString& name, const QString& url)
     }
     else
     {
-        getUserNameLabel()->setText(QStringLiteral("<b>%1</b>").arg(name));
+        getUserNameLabel()->setText(QString::fromLatin1("<b>%1</b>").arg(name));
     }
 }
 

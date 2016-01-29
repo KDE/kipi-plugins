@@ -99,18 +99,18 @@ void Plugin_Dropbox::setupActions()
     setDefaultCategory(ExportPlugin);// uncomment if import feature is added to google drive
     m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to &Dropbox..."));
-    m_actionExport->setIcon(QIcon::fromTheme(QStringLiteral("kipi-dropbox")));
+    m_actionExport->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-dropbox")));
     m_actionExport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_D));
 
     connect(m_actionExport,SIGNAL(triggered(bool)),
             this,SLOT(slotExport()));
 
-    addAction(QStringLiteral("dropboxexport"), m_actionExport);
+    addAction(QString::fromLatin1("dropboxexport"), m_actionExport);
 }
 
 void Plugin_Dropbox::slotExport()
 {
-    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation)+ QStringLiteral("/")+ QStringLiteral("kipi-dropboxplugin-") + QString::number(getpid()) + QStringLiteral("/");
+    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation)+ QString::fromLatin1("/")+ QString::fromLatin1("kipi-dropboxplugin-") + QString::number(getpid()) + QString::fromLatin1("/");
     QDir().mkpath(tmp);
 
     if (!m_dlgExport)

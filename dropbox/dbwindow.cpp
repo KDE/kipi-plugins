@@ -71,9 +71,9 @@ DBWindow::DBWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     m_imagesCount = 0;
     m_imagesTotal = 0;
 
-    m_widget      = new DropboxWidget(this, iface(), QStringLiteral("Dropbox"));
+    m_widget      = new DropboxWidget(this, iface(), QString::fromLatin1("Dropbox"));
     setMainWidget(m_widget);
-    setWindowIcon(QIcon::fromTheme(QStringLiteral("kipi-dropbox")));
+    setWindowIcon(QIcon::fromTheme(QString::fromLatin1("kipi-dropbox")));
     setModal(false);
     setWindowTitle(i18n("Export to Dropbox"));
 
@@ -105,14 +105,14 @@ DBWindow::DBWindow(const QString& tmpFolder, QWidget* const /*parent*/)
 
     about->addAuthor(ki18n("Saurabh Patel").toString(),
                      ki18n("Author").toString(),
-                     QStringLiteral("saurabhpatel7717 at gmail dot com"));
+                     QString::fromLatin1("saurabhpatel7717 at gmail dot com"));
 
-    about->setHandbookEntry(QStringLiteral("dropbox"));
+    about->setHandbookEntry(QString::fromLatin1("dropbox"));
     setAboutData(about);
 
     //-------------------------------------------------------------------------
 
-    m_albumDlg = new DBNewAlbum(this, QStringLiteral("Dropbox"));
+    m_albumDlg = new DBNewAlbum(this, QString::fromLatin1("Dropbox"));
 
     //-------------------------------------------------------------------------
 
@@ -184,7 +184,7 @@ void DBWindow::reactivate()
 
 void DBWindow::readSettings()
 {
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup grp   = config.group("Dropbox Settings");
 
     m_currentAlbumName = grp.readEntry("Current Album",QString());
@@ -214,7 +214,7 @@ void DBWindow::readSettings()
 
 void DBWindow::writeSettings()
 {
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup grp = config.group("Dropbox Settings");
 
     grp.writeEntry("Current Album",      m_currentAlbumName);
@@ -233,7 +233,7 @@ void DBWindow::writeSettings()
 
 void DBWindow::slotSetUserName(const QString& msg)
 {
-    m_widget->updateLabels(msg, QStringLiteral(""));
+    m_widget->updateLabels(msg, QString::fromLatin1(""));
 }
 
 void DBWindow::slotListAlbumsDone(const QList<QPair<QString,QString> >& list)
@@ -244,7 +244,7 @@ void DBWindow::slotListAlbumsDone(const QList<QPair<QString,QString> >& list)
     for(int i=0;i<list.size();i++)
     {
         m_widget->getAlbumsCoB()->addItem(
-            QIcon::fromTheme(QStringLiteral("system-users")),
+            QIcon::fromTheme(QString::fromLatin1("system-users")),
             list.value(i).second, list.value(i).first);
 
         if (m_currentAlbumName == list.value(i).first)
@@ -326,7 +326,7 @@ void DBWindow::slotStartTransfer()
     m_widget->progressBar()->show();
     m_widget->progressBar()->progressScheduled(i18n("Dropbox export"), true, true);
     m_widget->progressBar()->progressThumbnailChanged(
-        QIcon::fromTheme(QStringLiteral("kipi")).pixmap(22, 22));
+        QIcon::fromTheme(QString::fromLatin1("kipi")).pixmap(22, 22));
 
     uploadNextPhoto();
 }
@@ -343,14 +343,14 @@ void DBWindow::uploadNextPhoto()
     }
 
     QString imgPath = m_transferQueue.first().path();
-    QString temp = m_currentAlbumName + QStringLiteral("/");
+    QString temp = m_currentAlbumName + QString::fromLatin1("/");
 
     bool res = m_talker->addPhoto(imgPath,temp,m_widget->getResizeCheckBox()->isChecked(),m_widget->getDimensionSpB()->value(),
                                   m_widget->getImgQualitySpB()->value());
 
     if (!res)
     {
-        slotAddPhotoFailed(QStringLiteral(""));
+        slotAddPhotoFailed(QString::fromLatin1(""));
         return;
     }
 }
@@ -410,7 +410,7 @@ void DBWindow::slotNewAlbumRequest()
 
 void DBWindow::slotReloadAlbumsRequest()
 {
-    m_talker->listFolders(QStringLiteral("/"));
+    m_talker->listFolders(QString::fromLatin1("/"));
 }
 
 void DBWindow::slotAccessTokenFailed()
@@ -435,7 +435,7 @@ void DBWindow::slotAccessTokenObtained(const QString& msg1,const QString& msg2,c
     m_accTokenSecret = msg2;
     m_accoauthToken  = msg3;
 
-    m_talker->listFolders(QStringLiteral("/"));
+    m_talker->listFolders(QString::fromLatin1("/"));
 }
 
 void DBWindow::slotListAlbumsFailed(const QString& msg)
@@ -450,7 +450,7 @@ void DBWindow::slotCreateFolderFailed(const QString& msg)
 
 void DBWindow::slotCreateFolderSucceeded()
 {
-    m_talker->listFolders(QStringLiteral("/"));
+    m_talker->listFolders(QString::fromLatin1("/"));
 }
 
 void DBWindow::slotTransferCancel()
@@ -462,9 +462,9 @@ void DBWindow::slotTransferCancel()
 
 void DBWindow::slotUserChangeRequest()
 {
-    m_accToken = QStringLiteral("");
-    m_accTokenSecret = QStringLiteral("");
-    m_accoauthToken = QStringLiteral("");
+    m_accToken = QString::fromLatin1("");
+    m_accTokenSecret = QString::fromLatin1("");
+    m_accoauthToken = QString::fromLatin1("");
     m_talker->obtain_req_token();
 }
 
