@@ -232,8 +232,8 @@ void ImportWizardDlg::slotCurrentIdChanged(int id)
 {
     if (page(id) == d->generalPage && d->exporting)
     {
-        d->exporting = false;
         d->simple->slotCancel();
+        d->exporting = false;
     }
 }
 

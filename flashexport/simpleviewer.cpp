@@ -124,7 +124,7 @@ SimpleViewer::SimpleViewer(Interface* const interface, QObject* const parent)
 
     if (d->interface)
     {
-        d->meta = interface->createMetadataProcessor();
+        d->meta = d->interface->createMetadataProcessor();
     }
 
     d->hostName  = QLatin1String("Kipi-plugins");
@@ -1105,7 +1105,7 @@ bool SimpleViewer::extractArchive(KZip& zip) const
 
 bool SimpleViewer::extractFile(const KArchiveEntry* entry) const
 {
-    if ( !entry || !entry->isFile() )
+    if (!entry || !entry->isFile())
         return false;
 
     const KArchiveFile* const entryFile = dynamic_cast<const KArchiveFile*>(entry);
