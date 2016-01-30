@@ -101,14 +101,14 @@ void Plugin_Imageshack::setupActions()
 
     d->actionExport = new QAction(this);
     d->actionExport->setText(i18n("Export to &Imageshack..."));
-    d->actionExport->setIcon(QIcon::fromTheme(QStringLiteral("kipi-imageshack")));
+    d->actionExport->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-imageshack")));
     d->actionExport->setShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_M));
     d->actionExport->setEnabled(false);
 
     connect(d->actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()));
 
-    addAction(QStringLiteral("imageshackexport"), d->actionExport);
+    addAction(QString::fromLatin1("imageshackexport"), d->actionExport);
 }
 
 void Plugin_Imageshack::slotExport()

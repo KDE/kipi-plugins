@@ -115,13 +115,13 @@ void Imageshack::readSettings()
     if (bLoaded) return;
     bLoaded = true;
 
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup group = config.group("Imageshack Settings");
 }
 
 void Imageshack::saveSettings()
 {
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup group = config.group("Imageshack Settings");
     
     config.sync();

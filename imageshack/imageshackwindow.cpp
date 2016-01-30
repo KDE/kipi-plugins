@@ -74,13 +74,13 @@ ImageshackWindow::ImageshackWindow(QWidget* const parent, Imageshack* const imgh
     : KPToolDialog(parent)
 {
     m_imageshack = imghack;
-    m_widget     = new ImageshackWidget(this, imghack, iface(), QStringLiteral("ImageShack"));
+    m_widget     = new ImageshackWidget(this, imghack, iface(), QString::fromLatin1("ImageShack"));
     m_widget->setMinimumSize(700, 500);
     setMainWidget(m_widget);
     setWindowTitle(i18n("Export to Imageshack"));
     setModal(true);
     
-    m_albumDlg =  new NewAlbumDlg(this, QStringLiteral("ImageShack"));
+    m_albumDlg =  new NewAlbumDlg(this, QString::fromLatin1("ImageShack"));
 
     connect(m_widget->m_chgRegCodeBtn, SIGNAL(clicked(bool)),
             this, SLOT(slotChangeRegistrantionCode()));
@@ -102,9 +102,9 @@ ImageshackWindow::ImageshackWindow(QWidget* const parent, Imageshack* const imgh
 
     about->addAuthor(ki18n("Dodon Victor").toString(),
                      ki18n("Author").toString(),
-                     QStringLiteral("dodonvictor at gmail dot com"));
+                     QString::fromLatin1("dodonvictor at gmail dot com"));
 
-    about->setHandbookEntry(QStringLiteral("imageshack"));
+    about->setHandbookEntry(QString::fromLatin1("imageshack"));
     setAboutData(about);
 
     // -----------------------------------------------------------
@@ -181,7 +181,7 @@ void ImageshackWindow::closeEvent(QCloseEvent* e)
 
 void ImageshackWindow::readSettings()
 {
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup group = config.group("Imageshack Settings");
     KWindowConfig::restoreWindowSize(windowHandle(), group);
 
@@ -202,7 +202,7 @@ void ImageshackWindow::readSettings()
 
 void ImageshackWindow::saveSettings()
 {
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup group = config.group("Imageshack Settings");
     KWindowConfig::saveWindowSize(windowHandle(), group);
 
@@ -231,7 +231,7 @@ void ImageshackWindow::slotStartTransfer()
     m_widget->m_progressBar->setValue(0);
     m_widget->m_progressBar->setVisible(true);
     m_widget->m_progressBar->progressScheduled(i18n("Image Shack Export"), false, true);
-    m_widget->m_progressBar->progressThumbnailChanged(QIcon::fromTheme(QStringLiteral("kipi")).pixmap(22, 22));
+    m_widget->m_progressBar->progressThumbnailChanged(QIcon::fromTheme(QString::fromLatin1("kipi")).pixmap(22, 22));
 
     uploadNextItem();
 }
@@ -259,7 +259,7 @@ void ImageshackWindow::authenticate()
     m_widget->m_progressBar->setMaximum(4);
     m_widget->progressBar()->setFormat(i18n("Authenticating..."));
     
-    KIPIPlugins::KPLoginDialog* const dlg = new KIPIPlugins::KPLoginDialog(this, QStringLiteral("ImageShack"));
+    KIPIPlugins::KPLoginDialog* const dlg = new KIPIPlugins::KPLoginDialog(this, QString::fromLatin1("ImageShack"));
     
     if (dlg->exec() == QDialog::Accepted)
     {
@@ -350,12 +350,12 @@ void ImageshackWindow::uploadNextItem()
 
     if (m_widget->m_privateImagesChb->isChecked())
     {
-        opts[QStringLiteral("public")] = QStringLiteral("no");
+        opts[QString::fromLatin1("public")] = QString::fromLatin1("no");
     }
 
     if (m_widget->m_remBarChb->isChecked())
     {
-        opts[QStringLiteral("rembar")] = QStringLiteral("yes");
+        opts[QString::fromLatin1("rembar")] = QString::fromLatin1("yes");
     }
 
     // tags
@@ -363,11 +363,11 @@ void ImageshackWindow::uploadNextItem()
     {
         QString str = m_widget->m_tagsFld->text();
         QStringList tagsList;
-        tagsList = str.split(QRegExp(QStringLiteral("\\W+")), QString::SkipEmptyParts);
-        opts[QStringLiteral("tags")] = tagsList.join(QStringLiteral(","));
+        tagsList = str.split(QRegExp(QString::fromLatin1("\\W+")), QString::SkipEmptyParts);
+        opts[QString::fromLatin1("tags")] = tagsList.join(QString::fromLatin1(","));
     }
 
-    opts[QStringLiteral("auth_token")] = m_imageshack->authToken();
+    opts[QString::fromLatin1("auth_token")] = m_imageshack->authToken();
     
     int gidx = m_widget->m_galleriesCob->currentIndex();
     
@@ -379,11 +379,11 @@ void ImageshackWindow::uploadNextItem()
             m_talker->uploadItem(imgPath, opts);
             break;
         case 1:
-            opts[QStringLiteral("album")] = m_newAlbmTitle;
+            opts[QString::fromLatin1("album")] = m_newAlbmTitle;
             m_talker->uploadItemToGallery(imgPath, m_newAlbmTitle, opts);
             break;
         default:
-            opts[QStringLiteral("album")] = m_widget->m_galleriesCob->itemData(gidx).toString();
+            opts[QString::fromLatin1("album")] = m_widget->m_galleriesCob->itemData(gidx).toString();
             m_talker->uploadItemToGallery(imgPath, m_widget->m_galleriesCob->itemData(gidx).toString(), opts);
     }
 }

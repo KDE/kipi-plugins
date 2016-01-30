@@ -61,12 +61,12 @@ ImageshackTalker::ImageshackTalker(Imageshack* const imghack)
       m_job(0),
       m_state(IMGHCK_DONOTHING)
 {
-    m_userAgent   = QStringLiteral("KIPI-Plugin-Imageshack/%1").arg(kipipluginsVersion());
-    m_photoApiUrl = QUrl(QStringLiteral("https://api.imageshack.com/v2/images"));
-    m_videoApiUrl = QUrl(QStringLiteral("http://render.imageshack.us/upload_api.php"));
-    m_loginApiUrl = QUrl(QStringLiteral("http://my.imageshack.us/setlogin.php"));
-    m_galleryUrl  = QUrl(QStringLiteral("http://www.imageshack.us/gallery_api.php"));
-    m_appKey      = QStringLiteral("YPZ2L9WV2de2a1e08e8fbddfbcc1c5c39f94f92a");
+    m_userAgent   = QString::fromLatin1("KIPI-Plugin-Imageshack/%1").arg(kipipluginsVersion());
+    m_photoApiUrl = QUrl(QString::fromLatin1("https://api.imageshack.com/v2/images"));
+    m_videoApiUrl = QUrl(QString::fromLatin1("http://render.imageshack.us/upload_api.php"));
+    m_loginApiUrl = QUrl(QString::fromLatin1("http://my.imageshack.us/setlogin.php"));
+    m_galleryUrl  = QUrl(QString::fromLatin1("http://www.imageshack.us/gallery_api.php"));
+    m_appKey      = QString::fromLatin1("YPZ2L9WV2de2a1e08e8fbddfbcc1c5c39f94f92a");
 }
 
 ImageshackTalker::~ImageshackTalker()
@@ -94,9 +94,9 @@ QString ImageshackTalker::getCallString(QMap< QString, QString >& args)
          ++it)
     {
         if (!result.isEmpty())
-            result.append(QStringLiteral("&"));
+            result.append(QString::fromLatin1("&"));
         result.append(it.key());
-        result.append(QStringLiteral("="));
+        result.append(QString::fromLatin1("="));
         result.append(it.value());
     }
 
@@ -179,15 +179,15 @@ void ImageshackTalker::authenticate()
     emit signalBusy(true);
     emit signalJobInProgress(1, 4, i18n("Authenticating the user"));
     
-    QUrl url(QStringLiteral("https://api.imageshack.com/v2/user/login"));
+    QUrl url(QString::fromLatin1("https://api.imageshack.com/v2/user/login"));
     QUrlQuery q(url);
-    q.addQueryItem(QStringLiteral("user"), m_imageshack->email());
-    q.addQueryItem(QStringLiteral("password"), m_imageshack->password());
+    q.addQueryItem(QString::fromLatin1("user"), m_imageshack->email());
+    q.addQueryItem(QString::fromLatin1("password"), m_imageshack->password());
     url.setQuery(q);
     
     KIO::TransferJob* const job = KIO::http_post(url,"",KIO::HideProgressInfo);
-    job->addMetaData(QStringLiteral("content-type"),
-                     QStringLiteral("Content-Type : application/x-www-form-urlencoded"));
+    job->addMetaData(QString::fromLatin1("content-type"),
+                     QString::fromLatin1("Content-Type : application/x-www-form-urlencoded"));
     
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(data(KIO::Job*,QByteArray)));
@@ -214,8 +214,8 @@ void ImageshackTalker::getGalleries()
     QUrl gUrl(m_galleryUrl);
 
     QUrlQuery q(gUrl);
-    q.addQueryItem(QStringLiteral("action"), QStringLiteral("gallery_list"));
-    q.addQueryItem(QStringLiteral("user"), m_imageshack->username());
+    q.addQueryItem(QString::fromLatin1("action"), QString::fromLatin1("gallery_list"));
+    q.addQueryItem(QString::fromLatin1("user"), m_imageshack->username());
     gUrl.setQuery(q);
 
     KIO::TransferJob* const job = KIO::get(gUrl, KIO::NoReload, KIO::HideProgressInfo);
@@ -253,20 +253,20 @@ void ImageshackTalker::parseAccessToken(const QByteArray &data)
     
     QJsonObject jsonObject = doc.object();
         
-    if(jsonObject[QStringLiteral("success")].toBool())    
+    if(jsonObject[QString::fromLatin1("success")].toBool())    
     {
         m_imageshack->m_loggedIn = true;
-        QJsonObject obj = jsonObject[QStringLiteral("result")].toObject();
-        m_imageshack->setUsername(obj[QStringLiteral("username")].toString());
-        m_imageshack->setEmail(obj[QStringLiteral("email")].toString());
-        m_imageshack->setAuthToken(obj[QStringLiteral("auth_token")].toString());
-        checkRegistrationCodeDone(0,QStringLiteral(""));
+        QJsonObject obj = jsonObject[QString::fromLatin1("result")].toObject();
+        m_imageshack->setUsername(obj[QString::fromLatin1("username")].toString());
+        m_imageshack->setEmail(obj[QString::fromLatin1("email")].toString());
+        m_imageshack->setAuthToken(obj[QString::fromLatin1("auth_token")].toString());
+        checkRegistrationCodeDone(0,QString::fromLatin1(""));
     }
     else
     {
         m_imageshack->m_loggedIn = false;
-        QJsonObject obj = jsonObject[QStringLiteral("error")].toObject();
-        checkRegistrationCodeDone(obj[QStringLiteral("error_code")].toInt(), obj[QStringLiteral("error_message")].toString());
+        QJsonObject obj = jsonObject[QString::fromLatin1("error")].toObject();
+        checkRegistrationCodeDone(obj[QString::fromLatin1("error_code")].toInt(), obj[QString::fromLatin1("error_message")].toString());
     }
 }
 
@@ -285,11 +285,11 @@ void ImageshackTalker::parseGetGalleries(const QByteArray &data)
     for (int i = 0; i < children.size(); ++i)
     {
         QDomElement e = children.at(i).toElement();
-        if (e.tagName() == QStringLiteral("gallery"))
+        if (e.tagName() == QString::fromLatin1("gallery"))
         {
-            QDomElement nameElem   = e.firstChildElement(QStringLiteral("name"));
-            QDomElement titleElem  = e.firstChildElement(QStringLiteral("title"));
-            QDomElement serverElem = e.firstChildElement(QStringLiteral("server"));
+            QDomElement nameElem   = e.firstChildElement(QString::fromLatin1("name"));
+            QDomElement titleElem  = e.firstChildElement(QString::fromLatin1("title"));
+            QDomElement serverElem = e.firstChildElement(QString::fromLatin1("server"));
 
             if (!nameElem.isNull())
             {
@@ -328,7 +328,7 @@ void ImageshackTalker::logOut()
 void ImageshackTalker::cancelLogIn()
 {
     logOut();
-    emit signalLoginDone(-1, QStringLiteral("Canceled by the user!"));
+    emit signalLoginDone(-1, QString::fromLatin1("Canceled by the user!"));
 }
 
 QString ImageshackTalker::mimeType(const QString& path)
@@ -349,8 +349,8 @@ void ImageshackTalker::uploadItem(const QString& path, const QMap<QString, QStri
 
     emit signalBusy(true);
     QMap<QString, QString> args;
-    args[QStringLiteral("key")]        = m_appKey;
-    args[QStringLiteral("fileupload")] = QUrl(path).fileName();
+    args[QString::fromLatin1("key")]        = m_appKey;
+    args[QString::fromLatin1("fileupload")] = QUrl(path).fileName();
 
     MPForm form;
 
@@ -380,8 +380,8 @@ void ImageshackTalker::uploadItem(const QString& path, const QMap<QString, QStri
     m_state   = IMGHCK_ADDPHOTO;
     
     KIO::Job* const job = KIO::http_post(uploadUrl, form.formData(), KIO::HideProgressInfo);
-    job->addMetaData(QStringLiteral("UserAgent"), m_userAgent);
-    job->addMetaData(QStringLiteral("content-type"), form.contentType());
+    job->addMetaData(QString::fromLatin1("UserAgent"), m_userAgent);
+    job->addMetaData(QString::fromLatin1("content-type"), form.contentType());
 
     m_job = job;
 
@@ -390,7 +390,7 @@ void ImageshackTalker::uploadItem(const QString& path, const QMap<QString, QStri
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));    
-    //uploadItemToGallery(path, QStringLiteral(""), opts);
+    //uploadItemToGallery(path, QString::fromLatin1(""), opts);
 }
 
 void ImageshackTalker::uploadItemToGallery(const QString& path, const QString& /*gallery*/, const QMap<QString, QString>& opts)
@@ -403,8 +403,8 @@ void ImageshackTalker::uploadItemToGallery(const QString& path, const QString& /
 
     emit signalBusy(true);
     QMap<QString, QString> args;
-    args[QStringLiteral("key")]        = m_appKey;
-    args[QStringLiteral("fileupload")] = QUrl(path).fileName();
+    args[QString::fromLatin1("key")]        = m_appKey;
+    args[QString::fromLatin1("fileupload")] = QUrl(path).fileName();
 
     MPForm form;
 
@@ -439,8 +439,8 @@ void ImageshackTalker::uploadItemToGallery(const QString& path, const QString& /
     m_state   = IMGHCK_ADDPHOTO;
 
     KIO::Job* const job = KIO::http_post(uploadUrl, form.formData(), KIO::HideProgressInfo);
-    job->addMetaData(QStringLiteral("UserAgent"), m_userAgent);
-    job->addMetaData(QStringLiteral("content-type"), form.contentType());
+    job->addMetaData(QString::fromLatin1("UserAgent"), m_userAgent);
+    job->addMetaData(QString::fromLatin1("content-type"), form.contentType());
 
     m_job = job;
     
@@ -468,14 +468,14 @@ int ImageshackTalker::parseErrorResponse(QDomElement elem, QString& errMsg)
 
         QDomElement e = node.toElement();
 
-        if (e.tagName() == QStringLiteral("error"))
+        if (e.tagName() == QString::fromLatin1("error"))
         {
-            err_code = e.attributeNode(QStringLiteral("id")).value();
+            err_code = e.attributeNode(QString::fromLatin1("id")).value();
             errMsg = e.text();
         }
     }
 
-    if (err_code == QStringLiteral("file_too_big"))
+    if (err_code == QString::fromLatin1("file_too_big"))
     {
         errCode = 501;
     }
@@ -505,15 +505,15 @@ void ImageshackTalker::parseUploadPhotoDone(QByteArray data)
     if(m_state == IMGHCK_ADDPHOTO || m_state == IMGHCK_ADDVIDEO
             || (m_state == IMGHCK_ADDPHOTOGALLERY))
     {
-        if(jsonObject[QStringLiteral("success")].toBool())    
+        if(jsonObject[QString::fromLatin1("success")].toBool())    
         {
             emit signalBusy(false);
-            emit signalAddPhotoDone(0,QStringLiteral(""));
+            emit signalAddPhotoDone(0,QString::fromLatin1(""));
         }
         else
         {
-            QJsonObject obj = jsonObject[QStringLiteral("error")].toObject();
-            emit signalAddPhotoDone(obj[QStringLiteral("error_code")].toInt(), obj[QStringLiteral("error_message")].toString());
+            QJsonObject obj = jsonObject[QString::fromLatin1("error")].toObject();
+            emit signalAddPhotoDone(obj[QString::fromLatin1("error_code")].toInt(), obj[QString::fromLatin1("error_message")].toString());
             emit signalBusy(false);
         }        
     }
@@ -522,8 +522,8 @@ void ImageshackTalker::parseUploadPhotoDone(QByteArray data)
 void ImageshackTalker::parseAddPhotoToGalleryDone(QByteArray data)
 {
 //    int errCode = -1;
-    QString errMsg = QStringLiteral("");
-    QDomDocument domDoc(QStringLiteral("galleryXML"));
+    QString errMsg = QString::fromLatin1("");
+    QDomDocument domDoc(QString::fromLatin1("galleryXML"));
 
     qCDebug(KIPIPLUGINS_LOG) << data;
 
@@ -532,14 +532,14 @@ void ImageshackTalker::parseAddPhotoToGalleryDone(QByteArray data)
 
     QDomElement rootElem = domDoc.documentElement();
 
-    if (rootElem.isNull() || rootElem.tagName() != QStringLiteral("gallery"))
+    if (rootElem.isNull() || rootElem.tagName() != QString::fromLatin1("gallery"))
     {
         // TODO error cheking
     }
     else
     {
         emit signalBusy(false);
-        emit signalAddPhotoDone(0, QStringLiteral(""));
+        emit signalAddPhotoDone(0, QString::fromLatin1(""));
     }
 }
 

@@ -75,7 +75,7 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
     connect(m_reloadGalleriesBtn, SIGNAL(clicked()),
             this, SLOT(slotReloadGalleries()));    
     
-    QGroupBox* const tagsBox      = new QGroupBox(QStringLiteral(""), getSettingsBox());
+    QGroupBox* const tagsBox      = new QGroupBox(QString::fromLatin1(""), getSettingsBox());
     QGridLayout* const tagsLayout = new QGridLayout(tagsBox);
     
     m_privateImagesChb = new QCheckBox(tagsBox);
@@ -123,10 +123,10 @@ void ImageshackWidget::slotGetGalleries(const QStringList &gTexts, const QString
     m_galleriesCob->clear();
 
     m_galleriesCob->addItem(i18nc("@item:inlistbox", "Add to root folder"),
-                            QStringLiteral("--add-to-root--"));    
+                            QString::fromLatin1("--add-to-root--"));    
     
     m_galleriesCob->addItem(i18nc("@item:inlistbox", "Create new gallery"),
-                            QStringLiteral("--new-gallery--"));
+                            QString::fromLatin1("--new-gallery--"));
 
     // TODO check if the lists have the same size
     for (int i = 0; i < gTexts.size(); ++i)
