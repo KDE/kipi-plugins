@@ -323,7 +323,7 @@ void MainDialog::slotImagesFilesSelected(QTreeWidgetItem* item)
 {
     if (!item || m_ImagesFilesListBox->imageUrls().isEmpty())
     {
-        m_label7->setText(QStringLiteral(""));
+        m_label7->setText(QString::fromLatin1(""));
         m_previewLabel->setPixmap(m_noPreviewPixmap.getPixmap());
         return;
     }
@@ -467,7 +467,7 @@ void MainDialog::slotThumbnail(const QUrl& /*url*/, const QPixmap& pix)
 {
     if (pix.isNull())
     {
-        m_previewLabel->setPixmap(QIcon::fromTheme(QStringLiteral("image-x-generic")).pixmap(ICONSIZE, QIcon::Disabled));
+        m_previewLabel->setPixmap(QIcon::fromTheme(QString::fromLatin1("image-x-generic")).pixmap(ICONSIZE, QIcon::Disabled));
     }
     else
     {

@@ -49,7 +49,7 @@ SoundItem::SoundItem(QListWidget* const parent, const QUrl& url)
     : QListWidgetItem(parent)
 {
     m_url = url;
-    setIcon(QIcon::fromTheme(QStringLiteral("audio-x-generic")).pixmap(48, QIcon::Disabled));
+    setIcon(QIcon::fromTheme(QString::fromLatin1("audio-x-generic")).pixmap(48, QIcon::Disabled));
 
     m_totalTime   = QTime(0, 0, 0);
     m_mediaObject = new Phonon::MediaObject();
@@ -121,8 +121,8 @@ void SoundItem::slotMediaStateChanged(Phonon::State newstate, Phonon::State /*ol
     int mins       = (int)((total / (long int)( 60 * 1000 )) - (long int)(hours * 60));
     int secs       = (int)((total / (long int)1000) - (long int)(hours * 60 * 60) - (long int)(mins * 60));
     m_totalTime    = QTime(hours, mins, secs);
-    m_artist       = (m_mediaObject->metaData(Phonon::ArtistMetaData)).join(QStringLiteral(","));
-    m_title        = (m_mediaObject->metaData(Phonon::TitleMetaData)).join(QStringLiteral(","));
+    m_artist       = (m_mediaObject->metaData(Phonon::ArtistMetaData)).join(QString::fromLatin1(","));
+    m_title        = (m_mediaObject->metaData(Phonon::TitleMetaData)).join(QString::fromLatin1(","));
 
     if ( m_artist.isEmpty() && m_title.isEmpty() )
         setText(m_url.fileName());

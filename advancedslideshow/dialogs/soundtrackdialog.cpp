@@ -92,13 +92,13 @@ SoundtrackDialog::SoundtrackDialog(QWidget* const parent, SharedContainer* const
 
     // --------------------------------------------------------
 
-    m_SoundFilesButtonUp->setIcon(QIcon::fromTheme(QStringLiteral("arrow-up")));
-    m_SoundFilesButtonDown->setIcon(QIcon::fromTheme(QStringLiteral("arrow-down")));
-    m_SoundFilesButtonAdd->setIcon(QIcon::fromTheme(QStringLiteral("list-add")));
-    m_SoundFilesButtonDelete->setIcon(QIcon::fromTheme(QStringLiteral("list-remove")));
-    m_SoundFilesButtonLoad->setIcon(QIcon::fromTheme(QStringLiteral("document-open")));
-    m_SoundFilesButtonSave->setIcon(QIcon::fromTheme(QStringLiteral("document-save")));
-    m_SoundFilesButtonReset->setIcon(QIcon::fromTheme(QStringLiteral("edit-clear-list")));
+    m_SoundFilesButtonUp->setIcon(QIcon::fromTheme(QString::fromLatin1("arrow-up")));
+    m_SoundFilesButtonDown->setIcon(QIcon::fromTheme(QString::fromLatin1("arrow-down")));
+    m_SoundFilesButtonAdd->setIcon(QIcon::fromTheme(QString::fromLatin1("list-add")));
+    m_SoundFilesButtonDelete->setIcon(QIcon::fromTheme(QString::fromLatin1("list-remove")));
+    m_SoundFilesButtonLoad->setIcon(QIcon::fromTheme(QString::fromLatin1("document-open")));
+    m_SoundFilesButtonSave->setIcon(QIcon::fromTheme(QString::fromLatin1("document-save")));
+    m_SoundFilesButtonReset->setIcon(QIcon::fromTheme(QString::fromLatin1("edit-clear-list")));
 
     m_SoundFilesButtonUp->setText(QString());
     m_SoundFilesButtonDown->setText(QString());
@@ -283,7 +283,7 @@ void SoundtrackDialog::compareTimes()
     }
     else
     {
-        m_statusBarLabel->setText(QStringLiteral(""));
+        m_statusBarLabel->setText(QString::fromLatin1(""));
 
         QPalette paletteStatusBar = m_statusBarLabel->palette();
         paletteStatusBar.setColor(QPalette::WindowText, Qt::red);
@@ -338,7 +338,7 @@ void SoundtrackDialog::slotSoundFilesButtonAdd()
                                                 m_sharedData->soundtrackPath.toString());
 
     // Setting available mime-types (filtering out non audio mime-types)
-    dlg->setMimeTypeFilters(Phonon::BackendCapabilities::availableMimeTypes().filter(QStringLiteral("audio/")));
+    dlg->setMimeTypeFilters(Phonon::BackendCapabilities::availableMimeTypes().filter(QString::fromLatin1("audio/")));
     dlg->setAcceptMode(QFileDialog::AcceptOpen);
     dlg->setFileMode(QFileDialog::ExistingFiles);
     dlg->exec();

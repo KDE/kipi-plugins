@@ -76,14 +76,14 @@ SlideShowConfig::SlideShowConfig(QWidget* const parent, SharedContainer* const s
     : KPToolDialog(parent),
       d(new Private)
 {
-    setObjectName(QStringLiteral("Advanced Slideshow Settings"));
+    setObjectName(QString::fromLatin1("Advanced Slideshow Settings"));
     setWindowTitle(i18n("Advanced Slideshow"));
 
-    d->config     = new KConfig(QStringLiteral("kipirc"));
+    d->config     = new KConfig(QString::fromLatin1("kipirc"));
     d->sharedData = sharedData;
 
     startButton()->setDefault(true);
-    startButton()->setIcon(QIcon::fromTheme(QStringLiteral("system-run")));
+    startButton()->setIcon(QIcon::fromTheme(QString::fromLatin1("system-run")));
     startButton()->setText(i18n("Start Slideshow"));
     setModal(true);
 
@@ -93,24 +93,24 @@ SlideShowConfig::SlideShowConfig(QWidget* const parent, SharedContainer* const s
     
     d->sharedData->mainPage  = new MainDialog(this, d->sharedData);
     d->tab->addTab(d->sharedData->mainPage,
-                   QIcon::fromTheme(QStringLiteral("view-presentation")),
+                   QIcon::fromTheme(QString::fromLatin1("view-presentation")),
                    i18n("Main Settings"));
 
     d->sharedData->captionPage  = new CaptionDialog(this, d->sharedData);
     d->tab->addTab(d->sharedData->captionPage,
-                   QIcon::fromTheme(QStringLiteral("draw-freehand")),
+                   QIcon::fromTheme(QString::fromLatin1("draw-freehand")),
                    i18nc("captions for the slideshow", "Caption"));
 
 #ifdef HAVE_PHONON
     d->sharedData->soundtrackPage  = new SoundtrackDialog(this, d->sharedData);
     d->tab->addTab(d->sharedData->soundtrackPage,
-                   QIcon::fromTheme(QStringLiteral("speaker")),
+                   QIcon::fromTheme(QString::fromLatin1("speaker")),
                    i18n("Soundtrack"));
 #endif
     
     d->sharedData->advancedPage  = new AdvancedDialog(this, d->sharedData);
     d->tab->addTab(d->sharedData->advancedPage,
-                   QIcon::fromTheme(QStringLiteral("configure")),
+                   QIcon::fromTheme(QString::fromLatin1("configure")),
                    i18n("Advanced"));
 
     setMainWidget(d->tab);
@@ -126,13 +126,13 @@ SlideShowConfig::SlideShowConfig(QWidget* const parent, SharedContainer* const s
 
     about->addAuthor(ki18n("Renchi Raju").toString(),
                      ki18n("Developer").toString(),
-                     QStringLiteral("renchi dot raju at gmail dot com"));
+                     QString::fromLatin1("renchi dot raju at gmail dot com"));
 
     about->addAuthor(ki18n("Valerio Fuoglio").toString(),
                      ki18n("Developer").toString(),
-                     QStringLiteral("valerio dot fuoglio at gmail dot com"));
+                     QString::fromLatin1("valerio dot fuoglio at gmail dot com"));
 
-    about->setHandbookEntry(QStringLiteral("slideshow"));
+    about->setHandbookEntry(QString::fromLatin1("slideshow"));
     setAboutData(about);
 
     // Slot connections
@@ -207,7 +207,7 @@ void SlideShowConfig::readSettings()
 
     if (d->sharedData->soundtrackRememberPlaylist)
     {
-        QString groupName(objectName() + QStringLiteral(" Soundtrack ") + d->sharedData->iface()->currentAlbum().url().toLocalFile());
+        QString groupName(objectName() + QString::fromLatin1(" Soundtrack ") + d->sharedData->iface()->currentAlbum().url().toLocalFile());
         KConfigGroup soundGrp = d->config->group(groupName);
 
         // load and check playlist files, if valid, add to tracklist widget
@@ -294,7 +294,7 @@ void SlideShowConfig::saveSettings()
     // of older track entries
     if (d->sharedData->soundtrackRememberPlaylist && d->sharedData->soundtrackPlayListNeedsUpdate)
     {
-        QString groupName(objectName() + QStringLiteral(" Soundtrack ") + d->sharedData->iface()->currentAlbum().url().toLocalFile());
+        QString groupName(objectName() + QString::fromLatin1(" Soundtrack ") + d->sharedData->iface()->currentAlbum().url().toLocalFile());
         KConfigGroup soundGrp = d->config->group(groupName);
         soundGrp.writeEntry("Tracks", d->sharedData->soundtrackUrls);
     }

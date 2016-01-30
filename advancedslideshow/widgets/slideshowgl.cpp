@@ -150,7 +150,7 @@ SlideShowGL::SlideShowGL(const QList<QPair<QString, int> >& fileList,
 
     registerEffects();
 
-    if (m_sharedData->effectNameGL == QStringLiteral("Random"))
+    if (m_sharedData->effectNameGL == QString::fromLatin1("Random"))
     {
         m_effect = getRandomEffect();
         m_random = true;
@@ -160,7 +160,7 @@ SlideShowGL::SlideShowGL(const QList<QPair<QString, int> >& fileList,
         m_effect = m_effects[m_sharedData->effectNameGL];
 
         if (!m_effect)
-            m_effect = m_effects[QStringLiteral("None")];
+            m_effect = m_effects[QString::fromLatin1("None")];
 
         m_random = false;
     }
@@ -370,31 +370,31 @@ void SlideShowGL::wheelEvent(QWheelEvent* e)
 
 void SlideShowGL::registerEffects()
 {
-    m_effects.insert(QStringLiteral("None"),    &SlideShowGL::effectNone);
-    m_effects.insert(QStringLiteral("Blend"),   &SlideShowGL::effectBlend);
-    m_effects.insert(QStringLiteral("Fade"),    &SlideShowGL::effectFade);
-    m_effects.insert(QStringLiteral("Rotate"),  &SlideShowGL::effectRotate);
-    m_effects.insert(QStringLiteral("Bend"),    &SlideShowGL::effectBend);
-    m_effects.insert(QStringLiteral("In Out"),  &SlideShowGL::effectInOut);
-    m_effects.insert(QStringLiteral("Slide"),   &SlideShowGL::effectSlide);
-    m_effects.insert(QStringLiteral("Flutter"), &SlideShowGL::effectFlutter);
-    m_effects.insert(QStringLiteral("Cube"),    &SlideShowGL::effectCube);
+    m_effects.insert(QString::fromLatin1("None"),    &SlideShowGL::effectNone);
+    m_effects.insert(QString::fromLatin1("Blend"),   &SlideShowGL::effectBlend);
+    m_effects.insert(QString::fromLatin1("Fade"),    &SlideShowGL::effectFade);
+    m_effects.insert(QString::fromLatin1("Rotate"),  &SlideShowGL::effectRotate);
+    m_effects.insert(QString::fromLatin1("Bend"),    &SlideShowGL::effectBend);
+    m_effects.insert(QString::fromLatin1("In Out"),  &SlideShowGL::effectInOut);
+    m_effects.insert(QString::fromLatin1("Slide"),   &SlideShowGL::effectSlide);
+    m_effects.insert(QString::fromLatin1("Flutter"), &SlideShowGL::effectFlutter);
+    m_effects.insert(QString::fromLatin1("Cube"),    &SlideShowGL::effectCube);
 }
 
 QStringList SlideShowGL::effectNames()
 {
     QStringList effects;
 
-    effects.append(QStringLiteral("None"));
-    effects.append(QStringLiteral("Bend"));
-    effects.append(QStringLiteral("Blend"));
-    effects.append(QStringLiteral("Cube"));
-    effects.append(QStringLiteral("Fade"));
-    effects.append(QStringLiteral("Flutter"));
-    effects.append(QStringLiteral("In Out"));
-    effects.append(QStringLiteral("Rotate"));
-    effects.append(QStringLiteral("Slide"));
-    effects.append(QStringLiteral("Random"));
+    effects.append(QString::fromLatin1("None"));
+    effects.append(QString::fromLatin1("Bend"));
+    effects.append(QString::fromLatin1("Blend"));
+    effects.append(QString::fromLatin1("Cube"));
+    effects.append(QString::fromLatin1("Fade"));
+    effects.append(QString::fromLatin1("Flutter"));
+    effects.append(QString::fromLatin1("In Out"));
+    effects.append(QString::fromLatin1("Rotate"));
+    effects.append(QString::fromLatin1("Slide"));
+    effects.append(QString::fromLatin1("Random"));
 
     return effects;
 }
@@ -403,16 +403,16 @@ QMap<QString, QString> SlideShowGL::effectNamesI18N()
 {
     QMap<QString, QString> effects;
 
-    effects[QStringLiteral("None")]    = i18nc("Filter Effect: No effect",     "None");
-    effects[QStringLiteral("Bend")]    = i18nc("Filter Effect: Bend",          "Bend");
-    effects[QStringLiteral("Blend")]   = i18nc("Filter Effect: Blend",         "Blend");
-    effects[QStringLiteral("Cube")]    = i18nc("Filter Effect: Cube",          "Cube");
-    effects[QStringLiteral("Fade")]    = i18nc("Filter Effect: Fade",          "Fade");
-    effects[QStringLiteral("Flutter")] = i18nc("Filter Effect: Flutter",       "Flutter");
-    effects[QStringLiteral("In Out")]  = i18nc("Filter Effect: In Out",        "In Out");
-    effects[QStringLiteral("Rotate")]  = i18nc("Filter Effect: Rotate",        "Rotate");
-    effects[QStringLiteral("Slide")]   = i18nc("Filter Effect: Slide",         "Slide");
-    effects[QStringLiteral("Random")]  = i18nc("Filter Effect: Random effect", "Random");
+    effects[QString::fromLatin1("None")]    = i18nc("Filter Effect: No effect",     "None");
+    effects[QString::fromLatin1("Bend")]    = i18nc("Filter Effect: Bend",          "Bend");
+    effects[QString::fromLatin1("Blend")]   = i18nc("Filter Effect: Blend",         "Blend");
+    effects[QString::fromLatin1("Cube")]    = i18nc("Filter Effect: Cube",          "Cube");
+    effects[QString::fromLatin1("Fade")]    = i18nc("Filter Effect: Fade",          "Fade");
+    effects[QString::fromLatin1("Flutter")] = i18nc("Filter Effect: Flutter",       "Flutter");
+    effects[QString::fromLatin1("In Out")]  = i18nc("Filter Effect: In Out",        "In Out");
+    effects[QString::fromLatin1("Rotate")]  = i18nc("Filter Effect: Rotate",        "Rotate");
+    effects[QString::fromLatin1("Slide")]   = i18nc("Filter Effect: Slide",         "Slide");
+    effects[QString::fromLatin1("Random")]  = i18nc("Filter Effect: Random effect", "Random");
 
     return effects;
 }
@@ -421,7 +421,7 @@ SlideShowGL::EffectMethod SlideShowGL::getRandomEffect()
 {
     QMap<QString, EffectMethod>  tmpMap(m_effects);
 
-    tmpMap.remove(QStringLiteral("None"));
+    tmpMap.remove(QString::fromLatin1("None"));
     QStringList t = tmpMap.keys();
     int count     = t.count();
     int i         = (int)((float)(count) * qrand() / (RAND_MAX + 1.0));

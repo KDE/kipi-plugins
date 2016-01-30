@@ -486,7 +486,7 @@ void SlideShowKB::paintTexture(Image* const img)
 
 void SlideShowKB::readSettings()
 {
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup group = config.group("Advanced Slideshow Settings");
 
     m_delay            = group.readEntry("Delay", 8000) / 1000;
@@ -565,7 +565,7 @@ QStringList SlideShowKB::effectNames()
 {
     QStringList effects;
 
-    effects.append(QStringLiteral("Ken Burns"));
+    effects.append(QString::fromLatin1("Ken Burns"));
     return effects;
 }
 
@@ -573,7 +573,7 @@ QMap<QString, QString> SlideShowKB::effectNamesI18N()
 {
     QMap<QString, QString> effects;
 
-    effects[QStringLiteral("Ken Burns")] = i18n("Ken Burns");
+    effects[QString::fromLatin1("Ken Burns")] = i18n("Ken Burns");
 
     return effects;
 }

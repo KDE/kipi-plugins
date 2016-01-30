@@ -150,7 +150,7 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
 
     registerEffects();
 
-    if (m_sharedData->effectName == QStringLiteral("Random"))
+    if (m_sharedData->effectName == QString::fromLatin1("Random"))
     {
         m_effect = getRandomEffect();
     }
@@ -161,8 +161,8 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
 
         if (!m_effect)
         {
-            m_effect     = Effects[QStringLiteral("None")];
-            m_effectName = QStringLiteral("None");
+            m_effect     = Effects[QString::fromLatin1("None")];
+            m_effectName = QString::fromLatin1("None");
         }
     }
 
@@ -200,39 +200,39 @@ void SlideShow::readSettings()
 
 void SlideShow::registerEffects()
 {
-    Effects.insert( QStringLiteral("None"), &SlideShow::effectNone );
-    Effects.insert( QStringLiteral("Chess Board"), &SlideShow::effectChessboard );
-    Effects.insert( QStringLiteral("Melt Down"), &SlideShow::effectMeltdown );
-    Effects.insert( QStringLiteral("Sweep"), &SlideShow::effectSweep );
-    Effects.insert( QStringLiteral("Mosaic"), &SlideShow::effectMosaic );
-    Effects.insert( QStringLiteral("Cubism"), &SlideShow::effectCubism );
-    Effects.insert( QStringLiteral("Growing"), &SlideShow::effectGrowing );
-    Effects.insert( QStringLiteral("Horizontal Lines"), &SlideShow::effectHorizLines );
-    Effects.insert( QStringLiteral("Vertical Lines"), &SlideShow::effectVertLines );
-    Effects.insert( QStringLiteral("Circle Out"), &SlideShow::effectCircleOut );
-    Effects.insert( QStringLiteral("MultiCircle Out"), &SlideShow::effectMultiCircleOut );
-    Effects.insert( QStringLiteral("Spiral In"), &SlideShow::effectSpiralIn );
-    Effects.insert( QStringLiteral("Blobs"), &SlideShow::effectBlobs );
+    Effects.insert( QString::fromLatin1("None"), &SlideShow::effectNone );
+    Effects.insert( QString::fromLatin1("Chess Board"), &SlideShow::effectChessboard );
+    Effects.insert( QString::fromLatin1("Melt Down"), &SlideShow::effectMeltdown );
+    Effects.insert( QString::fromLatin1("Sweep"), &SlideShow::effectSweep );
+    Effects.insert( QString::fromLatin1("Mosaic"), &SlideShow::effectMosaic );
+    Effects.insert( QString::fromLatin1("Cubism"), &SlideShow::effectCubism );
+    Effects.insert( QString::fromLatin1("Growing"), &SlideShow::effectGrowing );
+    Effects.insert( QString::fromLatin1("Horizontal Lines"), &SlideShow::effectHorizLines );
+    Effects.insert( QString::fromLatin1("Vertical Lines"), &SlideShow::effectVertLines );
+    Effects.insert( QString::fromLatin1("Circle Out"), &SlideShow::effectCircleOut );
+    Effects.insert( QString::fromLatin1("MultiCircle Out"), &SlideShow::effectMultiCircleOut );
+    Effects.insert( QString::fromLatin1("Spiral In"), &SlideShow::effectSpiralIn );
+    Effects.insert( QString::fromLatin1("Blobs"), &SlideShow::effectBlobs );
 }
 
 QStringList SlideShow::effectNames()
 {
     QStringList effects;
 
-    effects.append( QStringLiteral("None") );
-    effects.append( QStringLiteral("Chess Board") );
-    effects.append( QStringLiteral("Melt Down") );
-    effects.append( QStringLiteral("Sweep") );
-    effects.append( QStringLiteral("Mosaic") );
-    effects.append( QStringLiteral("Cubism") );
-    effects.append( QStringLiteral("Growing") );
-    effects.append( QStringLiteral("Horizontal Lines") );
-    effects.append( QStringLiteral("Vertical Lines") );
-    effects.append( QStringLiteral("Circle Out") );
-    effects.append( QStringLiteral("MultiCircle Out") );
-    effects.append( QStringLiteral("Spiral In") );
-    effects.append( QStringLiteral("Blobs") );
-    effects.append( QStringLiteral("Random") );
+    effects.append( QString::fromLatin1("None") );
+    effects.append( QString::fromLatin1("Chess Board") );
+    effects.append( QString::fromLatin1("Melt Down") );
+    effects.append( QString::fromLatin1("Sweep") );
+    effects.append( QString::fromLatin1("Mosaic") );
+    effects.append( QString::fromLatin1("Cubism") );
+    effects.append( QString::fromLatin1("Growing") );
+    effects.append( QString::fromLatin1("Horizontal Lines") );
+    effects.append( QString::fromLatin1("Vertical Lines") );
+    effects.append( QString::fromLatin1("Circle Out") );
+    effects.append( QString::fromLatin1("MultiCircle Out") );
+    effects.append( QString::fromLatin1("Spiral In") );
+    effects.append( QString::fromLatin1("Blobs") );
+    effects.append( QString::fromLatin1("Random") );
 
     return effects;
 }
@@ -241,20 +241,20 @@ QMap<QString, QString> SlideShow::effectNamesI18N()
 {
     QMap<QString, QString> effects;
 
-    effects[QStringLiteral("None")]             = i18nc("Filter Effect: No effect",        "None" );
-    effects[QStringLiteral("Chess Board")]      = i18nc("Filter Effect: Chess Board",      "Chess Board" );
-    effects[QStringLiteral("Melt Down")]        = i18nc("Filter Effect: Melt Down",        "Melt Down" );
-    effects[QStringLiteral("Sweep")]            = i18nc("Filter Effect: Sweep",            "Sweep" );
-    effects[QStringLiteral("Mosaic")]           = i18nc("Filter Effect: Mosaic",           "Mosaic" );
-    effects[QStringLiteral("Cubism")]           = i18nc("Filter Effect: Cubism",           "Cubism" );
-    effects[QStringLiteral("Growing")]          = i18nc("Filter Effect: Growing",          "Growing" );
-    effects[QStringLiteral("Horizontal Lines")] = i18nc("Filter Effect: Horizontal Lines", "Horizontal Lines" );
-    effects[QStringLiteral("Vertical Lines")]   = i18nc("Filter Effect: Vertical Lines",   "Vertical Lines" );
-    effects[QStringLiteral("Circle Out")]       = i18nc("Filter Effect: Circle Out",       "Circle Out" );
-    effects[QStringLiteral("MultiCircle Out")]  = i18nc("Filter Effect: Multi-Circle Out", "Multi-Circle Out" );
-    effects[QStringLiteral("Spiral In")]        = i18nc("Filter Effect: Spiral In",        "Spiral In" );
-    effects[QStringLiteral("Blobs")]            = i18nc("Filter Effect: Blobs",            "Blobs" );
-    effects[QStringLiteral("Random")]           = i18nc("Filter Effect: Random effect",    "Random" );
+    effects[QString::fromLatin1("None")]             = i18nc("Filter Effect: No effect",        "None" );
+    effects[QString::fromLatin1("Chess Board")]      = i18nc("Filter Effect: Chess Board",      "Chess Board" );
+    effects[QString::fromLatin1("Melt Down")]        = i18nc("Filter Effect: Melt Down",        "Melt Down" );
+    effects[QString::fromLatin1("Sweep")]            = i18nc("Filter Effect: Sweep",            "Sweep" );
+    effects[QString::fromLatin1("Mosaic")]           = i18nc("Filter Effect: Mosaic",           "Mosaic" );
+    effects[QString::fromLatin1("Cubism")]           = i18nc("Filter Effect: Cubism",           "Cubism" );
+    effects[QString::fromLatin1("Growing")]          = i18nc("Filter Effect: Growing",          "Growing" );
+    effects[QString::fromLatin1("Horizontal Lines")] = i18nc("Filter Effect: Horizontal Lines", "Horizontal Lines" );
+    effects[QString::fromLatin1("Vertical Lines")]   = i18nc("Filter Effect: Vertical Lines",   "Vertical Lines" );
+    effects[QString::fromLatin1("Circle Out")]       = i18nc("Filter Effect: Circle Out",       "Circle Out" );
+    effects[QString::fromLatin1("MultiCircle Out")]  = i18nc("Filter Effect: Multi-Circle Out", "Multi-Circle Out" );
+    effects[QString::fromLatin1("Spiral In")]        = i18nc("Filter Effect: Spiral In",        "Spiral In" );
+    effects[QString::fromLatin1("Blobs")]            = i18nc("Filter Effect: Blobs",            "Blobs" );
+    effects[QString::fromLatin1("Random")]           = i18nc("Filter Effect: Random effect",    "Random" );
 
     return effects;
 }
@@ -279,7 +279,7 @@ void SlideShow::slotTimeOut()
             return;
         }
 
-        if ( m_sharedData->effectName  == QStringLiteral("Random") )            // Take a random effect.
+        if ( m_sharedData->effectName  == QString::fromLatin1("Random") )            // Take a random effect.
         {
             m_effect = getRandomEffect();
 
@@ -539,7 +539,7 @@ void SlideShow::printProgress()
 SlideShow::EffectMethod SlideShow::getRandomEffect()
 {
     QStringList effs = Effects.keys();
-    effs.removeAt( effs.indexOf(QStringLiteral("None")));
+    effs.removeAt( effs.indexOf(QString::fromLatin1("None")));
 
     int count    = effs.count();
     int i        = qrand() % count;
