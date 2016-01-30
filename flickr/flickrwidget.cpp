@@ -65,7 +65,7 @@ FlickrWidget::FlickrWidget(QWidget* const parent, KIPI::Interface* const iface, 
 
     // -- The image list --------------------------------------------------
 
-    m_imglst               = new FlickrList(this, (serviceName == QStringLiteral("23")));
+    m_imglst               = new FlickrList(this, (serviceName == QString::fromLatin1("23")));
 
     // For figuring out the width of the permission columns.
     QHeaderView* const hdr = m_imglst->listView()->header();
@@ -81,7 +81,7 @@ FlickrWidget::FlickrWidget(QWidget* const parent, KIPI::Interface* const iface, 
     m_imglst->listView()->setColumn(static_cast<KPImagesListView::ColumnType>(FlickrList::TAGS),
                                     i18n("Extra tags"), true);
 
-    if (serviceName != QStringLiteral("23"))
+    if (serviceName != QString::fromLatin1("23"))
     {
         int tmpWidth;
 
@@ -144,7 +144,7 @@ FlickrWidget::FlickrWidget(QWidget* const parent, KIPI::Interface* const iface, 
     m_extendedTagsButton->setSizePolicy(QSizePolicy::Maximum,
                                         QSizePolicy::Preferred);
 
-    m_extendedTagsBox               = new QGroupBox(QStringLiteral(""), getSettingsBox());
+    m_extendedTagsBox               = new QGroupBox(QString::fromLatin1(""), getSettingsBox());
     m_extendedTagsBox->setFlat(true);
     QGridLayout* extendedTagsLayout = new QGridLayout(m_extendedTagsBox);
 
@@ -193,7 +193,7 @@ FlickrWidget::FlickrWidget(QWidget* const parent, KIPI::Interface* const iface, 
     m_extendedPublicationButton->setChecked(true);
     m_extendedPublicationButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
 
-    m_extendedPublicationBox                  = new QGroupBox(QStringLiteral(""), publicationBox);
+    m_extendedPublicationBox                  = new QGroupBox(QString::fromLatin1(""), publicationBox);
     m_extendedPublicationBox->setFlat(true);
     QGridLayout* const extendedSettingsLayout = new QGridLayout(m_extendedPublicationBox);
 
@@ -249,13 +249,13 @@ FlickrWidget::FlickrWidget(QWidget* const parent, KIPI::Interface* const iface, 
             this, SLOT(slotAddExtraTagsToggled(bool)));
 
     // Zooomr doesn't support explicit Photosets.
-    if (serviceName == QStringLiteral("Zooomr"))
+    if (serviceName == QString::fromLatin1("Zooomr"))
     {
         getAlbumBox()->hide();
     }
 
     // 23HQ doesn't support the Family and Friends concept.
-    if (serviceName != QStringLiteral("23"))
+    if (serviceName != QString::fromLatin1("23"))
     {
         connect(m_familyCheckBox, SIGNAL(stateChanged(int)),
                 this, SLOT(slotMainFamilyToggled(int)));
@@ -270,7 +270,7 @@ FlickrWidget::FlickrWidget(QWidget* const parent, KIPI::Interface* const iface, 
     }
 
     // 23HQ and Zooomr don't support the Safety Level and Content Type concept.
-    if ((serviceName != QStringLiteral("23")) && (serviceName != QStringLiteral("Zooomr")))
+    if ((serviceName != QString::fromLatin1("23")) && (serviceName != QString::fromLatin1("Zooomr")))
     {
         connect(m_safetyLevelComboBox, SIGNAL(currentIndexChanged(int)),
                 this, SLOT(slotMainSafetyLevelChanged(int)));
@@ -302,12 +302,12 @@ FlickrWidget::~FlickrWidget()
 
 void FlickrWidget::updateLabels(const QString& /*name*/, const QString& /*url*/)
 {
-    if (m_serviceName == QStringLiteral("23"))
+    if (m_serviceName == QString::fromLatin1("23"))
         getHeaderLbl()->setText(i18n("<b><h2><a href='http://www.23hq.com'>"
                                   "<font color=\"#7CD164\">23</font></a>"
                                   " Export"
                                   "</h2></b>"));
-    else if (m_serviceName == QStringLiteral("Zooomr"))
+    else if (m_serviceName == QString::fromLatin1("Zooomr"))
         getHeaderLbl()->setText(i18n("<b><h2><a href='http://www.zooomr.com'>"
                                   "<font color=\"#7CD164\">zooomr</font></a>"
                                   " Export"

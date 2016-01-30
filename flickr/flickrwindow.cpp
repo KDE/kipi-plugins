@@ -74,23 +74,23 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
 
     if (serviceName == QLatin1String("23"))
     {
-        setWindowIcon(QIcon::fromTheme(QStringLiteral("kipi-hq")));
+        setWindowIcon(QIcon::fromTheme(QString::fromLatin1("kipi-hq")));
     }
     else if (serviceName == QLatin1String("Zooomr"))
     {
-        setWindowIcon(QIcon::fromTheme(QStringLiteral("kipi-zooomr")));
+        setWindowIcon(QIcon::fromTheme(QString::fromLatin1("kipi-zooomr")));
     }
     else
     {
-        setWindowIcon(QIcon::fromTheme(QStringLiteral("kipi-flickr")));
+        setWindowIcon(QIcon::fromTheme(QString::fromLatin1("kipi-flickr")));
     }
 
-    KConfig config(QStringLiteral("kipirc"));
-    KConfigGroup grp = config.group(QStringLiteral("%1Export Settings").arg(m_serviceName));
+    KConfig config(QString::fromLatin1("kipirc"));
+    KConfigGroup grp = config.group(QString::fromLatin1("%1Export Settings").arg(m_serviceName));
 
     if(grp.exists())
     {
-        qCDebug(KIPIPLUGINS_LOG) << QStringLiteral("%1Export Settings").arg(m_serviceName) << " exists, deleting it";
+        qCDebug(KIPIPLUGINS_LOG) << QString::fromLatin1("%1Export Settings").arg(m_serviceName) << " exists, deleting it";
         grp.deleteGroup();
     }
 
@@ -99,7 +99,7 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
     m_uploadCount               = 0;
     m_uploadTotal               = 0;
     m_widget                    = new FlickrWidget(this, iface(), serviceName);
-    m_albumDlg                  = new NewAlbum(this,QStringLiteral("Flickr"));
+    m_albumDlg                  = new NewAlbum(this,QString::fromLatin1("Flickr"));
     m_albumsListComboBox        = m_widget->getAlbumsCoB();
     m_newAlbumBtn               = m_widget->getNewAlbmBtn();
     //m_sendOriginalCheckBox      = m_widget->m_sendOriginalCheckBox;
@@ -147,15 +147,15 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
                                                      "(c) 2015, Shourya Singh Gupta"));
 
     about->addAuthor(i18n("Vardhman Jain"), i18n("Author and maintainer"),
-                     QStringLiteral("Vardhman at gmail dot com"));
+                     QString::fromLatin1("Vardhman at gmail dot com"));
 
     about->addAuthor(i18n("Gilles Caulier"), i18n("Developer"),
-                     QStringLiteral("caulier dot gilles at gmail dot com"));
+                     QString::fromLatin1("caulier dot gilles at gmail dot com"));
 
     about->addAuthor(i18n("Shourya Singh Gupta"), i18n("Developer"),
-                     QStringLiteral("shouryasgupta at gmail dot com"));
+                     QString::fromLatin1("shouryasgupta at gmail dot com"));
 
-    about->setHandbookEntry(QStringLiteral("flickrexport"));
+    about->setHandbookEntry(QString::fromLatin1("flickrexport"));
     setAboutData(about);
 
     // --------------------------------------------------------------------------
@@ -322,9 +322,9 @@ void FlickrWindow::reactivate()
 
 void FlickrWindow::readSettings(QString uname)
 {
-    KConfig config(QStringLiteral("kipirc"));
-    qCDebug(KIPIPLUGINS_LOG) << "Group name is : "<<QStringLiteral("%1%2Export Settings").arg(m_serviceName,uname);
-    KConfigGroup grp = config.group(QStringLiteral("%1%2Export Settings").arg(m_serviceName,uname));
+    KConfig config(QString::fromLatin1("kipirc"));
+    qCDebug(KIPIPLUGINS_LOG) << "Group name is : "<<QString::fromLatin1("%1%2Export Settings").arg(m_serviceName,uname);
+    KConfigGroup grp = config.group(QString::fromLatin1("%1%2Export Settings").arg(m_serviceName,uname));
     m_token          = grp.readEntry("token");
     qCDebug(KIPIPLUGINS_LOG) << "Token is : "<<m_token;
     m_exportHostTagsCheckBox->setChecked(grp.readEntry("Export Host Tags",      false));
@@ -378,24 +378,24 @@ void FlickrWindow::readSettings(QString uname)
     m_dimensionSpinBox->setValue(grp.readEntry("Maximum Width",       1600));
     m_imageQualitySpinBox->setValue(grp.readEntry("Image Quality",    85));
 
-    KConfigGroup dialogGroup = config.group(QStringLiteral("%1Export Dialog").arg(m_serviceName));
+    KConfigGroup dialogGroup = config.group(QString::fromLatin1("%1Export Dialog").arg(m_serviceName));
     KWindowConfig::restoreWindowSize(windowHandle(), dialogGroup);
 }
 
 void FlickrWindow::writeSettings()
 {
-    KConfig config(QStringLiteral("kipirc"));
-    qCDebug(KIPIPLUGINS_LOG) << "Group name is : "<<QStringLiteral("%1%2Export Settings").arg(m_serviceName,m_username);
+    KConfig config(QString::fromLatin1("kipirc"));
+    qCDebug(KIPIPLUGINS_LOG) << "Group name is : "<<QString::fromLatin1("%1%2Export Settings").arg(m_serviceName,m_username);
 
-    if (QString::compare(QStringLiteral("%1Export Settings").arg(m_serviceName), QStringLiteral("%1%2Export Settings").arg(m_serviceName,m_username), Qt::CaseInsensitive) == 0)
+    if (QString::compare(QString::fromLatin1("%1Export Settings").arg(m_serviceName), QString::fromLatin1("%1%2Export Settings").arg(m_serviceName,m_username), Qt::CaseInsensitive) == 0)
     {
-        qCDebug(KIPIPLUGINS_LOG) << "Not writing entry of group " << QStringLiteral("%1%2Export Settings").arg(m_serviceName,m_username);
+        qCDebug(KIPIPLUGINS_LOG) << "Not writing entry of group " << QString::fromLatin1("%1%2Export Settings").arg(m_serviceName,m_username);
         return;
     }
 
-    KConfigGroup grp = config.group(QStringLiteral("%1%2Export Settings").arg(m_serviceName,m_username));
+    KConfigGroup grp = config.group(QString::fromLatin1("%1%2Export Settings").arg(m_serviceName,m_username));
     grp.writeEntry("username",m_username);
-    qCDebug(KIPIPLUGINS_LOG) << "Token written of group "<<QStringLiteral("%1%2Export Settings").arg(m_serviceName,m_username)<<" is "<<m_token;
+    qCDebug(KIPIPLUGINS_LOG) << "Token written of group "<<QString::fromLatin1("%1%2Export Settings").arg(m_serviceName,m_username)<<" is "<<m_token;
     grp.writeEntry("token", m_token);
     grp.writeEntry("Export Host Tags",                  m_exportHostTagsCheckBox->isChecked());
     grp.writeEntry("Show Extended Tag Options",         m_extendedTagsButton->isChecked());
@@ -413,7 +413,7 @@ void FlickrWindow::writeSettings()
     //grp.writeEntry("Send original",                     m_sendOriginalCheckBox->isChecked());
     grp.writeEntry("Maximum Width",                     m_dimensionSpinBox->value());
     grp.writeEntry("Image Quality",                     m_imageQualitySpinBox->value());
-    KConfigGroup dialogGroup = config.group(QStringLiteral("%1Export Dialog").arg(m_serviceName));
+    KConfigGroup dialogGroup = config.group(QString::fromLatin1("%1Export Dialog").arg(m_serviceName));
     KWindowConfig::saveWindowSize(windowHandle(), dialogGroup);
     config.sync();
 }
@@ -428,9 +428,9 @@ void FlickrWindow::slotTokenObtained(const QString& token)
     m_username = m_talker->getUserName();
     m_userId   = m_talker->getUserId();
     qCDebug(KIPIPLUGINS_LOG) << "SlotTokenObtained invoked setting user Display name to " << m_username;
-    m_userNameDisplayLabel->setText(QStringLiteral("<b>%1</b>").arg(m_username));
+    m_userNameDisplayLabel->setText(QString::fromLatin1("<b>%1</b>").arg(m_username));
     
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
 
     foreach ( const QString& group, config.groupList() ) 
     {
@@ -451,7 +451,7 @@ void FlickrWindow::slotTokenObtained(const QString& token)
 
     // Mutable photosets are not supported by Zooomr (Zooomr only has smart
     // folder-type photosets).
-    if (m_serviceName != QStringLiteral("Zooomr"))
+    if (m_serviceName != QString::fromLatin1("Zooomr"))
     {
         m_talker->listPhotoSets();
     }
@@ -499,18 +499,18 @@ void FlickrWindow::slotUserChangeRequest()
 
 void FlickrWindow::slotRemoveAccount()
 {
-    KConfig config(QStringLiteral("kipirc"));
-    KConfigGroup grp = config.group(QStringLiteral("%1%2Export Settings").arg(m_serviceName).arg(m_username));
+    KConfig config(QString::fromLatin1("kipirc"));
+    KConfigGroup grp = config.group(QString::fromLatin1("%1%2Export Settings").arg(m_serviceName).arg(m_username));
 
     if(grp.exists())
     {
-        qCDebug(KIPIPLUGINS_LOG) << "Removing Account having group"<<QStringLiteral("%1%2Export Settings").arg(m_serviceName);
+        qCDebug(KIPIPLUGINS_LOG) << "Removing Account having group"<<QString::fromLatin1("%1%2Export Settings").arg(m_serviceName);
         grp.deleteGroup();
     }
 
     m_username = QString();
     qCDebug(KIPIPLUGINS_LOG) << "SlotTokenObtained invoked setting user Display name to " << m_username;
-    m_userNameDisplayLabel->setText(QStringLiteral("<b>%1</b>").arg(m_username));
+    m_userNameDisplayLabel->setText(QString::fromLatin1("<b>%1</b>").arg(m_username));
 }
 
 /**
@@ -576,7 +576,7 @@ void FlickrWindow::slotCreateNewPhotoSet()
         // Lets find an UNDEFINED_ style id that isn't taken yet.s
         QString id;
         int i                               = 0;
-        id                                  = QStringLiteral("UNDEFINED_") + QString::number(i);
+        id                                  = QString::fromLatin1("UNDEFINED_") + QString::number(i);
         QLinkedList<FPhotoSet>::iterator it = m_talker->m_photoSetsList->begin();
 
         while (it != m_talker->m_photoSetsList->end())
@@ -585,7 +585,7 @@ void FlickrWindow::slotCreateNewPhotoSet()
 
             if (fps.id == id)
             {
-                id = QStringLiteral("UNDEFINED_") + QString::number(++i);
+                id = QString::fromLatin1("UNDEFINED_") + QString::number(++i);
                 it = m_talker->m_photoSetsList->begin();
             }
 
@@ -784,7 +784,7 @@ void FlickrWindow::slotAddPhotoNext()
     FPhotoInfo info   = pathComments.second;
 
     // Find out the selected photo set.
-    if (m_serviceName != QStringLiteral("Zooomr"))
+    if (m_serviceName != QString::fromLatin1("Zooomr"))
     {
         // mutable photosets are not supported by Zooomr (Zooomr only has smart folder-type photosets)
         QString selectedPhotoSetId = m_albumsListComboBox->itemData(m_albumsListComboBox->currentIndex()).toString();
@@ -820,7 +820,7 @@ void FlickrWindow::slotAddPhotoNext()
 
     if (!res)
     {
-        slotAddPhotoFailed(QStringLiteral(""));
+        slotAddPhotoFailed(QString::fromLatin1(""));
         return;
     }
 
@@ -828,7 +828,7 @@ void FlickrWindow::slotAddPhotoNext()
     {
         setUiInProgressState(true);
         m_widget->progressBar()->progressScheduled(i18n("Flickr Export"), true, true);
-        m_widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme(QStringLiteral("kipi")).pixmap(22, 22));
+        m_widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme(QString::fromLatin1("kipi")).pixmap(22, 22));
     }
 }
 
@@ -845,7 +845,7 @@ void FlickrWindow::slotAddPhotoSucceeded()
 
 void FlickrWindow::slotListPhotoSetsFailed(const QString& msg)
 {
-    QMessageBox::critical(this, QStringLiteral("Error"), i18n("Failed to Fetch Photoset information from %1. %2\n", m_serviceName, msg));
+    QMessageBox::critical(this, QString::fromLatin1("Error"), i18n("Failed to Fetch Photoset information from %1. %2\n", m_serviceName, msg));
 }
 
 void FlickrWindow::slotAddPhotoFailed(const QString& msg)

@@ -74,7 +74,7 @@ void MPForm::finish()
 bool MPForm::addPair(const QString& name, const QString& value, const QString& contentType)
 {
     QByteArray str;
-    QString content_length = QStringLiteral("%1").arg(value.length());
+    QString content_length = QString::fromLatin1("%1").arg(value.length());
 
     str += "--";
     str += m_boundary;
@@ -128,7 +128,7 @@ bool MPForm::addFile(const QString& name, const QString& path)
     QByteArray imageData = imageFile.readAll();
 
     QByteArray str;
-    QString file_size = QStringLiteral("%1").arg(imageFile.size());
+    QString file_size = QString::fromLatin1("%1").arg(imageFile.size());
     imageFile.close();
 
     str += "--";
@@ -157,7 +157,7 @@ bool MPForm::addFile(const QString& name, const QString& path)
 
 QString MPForm::contentType() const
 {
-    return QString(QStringLiteral("Content-Type: multipart/form-data; boundary=") + QLatin1String(m_boundary));
+    return QString(QString::fromLatin1("Content-Type: multipart/form-data; boundary=") + QLatin1String(m_boundary));
 }
 
 QString MPForm::boundary() const

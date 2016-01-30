@@ -50,7 +50,7 @@ SelectUserDlg::SelectUserDlg(QWidget* const parent, const QString& serviceName)
     QDialogButtonBox* const buttonBox   = new QDialogButtonBox();
     QPushButton* const buttonNewAccount = new QPushButton(buttonBox);
     buttonNewAccount->setText(i18n("Add another account"));
-    buttonNewAccount->setIcon(QIcon::fromTheme(QStringLiteral("network-workgroup")));
+    buttonNewAccount->setIcon(QIcon::fromTheme(QString::fromLatin1("network-workgroup")));
 
     buttonBox->addButton(buttonNewAccount, QDialogButtonBox::AcceptRole);
     buttonBox->addButton(QDialogButtonBox::Ok);
@@ -60,23 +60,23 @@ SelectUserDlg::SelectUserDlg(QWidget* const parent, const QString& serviceName)
 
     m_okButton = buttonBox->button(QDialogButtonBox::Ok);
 
-    if (m_serviceName == QStringLiteral("23"))
+    if (m_serviceName == QString::fromLatin1("23"))
     {
-        setWindowIcon(QIcon::fromTheme(QStringLiteral("kipi-hq")));
+        setWindowIcon(QIcon::fromTheme(QString::fromLatin1("kipi-hq")));
     }
-    else if (m_serviceName == QStringLiteral("Zooomr"))
+    else if (m_serviceName == QString::fromLatin1("Zooomr"))
     {
-        setWindowIcon(QIcon::fromTheme(QStringLiteral("kipi-zooomr")));
+        setWindowIcon(QIcon::fromTheme(QString::fromLatin1("kipi-zooomr")));
     }
     else
     {
-        setWindowIcon(QIcon::fromTheme(QStringLiteral("kipi-flickr")));
+        setWindowIcon(QIcon::fromTheme(QString::fromLatin1("kipi-flickr")));
     }
 
     m_uname = QString();
 
     m_label = new QLabel(this);
-    m_label->setText(QStringLiteral("Choose the ") + m_serviceName + QStringLiteral(" account to use for exporting images: "));
+    m_label->setText(QString::fromLatin1("Choose the ") + m_serviceName + QString::fromLatin1(" account to use for exporting images: "));
 
     m_userComboBox = new QComboBox(this);
 
@@ -107,7 +107,7 @@ SelectUserDlg::~SelectUserDlg()
 
 void SelectUserDlg::reactivate()
 {
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
 
     m_userComboBox->clear();
 
@@ -118,10 +118,10 @@ void SelectUserDlg::reactivate()
 
         KConfigGroup grp = config.group(group);
 
-        if (QString::compare(grp.readEntry(QStringLiteral("username")), QString(), Qt::CaseInsensitive) == 0)
+        if (QString::compare(grp.readEntry(QString::fromLatin1("username")), QString(), Qt::CaseInsensitive) == 0)
             continue;
 
-        m_userComboBox->addItem(grp.readEntry(QStringLiteral("username")));
+        m_userComboBox->addItem(grp.readEntry(QString::fromLatin1("username")));
     }
 
     m_okButton->setEnabled(m_userComboBox->count() > 0);

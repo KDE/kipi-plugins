@@ -110,39 +110,39 @@ void Plugin_Flickr::setupActions()
 
     m_actionFlickr = new QAction(this);
     m_actionFlickr->setText(i18n("Export to Flick&r..."));
-    m_actionFlickr->setIcon(QIcon::fromTheme(QStringLiteral("kipi-flickr")));
+    m_actionFlickr->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-flickr")));
     m_actionFlickr->setShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_R));
     
-    selectFlickr = new SelectUserDlg(0,QStringLiteral("Flickr"));
+    selectFlickr = new SelectUserDlg(0,QString::fromLatin1("Flickr"));
     
     connect(m_actionFlickr, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateFlickr()));
 
-    addAction(QStringLiteral("flickrexport"), m_actionFlickr);
+    addAction(QString::fromLatin1("flickrexport"), m_actionFlickr);
 
     m_action23 = new QAction(this);
     m_action23->setText(i18n("Export to &23..."));
-    m_action23->setIcon(QIcon::fromTheme(QStringLiteral("kipi-hq")));
+    m_action23->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-hq")));
     m_action23->setShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_2));
 
-    select23 = new SelectUserDlg(0,QStringLiteral("23"));
+    select23 = new SelectUserDlg(0,QString::fromLatin1("23"));
     
     connect(m_action23, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate23()));
 
-    addAction(QStringLiteral("23export"), m_action23);
+    addAction(QString::fromLatin1("23export"), m_action23);
 
     m_actionZooomr = new QAction(this);
     m_actionZooomr->setText(i18n("Export to &Zooomr..."));
-    m_actionZooomr->setIcon(QIcon::fromTheme(QStringLiteral("kipi-zooomr")));
+    m_actionZooomr->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-zooomr")));
     m_actionZooomr->setShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_Z));
 
-    selectZoomr = new SelectUserDlg(0,QStringLiteral("Zooomr"));
+    selectZoomr = new SelectUserDlg(0,QString::fromLatin1("Zooomr"));
     
     connect(m_actionZooomr, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateZooomr()));
 
-    addAction(QStringLiteral("Zooomrexport"), m_actionZooomr);
+    addAction(QString::fromLatin1("Zooomrexport"), m_actionZooomr);
 }
 
 void Plugin_Flickr::slotActivateFlickr()
@@ -154,7 +154,7 @@ void Plugin_Flickr::slotActivateFlickr()
     if (!m_dlgFlickr)
     {
         // We clean it up in the close button
-        m_dlgFlickr = new FlickrWindow(tmp, QApplication::activeWindow(), QStringLiteral("Flickr"), selectFlickr);
+        m_dlgFlickr = new FlickrWindow(tmp, QApplication::activeWindow(), QString::fromLatin1("Flickr"), selectFlickr);
     }
     else
     {
@@ -178,7 +178,7 @@ void Plugin_Flickr::slotActivate23()
     if (!m_dlg23)
     {
         // We clean it up in the close button
-        m_dlg23 = new FlickrWindow(tmp, QApplication::activeWindow(), QStringLiteral("23"), select23);
+        m_dlg23 = new FlickrWindow(tmp, QApplication::activeWindow(), QString::fromLatin1("23"), select23);
     }
     else
     {
@@ -202,7 +202,7 @@ void Plugin_Flickr::slotActivateZooomr()
     if (!m_dlgZooomr)
     {
         // We clean it up in the close button
-        m_dlgZooomr = new FlickrWindow(tmp, QApplication::activeWindow(), QStringLiteral("Zooomr"), selectZoomr);
+        m_dlgZooomr = new FlickrWindow(tmp, QApplication::activeWindow(), QString::fromLatin1("Zooomr"), selectZoomr);
     }
     else
     {
