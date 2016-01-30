@@ -226,80 +226,80 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
     {
         QJsonObject jsonObject = doc.object();
 
-        if (jsonObject.contains(QStringLiteral("upload")))
+        if (jsonObject.contains(QString::fromLatin1("upload")))
         {
             ImgurSuccess success;
-            QJsonObject obj1 = jsonObject[QStringLiteral("upload")].toObject();
-            QJsonObject obj2 = obj1[QStringLiteral("image")].toObject();
-            QJsonObject obj3 = obj1[QStringLiteral("links")].toObject();
+            QJsonObject obj1 = jsonObject[QString::fromLatin1("upload")].toObject();
+            QJsonObject obj2 = obj1[QString::fromLatin1("image")].toObject();
+            QJsonObject obj3 = obj1[QString::fromLatin1("links")].toObject();
 
-            success.image.name = obj2[QStringLiteral("name")].toString();
+            success.image.name = obj2[QString::fromLatin1("name")].toString();
             qCDebug(KIPIPLUGINS_LOG)<<"Name is "<<success.image.name;
 
-            success.image.title = obj2[QStringLiteral("title")].toString();
+            success.image.title = obj2[QString::fromLatin1("title")].toString();
 
-            success.image.caption = obj2[QStringLiteral("caption")].toString();
+            success.image.caption = obj2[QString::fromLatin1("caption")].toString();
 
-            success.image.hash = obj2[QStringLiteral("hash")].toString();
+            success.image.hash = obj2[QString::fromLatin1("hash")].toString();
 
-            success.image.deletehash = obj2[QStringLiteral("deletehash")].toString();
+            success.image.deletehash = obj2[QString::fromLatin1("deletehash")].toString();
 
-            success.image.type = obj2[QStringLiteral("type")].toString();
+            success.image.type = obj2[QString::fromLatin1("type")].toString();
 
-            success.image.animated = (obj2[QStringLiteral("animated")].toString() == QStringLiteral("true"));
+            success.image.animated = (obj2[QString::fromLatin1("animated")].toString() == QString::fromLatin1("true"));
 
-            success.image.width = obj2[QStringLiteral("width")].toString().toInt();
+            success.image.width = obj2[QString::fromLatin1("width")].toString().toInt();
 
-            success.image.height = obj2[QStringLiteral("height")].toString().toInt();
+            success.image.height = obj2[QString::fromLatin1("height")].toString().toInt();
 
-            success.image.size = obj2[QStringLiteral("size")].toString().toInt();
+            success.image.size = obj2[QString::fromLatin1("size")].toString().toInt();
 
-            success.image.views = obj2[QStringLiteral("views")].toString().toInt();
+            success.image.views = obj2[QString::fromLatin1("views")].toString().toInt();
 
-            success.image.bandwidth = obj2[QStringLiteral("bandwidth")].toString().toLongLong();
+            success.image.bandwidth = obj2[QString::fromLatin1("bandwidth")].toString().toLongLong();
 
-            success.links.original = QUrl(obj3[QStringLiteral("original")].toString());
+            success.links.original = QUrl(obj3[QString::fromLatin1("original")].toString());
             qCDebug(KIPIPLUGINS_LOG)<<"Link original is "<<success.links.original;
 
-            success.links.imgur_page = QUrl(obj3[QStringLiteral("imgur_page")].toString());
+            success.links.imgur_page = QUrl(obj3[QString::fromLatin1("imgur_page")].toString());
 
-            success.links.delete_page = QUrl(obj3[QStringLiteral("delete_page")].toString());
+            success.links.delete_page = QUrl(obj3[QString::fromLatin1("delete_page")].toString());
 
-            success.links.small_square = QUrl(obj3[QStringLiteral("small_square")].toString());
+            success.links.small_square = QUrl(obj3[QString::fromLatin1("small_square")].toString());
 
-            success.links.large_thumbnail = QUrl(obj3[QStringLiteral("largeThumbnail")].toString());
+            success.links.large_thumbnail = QUrl(obj3[QString::fromLatin1("largeThumbnail")].toString());
 
             emit signalSuccess(m_currentUrl, success);
         }
 
-        if (jsonObject.contains(QStringLiteral("error")))
+        if (jsonObject.contains(QString::fromLatin1("error")))
         {
             ImgurError error;
-            QJsonObject obj = jsonObject[QStringLiteral("error")].toObject();
+            QJsonObject obj = jsonObject[QString::fromLatin1("error")].toObject();
 
-            error.message   = obj[QStringLiteral("message")].toString();
+            error.message   = obj[QString::fromLatin1("message")].toString();
 
-            error.request = obj[QStringLiteral("request")].toString();
+            error.request = obj[QString::fromLatin1("request")].toString();
 
-            error.parameters = obj[QStringLiteral("parameters")].toString();
+            error.parameters = obj[QString::fromLatin1("parameters")].toString();
 
-            if (QString::compare(obj[QStringLiteral("method")].toString(),
-                                 QStringLiteral("get"), Qt::CaseInsensitive) == 0)
+            if (QString::compare(obj[QString::fromLatin1("method")].toString(),
+                                 QString::fromLatin1("get"), Qt::CaseInsensitive) == 0)
             {
                 error.method = ImgurError::GET;
             }
-            else if (QString::compare(obj[QStringLiteral("method")].toString(),
-                                QStringLiteral("post"), Qt::CaseInsensitive) == 0)
+            else if (QString::compare(obj[QString::fromLatin1("method")].toString(),
+                                QString::fromLatin1("post"), Qt::CaseInsensitive) == 0)
             {
                 error.method = ImgurError::POST;
             }
-            else if (QString::compare(obj[QStringLiteral("format")].toString(),
-                                 QStringLiteral("json"), Qt::CaseInsensitive) == 0)
+            else if (QString::compare(obj[QString::fromLatin1("format")].toString(),
+                                 QString::fromLatin1("json"), Qt::CaseInsensitive) == 0)
             {
                 error.format = ImgurError::JSON;
             }
-            else if (QString::compare(obj[QStringLiteral("format")].toString(),
-                                 QStringLiteral("xml"), Qt::CaseInsensitive) == 0)
+            else if (QString::compare(obj[QString::fromLatin1("format")].toString(),
+                                 QString::fromLatin1("xml"), Qt::CaseInsensitive) == 0)
             {
                 error.format = ImgurError::XML;
             }
@@ -334,26 +334,26 @@ void ImgurTalker::imageUpload (const QUrl& filePath)
 
     QUrl exportUrl = QUrl(ImgurConnection::APIuploadURL());
     QUrlQuery q(exportUrl);
-    q.addQueryItem(QStringLiteral("key"), QString::fromUtf8(d->anonymousKey));
-    q.addQueryItem(QStringLiteral("name"), filePath.fileName());
+    q.addQueryItem(QString::fromLatin1("key"), QString::fromUtf8(d->anonymousKey));
+    q.addQueryItem(QString::fromLatin1("name"), filePath.fileName());
 
     // This should be replaced with something the user submits
-    q.addQueryItem(QStringLiteral("title"), filePath.fileName());
+    q.addQueryItem(QString::fromLatin1("title"), filePath.fileName());
 
     // This should be replaced with something the user submits
     //q.addQueryItem("caption", "");
 
-    q.addQueryItem(QStringLiteral("type"), QStringLiteral("file"));
+    q.addQueryItem(QString::fromLatin1("type"), QString::fromLatin1("file"));
     exportUrl.setQuery(q);
 
-    form.addFile(QStringLiteral("image"), filePath.path());
+    form.addFile(QString::fromLatin1("image"), filePath.path());
     form.finish();
 
     KIO::TransferJob* const job = KIO::http_post(exportUrl, form.formData(), KIO::HideProgressInfo);
-    job->addMetaData(QStringLiteral("content-type"), form.contentType());
-    job->addMetaData(QStringLiteral("content-length"),
-                     QStringLiteral("Content-Length: %1").arg(form.formData().length()));
-    job->addMetaData(QStringLiteral("UserAgent"), d->userAgent);
+    job->addMetaData(QString::fromLatin1("content-type"), form.contentType());
+    job->addMetaData(QString::fromLatin1("content-length"),
+                     QString::fromLatin1("Content-Length: %1").arg(form.formData().length()));
+    job->addMetaData(QString::fromLatin1("UserAgent"), d->userAgent);
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(slotData(KIO::Job*,QByteArray)));
@@ -368,13 +368,13 @@ bool ImgurTalker::imageRemove(const QString& delete_hash)
     MPForm form;
 
     QUrl removeUrl = QUrl(ImgurConnection::APIdeleteURL());
-    removeUrl.setPath(removeUrl.path() + QLatin1Char('/') + delete_hash + QStringLiteral(".json"));
+    removeUrl.setPath(removeUrl.path() + QLatin1Char('/') + delete_hash + QString::fromLatin1(".json"));
 
     form.finish();
 
     KIO::TransferJob* const job = KIO::http_post(removeUrl, form.formData(), KIO::HideProgressInfo);
-    job->addMetaData(QStringLiteral("content-type"), form.contentType());
-    job->addMetaData(QStringLiteral("UserAgent"), d->userAgent);
+    job->addMetaData(QString::fromLatin1("content-type"), form.contentType());
+    job->addMetaData(QString::fromLatin1("UserAgent"), d->userAgent);
 
     m_state = IE_REMOVEPHOTO;
 

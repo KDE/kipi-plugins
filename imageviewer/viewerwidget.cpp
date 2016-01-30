@@ -95,15 +95,15 @@ public:
         // load cursors for zooming and panning
         zoomCursor = QCursor(QPixmap(QStandardPaths::locate(
             QStandardPaths::GenericDataLocation,
-            QStringLiteral("kipiplugin_imageviewer/pics/zoom.png"))));
+            QString::fromLatin1("kipiplugin_imageviewer/pics/zoom.png"))));
         moveCursor = QCursor(QPixmap(QStandardPaths::locate(
             QStandardPaths::GenericDataLocation,
-            QStringLiteral("kipiplugin_imageviewer/pics/hand.png"))));
+            QString::fromLatin1("kipiplugin_imageviewer/pics/hand.png"))));
 
         // get path of nullImage in case QImage can't load the image
         nullImage  = QStandardPaths::locate(
             QStandardPaths::GenericDataLocation,
-            QStringLiteral("kipiplugin_imageviewer/pics/nullImage.png"));
+            QString::fromLatin1("kipiplugin_imageviewer/pics/nullImage.png"));
 
         // while zooming is performed, the image is downsampled to d->zoomsize. This seems to
         // be the optimal way for a PentiumM 1.4G, Nvidia FX5200. For a faster setup, this might
@@ -203,7 +203,7 @@ ViewerWidget::ViewerWidget()
 
         // only add images to d->files
         QString mimeTypeName = QMimeDatabase().mimeTypeForUrl(QUrl::fromLocalFile(s)).name();
-        bool isImage        = mimeTypeName.contains(QStringLiteral("image"), Qt::CaseInsensitive);
+        bool isImage        = mimeTypeName.contains(QString::fromLatin1("image"), Qt::CaseInsensitive);
 
         if ( isImage )
         {
@@ -883,7 +883,7 @@ OGLstate ViewerWidget::getOGLstate() const
     //GL_ARB_texture_rectangle is not supported
     QString s = QString::fromLatin1(reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS)));
 
-    if (!s.contains(QStringLiteral("GL_ARB_texture_rectangle"), Qt::CaseInsensitive))
+    if (!s.contains(QString::fromLatin1("GL_ARB_texture_rectangle"), Qt::CaseInsensitive))
     {
         return oglNoRectangularTexture;
     }

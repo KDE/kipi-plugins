@@ -98,13 +98,13 @@ void Plugin_viewer::setupActions()
 
     d->actionViewer = new QAction(this);
     d->actionViewer->setText(i18n("OpenGL Image Viewer..."));
-    d->actionViewer->setIcon(QIcon::fromTheme(QStringLiteral("kipi-ogl")));
+    d->actionViewer->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-ogl")));
     d->actionViewer->setEnabled(false);
 
     connect(d->actionViewer, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction(QStringLiteral("oglimageviewer"), d->actionViewer);
+    addAction(QString::fromLatin1("oglimageviewer"), d->actionViewer);
 }
 
 void Plugin_viewer::slotActivate()

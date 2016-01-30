@@ -41,7 +41,7 @@ namespace KIPIViewerPlugin
 HelpDialog::HelpDialog()
     : KPToolDialog(0)
 {
-    setWindowIcon(QIcon::fromTheme(QStringLiteral("kipi-ogl")));
+    setWindowIcon(QIcon::fromTheme(QString::fromLatin1("kipi-ogl")));
     setWindowTitle(i18n("Usage of OpenGL Image Viewer"));
     startButton()->setVisible(false);
 
@@ -52,10 +52,10 @@ HelpDialog::HelpDialog()
                                                "(c) 2008-2013, Gilles Caulier"));
 
     about->addAuthor(i18n("Markus Leuthold"), i18n("Author"),
-                     QStringLiteral("kusi at forum dot titlis dot org"));
+                     QString::fromLatin1("kusi at forum dot titlis dot org"));
 
     about->addAuthor(i18n("Gilles Caulier"), i18n("Developer"),
-                     QStringLiteral("caulier dot gilles at gmail dot com"));
+                     QString::fromLatin1("caulier dot gilles at gmail dot com"));
 
     setAboutData(about);
 

@@ -76,7 +76,7 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
 #endif //OAUTH_ENABLED
 
     setMainWidget(d->widget);
-    setWindowIcon(QIcon::fromTheme(QStringLiteral("kipi-imgur")));
+    setWindowIcon(QIcon::fromTheme(QString::fromLatin1("kipi-imgur")));
     setWindowTitle(i18n("Export to imgur.com"));
     setModal(false);
 
@@ -96,13 +96,13 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
 
     about->addAuthor(ki18n("Marius Orcsik").toString(),
                      ki18n("Author").toString(),
-                     QStringLiteral("marius at habarnam dot ro"));
+                     QString::fromLatin1("marius at habarnam dot ro"));
 
     about->addAuthor(ki18n("Gilles Caulier").toString(),
                      ki18n("Developer").toString(),
-                     QStringLiteral("caulier dot gilles at gmail dot com"));
+                     QString::fromLatin1("caulier dot gilles at gmail dot com"));
 
-    about->setHandbookEntry(QStringLiteral("imgur"));
+    about->setHandbookEntry(QString::fromLatin1("imgur"));
     setAboutData(about);
 
     // ------------------------------------------------------------
@@ -295,7 +295,7 @@ void ImgurWindow::slotBusy(bool val)
 
 void ImgurWindow::readSettings()
 {
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
     //KConfigGroup group = config.group(QString("Imgur Settings"));
 
     KConfigGroup group2 = config.group("Imgur Dialog");
@@ -304,7 +304,7 @@ void ImgurWindow::readSettings()
 
 void ImgurWindow::saveSettings()
 {
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
     //KConfigGroup group = config.group(QString("Imgur Settings"));
 
     KConfigGroup group2 = config.group("Imgur Dialog");
