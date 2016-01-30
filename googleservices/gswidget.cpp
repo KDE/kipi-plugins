@@ -48,7 +48,7 @@ GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interfac
 {
     m_pluginName = pluginName;
     
-    QGroupBox* m_LeafBox = new QGroupBox(QStringLiteral(""), getSettingsBox());
+    QGroupBox* m_LeafBox = new QGroupBox(QString::fromLatin1(""), getSettingsBox());
     QGridLayout* leafLayout = new QGridLayout(m_LeafBox);
     
     m_tagsBGrp = new QButtonGroup(m_LeafBox);
@@ -102,15 +102,15 @@ void GoogleServicesWidget::updateLabels(const QString& name, const QString& url)
     {
         case PluginName::GDrive :
         {
-            QString web(QStringLiteral("http://www.drive.google.com"));
-            getHeaderLbl()->setText(QStringLiteral(
+            QString web(QString::fromLatin1("http://www.drive.google.com"));
+            getHeaderLbl()->setText(QString::fromLatin1(
                 "<b><h2><a href='%1'>"
                 "<font color=\"#9ACD32\">Google Drive</font>"
                 "</a></h2></b>").arg(web));
             break;
         }
         default :
-            getHeaderLbl()->setText(QStringLiteral(
+            getHeaderLbl()->setText(QString::fromLatin1(
                 "<b><h2><a href='http://picasaweb.google.com/%1'>"
                 "<font color=\"#9ACD32\">Google Photos/PicasaWeb</font>"
                 "</a></h2></b>").arg(url));
@@ -123,7 +123,7 @@ void GoogleServicesWidget::updateLabels(const QString& name, const QString& url)
     }
     else
     {
-        getUserNameLabel()->setText(QStringLiteral("<b>%1</b>").arg(name));
+        getUserNameLabel()->setText(QString::fromLatin1("<b>%1</b>").arg(name));
     }
 }
 

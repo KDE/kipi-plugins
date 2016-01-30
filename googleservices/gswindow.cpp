@@ -78,20 +78,20 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
 
     m_serviceName = serviceName;
     
-    if (QString::compare(m_serviceName, QStringLiteral("googledriveexport"), Qt::CaseInsensitive) == 0)
+    if (QString::compare(m_serviceName, QString::fromLatin1("googledriveexport"), Qt::CaseInsensitive) == 0)
     {
         name = PluginName::GDrive;
-        m_pluginName = QStringLiteral("Google Drive");
+        m_pluginName = QString::fromLatin1("Google Drive");
     }
-    else if (QString::compare(m_serviceName, QStringLiteral("picasawebexport"), Qt::CaseInsensitive) == 0)
+    else if (QString::compare(m_serviceName, QString::fromLatin1("picasawebexport"), Qt::CaseInsensitive) == 0)
     {
         name         = PluginName::PicasaExport;
-        m_pluginName = QStringLiteral("Google Photos/PicasaWeb");
+        m_pluginName = QString::fromLatin1("Google Photos/PicasaWeb");
     }
     else
     {
         name         = PluginName::PicasaImport;
-        m_pluginName = QStringLiteral("Google Photos/PicasaWeb");
+        m_pluginName = QString::fromLatin1("Google Photos/PicasaWeb");
     }
     
     m_tmp         = tmpFolder;
@@ -117,15 +117,15 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
                                                  "(c) 2015, Shourya Singh Gupta")); 
 
             about->addAuthor(i18n("Saurabh Patel"),i18n("Author and maintainer"),
-                             QStringLiteral("saurabhpatel7717 at gmail dot com"));
+                             QString::fromLatin1("saurabhpatel7717 at gmail dot com"));
  
             about->addAuthor(i18n( "Shourya Singh Gupta" ), i18n("Developer"),
-                             QStringLiteral("shouryasgupta at gmail dot com"));
+                             QString::fromLatin1("shouryasgupta at gmail dot com"));
 
-            about->setHandbookEntry(QStringLiteral("googledrive"));
+            about->setHandbookEntry(QString::fromLatin1("googledrive"));
             setAboutData(about);
 
-            setWindowIcon(QIcon::fromTheme(QStringLiteral("kipi-googledrive")));
+            setWindowIcon(QIcon::fromTheme(QString::fromLatin1("kipi-googledrive")));
             setWindowTitle(i18n("Export to Google Drive"));
 
             startButton()->setText(i18n("Start Upload"));
@@ -192,24 +192,24 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
                                               "(c) 2015, Shourya Singh Gupta"));
 
             about->addAuthor(i18n( "Vardhman Jain" ), i18n("Author and maintainer"),
-                             QStringLiteral("Vardhman at gmail dot com"));
+                             QString::fromLatin1("Vardhman at gmail dot com"));
 
             about->addAuthor(i18n( "Gilles Caulier" ), i18n("Developer"),
-                             QStringLiteral("caulier dot gilles at gmail dot com"));
+                             QString::fromLatin1("caulier dot gilles at gmail dot com"));
 
             about->addAuthor(i18n( "Luka Renko" ), i18n("Developer"),
-                             QStringLiteral("lure at kubuntu dot org"));
+                             QString::fromLatin1("lure at kubuntu dot org"));
 
             about->addAuthor(i18n( "Jens Mueller" ), i18n("Developer"),
-                             QStringLiteral("tschenser at gmx dot de"));
+                             QString::fromLatin1("tschenser at gmx dot de"));
         
             about->addAuthor(i18n( "Shourya Singh Gupta" ), i18n("Developer"),
-                             QStringLiteral("shouryasgupta at gmail dot com"));
+                             QString::fromLatin1("shouryasgupta at gmail dot com"));
 
-            about->setHandbookEntry(QStringLiteral("picasawebexport"));
+            about->setHandbookEntry(QString::fromLatin1("picasawebexport"));
             setAboutData(about);
 
-            setWindowIcon(QIcon::fromTheme(QStringLiteral("kipi-picasa")));
+            setWindowIcon(QIcon::fromTheme(QString::fromLatin1("kipi-picasa")));
 
             if (name == PluginName::PicasaExport)
             {
@@ -311,7 +311,7 @@ void GSWindow::reactivate()
 
 void GSWindow::readSettings()
 {
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
     
     KConfigGroup grp;
     
@@ -367,7 +367,7 @@ void GSWindow::readSettings()
 
 void GSWindow::writeSettings()
 {
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup grp;
 
     switch(name)
@@ -480,8 +480,8 @@ void GSWindow::slotListPhotosDoneForUpload(int errCode, const QString& errMsg, c
 
         // Picasa doesn't support image titles. Include it in descriptions if needed.
         QStringList descriptions = QStringList() << info.title() << info.description();
-        descriptions.removeAll(QStringLiteral(""));
-        temp.description         = descriptions.join(QStringLiteral("\n\n"));
+        descriptions.removeAll(QString::fromLatin1(""));
+        temp.description         = descriptions.join(QString::fromLatin1("\n\n"));
 
         // check for existing items
         QString localId;
@@ -525,7 +525,7 @@ void GSWindow::slotListPhotosDoneForUpload(int errCode, const QString& errMsg, c
     m_widget->progressBar()->show();
     m_widget->progressBar()->progressScheduled(i18n("Picasa Export"), true, true);
     m_widget->progressBar()->progressThumbnailChanged(
-        QIcon::fromTheme(QStringLiteral("kipi")).pixmap(22, 22));
+        QIcon::fromTheme(QString::fromLatin1("kipi")).pixmap(22, 22));
 
     m_renamingOpt = 0;
 
@@ -552,7 +552,7 @@ void GSWindow::slotListAlbumsDone(int code,const QString& errMsg ,const QList <G
             for (int i=0;i<list.size();i++)
             {
                 m_widget->getAlbumsCoB()->addItem(
-                    QIcon::fromTheme(QStringLiteral("system-users")),
+                    QIcon::fromTheme(QString::fromLatin1("system-users")),
                     list.value(i).title, list.value(i).id);
 
                 if (m_currentAlbumId == list.value(i).id)
@@ -581,12 +581,12 @@ void GSWindow::slotListAlbumsDone(int code,const QString& errMsg ,const QList <G
             {
                 QString albumIcon;
 
-                if (list.at(i).access == QStringLiteral("public"))
-                    albumIcon = QStringLiteral("folder-image");
-                else if (list.at(i).access == QStringLiteral("protected"))
-                    albumIcon = QStringLiteral("folder-locked");
+                if (list.at(i).access == QString::fromLatin1("public"))
+                    albumIcon = QString::fromLatin1("folder-image");
+                else if (list.at(i).access == QString::fromLatin1("protected"))
+                    albumIcon = QString::fromLatin1("folder-locked");
                 else
-                    albumIcon = QStringLiteral("folder");
+                    albumIcon = QString::fromLatin1("folder");
 
                 m_widget->getAlbumsCoB()->addItem(QIcon::fromTheme(albumIcon), list.at(i).title, list.at(i).id);
 
@@ -741,7 +741,7 @@ void GSWindow::slotStartTransfer()
                 break;
         }
         
-        temp.description    = info.description().section(QStringLiteral("\n"), 0, 0);
+        temp.description    = info.description().section(QString::fromLatin1("\n"), 0, 0);
         temp.gpsLat.setNum(info.latitude());
         temp.gpsLon.setNum(info.longitude());
         temp.tags = info.tagsPath();
@@ -758,7 +758,7 @@ void GSWindow::slotStartTransfer()
     m_widget->progressBar()->setValue(0);
     m_widget->progressBar()->show();
     m_widget->progressBar()->progressScheduled(i18n("Google Drive export"), true, true);
-    m_widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme(QStringLiteral("kipi")).pixmap(22, 22));
+    m_widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme(QString::fromLatin1("kipi")).pixmap(22, 22));
 
     uploadNextPhoto();
 }
@@ -808,7 +808,7 @@ void GSWindow::uploadNextPhoto()
                         break;
                     default:
                     {
-                        ReplaceDialog dlg(this, QStringLiteral(""), iface(), pathComments.first, info.thumbURL);
+                        ReplaceDialog dlg(this, QString::fromLatin1(""), iface(), pathComments.first, info.thumbURL);
                         dlg.exec();
                         
                         switch (dlg.getResult())
@@ -847,7 +847,7 @@ void GSWindow::uploadNextPhoto()
                     for (itT = info.tags.constBegin(); itT != info.tags.constEnd(); ++itT)
                     {
                         QString strTmp = *itT;
-                        int idx        = strTmp.lastIndexOf(QStringLiteral("/"));
+                        int idx        = strTmp.lastIndexOf(QString::fromLatin1("/"));
 
                         if (idx > 0)
                         {
@@ -927,7 +927,7 @@ void GSWindow::uploadNextPhoto()
     
     if (!res)
     {
-        slotAddPhotoDone(0, QStringLiteral(""), QStringLiteral("-1"));
+        slotAddPhotoDone(0, QString::fromLatin1(""), QString::fromLatin1("-1"));
         return;
     }
 }
@@ -954,10 +954,10 @@ void GSWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
     GSPhoto item = m_transferQueue.first().second;
     QUrl tmpUrl = QUrl::fromLocalFile(QString(m_tmp + item.title));
 
-    if (item.mimeType == QStringLiteral("video/mpeg4"))
+    if (item.mimeType == QString::fromLatin1("video/mpeg4"))
     {
         tmpUrl = tmpUrl.adjusted(QUrl::RemoveFilename);
-        tmpUrl.setPath(tmpUrl.path() + item.title + QStringLiteral(".mp4"));
+        tmpUrl.setPath(tmpUrl.path() + item.title + QString::fromLatin1(".mp4"));
     }
 
     if (errCode == 1)
@@ -1319,7 +1319,7 @@ void GSWindow::slotTransferCancel()
 
 void GSWindow::slotUserChangeRequest()
 {
-    QUrl url(QStringLiteral("https://accounts.google.com/logout"));
+    QUrl url(QString::fromLatin1("https://accounts.google.com/logout"));
     QDesktopServices::openUrl(url);
 
     QMessageBox warn(QMessageBox::Warning,
@@ -1333,7 +1333,7 @@ void GSWindow::slotUserChangeRequest()
     
     if (warn.exec() == QMessageBox::Yes)
     {
-        refresh_token = QStringLiteral("");
+        refresh_token = QString::fromLatin1("");
         
         switch (name)
         {

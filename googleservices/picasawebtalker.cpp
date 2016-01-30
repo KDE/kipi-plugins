@@ -78,7 +78,7 @@ static bool picasaLessThan(GSFolder& p1, GSFolder& p2)
 }
 
 PicasawebTalker::PicasawebTalker(QWidget* const parent)
-    : Authorize(parent, QStringLiteral("https://picasaweb.google.com/data/")),
+    : Authorize(parent, QString::fromLatin1("https://picasaweb.google.com/data/")),
       m_job(0),
       m_state(FE_LOGOUT),
       m_iface(0)
@@ -117,17 +117,17 @@ void PicasawebTalker::listAlbums()
         m_job->kill();
         m_job = 0;
     }
-    QUrl url(QStringLiteral("https://picasaweb.google.com/data/feed/api/user/default"));
+    QUrl url(QString::fromLatin1("https://picasaweb.google.com/data/feed/api/user/default"));
     KIO::TransferJob* const job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
     KIO::JobUiDelegate* const job_ui = static_cast<KIO::JobUiDelegate*>(job->ui());
     job_ui->setWindow(m_parent);
-    job->addMetaData(QStringLiteral("content-type"),
-                     QStringLiteral("Content-Type: application/json"));
+    job->addMetaData(QString::fromLatin1("content-type"),
+                     QString::fromLatin1("Content-Type: application/json"));
 
     if (!m_access_token.isEmpty())
     {
-        QString auth_string = QStringLiteral("Authorization: ") + m_bearer_access_token;
-        job->addMetaData(QStringLiteral("customHTTPHeader"), auth_string);
+        QString auth_string = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
+        job->addMetaData(QString::fromLatin1("customHTTPHeader"), auth_string);
     }
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
@@ -151,14 +151,14 @@ void PicasawebTalker::listPhotos(const QString& albumId,
         m_job = 0;
     }
 
-    QUrl url(QStringLiteral("https://picasaweb.google.com/data/feed/api/user/default/albumid/") + albumId);
+    QUrl url(QString::fromLatin1("https://picasaweb.google.com/data/feed/api/user/default/albumid/") + albumId);
 
     QUrlQuery q(url);
-    q.addQueryItem(QStringLiteral("thumbsize"), QStringLiteral("200"));
+    q.addQueryItem(QString::fromLatin1("thumbsize"), QString::fromLatin1("200"));
 
     if (!imgmax.isNull())
     {
-        q.addQueryItem(QStringLiteral("imgmax"), imgmax);
+        q.addQueryItem(QString::fromLatin1("imgmax"), imgmax);
     }
 
     url.setQuery(q);
@@ -166,13 +166,13 @@ void PicasawebTalker::listPhotos(const QString& albumId,
     KIO::TransferJob* const job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
     KIO::JobUiDelegate* const job_ui = static_cast<KIO::JobUiDelegate*>(job->ui());
     job_ui->setWindow(m_parent);
-    job->addMetaData(QStringLiteral("content-type"),
-                     QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
+    job->addMetaData(QString::fromLatin1("content-type"),
+                     QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
 
     if (!m_access_token.isEmpty())
     {
-        QString auth_string = QStringLiteral("Authorization: ") + m_bearer_access_token;
-        job->addMetaData(QStringLiteral("customHTTPHeader"), auth_string);
+        QString auth_string = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
+        job->addMetaData(QString::fromLatin1("customHTTPHeader"), auth_string);
     }
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
@@ -198,78 +198,78 @@ void PicasawebTalker::createAlbum(const GSFolder& album)
     //Create the Body in atom-xml
     QDomDocument docMeta;
     QDomProcessingInstruction instr = docMeta.createProcessingInstruction(
-        QStringLiteral("xml"), QStringLiteral("version='1.0' encoding='UTF-8'"));
+        QString::fromLatin1("xml"), QString::fromLatin1("version='1.0' encoding='UTF-8'"));
     docMeta.appendChild(instr);
-    QDomElement entryElem = docMeta.createElement(QStringLiteral("entry"));
+    QDomElement entryElem = docMeta.createElement(QString::fromLatin1("entry"));
     docMeta.appendChild(entryElem);
-    entryElem.setAttribute(QStringLiteral("xmlns"), QStringLiteral("http://www.w3.org/2005/Atom"));
-    QDomElement titleElem = docMeta.createElement(QStringLiteral("title"));
+    entryElem.setAttribute(QString::fromLatin1("xmlns"), QString::fromLatin1("http://www.w3.org/2005/Atom"));
+    QDomElement titleElem = docMeta.createElement(QString::fromLatin1("title"));
     entryElem.appendChild(titleElem);
     QDomText titleText = docMeta.createTextNode(album.title);
     titleElem.appendChild(titleText);
-    QDomElement summaryElem = docMeta.createElement(QStringLiteral("summary"));
+    QDomElement summaryElem = docMeta.createElement(QString::fromLatin1("summary"));
     entryElem.appendChild(summaryElem);
     QDomText summaryText = docMeta.createTextNode(album.description);
     summaryElem.appendChild(summaryText);
     QDomElement locationElem = docMeta.createElementNS(
-        QStringLiteral("http://schemas.google.com/photos/2007"),
-        QStringLiteral("gphoto:location"));
+        QString::fromLatin1("http://schemas.google.com/photos/2007"),
+        QString::fromLatin1("gphoto:location"));
     entryElem.appendChild(locationElem);
     QDomText locationText = docMeta.createTextNode(album.location);
     locationElem.appendChild(locationText);
     QDomElement accessElem = docMeta.createElementNS(
-        QStringLiteral("http://schemas.google.com/photos/2007"),
-        QStringLiteral("gphoto:access"));
+        QString::fromLatin1("http://schemas.google.com/photos/2007"),
+        QString::fromLatin1("gphoto:access"));
     entryElem.appendChild(accessElem);
     QDomText accessText = docMeta.createTextNode(album.access);
     accessElem.appendChild(accessText);
     QDomElement commentElem = docMeta.createElementNS(
-        QStringLiteral("http://schemas.google.com/photos/2007"),
-        QStringLiteral("gphoto:commentingEnabled"));
+        QString::fromLatin1("http://schemas.google.com/photos/2007"),
+        QString::fromLatin1("gphoto:commentingEnabled"));
     entryElem.appendChild(commentElem);
     QDomText commentText = docMeta.createTextNode(
-        album.canComment ? QStringLiteral("true") : QStringLiteral("false"));
+        album.canComment ? QString::fromLatin1("true") : QString::fromLatin1("false"));
     commentElem.appendChild(commentText);
     QDomElement timestampElem = docMeta.createElementNS(
-        QStringLiteral("http://schemas.google.com/photos/2007"),
-        QStringLiteral("gphoto:timestamp"));
+        QString::fromLatin1("http://schemas.google.com/photos/2007"),
+        QString::fromLatin1("gphoto:timestamp"));
     entryElem.appendChild(timestampElem);
     QDomText timestampText = docMeta.createTextNode(album.timestamp);
     timestampElem.appendChild(timestampText);
-    QDomElement categoryElem = docMeta.createElement(QStringLiteral("category"));
+    QDomElement categoryElem = docMeta.createElement(QString::fromLatin1("category"));
     entryElem.appendChild(categoryElem);
     categoryElem.setAttribute(
-        QStringLiteral("scheme"),
-        QStringLiteral("http://schemas.google.com/g/2005#kind"));
+        QString::fromLatin1("scheme"),
+        QString::fromLatin1("http://schemas.google.com/g/2005#kind"));
     categoryElem.setAttribute(
-        QStringLiteral("term"),
-        QStringLiteral("http://schemas.google.com/photos/2007#album"));
+        QString::fromLatin1("term"),
+        QString::fromLatin1("http://schemas.google.com/photos/2007#album"));
     QDomElement mediaGroupElem = docMeta.createElementNS(
-        QStringLiteral("http://search.yahoo.com/mrss/"),
-        QStringLiteral("media:group"));
+        QString::fromLatin1("http://search.yahoo.com/mrss/"),
+        QString::fromLatin1("media:group"));
     entryElem.appendChild(mediaGroupElem);
     QDomElement mediaKeywordsElem = docMeta.createElementNS(
-        QStringLiteral("http://search.yahoo.com/mrss/"),
-        QStringLiteral("media:keywords"));
+        QString::fromLatin1("http://search.yahoo.com/mrss/"),
+        QString::fromLatin1("media:keywords"));
     mediaGroupElem.appendChild(mediaKeywordsElem);
-    QDomText mediaKeywordsText = docMeta.createTextNode(album.tags.join(QStringLiteral(",")));
+    QDomText mediaKeywordsText = docMeta.createTextNode(album.tags.join(QString::fromLatin1(",")));
     mediaKeywordsElem.appendChild(mediaKeywordsText);
 
     QByteArray buffer;
     buffer.append(docMeta.toString().toUtf8());
 
-    QUrl url(QStringLiteral("https://picasaweb.google.com/data/feed/api/user/default"));
-    QString auth_string = QStringLiteral("Authorization: ") + m_bearer_access_token;
+    QUrl url(QString::fromLatin1("https://picasaweb.google.com/data/feed/api/user/default"));
+    QString auth_string = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
     KIO::TransferJob* const job = KIO::http_post(url, buffer, KIO::HideProgressInfo);
     KIO::JobUiDelegate* const job_ui = static_cast<KIO::JobUiDelegate*>(job->ui());
     job_ui->setWindow(m_parent);
     job->addMetaData(
-        QStringLiteral("content-type"),
-        QStringLiteral("Content-Type: application/atom+xml"));
+        QString::fromLatin1("content-type"),
+        QString::fromLatin1("Content-Type: application/atom+xml"));
     job->addMetaData(
-        QStringLiteral("content-length"),
-        QStringLiteral("Content-Length: %1").arg(buffer.length()));
-    job->addMetaData(QStringLiteral("customHTTPHeader"), auth_string);
+        QString::fromLatin1("content-length"),
+        QString::fromLatin1("Content-Length: %1").arg(buffer.length()));
+    job->addMetaData(QString::fromLatin1("customHTTPHeader"), auth_string);
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(data(KIO::Job*,QByteArray)));
@@ -291,8 +291,8 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QS
         m_job = 0;
     }
 
-    QUrl url(QStringLiteral("https://picasaweb.google.com/data/feed/api/user/default/albumid/") + albumId);
-    QString     auth_string = QStringLiteral("Authorization: ") + m_bearer_access_token;
+    QUrl url(QString::fromLatin1("https://picasaweb.google.com/data/feed/api/user/default/albumid/") + albumId);
+    QString     auth_string = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
     MPForm_Picasa      form;
     
     QString path = photoPath;
@@ -319,7 +319,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QS
         return false;
     }
     
-    path = QDir::tempPath() + QLatin1Char('/') + QFileInfo(photoPath).baseName().trimmed() + QStringLiteral(".jpg");
+    path = QDir::tempPath() + QLatin1Char('/') + QFileInfo(photoPath).baseName().trimmed() + QString::fromLatin1(".jpg");
     int imgQualityToApply = 100;
 
     if (rescale)
@@ -335,65 +335,65 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QS
     if (m_meta && m_meta->load(QUrl::fromLocalFile(photoPath)))
     {
         m_meta->setImageDimensions(image.size());
-        m_meta->setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
+        m_meta->setImageProgramId(QString::fromLatin1("Kipi-plugins"), kipipluginsVersion());
         m_meta->save(QUrl::fromLocalFile(path));
     }
 
     //Create the Body in atom-xml
     QDomDocument docMeta;
-    QDomProcessingInstruction instr = docMeta.createProcessingInstruction(QStringLiteral("xml"), QStringLiteral("version='1.0' encoding='UTF-8'"));
+    QDomProcessingInstruction instr = docMeta.createProcessingInstruction(QString::fromLatin1("xml"), QString::fromLatin1("version='1.0' encoding='UTF-8'"));
     docMeta.appendChild(instr);
-    QDomElement entryElem = docMeta.createElement(QStringLiteral("entry"));
+    QDomElement entryElem = docMeta.createElement(QString::fromLatin1("entry"));
     docMeta.appendChild(entryElem);
-    entryElem.setAttribute(QStringLiteral("xmlns"), QStringLiteral("http://www.w3.org/2005/Atom"));
-    QDomElement titleElem = docMeta.createElement(QStringLiteral("title"));
+    entryElem.setAttribute(QString::fromLatin1("xmlns"), QString::fromLatin1("http://www.w3.org/2005/Atom"));
+    QDomElement titleElem = docMeta.createElement(QString::fromLatin1("title"));
     entryElem.appendChild(titleElem);
     QDomText titleText = docMeta.createTextNode(QFileInfo(path).fileName()); // NOTE: Do not use info.title as arg here to set titleText because we change the format of image as .jpg before uploading.
     titleElem.appendChild(titleText);
-    QDomElement summaryElem = docMeta.createElement(QStringLiteral("summary"));
+    QDomElement summaryElem = docMeta.createElement(QString::fromLatin1("summary"));
     entryElem.appendChild(summaryElem);
     QDomText summaryText = docMeta.createTextNode(info.description);
     summaryElem.appendChild(summaryText);
-    QDomElement categoryElem = docMeta.createElement(QStringLiteral("category"));
+    QDomElement categoryElem = docMeta.createElement(QString::fromLatin1("category"));
     entryElem.appendChild(categoryElem);
     categoryElem.setAttribute(
-        QStringLiteral("scheme"),
-        QStringLiteral("http://schemas.google.com/g/2005#kind"));
+        QString::fromLatin1("scheme"),
+        QString::fromLatin1("http://schemas.google.com/g/2005#kind"));
     categoryElem.setAttribute(
-        QStringLiteral("term"),
-        QStringLiteral("http://schemas.google.com/photos/2007#photo"));
+        QString::fromLatin1("term"),
+        QString::fromLatin1("http://schemas.google.com/photos/2007#photo"));
     QDomElement mediaGroupElem = docMeta.createElementNS(
-        QStringLiteral("http://search.yahoo.com/mrss/"),
-        QStringLiteral("media:group"));
+        QString::fromLatin1("http://search.yahoo.com/mrss/"),
+        QString::fromLatin1("media:group"));
     entryElem.appendChild(mediaGroupElem);
     QDomElement mediaKeywordsElem = docMeta.createElementNS(
-        QStringLiteral("http://search.yahoo.com/mrss/"),
-        QStringLiteral("media:keywords"));
+        QString::fromLatin1("http://search.yahoo.com/mrss/"),
+        QString::fromLatin1("media:keywords"));
     mediaGroupElem.appendChild(mediaKeywordsElem);
-    QDomText mediaKeywordsText = docMeta.createTextNode(info.tags.join(QStringLiteral(",")));
+    QDomText mediaKeywordsText = docMeta.createTextNode(info.tags.join(QString::fromLatin1(",")));
     mediaKeywordsElem.appendChild(mediaKeywordsText);
 
     if (!info.gpsLat.isEmpty() && !info.gpsLon.isEmpty())
     {
         QDomElement whereElem = docMeta.createElementNS(
-            QStringLiteral("http://www.georss.org/georss"),
-            QStringLiteral("georss:where"));
+            QString::fromLatin1("http://www.georss.org/georss"),
+            QString::fromLatin1("georss:where"));
         entryElem.appendChild(whereElem);
         QDomElement pointElem = docMeta.createElementNS(
-            QStringLiteral("http://www.opengis.net/gml"),
-            QStringLiteral("gml:Point"));
+            QString::fromLatin1("http://www.opengis.net/gml"),
+            QString::fromLatin1("gml:Point"));
         whereElem.appendChild(pointElem);
         QDomElement gpsElem = docMeta.createElementNS(
-            QStringLiteral("http://www.opengis.net/gml"),
-            QStringLiteral("gml:pos"));
+            QString::fromLatin1("http://www.opengis.net/gml"),
+            QString::fromLatin1("gml:pos"));
         pointElem.appendChild(gpsElem);
         QDomText gpsVal = docMeta.createTextNode(info.gpsLat + QLatin1Char(' ') + info.gpsLon);
         gpsElem.appendChild(gpsVal);
     }
 
-    form.addPair(QStringLiteral("descr"), docMeta.toString(), QStringLiteral("application/atom+xml"));
+    form.addPair(QString::fromLatin1("descr"), docMeta.toString(), QString::fromLatin1("application/atom+xml"));
 
-    if (!form.addFile(QStringLiteral("photo"), path))
+    if (!form.addFile(QString::fromLatin1("photo"), path))
         return false;
 
     form.finish();
@@ -401,11 +401,11 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QS
     KIO::TransferJob* const job = KIO::http_post(url, form.formData(), KIO::HideProgressInfo);
     KIO::JobUiDelegate* const job_ui = static_cast<KIO::JobUiDelegate*>(job->ui());
     job_ui->setWindow(m_parent);
-    job->addMetaData(QStringLiteral("content-type"), form.contentType());
-    job->addMetaData(QStringLiteral("content-length"),
-                     QStringLiteral("Content-Length: %1").arg(form.formData().length()));
-    job->addMetaData(QStringLiteral("customHTTPHeader"),
-                     auth_string + QStringLiteral("\nMIME-version: 1.0"));
+    job->addMetaData(QString::fromLatin1("content-type"), form.contentType());
+    job->addMetaData(QString::fromLatin1("content-length"),
+                     QString::fromLatin1("Content-Length: %1").arg(form.formData().length()));
+    job->addMetaData(QString::fromLatin1("customHTTPHeader"),
+                     auth_string + QString::fromLatin1("\nMIME-version: 1.0"));
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(data(KIO::Job*,QByteArray)));
@@ -453,7 +453,7 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, con
         return false;
     }
     
-    path = QDir::tempPath() + QLatin1Char('/') + QFileInfo(photoPath).baseName().trimmed() + QStringLiteral(".jpg");
+    path = QDir::tempPath() + QLatin1Char('/') + QFileInfo(photoPath).baseName().trimmed() + QString::fromLatin1(".jpg");
     
     int imgQualityToApply = 100;
 
@@ -470,82 +470,82 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, con
     if (m_meta && m_meta->load(QUrl::fromLocalFile(photoPath)))
     {
         m_meta->setImageDimensions(image.size());
-        m_meta->setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
+        m_meta->setImageProgramId(QString::fromLatin1("Kipi-plugins"), kipipluginsVersion());
         m_meta->save(QUrl::fromLocalFile(path));
     }
 
     //Create the Body in atom-xml
     QDomDocument docMeta;
     QDomProcessingInstruction instr = docMeta.createProcessingInstruction(
-        QStringLiteral("xml"),
-        QStringLiteral("version='1.0' encoding='UTF-8'"));
+        QString::fromLatin1("xml"),
+        QString::fromLatin1("version='1.0' encoding='UTF-8'"));
     docMeta.appendChild(instr);
-    QDomElement entryElem = docMeta.createElement(QStringLiteral("entry"));
+    QDomElement entryElem = docMeta.createElement(QString::fromLatin1("entry"));
     docMeta.appendChild(entryElem);
     entryElem.setAttribute(
-        QStringLiteral("xmlns"),
-        QStringLiteral("http://www.w3.org/2005/Atom"));
-    QDomElement titleElem = docMeta.createElement(QStringLiteral("title"));
+        QString::fromLatin1("xmlns"),
+        QString::fromLatin1("http://www.w3.org/2005/Atom"));
+    QDomElement titleElem = docMeta.createElement(QString::fromLatin1("title"));
     entryElem.appendChild(titleElem);
     QDomText titleText = docMeta.createTextNode(QFileInfo(path).fileName());
     titleElem.appendChild(titleText);
-    QDomElement summaryElem = docMeta.createElement(QStringLiteral("summary"));
+    QDomElement summaryElem = docMeta.createElement(QString::fromLatin1("summary"));
     entryElem.appendChild(summaryElem);
     QDomText summaryText = docMeta.createTextNode(info.description);
     summaryElem.appendChild(summaryText);
-    QDomElement categoryElem = docMeta.createElement(QStringLiteral("category"));
+    QDomElement categoryElem = docMeta.createElement(QString::fromLatin1("category"));
     entryElem.appendChild(categoryElem);
     categoryElem.setAttribute(
-        QStringLiteral("scheme"),
-        QStringLiteral("http://schemas.google.com/g/2005#kind"));
+        QString::fromLatin1("scheme"),
+        QString::fromLatin1("http://schemas.google.com/g/2005#kind"));
     categoryElem.setAttribute(
-        QStringLiteral("term"),
-        QStringLiteral("http://schemas.google.com/photos/2007#photo"));
+        QString::fromLatin1("term"),
+        QString::fromLatin1("http://schemas.google.com/photos/2007#photo"));
     QDomElement mediaGroupElem = docMeta.createElementNS(
-        QStringLiteral("http://search.yahoo.com/mrss/"),
-        QStringLiteral("media:group"));
+        QString::fromLatin1("http://search.yahoo.com/mrss/"),
+        QString::fromLatin1("media:group"));
     entryElem.appendChild(mediaGroupElem);
     QDomElement mediaKeywordsElem = docMeta.createElementNS(
-        QStringLiteral("http://search.yahoo.com/mrss/"),
-        QStringLiteral("media:keywords"));
+        QString::fromLatin1("http://search.yahoo.com/mrss/"),
+        QString::fromLatin1("media:keywords"));
     mediaGroupElem.appendChild(mediaKeywordsElem);
-    QDomText mediaKeywordsText = docMeta.createTextNode(info.tags.join(QStringLiteral(",")));
+    QDomText mediaKeywordsText = docMeta.createTextNode(info.tags.join(QString::fromLatin1(",")));
     mediaKeywordsElem.appendChild(mediaKeywordsText);
 
     if (!info.gpsLat.isEmpty() && !info.gpsLon.isEmpty())
     {
         QDomElement whereElem = docMeta.createElementNS(
-            QStringLiteral("http://www.georss.org/georss"),
-            QStringLiteral("georss:where"));
+            QString::fromLatin1("http://www.georss.org/georss"),
+            QString::fromLatin1("georss:where"));
         entryElem.appendChild(whereElem);
         QDomElement pointElem = docMeta.createElementNS(
-            QStringLiteral("http://www.opengis.net/gml"),
-            QStringLiteral("gml:Point"));
+            QString::fromLatin1("http://www.opengis.net/gml"),
+            QString::fromLatin1("gml:Point"));
         whereElem.appendChild(pointElem);
         QDomElement gpsElem = docMeta.createElementNS(
-            QStringLiteral("http://www.opengis.net/gml"),
-            QStringLiteral("gml:pos"));
+            QString::fromLatin1("http://www.opengis.net/gml"),
+            QString::fromLatin1("gml:pos"));
         pointElem.appendChild(gpsElem);
         QDomText gpsVal = docMeta.createTextNode(info.gpsLat + QLatin1Char(' ') + info.gpsLon);
         gpsElem.appendChild(gpsVal);
     }
 
-    form.addPair(QStringLiteral("descr"), docMeta.toString(), QStringLiteral("application/atom+xml"));
+    form.addPair(QString::fromLatin1("descr"), docMeta.toString(), QString::fromLatin1("application/atom+xml"));
 
-    if (!form.addFile(QStringLiteral("photo"), path))
+    if (!form.addFile(QString::fromLatin1("photo"), path))
         return false;
 
     form.finish();
 
-    QString auth_string = QStringLiteral("Authorization: ") + m_bearer_access_token;
+    QString auth_string = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
     KIO::TransferJob* const job      = KIO::put(info.editUrl, -1, KIO::HideProgressInfo);
     KIO::JobUiDelegate* const job_ui = static_cast<KIO::JobUiDelegate*>(job->ui());
     job_ui->setWindow(m_parent);
-    job->addMetaData(QStringLiteral("content-type"), form.contentType());
-    job->addMetaData(QStringLiteral("content-length"),
-                     QStringLiteral("Content-Length: %1").arg(form.formData().length()));
-    job->addMetaData(QStringLiteral("customHTTPHeader"),
-                     auth_string + QStringLiteral("\nIf-Match: *"));
+    job->addMetaData(QString::fromLatin1("content-type"), form.contentType());
+    job->addMetaData(QString::fromLatin1("content-length"),
+                     QString::fromLatin1("Content-Length: %1").arg(form.formData().length()));
+    job->addMetaData(QString::fromLatin1("customHTTPHeader"),
+                     auth_string + QString::fromLatin1("\nIf-Match: *"));
 
     m_jobData.insert(job, form.formData());
 
@@ -684,7 +684,7 @@ void PicasawebTalker::slotResult(KJob *job)
     {
         if (m_state == FE_ADDPHOTO)
         {
-            emit signalAddPhotoDone(job->error(), job->errorText(), QStringLiteral("-1"));
+            emit signalAddPhotoDone(job->error(), job->errorText(), QString::fromLatin1("-1"));
         }
         else
         {
@@ -711,7 +711,7 @@ void PicasawebTalker::slotResult(KJob *job)
             parseResponseAddPhoto(m_buffer);
             break;
         case (FE_UPDATEPHOTO):
-            emit signalAddPhotoDone(1, QStringLiteral(""), QStringLiteral(""));
+            emit signalAddPhotoDone(1, QString::fromLatin1(""), QString::fromLatin1(""));
             break;
         case (FE_GETPHOTO):
             // all we get is data of the image
@@ -722,7 +722,7 @@ void PicasawebTalker::slotResult(KJob *job)
 
 void PicasawebTalker::parseResponseListAlbums(const QByteArray& data)
 {
-    QDomDocument doc(QStringLiteral("feed"));
+    QDomDocument doc(QString::fromLatin1("feed"));
     QString err;
     int line;
     int columns;
@@ -742,17 +742,17 @@ void PicasawebTalker::parseResponseListAlbums(const QByteArray& data)
 
     while (!node.isNull())
     {
-        if (node.isElement() && node.nodeName() == QStringLiteral("gphoto:nickname"))
+        if (node.isElement() && node.nodeName() == QString::fromLatin1("gphoto:nickname"))
         {
             m_loginName = node.toElement().text();
         }
         
-        if (node.isElement() && node.nodeName() == QStringLiteral("gphoto:user"))
+        if (node.isElement() && node.nodeName() == QString::fromLatin1("gphoto:user"))
         {
             m_username = node.toElement().text();
         }
 
-        if (node.isElement() && node.nodeName() == QStringLiteral("entry"))
+        if (node.isElement() && node.nodeName() == QString::fromLatin1("entry"))
         {
             e                    = node.toElement();
             QDomNode details     = e.firstChild();
@@ -763,17 +763,17 @@ void PicasawebTalker::parseResponseListAlbums(const QByteArray& data)
             {
                 if (detailsNode.isElement())
                 {
-                    if (detailsNode.nodeName() == QStringLiteral("gphoto:id"))
+                    if (detailsNode.nodeName() == QString::fromLatin1("gphoto:id"))
                     {
                         fps.id = detailsNode.toElement().text();
                     }
 
-                    if (detailsNode.nodeName() == QStringLiteral("title"))
+                    if (detailsNode.nodeName() == QString::fromLatin1("title"))
                     {
                         fps.title = detailsNode.toElement().text();
                     }
 
-                    if (detailsNode.nodeName() == QStringLiteral("gphoto:access"))
+                    if (detailsNode.nodeName() == QString::fromLatin1("gphoto:access"))
                     {
                         fps.access = detailsNode.toElement().text();
                     }
@@ -788,12 +788,12 @@ void PicasawebTalker::parseResponseListAlbums(const QByteArray& data)
     }
 
     qSort(albumList.begin(), albumList.end(), picasaLessThan);
-    emit signalListAlbumsDone(1, QStringLiteral(""), albumList);
+    emit signalListAlbumsDone(1, QString::fromLatin1(""), albumList);
 }
 
 void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
 {
-    QDomDocument doc(QStringLiteral("feed"));
+    QDomDocument doc(QString::fromLatin1("feed"));
 
     if ( !doc.setContent( data ) )
     {
@@ -808,7 +808,7 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
 
     while (!node.isNull())
     {
-        if (node.isElement() && node.nodeName() == QStringLiteral("entry"))
+        if (node.isElement() && node.nodeName() == QString::fromLatin1("entry"))
         {
             QDomNode details     = node.firstChild();
             QDomNode detailsNode = details;
@@ -820,40 +820,40 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
                 {
                     QDomElement detailsElem = detailsNode.toElement();
 
-                    if (detailsNode.nodeName() == QStringLiteral("gphoto:id"))
+                    if (detailsNode.nodeName() == QString::fromLatin1("gphoto:id"))
                     {
                         fps.id = detailsElem.text();
                     }
 
-                    if (detailsNode.nodeName() == QStringLiteral("title"))
+                    if (detailsNode.nodeName() == QString::fromLatin1("title"))
                     {
                         //fps.title = detailsElem.text();
                     }
                     
-                    if (detailsNode.nodeName() == QStringLiteral("summary"))
+                    if (detailsNode.nodeName() == QString::fromLatin1("summary"))
                     {
                         fps.description = detailsElem.text();
                     }
 
-                    if (detailsNode.nodeName() == QStringLiteral("gphoto:access"))
+                    if (detailsNode.nodeName() == QString::fromLatin1("gphoto:access"))
                     {
                         fps.access = detailsElem.text();
                     }
 
-                    if (detailsNode.nodeName() == QStringLiteral("link") &&
-                        detailsElem.attribute(QStringLiteral("rel")) == QStringLiteral("edit-media"))
+                    if (detailsNode.nodeName() == QString::fromLatin1("link") &&
+                        detailsElem.attribute(QString::fromLatin1("rel")) == QString::fromLatin1("edit-media"))
                     {
-                        fps.editUrl = QUrl(detailsElem.attribute(QStringLiteral("href")));
+                        fps.editUrl = QUrl(detailsElem.attribute(QString::fromLatin1("href")));
                     }
 
-                    if (detailsNode.nodeName() == QStringLiteral("georss:where"))
+                    if (detailsNode.nodeName() == QString::fromLatin1("georss:where"))
                     {
-                        QDomNode geoPointNode = detailsElem.namedItem(QStringLiteral("gml:Point"));
+                        QDomNode geoPointNode = detailsElem.namedItem(QString::fromLatin1("gml:Point"));
 
                         if (!geoPointNode.isNull() && geoPointNode.isElement())
                         {
                             QDomNode geoPosNode = geoPointNode.toElement().namedItem(
-                                QStringLiteral("gml:pos"));
+                                QString::fromLatin1("gml:pos"));
 
                             if (!geoPosNode.isNull() && geoPosNode.isElement())
                             {
@@ -868,24 +868,24 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
                         }
                     }
 
-                    if (detailsNode.nodeName() == QStringLiteral("media:group"))
+                    if (detailsNode.nodeName() == QString::fromLatin1("media:group"))
                     {
-                        QDomNode thumbNode = detailsElem.namedItem(QStringLiteral("media:thumbnail"));
+                        QDomNode thumbNode = detailsElem.namedItem(QString::fromLatin1("media:thumbnail"));
 
                         if (!thumbNode.isNull() && thumbNode.isElement())
                         {
                             fps.thumbURL = QUrl(thumbNode.toElement().attribute(
-                                QStringLiteral("url"), QStringLiteral("")));
+                                QString::fromLatin1("url"), QString::fromLatin1("")));
                         }
 
-                        QDomNode keywordNode = detailsElem.namedItem(QStringLiteral("media:keywords"));
+                        QDomNode keywordNode = detailsElem.namedItem(QString::fromLatin1("media:keywords"));
 
                         if (!keywordNode.isNull() && keywordNode.isElement())
                         {
                             fps.tags = keywordNode.toElement().text().split(QLatin1Char(','));
                         }
 
-                        QDomNodeList contentsList = detailsElem.elementsByTagName(QStringLiteral("media:content"));
+                        QDomNodeList contentsList = detailsElem.elementsByTagName(QString::fromLatin1("media:content"));
 
                         for (int i = 0; i < contentsList.size(); ++i)
                         {
@@ -893,20 +893,20 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
 
                             if (!contentElem.isNull())
                             {
-                                if ((contentElem.attribute(QStringLiteral("medium")) == QStringLiteral("image")) &&
+                                if ((contentElem.attribute(QString::fromLatin1("medium")) == QString::fromLatin1("image")) &&
                                     fps.originalURL.isEmpty())
                                 {
-                                    fps.originalURL = QUrl(contentElem.attribute(QStringLiteral("url")));
+                                    fps.originalURL = QUrl(contentElem.attribute(QString::fromLatin1("url")));
                                     fps.title = fps.originalURL.fileName();
-                                    fps.mimeType = contentElem.attribute(QStringLiteral("type"));
+                                    fps.mimeType = contentElem.attribute(QString::fromLatin1("type"));
                                 }
 
-                                if ((contentElem.attribute(QStringLiteral("medium")) == QStringLiteral("video")) &&
-                                    (contentElem.attribute(QStringLiteral("type")) == QStringLiteral("video/mpeg4")))
+                                if ((contentElem.attribute(QString::fromLatin1("medium")) == QString::fromLatin1("video")) &&
+                                    (contentElem.attribute(QString::fromLatin1("type")) == QString::fromLatin1("video/mpeg4")))
                                 {
-                                    fps.originalURL = QUrl(contentElem.attribute(QStringLiteral("url")));
+                                    fps.originalURL = QUrl(contentElem.attribute(QString::fromLatin1("url")));
                                     fps.title = fps.originalURL.fileName();
-                                    fps.mimeType = contentElem.attribute(QStringLiteral("type"));
+                                    fps.mimeType = contentElem.attribute(QString::fromLatin1("type"));
                                 }
                             }
                         }
@@ -922,26 +922,26 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
         node = node.nextSibling();
     }
 
-    emit signalListPhotosDone(1, QStringLiteral(""), photoList);
+    emit signalListPhotosDone(1, QString::fromLatin1(""), photoList);
 }
 
 void PicasawebTalker::parseResponseCreateAlbum(const QByteArray& data)
 {
     bool success = false;
 
-    QDomDocument doc(QStringLiteral("AddPhoto Response"));
+    QDomDocument doc(QString::fromLatin1("AddPhoto Response"));
 
     if ( !doc.setContent( data ) )
     {
-        signalCreateAlbumDone(0, i18n("Failed to create album"), QStringLiteral("-1"));
+        signalCreateAlbumDone(0, i18n("Failed to create album"), QString::fromLatin1("-1"));
         return;
     }
 
     // parse the new album name
     QDomElement docElem = doc.documentElement();
-    QString albumId(QStringLiteral(""));
+    QString albumId(QString::fromLatin1(""));
 
-    if (docElem.nodeName() == QStringLiteral("entry"))
+    if (docElem.nodeName() == QString::fromLatin1("entry"))
     {
         success       = true;
         QDomNode node = docElem.firstChild(); //this should mean <entry>
@@ -950,7 +950,7 @@ void PicasawebTalker::parseResponseCreateAlbum(const QByteArray& data)
         {
             if ( node.isElement())
             {
-                if (node.nodeName() == QStringLiteral("gphoto:id"))
+                if (node.nodeName() == QString::fromLatin1("gphoto:id"))
                 {
                     albumId = node.toElement().text();
                 }
@@ -961,29 +961,29 @@ void PicasawebTalker::parseResponseCreateAlbum(const QByteArray& data)
 
     if (success == true)
     {
-        signalCreateAlbumDone(1, QStringLiteral(""), albumId);
+        signalCreateAlbumDone(1, QString::fromLatin1(""), albumId);
     }
     else
     {
-        signalCreateAlbumDone(0, i18n("Failed to create album"), QStringLiteral("-1"));
+        signalCreateAlbumDone(0, i18n("Failed to create album"), QString::fromLatin1("-1"));
     }
 }
 
 void PicasawebTalker::parseResponseAddPhoto(const QByteArray& data)
 {
-    QDomDocument doc(QStringLiteral("AddPhoto Response"));
+    QDomDocument doc(QString::fromLatin1("AddPhoto Response"));
 
     if ( !doc.setContent( data ) )
     {
-        emit signalAddPhotoDone(0, i18n("Failed to upload photo"), QStringLiteral("-1"));
+        emit signalAddPhotoDone(0, i18n("Failed to upload photo"), QString::fromLatin1("-1"));
         return;
     }
     
     // parse the new album name
     QDomElement docElem = doc.documentElement();
-    QString photoId(QStringLiteral(""));
+    QString photoId(QString::fromLatin1(""));
 
-    if (docElem.nodeName() == QStringLiteral("entry"))
+    if (docElem.nodeName() == QString::fromLatin1("entry"))
     {
         QDomNode node = docElem.firstChild(); //this should mean <entry>
 
@@ -991,7 +991,7 @@ void PicasawebTalker::parseResponseAddPhoto(const QByteArray& data)
         {
             if (node.isElement())
             {
-                if (node.nodeName() == QStringLiteral("gphoto:id"))
+                if (node.nodeName() == QString::fromLatin1("gphoto:id"))
                 {
                     photoId = node.toElement().text();
                 }
@@ -1000,7 +1000,7 @@ void PicasawebTalker::parseResponseAddPhoto(const QByteArray& data)
         }
     }
 
-    emit signalAddPhotoDone(1, QStringLiteral(""), photoId);
+    emit signalAddPhotoDone(1, QString::fromLatin1(""), photoId);
 }
 
 } // KIPIGoogleServicesPlugin

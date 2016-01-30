@@ -84,15 +84,15 @@ void MPForm_GDrive::addPair(const QString& name, const QString& description, con
 
     // Generate JSON
     QJsonObject photoInfo;
-    photoInfo.insert(QStringLiteral("title"),QJsonValue(name));
-    photoInfo.insert(QStringLiteral("description"),QJsonValue(description));
-    photoInfo.insert(QStringLiteral("mimeType"),QJsonValue(mime));
+    photoInfo.insert(QString::fromLatin1("title"),QJsonValue(name));
+    photoInfo.insert(QString::fromLatin1("description"),QJsonValue(description));
+    photoInfo.insert(QString::fromLatin1("mimeType"),QJsonValue(mime));
 
     QVariantMap parentId;
-    parentId.insert(QStringLiteral("id"), id);
+    parentId.insert(QString::fromLatin1("id"), id);
     QVariantList parents;
     parents << parentId;
-    photoInfo.insert(QStringLiteral("parents"),QJsonValue(QJsonArray::fromVariantList(parents)));
+    photoInfo.insert(QString::fromLatin1("parents"),QJsonValue(QJsonArray::fromVariantList(parents)));
     
     QJsonDocument doc(photoInfo);
     QByteArray json = doc.toJson();
@@ -154,7 +154,7 @@ QString MPForm_GDrive::boundary() const
 
 QString MPForm_GDrive::contentType() const
 {
-    return QStringLiteral("Content-Type: multipart/related;boundary=") + QString::fromLatin1(m_boundary);
+    return QString::fromLatin1("Content-Type: multipart/related;boundary=") + QString::fromLatin1(m_boundary);
 }
 
 QString MPForm_GDrive::getFileSize() const

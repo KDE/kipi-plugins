@@ -152,7 +152,7 @@ bool MPForm_Picasa::addFile(const QString& name,const QString& path)
 
 QString MPForm_Picasa::contentType() const
 {
-    return QStringLiteral("Content-Type: multipart/related; boundary=") + QString::fromLatin1(m_boundary);
+    return QString::fromLatin1("Content-Type: multipart/related; boundary=") + QString::fromLatin1(m_boundary);
 }
 
 QString MPForm_Picasa::boundary() const

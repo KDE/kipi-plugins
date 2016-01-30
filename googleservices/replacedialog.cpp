@@ -87,7 +87,7 @@ ReplaceDialog::ReplaceDialog(QWidget* const parent, const QString& _caption,
     : QDialog(parent),
       d(new Private)
 {
-    setObjectName(QStringLiteral("ReplaceDialog"));
+    setObjectName(QString::fromLatin1("ReplaceDialog"));
 
     d->src   = _src;
     d->dest  = _dest;
@@ -209,8 +209,8 @@ ReplaceDialog::ReplaceDialog(QWidget* const parent, const QString& _caption,
     {
         KIO::TransferJob* const job = KIO::get(d->dest, KIO::NoReload, KIO::HideProgressInfo);
 
-        job->addMetaData(QStringLiteral("content-type"),
-                         QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
+        job->addMetaData(QString::fromLatin1("content-type"),
+                         QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
 
         connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
                 this, SLOT(slotData(KIO::Job*,QByteArray)));

@@ -75,10 +75,10 @@ static bool gdriveLessThan(GSFolder& p1, GSFolder& p2)
 }
 
 GDTalker::GDTalker(QWidget* const parent)
-    : Authorize(parent, QStringLiteral("https://www.googleapis.com/auth/drive")), m_state(GD_LOGOUT)
+    : Authorize(parent, QString::fromLatin1("https://www.googleapis.com/auth/drive")), m_state(GD_LOGOUT)
 {
-    m_rootid          = QStringLiteral("root");
-    m_rootfoldername  = QStringLiteral("GoogleDrive Root");
+    m_rootid          = QString::fromLatin1("root");
+    m_rootfoldername  = QString::fromLatin1("GoogleDrive Root");
     m_iface           = 0;
 
     PluginLoader* const pl = PluginLoader::instance();
@@ -97,17 +97,17 @@ GDTalker::~GDTalker()
  */
 void GDTalker::getUserName()
 {
-    QUrl url(QStringLiteral("https://www.googleapis.com/drive/v2/about"));
+    QUrl url(QString::fromLatin1("https://www.googleapis.com/drive/v2/about"));
     QUrlQuery urlQuery;
-    urlQuery.addQueryItem(QStringLiteral("scope"), m_scope);
-    urlQuery.addQueryItem(QStringLiteral("access_token"), m_access_token);
+    urlQuery.addQueryItem(QString::fromLatin1("scope"), m_scope);
+    urlQuery.addQueryItem(QString::fromLatin1("access_token"), m_access_token);
     url.setQuery(urlQuery);
-    QString auth = QStringLiteral("Authorization: ") + m_bearer_access_token;
+    QString auth = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
 
     KIO::TransferJob* job = KIO::get(url,KIO::NoReload,KIO::HideProgressInfo);
-    job->addMetaData(QStringLiteral("content-type"),
-                     QStringLiteral("Content-Type: application/json"));
-    job->addMetaData(QStringLiteral("customHTTPHeader"), auth);
+    job->addMetaData(QString::fromLatin1("content-type"),
+                     QString::fromLatin1("Content-Type: application/json"));
+    job->addMetaData(QString::fromLatin1("customHTTPHeader"), auth);
 
     connect(job,SIGNAL(data(KIO::Job*,QByteArray)),
             this,SLOT(data(KIO::Job*,QByteArray)));
@@ -125,13 +125,13 @@ void GDTalker::getUserName()
  */
 void GDTalker::listFolders()
 {
-    QUrl url(QStringLiteral("https://www.googleapis.com/drive/v2/files?q=mimeType = 'application/vnd.google-apps.folder'"));
-    QString auth = QStringLiteral("Authorization: ") + m_bearer_access_token;
+    QUrl url(QString::fromLatin1("https://www.googleapis.com/drive/v2/files?q=mimeType = 'application/vnd.google-apps.folder'"));
+    QString auth = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
     qCDebug(KIPIPLUGINS_LOG) << auth;
     KIO::TransferJob* const job = KIO::get(url,KIO::NoReload,KIO::HideProgressInfo);
-    job->addMetaData(QStringLiteral("content-type"),
-                     QStringLiteral("Content-Type: application/json"));
-    job->addMetaData(QStringLiteral("customHTTPHeader"), auth);
+    job->addMetaData(QString::fromLatin1("content-type"),
+                     QString::fromLatin1("Content-Type: application/json"));
+    job->addMetaData(QString::fromLatin1("customHTTPHeader"), auth);
 
     connect(job,SIGNAL(data(KIO::Job*,QByteArray)),
             this,SLOT(data(KIO::Job*,QByteArray)));
@@ -155,7 +155,7 @@ void GDTalker::createFolder(const QString& title,const QString& id)
         m_job = 0;
     }
 
-    QUrl url(QStringLiteral("https://www.googleapis.com/drive/v2/files"));
+    QUrl url(QString::fromLatin1("https://www.googleapis.com/drive/v2/files"));
     QByteArray data;
     data += "{\"title\":\"";
     data += title.toLatin1();
@@ -170,11 +170,11 @@ void GDTalker::createFolder(const QString& title,const QString& id)
     data += "}\r\n";
 
     qCDebug(KIPIPLUGINS_LOG) << "data:" << data;
-    QString auth = QStringLiteral("Authorization: ") + m_bearer_access_token;
+    QString auth = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
     KIO::TransferJob* const job = KIO::http_post(url,data,KIO::HideProgressInfo);
-    job->addMetaData(QStringLiteral("content-type"),
-                     QStringLiteral("Content-Type: application/json"));
-    job->addMetaData(QStringLiteral("customHTTPHeader"), auth);
+    job->addMetaData(QString::fromLatin1("content-type"),
+                     QString::fromLatin1("Content-Type: application/json"));
+    job->addMetaData(QString::fromLatin1("customHTTPHeader"), auth);
 
     connect(job,SIGNAL(data(KIO::Job*,QByteArray)),
             this,SLOT(data(KIO::Job*,QByteArray)));
@@ -223,7 +223,7 @@ bool GDTalker::addPhoto(const QString& imgPath,const GSPhoto& info,const QString
         return false;
     }
 
-    path = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QStringLiteral("/") + QFileInfo(imgPath).baseName().trimmed() + QStringLiteral(".jpg");
+    path = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QString::fromLatin1("/") + QFileInfo(imgPath).baseName().trimmed() + QString::fromLatin1(".jpg");
 
     int imgQualityToApply = 100;
 
@@ -244,7 +244,7 @@ bool GDTalker::addPhoto(const QString& imgPath,const GSPhoto& info,const QString
         if (meta && meta->load(QUrl::fromLocalFile(imgPath)))
         {
             meta->setImageDimensions(image.size());
-            meta->setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
+            meta->setImageProgramId(QString::fromLatin1("Kipi-plugins"), kipipluginsVersion());
             meta->save(QUrl::fromLocalFile(path));
         }
     }
@@ -257,14 +257,14 @@ bool GDTalker::addPhoto(const QString& imgPath,const GSPhoto& info,const QString
 
     form.finish();
 
-    QString auth = QStringLiteral("Authorization: ") + m_bearer_access_token;
-    QUrl url(QStringLiteral("https://www.googleapis.com/upload/drive/v2/files?uploadType=multipart"));
+    QString auth = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
+    QUrl url(QString::fromLatin1("https://www.googleapis.com/upload/drive/v2/files?uploadType=multipart"));
     KIO::TransferJob* job = KIO::http_post(url, form.formData(), KIO::HideProgressInfo);
-    job->addMetaData(QStringLiteral("content-type"), form.contentType());
-    job->addMetaData(QStringLiteral("content-length"),
-                     QStringLiteral("Content-Length:") + form.getFileSize());
-    job->addMetaData(QStringLiteral("customHTTPHeader"), auth);
-    job->addMetaData(QStringLiteral("host"), QStringLiteral("Host:www.googleapis.com"));
+    job->addMetaData(QString::fromLatin1("content-type"), form.contentType());
+    job->addMetaData(QString::fromLatin1("content-length"),
+                     QString::fromLatin1("Content-Length:") + form.getFileSize());
+    job->addMetaData(QString::fromLatin1("customHTTPHeader"), auth);
+    job->addMetaData(QString::fromLatin1("host"), QString::fromLatin1("Host:www.googleapis.com"));
 
     connect(job,SIGNAL(data(KIO::Job*,QByteArray)),
             this,SLOT(data(KIO::Job*,QByteArray)));
@@ -331,8 +331,8 @@ void GDTalker::parseResponseUserName(const QByteArray& data)
     }
 
     QJsonObject jsonObject = doc.object();
-    qCDebug(KIPIPLUGINS_LOG)<<"User Name is: " << jsonObject[QStringLiteral("name")].toString();
-    QString temp = jsonObject[QStringLiteral("name")].toString();
+    qCDebug(KIPIPLUGINS_LOG)<<"User Name is: " << jsonObject[QString::fromLatin1("name")].toString();
+    QString temp = jsonObject[QString::fromLatin1("name")].toString();
 
     qCDebug(KIPIPLUGINS_LOG) << "in parseResponseUserName";
 
@@ -354,7 +354,7 @@ void GDTalker::parseResponseListFolders(const QByteArray& data)
     }
 
     QJsonObject jsonObject = doc.object();
-    QJsonArray jsonArray = jsonObject[QStringLiteral("items")].toArray();
+    QJsonArray jsonArray = jsonObject[QString::fromLatin1("items")].toArray();
 
     QList<GSFolder> albumList;
     GSFolder fps;
@@ -365,8 +365,8 @@ void GDTalker::parseResponseListFolders(const QByteArray& data)
     foreach (const QJsonValue & value, jsonArray) 
     {
         QJsonObject obj = value.toObject();
-        fps.id    = obj[QStringLiteral("id")].toString();
-        fps.title = obj[QStringLiteral("title")].toString();
+        fps.id    = obj[QString::fromLatin1("id")].toString();
+        fps.title = obj[QString::fromLatin1("title")].toString();
         albumList.append(fps);
     }
 
@@ -387,10 +387,10 @@ void GDTalker::parseResponseCreateFolder(const QByteArray& data)
     }
 
     QJsonObject jsonObject = doc.object();
-    QString temp           = jsonObject[QStringLiteral("alternateLink")].toString();
+    QString temp           = jsonObject[QString::fromLatin1("alternateLink")].toString();
     bool success           = false;
 
-    if (!(QString::compare(temp, QStringLiteral(""), Qt::CaseInsensitive) == 0))
+    if (!(QString::compare(temp, QString::fromLatin1(""), Qt::CaseInsensitive) == 0))
         success = true;
 
     emit signalBusy(false);
@@ -417,18 +417,18 @@ void GDTalker::parseResponseAddPhoto(const QByteArray& data)
     }
 
     QJsonObject jsonObject = doc.object();
-    QString altLink        = jsonObject[QStringLiteral("alternateLink")].toString();
-    QString photoId        = jsonObject[QStringLiteral("id")].toString();
+    QString altLink        = jsonObject[QString::fromLatin1("alternateLink")].toString();
+    QString photoId        = jsonObject[QString::fromLatin1("id")].toString();
     bool success           = false;
 
-    if (!(QString::compare(altLink, QStringLiteral(""), Qt::CaseInsensitive) == 0))
+    if (!(QString::compare(altLink, QString::fromLatin1(""), Qt::CaseInsensitive) == 0))
         success = true;
 
     emit signalBusy(false);
 
     if (!success)
     {
-        emit signalAddPhotoDone(0,i18n("Failed to upload photo"),QStringLiteral("-1"));
+        emit signalAddPhotoDone(0,i18n("Failed to upload photo"),QString::fromLatin1("-1"));
     }
     else
     {

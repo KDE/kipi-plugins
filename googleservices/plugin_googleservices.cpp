@@ -99,44 +99,44 @@ void Plugin_GoogleServices::setupActions()
     setDefaultCategory(ExportPlugin);// uncomment if import feature is added to google drive
     m_actionGDriveExport = new QAction(this);
     m_actionGDriveExport->setText(i18n("Export to &Google Drive..."));
-    m_actionGDriveExport->setIcon(QIcon::fromTheme(QStringLiteral("kipi-googledrive")));
+    m_actionGDriveExport->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-googledrive")));
     m_actionGDriveExport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_G));
 
     connect(m_actionGDriveExport, SIGNAL(triggered(bool)),
             this,SLOT(slotGDriveExport()));
 
-    addAction(QStringLiteral("googledriveexport"), m_actionGDriveExport);
+    addAction(QString::fromLatin1("googledriveexport"), m_actionGDriveExport);
 
     m_actionPicasaExport = new QAction(this);
     m_actionPicasaExport->setText(i18n("Export to &Google Photos/PicasaWeb..."));
-    m_actionPicasaExport->setIcon(QIcon::fromTheme(QStringLiteral("kipi-picasa")));
+    m_actionPicasaExport->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-picasa")));
     m_actionPicasaExport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::Key_P));
 
     connect(m_actionPicasaExport, SIGNAL(triggered(bool)),
             this, SLOT(slotPicasaExport()));
 
-    addAction(QStringLiteral("picasawebexport"), m_actionPicasaExport);
+    addAction(QString::fromLatin1("picasawebexport"), m_actionPicasaExport);
 
     m_actionPicasaImport = new QAction(this);
     m_actionPicasaImport->setText(i18n("Import from &Google Photos/PicasaWeb..."));
-    m_actionPicasaImport->setIcon(QIcon::fromTheme(QStringLiteral("kipi-picasa")));
+    m_actionPicasaImport->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-picasa")));
     m_actionPicasaImport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_P));
 
     connect(m_actionPicasaImport, SIGNAL(triggered(bool)),
             this, SLOT(slotPicasaImport()) );
 
-    addAction(QStringLiteral("picasawebimport"), m_actionPicasaImport, ImportPlugin);
+    addAction(QString::fromLatin1("picasawebimport"), m_actionPicasaImport, ImportPlugin);
 }
 
 void Plugin_GoogleServices::slotGDriveExport()
 {
-    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation)+ QStringLiteral("/")+ QStringLiteral("kipi-gs-") + QString::number(getpid()) + QStringLiteral("/");
+    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation)+ QString::fromLatin1("/")+ QString::fromLatin1("kipi-gs-") + QString::number(getpid()) + QString::fromLatin1("/");
     QDir().mkpath(tmp);
 
     if(!m_dlgGDriveExport)
     {
         m_dlgGDriveExport = new GSWindow(tmp, QApplication::activeWindow(),
-                                         QStringLiteral("googledriveexport"));
+                                         QString::fromLatin1("googledriveexport"));
     }
     else
     {
@@ -153,13 +153,13 @@ void Plugin_GoogleServices::slotGDriveExport()
 
 void Plugin_GoogleServices::slotPicasaExport()
 {
-    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation)+ QStringLiteral("/")+ QStringLiteral("kipi-gs-") + QString::number(getpid()) + QStringLiteral("/");
+    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation)+ QString::fromLatin1("/")+ QString::fromLatin1("kipi-gs-") + QString::number(getpid()) + QString::fromLatin1("/");
     QDir().mkpath(tmp);
 
     if(!m_dlgPicasaExport)
     {
         m_dlgPicasaExport = new GSWindow(tmp, QApplication::activeWindow(),
-                                         QStringLiteral("picasawebexport"));
+                                         QString::fromLatin1("picasawebexport"));
     }
     else
     {
@@ -176,13 +176,13 @@ void Plugin_GoogleServices::slotPicasaExport()
 
 void Plugin_GoogleServices::slotPicasaImport()
 {
-    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation)+ QStringLiteral("/")+ QStringLiteral("kipi-gs-") + QString::number(getpid()) + QStringLiteral("/");
+    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation)+ QString::fromLatin1("/")+ QString::fromLatin1("kipi-gs-") + QString::number(getpid()) + QString::fromLatin1("/");
     QDir().mkpath(tmp);
 
     if(!m_dlgPicasaImport)
     {
         m_dlgPicasaImport = new GSWindow(tmp, QApplication::activeWindow(),
-                                         QStringLiteral("picasawebimport"));
+                                         QString::fromLatin1("picasawebimport"));
     }
     else
     {
