@@ -59,7 +59,7 @@ namespace KIPISmugPlugin
 SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool import)
     : QWidget(parent)
 {
-    setObjectName(QStringLiteral("SmugWidget"));
+    setObjectName(QString::fromLatin1("SmugWidget"));
 
     const int spacing = QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
 
@@ -100,7 +100,7 @@ SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool
     m_changeUserBtn     = new QPushButton(accountBox);
     
     m_changeUserBtn->setText(i18n("Change Account"));
-    m_changeUserBtn->setIcon(QIcon::fromTheme(QStringLiteral("system-switch-user")));
+    m_changeUserBtn->setIcon(QIcon::fromTheme(QString::fromLatin1("system-switch-user")));
     m_changeUserBtn->setToolTip(i18n("Change SmugMug Account used to authenticate"));
 
     accountBoxLayout->addWidget(m_anonymousRBtn,        0, 0, 1, 2);
@@ -133,12 +133,12 @@ SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool
 
     m_newAlbumBtn = new QPushButton(accountBox);
     m_newAlbumBtn->setText(i18n("New Album"));
-    m_newAlbumBtn->setIcon(QIcon::fromTheme(QStringLiteral("list-add")));
+    m_newAlbumBtn->setIcon(QIcon::fromTheme(QString::fromLatin1("list-add")));
     m_newAlbumBtn->setToolTip(i18n("Create new SmugMug album"));
     
     m_reloadAlbumsBtn = new QPushButton(accountBox);
     m_reloadAlbumsBtn->setText(i18nc("reload album list", "Reload"));
-    m_reloadAlbumsBtn->setIcon(QIcon::fromTheme(QStringLiteral("view-refresh")));
+    m_reloadAlbumsBtn->setIcon(QIcon::fromTheme(QString::fromLatin1("view-refresh")));
     m_reloadAlbumsBtn->setToolTip(i18n("Reload album list"));
 
     albumsBoxLayout->addWidget(m_albumsCoB,         0, 0, 1, 5);
@@ -302,7 +302,7 @@ QString SmugWidget::getDestinationPath() const
 void SmugWidget::setNickName(const QString& nick)
 {
     m_nickNameEdt->setText(nick);
-    m_headerLbl->setText(QStringLiteral("<b><h2><a href='http://%1.smugmug.com'>"
+    m_headerLbl->setText(QString::fromLatin1("<b><h2><a href='http://%1.smugmug.com'>"
                                         "<font color=\"#9ACD32\">SmugMug</font>"
                                         "</a></h2></b>").arg(nick));
 }
@@ -310,13 +310,13 @@ void SmugWidget::setNickName(const QString& nick)
 void SmugWidget::updateLabels(const QString& email, const QString& name, const QString& nick)
 {
     m_email->setText(email);
-    m_userName->setText(QStringLiteral("<b>%1</b>").arg(name));
-    QString web(QStringLiteral("www"));
+    m_userName->setText(QString::fromLatin1("<b>%1</b>").arg(name));
+    QString web(QString::fromLatin1("www"));
 
     if (!nick.isEmpty())
         web = nick;
 
-    m_headerLbl->setText(QStringLiteral("<b><h2><a href='http://%1.smugmug.com'>"
+    m_headerLbl->setText(QString::fromLatin1("<b><h2><a href='http://%1.smugmug.com'>"
                                         "<font color=\"#9ACD32\">SmugMug</font>"
                                         "</a></h2></b>").arg(web));
 }

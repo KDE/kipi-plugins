@@ -55,10 +55,10 @@ SmugTalker::SmugTalker(QWidget* const parent)
     m_parent     = parent;
     m_job        = 0;
     m_state      = SMUG_LOGOUT;
-    m_userAgent  = QStringLiteral("KIPI-Plugin-Smug/%1 (lure@kubuntu.org)").arg(kipipluginsVersion());
-    m_apiVersion = QStringLiteral("1.2.2");
-    m_apiURL     = QStringLiteral("https://api.smugmug.com/services/api/rest/%1/").arg(m_apiVersion);
-    m_apiKey     = QStringLiteral("R83lTcD4TvMsIiXqpdrA9OdIJ22uA4Wi");
+    m_userAgent  = QString::fromLatin1("KIPI-Plugin-Smug/%1 (lure@kubuntu.org)").arg(kipipluginsVersion());
+    m_apiVersion = QString::fromLatin1("1.2.2");
+    m_apiURL     = QString::fromLatin1("https://api.smugmug.com/services/api/rest/%1/").arg(m_apiVersion);
+    m_apiKey     = QString::fromLatin1("R83lTcD4TvMsIiXqpdrA9OdIJ22uA4Wi");
 }
 
 SmugTalker::~SmugTalker()
@@ -107,23 +107,23 @@ void SmugTalker::login(const QString& email, const QString& password)
 
     if (email.isEmpty()) 
     {
-        q.addQueryItem(QStringLiteral("method"), QStringLiteral("smugmug.login.anonymously"));
-        q.addQueryItem(QStringLiteral("APIKey"), m_apiKey);
+        q.addQueryItem(QString::fromLatin1("method"), QString::fromLatin1("smugmug.login.anonymously"));
+        q.addQueryItem(QString::fromLatin1("APIKey"), m_apiKey);
     }
     else
     {
-        q.addQueryItem(QStringLiteral("method"), QStringLiteral("smugmug.login.withPassword"));
-        q.addQueryItem(QStringLiteral("APIKey"), m_apiKey);
-        q.addQueryItem(QStringLiteral("EmailAddress"), email);
-        q.addQueryItem(QStringLiteral("Password"), password);
+        q.addQueryItem(QString::fromLatin1("method"), QString::fromLatin1("smugmug.login.withPassword"));
+        q.addQueryItem(QString::fromLatin1("APIKey"), m_apiKey);
+        q.addQueryItem(QString::fromLatin1("EmailAddress"), email);
+        q.addQueryItem(QString::fromLatin1("Password"), password);
     }
     
     url.setQuery(q);
 
     KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
-    job->addMetaData(QStringLiteral("UserAgent"), m_userAgent);
-    job->addMetaData(QStringLiteral("content-type"),
-                     QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
+    job->addMetaData(QString::fromLatin1("UserAgent"), m_userAgent);
+    job->addMetaData(QString::fromLatin1("content-type"),
+                     QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(data(KIO::Job*,QByteArray)));
@@ -150,14 +150,14 @@ void SmugTalker::logout()
 
     QUrl url(m_apiURL);
     QUrlQuery q;
-    q.addQueryItem(QStringLiteral("method"), QStringLiteral("smugmug.logout"));
-    q.addQueryItem(QStringLiteral("SessionID"), m_sessionID);
+    q.addQueryItem(QString::fromLatin1("method"), QString::fromLatin1("smugmug.logout"));
+    q.addQueryItem(QString::fromLatin1("SessionID"), m_sessionID);
     url.setQuery(q);
 
     KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
-    job->addMetaData(QStringLiteral("UserAgent"), m_userAgent);
-    job->addMetaData(QStringLiteral("content-type"),
-                     QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
+    job->addMetaData(QString::fromLatin1("UserAgent"), m_userAgent);
+    job->addMetaData(QString::fromLatin1("content-type"),
+                     QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(data(KIO::Job*,QByteArray)));
@@ -183,19 +183,19 @@ void SmugTalker::listAlbums(const QString& nickName)
 
     QUrl url(m_apiURL);
     QUrlQuery q;
-    q.addQueryItem(QStringLiteral("method"), QStringLiteral("smugmug.albums.get"));
-    q.addQueryItem(QStringLiteral("SessionID"), m_sessionID);
-    q.addQueryItem(QStringLiteral("Heavy"), QStringLiteral("1"));
+    q.addQueryItem(QString::fromLatin1("method"), QString::fromLatin1("smugmug.albums.get"));
+    q.addQueryItem(QString::fromLatin1("SessionID"), m_sessionID);
+    q.addQueryItem(QString::fromLatin1("Heavy"), QString::fromLatin1("1"));
     
     if (!nickName.isEmpty())
-        q.addQueryItem(QStringLiteral("NickName"), nickName);
+        q.addQueryItem(QString::fromLatin1("NickName"), nickName);
 
     url.setQuery(q);
     
     KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
-    job->addMetaData(QStringLiteral("UserAgent"), m_userAgent);
-    job->addMetaData(QStringLiteral("content-type"),
-                     QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
+    job->addMetaData(QString::fromLatin1("UserAgent"), m_userAgent);
+    job->addMetaData(QString::fromLatin1("content-type"),
+                     QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(data(KIO::Job*,QByteArray)));
@@ -223,24 +223,24 @@ void SmugTalker::listPhotos(const qint64 albumID,
 
     QUrl url(m_apiURL);
     QUrlQuery q;
-    q.addQueryItem(QStringLiteral("method"), QStringLiteral("smugmug.images.get"));
-    q.addQueryItem(QStringLiteral("SessionID"), m_sessionID);
-    q.addQueryItem(QStringLiteral("AlbumID"), QString::number(albumID));
-    q.addQueryItem(QStringLiteral("AlbumKey"), albumKey);
-    q.addQueryItem(QStringLiteral("Heavy"), QStringLiteral("1"));
+    q.addQueryItem(QString::fromLatin1("method"), QString::fromLatin1("smugmug.images.get"));
+    q.addQueryItem(QString::fromLatin1("SessionID"), m_sessionID);
+    q.addQueryItem(QString::fromLatin1("AlbumID"), QString::number(albumID));
+    q.addQueryItem(QString::fromLatin1("AlbumKey"), albumKey);
+    q.addQueryItem(QString::fromLatin1("Heavy"), QString::fromLatin1("1"));
 
     if (!albumPassword.isEmpty())
-        q.addQueryItem(QStringLiteral("Password"), albumPassword);
+        q.addQueryItem(QString::fromLatin1("Password"), albumPassword);
 
     if (!sitePassword.isEmpty())
-        q.addQueryItem(QStringLiteral("SitePassword"), sitePassword);
+        q.addQueryItem(QString::fromLatin1("SitePassword"), sitePassword);
     
     url.setQuery(q);
 
     KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
-    job->addMetaData(QStringLiteral("UserAgent"), m_userAgent);
-    job->addMetaData(QStringLiteral("content-type"),
-                     QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
+    job->addMetaData(QString::fromLatin1("UserAgent"), m_userAgent);
+    job->addMetaData(QString::fromLatin1("content-type"),
+                     QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(data(KIO::Job*,QByteArray)));
@@ -265,14 +265,14 @@ void SmugTalker::listAlbumTmpl()
 
     QUrl url(m_apiURL);
     QUrlQuery q;
-    q.addQueryItem(QStringLiteral("method"), QStringLiteral("smugmug.albumtemplates.get"));
-    q.addQueryItem(QStringLiteral("SessionID"), m_sessionID);
+    q.addQueryItem(QString::fromLatin1("method"), QString::fromLatin1("smugmug.albumtemplates.get"));
+    q.addQueryItem(QString::fromLatin1("SessionID"), m_sessionID);
     url.setQuery(q);
 
     KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
-    job->addMetaData(QStringLiteral("UserAgent"), m_userAgent);
-    job->addMetaData(QStringLiteral("content-type"),
-                     QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
+    job->addMetaData(QString::fromLatin1("UserAgent"), m_userAgent);
+    job->addMetaData(QString::fromLatin1("content-type"),
+                     QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(data(KIO::Job*,QByteArray)));
@@ -297,14 +297,14 @@ void SmugTalker::listCategories()
 
     QUrl url(m_apiURL);
     QUrlQuery q;
-    q.addQueryItem(QStringLiteral("method"), QStringLiteral("smugmug.categories.get"));
-    q.addQueryItem(QStringLiteral("SessionID"), m_sessionID);
+    q.addQueryItem(QString::fromLatin1("method"), QString::fromLatin1("smugmug.categories.get"));
+    q.addQueryItem(QString::fromLatin1("SessionID"), m_sessionID);
     url.setQuery(q);
 
     KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
-    job->addMetaData(QStringLiteral("UserAgent"), m_userAgent);
-    job->addMetaData(QStringLiteral("content-type"),
-                     QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
+    job->addMetaData(QString::fromLatin1("UserAgent"), m_userAgent);
+    job->addMetaData(QString::fromLatin1("content-type"),
+                     QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(data(KIO::Job*,QByteArray)));
@@ -329,15 +329,15 @@ void SmugTalker::listSubCategories(qint64 categoryID)
 
     QUrl url(m_apiURL);
     QUrlQuery q;
-    q.addQueryItem(QStringLiteral("method"), QStringLiteral("smugmug.subcategories.get"));
-    q.addQueryItem(QStringLiteral("SessionID"), m_sessionID);
-    q.addQueryItem(QStringLiteral("CategoryID"), QString::number(categoryID));
+    q.addQueryItem(QString::fromLatin1("method"), QString::fromLatin1("smugmug.subcategories.get"));
+    q.addQueryItem(QString::fromLatin1("SessionID"), m_sessionID);
+    q.addQueryItem(QString::fromLatin1("CategoryID"), QString::number(categoryID));
     url.setQuery(q);
 
     KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
-    job->addMetaData(QStringLiteral("UserAgent"), m_userAgent);
-    job->addMetaData(QStringLiteral("content-type"),
-                     QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
+    job->addMetaData(QString::fromLatin1("UserAgent"), m_userAgent);
+    job->addMetaData(QString::fromLatin1("content-type"),
+                     QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(data(KIO::Job*,QByteArray)));
@@ -362,40 +362,40 @@ void SmugTalker::createAlbum(const SmugAlbum& album)
 
     QUrl url(m_apiURL);
     QUrlQuery q;
-    q.addQueryItem(QStringLiteral("method"), QStringLiteral("smugmug.albums.create"));
-    q.addQueryItem(QStringLiteral("SessionID"), m_sessionID);
-    q.addQueryItem(QStringLiteral("Title"), album.title);
-    q.addQueryItem(QStringLiteral("CategoryID"), QString::number(album.categoryID));
+    q.addQueryItem(QString::fromLatin1("method"), QString::fromLatin1("smugmug.albums.create"));
+    q.addQueryItem(QString::fromLatin1("SessionID"), m_sessionID);
+    q.addQueryItem(QString::fromLatin1("Title"), album.title);
+    q.addQueryItem(QString::fromLatin1("CategoryID"), QString::number(album.categoryID));
 
     if (album.subCategoryID > 0)
-        q.addQueryItem(QStringLiteral("SubCategoryID"), QString::number(album.subCategoryID));
+        q.addQueryItem(QString::fromLatin1("SubCategoryID"), QString::number(album.subCategoryID));
 
     if (!album.description.isEmpty())
-        q.addQueryItem(QStringLiteral("Description"), album.description);
+        q.addQueryItem(QString::fromLatin1("Description"), album.description);
 
     if (album.tmplID > 0)
     {
         // template will also define privacy settings
-        q.addQueryItem(QStringLiteral("AlbumTemplateID"), QString::number(album.tmplID));
+        q.addQueryItem(QString::fromLatin1("AlbumTemplateID"), QString::number(album.tmplID));
     }
     else
     {
         if (!album.password.isEmpty())
-            q.addQueryItem(QStringLiteral("Password"), album.password);
+            q.addQueryItem(QString::fromLatin1("Password"), album.password);
         if (!album.passwordHint.isEmpty())
-            q.addQueryItem(QStringLiteral("PasswordHint"), album.passwordHint);
+            q.addQueryItem(QString::fromLatin1("PasswordHint"), album.passwordHint);
         if (album.isPublic)
-            q.addQueryItem(QStringLiteral("Public"), QStringLiteral("1"));
+            q.addQueryItem(QString::fromLatin1("Public"), QString::fromLatin1("1"));
         else
-            q.addQueryItem(QStringLiteral("Public"), QStringLiteral("0"));
+            q.addQueryItem(QString::fromLatin1("Public"), QString::fromLatin1("0"));
     }
     
     url.setQuery(q);
 
     KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
-    job->addMetaData(QStringLiteral("UserAgent"), m_userAgent);
-    job->addMetaData(QStringLiteral("content-type"),
-                     QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
+    job->addMetaData(QString::fromLatin1("UserAgent"), m_userAgent);
+    job->addMetaData(QString::fromLatin1("content-type"),
+                     QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(data(KIO::Job*,QByteArray)));
@@ -436,15 +436,15 @@ bool SmugTalker::addPhoto(const QString& imgPath, qint64 albumID,
 
     MPForm form;
 
-    form.addPair(QStringLiteral("ByteCount"), QString::number(imgSize));
-    form.addPair(QStringLiteral("MD5Sum"), QString::fromLatin1(
+    form.addPair(QString::fromLatin1("ByteCount"), QString::number(imgSize));
+    form.addPair(QString::fromLatin1("MD5Sum"), QString::fromLatin1(
         QCryptographicHash::hash(imgData, QCryptographicHash::Md5).toHex()));
-    form.addPair(QStringLiteral("AlbumID"), QString::number(albumID));
-    form.addPair(QStringLiteral("AlbumKey"), albumKey);
-    form.addPair(QStringLiteral("ResponseType"), QStringLiteral("REST"));
+    form.addPair(QString::fromLatin1("AlbumID"), QString::number(albumID));
+    form.addPair(QString::fromLatin1("AlbumKey"), albumKey);
+    form.addPair(QString::fromLatin1("ResponseType"), QString::fromLatin1("REST"));
 
     if (!caption.isEmpty())
-        form.addPair(QStringLiteral("Caption"), caption);
+        form.addPair(QString::fromLatin1("Caption"), caption);
 
     if (!form.addFile(imgName, imgPath))
         return false;
@@ -452,13 +452,13 @@ bool SmugTalker::addPhoto(const QString& imgPath, qint64 albumID,
     form.finish();
 
     QString customHdr;
-    QUrl url(QStringLiteral("http://upload.smugmug.com/photos/xmladd.mg"));
+    QUrl url(QString::fromLatin1("http://upload.smugmug.com/photos/xmladd.mg"));
     KIO::TransferJob* const job = KIO::http_post(url, form.formData(), KIO::HideProgressInfo);
-    job->addMetaData(QStringLiteral("content-type"), form.contentType());
-    job->addMetaData(QStringLiteral("UserAgent"), m_userAgent);
-    customHdr += QStringLiteral("X-Smug-SessionID: ") + m_sessionID + QStringLiteral("\r\n");
-    customHdr += QStringLiteral("X-Smug-Version: ") + m_apiVersion + QStringLiteral("\r\n");
-    job->addMetaData(QStringLiteral("customHTTPHeader"), customHdr);
+    job->addMetaData(QString::fromLatin1("content-type"), form.contentType());
+    job->addMetaData(QString::fromLatin1("UserAgent"), m_userAgent);
+    customHdr += QString::fromLatin1("X-Smug-SessionID: ") + m_sessionID + QString::fromLatin1("\r\n");
+    customHdr += QString::fromLatin1("X-Smug-Version: ") + m_apiVersion + QString::fromLatin1("\r\n");
+    job->addMetaData(QString::fromLatin1("customHTTPHeader"), customHdr);
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(data(KIO::Job*,QByteArray)));
@@ -484,10 +484,10 @@ void SmugTalker::getPhoto(const QString& imgPath)
 
     KIO::TransferJob* const job = KIO::get(QUrl::fromLocalFile(imgPath), KIO::Reload, KIO::HideProgressInfo);
     QString customHdr;
-    customHdr += QStringLiteral("X-Smug-SessionID: ") + m_sessionID + QStringLiteral("\r\n");
-    customHdr += QStringLiteral("X-Smug-Version: ") + m_apiVersion + QStringLiteral("\r\n");
-    job->addMetaData(QStringLiteral("UserAgent"), m_userAgent);
-    job->addMetaData(QStringLiteral("customHTTPHeader"), customHdr);
+    customHdr += QString::fromLatin1("X-Smug-SessionID: ") + m_sessionID + QString::fromLatin1("\r\n");
+    customHdr += QString::fromLatin1("X-Smug-Version: ") + m_apiVersion + QString::fromLatin1("\r\n");
+    job->addMetaData(QString::fromLatin1("UserAgent"), m_userAgent);
+    job->addMetaData(QString::fromLatin1("customHTTPHeader"), customHdr);
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(data(KIO::Job*,QByteArray)));
@@ -615,7 +615,7 @@ void SmugTalker::parseResponseLogin(const QByteArray& data)
 
     emit signalLoginProgress(3);
 
-    QDomDocument doc(QStringLiteral("login"));
+    QDomDocument doc(QString::fromLatin1("login"));
 
     if (!doc.setContent(data))
         return;
@@ -633,10 +633,10 @@ void SmugTalker::parseResponseLogin(const QByteArray& data)
 
         e = node.toElement();
 
-        if (e.tagName() == QStringLiteral("Login"))
+        if (e.tagName() == QString::fromLatin1("Login"))
         {
-            m_user.accountType   = e.attribute(QStringLiteral("AccountType"));
-            m_user.fileSizeLimit = e.attribute(QStringLiteral("FileSizeLimit")).toInt();
+            m_user.accountType   = e.attribute(QString::fromLatin1("AccountType"));
+            m_user.fileSizeLimit = e.attribute(QString::fromLatin1("FileSizeLimit")).toInt();
 
             for (QDomNode nodeL = e.firstChild(); !nodeL.isNull(); nodeL = nodeL.nextSibling())
             {
@@ -645,22 +645,22 @@ void SmugTalker::parseResponseLogin(const QByteArray& data)
 
                 e = nodeL.toElement();
 
-                if (e.tagName() == QStringLiteral("Session"))
+                if (e.tagName() == QString::fromLatin1("Session"))
                 {
-                    m_sessionID = e.attribute(QStringLiteral("id"));
+                    m_sessionID = e.attribute(QString::fromLatin1("id"));
                 }
-                else if (e.tagName() == QStringLiteral("User"))
+                else if (e.tagName() == QString::fromLatin1("User"))
                 {
-                    m_user.nickName    = e.attribute(QStringLiteral("NickName"));
-                    m_user.displayName = e.attribute(QStringLiteral("DisplayName"));
+                    m_user.nickName    = e.attribute(QString::fromLatin1("NickName"));
+                    m_user.displayName = e.attribute(QString::fromLatin1("DisplayName"));
                 }
             }
             errCode = 0;
         }
-        else if (e.tagName() == QStringLiteral("err"))
+        else if (e.tagName() == QString::fromLatin1("err"))
         {
-            errCode = e.attribute(QStringLiteral("code")).toInt();
-            errMsg  = e.attribute(QStringLiteral("msg"));
+            errCode = e.attribute(QString::fromLatin1("code")).toInt();
+            errMsg  = e.attribute(QString::fromLatin1("msg"));
             qCDebug(KIPIPLUGINS_LOG) << "Error:" << errCode << errMsg;
         }
     }
@@ -682,7 +682,7 @@ void SmugTalker::parseResponseLogout(const QByteArray& data)
     int errCode = -1;
     QString errMsg;
 
-    QDomDocument doc(QStringLiteral("logout"));
+    QDomDocument doc(QString::fromLatin1("logout"));
 
     if (!doc.setContent(data))
         return;
@@ -698,14 +698,14 @@ void SmugTalker::parseResponseLogout(const QByteArray& data)
 
         e = node.toElement();
 
-        if (e.tagName() == QStringLiteral("Logout"))
+        if (e.tagName() == QString::fromLatin1("Logout"))
         {
             errCode = 0;
         }
-        else if (e.tagName() == QStringLiteral("err"))
+        else if (e.tagName() == QString::fromLatin1("err"))
         {
-            errCode = e.attribute(QStringLiteral("code")).toInt();
-            errMsg  = e.attribute(QStringLiteral("msg"));
+            errCode = e.attribute(QString::fromLatin1("code")).toInt();
+            errMsg  = e.attribute(QString::fromLatin1("msg"));
             qCDebug(KIPIPLUGINS_LOG) << "Error:" << errCode << errMsg;
         }
     }
@@ -740,7 +740,7 @@ void SmugTalker::parseResponseAddPhoto(const QByteArray& data)
 
     int errCode = -1;
     QString errMsg;
-    QDomDocument doc(QStringLiteral("addphoto"));
+    QDomDocument doc(QString::fromLatin1("addphoto"));
 
     if (!doc.setContent(data))
         return;
@@ -749,25 +749,25 @@ void SmugTalker::parseResponseAddPhoto(const QByteArray& data)
 
     QDomElement document = doc.documentElement();
 
-    if (document.tagName() == QStringLiteral("rsp"))
+    if (document.tagName() == QString::fromLatin1("rsp"))
     {
-        qCDebug(KIPIPLUGINS_LOG) << "rsp stat: " << document.attribute(QStringLiteral("stat"));
-        if (document.attribute(QStringLiteral("stat")) == QStringLiteral("ok"))
+        qCDebug(KIPIPLUGINS_LOG) << "rsp stat: " << document.attribute(QString::fromLatin1("stat"));
+        if (document.attribute(QString::fromLatin1("stat")) == QString::fromLatin1("ok"))
         {
             errCode = 0;
         }
-        else if (document.attribute(QStringLiteral("stat")) == QStringLiteral("fail"))
+        else if (document.attribute(QString::fromLatin1("stat")) == QString::fromLatin1("fail"))
         {
-            QDomElement error = document.firstChildElement(QStringLiteral("err"));
-            errCode = error.attribute(QStringLiteral("code")).toInt();
-            errMsg = error.attribute(QStringLiteral("msg"));
+            QDomElement error = document.firstChildElement(QString::fromLatin1("err"));
+            errCode = error.attribute(QString::fromLatin1("code")).toInt();
+            errMsg = error.attribute(QString::fromLatin1("msg"));
             qCDebug(KIPIPLUGINS_LOG) << "error" << errCode << ":" << errMsg << endl;
         }
     }
     else
     {
         errCode = -2;
-        errMsg = QStringLiteral("Malformed response from smugmug: ") + document.tagName();
+        errMsg = QString::fromLatin1("Malformed response from smugmug: ") + document.tagName();
         qCDebug(KIPIPLUGINS_LOG) << "Error:" << errCode << errMsg;
     }
 
@@ -779,7 +779,7 @@ void SmugTalker::parseResponseCreateAlbum(const QByteArray& data)
 {
     int errCode = -1;
     QString errMsg;
-    QDomDocument doc(QStringLiteral("createalbum"));
+    QDomDocument doc(QString::fromLatin1("createalbum"));
 
     if (!doc.setContent(data))
         return;
@@ -797,18 +797,18 @@ void SmugTalker::parseResponseCreateAlbum(const QByteArray& data)
 
         e = node.toElement();
 
-        if (e.tagName() == QStringLiteral("Album"))
+        if (e.tagName() == QString::fromLatin1("Album"))
         {
-            newAlbumID  = e.attribute(QStringLiteral("id")).toLongLong();
-            newAlbumKey = e.attribute(QStringLiteral("Key"));
+            newAlbumID  = e.attribute(QString::fromLatin1("id")).toLongLong();
+            newAlbumKey = e.attribute(QString::fromLatin1("Key"));
             qCDebug(KIPIPLUGINS_LOG) << "AlbumID: " << newAlbumID;
             qCDebug(KIPIPLUGINS_LOG) << "Key: " << newAlbumKey;
             errCode = 0;
         }
-        else if (e.tagName() == QStringLiteral("err"))
+        else if (e.tagName() == QString::fromLatin1("err"))
         {
-            errCode = e.attribute(QStringLiteral("code")).toInt();
-            errMsg  = e.attribute(QStringLiteral("msg"));
+            errCode = e.attribute(QString::fromLatin1("code")).toInt();
+            errMsg  = e.attribute(QString::fromLatin1("msg"));
             qCDebug(KIPIPLUGINS_LOG) << "Error:" << errCode << errMsg;
         }
     }
@@ -822,7 +822,7 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
 {
     int errCode = -1;
     QString errMsg;
-    QDomDocument doc(QStringLiteral("albums.get"));
+    QDomDocument doc(QString::fromLatin1("albums.get"));
 
     if (!doc.setContent(data))
         return;
@@ -839,7 +839,7 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
 
         e = node.toElement();
 
-        if (e.tagName() == QStringLiteral("Albums"))
+        if (e.tagName() == QString::fromLatin1("Albums"))
         {
             for (QDomNode nodeA = e.firstChild(); !nodeA.isNull(); nodeA = nodeA.nextSibling())
             {
@@ -848,18 +848,18 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
 
                 e = nodeA.toElement();
 
-                if (e.tagName() == QStringLiteral("Album"))
+                if (e.tagName() == QString::fromLatin1("Album"))
                 {
                     SmugAlbum album;
-                    album.id           = e.attribute(QStringLiteral("id")).toLongLong();
-                    album.key          = e.attribute(QStringLiteral("Key"));
-                    album.title        = htmlToText(e.attribute(QStringLiteral("Title")));
-                    album.description  = htmlToText(e.attribute(QStringLiteral("Description")));
-                    album.keywords     = htmlToText(e.attribute(QStringLiteral("Keywords")));
-                    album.isPublic     = e.attribute(QStringLiteral("Public")) == QStringLiteral("1");
-                    album.password     = htmlToText(e.attribute(QStringLiteral("Password")));
-                    album.passwordHint = htmlToText(e.attribute(QStringLiteral("PasswordHint")));
-                    album.imageCount   = e.attribute(QStringLiteral("ImageCount")).toInt();
+                    album.id           = e.attribute(QString::fromLatin1("id")).toLongLong();
+                    album.key          = e.attribute(QString::fromLatin1("Key"));
+                    album.title        = htmlToText(e.attribute(QString::fromLatin1("Title")));
+                    album.description  = htmlToText(e.attribute(QString::fromLatin1("Description")));
+                    album.keywords     = htmlToText(e.attribute(QString::fromLatin1("Keywords")));
+                    album.isPublic     = e.attribute(QString::fromLatin1("Public")) == QString::fromLatin1("1");
+                    album.password     = htmlToText(e.attribute(QString::fromLatin1("Password")));
+                    album.passwordHint = htmlToText(e.attribute(QString::fromLatin1("PasswordHint")));
+                    album.imageCount   = e.attribute(QString::fromLatin1("ImageCount")).toInt();
 
                     for (QDomNode nodeC = e.firstChild(); !nodeC.isNull(); nodeC = node.nextSibling())
                     {
@@ -868,15 +868,15 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
 
                         e = nodeC.toElement();
 
-                        if (e.tagName() == QStringLiteral("Category"))
+                        if (e.tagName() == QString::fromLatin1("Category"))
                         {
-                            album.categoryID = e.attribute(QStringLiteral("id")).toLongLong();
-                            album.category = htmlToText(e.attribute(QStringLiteral("Name")));
+                            album.categoryID = e.attribute(QString::fromLatin1("id")).toLongLong();
+                            album.category = htmlToText(e.attribute(QString::fromLatin1("Name")));
                         }
-                        else if (e.tagName() == QStringLiteral("SubCategory"))
+                        else if (e.tagName() == QString::fromLatin1("SubCategory"))
                         {
-                            album.subCategoryID = e.attribute(QStringLiteral("id")).toLongLong();
-                            album.subCategory = htmlToText(e.attribute(QStringLiteral("Name")));
+                            album.subCategoryID = e.attribute(QString::fromLatin1("id")).toLongLong();
+                            album.subCategory = htmlToText(e.attribute(QString::fromLatin1("Name")));
                         }
                     }
                     albumsList.append(album);
@@ -885,10 +885,10 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
 
             errCode = 0;
         }
-        else if (e.tagName() == QStringLiteral("err"))
+        else if (e.tagName() == QString::fromLatin1("err"))
         {
-            errCode = e.attribute(QStringLiteral("code")).toInt();
-            errMsg = e.attribute(QStringLiteral("msg"));
+            errCode = e.attribute(QString::fromLatin1("code")).toInt();
+            errMsg = e.attribute(QString::fromLatin1("msg"));
             qCDebug(KIPIPLUGINS_LOG) << "Error:" << errCode << errMsg;
         }
     }
@@ -906,7 +906,7 @@ void SmugTalker::parseResponseListPhotos(const QByteArray& data)
 {
     int errCode = -1;
     QString errMsg;
-    QDomDocument doc(QStringLiteral("images.get"));
+    QDomDocument doc(QString::fromLatin1("images.get"));
 
     if (!doc.setContent(data))
         return;
@@ -923,14 +923,14 @@ void SmugTalker::parseResponseListPhotos(const QByteArray& data)
 
         e = node.toElement();
 	
-	if (e.tagName() == QStringLiteral("Album")) {
+	if (e.tagName() == QString::fromLatin1("Album")) {
 	    node = e.firstChild();
 	    if (!node.isElement())
 		continue;
 	    e = node.toElement();
 	}
 
-        if (e.tagName() == QStringLiteral("Images"))
+        if (e.tagName() == QString::fromLatin1("Images"))
         {
             for (QDomNode nodeP = e.firstChild(); !nodeP.isNull(); nodeP = nodeP.nextSibling())
             {
@@ -939,38 +939,38 @@ void SmugTalker::parseResponseListPhotos(const QByteArray& data)
 
                 e = nodeP.toElement();
 
-                if (e.tagName() == QStringLiteral("Image"))
+                if (e.tagName() == QString::fromLatin1("Image"))
                 {
                     SmugPhoto photo;
-                    photo.id       = e.attribute(QStringLiteral("id")).toLongLong();
-                    photo.key      = e.attribute(QStringLiteral("Key"));
-                    photo.caption  = htmlToText(e.attribute(QStringLiteral("Caption")));
-                    photo.keywords = htmlToText(e.attribute(QStringLiteral("Keywords")));
-                    photo.thumbURL = e.attribute(QStringLiteral("ThumbURL"));
+                    photo.id       = e.attribute(QString::fromLatin1("id")).toLongLong();
+                    photo.key      = e.attribute(QString::fromLatin1("Key"));
+                    photo.caption  = htmlToText(e.attribute(QString::fromLatin1("Caption")));
+                    photo.keywords = htmlToText(e.attribute(QString::fromLatin1("Keywords")));
+                    photo.thumbURL = e.attribute(QString::fromLatin1("ThumbURL"));
 
                     // try to get largest size available
-                    if (e.hasAttribute(QStringLiteral("Video1280URL")))
-                        photo.originalURL = e.attribute(QStringLiteral("Video1280URL"));
-                    else if (e.hasAttribute(QStringLiteral("Video960URL")))
-                        photo.originalURL = e.attribute(QStringLiteral("Video960URL"));
-                    else if (e.hasAttribute(QStringLiteral("Video640URL")))
-                        photo.originalURL = e.attribute(QStringLiteral("Video640URL"));
-                    else if (e.hasAttribute(QStringLiteral("Video320URL")))
-                        photo.originalURL = e.attribute(QStringLiteral("Video320URL"));
-                    else if (e.hasAttribute(QStringLiteral("OriginalURL")))
-                        photo.originalURL = e.attribute(QStringLiteral("OriginalURL"));
-                    else if (e.hasAttribute(QStringLiteral("X3LargeURL")))
-                        photo.originalURL = e.attribute(QStringLiteral("X3LargeURL"));
-                    else if (e.hasAttribute(QStringLiteral("X2LargeURL")))
-                        photo.originalURL = e.attribute(QStringLiteral("X2LargeURL"));
-                    else if (e.hasAttribute(QStringLiteral("XLargeURL")))
-                        photo.originalURL = e.attribute(QStringLiteral("XLargeURL"));
-                    else if (e.hasAttribute(QStringLiteral("LargeURL")))
-                        photo.originalURL = e.attribute(QStringLiteral("LargeURL"));
-                    else if (e.hasAttribute(QStringLiteral("MediumURL")))
-                        photo.originalURL = e.attribute(QStringLiteral("MediumURL"));
-                    else if (e.hasAttribute(QStringLiteral("SmallURL")))
-                        photo.originalURL = e.attribute(QStringLiteral("SmallURL"));
+                    if (e.hasAttribute(QString::fromLatin1("Video1280URL")))
+                        photo.originalURL = e.attribute(QString::fromLatin1("Video1280URL"));
+                    else if (e.hasAttribute(QString::fromLatin1("Video960URL")))
+                        photo.originalURL = e.attribute(QString::fromLatin1("Video960URL"));
+                    else if (e.hasAttribute(QString::fromLatin1("Video640URL")))
+                        photo.originalURL = e.attribute(QString::fromLatin1("Video640URL"));
+                    else if (e.hasAttribute(QString::fromLatin1("Video320URL")))
+                        photo.originalURL = e.attribute(QString::fromLatin1("Video320URL"));
+                    else if (e.hasAttribute(QString::fromLatin1("OriginalURL")))
+                        photo.originalURL = e.attribute(QString::fromLatin1("OriginalURL"));
+                    else if (e.hasAttribute(QString::fromLatin1("X3LargeURL")))
+                        photo.originalURL = e.attribute(QString::fromLatin1("X3LargeURL"));
+                    else if (e.hasAttribute(QString::fromLatin1("X2LargeURL")))
+                        photo.originalURL = e.attribute(QString::fromLatin1("X2LargeURL"));
+                    else if (e.hasAttribute(QString::fromLatin1("XLargeURL")))
+                        photo.originalURL = e.attribute(QString::fromLatin1("XLargeURL"));
+                    else if (e.hasAttribute(QString::fromLatin1("LargeURL")))
+                        photo.originalURL = e.attribute(QString::fromLatin1("LargeURL"));
+                    else if (e.hasAttribute(QString::fromLatin1("MediumURL")))
+                        photo.originalURL = e.attribute(QString::fromLatin1("MediumURL"));
+                    else if (e.hasAttribute(QString::fromLatin1("SmallURL")))
+                        photo.originalURL = e.attribute(QString::fromLatin1("SmallURL"));
 
                     photosList.append(photo);
                 }
@@ -978,10 +978,10 @@ void SmugTalker::parseResponseListPhotos(const QByteArray& data)
 
             errCode = 0;
         }
-        else if (e.tagName() == QStringLiteral("err"))
+        else if (e.tagName() == QString::fromLatin1("err"))
         {
-            errCode = e.attribute(QStringLiteral("code")).toInt();
-            errMsg  = e.attribute(QStringLiteral("msg"));
+            errCode = e.attribute(QString::fromLatin1("code")).toInt();
+            errMsg  = e.attribute(QString::fromLatin1("msg"));
             qCDebug(KIPIPLUGINS_LOG) << "Error:" << errCode << errMsg;
         }
     }
@@ -997,7 +997,7 @@ void SmugTalker::parseResponseListAlbumTmpl(const QByteArray& data)
 {
     int errCode = -1;
     QString errMsg;
-    QDomDocument doc(QStringLiteral("albumtemplates.get"));
+    QDomDocument doc(QString::fromLatin1("albumtemplates.get"));
 
     if (!doc.setContent(data))
         return;
@@ -1014,7 +1014,7 @@ void SmugTalker::parseResponseListAlbumTmpl(const QByteArray& data)
 
         e = node.toElement();
 
-        if (e.tagName() == QStringLiteral("AlbumTemplates"))
+        if (e.tagName() == QString::fromLatin1("AlbumTemplates"))
         {
             for (QDomNode nodeT = e.firstChild(); !nodeT.isNull(); nodeT = nodeT.nextSibling())
             {
@@ -1023,24 +1023,24 @@ void SmugTalker::parseResponseListAlbumTmpl(const QByteArray& data)
 
                 QDomElement e = nodeT.toElement();
 
-                if (e.tagName() == QStringLiteral("AlbumTemplate"))
+                if (e.tagName() == QString::fromLatin1("AlbumTemplate"))
                 {
                     SmugAlbumTmpl tmpl;
-                    tmpl.id           = e.attribute(QStringLiteral("id")).toLongLong();
-                    tmpl.name         = htmlToText(e.attribute(QStringLiteral("AlbumTemplateName")));
-                    tmpl.isPublic     = e.attribute(QStringLiteral("Public")) == QStringLiteral("1");
-                    tmpl.password     = htmlToText(e.attribute(QStringLiteral("Password")));
-                    tmpl.passwordHint = htmlToText(e.attribute(QStringLiteral("PasswordHint")));
+                    tmpl.id           = e.attribute(QString::fromLatin1("id")).toLongLong();
+                    tmpl.name         = htmlToText(e.attribute(QString::fromLatin1("AlbumTemplateName")));
+                    tmpl.isPublic     = e.attribute(QString::fromLatin1("Public")) == QString::fromLatin1("1");
+                    tmpl.password     = htmlToText(e.attribute(QString::fromLatin1("Password")));
+                    tmpl.passwordHint = htmlToText(e.attribute(QString::fromLatin1("PasswordHint")));
                     albumTList.append(tmpl);
                 }
             }
 
             errCode = 0;
         }
-        else if (e.tagName() == QStringLiteral("err"))
+        else if (e.tagName() == QString::fromLatin1("err"))
         {
-            errCode = e.attribute(QStringLiteral("code")).toInt();
-            errMsg  = e.attribute(QStringLiteral("msg"));
+            errCode = e.attribute(QString::fromLatin1("code")).toInt();
+            errMsg  = e.attribute(QString::fromLatin1("msg"));
             qCDebug(KIPIPLUGINS_LOG) << "Error:" << errCode << errMsg;
         }
     }
@@ -1056,7 +1056,7 @@ void SmugTalker::parseResponseListCategories(const QByteArray& data)
 {
     int errCode = -1;
     QString errMsg;
-    QDomDocument doc(QStringLiteral("categories.get"));
+    QDomDocument doc(QString::fromLatin1("categories.get"));
 
     if (!doc.setContent(data))
         return;
@@ -1073,7 +1073,7 @@ void SmugTalker::parseResponseListCategories(const QByteArray& data)
 
         e = node.toElement();
 
-        if (e.tagName() == QStringLiteral("Categories"))
+        if (e.tagName() == QString::fromLatin1("Categories"))
         {
             for (QDomNode nodeC = e.firstChild(); !nodeC.isNull(); nodeC = nodeC.nextSibling())
             {
@@ -1082,21 +1082,21 @@ void SmugTalker::parseResponseListCategories(const QByteArray& data)
 
                 QDomElement e = nodeC.toElement();
 
-                if (e.tagName() == QStringLiteral("Category"))
+                if (e.tagName() == QString::fromLatin1("Category"))
                 {
                     SmugCategory category;
-                    category.id   = e.attribute(QStringLiteral("id")).toLongLong();
-                    category.name = htmlToText(e.attribute(QStringLiteral("Name")));
+                    category.id   = e.attribute(QString::fromLatin1("id")).toLongLong();
+                    category.name = htmlToText(e.attribute(QString::fromLatin1("Name")));
                     categoriesList.append(category);
                 }
             }
 
             errCode = 0;
         }
-        else if (e.tagName() == QStringLiteral("err"))
+        else if (e.tagName() == QString::fromLatin1("err"))
         {
-            errCode = e.attribute(QStringLiteral("code")).toInt();
-            errMsg  = e.attribute(QStringLiteral("msg"));
+            errCode = e.attribute(QString::fromLatin1("code")).toInt();
+            errMsg  = e.attribute(QString::fromLatin1("msg"));
             qCDebug(KIPIPLUGINS_LOG) << "Error:" << errCode << errMsg;
         }
     }
@@ -1112,7 +1112,7 @@ void SmugTalker::parseResponseListSubCategories(const QByteArray& data)
 {
     int errCode = -1;
     QString errMsg;
-    QDomDocument doc(QStringLiteral("subcategories.get"));
+    QDomDocument doc(QString::fromLatin1("subcategories.get"));
 
     if (!doc.setContent(data))
         return;
@@ -1129,7 +1129,7 @@ void SmugTalker::parseResponseListSubCategories(const QByteArray& data)
 
         e = node.toElement();
 
-        if (e.tagName() == QStringLiteral("SubCategories"))
+        if (e.tagName() == QString::fromLatin1("SubCategories"))
         {
             for (QDomNode nodeC = e.firstChild(); !nodeC.isNull(); nodeC = nodeC.nextSibling())
             {
@@ -1138,21 +1138,21 @@ void SmugTalker::parseResponseListSubCategories(const QByteArray& data)
 
                 e = nodeC.toElement();
 
-                if (e.tagName() == QStringLiteral("SubCategory"))
+                if (e.tagName() == QString::fromLatin1("SubCategory"))
                 {
                     SmugCategory category;
-                    category.id   = e.attribute(QStringLiteral("id")).toLongLong();
-                    category.name = htmlToText(e.attribute(QStringLiteral("Name")));
+                    category.id   = e.attribute(QString::fromLatin1("id")).toLongLong();
+                    category.name = htmlToText(e.attribute(QString::fromLatin1("Name")));
                     categoriesList.append(category);
                 }
             }
 
             errCode = 0;
         }
-        else if (e.tagName() == QStringLiteral("err"))
+        else if (e.tagName() == QString::fromLatin1("err"))
         {
-            errCode = e.attribute(QStringLiteral("code")).toInt();
-            errMsg  = e.attribute(QStringLiteral("msg"));
+            errCode = e.attribute(QString::fromLatin1("code")).toInt();
+            errMsg  = e.attribute(QString::fromLatin1("msg"));
             qCDebug(KIPIPLUGINS_LOG) << "Error:" << errCode << errMsg;
         }
     }

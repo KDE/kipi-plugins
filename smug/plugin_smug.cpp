@@ -103,30 +103,30 @@ void Plugin_Smug::setupActions()
 
     m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to &SmugMug..."));
-    m_actionExport->setIcon(QIcon::fromTheme(QStringLiteral("kipi-smugmug")));
+    m_actionExport->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-smugmug")));
     m_actionExport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::Key_S));
     m_actionExport->setEnabled(false);
 
     connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()) );
 
-    addAction(QStringLiteral("smugexport"), m_actionExport);
+    addAction(QString::fromLatin1("smugexport"), m_actionExport);
 
     m_actionImport = new QAction(this);
     m_actionImport->setText(i18n("Import from &SmugMug..."));
-    m_actionImport->setIcon(QIcon::fromTheme(QStringLiteral("kipi-smugmug")));
+    m_actionImport->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-smugmug")));
     m_actionImport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_S));
     m_actionImport->setEnabled(false);
 
     connect(m_actionImport, SIGNAL(triggered(bool)),
             this, SLOT(slotImport()) );
 
-    addAction(QStringLiteral("smugimport"), m_actionImport, ImportPlugin);
+    addAction(QString::fromLatin1("smugimport"), m_actionImport, ImportPlugin);
 }
 
 void Plugin_Smug::slotExport()
 {
-    QString tmp = makeTemporaryDir("kipi-smug").absolutePath() + QStringLiteral("/");
+    QString tmp = makeTemporaryDir("kipi-smug").absolutePath() + QString::fromLatin1("/");
 
     if (!m_dlgExport)
     {
@@ -146,7 +146,7 @@ void Plugin_Smug::slotExport()
 
 void Plugin_Smug::slotImport()
 {
-    QString tmp = makeTemporaryDir("kipi-smug").absolutePath() + QStringLiteral("/");
+    QString tmp = makeTemporaryDir("kipi-smug").absolutePath() + QString::fromLatin1("/");
 
     if (!m_dlgImport)
     {
