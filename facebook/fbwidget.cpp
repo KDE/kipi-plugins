@@ -71,12 +71,12 @@ FbWidget::~FbWidget()
 
 void FbWidget::updateLabels(const QString& name, const QString& url)
 {
-    QString web(QStringLiteral("http://www.facebook.com"));
+    QString web(QString::fromLatin1("http://www.facebook.com"));
 
     if (!url.isEmpty())
         web = url;
 
-    getHeaderLbl()->setText(QStringLiteral(
+    getHeaderLbl()->setText(QString::fromLatin1(
         "<b><h2><a href='%1'>"
         "<font color=\"#3B5998\">facebook</font>"
         "</a></h2></b>").arg(web));
@@ -86,7 +86,7 @@ void FbWidget::updateLabels(const QString& name, const QString& url)
     }
     else
     {
-        getUserNameLabel()->setText(QStringLiteral("<b>%1</b>").arg(name));
+        getUserNameLabel()->setText(QString::fromLatin1("<b>%1</b>").arg(name));
     }
 }
 

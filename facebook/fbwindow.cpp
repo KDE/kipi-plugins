@@ -67,7 +67,7 @@ public:
 
     Private(QWidget* const widget, KIPI::Interface* const iface)
     {
-        m_widget          = new FbWidget(widget, iface, QStringLiteral("Facebook"));
+        m_widget          = new FbWidget(widget, iface, QString::fromLatin1("Facebook"));
         m_imgList         = m_widget->imagesList();
         m_progressBar     = m_widget->progressBar();
         m_changeUserBtn   = m_widget->getChangeUserBtn();
@@ -102,7 +102,7 @@ FbWindow::FbWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     m_imagesTotal = 0;
 
     setMainWidget(d->m_widget);
-    setWindowIcon(QIcon::fromTheme(QStringLiteral("kipi-facebook")));
+    setWindowIcon(QIcon::fromTheme(QString::fromLatin1("kipi-facebook")));
     setModal(false);
 
     setWindowTitle(i18n("Export to Facebook Web Service"));
@@ -146,14 +146,14 @@ FbWindow::FbWindow(const QString& tmpFolder, QWidget* const /*parent*/)
 
     about->addAuthor(ki18n("Luka Renko").toString(),
                      ki18n("Author and maintainer").toString(),
-                     QStringLiteral("lure at kubuntu dot org"));
+                     QString::fromLatin1("lure at kubuntu dot org"));
 
-    about->setHandbookEntry(QStringLiteral("facebook"));
+    about->setHandbookEntry(QString::fromLatin1("facebook"));
     setAboutData(about);
 
     // ------------------------------------------------------------------------
 
-    m_albumDlg = new FbNewAlbum(this, QStringLiteral("Facebook"));
+    m_albumDlg = new FbNewAlbum(this, QString::fromLatin1("Facebook"));
 
     // ------------------------------------------------------------------------
 
@@ -242,7 +242,7 @@ void FbWindow::closeEvent(QCloseEvent* e)
 
 void FbWindow::readSettings()
 {
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup grp = config.group("Facebook Settings");
     m_accessToken    = grp.readEntry("Access Token");
     m_sessionExpires = grp.readEntry("Session Expires", 0);
@@ -277,7 +277,7 @@ void FbWindow::readSettings()
 
 void FbWindow::writeSettings()
 {
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup grp = config.group("Facebook Settings");
     grp.writeEntry("Access Token",    m_accessToken);
 
@@ -311,7 +311,7 @@ void FbWindow::authenticate()
 {
     setRejectButtonMode(QDialogButtonBox::Cancel);
     d->m_progressBar->show();
-    d->m_progressBar->setFormat(QStringLiteral(""));
+    d->m_progressBar->setFormat(QString::fromLatin1(""));
 
     // Converting old world session keys into OAuth2 tokens
     if (! m_sessionKey.isEmpty() && m_accessToken.isEmpty())
@@ -372,10 +372,10 @@ void FbWindow::slotLoginDone(int errCode, const QString& errMsg)
 void FbWindow::slotListAlbumsDone(int errCode, const QString& errMsg, const QList<FbAlbum>& albumsList)
 {
 
-    QString albumDebug = QStringLiteral("");
+    QString albumDebug = QString::fromLatin1("");
     foreach(const FbAlbum &album, albumsList)
     {
-        albumDebug.append(QStringLiteral("%1: %2\n").arg(album.id).arg(album.title));
+        albumDebug.append(QString::fromLatin1("%1: %2\n").arg(album.id).arg(album.title));
     }
 
     qCDebug(KIPIPLUGINS_LOG) << "Received albums (errCode = " << errCode << ", errMsg = "
@@ -397,27 +397,27 @@ void FbWindow::slotListAlbumsDone(int errCode, const QString& errMsg, const QLis
         switch (albumsList.at(i).privacy)
         {
             case FB_ME:
-                albumIcon = QStringLiteral("secure-card");
+                albumIcon = QString::fromLatin1("secure-card");
                 break;
 
             case FB_FRIENDS:
-                albumIcon = QStringLiteral("user-identity");
+                albumIcon = QString::fromLatin1("user-identity");
                 break;
 
             case FB_FRIENDS_OF_FRIENDS:
-                albumIcon = QStringLiteral("system-users");
+                albumIcon = QString::fromLatin1("system-users");
                 break;
 
             case FB_NETWORKS:
-                albumIcon = QStringLiteral("network-workgroup");
+                albumIcon = QString::fromLatin1("network-workgroup");
                 break;
 
             case FB_EVERYONE:
-                albumIcon = QStringLiteral("applications-internet");
+                albumIcon = QString::fromLatin1("applications-internet");
                 break;
 
             case FB_CUSTOM:
-                albumIcon = QStringLiteral("configure");
+                albumIcon = QString::fromLatin1("configure");
                 break;
         }
 
@@ -537,7 +537,7 @@ void FbWindow::slotStartTransfer()
     d->m_progressBar->setValue(0);
     d->m_progressBar->show();
     d->m_progressBar->progressScheduled(i18n("Facebook export"), true, true);
-    d->m_progressBar->progressThumbnailChanged(QIcon::fromTheme(QStringLiteral("kipi")).pixmap(22, 22));
+    d->m_progressBar->progressThumbnailChanged(QIcon::fromTheme(QString::fromLatin1("kipi")).pixmap(22, 22));
 
     uploadNextPhoto();
 }
@@ -555,8 +555,8 @@ QString FbWindow::getImageCaption(const QString& fileName)
     KPImageInfo info(QUrl::fromLocalFile(fileName));
     // Facebook doesn't support image titles. Include it in descriptions if needed.
     QStringList descriptions = QStringList() << info.title() << info.description();
-    descriptions.removeAll(QStringLiteral(""));
-    return descriptions.join(QStringLiteral("\n\n"));
+    descriptions.removeAll(QString::fromLatin1(""));
+    return descriptions.join(QString::fromLatin1("\n\n"));
 }
 
 bool FbWindow::prepareImageForUpload(const QString& imgPath, bool isRAW, QString& caption)
@@ -589,7 +589,7 @@ bool FbWindow::prepareImageForUpload(const QString& imgPath, bool isRAW, QString
     }
 
     // get temporary file name
-    m_tmpPath = m_tmpDir + QFileInfo(imgPath).baseName().trimmed() + QStringLiteral(".jpg");
+    m_tmpPath = m_tmpDir + QFileInfo(imgPath).baseName().trimmed() + QString::fromLatin1(".jpg");
 
     // rescale image if requested
     int maxDim = d->m_dimensionSpB->value();
@@ -615,7 +615,7 @@ bool FbWindow::prepareImageForUpload(const QString& imgPath, bool isRAW, QString
         {
             caption = getImageCaption(imgPath);
             meta->setImageDimensions(image.size());
-            meta->setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
+            meta->setImageProgramId(QString::fromLatin1("Kipi-plugins"), kipipluginsVersion());
             meta->save(QUrl::fromLocalFile(m_tmpPath));
         }
         else

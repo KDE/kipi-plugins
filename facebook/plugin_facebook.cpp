@@ -95,18 +95,18 @@ void Plugin_Facebook::setupActions()
 
     m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to &Facebook..."));
-    m_actionExport->setIcon(QIcon::fromTheme(QStringLiteral("kipi-facebook")));
+    m_actionExport->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-facebook")));
     m_actionExport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::Key_F));
 
     connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()) );
 
-    addAction(QStringLiteral("facebookexport"), m_actionExport);
+    addAction(QString::fromLatin1("facebookexport"), m_actionExport);
 }
 
 void Plugin_Facebook::slotExport()
 {
-    QString tmp = makeTemporaryDir("kipi-fb").absolutePath() + QStringLiteral("/");
+    QString tmp = makeTemporaryDir("kipi-fb").absolutePath() + QString::fromLatin1("/");
 
     if (!m_dlgExport)
     {
