@@ -92,13 +92,13 @@ void Plugin_PiwigoExport::setupActions()
 
     m_action = new QAction(this);
     m_action->setText(i18n("Export to &Piwigo..."));
-    m_action->setIcon(QIcon::fromTheme(QStringLiteral("kipi-piwigo")));
+    m_action->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-piwigo")));
     m_action->setEnabled(true);
 
     connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(slotSync()));
 
-    addAction(QStringLiteral("piwigoexport"), m_action);
+    addAction(QString::fromLatin1("piwigoexport"), m_action);
 }
 
 // this slot uses PiwigoWindow Class
@@ -107,7 +107,7 @@ void Plugin_PiwigoExport::slotSync()
     QPointer<PiwigoEdit>   configDlg;
     QPointer<PiwigoWindow> dlg;
 
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
 
     if (!config.hasGroup("Piwigo Settings") )
     {

@@ -59,7 +59,7 @@ using namespace KIPIPlugins;
 namespace KIPIPiwigoExportPlugin
 {
 
-QString PiwigoTalker::s_authToken = QStringLiteral("");
+QString PiwigoTalker::s_authToken = QString::fromLatin1("");
 
 PiwigoTalker::PiwigoTalker(QWidget* const parent)
     : m_parent(parent),
@@ -136,10 +136,10 @@ void PiwigoTalker::login(const QUrl& url, const QString& name, const QString& pa
     QByteArray buffer;
     buffer.append(dataParameters.toUtf8());
     m_job = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
-    m_job->addMetaData(QStringLiteral("content-type"),
-                       QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
-    m_job->addMetaData(QStringLiteral("customHTTPHeader"),
-                       QStringLiteral("Authorization: ") + s_authToken);
+    m_job->addMetaData(QString::fromLatin1("content-type"),
+                       QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
+    m_job->addMetaData(QString::fromLatin1("customHTTPHeader"),
+                       QString::fromLatin1("Authorization: ") + s_authToken);
 
     connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
@@ -157,17 +157,17 @@ void PiwigoTalker::listAlbums()
     m_talker_buffer.resize(0);
 
     QStringList qsl;
-    qsl.append(QStringLiteral("method=pwg.categories.getList"));
-    qsl.append(QStringLiteral("recursive=true"));
-    QString dataParameters = qsl.join(QStringLiteral("&"));
+    qsl.append(QString::fromLatin1("method=pwg.categories.getList"));
+    qsl.append(QString::fromLatin1("recursive=true"));
+    QString dataParameters = qsl.join(QString::fromLatin1("&"));
     QByteArray buffer;
     buffer.append(dataParameters.toUtf8());
 
     m_job = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
-    m_job->addMetaData(QStringLiteral("content-type"),
-                       QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
-    m_job->addMetaData(QStringLiteral("customHTTPHeader"),
-                       QStringLiteral("Authorization: ") + s_authToken);
+    m_job->addMetaData(QString::fromLatin1("content-type"),
+                       QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
+    m_job->addMetaData(QString::fromLatin1("customHTTPHeader"),
+                       QString::fromLatin1("Authorization: ") + s_authToken);
 
     connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
@@ -190,16 +190,16 @@ bool PiwigoTalker::addPhoto(int   albumId,
     m_talker_buffer.resize(0);
 
     m_path    = mediaPath; // By default, m_path contains the original file
-    m_tmpPath = QStringLiteral(""); // By default, no temporary file (except with rescaling)
+    m_tmpPath = QString::fromLatin1(""); // By default, no temporary file (except with rescaling)
     m_albumId = albumId;
 
     m_md5sum  = computeMD5Sum(mediaPath);
 
     qCDebug(KIPIPLUGINS_LOG) << mediaPath << " " << m_md5sum.toHex();
 
-    if (mediaPath.endsWith(QStringLiteral(".mp4"))  || mediaPath.endsWith(QStringLiteral(".MP4")) ||
-        mediaPath.endsWith(QStringLiteral(".ogg"))  || mediaPath.endsWith(QStringLiteral(".OGG")) ||
-        mediaPath.endsWith(QStringLiteral(".webm")) || mediaPath.endsWith(QStringLiteral(".WEBM")))
+    if (mediaPath.endsWith(QString::fromLatin1(".mp4"))  || mediaPath.endsWith(QString::fromLatin1(".MP4")) ||
+        mediaPath.endsWith(QString::fromLatin1(".ogg"))  || mediaPath.endsWith(QString::fromLatin1(".OGG")) ||
+        mediaPath.endsWith(QString::fromLatin1(".webm")) || mediaPath.endsWith(QString::fromLatin1(".WEBM")))
     {
         // Video management
         // Nothing to do
@@ -256,7 +256,7 @@ bool PiwigoTalker::addPhoto(int   albumId,
             
                 if (meta && meta->load(QUrl::fromLocalFile(mediaPath)))
                 {
-                    meta->setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
+                    meta->setImageProgramId(QString::fromLatin1("Kipi-plugins"), kipipluginsVersion());
                     meta->setImageDimensions(image.size());
                     meta->save(QUrl::fromLocalFile(m_path));
                 }
@@ -273,8 +273,8 @@ bool PiwigoTalker::addPhoto(int   albumId,
     // Complete name and comment for summary sending
     QFileInfo fi(mediaPath);
     m_title   = fi.completeBaseName();
-    m_comment = QStringLiteral("");
-    m_author  = QStringLiteral("");
+    m_comment = QString::fromLatin1("");
+    m_author  = QString::fromLatin1("");
     m_date    = fi.created();
 
     // Look in the Kipi host database
@@ -287,7 +287,7 @@ bool PiwigoTalker::addPhoto(int   albumId,
         m_comment = info.description();
 
     if (info.hasCreators() && !info.creators().isEmpty())
-        m_author = info.creators().join(QStringLiteral(" / "));
+        m_author = info.creators().join(QString::fromLatin1(" / "));
 
     if (info.hasDate())
         m_date = info.date();
@@ -305,10 +305,10 @@ bool PiwigoTalker::addPhoto(int   albumId,
     buffer.append(dataParameters.toUtf8());
 
     m_job = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
-    m_job->addMetaData(QStringLiteral("content-type"),
-                       QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
-    m_job->addMetaData(QStringLiteral("customHTTPHeader"),
-                       QStringLiteral("Authorization: ") + s_authToken);
+    m_job->addMetaData(QString::fromLatin1("content-type"),
+                       QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
+    m_job->addMetaData(QString::fromLatin1("customHTTPHeader"),
+                       QString::fromLatin1("Authorization: ") + s_authToken);
 
     emit signalProgressInfo( i18n("Check if %1 already exists", QUrl(mediaPath).fileName()) );
 
@@ -430,7 +430,7 @@ void PiwigoTalker::parseResponseLogin(const QByteArray& data)
         {
             foundResponse = true;
 
-            if (ts.name() == QStringLiteral("rsp") && ts.attributes().value(QStringLiteral("stat")) == QStringLiteral("ok"))
+            if (ts.name() == QString::fromLatin1("rsp") && ts.attributes().value(QString::fromLatin1("stat")) == QString::fromLatin1("ok"))
             {
                 m_loggedIn = true;
 
@@ -441,10 +441,10 @@ void PiwigoTalker::parseResponseLogin(const QByteArray& data)
 
                 QByteArray buffer = "method=pwg.getVersion";
                 m_job             = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
-                m_job->addMetaData(QStringLiteral("content-type"),
-                                   QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
-                m_job->addMetaData(QStringLiteral("customHTTPHeader"),
-                                   QStringLiteral("Authorization: ") + s_authToken);
+                m_job->addMetaData(QString::fromLatin1("content-type"),
+                                   QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
+                m_job->addMetaData(QString::fromLatin1("customHTTPHeader"),
+                                   QString::fromLatin1("Authorization: ") + s_authToken);
 
                 connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
                         this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
@@ -475,7 +475,7 @@ void PiwigoTalker::parseResponseGetVersion(const QByteArray& data)
 {
     QXmlStreamReader ts(data);
     QString line;
-    QRegExp verrx(QStringLiteral(".?(\\d)\\.(\\d).*"));
+    QRegExp verrx(QString::fromLatin1(".?(\\d)\\.(\\d).*"));
 
     bool foundResponse = false;
 
@@ -489,7 +489,7 @@ void PiwigoTalker::parseResponseGetVersion(const QByteArray& data)
         {
             foundResponse = true;
 
-            if (ts.name() == QStringLiteral("rsp") && ts.attributes().value(QStringLiteral("stat")) == QStringLiteral("ok"))
+            if (ts.name() == QString::fromLatin1("rsp") && ts.attributes().value(QString::fromLatin1("stat")) == QString::fromLatin1("ok"))
             {
                 QString v = ts.readElementText();
 
@@ -533,25 +533,25 @@ void PiwigoTalker::parseResponseListAlbums(const QByteArray& data)
     {
         ts.readNext();
 
-        if (ts.isEndElement() && ts.name() == QStringLiteral("categories"))
+        if (ts.isEndElement() && ts.name() == QString::fromLatin1("categories"))
             break;
 
         if (ts.isStartElement())
         {
-            if (ts.name() == QStringLiteral("rsp") && ts.attributes().value(QStringLiteral("stat")) == QStringLiteral("ok"))
+            if (ts.name() == QString::fromLatin1("rsp") && ts.attributes().value(QString::fromLatin1("stat")) == QString::fromLatin1("ok"))
             {
                 foundResponse = true;
             }
 
-            if (ts.name() == QStringLiteral("categories"))
+            if (ts.name() == QString::fromLatin1("categories"))
             {
                 success = true;
             }
 
-            if (ts.name() == QStringLiteral("category"))
+            if (ts.name() == QString::fromLatin1("category"))
             {
                 GAlbum album;
-                album.ref_num = ts.attributes().value(QStringLiteral("id")).toString().toInt();
+                album.ref_num = ts.attributes().value(QString::fromLatin1("id")).toString().toInt();
                 album.parent_ref_num = -1;
 
                 qCDebug(KIPIPLUGINS_LOG) << album.ref_num << "\n";
@@ -559,13 +559,13 @@ void PiwigoTalker::parseResponseListAlbums(const QByteArray& data)
                 iter = albumList.insert(iter, album);
             }
 
-            if (ts.name() == QStringLiteral("name"))
+            if (ts.name() == QString::fromLatin1("name"))
             {
                 (*iter).name = ts.readElementText();
                 qCDebug(KIPIPLUGINS_LOG) << (*iter).name << "\n";
             }
 
-            if (ts.name() == QStringLiteral("uppercats"))
+            if (ts.name() == QString::fromLatin1("uppercats"))
             {
                 QString uppercats   = ts.readElementText();
                 QStringList catlist = uppercats.split(QLatin1Char(','));
@@ -614,16 +614,16 @@ void PiwigoTalker::parseResponseDoesPhotoExist(const QByteArray& data)
 
         ts.readNext();
 
-        if (ts.name() == QStringLiteral("rsp"))
+        if (ts.name() == QString::fromLatin1("rsp"))
         {
             foundResponse = true;
 
-            if (ts.attributes().value(QStringLiteral("stat")) == QStringLiteral("ok"))
+            if (ts.attributes().value(QString::fromLatin1("stat")) == QString::fromLatin1("ok"))
                 success = true;
 
             // Originally, first versions of Piwigo 2.4.x returned an invalid XML as the element started with a digit
             // New versions are corrected (starting with _) : This code works with both versions
-            QRegExp md5rx(QStringLiteral("_?([a-f0-9]+)>([0-9]+)</.+"));
+            QRegExp md5rx(QString::fromLatin1("_?([a-f0-9]+)>([0-9]+)</.+"));
 
             ts.readNext();
 
@@ -642,17 +642,17 @@ void PiwigoTalker::parseResponseDoesPhotoExist(const QByteArray& data)
                     m_talker_buffer.resize(0);
 
                     QStringList qsl;
-                    qsl.append(QStringLiteral("method=pwg.images.getInfo"));
-                    qsl.append(QStringLiteral("image_id=") + QString::number(m_photoId));
-                    QString dataParameters = qsl.join(QStringLiteral("&"));
+                    qsl.append(QString::fromLatin1("method=pwg.images.getInfo"));
+                    qsl.append(QString::fromLatin1("image_id=") + QString::number(m_photoId));
+                    QString dataParameters = qsl.join(QString::fromLatin1("&"));
                     QByteArray buffer;
                     buffer.append(dataParameters.toUtf8());
 
                     m_job = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
-                    m_job->addMetaData(QStringLiteral("content-type"),
-                                       QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
-                    m_job->addMetaData(QStringLiteral("customHTTPHeader"),
-                                       QStringLiteral("Authorization: ") + s_authToken);
+                    m_job->addMetaData(QString::fromLatin1("content-type"),
+                                       QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
+                    m_job->addMetaData(QString::fromLatin1("customHTTPHeader"),
+                                       QString::fromLatin1("Authorization: ") + s_authToken);
 
                     connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
                         this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
@@ -716,17 +716,17 @@ void PiwigoTalker::parseResponseGetInfo(const QByteArray& data)
 
         if (ts.isStartElement())
         {
-            if (ts.name() == QStringLiteral("rsp"))
+            if (ts.name() == QString::fromLatin1("rsp"))
             {
                 foundResponse = true;
-                if (ts.attributes().value(QStringLiteral("stat")) == QStringLiteral("ok")) success = true;
+                if (ts.attributes().value(QString::fromLatin1("stat")) == QString::fromLatin1("ok")) success = true;
             }
 
-            if (ts.name() == QStringLiteral("category"))
+            if (ts.name() == QString::fromLatin1("category"))
             {
-                if (ts.attributes().hasAttribute(QStringLiteral("id")))
+                if (ts.attributes().hasAttribute(QString::fromLatin1("id")))
                 {
-                    QString id(ts.attributes().value(QStringLiteral("id")).toString());
+                    QString id(ts.attributes().value(QString::fromLatin1("id")).toString());
                     categories.append(id.toInt());
                 }
             }
@@ -770,10 +770,10 @@ void PiwigoTalker::parseResponseGetInfo(const QByteArray& data)
     buffer.append(dataParameters.toUtf8());
 
     m_job = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
-    m_job->addMetaData(QStringLiteral("content-type"),
-                       QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
-    m_job->addMetaData(QStringLiteral("customHTTPHeader"),
-                       QStringLiteral("Authorization: ") + s_authToken);
+    m_job->addMetaData(QString::fromLatin1("content-type"),
+                       QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
+    m_job->addMetaData(QString::fromLatin1("customHTTPHeader"),
+                       QString::fromLatin1("Authorization: ") + s_authToken);
 
     connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
@@ -800,10 +800,10 @@ void PiwigoTalker::parseResponseSetInfo(const QByteArray& data)
 
         if (ts.isStartElement())
         {
-            if (ts.name() == QStringLiteral("rsp"))
+            if (ts.name() == QString::fromLatin1("rsp"))
             {
                 foundResponse = true;
-                if (ts.attributes().value(QStringLiteral("stat")) == QStringLiteral("ok")) success = true;
+                if (ts.attributes().value(QString::fromLatin1("stat")) == QString::fromLatin1("ok")) success = true;
                 break;
             }
         }
@@ -852,10 +852,10 @@ void PiwigoTalker::addNextChunk()
     imagefile.close();
 
     m_job = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
-    m_job->addMetaData(QStringLiteral("content-type"),
-                       QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
-    m_job->addMetaData(QStringLiteral("customHTTPHeader"),
-                       QStringLiteral("Authorization: ") + s_authToken);
+    m_job->addMetaData(QString::fromLatin1("content-type"),
+                       QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
+    m_job->addMetaData(QString::fromLatin1("customHTTPHeader"),
+                       QString::fromLatin1("Authorization: ") + s_authToken);
 
     emit signalProgressInfo( i18n("Upload the chunk %1/%2 of %3", m_chunkId, m_nbOfChunks, QUrl(m_path).fileName()) );
 
@@ -882,10 +882,10 @@ void PiwigoTalker::parseResponseAddPhotoChunk(const QByteArray& data)
 
         if (ts.isStartElement())
         {
-            if (ts.name() == QStringLiteral("rsp"))
+            if (ts.name() == QString::fromLatin1("rsp"))
             {
                 foundResponse = true;
-                if (ts.attributes().value(QStringLiteral("stat")) == QStringLiteral("ok")) success = true;
+                if (ts.attributes().value(QString::fromLatin1("stat")) == QString::fromLatin1("ok")) success = true;
                 break;
             }
         }
@@ -929,10 +929,10 @@ void PiwigoTalker::addPhotoSummary()
     buffer.append(dataParameters.toUtf8());
 
     m_job = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
-    m_job->addMetaData(QStringLiteral("content-type"),
-                       QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
-    m_job->addMetaData(QStringLiteral("customHTTPHeader"),
-                       QStringLiteral("Authorization: ") + s_authToken);
+    m_job->addMetaData(QString::fromLatin1("content-type"),
+                       QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
+    m_job->addMetaData(QString::fromLatin1("customHTTPHeader"),
+                       QString::fromLatin1("Authorization: ") + s_authToken);
 
     emit signalProgressInfo( i18n("Upload the metadata of %1", QUrl(m_path).fileName()) );
 
@@ -959,10 +959,10 @@ void PiwigoTalker::parseResponseAddPhotoSummary(const QByteArray& data)
 
         if (ts.isStartElement())
         {
-            if (ts.name() == QStringLiteral("rsp"))
+            if (ts.name() == QString::fromLatin1("rsp"))
             {
                 foundResponse = true;
-                if (ts.attributes().value(QStringLiteral("stat")) == QStringLiteral("ok")) success = true;
+                if (ts.attributes().value(QString::fromLatin1("stat")) == QString::fromLatin1("ok")) success = true;
                 break;
             }
         }
@@ -989,7 +989,7 @@ void PiwigoTalker::deleteTemporaryFile()
 {
     if (m_tmpPath.size()) {
         QFile(m_tmpPath).remove();
-        m_tmpPath = QStringLiteral("");
+        m_tmpPath = QString::fromLatin1("");
     }
 }
 

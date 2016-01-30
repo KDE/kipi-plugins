@@ -152,7 +152,7 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
 
     confButton = new QPushButton;
     confButton->setText(i18n("Change Account"));
-    confButton->setIcon(QIcon::fromTheme(QStringLiteral("system-switch-user")));
+    confButton->setIcon(QIcon::fromTheme(QString::fromLatin1("system-switch-user")));
     confButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     QGroupBox* const optionsBox = new QGroupBox(i18n("Options"));
@@ -242,25 +242,25 @@ PiwigoWindow::PiwigoWindow(QWidget* const parent, Piwigo* const pPiwigo)
 
     about->addAuthor(ki18n("Renchi Raju").toString(),
                      ki18n("Developer").toString(),
-                     QStringLiteral("renchi dot raju at gmail dot com"));
+                     QString::fromLatin1("renchi dot raju at gmail dot com"));
 
     about->addAuthor(ki18n("Colin Guthrie").toString(),
                      ki18n("Developer").toString(),
-                     QStringLiteral("kde at colin dot guthr dot ie"));
+                     QString::fromLatin1("kde at colin dot guthr dot ie"));
 
     about->addAuthor(ki18n("Andrea Diamantini").toString(),
                      ki18n("Developer").toString(),
-                     QStringLiteral("adjam7 at gmail dot com"));
+                     QString::fromLatin1("adjam7 at gmail dot com"));
 
     about->addAuthor(ki18n("Gilles Caulier").toString(),
                      ki18n("Developer").toString(),
-                     QStringLiteral("caulier dot gilles at gmail dot com"));
+                     QString::fromLatin1("caulier dot gilles at gmail dot com"));
 
     about->addAuthor(ki18n("Frédéric Coiffier").toString(),
                      ki18n("Developer").toString(),
-                     QStringLiteral("frederic dot coiffier at free dot com"));
+                     QString::fromLatin1("frederic dot coiffier at free dot com"));
 
-    about->setHandbookEntry(QStringLiteral("piwigo"));
+    about->setHandbookEntry(QString::fromLatin1("piwigo"));
     setAboutData(about);
 
     // "Start Upload" button
@@ -292,7 +292,7 @@ PiwigoWindow::PiwigoWindow(QWidget* const parent, Piwigo* const pPiwigo)
 PiwigoWindow::~PiwigoWindow()
 {
     // write config
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup group = config.group("PiwigoSync Galleries");
 
     group.writeEntry("Resize",          d->resizeCheckBox->isChecked());
@@ -345,7 +345,7 @@ void PiwigoWindow::connectSignals()
 void PiwigoWindow::readSettings()
 {
     // read Config
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup group = config.group("PiwigoSync Galleries");
 
     if (group.readEntry("Resize", false))
@@ -373,7 +373,7 @@ void PiwigoWindow::slotDoLogin()
 
     if (url.scheme().isEmpty())
     {
-        url.setScheme(QStringLiteral("http"));
+        url.setScheme(QString::fromLatin1("http"));
         url.setHost(d->pPiwigo->url());
     }
 
@@ -456,7 +456,7 @@ void PiwigoWindow::slotAlbums(const QList<GAlbum>& albumList)
         {
             QTreeWidgetItem *item = new QTreeWidgetItem();
             item->setText(0, cleanName(album.name) );
-            item->setIcon(0, QIcon::fromTheme(QStringLiteral("inode-directory")) );
+            item->setIcon(0, QIcon::fromTheme(QString::fromLatin1("inode-directory")) );
             item->setData(1, Qt::UserRole, QVariant(album.ref_num) );
             item->setText(2, i18n("Album") );
 
@@ -480,7 +480,7 @@ void PiwigoWindow::slotAlbums(const QList<GAlbum>& albumList)
                 {
                     QTreeWidgetItem *item = new QTreeWidgetItem(parentItem);
                     item->setText(0, cleanName(album.name) );
-                    item->setIcon(0, QIcon::fromTheme(QStringLiteral("inode-directory")) );
+                    item->setIcon(0, QIcon::fromTheme(QString::fromLatin1("inode-directory")) );
                     item->setData(1, Qt::UserRole, album.ref_num );
                     item->setText(2, i18n("Album") );
 
@@ -651,10 +651,10 @@ void PiwigoWindow::slotSettings()
 QString PiwigoWindow::cleanName(const QString& str) const
 {
     QString plain = str;
-    plain.replace(QStringLiteral("&lt;"), QStringLiteral("<"));
-    plain.replace(QStringLiteral("&gt;"), QStringLiteral(">"));
-    plain.replace(QStringLiteral("&quot;"), QStringLiteral("\""));
-    plain.replace(QStringLiteral("&amp;"), QStringLiteral("&"));
+    plain.replace(QString::fromLatin1("&lt;"), QString::fromLatin1("<"));
+    plain.replace(QString::fromLatin1("&gt;"), QString::fromLatin1(">"));
+    plain.replace(QString::fromLatin1("&quot;"), QString::fromLatin1("\""));
+    plain.replace(QString::fromLatin1("&amp;"), QString::fromLatin1("&"));
 
     return plain;
 }

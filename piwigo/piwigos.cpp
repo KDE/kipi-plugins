@@ -94,7 +94,7 @@ void Piwigo::load()
     bln_loaded = true;
 
     // read config
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup group = config.group("Piwigo Settings");
 
     qCDebug(KIPIPLUGINS_LOG) << "Reading data from kipirc file..";
@@ -106,14 +106,14 @@ void Piwigo::load()
 
 void Piwigo::save()
 {
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup group = config.group("Piwigo Settings");
 
     qCDebug(KIPIPLUGINS_LOG) << "Saving data to kipirc file..";
 
-    group.writeEntry(QStringLiteral("URL"),      url());
-    group.writeEntry(QStringLiteral("Username"), username());
-    group.writeEntry(QStringLiteral("Password"), password());
+    group.writeEntry(QString::fromUtf8("URL"),      url());
+    group.writeEntry(QString::fromUtf8("Username"), username());
+    group.writeEntry(QString::fromUtf8("Password"), password());
 
     qCDebug(KIPIPLUGINS_LOG) << "syncing..";
     config.sync();
