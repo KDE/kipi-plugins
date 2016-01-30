@@ -67,7 +67,7 @@ AuthInfoWidget::AuthInfoWidget(QWidget* const parent,
     loginDescLabel->setWhatsThis(i18n("Your VKontakte login"));
 
     m_loginLabel       = new QLabel(this);
-    m_changeUserButton = new QPushButton(QIcon::fromTheme(QStringLiteral("system-switch-user")),
+    m_changeUserButton = new QPushButton(QIcon::fromTheme(QString::fromLatin1("system-switch-user")),
                                          i18n("Change Account"), this);
     m_changeUserButton->setToolTip(i18n("Change VKontakte account used to authenticate"));
     m_changeUserButton->hide(); // changing account does not work anyway
@@ -150,7 +150,7 @@ void AuthInfoWidget::updateAuthInfo()
         loginText = i18n("Unauthorized");
     }
 
-    m_loginLabel->setText(QStringLiteral("<b>%1</b>").arg(loginText));
+    m_loginLabel->setText(QString::fromLatin1("<b>%1</b>").arg(loginText));
 }
 
 // TODO: share this code with `vkwindow.cpp`
@@ -164,9 +164,9 @@ void AuthInfoWidget::handleVkError(KJob* kjob)
 QString AuthInfoWidget::albumsURL() const
 {
     if (m_vkapi->isAuthenticated() && m_userId != -1)
-        return QStringLiteral("http://vk.com/albums%1").arg(m_userId);
+        return QString::fromLatin1("http://vk.com/albums%1").arg(m_userId);
     else
-        return QStringLiteral("http://vk.com/");
+        return QString::fromLatin1("http://vk.com/");
 }
 
 } // namespace KIPIVkontaktePlugin

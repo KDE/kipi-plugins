@@ -159,7 +159,7 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
 //     mainLayout->setMargin(0);
 
     setMainWidget(m_mainWidget);
-    setWindowIcon(QIcon::fromTheme(QStringLiteral("kipi")));
+    setWindowIcon(QIcon::fromTheme(QString::fromLatin1("kipi")));
     setModal(false);
 
     if (!m_import)
@@ -190,8 +190,8 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
                                                      "(c) 2010-2013, Roman Tsisyk\n"
                                                      "(c) 2011-2015, Alexander Potashev"));
 
-    about->addAuthor(i18n("Alexander Potashev"), i18n("Author"), QStringLiteral("aspotashev@gmail.com"));
-    about->setHandbookEntry(QStringLiteral("VKontakte"));
+    about->addAuthor(i18n("Alexander Potashev"), i18n("Author"), QString::fromLatin1("aspotashev@gmail.com"));
+    about->setHandbookEntry(QString::fromLatin1("VKontakte"));
     setAboutData(about);
 
     /*
@@ -278,7 +278,7 @@ void VkontakteWindow::updateBusyStatusReady()
 
 void VkontakteWindow::readSettings()
 {
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup grp = config.group("VKontakte Settings");
 
     m_appId         = grp.readEntry("VkAppId", "2446321");
@@ -290,7 +290,7 @@ void VkontakteWindow::readSettings()
 
 void VkontakteWindow::writeSettings()
 {
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup grp = config.group("VKontakte Settings");
 
     grp.writeEntry("VkAppId", m_appId);
@@ -345,7 +345,7 @@ void VkontakteWindow::authCleared()
 
 void VkontakteWindow::updateHeaderLabel()
 {
-    m_headerLabel->setText(QStringLiteral("<b><h2><a href=\"%1\"><font color=\"black\">%2</font></a></h2></b>")
+    m_headerLabel->setText(QString::fromLatin1("<b><h2><a href=\"%1\"><font color=\"black\">%2</font></a></h2></b>")
                            .arg(m_accountBox->albumsURL()).arg(i18n("VKontakte")));
 }
 
@@ -395,7 +395,7 @@ void VkontakteWindow::slotStartTransfer()
 
     m_progressBar->show();
     m_progressBar->progressScheduled(i18n("Vkontakte Export"), false, true);
-    m_progressBar->progressThumbnailChanged(QIcon::fromTheme(QStringLiteral("kipi")).pixmap(22, 22));
+    m_progressBar->progressThumbnailChanged(QIcon::fromTheme(QString::fromLatin1("kipi")).pixmap(22, 22));
 }
 
 void VkontakteWindow::slotPhotoUploadDone(KJob *kjob)
