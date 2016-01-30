@@ -64,9 +64,9 @@ void MPForm::reset()
 void MPForm::finish()
 {
     QString str;
-    str += QStringLiteral("--");
+    str += QString::fromLatin1("--");
     str += QString::fromLatin1(m_boundary);
-    str += QStringLiteral("--");
+    str += QString::fromLatin1("--");
 
     m_buffer.append(str.toUtf8());
 }
@@ -127,21 +127,21 @@ bool MPForm::addFile(const QString& name,const QString& path)
     QString str;
     QString file_size = QString::number(imageFile.size());
 
-    str += QStringLiteral("--");
+    str += QString::fromLatin1("--");
     str += QString::fromLatin1(m_boundary);
-    str += QStringLiteral("\r\n");
-    str += QStringLiteral("Content-Disposition: form-data; name=\"");
+    str += QString::fromLatin1("\r\n");
+    str += QString::fromLatin1("Content-Disposition: form-data; name=\"");
     str += name;
-    str += QStringLiteral("\"; ");
-    str += QStringLiteral("filename=\"");
+    str += QString::fromLatin1("\"; ");
+    str += QString::fromLatin1("filename=\"");
     str += QUrl(path).fileName();
-    str += QStringLiteral("\"\r\n");
-    str += QStringLiteral("Content-Length: ");
+    str += QString::fromLatin1("\"\r\n");
+    str += QString::fromLatin1("Content-Length: ");
     str += file_size;
-    str += QStringLiteral("\r\n");
-    str += QStringLiteral("Content-Type: ");
+    str += QString::fromLatin1("\r\n");
+    str += QString::fromLatin1("Content-Type: ");
     str += mime;
-    str += QStringLiteral("\r\n\r\n");
+    str += QString::fromLatin1("\r\n\r\n");
 
     imageFile.close();
     m_buffer.append(str.toUtf8());
@@ -159,7 +159,7 @@ bool MPForm::addFile(const QString& name,const QString& path)
 
 QString MPForm::contentType() const
 {
-    return QStringLiteral("Content-Type: multipart/form-data; boundary=") + QString::fromLatin1(m_boundary);
+    return QString::fromLatin1("Content-Type: multipart/form-data; boundary=") + QString::fromLatin1(m_boundary);
 }
 
 QString MPForm::boundary() const

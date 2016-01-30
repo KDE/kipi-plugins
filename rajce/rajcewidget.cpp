@@ -62,7 +62,7 @@ namespace KIPIRajcePlugin
 {
 
 RajceWidget::RajceWidget(KIPI::Interface* const interface, const QString& tmpFolder, QWidget* const parent)
-    : KPSettingsWidget(parent, interface, QStringLiteral("Rajce.net"))
+    : KPSettingsWidget(parent, interface, QString::fromLatin1("Rajce.net"))
 {
     m_lastLoggedInState           = false;
     m_session                     = new RajceSession(this, tmpFolder);
@@ -116,17 +116,17 @@ void RajceWidget::updateLabels(const QString&, const QString&)
         emit loginStatusChanged(loggedIn);
     }
 
-    QString username = loggedIn ? m_session->state().username() : QStringLiteral("");
+    QString username = loggedIn ? m_session->state().username() : QString::fromLatin1("");
     QString nickname = loggedIn ? m_session->state().nickname() : i18n("Not logged in");
 
-    getUserNameLabel()->setText(QStringLiteral("<b>%2</b> <small>%1</small>").arg(username, nickname));
+    getUserNameLabel()->setText(QString::fromLatin1("<b>%2</b> <small>%1</small>").arg(username, nickname));
 
     QString link = loggedIn
-        ? QStringLiteral("<b><h2><a href='http://") + m_session->state().nickname() +
-        QStringLiteral(".rajce.net'>"
+        ? QString::fromLatin1("<b><h2><a href='http://") + m_session->state().nickname() +
+        QString::fromLatin1(".rajce.net'>"
         "<font color=\"#9ACD32\">Rajce.net</font>"
         "</a></h2></b>")
-        : QStringLiteral("<b><h2><a href='http://www.rajce.net'>"
+        : QString::fromLatin1("<b><h2><a href='http://www.rajce.net'>"
         "<font color=\"#9ACD32\">Rajce.net</font>"
         "</a></h2></b>");
 
@@ -287,7 +287,7 @@ void RajceWidget::progressStarted(unsigned commandType)
 
 void RajceWidget::changeUserClicked()
 {
-    KIPIPlugins::KPLoginDialog* const dlg = new KIPIPlugins::KPLoginDialog(this, QStringLiteral("Rajce.net"));
+    KIPIPlugins::KPLoginDialog* const dlg = new KIPIPlugins::KPLoginDialog(this, QString::fromLatin1("Rajce.net"));
 
     if (dlg->exec() == QDialog::Accepted)
     {
@@ -453,7 +453,7 @@ void RajceWidget::_setEnabled(bool enabled)
 
 void RajceWidget::readSettings()
 {
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup grp = config.group("RajceExport Settings");
 
     SessionState state;
@@ -476,7 +476,7 @@ void RajceWidget::readSettings()
 
 void RajceWidget::writeSettings()
 {
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup grp          = config.group("RajceExport Settings");
     const SessionState& state = m_session->state();
 

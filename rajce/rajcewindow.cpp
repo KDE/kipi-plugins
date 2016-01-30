@@ -47,7 +47,7 @@ RajceWindow::RajceWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     m_widget->readSettings();
 
     setMainWidget(m_widget);
-    setWindowIcon(QIcon::fromTheme(QStringLiteral("kipi-rajce")));
+    setWindowIcon(QIcon::fromTheme(QString::fromLatin1("kipi-rajce")));
     setModal(false);
 
     setWindowTitle(i18n("Export to Rajce.net"));
@@ -77,9 +77,9 @@ RajceWindow::RajceWindow(const QString& tmpFolder, QWidget* const /*parent*/)
 
     about->addAuthor(ki18n( "Lukas Krejci" ).toString(),
                      ki18n("Author").toString(),
-                     QStringLiteral("metlosh at gmail dot com"));
+                     QString::fromLatin1("metlosh at gmail dot com"));
 
-    about->setHandbookEntry(QStringLiteral("rajceexport"));
+    about->setHandbookEntry(QString::fromLatin1("rajceexport"));
     setAboutData(about);
 
     startButton()->setEnabled(false);

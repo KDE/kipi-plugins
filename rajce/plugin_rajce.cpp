@@ -98,19 +98,19 @@ void Plugin_Rajce::setupActions()
 
     m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to &Rajce.net..."));
-    m_actionExport->setIcon(QIcon::fromTheme(QStringLiteral("kipi-rajce")));
+    m_actionExport->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-rajce")));
     m_actionExport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::Key_J));
     m_actionExport->setEnabled(false);
 
     connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()));
 
-    addAction(QStringLiteral("rajceexport"), m_actionExport);
+    addAction(QString::fromLatin1("rajceexport"), m_actionExport);
 }
 
 void Plugin_Rajce::slotExport()
 {
-    QString tmp = makeTemporaryDir("kipi-rajce").absolutePath() + QStringLiteral("/");
+    QString tmp = makeTemporaryDir("kipi-rajce").absolutePath() + QString::fromLatin1("/");
 
     if (!m_dlgExport)
     {
