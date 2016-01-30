@@ -79,7 +79,8 @@ FlashManager::~FlashManager()
 
 void FlashManager::initSimple()
 {
-// it cannot be initialized in main function because interface pointer is null.
+    // it cannot be initialized in main function because interface pointer is null.
+    delete d->simple;
     d->simple = new SimpleViewer(d->iface,this);
     qCDebug(KIPIPLUGINS_LOG) << "simpleview Initialized...";
 }
@@ -114,6 +115,7 @@ void FlashManager::run()
 
 void FlashManager::startWizard()
 {
+    delete d->wizard;
     d->wizard = new ImportWizardDlg(this, QApplication::activeWindow());
     d->wizard->show();
 }
