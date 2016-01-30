@@ -86,9 +86,9 @@ KioImportWindow::KioImportWindow(QWidget* const /*parent*/)
 
     about->addAuthor(ki18n("Johannes Wienke").toString(),
                      ki18n("Developer and maintainer").toString(),
-                     QStringLiteral("languitar at semipol dot de"));
+                     QString::fromLatin1("languitar at semipol dot de"));
 
-    about->setHandbookEntry(QStringLiteral("kioexport"));
+    about->setHandbookEntry(QString::fromLatin1("kioexport"));
     setAboutData(about);
 
     slotSourceAndTargetUpdated();

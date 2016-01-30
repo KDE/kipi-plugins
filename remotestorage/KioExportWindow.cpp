@@ -48,9 +48,9 @@
 namespace KIPIRemoteStoragePlugin
 {
 
-const QString KioExportWindow::TARGET_URL_PROPERTY  = QStringLiteral("targetUrl");
-const QString KioExportWindow::HISTORY_URL_PROPERTY = QStringLiteral("historyUrls");
-const QString KioExportWindow::CONFIG_GROUP         = QStringLiteral("KioExport");
+const QString KioExportWindow::TARGET_URL_PROPERTY  = QString::fromLatin1("targetUrl");
+const QString KioExportWindow::HISTORY_URL_PROPERTY = QString::fromLatin1("historyUrls");
+const QString KioExportWindow::CONFIG_GROUP         = QString::fromLatin1("KioExport");
 
 KioExportWindow::KioExportWindow(QWidget* const /*parent*/)
     : KPToolDialog(0)
@@ -88,9 +88,9 @@ KioExportWindow::KioExportWindow(QWidget* const /*parent*/)
 
     about->addAuthor(ki18n("Johannes Wienke").toString(),
                      ki18n("Developer and maintainer").toString(),
-                     QStringLiteral("languitar at semipol dot de"));
+                     QString::fromLatin1("languitar at semipol dot de"));
 
-    about->setHandbookEntry(QStringLiteral("kioexport"));
+    about->setHandbookEntry(QString::fromLatin1("kioexport"));
     setAboutData(about);
 
     // -- initial sync ------------------------------------------------------
@@ -129,24 +129,24 @@ void KioExportWindow::reactivate()
 void KioExportWindow::restoreSettings()
 {
     qCDebug(KIPIPLUGINS_LOG) <<  "pass here";
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup group = config.group(CONFIG_GROUP);
     m_exportWidget->setHistory(group.readEntry(HISTORY_URL_PROPERTY, QList<QUrl>()));
     m_exportWidget->setTargetUrl(group.readEntry(TARGET_URL_PROPERTY, QUrl()));
 
-    KConfigGroup group2 = config.group(QStringLiteral("Kio Export Dialog"));
+    KConfigGroup group2 = config.group(QString::fromLatin1("Kio Export Dialog"));
     KWindowConfig::restoreWindowSize(windowHandle(), group2);
 }
 
 void KioExportWindow::saveSettings()
 {
     qCDebug(KIPIPLUGINS_LOG) <<  "pass here";
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup group = config.group(CONFIG_GROUP);
     group.writeEntry(HISTORY_URL_PROPERTY, m_exportWidget->history());
     group.writeEntry(TARGET_URL_PROPERTY,  m_exportWidget->targetUrl().url());
 
-    KConfigGroup group2 = config.group(QStringLiteral("Kio Export Dialog"));
+    KConfigGroup group2 = config.group(QString::fromLatin1("Kio Export Dialog"));
     KWindowConfig::saveWindowSize(windowHandle(), group2);
     config.sync();
 }

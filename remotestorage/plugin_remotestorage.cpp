@@ -92,26 +92,26 @@ void Plugin_RemoteStorage::setupActions()
 
     m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to remote storage..."));
-    m_actionExport->setIcon(QIcon::fromTheme(QStringLiteral("folder-remote")));
+    m_actionExport->setIcon(QIcon::fromTheme(QString::fromLatin1("folder-remote")));
     m_actionExport->setShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_K));
     m_actionExport->setEnabled(false);
 
     connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateExport()));
 
-    addAction(QStringLiteral("remotestorageexport"), m_actionExport);
+    addAction(QString::fromLatin1("remotestorageexport"), m_actionExport);
 
     // import
     m_actionImport = new QAction(this);
     m_actionImport->setText(i18n("Import from remote storage..."));
-    m_actionImport->setIcon(QIcon::fromTheme(QStringLiteral("folder-remote")));
+    m_actionImport->setIcon(QIcon::fromTheme(QString::fromLatin1("folder-remote")));
     m_actionImport->setShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_I));
     m_actionImport->setEnabled(false);
 
     connect(m_actionImport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateImport()));
 
-    addAction(QStringLiteral("remotestorageimport"), m_actionImport, ImportPlugin);
+    addAction(QString::fromLatin1("remotestorageimport"), m_actionImport, ImportPlugin);
 }
 
 void Plugin_RemoteStorage::slotActivateExport()
