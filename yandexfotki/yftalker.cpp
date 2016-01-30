@@ -53,16 +53,16 @@ namespace KIPIYandexFotkiPlugin
 /*
  * static API constants
  */
-const QString YandexFotkiTalker::SESSION_URL          = QStringLiteral("http://auth.mobile.yandex.ru/yamrsa/key/");
-const QString YandexFotkiTalker::AUTH_REALM           = QStringLiteral("fotki.yandex.ru");
-const QString YandexFotkiTalker::TOKEN_URL            = QStringLiteral("http://auth.mobile.yandex.ru/yamrsa/token/");
-const QString YandexFotkiTalker::SERVICE_URL          = QStringLiteral("http://api-fotki.yandex.ru/api/users/%1/");
-const QString YandexFotkiTalker::USERPAGE_URL         = QStringLiteral("http://fotki.yandex.ru/users/%1/");
-const QString YandexFotkiTalker::USERPAGE_DEFAULT_URL = QStringLiteral("http://fotki.yandex.ru/");
+const QString YandexFotkiTalker::SESSION_URL          = QString::fromLatin1("http://auth.mobile.yandex.ru/yamrsa/key/");
+const QString YandexFotkiTalker::AUTH_REALM           = QString::fromLatin1("fotki.yandex.ru");
+const QString YandexFotkiTalker::TOKEN_URL            = QString::fromLatin1("http://auth.mobile.yandex.ru/yamrsa/token/");
+const QString YandexFotkiTalker::SERVICE_URL          = QString::fromLatin1("http://api-fotki.yandex.ru/api/users/%1/");
+const QString YandexFotkiTalker::USERPAGE_URL         = QString::fromLatin1("http://fotki.yandex.ru/users/%1/");
+const QString YandexFotkiTalker::USERPAGE_DEFAULT_URL = QString::fromLatin1("http://fotki.yandex.ru/");
 const QString YandexFotkiTalker::ACCESS_STRINGS[]     = {
-    QStringLiteral("public"),
-    QStringLiteral("friends"),
-    QStringLiteral("private") };
+    QString::fromLatin1("public"),
+    QString::fromLatin1("friends"),
+    QString::fromLatin1("private") };
 
 YandexFotkiTalker::YandexFotkiTalker( QObject* const parent )
     : QObject(parent),
@@ -156,13 +156,13 @@ void YandexFotkiTalker::getToken()
 
     paramList.append(QLatin1String("credentials=") + QString::fromUtf8(QUrl::toPercentEncoding(credentials)));
 
-    QString params = paramList.join(QStringLiteral("&"));
+    QString params = paramList.join(QString::fromLatin1("&"));
 
     KIO::TransferJob* const job = KIO::http_post(QUrl(TOKEN_URL), params.toUtf8(),
                                            KIO::HideProgressInfo);
 
-    job->addMetaData(QStringLiteral("content-type"),
-                     QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
+    job->addMetaData(QString::fromLatin1("content-type"),
+                     QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
 
     m_state = STATE_GETTOKEN;
 
@@ -194,10 +194,10 @@ void YandexFotkiTalker::listAlbumsNext()
     KIO::TransferJob* const job = KIO::get(QUrl(m_albumsNextUrl),
                                   KIO::NoReload, KIO::HideProgressInfo);
 
-    job->addMetaData(QStringLiteral("content-type"),
-                     QStringLiteral("Content-Type: application/atom+xml; charset=utf-8; type=feed"));
-    job->addMetaData(QStringLiteral("customHTTPHeader"),
-                     QStringLiteral("Authorization: FimpToken realm=\"%1\", token=\"%2\"")
+    job->addMetaData(QString::fromLatin1("content-type"),
+                     QString::fromLatin1("Content-Type: application/atom+xml; charset=utf-8; type=feed"));
+    job->addMetaData(QString::fromLatin1("customHTTPHeader"),
+                     QString::fromLatin1("Authorization: FimpToken realm=\"%1\", token=\"%2\"")
                      .arg(AUTH_REALM).arg(m_token));
 
     m_state = STATE_LISTALBUMS;
@@ -231,10 +231,10 @@ void YandexFotkiTalker::listPhotosNext()
     KIO::TransferJob* const job = KIO::get(QUrl(m_photosNextUrl),
                                   KIO::NoReload, KIO::HideProgressInfo);
 
-    job->addMetaData(QStringLiteral("content-type"),
-                     QStringLiteral("Content-Type: application/atom+xml; charset=utf-8; type=feed"));
-    job->addMetaData(QStringLiteral("customHTTPHeader"),
-                     QStringLiteral("Authorization: FimpToken realm=\"%1\", token=\"%2\"")
+    job->addMetaData(QString::fromLatin1("content-type"),
+                     QString::fromLatin1("Content-Type: application/atom+xml; charset=utf-8; type=feed"));
+    job->addMetaData(QString::fromLatin1("customHTTPHeader"),
+                     QString::fromLatin1("Authorization: FimpToken realm=\"%1\", token=\"%2\"")
                      .arg(AUTH_REALM).arg(m_token));
 
     m_state = STATE_LISTPHOTOS;
@@ -293,10 +293,10 @@ void YandexFotkiTalker::updatePhotoFile(YandexFotkiPhoto& photo)
 
     KIO::TransferJob* const job = KIO::http_post(QUrl(m_lastPhotosUrl), imageFile.readAll());
     //job->ui()->setWindow(m_parent);
-    job->addMetaData(QStringLiteral("content-type"),
-                     QStringLiteral("Content-Type: image/jpeg"));
-    job->addMetaData(QStringLiteral("customHTTPHeader"),
-                     QStringLiteral("Authorization: FimpToken realm=\"%1\", token=\"%2\"")
+    job->addMetaData(QString::fromLatin1("content-type"),
+                     QString::fromLatin1("Content-Type: image/jpeg"));
+    job->addMetaData(QString::fromLatin1("customHTTPHeader"),
+                     QString::fromLatin1("Authorization: FimpToken realm=\"%1\", token=\"%2\"")
                      .arg(AUTH_REALM).arg(m_token));
     job->addMetaData(QLatin1String("slug"), QLatin1String("Slug: ") +
                      QString::fromUtf8(QUrl::toPercentEncoding(photo.title())) + QLatin1String(".jpg"));
@@ -319,56 +319,56 @@ void YandexFotkiTalker::updatePhotoInfo(YandexFotkiPhoto& photo)
 {
     QDomDocument doc;
     QDomProcessingInstruction instr = doc.createProcessingInstruction(
-        QStringLiteral("xml"),
-        QStringLiteral("version='1.0' encoding='UTF-8'"));
+        QString::fromLatin1("xml"),
+        QString::fromLatin1("version='1.0' encoding='UTF-8'"));
 
     doc.appendChild(instr);
-    QDomElement entryElem = doc.createElement(QStringLiteral("entry"));
-    entryElem.setAttribute(QStringLiteral("xmlns"), QStringLiteral("http://www.w3.org/2005/Atom"));
-    entryElem.setAttribute(QStringLiteral("xmlns:f"), QStringLiteral("yandex:fotki"));
+    QDomElement entryElem = doc.createElement(QString::fromLatin1("entry"));
+    entryElem.setAttribute(QString::fromLatin1("xmlns"), QString::fromLatin1("http://www.w3.org/2005/Atom"));
+    entryElem.setAttribute(QString::fromLatin1("xmlns:f"), QString::fromLatin1("yandex:fotki"));
     doc.appendChild(entryElem);
 
-    QDomElement urn = doc.createElement(QStringLiteral("urn"));
+    QDomElement urn = doc.createElement(QString::fromLatin1("urn"));
     urn.appendChild(doc.createTextNode(photo.urn()));
     entryElem.appendChild(urn);
 
-    QDomElement title = doc.createElement(QStringLiteral("title"));
+    QDomElement title = doc.createElement(QString::fromLatin1("title"));
     title.appendChild(doc.createTextNode(photo.title()));
     entryElem.appendChild(title);
 
-    QDomElement linkAlbum = doc.createElement(QStringLiteral("link"));
-    linkAlbum.setAttribute(QStringLiteral("href"), photo.m_apiAlbumUrl);
-    linkAlbum.setAttribute(QStringLiteral("rel"), QStringLiteral("album"));
+    QDomElement linkAlbum = doc.createElement(QString::fromLatin1("link"));
+    linkAlbum.setAttribute(QString::fromLatin1("href"), photo.m_apiAlbumUrl);
+    linkAlbum.setAttribute(QString::fromLatin1("rel"), QString::fromLatin1("album"));
     entryElem.appendChild(linkAlbum);
 
-    QDomElement summary = doc.createElement(QStringLiteral("summary"));
+    QDomElement summary = doc.createElement(QString::fromLatin1("summary"));
     summary.appendChild(doc.createTextNode(photo.summary()));
     entryElem.appendChild(summary);
 
-    QDomElement adult = doc.createElement(QStringLiteral("f:xxx"));
-    adult.setAttribute(QStringLiteral("value"), photo.isAdult() ? QStringLiteral("true") : QStringLiteral("false"));
+    QDomElement adult = doc.createElement(QString::fromLatin1("f:xxx"));
+    adult.setAttribute(QString::fromLatin1("value"), photo.isAdult() ? QString::fromLatin1("true") : QString::fromLatin1("false"));
     entryElem.appendChild(adult);
 
-    QDomElement hideOriginal = doc.createElement(QStringLiteral("f:hide_original"));
-    hideOriginal.setAttribute(QStringLiteral("value"),
-                              photo.isHideOriginal() ? QStringLiteral("true") : QStringLiteral("false"));
+    QDomElement hideOriginal = doc.createElement(QString::fromLatin1("f:hide_original"));
+    hideOriginal.setAttribute(QString::fromLatin1("value"),
+                              photo.isHideOriginal() ? QString::fromLatin1("true") : QString::fromLatin1("false"));
     entryElem.appendChild(hideOriginal);
 
-    QDomElement disableComments = doc.createElement(QStringLiteral("f:disable_comments"));
-    disableComments.setAttribute(QStringLiteral("value"),
-                                 photo.isDisableComments() ? QStringLiteral("true") : QStringLiteral("false"));
+    QDomElement disableComments = doc.createElement(QString::fromLatin1("f:disable_comments"));
+    disableComments.setAttribute(QString::fromLatin1("value"),
+                                 photo.isDisableComments() ? QString::fromLatin1("true") : QString::fromLatin1("false"));
     entryElem.appendChild(disableComments);
 
-    QDomElement access = doc.createElement(QStringLiteral("f:access"));
-    access.setAttribute(QStringLiteral("value"), ACCESS_STRINGS[photo.access()]);
+    QDomElement access = doc.createElement(QString::fromLatin1("f:access"));
+    access.setAttribute(QString::fromLatin1("value"), ACCESS_STRINGS[photo.access()]);
     entryElem.appendChild(access);
 
     // FIXME: undocumented API
     foreach(const QString& t, photo.tags)
     {
-        QDomElement tag = doc.createElement(QStringLiteral("category"));
-        tag.setAttribute(QStringLiteral("scheme"), m_apiTagsUrl);
-        tag.setAttribute(QStringLiteral("term"), t);
+        QDomElement tag = doc.createElement(QString::fromLatin1("category"));
+        tag.setAttribute(QString::fromLatin1("scheme"), m_apiTagsUrl);
+        tag.setAttribute(QString::fromLatin1("term"), t);
         entryElem.appendChild(tag);
     }
 
@@ -384,13 +384,13 @@ void YandexFotkiTalker::updatePhotoInfo(YandexFotkiPhoto& photo)
      * It's really unsuable, but anyway...
      */
     KIO::TransferJob* const job = KIO::put(QUrl(photo.m_apiEditUrl), -1/*, KIO::HideProgressInfo*/);
-    job->addMetaData(QStringLiteral("customHTTPHeader"),
-                     QStringLiteral("Authorization: FimpToken realm=\"%1\", token=\"%2\"")
+    job->addMetaData(QString::fromLatin1("customHTTPHeader"),
+                     QString::fromLatin1("Authorization: FimpToken realm=\"%1\", token=\"%2\"")
                      .arg(AUTH_REALM).arg(m_token));
-    job->addMetaData(QStringLiteral("content-type"),
-                     QStringLiteral("Content-Type: application/atom+xml; charset=utf-8; type=entry"));
-    job->addMetaData(QStringLiteral("content-length"),
-                     QStringLiteral("Content-Length: %1").arg(m_buffer.size()));
+    job->addMetaData(QString::fromLatin1("content-type"),
+                     QString::fromLatin1("Content-Type: application/atom+xml; charset=utf-8; type=entry"));
+    job->addMetaData(QString::fromLatin1("content-length"),
+                     QString::fromLatin1("Content-Length: %1").arg(m_buffer.size()));
 
     // no result data in this method, but reading from m_buffer
     connect(job, SIGNAL(dataReq(KIO::Job*,QByteArray&)),
@@ -423,24 +423,24 @@ void YandexFotkiTalker::updateAlbumCreate(YandexFotkiAlbum& album)
 {
     QDomDocument doc;
     QDomProcessingInstruction instr = doc.createProcessingInstruction(
-        QStringLiteral("xml"),
-        QStringLiteral("version='1.0' encoding='UTF-8'"));
+        QString::fromLatin1("xml"),
+        QString::fromLatin1("version='1.0' encoding='UTF-8'"));
 
     doc.appendChild(instr);
-    QDomElement entryElem = doc.createElement(QStringLiteral("entry"));
-    entryElem.setAttribute(QStringLiteral("xmlns"), QStringLiteral("http://www.w3.org/2005/Atom"));
-    entryElem.setAttribute(QStringLiteral("xmlns:f"), QStringLiteral("yandex:fotki"));
+    QDomElement entryElem = doc.createElement(QString::fromLatin1("entry"));
+    entryElem.setAttribute(QString::fromLatin1("xmlns"), QString::fromLatin1("http://www.w3.org/2005/Atom"));
+    entryElem.setAttribute(QString::fromLatin1("xmlns:f"), QString::fromLatin1("yandex:fotki"));
     doc.appendChild(entryElem);
 
-    QDomElement title = doc.createElement(QStringLiteral("title"));
+    QDomElement title = doc.createElement(QString::fromLatin1("title"));
     title.appendChild(doc.createTextNode(album.title()));
     entryElem.appendChild(title);
 
-    QDomElement summary = doc.createElement(QStringLiteral("summary"));
+    QDomElement summary = doc.createElement(QString::fromLatin1("summary"));
     summary.appendChild(doc.createTextNode(album.summary()));
     entryElem.appendChild(summary);
 
-    QDomElement password = doc.createElement(QStringLiteral("f:password"));
+    QDomElement password = doc.createElement(QString::fromLatin1("f:password"));
     password.appendChild(doc.createTextNode(album.m_password));
     entryElem.appendChild(password);
 
@@ -450,10 +450,10 @@ void YandexFotkiTalker::updateAlbumCreate(YandexFotkiAlbum& album)
 
     KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiAlbumsUrl), postData,
                                   KIO::HideProgressInfo);
-    job->addMetaData(QStringLiteral("content-type"),
-                     QStringLiteral("Content-Type: application/atom+xml; charset=utf-8; type=entry"));
-    job->addMetaData(QStringLiteral("customHTTPHeader"),
-                     QStringLiteral("Authorization: FimpToken realm=\"%1\", token=\"%2\"")
+    job->addMetaData(QString::fromLatin1("content-type"),
+                     QString::fromLatin1("Content-Type: application/atom+xml; charset=utf-8; type=entry"));
+    job->addMetaData(QString::fromLatin1("customHTTPHeader"),
+                     QString::fromLatin1("Authorization: FimpToken realm=\"%1\", token=\"%2\"")
                      .arg(AUTH_REALM).arg(m_token));
 
     m_state = STATE_UPDATEALBUM;
@@ -514,11 +514,11 @@ bool YandexFotkiTalker::prepareJobResult(KJob* job, State error)
 
     if (transferJob->error() || transferJob->isErrorPage())
     {
-        const QString code = transferJob->queryMetaData(QStringLiteral("responsecode"));
+        const QString code = transferJob->queryMetaData(QString::fromLatin1("responsecode"));
         qCDebug(KIPIPLUGINS_LOG) << "Transfer Error" << code << transferJob->errorString();
         qCDebug(KIPIPLUGINS_LOG) << "Buffer:" << m_buffer;
 
-        if (code == QStringLiteral("401") || code == QStringLiteral("403")) // auth required
+        if (code == QString::fromLatin1("401") || code == QString::fromLatin1("403")) // auth required
         {
             setErrorState(STATE_INVALID_CREDENTIALS);
         }
@@ -560,7 +560,7 @@ void YandexFotkiTalker::parseResponseGetService(KJob* job)
 
     if (transferJob->isErrorPage())
     {
-        if (transferJob->queryMetaData(QStringLiteral("responsecode")) == QStringLiteral("404")) // user not found
+        if (transferJob->queryMetaData(QString::fromLatin1("responsecode")) == QString::fromLatin1("404")) // user not found
         {
             return setErrorState(STATE_INVALID_CREDENTIALS);
         }
@@ -570,7 +570,7 @@ void YandexFotkiTalker::parseResponseGetService(KJob* job)
         }
     }
 
-    QDomDocument doc(QStringLiteral("service"));
+    QDomDocument doc(QString::fromLatin1("service"));
 
     if ( !doc.setContent( m_buffer ) )
     {
@@ -580,14 +580,14 @@ void YandexFotkiTalker::parseResponseGetService(KJob* job)
 
     const QDomElement rootElem = doc.documentElement();
 
-    QDomElement workspaceElem = rootElem.firstChildElement(QStringLiteral("app:workspace"));
+    QDomElement workspaceElem = rootElem.firstChildElement(QString::fromLatin1("app:workspace"));
 
     // FIXME: workaround for Yandex xml namespaces bugs
-    QString prefix = QStringLiteral("app:");
+    QString prefix = QString::fromLatin1("app:");
 
     if (workspaceElem.isNull())
     {
-        workspaceElem = rootElem.firstChildElement(QStringLiteral("workspace"));
+        workspaceElem = rootElem.firstChildElement(QString::fromLatin1("workspace"));
         prefix = QString();
         qCCritical(KIPIPLUGINS_LOG) << "Service document without namespaces found";
     }
@@ -602,13 +602,13 @@ void YandexFotkiTalker::parseResponseGetService(KJob* job)
     QString apiPhotosUrl;
     QString apiTagsUrl;
 
-    QDomElement collectionElem = workspaceElem.firstChildElement(prefix + QStringLiteral("collection"));
+    QDomElement collectionElem = workspaceElem.firstChildElement(prefix + QString::fromLatin1("collection"));
 
     for ( ; !collectionElem.isNull();
-          collectionElem = collectionElem.nextSiblingElement(prefix + QStringLiteral("collection")))
+          collectionElem = collectionElem.nextSiblingElement(prefix + QString::fromLatin1("collection")))
     {
 
-        const QDomElement acceptElem = collectionElem.firstChildElement(prefix + QStringLiteral("accept"));
+        const QDomElement acceptElem = collectionElem.firstChildElement(prefix + QString::fromLatin1("accept"));
 
         if (acceptElem.isNull()) // invalid section, ignore
         {
@@ -616,17 +616,17 @@ void YandexFotkiTalker::parseResponseGetService(KJob* job)
         }
 
         // FIXME: id attribute is undocumented
-        if (collectionElem.attribute(QStringLiteral("id")) == QStringLiteral("album-list"))
+        if (collectionElem.attribute(QString::fromLatin1("id")) == QString::fromLatin1("album-list"))
         {
-            apiAlbumsUrl = collectionElem.attribute(QStringLiteral("href"));
+            apiAlbumsUrl = collectionElem.attribute(QString::fromLatin1("href"));
         }
-        else if (collectionElem.attribute(QStringLiteral("id")) == QStringLiteral("photo-list"))
+        else if (collectionElem.attribute(QString::fromLatin1("id")) == QString::fromLatin1("photo-list"))
         {
-            apiPhotosUrl = collectionElem.attribute(QStringLiteral("href"));
+            apiPhotosUrl = collectionElem.attribute(QString::fromLatin1("href"));
         }
-        else if (collectionElem.attribute(QStringLiteral("id")) == QStringLiteral("tag-list"))
+        else if (collectionElem.attribute(QString::fromLatin1("id")) == QString::fromLatin1("tag-list"))
         {
-            apiTagsUrl = collectionElem.attribute(QStringLiteral("href"));
+            apiTagsUrl = collectionElem.attribute(QString::fromLatin1("href"));
         } // else skip unknown section
     }
 
@@ -670,7 +670,7 @@ void YandexFotkiTalker::parseResponseGetSession(KJob* job)
     if (!prepareJobResult(job, STATE_GETSESSION_ERROR))
         return;
 
-    QDomDocument doc(QStringLiteral("session"));
+    QDomDocument doc(QString::fromLatin1("session"));
 
     if ( !doc.setContent( m_buffer ) )
     {
@@ -679,9 +679,9 @@ void YandexFotkiTalker::parseResponseGetSession(KJob* job)
 
     const QDomElement rootElem = doc.documentElement();
 
-    const QDomElement keyElem =  rootElem.firstChildElement(QStringLiteral("key"));
+    const QDomElement keyElem =  rootElem.firstChildElement(QString::fromLatin1("key"));
 
-    const QDomElement requestIdElem =  rootElem.firstChildElement(QStringLiteral("request_id"));
+    const QDomElement requestIdElem =  rootElem.firstChildElement(QString::fromLatin1("request_id"));
 
     if (keyElem.isNull() || keyElem.nodeType() != QDomNode::ElementNode ||
         requestIdElem.isNull() || requestIdElem.nodeType() != QDomNode::ElementNode)
@@ -705,7 +705,7 @@ void YandexFotkiTalker::parseResponseGetToken(KJob* job)
     if (!prepareJobResult(job, STATE_GETTOKEN_ERROR))
         return;
 
-    QDomDocument doc(QStringLiteral("response"));
+    QDomDocument doc(QString::fromLatin1("response"));
 
     if ( !doc.setContent( m_buffer ) )
     {
@@ -714,11 +714,11 @@ void YandexFotkiTalker::parseResponseGetToken(KJob* job)
     }
 
     const QDomElement rootElem  = doc.documentElement();
-    const QDomElement tokenElem =  rootElem.firstChildElement(QStringLiteral("token"));
+    const QDomElement tokenElem =  rootElem.firstChildElement(QString::fromLatin1("token"));
 
     if (tokenElem.isNull() || tokenElem.nodeType() != QDomNode::ElementNode)
     {
-        const QDomElement errorElem =  rootElem.firstChildElement(QStringLiteral("error"));
+        const QDomElement errorElem =  rootElem.firstChildElement(QString::fromLatin1("error"));
 
         if (errorElem.isNull() || errorElem.nodeType() != QDomNode::ElementNode)
         {
@@ -752,7 +752,7 @@ void YandexFotkiTalker::parseResponseListAlbums(KJob* job)
     if (!prepareJobResult(job, STATE_LISTALBUMS_ERROR))
         return;
 
-    QDomDocument doc(QStringLiteral("feed"));
+    QDomDocument doc(QString::fromLatin1("feed"));
 
     if ( !doc.setContent( m_buffer ) )
     {
@@ -765,49 +765,49 @@ void YandexFotkiTalker::parseResponseListAlbums(KJob* job)
 
     // find next page link
     m_albumsNextUrl.clear();
-    QDomElement linkElem = rootElem.firstChildElement(QStringLiteral("link"));
+    QDomElement linkElem = rootElem.firstChildElement(QString::fromLatin1("link"));
 
     for ( ; !linkElem.isNull();
-          linkElem = linkElem.nextSiblingElement(QStringLiteral("link")))
+          linkElem = linkElem.nextSiblingElement(QString::fromLatin1("link")))
     {
-        if (linkElem.attribute(QStringLiteral("rel")) == QStringLiteral("next") &&
-            !linkElem.attribute(QStringLiteral("href")).isNull())
+        if (linkElem.attribute(QString::fromLatin1("rel")) == QString::fromLatin1("next") &&
+            !linkElem.attribute(QString::fromLatin1("href")).isNull())
         {
-            m_albumsNextUrl = linkElem.attribute(QStringLiteral("href"));
+            m_albumsNextUrl = linkElem.attribute(QString::fromLatin1("href"));
             break;
         }
     }
 
-    QDomElement entryElem = rootElem.firstChildElement(QStringLiteral("entry"));
+    QDomElement entryElem = rootElem.firstChildElement(QString::fromLatin1("entry"));
 
     for ( ; !entryElem.isNull();
-          entryElem = entryElem.nextSiblingElement(QStringLiteral("entry")))
+          entryElem = entryElem.nextSiblingElement(QString::fromLatin1("entry")))
     {
 
-        const QDomElement urn       = entryElem.firstChildElement(QStringLiteral("id"));
-        const QDomElement author    = entryElem.firstChildElement(QStringLiteral("author"));
-        const QDomElement title     = entryElem.firstChildElement(QStringLiteral("title"));
-        const QDomElement summary   = entryElem.firstChildElement(QStringLiteral("summary"));
-        const QDomElement published = entryElem.firstChildElement(QStringLiteral("published"));
-        const QDomElement edited    = entryElem.firstChildElement(QStringLiteral("app:edited"));
-        const QDomElement updated   = entryElem.firstChildElement(QStringLiteral("updated"));
-        const QDomElement prot      = entryElem.firstChildElement(QStringLiteral("protected"));
+        const QDomElement urn       = entryElem.firstChildElement(QString::fromLatin1("id"));
+        const QDomElement author    = entryElem.firstChildElement(QString::fromLatin1("author"));
+        const QDomElement title     = entryElem.firstChildElement(QString::fromLatin1("title"));
+        const QDomElement summary   = entryElem.firstChildElement(QString::fromLatin1("summary"));
+        const QDomElement published = entryElem.firstChildElement(QString::fromLatin1("published"));
+        const QDomElement edited    = entryElem.firstChildElement(QString::fromLatin1("app:edited"));
+        const QDomElement updated   = entryElem.firstChildElement(QString::fromLatin1("updated"));
+        const QDomElement prot      = entryElem.firstChildElement(QString::fromLatin1("protected"));
 
         QDomElement linkSelf;
         QDomElement linkEdit;
         QDomElement linkPhotos;
 
-        QDomElement linkElem = entryElem.firstChildElement(QStringLiteral("link"));
+        QDomElement linkElem = entryElem.firstChildElement(QString::fromLatin1("link"));
 
         for ( ; !linkElem.isNull();
-              linkElem = linkElem.nextSiblingElement(QStringLiteral("link")))
+              linkElem = linkElem.nextSiblingElement(QString::fromLatin1("link")))
         {
 
-            if (linkElem.attribute(QStringLiteral("rel")) == QStringLiteral("self"))
+            if (linkElem.attribute(QString::fromLatin1("rel")) == QString::fromLatin1("self"))
                 linkSelf = linkElem;
-            else if (linkElem.attribute(QStringLiteral("rel")) == QStringLiteral("edit"))
+            else if (linkElem.attribute(QString::fromLatin1("rel")) == QString::fromLatin1("edit"))
                 linkEdit = linkElem;
-            else if (linkElem.attribute(QStringLiteral("rel")) == QStringLiteral("photos"))
+            else if (linkElem.attribute(QString::fromLatin1("rel")) == QString::fromLatin1("photos"))
                 linkPhotos = linkElem;
             // else skip <link>
         }
@@ -823,9 +823,9 @@ void YandexFotkiTalker::parseResponseListAlbums(KJob* job)
 
         QString password;
 
-        if (!prot.isNull() && prot.attribute(QStringLiteral("value"), QStringLiteral("false")) == QStringLiteral("true"))
+        if (!prot.isNull() && prot.attribute(QString::fromLatin1("value"), QString::fromLatin1("false")) == QString::fromLatin1("true"))
         {
-            password = QStringLiteral(""); // set not null value
+            password = QString::fromLatin1(""); // set not null value
         }
 
         m_albums.append(YandexFotkiAlbum(
@@ -833,12 +833,12 @@ void YandexFotkiTalker::parseResponseListAlbums(KJob* job)
                             author.text(),
                             title.text(),
                             summary.text(),
-                            linkEdit.attribute(QStringLiteral("href")),
-                            linkSelf.attribute(QStringLiteral("href")),
-                            linkPhotos.attribute(QStringLiteral("href")),
-                            QDateTime::fromString(published.text(), QStringLiteral("yyyy-MM-ddTHH:mm:ssZ")),
-                            QDateTime::fromString(edited.text(), QStringLiteral("yyyy-MM-ddTHH:mm:ssZ")),
-                            QDateTime::fromString(updated.text(), QStringLiteral("yyyy-MM-ddTHH:mm:ssZ")),
+                            linkEdit.attribute(QString::fromLatin1("href")),
+                            linkSelf.attribute(QString::fromLatin1("href")),
+                            linkPhotos.attribute(QString::fromLatin1("href")),
+                            QDateTime::fromString(published.text(), QString::fromLatin1("yyyy-MM-ddTHH:mm:ssZ")),
+                            QDateTime::fromString(edited.text(), QString::fromLatin1("yyyy-MM-ddTHH:mm:ssZ")),
+                            QDateTime::fromString(updated.text(), QString::fromLatin1("yyyy-MM-ddTHH:mm:ssZ")),
                             password
                         ));
 
@@ -870,38 +870,38 @@ void YandexFotkiTalker::parseResponseListAlbums(KJob* job)
 bool YandexFotkiTalker::parsePhotoXml(const QDomElement& entryElem, YandexFotkiPhoto& photo)
 {
 
-    const QDomElement urn             = entryElem.firstChildElement(QStringLiteral("id"));
-    const QDomElement author          = entryElem.firstChildElement(QStringLiteral("author"));
-    const QDomElement title           = entryElem.firstChildElement(QStringLiteral("title"));
-    const QDomElement summary         = entryElem.firstChildElement(QStringLiteral("summary"));
-    const QDomElement published       = entryElem.firstChildElement(QStringLiteral("published"));
-    const QDomElement edited          = entryElem.firstChildElement(QStringLiteral("app:edited"));
-    const QDomElement updated         = entryElem.firstChildElement(QStringLiteral("updated"));
-    const QDomElement created         = entryElem.firstChildElement(QStringLiteral("f:created"));
-    const QDomElement accessAttr      = entryElem.firstChildElement(QStringLiteral("f:access"));
-    const QDomElement hideOriginal    = entryElem.firstChildElement(QStringLiteral("f:hide_original"));
-    const QDomElement disableComments = entryElem.firstChildElement(QStringLiteral("f:disable_comments"));
-    const QDomElement adult           = entryElem.firstChildElement(QStringLiteral("f:xxx"));
-    const QDomElement content         = entryElem.firstChildElement(QStringLiteral("content"));
+    const QDomElement urn             = entryElem.firstChildElement(QString::fromLatin1("id"));
+    const QDomElement author          = entryElem.firstChildElement(QString::fromLatin1("author"));
+    const QDomElement title           = entryElem.firstChildElement(QString::fromLatin1("title"));
+    const QDomElement summary         = entryElem.firstChildElement(QString::fromLatin1("summary"));
+    const QDomElement published       = entryElem.firstChildElement(QString::fromLatin1("published"));
+    const QDomElement edited          = entryElem.firstChildElement(QString::fromLatin1("app:edited"));
+    const QDomElement updated         = entryElem.firstChildElement(QString::fromLatin1("updated"));
+    const QDomElement created         = entryElem.firstChildElement(QString::fromLatin1("f:created"));
+    const QDomElement accessAttr      = entryElem.firstChildElement(QString::fromLatin1("f:access"));
+    const QDomElement hideOriginal    = entryElem.firstChildElement(QString::fromLatin1("f:hide_original"));
+    const QDomElement disableComments = entryElem.firstChildElement(QString::fromLatin1("f:disable_comments"));
+    const QDomElement adult           = entryElem.firstChildElement(QString::fromLatin1("f:xxx"));
+    const QDomElement content         = entryElem.firstChildElement(QString::fromLatin1("content"));
 
     QDomElement linkSelf;
     QDomElement linkEdit;
     QDomElement linkMedia;
     QDomElement linkAlbum;
 
-    QDomElement linkElem = entryElem.firstChildElement(QStringLiteral("link"));
+    QDomElement linkElem = entryElem.firstChildElement(QString::fromLatin1("link"));
 
     for ( ; !linkElem.isNull();
-          linkElem = linkElem.nextSiblingElement(QStringLiteral("link")))
+          linkElem = linkElem.nextSiblingElement(QString::fromLatin1("link")))
     {
 
-        if (linkElem.attribute(QStringLiteral("rel")) == QStringLiteral("self"))
+        if (linkElem.attribute(QString::fromLatin1("rel")) == QString::fromLatin1("self"))
             linkSelf = linkElem;
-        else if (linkElem.attribute(QStringLiteral("rel")) == QStringLiteral("edit"))
+        else if (linkElem.attribute(QString::fromLatin1("rel")) == QString::fromLatin1("edit"))
             linkEdit = linkElem;
-        else if (linkElem.attribute(QStringLiteral("rel")) == QStringLiteral("edit-media"))
+        else if (linkElem.attribute(QString::fromLatin1("rel")) == QString::fromLatin1("edit-media"))
             linkMedia = linkElem;
-        else if (linkElem.attribute(QStringLiteral("rel")) == QStringLiteral("album"))
+        else if (linkElem.attribute(QString::fromLatin1("rel")) == QString::fromLatin1("album"))
             linkAlbum = linkElem;
         // else skip <link>
     }
@@ -910,8 +910,8 @@ bool YandexFotkiTalker::parsePhotoXml(const QDomElement& entryElem, YandexFotkiP
     if (urn.isNull() || title.isNull() ||
         linkSelf.isNull() || linkEdit.isNull() ||
         linkMedia.isNull() || linkAlbum.isNull() ||
-        !content.hasAttribute(QStringLiteral("src")) ||
-        !accessAttr.hasAttribute(QStringLiteral("value")))
+        !content.hasAttribute(QString::fromLatin1("src")) ||
+        !accessAttr.hasAttribute(QString::fromLatin1("value")))
     {
 
         qCDebug(KIPIPLUGINS_LOG) << "Invalid XML data, error on line" << entryElem.lineNumber();
@@ -919,7 +919,7 @@ bool YandexFotkiTalker::parsePhotoXml(const QDomElement& entryElem, YandexFotkiP
         return false;
     }
 
-    const QString accessString = accessAttr.attribute(QStringLiteral("value"));
+    const QString accessString = accessAttr.attribute(QString::fromLatin1("value"));
 
     YandexFotkiPhoto::Access access;
 
@@ -940,24 +940,24 @@ bool YandexFotkiTalker::parsePhotoXml(const QDomElement& entryElem, YandexFotkiP
 
     photo.setTitle(title.text());
     photo.setSummary(summary.text());
-    photo.m_apiEditUrl    = linkEdit.attribute(QStringLiteral("href"));
-    photo.m_apiSelfUrl    = linkSelf.attribute(QStringLiteral("href"));
-    photo.m_apiMediaUrl   = linkMedia.attribute(QStringLiteral("href"));
-    photo.m_apiAlbumUrl   = linkAlbum.attribute(QStringLiteral("href"));
-    photo.m_publishedDate = QDateTime::fromString(published.text(), QStringLiteral("yyyy-MM-ddTHH:mm:ssZ"));
-    photo.m_editedDate    = QDateTime::fromString(edited.text(), QStringLiteral("yyyy-MM-ddTHH:mm:ssZ"));
-    photo.m_updatedDate   = QDateTime::fromString(updated.text(), QStringLiteral("yyyy-MM-ddTHH:mm:ssZ"));
-    photo.m_createdDate   = QDateTime::fromString(created.text(), QStringLiteral("yyyy-MM-ddTHH:mm:ss"));
+    photo.m_apiEditUrl    = linkEdit.attribute(QString::fromLatin1("href"));
+    photo.m_apiSelfUrl    = linkSelf.attribute(QString::fromLatin1("href"));
+    photo.m_apiMediaUrl   = linkMedia.attribute(QString::fromLatin1("href"));
+    photo.m_apiAlbumUrl   = linkAlbum.attribute(QString::fromLatin1("href"));
+    photo.m_publishedDate = QDateTime::fromString(published.text(), QString::fromLatin1("yyyy-MM-ddTHH:mm:ssZ"));
+    photo.m_editedDate    = QDateTime::fromString(edited.text(), QString::fromLatin1("yyyy-MM-ddTHH:mm:ssZ"));
+    photo.m_updatedDate   = QDateTime::fromString(updated.text(), QString::fromLatin1("yyyy-MM-ddTHH:mm:ssZ"));
+    photo.m_createdDate   = QDateTime::fromString(created.text(), QString::fromLatin1("yyyy-MM-ddTHH:mm:ss"));
 
     photo.setAccess(access);
     photo.setHideOriginal(hideOriginal.attribute(
-        QStringLiteral("value"), QStringLiteral("false")) == QStringLiteral("true"));
+        QString::fromLatin1("value"), QString::fromLatin1("false")) == QString::fromLatin1("true"));
     photo.setDisableComments(disableComments.attribute(
-        QStringLiteral("value"), QStringLiteral("false")) == QStringLiteral("true"));
+        QString::fromLatin1("value"), QString::fromLatin1("false")) == QString::fromLatin1("true"));
     photo.setAdult(adult.attribute(
-        QStringLiteral("value"), QStringLiteral("false")) == QStringLiteral("true"));
+        QString::fromLatin1("value"), QString::fromLatin1("false")) == QString::fromLatin1("true"));
 
-    photo.m_remoteUrl = content.attribute(QStringLiteral("src"));
+    photo.m_remoteUrl = content.attribute(QString::fromLatin1("src"));
 
     /*
      * FIXME: tags part of the API is not documented by Yandex
@@ -965,17 +965,17 @@ bool YandexFotkiTalker::parsePhotoXml(const QDomElement& entryElem, YandexFotkiP
 
     // reload all tags from the response
     photo.tags.clear();
-    QDomElement category = entryElem.firstChildElement(QStringLiteral("category"));
+    QDomElement category = entryElem.firstChildElement(QString::fromLatin1("category"));
 
     for ( ; !category.isNull();
-         category = category.nextSiblingElement(QStringLiteral("category")))
+         category = category.nextSiblingElement(QString::fromLatin1("category")))
     {
-        if (category.hasAttribute(QStringLiteral("term")) &&
-            category.hasAttribute(QStringLiteral("scheme")) &&
+        if (category.hasAttribute(QString::fromLatin1("term")) &&
+            category.hasAttribute(QString::fromLatin1("scheme")) &&
             // FIXME: I have no idea how to make its better, usable API is needed
-            category.attribute(QStringLiteral("scheme")) == m_apiTagsUrl)
+            category.attribute(QString::fromLatin1("scheme")) == m_apiTagsUrl)
         {
-            photo.tags.append(category.attribute(QStringLiteral("term")));
+            photo.tags.append(category.attribute(QString::fromLatin1("term")));
         }
     }
 
@@ -987,7 +987,7 @@ void YandexFotkiTalker::parseResponseListPhotos(KJob* job)
     if (!prepareJobResult(job, STATE_LISTPHOTOS_ERROR))
         return;
 
-    QDomDocument doc(QStringLiteral("feed"));
+    QDomDocument doc(QString::fromLatin1("feed"));
 
     if ( !doc.setContent( m_buffer ) )
     {
@@ -1002,22 +1002,22 @@ void YandexFotkiTalker::parseResponseListPhotos(KJob* job)
 
     // find next page link
     m_photosNextUrl.clear();
-    QDomElement linkElem = rootElem.firstChildElement(QStringLiteral("link"));
+    QDomElement linkElem = rootElem.firstChildElement(QString::fromLatin1("link"));
 
     for ( ; !linkElem.isNull();
-          linkElem = linkElem.nextSiblingElement(QStringLiteral("link")))
+          linkElem = linkElem.nextSiblingElement(QString::fromLatin1("link")))
     {
-        if (linkElem.attribute(QStringLiteral("rel")) == QStringLiteral("next") &&
-            !linkElem.attribute(QStringLiteral("href")).isNull())
+        if (linkElem.attribute(QString::fromLatin1("rel")) == QString::fromLatin1("next") &&
+            !linkElem.attribute(QString::fromLatin1("href")).isNull())
         {
-            m_photosNextUrl = linkElem.attribute(QStringLiteral("href"));
+            m_photosNextUrl = linkElem.attribute(QString::fromLatin1("href"));
             break;
         }
     }
 
-    QDomElement entryElem = rootElem.firstChildElement(QStringLiteral("entry"));
+    QDomElement entryElem = rootElem.firstChildElement(QString::fromLatin1("entry"));
     for ( ; !entryElem.isNull();
-          entryElem = entryElem.nextSiblingElement(QStringLiteral("entry")))
+          entryElem = entryElem.nextSiblingElement(QString::fromLatin1("entry")))
     {
 
         YandexFotkiPhoto photo;
@@ -1059,7 +1059,7 @@ void YandexFotkiTalker::parseResponseUpdatePhotoFile(KJob* job)
         return;
 
     qCDebug(KIPIPLUGINS_LOG) << "Uploaded photo document" << m_buffer;
-    QDomDocument doc(QStringLiteral("entry"));
+    QDomDocument doc(QString::fromLatin1("entry"));
 
     if ( !doc.setContent( m_buffer ) )
     {

@@ -70,11 +70,11 @@ YandexFotkiWidget::YandexFotkiWidget(QWidget* const parent, KIPI::Interface* con
 
     QLabel* const accessLabel = new QLabel(i18n("Privacy settings:"), optionsBox);
     m_accessCombo             = new QComboBox(optionsBox);
-    m_accessCombo->addItem(QIcon::fromTheme(QStringLiteral("folder")),
+    m_accessCombo->addItem(QIcon::fromTheme(QString::fromLatin1("folder")),
                            i18n("Public access"), YandexFotkiPhoto::ACCESS_PUBLIC);
-    m_accessCombo->addItem(QIcon::fromTheme(QStringLiteral("folder-red")),
+    m_accessCombo->addItem(QIcon::fromTheme(QString::fromLatin1("folder-red")),
                            i18n("Friends access"), YandexFotkiPhoto::ACCESS_FRIENDS);
-    m_accessCombo->addItem(QIcon::fromTheme(QStringLiteral("folder-locked")),
+    m_accessCombo->addItem(QIcon::fromTheme(QString::fromLatin1("folder-locked")),
                            i18n("Private access"), YandexFotkiPhoto::ACCESS_PRIVATE);
 
     m_hideOriginalCheck    = new QCheckBox(i18n("Hide original photo"), optionsBox);

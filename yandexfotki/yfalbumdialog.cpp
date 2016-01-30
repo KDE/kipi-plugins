@@ -48,7 +48,7 @@ namespace KIPIYandexFotkiPlugin
 {
 
 YandexFotkiAlbumDialog::YandexFotkiAlbumDialog(QWidget* const parent, YandexFotkiAlbum& album)
-    : KPNewAlbumDialog(parent, QStringLiteral("Yandex.Fotki")),
+    : KPNewAlbumDialog(parent, QString::fromLatin1("Yandex.Fotki")),
       m_album(album)
 {
     hideLocation();

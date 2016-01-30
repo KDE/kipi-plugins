@@ -98,8 +98,8 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
     : KPToolDialog(parent)
 {
     m_import = import;
-    m_tmpDir = makeTemporaryDir("kipi-yandexfotki").absolutePath() + QStringLiteral("/");
-    m_widget = new YandexFotkiWidget(this, iface(), QStringLiteral("Yandex.Fotki"));
+    m_tmpDir = makeTemporaryDir("kipi-yandexfotki").absolutePath() + QString::fromLatin1("/");
+    m_widget = new YandexFotkiWidget(this, iface(), QString::fromLatin1("Yandex.Fotki"));
     
     m_loginLabel           = m_widget->getUserNameLabel();
     m_headerLabel          = m_widget->getHeaderLbl();
@@ -150,9 +150,9 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
 
     about->addAuthor(ki18n( "Roman Tsisyk" ).toString(),
                      ki18n("Author").toString(),
-                     QStringLiteral("roman at tsisyk dot com"));
+                     QString::fromLatin1("roman at tsisyk dot com"));
 
-    about->setHandbookEntry(QStringLiteral("YandexFotki"));
+    about->setHandbookEntry(QString::fromLatin1("YandexFotki"));
     setAboutData(about);
 
     // -- UI slots -----------------------------------------------------------------------
@@ -266,8 +266,8 @@ void YandexFotkiWindow::updateLabels()
         m_albumsCombo->clear();
     }
 
-    m_loginLabel->setText(QStringLiteral("<b>%1</b>").arg(logintext));
-    m_headerLabel->setText(QStringLiteral(
+    m_loginLabel->setText(QString::fromLatin1("<b>%1</b>").arg(logintext));
+    m_headerLabel->setText(QString::fromLatin1(
         "<b><h2><a href=\"%1\">"
         "<font color=\"#ff000a\">%2</font>"
         "<font color=\"black\">%3</font>"
@@ -281,7 +281,7 @@ void YandexFotkiWindow::updateLabels()
 
 void YandexFotkiWindow::readSettings()
 {
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup grp = config.group("YandexFotki Settings");
 
     m_talker.setLogin(grp.readEntry("login", ""));
@@ -308,7 +308,7 @@ void YandexFotkiWindow::readSettings()
 
 void YandexFotkiWindow::writeSettings()
 {
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup grp = config.group("YandexFotki Settings");
 
     grp.writeEntry("token", m_talker.token());
@@ -365,7 +365,7 @@ void YandexFotkiWindow::authenticate(bool forceAuthWindow)
     // update credentials
     if (forceAuthWindow || m_talker.login().isNull() || m_talker.password().isNull())
     {
-        KPLoginDialog* const dlg = new KPLoginDialog(this, QStringLiteral("Yandex.Fotki"), m_talker.login(), QString());
+        KPLoginDialog* const dlg = new KPLoginDialog(this, QString::fromLatin1("Yandex.Fotki"), m_talker.login(), QString());
 
         if (dlg->exec() == QDialog::Accepted)
         {
@@ -572,7 +572,7 @@ void YandexFotkiWindow::updateNextPhoto()
 
             photo.setLocalUrl(m_tmpDir + QFileInfo(photo.originalUrl())
                               .baseName()
-                              .trimmed() + QStringLiteral(".jpg"));
+                              .trimmed() + QString::fromLatin1(".jpg"));
 
             bool prepared = false;
 
@@ -597,7 +597,7 @@ void YandexFotkiWindow::updateNextPhoto()
                     if (m_meta && m_meta->load(QUrl::fromLocalFile(photo.originalUrl())))
                     {
                         m_meta->setImageDimensions(image.size());
-                        m_meta->setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
+                        m_meta->setImageProgramId(QString::fromLatin1("Kipi-plugins"), kipipluginsVersion());
                         m_meta->save(QUrl::fromLocalFile(photo.localUrl()));
                         prepared = true;
                     }
@@ -779,11 +779,11 @@ void YandexFotkiWindow::slotListAlbumsDone(const QList<YandexFotkiAlbum>& albums
 
         if (album.isProtected())
         {
-            albumIcon = QStringLiteral("folder-locked");
+            albumIcon = QString::fromLatin1("folder-locked");
         }
         else
         {
-            albumIcon = QStringLiteral("folder-image");
+            albumIcon = QString::fromLatin1("folder-image");
         }
 
         m_albumsCombo->addItem(QIcon::fromTheme(albumIcon), album.toString());
