@@ -119,17 +119,17 @@ CalWizard::CalWizard(QWidget* const parent)
 
     about->addAuthor(ki18n("Orgad Shaneh").toString(),
                      ki18n("Developer").toString(),
-                     QStringLiteral("orgads@gmail.com"));
+                     QString::fromLatin1("orgads@gmail.com"));
 
     about->addAuthor(ki18n("Tom Albers").toString(),
                      ki18n("Developer").toString(),
-                     QStringLiteral("tomalbers@kde.nl"));
+                     QString::fromLatin1("tomalbers@kde.nl"));
 
     about->addAuthor(ki18n("Renchi Raju").toString(),
                      ki18n("Author").toString(),
-                     QStringLiteral("renchi dot raju at gmail dot com"));
+                     QString::fromLatin1("renchi dot raju at gmail dot com"));
 
-    about->setHandbookEntry(QStringLiteral("calendar"));
+    about->setHandbookEntry(QString::fromLatin1("calendar"));
     setAboutData(about);
 
     // ------------------------------------------
@@ -180,9 +180,9 @@ void CalWizard::slotPageSelected(int curr)
 
         if (months_.empty())
         {
-            wPrintLabel_->setText(QStringLiteral("<qt>") +
+            wPrintLabel_->setText(QString::fromLatin1("<qt>") +
                                   i18n("No valid images selected for months<br/>"
-                                       "Click Back to select images") + QStringLiteral("</qt>"));
+                                       "Click Back to select images") + QString::fromLatin1("</qt>"));
             wFinishPage_->setComplete(false);
         }
         else
@@ -194,16 +194,16 @@ void CalWizard::slotPageSelected(int curr)
             if ((KLocale::global()->calendar()->month(QDate::currentDate()) >= 6    &&
                  KLocale::global()->calendar()->year(QDate::currentDate()) == year) ||
                  KLocale::global()->calendar()->year(QDate::currentDate()) > year)
-                extra = QStringLiteral("<br/><br/><b>") +
+                extra = QString::fromLatin1("<br/><br/><b>") +
                     i18n("Please note that you are making a "
                          "calendar for<br/>the current year or a year in the "
-                         "past.") + QStringLiteral("</b>");
+                         "past.") + QString::fromLatin1("</b>");
 
             QString year_locale = KLocale::global()->calendar()->formatDate(d, KLocale::Year, KLocale::LongNumber);
 
             wPrintLabel_->setText(i18n("Click Next to start Printing<br/><br/>"
                                        "Following months will be printed for year %1:<br/>", year_locale)
-                                  + printList.join(QStringLiteral(" - ")) + extra);
+                                  + printList.join(QString::fromLatin1(" - ")) + extra);
             wPrintLabel_->setTextFormat(Qt::RichText);
 
             wFinishPage_->setComplete(true);
@@ -267,7 +267,7 @@ void CalWizard::print()
     calProgressUI.totalProgress->setMaximum(months_.count());
     calProgressUI.totalProgress->setValue(0);
     calProgressUI.totalProgress->progressScheduled(i18n("Making calendar"), false, true);
-    calProgressUI.totalProgress->progressThumbnailChanged(QIcon::fromTheme(QStringLiteral("kipi")).pixmap(22, 22));
+    calProgressUI.totalProgress->progressThumbnailChanged(QIcon::fromTheme(QString::fromLatin1("kipi")).pixmap(22, 22));
 
     if (printThread_)
     {
@@ -313,7 +313,7 @@ void CalWizard::updatePage(int page)
 
     calProgressUI.finishLabel->setText(i18n("Printing calendar page for %1 of %2",
         KLocale::global()->calendar()->monthName(month, year, KCalendarSystem::LongName),
-        KLocale::global()->calendar()->formatDate(date, QStringLiteral("%Y"))));
+        KLocale::global()->calendar()->formatDate(date, QString::fromLatin1("%Y"))));
 }
 
 void CalWizard::printComplete()

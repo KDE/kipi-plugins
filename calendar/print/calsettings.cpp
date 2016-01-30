@@ -50,8 +50,8 @@ CalSettings::CalSettings(QObject* const parent)
     : QObject(parent)
 {
     params.year = KLocale::global()->calendar()->earliestValidDate().year() + 1;
-    setPaperSize(QStringLiteral("A4"));
-    setResolution(QStringLiteral("High"));
+    setPaperSize(QString::fromLatin1("A4"));
+    setResolution(QString::fromLatin1("High"));
     setImagePos(0);
 }
 
@@ -92,13 +92,13 @@ QUrl CalSettings::image(int month) const
 
 void CalSettings::setPaperSize(const QString& paperSize)
 {
-    if (paperSize == QStringLiteral("A4"))
+    if (paperSize == QString::fromLatin1("A4"))
     {
         params.paperWidth  = 210;
         params.paperHeight = 297;
         params.pageSize    = QPrinter::A4;
     }
-    else if (paperSize == QStringLiteral("US Letter"))
+    else if (paperSize == QString::fromLatin1("US Letter"))
     {
         params.paperWidth  = 216;
         params.paperHeight = 279;
@@ -110,11 +110,11 @@ void CalSettings::setPaperSize(const QString& paperSize)
 
 void CalSettings::setResolution(const QString& resolution)
 {
-    if (resolution == QStringLiteral("High"))
+    if (resolution == QString::fromLatin1("High"))
     {
         params.printResolution = QPrinter::HighResolution;
     }
-    else if (resolution == QStringLiteral("Low"))
+    else if (resolution == QString::fromLatin1("Low"))
     {
         params.printResolution = QPrinter::ScreenResolution;
     }
@@ -201,7 +201,7 @@ void CalSettings::addSpecial(const QDate& date, const Day& info)
 {
     if (m_special.contains(date))
     {
-        m_special[date].second.append(QStringLiteral("; ")).append(info.second);
+        m_special[date].second.append(QString::fromLatin1("; ")).append(info.second);
     }
     else
     {
@@ -217,7 +217,7 @@ void CalSettings::loadSpecial(const QUrl& url, const QColor& color)
         return;
     }
 
-    KCalCore::MemoryCalendar::Ptr memCal(new KCalCore::MemoryCalendar(QStringLiteral("UTC")));
+    KCalCore::MemoryCalendar::Ptr memCal(new KCalCore::MemoryCalendar(QString::fromLatin1("UTC")));
     KCalCore::FileStorage::Ptr fileStorage(new KCalCore::FileStorage(memCal, url.path(), new KCalCore::ICalFormat));
 
     qCDebug(KIPIPLUGINS_LOG) << "Loading calendar from file " << url.path();
