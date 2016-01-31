@@ -57,6 +57,11 @@ extern "C"
 
 #include "kipiplugins_debug.h"
 
+inline void initKipipluginsResources()
+{
+    Q_INIT_RESOURCE(libkipiplugins);
+}
+
 namespace KIPIPlugins
 {
 
@@ -182,7 +187,8 @@ KPVBox::~KPVBox()
 
 KPWorkingPixmap::KPWorkingPixmap()
 {
-    QPixmap pix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QLatin1String("kipiplugins/pics/process-working.png")));
+    initKipipluginsResources();
+    QPixmap pix(QLatin1String(":/images/process-working.png"));
     QSize   size(22, 22);
 
     if (pix.isNull())

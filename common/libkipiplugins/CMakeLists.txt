@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2010-2015, Gilles Caulier, <caulier dot gilles at gmail dot com>
+# Copyright (c) 2010-2016, Gilles Caulier, <caulier dot gilles at gmail dot com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
@@ -8,6 +8,8 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tools/kpversion.h.cmake.in           
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/templates/Doxyfile.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
 
 include_directories(${JPEG_INCLUDE_DIR} ${PNG_INCLUDE_DIR} ${TIFF_INCLUDE_DIR})
+
+qt5_add_resources(libkipipluginsresources_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/../data/libkipiplugins.qrc)
 
 set(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kipiplugins_debug.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kputil.cpp
@@ -30,6 +32,8 @@ set(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kipiplugins_debug.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpoutputdialog.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpnewalbumdialog.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kplogindialog.cpp
+
+                         ${libkipipluginsresources_SRCS}
 )
 
 add_library(KF5kipiplugins SHARED ${kipiplugins_LIB_SRCS})
