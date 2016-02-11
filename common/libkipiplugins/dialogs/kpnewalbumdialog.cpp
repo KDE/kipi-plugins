@@ -39,7 +39,7 @@
 
 namespace KIPIPlugins
 {
-    
+
 class KPNewAlbumDialog::Private
 {
 public:
@@ -50,29 +50,28 @@ public:
         m_descEdt      = new QTextEdit;
         m_locEdt       = new QLineEdit;
         m_dtEdt        = new QDateTimeEdit(QDateTime::currentDateTime());
-        
+
         mainWidget     = new QWidget(widget);
         mainLayout     = new QVBoxLayout(mainWidget);
-        
+
         albumBox       = new QGroupBox(i18n("Album"), mainWidget);
         albumBoxLayout = new QGridLayout(albumBox);
-        
+
         titleLabel     = new QLabel(i18n("Title: "), albumBox);
         dateLabel      = new QLabel(i18n("Time Stamp: "), albumBox);
         descLabel      = new QLabel(i18n("Description: "), albumBox);
         locLabel       = new QLabel(i18n("Location: "), albumBox);
-        
+
         buttonBox      = new QDialogButtonBox();
-        
+
         m_pluginName   = pluginName;
-        
     }
 
     QLineEdit*         m_titleEdt;
     QTextEdit*         m_descEdt;
     QLineEdit*         m_locEdt;
     QDateTimeEdit*     m_dtEdt;
-    
+
     QLabel*            titleLabel;
     QLabel*            dateLabel;
     QLabel*            descLabel;
@@ -80,13 +79,13 @@ public:
 
     QString            m_pluginName;
     QDialogButtonBox*  buttonBox;
-    
+
     QGridLayout*       albumBoxLayout;
     QGroupBox*         albumBox;
-    
+
     QVBoxLayout*       mainLayout;
     QWidget*           mainWidget;
-};    
+};
 
 KPNewAlbumDialog::KPNewAlbumDialog(QWidget* const parent, const QString& pluginName)
     : QDialog(parent),
@@ -102,11 +101,11 @@ KPNewAlbumDialog::KPNewAlbumDialog(QWidget* const parent, const QString& pluginN
     d->buttonBox->addButton(QDialogButtonBox::Ok);
     d->buttonBox->addButton(QDialogButtonBox::Cancel);
     d->buttonBox->button(QDialogButtonBox::Cancel)->setDefault(true);
-    d->buttonBox->button( QDialogButtonBox::Ok )->setEnabled( false ); 
+    d->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
 
     connect(d->m_titleEdt, SIGNAL(textChanged(QString)),
             this, SLOT(slotTextChanged(QString)));
-    
+
     connect(d->buttonBox, SIGNAL(accepted()),
             this, SLOT(accept()));
 
@@ -138,9 +137,9 @@ KPNewAlbumDialog::KPNewAlbumDialog(QWidget* const parent, const QString& pluginN
 
     d->mainLayout->addWidget(d->albumBox);
     d->mainLayout->addWidget(d->buttonBox);
-    d->mainLayout->setContentsMargins(QMargins());
+    d->mainLayout->setContentsMargins(spacing, spacing, spacing, spacing);
     d->mainLayout->setSpacing(spacing);
-    d->mainWidget->setLayout(d->mainLayout);
+    setLayout(d->mainLayout);
 }
 
 KPNewAlbumDialog::~KPNewAlbumDialog()
@@ -160,7 +159,7 @@ void KPNewAlbumDialog::hideDateTime()
 {
     d->m_dtEdt->hide();
     d->dateLabel->hide();
-    d->albumBoxLayout->removeWidget(d->m_dtEdt);   
+    d->albumBoxLayout->removeWidget(d->m_dtEdt);
     d->albumBoxLayout->removeWidget(d->dateLabel);
 }
 
@@ -168,15 +167,16 @@ void KPNewAlbumDialog::hideDesc()
 {
     d->m_descEdt->hide();
     d->descLabel->hide();
-    d->albumBoxLayout->removeWidget(d->m_descEdt);   
-    d->albumBoxLayout->removeWidget(d->descLabel);        
+    d->albumBoxLayout->removeWidget(d->m_descEdt);
+    d->albumBoxLayout->removeWidget(d->descLabel);
 }
+
 void KPNewAlbumDialog::hideLocation()
 {
     d->m_locEdt->hide();
     d->locLabel->hide();
-    d->albumBoxLayout->removeWidget(d->m_locEdt);   
-    d->albumBoxLayout->removeWidget(d->locLabel);    
+    d->albumBoxLayout->removeWidget(d->m_locEdt);
+    d->albumBoxLayout->removeWidget(d->locLabel);
 }
 
 QWidget* KPNewAlbumDialog::getMainWidget() const
@@ -188,7 +188,7 @@ QGroupBox* KPNewAlbumDialog::getAlbumBox() const
 {
     return d->albumBox;
 }
-    
+
 QLineEdit* KPNewAlbumDialog::getTitleEdit() const
 {
     return d->m_titleEdt;

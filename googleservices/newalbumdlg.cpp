@@ -73,9 +73,11 @@ NewAlbumDlg::NewAlbumDlg(QWidget* const parent, const QString& serviceName, cons
     privBoxLayout->setContentsMargins(spacing, spacing, spacing, spacing);
     privBoxLayout->setSpacing(spacing);
     privBox->setLayout(privBoxLayout);
-    
-    if(!(QString::compare(m_serviceName, QString::fromLatin1("googledriveexport"), Qt::CaseInsensitive) == 0))
+
+    if (!(QString::compare(m_serviceName, QString::fromLatin1("googledriveexport"), Qt::CaseInsensitive) == 0))
+    {
         addToMainLayout(privBox);
+    }
     else
     {
         privBox->hide();
@@ -92,11 +94,12 @@ NewAlbumDlg::~NewAlbumDlg()
 
 void NewAlbumDlg::getAlbumProperties(GSFolder& album)
 {
-    if(QString::compare(m_serviceName, QString::fromLatin1("googledriveexport"), Qt::CaseInsensitive) == 0)
+    if (QString::compare(m_serviceName, QString::fromLatin1("googledriveexport"), Qt::CaseInsensitive) == 0)
     {
         album.title       = getTitleEdit()->text();
         return;
     }
+
     album.title       = getTitleEdit()->text();
     album.description = getDescEdit()->toPlainText();
     album.location    = getLocEdit()->text();
