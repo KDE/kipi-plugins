@@ -54,4 +54,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 036 ==> 342687 - Panorama file time-stamps should be the same than the stitched pictures [patch].
 037 ==> 356673 - MediaWiki export doesn't work.
 038 ==> 353626 - Processing of bracketed images fails after the first set is done.
-039 ==> 
+039 ==> 359257 - Image size spinbox doesn't allow values larger than 99.
+040 ==> 

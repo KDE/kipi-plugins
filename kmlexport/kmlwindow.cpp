@@ -118,7 +118,7 @@ KmlWindow::KmlWindow(QWidget* const parent,
     DestinationDirectory_= new KPFileSelector(TargetPreferenceGroupBox);
     DestinationDirectory_->setFileDlgMode(QFileDialog::Directory);
     DestinationDirectory_->setFileDlgTitle(i18n("Select a directory in which to save the kml file and pictures"));
-    
+
     DestinationUrlLabel_ = new QLabel(i18n("Destination Path:"), TargetPreferenceGroupBox);
     DestinationUrl_      = new QLineEdit(TargetPreferenceGroupBox);
     FileNameLabel_       = new QLabel(i18n( "Filename:" ), TargetPreferenceGroupBox);
@@ -143,10 +143,12 @@ KmlWindow::KmlWindow(QWidget* const parent,
     SizeGroupBoxLayout            = new QGridLayout(SizeGroupBox);
     IconSizeLabel                 = new QLabel(i18n("Icon Size:" ), SizeGroupBox);
     IconSizeInput_                = new QSpinBox(SizeGroupBox);
+    IconSizeInput_->setRange(1, 100);
     IconSizeInput_->setValue(33);
 
     ImageSizeLabel  = new QLabel(i18n("Image Size:"), SizeGroupBox);
     ImageSizeInput_ = new QSpinBox(SizeGroupBox);
+    ImageSizeInput_->setRange(1, 10000);
     ImageSizeInput_->setValue(320);
 
     SizeGroupBoxLayout->addWidget(IconSizeLabel,   0, 0, 1, 1);
