@@ -51,7 +51,7 @@ public:
         m_locEdt       = new QLineEdit;
         m_dtEdt        = new QDateTimeEdit(QDateTime::currentDateTime());
 
-        mainWidget     = new QWidget(widget);
+        mainWidget     = widget;
         mainLayout     = new QVBoxLayout(mainWidget);
 
         albumBox       = new QGroupBox(i18n("Album"), mainWidget);
