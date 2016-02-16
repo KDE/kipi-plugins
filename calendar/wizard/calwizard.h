@@ -31,13 +31,10 @@
 
 #include <QMap>
 
-// UI includes
+// Local includes
 
 #include "ui_calevents.h"
 #include "ui_calprogress.h"
-
-// Local includes
-
 #include "kptooldialog.h"
 #include "kpwizardpage.h"
 

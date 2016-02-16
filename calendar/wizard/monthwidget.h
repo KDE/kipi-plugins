@@ -31,9 +31,6 @@
 #include <QPixmap>
 #include <QPushButton>
 #include <QSize>
-
-// KDE includes
-
 #include <QUrl>
 
 class QDragEnterEvent;

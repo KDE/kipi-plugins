@@ -37,9 +37,6 @@
 #include <QString>
 #include <QPointer>
 #include <QPrinter>
-
-// KDE includes
-
 #include <QUrl>
 
 namespace KIPI
