@@ -6,7 +6,7 @@
  * Date        : 2015-06-07
  * Description : a plugin to create panorama by fusion of several images.
  *
- * Copyright (C) 2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2015-2016 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -61,7 +61,7 @@ void CommandTask::runProcess(QStringList& args)
 
     process->start();
 
-    successFlag = process->waitForFinished(-1) || process->exitStatus() == QProcess::NormalExit;
+    successFlag = process->waitForFinished(-1) && process->exitStatus() == QProcess::NormalExit;
     output      = QString::fromLocal8Bit(process->readAll());
 
     if (!successFlag)
@@ -86,7 +86,15 @@ QString CommandTask::getProcessError()
 {
     if (process.isNull())
         return QString();
-    return (xi18n("<title>Cannot run <command>%1</command>:</title><para><message>%2</message></para>", getProgram(), output));
+    return (i18n("<b>Cannot run <i>%1</i>:</b><p>%2</p>",
+                 getProgram(),
+                 output.toHtmlEscaped().replace(QLatin1String("\n"), QLatin1String("<br />"))));
+}
+
+void CommandTask::printDebug(const QString& binaryName)
+{
+    qCDebug(KIPIPLUGINS_LOG) << binaryName << "command line: " << getCommandLine();
+    qCDebug(KIPIPLUGINS_LOG) << binaryName << "output:" << endl << qPrintable(QStringLiteral(" >>\t") + output.replace(QStringLiteral("\n"), QStringLiteral("\n >>\t")));
 }
 
 }  // namespace KIPIPanoramaPlugin

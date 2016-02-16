@@ -7,7 +7,7 @@
  * Description : a plugin to create panorama by fusion of several images.
  * Acknowledge : based on the expoblending plugin
  *
- * Copyright (C) 2011-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2011-2016 by Benjamin Girault <benjamin dot girault at gmail dot com>
  * Copyright (C) 2009-2016 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -56,7 +56,8 @@ namespace KIPIPanoramaPlugin
 struct LastPage::Private
 {
     Private()
-        : title(0),
+        : copyDone(false),
+          title(0),
           saveSettingsGroupBox(0),
           fileTemplateQLineEdit(0),
           savePtoCheckBox(0),
@@ -65,6 +66,8 @@ struct LastPage::Private
           mngr(0)
     {
     }
+
+    bool       copyDone;
 
     QLabel*    title;
 
@@ -81,12 +84,12 @@ LastPage::LastPage(Manager* const mngr, KPWizardDialog* const dlg)
      : KPWizardPage(dlg, i18nc("@title:window", "<b>Panorama Stitched</b>")),
        d(new Private)
 {
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup group        = config.group("Panorama Settings");
 
     d->mngr                   = mngr;
 
-    KPVBox* const vbox         = new KPVBox(this);
+    KPVBox* const vbox        = new KPVBox(this);
 
     d->title                  = new QLabel(vbox);
     d->title->setOpenExternalLinks(true);
@@ -101,7 +104,7 @@ LastPage::LastPage(Manager* const mngr, KPWizardDialog* const dlg)
     QLabel* const fileTemplateLabel = new QLabel(i18nc("@label:textbox", "File name template:"), d->saveSettingsGroupBox);
     formatVBox->addWidget(fileTemplateLabel);
 
-    d->fileTemplateQLineEdit  = new QLineEdit(QStringLiteral("panorama"), d->saveSettingsGroupBox);
+    d->fileTemplateQLineEdit  = new QLineEdit(QString::fromLatin1("panorama"), d->saveSettingsGroupBox);
     d->fileTemplateQLineEdit->setToolTip(i18nc("@info:tooltip", "Name of the panorama file (without its extension)."));
     d->fileTemplateQLineEdit->setWhatsThis(i18nc("@info:whatsthis", "<b>File name template</b>: Set here the base name of the files that "
                                                 "will be saved. For example, if your template is <i>panorama</i> and if "
@@ -132,7 +135,7 @@ LastPage::LastPage(Manager* const mngr, KPWizardDialog* const dlg)
 
     setPageWidget(vbox);
 
-    QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("kipiplugin_panorama/pics/assistant-hugin.png")));
+    QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromLatin1("kipiplugin_panorama/pics/assistant-hugin.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
     connect(d->fileTemplateQLineEdit, SIGNAL(textChanged(QString)),
@@ -144,25 +147,12 @@ LastPage::LastPage(Manager* const mngr, KPWizardDialog* const dlg)
 
 LastPage::~LastPage()
 {
-    KConfig config(QStringLiteral("kipirc"));
+    KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup group = config.group("Panorama Settings");
     group.writeEntry("Save PTO", d->savePtoCheckBox->isChecked());
     config.sync();
 
     delete d;
-}
-
-void LastPage::resetTitle()
-{
-    QString first = d->mngr->itemsList().front().fileName();
-    QString last = d->mngr->itemsList().back().fileName();
-    QString file = QStringLiteral("%1-%2")
-        .arg(first.left(first.lastIndexOf(QChar::fromLatin1('.'))))
-        .arg(last.left(last.lastIndexOf(QChar::fromLatin1('.'))));
-    d->fileTemplateQLineEdit->setText(file);
-
-    slotTemplateChanged(d->fileTemplateQLineEdit->text());
-    checkFiles();
 }
 
 void LastPage::copyFiles()
@@ -172,6 +162,7 @@ void LastPage::copyFiles()
 
     QUrl panoUrl = d->mngr->preProcessedMap().begin().key().adjusted(QUrl::RemoveFilename);
     panoUrl.setPath(panoUrl.path() + panoFileName(d->fileTemplateQLineEdit->text()));
+
     d->mngr->thread()->copyFiles(d->mngr->panoPtoUrl(),
                                  d->mngr->panoUrl(),
                                  panoUrl,
@@ -181,52 +172,87 @@ void LastPage::copyFiles()
                                 );
 }
 
-void LastPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
+QString LastPage::panoFileName(const QString& fileTemplate) const
 {
-    if (!ad.starting)           // Something is complete...
+    switch (d->mngr->format())
     {
-        if (!ad.success)        // Something is failed...
-        {
-            switch (ad.action)
-            {
-                case COPY:
-                {
-                    disconnect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
-                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+        default:
+        case JPEG:
+            return fileTemplate + QString::fromLatin1(".jpg");
+        case TIFF:
+            return fileTemplate + QString::fromLatin1(".tif");
+    }
+}
 
-                    emit signalCopyFinished(false);
-                    d->errorLabel->setText(i18n("<qt><p><font color=\"red\"><b>Error:</b> "
-                                                 "%1</font></p></qt>", ad.message));
-                    d->errorLabel->show();
-                    break;
-                }
-                default:
-                {
-                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action (last) " << ad.action;
-                    break;
-                }
-            }
-        }
-        else                    // Something is done...
-        {
-            switch (ad.action)
-            {
-                case COPY:
-                {
-                    disconnect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
-                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+void LastPage::checkFiles()
+{
+    QString dir = d->mngr->preProcessedMap().begin().key().toString(QUrl::RemoveFilename);
+    QUrl panoUrl(dir + panoFileName(d->fileTemplateQLineEdit->text()));
+    QUrl ptoUrl(dir + d->fileTemplateQLineEdit->text() + QString::fromLatin1(".pto"));
+    QFile panoFile(panoUrl.toString(QUrl::PreferLocalFile));
+    QFile ptoFile(ptoUrl.toString(QUrl::PreferLocalFile));
 
-                    emit signalCopyFinished(true);
-                    break;
-                }
-                default:
-                {
-                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action (last) " << ad.action;
-                    break;
-                }
+    bool rawsOk = true;
+
+    if (d->savePtoCheckBox->isChecked())
+    {
+        for (auto& input : d->mngr->preProcessedMap().keys())
+        {
+            if (input != d->mngr->preProcessedMap()[input].preprocessedUrl)
+            {
+                QString dir = input.toString(QUrl::RemoveFilename);
+                QUrl derawUrl(dir + d->mngr->preProcessedMap()[input].preprocessedUrl.fileName());
+                QFile derawFile(derawUrl.toString(QUrl::PreferLocalFile));
+                rawsOk &= !derawFile.exists();
             }
         }
     }
+
+    if (panoFile.exists() || (d->savePtoCheckBox->isChecked() && ptoFile.exists()))
+    {
+        setComplete(false);
+        emit completeChanged();
+        d->warningLabel->setText(i18n("<qt><p><font color=\"red\"><b>Warning:</b> "
+                                      "This file already exists.</font></p></qt>"));
+        d->warningLabel->show();
+    }
+    else if (!rawsOk)
+    {
+        setComplete(true);
+        emit completeChanged();
+        d->warningLabel->setText(i18n("<qt><p><font color=\"orange\"><b>Warning:</b> "
+                                      "One or more converted raw files already exists (they will be skipped during the copying process).</font></p></qt>"));
+        d->warningLabel->show();
+    }
+    else
+    {
+        setComplete(true);
+        emit completeChanged();
+        d->warningLabel->hide();
+    }
+}
+
+void LastPage::initializePage()
+{
+    QString first = d->mngr->itemsList().front().fileName();
+    QString last = d->mngr->itemsList().back().fileName();
+    QString file = QString::fromLatin1("%1-%2")
+        .arg(first.left(first.lastIndexOf(QChar::fromLatin1('.'))))
+        .arg(last.left(last.lastIndexOf(QChar::fromLatin1('.'))));
+    d->fileTemplateQLineEdit->setText(file);
+
+    checkFiles();
+}
+
+bool LastPage::validatePage()
+{
+    if (d->copyDone)
+        return true;
+
+    setComplete(false);
+    copyFiles();
+
+    return false;
 }
 
 void LastPage::slotTemplateChanged(const QString&)
@@ -252,60 +278,54 @@ void LastPage::slotPtoCheckBoxChanged(int)
     checkFiles();
 }
 
-QString LastPage::panoFileName(const QString& fileTemplate) const
+void LastPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
 {
-    switch (d->mngr->format())
+    qCDebug(KIPIPLUGINS_LOG) << "SlotAction (lastPage)";
+    qCDebug(KIPIPLUGINS_LOG) << "starting, success, action:" << ad.starting << ad.success << ad.action;
+
+    if (!ad.starting)           // Something is complete...
     {
-        default:
-        case JPEG:
-            return fileTemplate + QStringLiteral(".jpg");
-        case TIFF:
-            return fileTemplate + QStringLiteral(".tif");
-    }
-}
-
-void LastPage::checkFiles()
-{
-    QString dir = d->mngr->preProcessedMap().begin().key().toString(QUrl::RemoveFilename);
-    QUrl panoUrl(dir + panoFileName(d->fileTemplateQLineEdit->text()));
-    QUrl ptoUrl(dir + d->fileTemplateQLineEdit->text() + QStringLiteral(".pto"));
-    QFile panoFile(panoUrl.toString(QUrl::PreferLocalFile));
-    QFile ptoFile(ptoUrl.toString(QUrl::PreferLocalFile));
-
-    bool rawsOk = true;
-
-    if (d->savePtoCheckBox->isChecked())
-    {
-        for (auto& input : d->mngr->preProcessedMap().keys())
+        if (!ad.success)        // Something is failed...
         {
-            if (input != d->mngr->preProcessedMap()[input].preprocessedUrl)
+            switch (ad.action)
             {
-                QString dir = input.toString(QUrl::RemoveFilename);
-                QUrl derawUrl(dir + d->mngr->preProcessedMap()[input].preprocessedUrl.fileName());
-                QFile derawFile(derawUrl.toString(QUrl::PreferLocalFile));
-                rawsOk &= !derawFile.exists();
+                case COPY:
+                {
+                    disconnect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
+                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
+                    d->errorLabel->setText(i18n("<qt><p><font color=\"red\"><b>Error:</b> "
+                                                 "%1</font></p></qt>", ad.message));
+                    d->errorLabel->show();
+                    break;
+                }
+                default:
+                {
+                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action (last) " << ad.action;
+                    break;
+                }
             }
         }
-    }
+        else                    // Something is done...
+        {
+            switch (ad.action)
+            {
+                case COPY:
+                {
+                    disconnect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
+                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
-    if (panoFile.exists() || (d->savePtoCheckBox->isChecked() && ptoFile.exists()))
-    {
-        emit signalIsValid(false);
-        d->warningLabel->setText(i18n("<qt><p><font color=\"red\"><b>Warning:</b> "
-                                      "This file already exists.</font></p></qt>"));
-        d->warningLabel->show();
-    }
-    else if (!rawsOk)
-    {
-        emit signalIsValid(true);
-        d->warningLabel->setText(i18n("<qt><p><font color=\"orange\"><b>Warning:</b> "
-                                      "One or more converted raw files already exists (they will be skipped during the copying process).</font></p></qt>"));
-        d->warningLabel->show();
-    }
-    else
-    {
-        emit signalIsValid(true);
-        d->warningLabel->hide();
+                    d->copyDone = true;
+                    emit signalCopyFinished();
+                    break;
+                }
+                default:
+                {
+                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action (last) " << ad.action;
+                    break;
+                }
+            }
+        }
     }
 }
 

@@ -7,7 +7,7 @@
  * Description : a plugin to create panorama by fusion of several images.
  * Acknowledge : based on the expoblending plugin
  *
- * Copyright (C) 2011-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2011-2016 by Benjamin Girault <benjamin dot girault at gmail dot com>
  * Copyright (C) 2009-2016 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -38,22 +38,24 @@ namespace KIPIPanoramaPlugin
 
 enum Action
 {
-    NONE = 0,
-    PREPROCESS_INPUT,
-    CREATEPTO,
-    CPFIND,
-    CPCLEAN,
-    OPTIMIZE,
-    AUTOCROP,
-    CREATEPREVIEWPTO,
-    CREATEMK,
-    CREATEMKPREVIEW,
-    CREATEFINALPTO,
-    NONAFILE,
-    NONAFILEPREVIEW,
-    STITCH,
-    STITCHPREVIEW,
-    COPY
+    NONE = 0,                   // 0
+    PREPROCESS_INPUT,           // 1
+    CREATEPTO,                  // 2
+    CPFIND,                     // 3
+    CPCLEAN,                    // 4
+    OPTIMIZE,                   // 5
+    AUTOCROP,                   // 6
+    CREATEPREVIEWPTO,           // 7
+    CREATEMK,                   // 8
+    CREATEMKPREVIEW,            // 9
+    CREATEFINALPTO,             // 10
+    NONAFILE,                   // 11
+    NONAFILEPREVIEW,            // 12
+    STITCH,                     // 13
+    STITCHPREVIEW,              // 14
+    HUGINEXECUTOR,              // 15
+    HUGINEXECUTORPREVIEW,       // 16
+    COPY                        // 17
 };
 
 typedef enum

@@ -7,7 +7,7 @@
  * Description : a plugin to create panorama by fusion of several images.
  * Acknowledge : based on the expoblending plugin
  *
- * Copyright (C) 2011-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2011-2016 by Benjamin Girault <benjamin dot girault at gmail dot com>
  * Copyright (C) 2009-2016 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -46,24 +46,24 @@ public:
     LastPage(Manager* const mngr, KPWizardDialog* const dlg);
     ~LastPage();
 
-    void resetTitle();
+private:
+
     void copyFiles();
+    void checkFiles();
+    QString panoFileName(const QString& fileTemplate) const;
+
+    void initializePage();
+    bool validatePage();
 
 Q_SIGNALS:
 
-    void signalCopyFinished(bool);
-    void signalIsValid(bool);
+    void signalCopyFinished();
 
 private Q_SLOTS:
 
-    void slotAction(const KIPIPanoramaPlugin::ActionData&);
     void slotTemplateChanged(const QString&);
     void slotPtoCheckBoxChanged(int);
-
-private:
-
-    QString panoFileName(const QString& fileTemplate) const;
-    void checkFiles();
+    void slotAction(const KIPIPanoramaPlugin::ActionData&);
 
 private:
 

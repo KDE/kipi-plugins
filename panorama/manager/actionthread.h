@@ -7,7 +7,7 @@
  * Description : a plugin to create panorama by fusion of several images.
  * Acknowledge : based on the expoblending plugin
  *
- * Copyright (C) 2011-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2011-2016 by Benjamin Girault <benjamin dot girault at gmail dot com>
  * Copyright (C) 2009-2016 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009-2011 by Johannes Wienke <languitar at semipol dot de>
  *
@@ -66,13 +66,13 @@ public:
 
     void generatePanoramaPreview(QSharedPointer<const PTOType> ptoData, QUrl& previewPtoUrl, QUrl& previewMkUrl, QUrl& previewUrl,
                                  const ItemUrlsMap& preProcessedUrlsMap,
-                                 const QString& makePath, const QString& pto2mkPath,
+                                 const QString& makePath, const QString& pto2mkPath, const QString& huginExecutorPath, bool hugin2015,
                                  const QString& enblendPath, const QString& nonaPath);
 
     void compileProject(QSharedPointer<const PTOType> basePtoData, QUrl& panoPtoUrl, QUrl& mkUrl, QUrl& panoUrl,
                         const ItemUrlsMap& preProcessedUrlsMap,
                         PanoramaFileType fileType, const QRect& crop,
-                        const QString& makePath, const QString& pto2mkPath,
+                        const QString& makePath, const QString& pto2mkPath, const QString& huginExecutorPath, bool hugin2015,
                         const QString& enblendPath, const QString& nonaPath);
 
     void copyFiles(const QUrl& ptoUrl, const QUrl& panoUrl, const QUrl& finalPanoUrl,

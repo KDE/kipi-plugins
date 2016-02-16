@@ -61,6 +61,7 @@ set(panorama_common_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/tasks/createmktask.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tasks/compilemksteptask.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tasks/compilemktask.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/huginexecutortask.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tasks/copyfilestask.cpp
    )
 

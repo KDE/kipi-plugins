@@ -6,7 +6,7 @@
  * Date        : 2012-03-15
  * Description : a plugin to create panorama by fusion of several images.
  *
- * Copyright (C) 2012-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2012-2016 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -57,10 +57,10 @@ CreatePtoTask::CreatePtoTask(const QString& workDirPath, PanoramaFileType fileTy
     if (pl)
     {
         m_iface = pl->interface();
-        
+
         if (m_iface)
             m_meta = m_iface->createMetadataProcessor();
-    }   
+    }
 }
 
 CreatePtoTask::~CreatePtoTask()

@@ -6,7 +6,7 @@
  * Date        : 2011-05-23
  * Description : a plugin to create panorama by fusion of several images.
  *
- * Copyright (C) 2011-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2011-2016 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -63,6 +63,7 @@ struct OptimizePage::Private
         : progressCount(0),
           progressLabel(0),
           progressTimer(0),
+          optimisationDone(false),
           canceled(false),
           title(0),
 //        preprocessResults(0),
@@ -78,6 +79,7 @@ struct OptimizePage::Private
     QLabel*                    progressLabel;
     QTimer*                    progressTimer;
     QMutex                     progressMutex;      // This is a precaution in case the user does a back / next action at the wrong moment
+    bool                       optimisationDone;
     bool                       canceled;
 
     QLabel*                    title;
@@ -158,8 +160,6 @@ OptimizePage::OptimizePage(Manager* const mngr, KPWizardDialog* const dlg)
 
     setPageWidget(vbox);
 
-    resetTitle();
-
     QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("kipiplugin_panorama/pics/assistant-hugin.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
@@ -208,9 +208,48 @@ void OptimizePage::process()
                                        d->mngr->panoModifyBinary().path());
 }
 
-bool OptimizePage::cancel()
+void OptimizePage::initializePage()
+{
+    d->title->setText(i18n("<qt>"
+                           "<p>The optimization step according to your settings is ready to be performed.</p>"
+                           "<p>This step can include an automatic leveling of the horizon, and also "
+                           "an automatic projection selection and size</p>"
+                           "<p>To perform this operation, the <command>%1</command> program from the "
+                           "<a href='%2'>%3</a> project will be used.</p>"
+                           "<p>Press the \"Next\" button to run the optimization.</p>"
+                           "</qt>",
+                           QDir::toNativeSeparators(d->mngr->autoOptimiserBinary().path()),
+                           d->mngr->autoOptimiserBinary().url().url(),
+                           d->mngr->autoOptimiserBinary().projectName()));
+
+//  QPair<double, int> result = d->mngr->cpFindUrlData().standardDeviation();
+//  d->preprocessResults->setText(i18n("Alignment error: %1px", result.first / ((double) result.second)));
+    d->detailsBtn->hide();
+    d->horizonCheckbox->show();
+//  d->projectionAndSizeCheckbox->show();
+
+    d->canceled = false;
+    d->optimisationDone = false;
+
+    setComplete(true);
+    emit completeChanged();
+}
+
+bool OptimizePage::validatePage()
+{
+    if (d->optimisationDone)
+        return true;
+
+    setComplete(false);
+    process();
+
+    return false;
+}
+
+void OptimizePage::cleanupPage()
 {
     d->canceled = true;
+
     disconnect(d->mngr->thread(), SIGNAL(stepFinished(KIPIPanoramaPlugin::ActionData)),
                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
     disconnect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
@@ -224,17 +263,7 @@ bool OptimizePage::cancel()
     {
         d->progressTimer->stop();
         d->progressLabel->clear();
-        resetTitle();
-        return false;
     }
-
-    return true;
-}
-
-void OptimizePage::resetPage()
-{
-    d->canceled = false;
-    resetTitle();
 }
 
 void OptimizePage::slotProgressTimerDone()
@@ -248,8 +277,21 @@ void OptimizePage::slotProgressTimerDone()
     d->progressTimer->start(300);
 }
 
+void OptimizePage::slotShowDetails()
+{
+    KPOutputDialog dlg(QApplication::activeWindow(),
+                       i18nc("@title:window", "Pre-Processing Messages"),
+                       d->output);
+
+    dlg.setAboutData(new PanoramaAboutData());
+    dlg.exec();
+}
+
 void OptimizePage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
 {
+    qCDebug(KIPIPLUGINS_LOG) << "SlotAction (optimize)";
+    qCDebug(KIPIPLUGINS_LOG) << "starting, success, canceled, action: " << ad.starting << ad.success << d->canceled << ad.action;
+
     QString text;
 
     QMutexLocker lock(&d->progressMutex);
@@ -272,10 +314,11 @@ void OptimizePage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     disconnect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
                                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
+                    qCWarning(KIPIPLUGINS_LOG) << "Job failed (optimize): " << ad.action;
                     if (d->detailsBtn->isHidden())
                     {
                         d->title->setText(i18n("<qt>"
-                                            "<p>Optimization has failed.</p>"
+                                            "<h1>Optimization has failed.</h1>"
                                             "<p>Press \"Details\" to show processing messages.</p>"
                                             "</qt>"));
                         d->progressTimer->stop();
@@ -284,7 +327,9 @@ void OptimizePage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                         d->detailsBtn->show();
                         d->progressLabel->clear();
                         d->output = ad.message;
-                        emit signalOptimized(false);
+
+                        setComplete(false);
+                        emit completeChanged();
                     }
                     break;
                 }
@@ -312,7 +357,11 @@ void OptimizePage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
 
                     d->progressTimer->stop();
                     d->progressLabel->clear();
-                    emit signalOptimized(true);
+                    d->optimisationDone = true;
+
+                    emit signalOptimized();
+                    initializePage();
+
                     break;
                 }
                 default:
@@ -323,38 +372,6 @@ void OptimizePage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
             }
         }
     }
-}
-
-void OptimizePage::slotShowDetails()
-{
-    KPOutputDialog dlg(QApplication::activeWindow(),
-                       i18nc("@title:window", "Pre-Processing Messages"),
-                       d->output);
-
-    dlg.setAboutData(new PanoramaAboutData());
-    dlg.exec();
-}
-
-void OptimizePage::resetTitle()
-{
-    d->title->setText(i18n("<qt>"
-                           "<p><h1><b>Images Pre-Processing is Done</b></h1></p>"
-                           "<p>The optimization step according to your settings is ready to be performed.</p>"
-                           "<p>This step can include an automatic leveling of the horizon, and also "
-                           "an automatic projection selection and size</p>"
-                           "<p>To perform this operation, the <command>%1</command> program from the "
-                           "<a href='%2'>%3</a> project will be used.</p>"
-                           "<p>Press the \"Next\" button to run the optimization.</p>"
-                           "</qt>",
-                           QDir::toNativeSeparators(d->mngr->autoOptimiserBinary().path()),
-                           d->mngr->autoOptimiserBinary().url().url(),
-                           d->mngr->autoOptimiserBinary().projectName()));
-
-//  QPair<double, int> result = d->mngr->cpFindUrlData().standardDeviation();
-//  d->preprocessResults->setText(i18n("Alignment error: %1px", result.first / ((double) result.second)));
-    d->detailsBtn->hide();
-    d->horizonCheckbox->show();
-//  d->projectionAndSizeCheckbox->show();
 }
 
 }   // namespace KIPIPanoramaPlugin

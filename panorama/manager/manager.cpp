@@ -7,7 +7,7 @@
  * Description : a plugin to create panorama by fusion of several images.
  * Acknowledge : based on the expoblending plugin
  *
- * Copyright (C) 2011-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2011-2016 by Benjamin Girault <benjamin dot girault at gmail dot com>
  * Copyright (C) 2009-2016 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -67,6 +67,7 @@ struct Manager::Private
       viewAndCropOptimisePtoData(0),
       previewPtoData(0),
       panoPtoData(0),
+      hugin2015(false),
       iface(0),
       thread(0),
       wizard(0),
@@ -109,6 +110,7 @@ struct Manager::Private
     QUrl                           mkUrl;
     QUrl                           panoUrl;
 
+    bool                           hugin2015;
     bool                           gPano;
 //     bool                           hdr;
 
@@ -154,14 +156,32 @@ Manager::~Manager()
 
 bool Manager::checkBinaries()
 {
-    return(d->autoOptimiserBinary.recheckDirectories() &&
-           d->cpCleanBinary.recheckDirectories()       &&
-           d->cpFindBinary.recheckDirectories()        &&
-           d->enblendBinary.recheckDirectories()       &&
-           d->makeBinary.recheckDirectories()          &&
-           d->nonaBinary.recheckDirectories()          &&
-           d->pto2MkBinary.recheckDirectories()        &&
-           d->huginExecutorBinary.recheckDirectories());
+    bool result = d->autoOptimiserBinary.recheckDirectories() &&
+                  d->cpCleanBinary.recheckDirectories()       &&
+                  d->cpFindBinary.recheckDirectories()        &&
+                  d->enblendBinary.recheckDirectories()       &&
+                  d->makeBinary.recheckDirectories()          &&
+                  d->nonaBinary.recheckDirectories();
+
+    if (result)
+    {
+        d->hugin2015 = d->autoOptimiserBinary.versionIsRight(2015.0);
+        if (d->hugin2015)
+        {
+            result = d->huginExecutorBinary.recheckDirectories();
+        }
+        else
+        {
+            result = d->pto2MkBinary.recheckDirectories();
+        }
+    }
+
+    return result;
+}
+
+bool Manager::hugin2015() const
+{
+    return d->hugin2015;
 }
 
 void Manager::setGPano(bool gPano)

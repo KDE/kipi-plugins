@@ -6,7 +6,7 @@
  * Date        : 2012-03-15
  * Description : a plugin to create panorama by fusion of several images.
  *
- * Copyright (C) 2012-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2012-2016 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -22,9 +22,9 @@
 
 #include "autocroptask.h"
 
-// Local includes
+// Qt includes
 
-#include "kipiplugins_debug.h"
+#include <QFile>
 
 namespace KIPIPanoramaPlugin
 {
@@ -56,9 +56,15 @@ void AutoCropTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 
     runProcess(args);
 
-    qCDebug(KIPIPLUGINS_LOG) << "pano_modify command line: " << getCommandLine();
+    // PanoModify does not return an error code when something went wrong...
+    QFile ptoOutput(viewCropPtoUrl.toLocalFile());
+    if (!ptoOutput.exists())
+    {
+        successFlag = false;
+        errString = getProcessError();
+    }
 
-    qCDebug(KIPIPLUGINS_LOG) << "pano_modify output:" << endl << output;
+    printDebug(QStringLiteral("pano_modify"));
 }
 
 }  // namespace KIPIPanoramaPlugin

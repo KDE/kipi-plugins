@@ -3,8 +3,8 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2015-06-07
- * Description : a plugin to create panorama by fusion of several images.
+ * Date        : 2015-11-04
+ * Description : interface to hugin_executor
  *
  * Copyright (C) 2015-2016 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
@@ -20,48 +20,40 @@
  *
  * ============================================================ */
 
-#ifndef COMMANDTASK_H
-#define COMMANDTASK_H
-
-// Qt includes
-
-#include <QProcess>
+#ifndef HUGINEXECUTORTASK_H
+#define HUGINEXECUTORTASK_H
 
 // Local includes
 
-#include "task.h"
+#include "commandtask.h"
+
+
 
 namespace KIPIPanoramaPlugin
 {
 
-class CommandTask : public Task
+class HuginExecutorTask : public CommandTask
 {
-protected:
-
-    QString                             output;
 
 private:
 
-    QSharedPointer<QProcess>            process;
-    QString                             commandPath;
+    const QUrl&                         ptoUrl;
+    QUrl&                               panoUrl;
+    const PanoramaFileType              fileType;
 
 public:
 
-    CommandTask(Action action, const QString& workDirPath, const QString& commandPath);
-    ~CommandTask();
-
-    void    requestAbort();
+    HuginExecutorTask(const QString& workDirPath, const QUrl& input,
+                      QUrl& panoUrl, PanoramaFileType fileType,
+                      const QString& huginExecutorPath, bool preview);
+    ~HuginExecutorTask();
 
 protected:
 
-    void    runProcess(QStringList& args);
-    QString getProgram();
-    QString getCommandLine();
-    QString getProcessError();
-    void    printDebug(const QString& binaryName);
+    void run(ThreadWeaver::JobPointer self, ThreadWeaver::Thread *thread) override;
 
 };
 
 }  // namespace KIPIPanoramaPlugin
 
-#endif /* COMMANDTASK_H */
+#endif /* HUGINEXECUTORTASK_H */

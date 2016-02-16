@@ -7,7 +7,7 @@
  * Description : a plugin to create panorama by fusion of several images.
  * Acknowledge : based on the expoblending plugin
  *
- * Copyright (C) 2011-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2011-2016 by Benjamin Girault <benjamin dot girault at gmail dot com>
  * Copyright (C) 2009-2016 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -120,8 +120,15 @@ IntroPage::IntroPage(Manager* const mngr, KPWizardDialog* const dlg)
     d->binariesWidget->addBinary(d->mngr->makeBinary());
     d->binariesWidget->addBinary(d->mngr->nonaBinary());
     d->binariesWidget->addBinary(d->mngr->panoModifyBinary());
-    d->binariesWidget->addBinary(d->mngr->pto2MkBinary());
-    d->binariesWidget->addBinary(d->mngr->huginExecutorBinary());
+
+    if (d->mngr->checkBinaries() && d->mngr->hugin2015())
+    {
+        d->binariesWidget->addBinary(d->mngr->huginExecutorBinary());
+    }
+    else
+    {
+        d->binariesWidget->addBinary(d->mngr->pto2MkBinary());
+    }
 
 #ifdef Q_WS_MAC
     d->binariesWidget->addDirectory("/Applications/Hugin/HuginTools");    // Hugin bundle PKG install
@@ -216,9 +223,7 @@ IntroPage::IntroPage(Manager* const mngr, KPWizardDialog* const dlg)
             this, SLOT(slotChangeFileFormat(QAbstractButton*)));
 
     connect(d->binariesWidget, SIGNAL(signalBinariesFound(bool)),
-            this, SIGNAL(signalIntroPageIsValid(bool)));
-
-    emit signalIntroPageIsValid(d->binariesWidget->allBinariesFound());
+            this, SLOT(slotBinariesChanged(bool)));
 
     // TODO HDR
 //   d->hdrCheckBox->setChecked(d->mngr->hdr());
@@ -239,6 +244,22 @@ void IntroPage::slotToggleGPano(int state)
     d->mngr->setGPano(state);
 }
 
+void IntroPage::slotChangeFileFormat(QAbstractButton* button)
+{
+    if (button == d->jpegRadioButton)
+        d->mngr->setFileFormatJPEG();
+    else if (button == d->tiffRadioButton)
+        d->mngr->setFileFormatTIFF();
+    else if (button == d->hdrRadioButton)
+        d->mngr->setFileFormatHDR();
+}
+
+void IntroPage::slotBinariesChanged(bool found)
+{
+    setComplete(found);
+    emit completeChanged();
+}
+
     // TODO HDR
 /*
 void IntroPage::slotShowFileFormat(int state)
@@ -255,14 +276,10 @@ void IntroPage::slotShowFileFormat(int state)
 }
 */
 
-void IntroPage::slotChangeFileFormat(QAbstractButton* button)
+void IntroPage::initializePage()
 {
-    if (button == d->jpegRadioButton)
-        d->mngr->setFileFormatJPEG();
-    else if (button == d->tiffRadioButton)
-        d->mngr->setFileFormatTIFF();
-    else if (button == d->hdrRadioButton)
-        d->mngr->setFileFormatHDR();
+    setComplete(d->binariesWidget->allBinariesFound());
+    emit completeChanged();
 }
 
 }   // namespace KIPIPanoramaPlugin

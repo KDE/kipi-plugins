@@ -6,7 +6,7 @@
  * Date        : 2011-05-23
  * Description : a plugin to create panorama by fusion of several images.
  *
- * Copyright (C) 2011-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2011-2016 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -44,23 +44,23 @@ public:
     OptimizePage(Manager* const mngr, KPWizardDialog* const dlg);
     ~OptimizePage();
 
+private:
+
     void process();
-    bool cancel();
-    void resetPage();
+
+    void initializePage();
+    bool validatePage();
+    void cleanupPage();
 
 Q_SIGNALS:
 
-    void signalOptimized(bool);
+    void signalOptimized();
 
 private Q_SLOTS:
 
     void slotProgressTimerDone();
-    void slotAction(const KIPIPanoramaPlugin::ActionData&);
     void slotShowDetails();
-
-private:
-
-    void resetTitle();
+    void slotAction(const KIPIPanoramaPlugin::ActionData&);
 
 private:
 

@@ -7,7 +7,7 @@
  * Description : a plugin to create panorama by fusion of several images.
  * Acknowledge : based on the expoblending plugin
  *
- * Copyright (C) 2011-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2011-2016 by Benjamin Girault <benjamin dot girault at gmail dot com>
  * Copyright (C) 2009-2016 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -40,6 +40,8 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 
+// #include <QList>
+
 // KDE includes
 
 #include <kconfig.h>
@@ -70,6 +72,7 @@ struct PreProcessingPage::Private
         : progressCount(0),
           progressLabel(0),
           progressTimer(0),
+          preprocessingDone(false),
           canceled(false),
           nbFilesProcessed(0),
           title(0),
@@ -84,6 +87,7 @@ struct PreProcessingPage::Private
     QLabel*                    progressLabel;
     QTimer*                    progressTimer;
     QMutex                     progressMutex;      // This is a precaution in case the user does a back / next action at the wrong moment
+    bool                       preprocessingDone;
     bool                       canceled;
 
     int                        nbFilesProcessed;
@@ -141,8 +145,6 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KPWizardDialog* const 
 
     setPageWidget(vbox);
 
-    resetTitle();
-
     QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("kipiplugin_panorama/pics/assistant-preprocessing.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
@@ -199,7 +201,43 @@ void PreProcessingPage::process()
                                        d->mngr->cpFindBinary().path());
 }
 
-bool PreProcessingPage::cancel()
+void PreProcessingPage::initializePage()
+{
+    d->title->setText(i18n("<qt>"
+                           "<p>Now, we will pre-process images before stitching them.</p>"
+                           "<p>Pre-processing operations include Raw demosaicing. Raw images will be converted "
+                           "to 16-bit sRGB images with auto-gamma.</p>"
+                           "<p>Pre-processing also include a calculation of some control points to match "
+                           "overlaps between images. For that purpose, the <b>%1</b> program from the "
+                           "<a href='%2'>%3</a> project will be used.</p>"
+                           "<p>Press \"Next\" to start pre-processing.</p>"
+                           "</qt>",
+                           QDir::toNativeSeparators(d->mngr->cpFindBinary().path()),
+                           d->mngr->cpFindBinary().url().url(),
+                           d->mngr->cpFindBinary().projectName()));
+
+    d->detailsBtn->hide();
+    d->celesteCheckBox->show();
+
+    d->canceled = false;
+    d->preprocessingDone = false;
+
+    setComplete(true);
+    emit completeChanged();
+}
+
+bool PreProcessingPage::validatePage()
+{
+    if (d->preprocessingDone)
+        return true;
+
+    setComplete(false);
+    process();
+
+    return false;
+}
+
+void PreProcessingPage::cleanupPage()
 {
     d->canceled = true;
 
@@ -216,17 +254,7 @@ bool PreProcessingPage::cancel()
     {
         d->progressTimer->stop();
         d->progressLabel->clear();
-        resetTitle();
-        return false;
     }
-
-    return true;
-}
-
-void PreProcessingPage::resetPage()
-{
-    d->canceled = false;
-    resetTitle();
 }
 
 void PreProcessingPage::slotProgressTimerDone()
@@ -247,7 +275,8 @@ void PreProcessingPage::slotShowDetails()
 
 void PreProcessingPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
 {
-    qCDebug(KIPIPLUGINS_LOG) << "SlotAction";
+    qCDebug(KIPIPLUGINS_LOG) << "SlotAction (preprocessing)";
+    qCDebug(KIPIPLUGINS_LOG) << "starting, success, canceled, action: " << ad.starting << ad.success << d->canceled << ad.action;
     QString text;
 
     QMutexLocker lock(&d->progressMutex);
@@ -273,11 +302,11 @@ void PreProcessingPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     disconnect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
                                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
-                    qCWarning(KIPIPLUGINS_LOG) << "Job canceled: " << ad.action;
+                    qCWarning(KIPIPLUGINS_LOG) << "Job failed (preprocessing): " << ad.action;
                     if (d->detailsBtn->isHidden())  // Ensures only the first failed task is shown
                     {
                         d->title->setText(i18n("<qt>"
-                                                "<p>Pre-processing has failed.</p>"
+                                                "<h1>Pre-processing has failed.</h1>"
                                                 "<p>Press \"Details\" to show processing messages.</p>"
                                                 "</qt>"));
                         d->progressTimer->stop();
@@ -285,7 +314,10 @@ void PreProcessingPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                         d->detailsBtn->show();
                         d->progressLabel->clear();
                         d->output = ad.message;
-                        emit signalPreProcessed(false);
+
+                        setComplete(false);
+                        emit completeChanged();
+
                     }
                     break;
                 }
@@ -323,7 +355,11 @@ void PreProcessingPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
 
                     d->progressTimer->stop();
                     d->progressLabel->clear();
-                    emit signalPreProcessed(true);
+                    d->preprocessingDone = true;
+
+                    emit signalPreProcessed();
+                    initializePage();
+
                     break;
                 }
                 default:
@@ -334,25 +370,6 @@ void PreProcessingPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
             }
         }
     }
-}
-
-void PreProcessingPage::resetTitle()
-{
-    d->title->setText(i18n("<qt>"
-                           "<p>Now, we will pre-process images before stitching them.</p>"
-                           "<p>Pre-processing operations include Raw demosaicing. Raw images will be converted "
-                           "to 16-bit sRGB images with auto-gamma.</p>"
-                           "<p>Pre-processing also include a calculation of some control points to match "
-                           "overlaps between images. For that purpose, the <b>%1</b> program from the "
-                           "<a href='%2'>%3</a> project will be used.</p>"
-                           "<p>Press \"Next\" to start pre-processing.</p>"
-                           "</qt>",
-                           QDir::toNativeSeparators(d->mngr->cpFindBinary().path()),
-                           d->mngr->cpFindBinary().url().url(),
-                           d->mngr->cpFindBinary().projectName()));
-
-    d->detailsBtn->hide();
-    d->celesteCheckBox->show();
 }
 
 }   // namespace KIPIPanoramaPlugin

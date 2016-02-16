@@ -6,7 +6,7 @@
  * Date        : 2012-03-15
  * Description : a plugin to create panorama by fusion of several images.
  *
- * Copyright (C) 2012-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2012-2016 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -53,13 +53,13 @@ CopyFilesTask::CopyFilesTask(const QString& workDirPath, const QUrl& panoUrl, co
       addGPlusMetadata(GPlusMetadata),
       m_iface(0),
       m_meta(0)
-{    
+{
     PluginLoader* const pl = PluginLoader::instance();
 
     if (pl)
     {
         m_iface = pl->interface();
-        
+
         if (m_iface)
             m_meta = m_iface->createMetadataProcessor();
     }
@@ -84,7 +84,7 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
     if (!panoFile.exists())
     {
         errString = i18n("Temporary panorama file does not exists.");
-        qCDebug(KIPIPLUGINS_LOG) << "Temporary panorama file does not exists: " << panoUrl.toLocalFile();
+        qCDebug(KIPIPLUGINS_LOG) << "Temporary panorama file does not exists: " << panoUrl;
         successFlag = false;
         return;
     }
@@ -92,7 +92,7 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
     if (finalPanoFile.exists())
     {
         errString = i18n("A panorama file named <filename>%1</filename> already exists.", finalPanoUrl.fileName());
-        qCDebug(KIPIPLUGINS_LOG) << "Final panorama file already exists: " << finalPanoUrl.toLocalFile();
+        qCDebug(KIPIPLUGINS_LOG) << "Final panorama file already exists: " << finalPanoUrl;
         successFlag = false;
         return;
     }
@@ -100,7 +100,7 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
     if (savePTO && !ptoFile.exists())
     {
         errString = i18n("Temporary project file does not exist.");
-        qCDebug(KIPIPLUGINS_LOG) << "Temporary project file does not exists: " << ptoUrl.toLocalFile();
+        qCDebug(KIPIPLUGINS_LOG) << "Temporary project file does not exists: " << ptoUrl;
         successFlag = false;
         return;
     }
@@ -108,7 +108,7 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
     if (savePTO && finalPTOFile.exists())
     {
         errString = i18n("A project file named <filename>%1</filename> already exists.", finalPTOUrl.fileName());
-        qCDebug(KIPIPLUGINS_LOG) << "Final project file already exists: " << finalPTOUrl.toLocalFile();
+        qCDebug(KIPIPLUGINS_LOG) << "Final project file already exists: " << finalPTOUrl;
         successFlag = false;
         return;
     }
@@ -177,7 +177,7 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 
         m_meta->applyChanges();
     }
-    
+
     qCDebug(KIPIPLUGINS_LOG) << "Copying panorama file...";
 
     if (!panoFile.copy(finalPanoUrl.toLocalFile()) || !panoFile.remove())
@@ -211,7 +211,7 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
         {
             rawdec = m_iface->createRawProcessor();
         }
-        
+
         for (ItemUrlsMap::const_iterator i = urlList->constBegin(); i != urlList->constEnd(); ++i)
         {
             if (rawdec && rawdec->isRawFile(i.key()))

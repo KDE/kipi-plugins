@@ -6,7 +6,7 @@
  * Date        : 2012-03-15
  * Description : a plugin to create panorama by fusion of several images.
  *
- * Copyright (C) 2012-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2012-2016 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -58,7 +58,7 @@ PreProcessTask::PreProcessTask(const QString& workDirPath, int id, ItemPreproces
     if (pl)
     {
         m_iface = pl->interface();
-                
+
         if (m_iface)
         {
             m_meta   = m_iface->createMetadataProcessor();
@@ -131,7 +131,7 @@ bool PreProcessTask::computePreview(const QUrl& inUrl)
         {
             m_meta->load(inUrl);
             int orientation = m_meta->getImageOrientation();
-            
+
             m_meta->load(outUrl);
             m_meta->setImageOrientation(orientation);
             m_meta->setImageDimensions(QSize(preview.width(), preview.height()));
@@ -143,6 +143,7 @@ bool PreProcessTask::computePreview(const QUrl& inUrl)
     }
     else
     {
+        qCDebug(KIPIPLUGINS_LOG) << "Error during preview generation of: " << inUrl;
         errString = i18n("Input image cannot be loaded for preview generation.");
     }
 
@@ -166,7 +167,7 @@ bool PreProcessTask::convertRaw()
     if (m_rawdec)
     {
         decoded = m_rawdec->decodeRawImage(inUrl, imageData, width, height, rgbmax);
-    }            
+    }
 
     if (decoded)
     {
@@ -203,7 +204,7 @@ bool PreProcessTask::convertRaw()
         outUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName().replace(QLatin1String("."), QLatin1String("_")) + QStringLiteral(".tif")));
 
         // wImageIface.setCancel(&isAbortedFlag);
-        
+
         if (m_iface && !m_iface->saveImage(outUrl, QLatin1String("TIF"),
                                            imageData, width, height,
                                            true, false,

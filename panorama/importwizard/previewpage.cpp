@@ -6,7 +6,7 @@
  * Date        : 2011-05-23
  * Description : a plugin to create panorama by fusion of several images.
  *
- * Copyright (C) 2011-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2011-2016 by Benjamin Girault <benjamin dot girault at gmail dot com>
  * Copyright (C) 2011-2016 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -47,6 +47,7 @@
 #include "makebinary.h"
 #include "nonabinary.h"
 #include "pto2mkbinary.h"
+#include "huginexecutorbinary.h"
 #include "kputil.h"
 
 
@@ -57,14 +58,15 @@ namespace KIPIPanoramaPlugin
 struct PreviewPage::Private
 {
     Private(Manager* const m)
-        : title(0), 
-          previewWidget(0), 
-          previewBusy(false), 
+        : title(0),
+          previewWidget(0),
+          previewBusy(false),
           stitchingBusy(false),
+          stitchingDone(false),
           postProcessing(0),
           curProgress(0),
           totalProgress(0),
-          canceled(false), 
+          canceled(false),
           mngr(m),
           dlg(0)
     {
@@ -75,6 +77,7 @@ struct PreviewPage::Private
     KPPreviewManager*      previewWidget;
     bool                   previewBusy;
     bool                   stitchingBusy;
+    bool                   stitchingDone;
     KPBatchProgressWidget* postProcessing;
     int                    curProgress, totalProgress;
     QMutex                 actionMutex;      // This is a precaution in case the user does a back / next action at the wrong moment
@@ -101,14 +104,12 @@ PreviewPage::PreviewPage(Manager* const mngr, KPWizardDialog* const dlg)
 
     d->previewWidget  = new KPPreviewManager(vbox);
     d->previewWidget->setButtonText(i18nc("@action:button", "Details..."));
-    d->previewWidget->show();
 
     d->postProcessing = new KPBatchProgressWidget(vbox);
-    d->postProcessing->hide();
 
     setPageWidget(vbox);
 
-    QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("kipiplugin_panorama/pics/assistant-hugin.png")));
+    QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromLatin1("kipiplugin_panorama/pics/assistant-hugin.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
     connect(d->postProcessing, SIGNAL(signalProgressCanceled()),
@@ -120,53 +121,12 @@ PreviewPage::~PreviewPage()
     delete d;
 }
 
-void PreviewPage::slotCancel()
-{
-    d->dlg->reject();
-}
-
-bool PreviewPage::cancel()
-{
-    disconnect(d->mngr->thread(), SIGNAL(starting(KIPIPanoramaPlugin::ActionData)),
-               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
-
-    disconnect(d->mngr->thread(), SIGNAL(stepFinished(KIPIPanoramaPlugin::ActionData)),
-               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
-
-    disconnect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
-               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
-
-    d->canceled = true;
-    d->mngr->thread()->cancel();
-    d->mngr->thread()->finish();
-    d->postProcessing->progressCompleted();
-
-    QMutexLocker lock(&d->actionMutex);
-
-    if (d->previewBusy)
-    {
-        d->previewBusy = false;
-        d->previewWidget->setBusy(false);
-        d->previewWidget->setText(i18n("Preview Processing Cancelled."));
-        return true;
-    }
-    else if (d->stitchingBusy)
-    {
-        d->stitchingBusy = false;
-        lock.unlock();
-        resetPage();
-        return false;
-    }
-
-    return true;
-}
-
 void PreviewPage::computePreview()
 {
     // Cancel any stitching being processed
     if (d->stitchingBusy)
     {
-        cancel();
+        cleanupPage();
     }
 
     QMutexLocker lock(&d->actionMutex);
@@ -192,6 +152,8 @@ void PreviewPage::computePreview()
                                                d->mngr->preProcessedMap(),
                                                d->mngr->makeBinary().path(),
                                                d->mngr->pto2MkBinary().path(),
+                                               d->mngr->huginExecutorBinary().path(),
+                                               d->mngr->hugin2015(),
                                                d->mngr->enblendBinary().path(),
                                                d->mngr->nonaBinary().path());
 }
@@ -204,7 +166,7 @@ void PreviewPage::startStitching()
     if (d->previewBusy)
     {
         previewReady = false;
-        cancel();
+        cleanupPage();
     }
 
     QMutexLocker lock(&d->actionMutex);
@@ -221,7 +183,14 @@ void PreviewPage::startStitching()
     d->canceled      = false;
     d->stitchingBusy = true;
     d->curProgress   = 0;
-    d->totalProgress = d->mngr->preProcessedMap().size() + 1;
+    if (d->mngr->hugin2015())
+    {
+        d->totalProgress = 1;
+    }
+    else
+    {
+        d->totalProgress = d->mngr->preProcessedMap().size() + 1;
+    }
     d->previewWidget->hide();
 
     QSize panoSize      = d->mngr->viewAndCropOptimisePtoData()->project.size;
@@ -250,7 +219,7 @@ void PreviewPage::startStitching()
 
     d->postProcessing->reset();
     d->postProcessing->setTotal(d->totalProgress);
-    d->postProcessing->progressScheduled(i18nc("@title:group", "Panorama Post-Processing"), QIcon::fromTheme(QStringLiteral("kipi-panorama")).pixmap(22, 22));
+    d->postProcessing->progressScheduled(i18nc("@title:group", "Panorama Post-Processing"), QIcon::fromTheme(QString::fromLatin1("kipi-panorama")).pixmap(22, 22));
     d->postProcessing->show();
 
     d->mngr->resetPanoPto();
@@ -265,22 +234,86 @@ void PreviewPage::startStitching()
                                       panoSelection,
                                       d->mngr->makeBinary().path(),
                                       d->mngr->pto2MkBinary().path(),
+                                      d->mngr->huginExecutorBinary().path(),
+                                      d->mngr->hugin2015(),
                                       d->mngr->enblendBinary().path(),
                                       d->mngr->nonaBinary().path());
 }
 
-void PreviewPage::resetPage()
+void PreviewPage::preInitializePage()
 {
     d->title->setText(QString());
+    d->previewWidget->show();
     d->postProcessing->progressCompleted();
     d->postProcessing->hide();
-    d->previewWidget->show();
+
+    setComplete(true);
+    emit completeChanged();
+}
+
+void PreviewPage::initializePage()
+{
+    preInitializePage();
+
     computePreview();
+}
+
+bool PreviewPage::validatePage()
+{
+    if (d->stitchingDone)
+        return true;
+
+    setComplete(false);
+    startStitching();
+
+    return false;
+}
+
+void PreviewPage::cleanupPage()
+{
+    d->canceled = true;
+
+    disconnect(d->mngr->thread(), SIGNAL(starting(KIPIPanoramaPlugin::ActionData)),
+               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
+    disconnect(d->mngr->thread(), SIGNAL(stepFinished(KIPIPanoramaPlugin::ActionData)),
+               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
+    disconnect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
+               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
+    d->mngr->thread()->cancel();
+    d->mngr->thread()->finish();
+    d->postProcessing->progressCompleted();
+
+    QMutexLocker lock(&d->actionMutex);
+
+    if (d->previewBusy)
+    {
+        d->previewBusy = false;
+        d->previewWidget->setBusy(false);
+        d->previewWidget->setText(i18n("Preview Processing Cancelled."));
+    }
+    else if (d->stitchingBusy)
+    {
+        d->stitchingBusy = false;
+    }
+}
+
+void PreviewPage::slotCancel()
+{
+    d->dlg->reject();
 }
 
 void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
 {
+    qCDebug(KIPIPLUGINS_LOG) << "SlotAction (preview)";
+    qCDebug(KIPIPLUGINS_LOG) << "starting, success, canceled, action: " << ad.starting << ad.success << d->canceled << ad.action;
+
+    qCDebug(KIPIPLUGINS_LOG) << "busy (preview / stitch):" << d->previewBusy << d->stitchingBusy;
+
     QString      text;
+
     QMutexLocker lock(&d->actionMutex);
 
     if (!ad.starting)           // Something is complete...
@@ -293,6 +326,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 case NONAFILEPREVIEW:
                 case STITCHPREVIEW:
                 case CREATEMKPREVIEW:
+                case HUGINEXECUTORPREVIEW:
                 {
                     if (!d->previewBusy)
                     {
@@ -309,13 +343,13 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     d->previewWidget->setBusy(false);
                     d->previewBusy = false;
                     qCWarning(KIPIPLUGINS_LOG) << "Preview compilation failed: " << ad.message;
-                    QString errorString(xi18n("<qt><h2><b>Error</b></h2><p><message>%1</message></p></qt>",
-                                              ad.message.toHtmlEscaped().replace(QLatin1String("\n"),
-                                                                                 QLatin1String("</p><p>"))));
+                    QString errorString(i18n("<h1><b>Error</b></h1><p>%1</p>",
+                                              ad.message));
                     d->previewWidget->setText(errorString);
                     d->previewWidget->setSelectionAreaPossible(false);
 
-                    emit signalPreviewStitchingFinished(false);
+                    setComplete(false);
+                    emit completeChanged();
 
                     break;
                 }
@@ -335,10 +369,15 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
                     d->stitchingBusy = false;
-                    QString message  = xi18nc("Here a makefile is a script for GNU Make", "Cannot create makefile: <message>%3</message>", ad.message);
+                    QString message  = i18nc("Here a makefile is a script for GNU Make",
+                                             "<p><b>Cannot create makefile: </b></p><p>%1</p>",
+                                             ad.message);
                     qCWarning(KIPIPLUGINS_LOG) << "pto2mk call failed";
                     d->postProcessing->addedAction(message, ErrorMessage);
-                    emit signalStitchingFinished(false);
+
+                    setComplete(false);
+                    emit completeChanged();
+
                     break;
                 }
                 case CREATEFINALPTO:
@@ -358,12 +397,15 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
                     d->stitchingBusy = false;
-                    QString message  = xi18nc("a project file is a .pto file, as given to hugin to build a panorama",
-                                              "Cannot create project file: <message>%3</message>",
-                                              ad.message);
+                    QString message  = i18nc("a project file is a .pto file, as given to hugin to build a panorama",
+                                             "<p><b>Cannot create project file: </b></p><p>%1</p>",
+                                             ad.message);
                     qCWarning(KIPIPLUGINS_LOG) << "pto creation failed";
                     d->postProcessing->addedAction(message, ErrorMessage);
-                    emit signalStitchingFinished(false);
+
+                    setComplete(false);
+                    emit completeChanged();
+
                     break;
                 }
                 case NONAFILE:
@@ -383,17 +425,21 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
                     d->stitchingBusy = false;
-                    QString message  = xi18nc("Error message for image file number %1 out of %2", "Processing file %1 / %2: <message>%3</message>",
-                                              QString::number(ad.id + 1),
-                                              QString::number(d->totalProgress - 1),
-                                              ad.message
-                                             );
+                    QString message  = i18nc("Error message for image file number %1 out of %2",
+                                             "<p><b>Processing file %1 / %2: </b></p><p>%3</p>",
+                                             QString::number(ad.id + 1),
+                                             QString::number(d->totalProgress - 1),
+                                             ad.message);
                     qCWarning(KIPIPLUGINS_LOG) << "Nona call failed for file #" << ad.id;
                     d->postProcessing->addedAction(message, ErrorMessage);
-                    emit signalStitchingFinished(false);
+
+                    setComplete(false);
+                    emit completeChanged();
+
                     break;
                 }
                 case STITCH:
+                case HUGINEXECUTOR:
                 {
                     if (!d->stitchingBusy)
                     {
@@ -410,10 +456,14 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
                     d->stitchingBusy = false;
-                    d->postProcessing->addedAction(xi18nc("Error message for panorama compilation", "Panorama compilation: <message>%1</message>",
-                                                          ad.message.toHtmlEscaped()), ErrorMessage);
+                    d->postProcessing->addedAction(i18nc("Error message for panorama compilation",
+                                                         "<p><b>Panorama compilation: </b></p><p>%1</p>",
+                                                         ad.message.toHtmlEscaped()), ErrorMessage);
                     qCWarning(KIPIPLUGINS_LOG) << "Enblend call failed";
-                    emit signalStitchingFinished(false);
+
+                    setComplete(false);
+                    emit completeChanged();
+
                     break;
                 }
                 default:
@@ -437,6 +487,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     break;
                 }
                 case STITCHPREVIEW:
+                case HUGINEXECUTORPREVIEW:
                 {
                     if (!d->previewBusy)
                     {
@@ -449,17 +500,17 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     disconnect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
                                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
-                    qCDebug(KIPIPLUGINS_LOG) << "Preview Stitching finished";
                     d->previewBusy = false;
 
                     d->title->setText(i18n("<qt>"
-                                           "<p><h1>Panorama Preview</h1></p>"
+                                           "<h1>Panorama Preview</h1>"
                                            "<p>Draw a rectangle if you want to crop the image.</p>"
                                            "<p>Pressing the <i>Next</i> button will then launch the final "
                                            "stitching process.</p>"
                                            "</qt>"));
                     d->previewWidget->setSelectionAreaPossible(true);
-                    d->previewWidget->load(QUrl::fromLocalFile(d->mngr->previewUrl().toLocalFile()), true);
+//                     d->previewWidget->load(QUrl::fromLocalFile(d->mngr->previewUrl().toLocalFile()), true);
+                    d->previewWidget->load(d->mngr->previewUrl(), true);
                     QSize panoSize    = d->mngr->viewAndCropOptimisePtoData()->project.size;
                     QRect panoCrop    = d->mngr->viewAndCropOptimisePtoData()->project.crop;
                     QSize previewSize = d->mngr->previewPtoData()->project.size;
@@ -469,22 +520,23 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                         ((double) panoCrop.width())  / panoSize.width()  * previewSize.width(),
                         ((double) panoCrop.height()) / panoSize.height() * previewSize.height()
                     ));
-                    qCDebug(KIPIPLUGINS_LOG) << "Preview URL: " << d->mngr->previewUrl();
-
-                    emit signalPreviewStitchingFinished(true);
 
                     break;
                 }
                 case NONAFILE:
                 {
-                    QString message = i18nc("Success for image file number %1 out of %2", "Processing file %1 / %2", QString::number(ad.id + 1), QString::number(d->totalProgress - 1));
+                    QString message = i18nc("Success for image file number %1 out of %2",
+                                            "Processing file %1 / %2",
+                                            QString::number(ad.id + 1),
+                                            QString::number(d->totalProgress - 1));
                     d->postProcessing->addedAction(message, SuccessMessage);
                     d->curProgress++;
                     d->postProcessing->setProgress(d->curProgress, d->totalProgress);
-                    qCDebug(KIPIPLUGINS_LOG) << "Nona URL #" << ad.id;
+
                     break;
                 }
                 case STITCH:
+                case HUGINEXECUTOR:
                 {
                     if (!d->stitchingBusy)
                     {
@@ -506,8 +558,11 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     d->postProcessing->setProgress(d->curProgress, d->totalProgress);
                     d->postProcessing->progressCompleted();
                     d->postProcessing->hide();
-                    qCDebug(KIPIPLUGINS_LOG) << "Panorama stitched";
-                    emit signalStitchingFinished(true);
+                    d->stitchingDone = true;
+
+                    emit signalStitchingFinished();
+                    preInitializePage();
+
                     break;
                 }
                 default:
@@ -528,18 +583,22 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
             case STITCHPREVIEW:
             case CREATEFINALPTO:
             case CREATEMK:
+            case HUGINEXECUTORPREVIEW:
             {
                 // Nothing to do...
                 break;
             }
             case NONAFILE:
             {
-                qCDebug(KIPIPLUGINS_LOG) << "Start" << ad.id;
-                QString message = i18nc("Compilation started for image file number %1 out of %2", "Processing file %1 / %2", QString::number(ad.id + 1), QString::number(d->totalProgress - 1));
+                QString message = i18nc("Compilation started for image file number %1 out of %2",
+                                        "Processing file %1 / %2",
+                                        QString::number(ad.id + 1),
+                                        QString::number(d->totalProgress - 1));
                 d->postProcessing->addedAction(message, StartingMessage);
                 break;
             }
             case STITCH:
+            case HUGINEXECUTOR:
             {
                 d->postProcessing->addedAction(i18nc("Panorama compilation started", "Panorama compilation"), StartingMessage);
                 break;

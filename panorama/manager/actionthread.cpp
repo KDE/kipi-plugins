@@ -7,7 +7,7 @@
  * Description : a plugin to create panorama by fusion of several images.
  * Acknowledge : based on the expoblending plugin
  *
- * Copyright (C) 2011-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2011-2016 by Benjamin Girault <benjamin dot girault at gmail dot com>
  * Copyright (C) 2009-2016 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009-2011 by Johannes Wienke <languitar at semipol dot de>
  *
@@ -24,6 +24,8 @@
  * ============================================================ */
 
 #include "actionthread.h"
+
+// #include <typeinfo>
 
 // Qt includes
 
@@ -220,7 +222,7 @@ void ActionThread::optimizeProject(QUrl& ptoUrl, QUrl& optimizePtoUrl, QUrl& vie
 
 void ActionThread::generatePanoramaPreview(QSharedPointer<const PTOType> ptoData, QUrl& previewPtoUrl, QUrl& previewMkUrl, QUrl& previewUrl,
                                            const ItemUrlsMap& preProcessedUrlsMap,
-                                           const QString& makePath, const QString& pto2mkPath,
+                                           const QString& makePath, const QString& pto2mkPath, const QString& huginExecutorPath, bool hugin2015,
                                            const QString& enblendPath, const QString& nonaPath)
 {
     QSharedPointer<Sequence> jobs(new Sequence());
@@ -238,17 +240,37 @@ void ActionThread::generatePanoramaPreview(QSharedPointer<const PTOType> ptoData
 
     (*jobs) << ptoTask;
 
-    appendStitchingJobs(jobs,
-                        previewPtoUrl,
-                        previewMkUrl,
-                        previewUrl,
-                        preProcessedUrlsMap,
-                        JPEG,
-                        makePath,
-                        pto2mkPath,
-                        enblendPath,
-                        nonaPath,
-                        true);
+    if (!hugin2015)
+    {
+        appendStitchingJobs(jobs,
+                            previewPtoUrl,
+                            previewMkUrl,
+                            previewUrl,
+                            preProcessedUrlsMap,
+                            JPEG,
+                            makePath,
+                            pto2mkPath,
+                            enblendPath,
+                            nonaPath,
+                            true);
+    }
+    else
+    {
+        QObjectDecorator* huginExecutorTask = new QObjectDecorator(new HuginExecutorTask(d->preprocessingTmpDir->path(),
+                                                                                         previewPtoUrl,
+                                                                                         previewUrl,
+                                                                                         JPEG,
+                                                                                         huginExecutorPath,
+                                                                                         true));
+
+        connect(huginExecutorTask, SIGNAL(started(ThreadWeaver::JobPointer)),
+                this, SLOT(slotStarting(ThreadWeaver::JobPointer)));
+
+        connect(huginExecutorTask, SIGNAL(done(ThreadWeaver::JobPointer)),
+                this, SLOT(slotStepDone(ThreadWeaver::JobPointer)));
+
+        (*jobs) << huginExecutorTask;
+    }
 
     d->threadQueue->enqueue(jobs);
 }
@@ -256,7 +278,7 @@ void ActionThread::generatePanoramaPreview(QSharedPointer<const PTOType> ptoData
 void ActionThread::compileProject(QSharedPointer<const PTOType> basePtoData, QUrl& panoPtoUrl, QUrl& mkUrl, QUrl& panoUrl,
                                   const ItemUrlsMap& preProcessedUrlsMap,
                                   PanoramaFileType fileType, const QRect& crop,
-                                  const QString& makePath, const QString& pto2mkPath,
+                                  const QString& makePath, const QString& pto2mkPath, const QString& huginExecutorPath, bool hugin2015,
                                   const QString& enblendPath, const QString& nonaPath)
 {
     QSharedPointer<Sequence> jobs(new Sequence());
@@ -274,17 +296,37 @@ void ActionThread::compileProject(QSharedPointer<const PTOType> basePtoData, QUr
 
     (*jobs) << ptoTask;
 
-    appendStitchingJobs(jobs,
-                        panoPtoUrl,
-                        mkUrl,
-                        panoUrl,
-                        preProcessedUrlsMap,
-                        fileType,
-                        makePath,
-                        pto2mkPath,
-                        enblendPath,
-                        nonaPath,
-                        false);
+    if (!hugin2015)
+    {
+        appendStitchingJobs(jobs,
+                            panoPtoUrl,
+                            mkUrl,
+                            panoUrl,
+                            preProcessedUrlsMap,
+                            fileType,
+                            makePath,
+                            pto2mkPath,
+                            enblendPath,
+                            nonaPath,
+                            false);
+    }
+    else
+    {
+        QObjectDecorator* huginExecutorTask = new QObjectDecorator(new HuginExecutorTask(d->preprocessingTmpDir->path(),
+                                                                                         panoPtoUrl,
+                                                                                         panoUrl,
+                                                                                         fileType,
+                                                                                         huginExecutorPath,
+                                                                                         false));
+
+        connect(huginExecutorTask, SIGNAL(started(ThreadWeaver::JobPointer)),
+                this, SLOT(slotStarting(ThreadWeaver::JobPointer)));
+
+        connect(huginExecutorTask, SIGNAL(done(ThreadWeaver::JobPointer)),
+                this, SLOT(slotStepDone(ThreadWeaver::JobPointer)));
+
+        (*jobs) << huginExecutorTask;
+    }
 
     d->threadQueue->enqueue(jobs);
 }
@@ -356,12 +398,16 @@ void ActionThread::slotStepDone(JobPointer j)
         ad.id = p->id;
     }
 
+//     if (!ad.success)
+//     {
+//         d->threadQueue->dequeue();
+//     }
+
     emit stepFinished(ad);
 }
 
 void ActionThread::slotDone(JobPointer j)
 {
-    qCDebug(KIPIPLUGINS_LOG) << "Something is done...";
     QSharedPointer<QObjectDecorator> dec = j.staticCast<QObjectDecorator>();
     Task* t = static_cast<Task*>(dec->job());
 
