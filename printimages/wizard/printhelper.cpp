@@ -126,8 +126,8 @@ public:
             PrintOptionsPage::Unit unit = PrintOptionsPage::Unit ( doc.pAddInfo->mUnit );
             double wImg                 = doc.scaleWidth ( PrintOptionsPage::unitToInches ( unit ) );
             double hImg                 = doc.scaleHeight ( PrintOptionsPage::unitToInches ( unit ) );
-            size.setWidth ( int ( wImg * printerResolution ) );
-            size.setHeight ( int ( hImg * printerResolution ) );
+            size.setWidth(int(wImg * printerResolution));
+            size.setHeight(int(hImg * printerResolution));
         }
         else
         {
@@ -191,7 +191,7 @@ public:
 // ----------------------------------------------------------------------------
 
 PrintHelper::PrintHelper(QWidget* const parent)
-    : d ( new Private )
+    : d(new Private)
 {
     d->mParent = parent;
 }

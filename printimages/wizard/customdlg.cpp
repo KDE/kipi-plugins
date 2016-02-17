@@ -41,12 +41,12 @@ enum CustomChoice
 };
 
 CustomLayoutDlg::CustomLayoutDlg(QWidget* const parent)
-    : QDialog ( parent )
+    : QDialog(parent)
 {
-    setupUi ( this );
+    setupUi(this);
 
-    connect ( m_doneButton, SIGNAL (clicked()),
-              this, SLOT (accept()) );
+    connect(m_doneButton, SIGNAL(clicked()),
+            this, SLOT(accept()));
 
     m_photoGridCheck->setToolTip(i18n("Choose your grid size"));
     m_photoGridCheck->setWhatsThis(i18n("Choose your grid size"));
@@ -62,7 +62,7 @@ CustomLayoutDlg::CustomLayoutDlg(QWidget* const parent)
     m_photoWidth->setToolTip(i18n("Photo width"));
     m_photoWidth->setWhatsThis(i18n("Insert photo width"));
 
-    m_autorotate->setToolTip(i18n("Auto rotate photo"));  
+    m_autorotate->setToolTip(i18n("Auto rotate photo"));
 }
 
 CustomLayoutDlg:: ~CustomLayoutDlg()
@@ -71,24 +71,24 @@ CustomLayoutDlg:: ~CustomLayoutDlg()
 
 void CustomLayoutDlg::readSettings()
 {
-    KConfig config ( QLatin1String("kipirc") );
-    KConfigGroup group = config.group ( QLatin1String ( "PrintAssistant" ) );
+    KConfig config(QLatin1String("kipirc"));
+    KConfigGroup group = config.group(QLatin1String("PrintAssistant"));
 
-    QSize gridSize = group.readEntry  ( QLatin1String("Custom-gridSize"), QSize(3,8));
+    QSize gridSize = group.readEntry(QLatin1String("Custom-gridSize"), QSize(3,8));
     m_gridRows->setValue(gridSize.width());
     m_gridColumns->setValue(gridSize.height());
 
-    QSize photoSize = group.readEntry  ( QLatin1String("Custom-photoSize"), QSize(5,4));
+    QSize photoSize = group.readEntry (QLatin1String("Custom-photoSize"), QSize(5,4));
     m_photoHeight->setValue(photoSize.height());
     m_photoWidth->setValue(photoSize.width());
 
-    int index       = group.readEntry  ( QLatin1String("Custom-photoUnits"), 0);
+    int index       = group.readEntry(QLatin1String("Custom-photoUnits"), 0);
     m_photoUnits->setCurrentIndex(index);
 
-    bool autorotate = group.readEntry ( QLatin1String("Custom-autorotate"), 0 ) == 1;
+    bool autorotate = group.readEntry(QLatin1String("Custom-autorotate"), 0) == 1;
     m_autorotate->setChecked(autorotate);
 
-    int choice      = group.readEntry  ( QLatin1String("Custom-choice"), (int)PHOTO_GRID);
+    int choice      = group.readEntry(QLatin1String("Custom-choice"), (int)PHOTO_GRID);
 
     if (choice == PHOTOS_PER_PAGE)
     {
@@ -107,7 +107,7 @@ void CustomLayoutDlg::readSettings()
 void CustomLayoutDlg::saveSettings()
 {
     KConfig config ( QLatin1String("kipirc") );
-    KConfigGroup group = config.group ( QLatin1String ( "PrintAssistant" ) );
+    KConfigGroup group = config.group(QLatin1String("PrintAssistant"));
 
     int choice = PHOTO_GRID;
 

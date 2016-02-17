@@ -38,24 +38,24 @@ namespace KIPIPrintImagesPlugin
 */
 
 LayoutNode::LayoutNode(double aspectRatio, double relativeArea, int index)
-          : m_a(aspectRatio),
-            m_e(relativeArea),
-            m_division(0),
-            m_type(TerminalNode),
-            m_index(index),
-            m_leftChild(0),
-            m_rightChild(0)
+    : m_a(aspectRatio),
+      m_e(relativeArea),
+      m_division(0),
+      m_type(TerminalNode),
+      m_index(index),
+      m_leftChild(0),
+      m_rightChild(0)
 {
 }
 
 LayoutNode::LayoutNode(LayoutNode* const subtree, LayoutNode* const terminalChild, bool horizontal, int index)
-          : m_a(0),
-            m_e(0),
-            m_division(0),
-            m_type(horizontal ? HorizontalDivision : VerticalDivision),
-            m_index(index),
-            m_leftChild(subtree),
-            m_rightChild(terminalChild)
+    : m_a(0),
+      m_e(0),
+      m_division(0),
+      m_type(horizontal ? HorizontalDivision : VerticalDivision),
+      m_index(index),
+      m_leftChild(subtree),
+      m_rightChild(terminalChild)
 {
 }
 
@@ -186,10 +186,10 @@ void LayoutNode::computeDivisions()
 // --------------------------------------------- //
 
 LayoutTree::LayoutTree(double aspectRatioPage, double absoluteAreaPage)
-          : m_root(0),
-            m_count(0),
-            m_aspectRatioPage(aspectRatioPage),
-            m_absoluteAreaPage(absoluteAreaPage)
+    : m_root(0),
+      m_count(0),
+      m_aspectRatioPage(aspectRatioPage),
+      m_absoluteAreaPage(absoluteAreaPage)
 {
 }
 
@@ -396,7 +396,7 @@ QRectF LayoutTree::rectInRect(const QRectF &rect, double aspectRatio, double abs
 {
     double width  = std::sqrt(absoluteArea / aspectRatio);
     double height = std::sqrt(absoluteArea * aspectRatio);
-    double x      = rect.x() + (rect.width() - width) / 2;
+    double x      = rect.x() + (rect.width()  - width)  / 2;
     double y      = rect.y() + (rect.height() - height) / 2;
     return QRectF(x,y,width, height);
 }

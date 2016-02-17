@@ -130,7 +130,8 @@ public:
 };
 
 PrintOptionsPage::PrintOptionsPage(QWidget* const parent, QList<TPhoto*>* const photoList)
-    : QWidget(), d(new Private)
+    : QWidget(),
+      d(new Private)
 {
     d->setupUi ( this );
     d->mParent              = parent;

@@ -61,9 +61,9 @@ public:
     PrintOptionsPage(QWidget* const parent, QList<TPhoto*>* const photoList );
     ~PrintOptionsPage();
 
-    int photoXPage()              const;
-    int mp_horPages()             const;
-    int mp_verPages()             const;
+    int  photoXPage()             const;
+    int  mp_horPages()            const;
+    int  mp_verPages()            const;
     bool printUsingAtkinsLayout() const;
 
     void loadConfig();

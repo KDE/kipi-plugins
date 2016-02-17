@@ -43,21 +43,21 @@ TPhoto::TPhoto(int thumbnailSize)
     : pAddInfo(0),
       pCaptionInfo(0)
 {
-    m_size                = 0;
-    cropRegion            = QRect(-1, -1, -1, -1);
-    rotation              = 0;
-    first                 = false;
+    m_size                 = 0;
+    cropRegion             = QRect(-1, -1, -1, -1);
+    rotation               = 0;
+    first                  = false;
 
-    copies                = 1;
+    copies                 = 1;
     //TODO mPrintPosition;
-    filename              = QUrl();
-    m_meta                = 0;
-    m_iface               = 0;
+    filename               = QUrl();
+    m_meta                 = 0;
+    m_iface                = 0;
 
-    m_thumbnail           = 0;
+    m_thumbnail            = 0;
 
-    this->m_thumbnailSize = thumbnailSize;
-    
+    this->m_thumbnailSize  = thumbnailSize;
+
     PluginLoader* const pl = PluginLoader::instance();
 
     if (pl)
@@ -92,7 +92,7 @@ TPhoto::TPhoto (const TPhoto& photo)
     m_meta      = 0;
     m_iface     = 0;
     m_thumbnail = 0;
-    
+
     PluginLoader* const pl = PluginLoader::instance();
 
     if (pl)
@@ -148,7 +148,7 @@ QImage TPhoto::loadPhoto()
             rawdec->loadRawPreview(filename, photo);
         }
     }
-    
+
     if (photo.isNull())
     {
         photo.load(filename.path());

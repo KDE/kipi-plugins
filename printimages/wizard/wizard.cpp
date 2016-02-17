@@ -124,7 +124,7 @@ struct Wizard::Private
 {
     PhotoPage*               m_photoPage;
     CropPage*                m_cropPage;
-    
+
     PhotoUI*                 m_photoUi;
     CropUI*                  m_cropUi;
 
@@ -153,9 +153,9 @@ Wizard::Wizard(QWidget* const parent)
     : KPWizardDialog(parent),
       d(new Private)
 {
-    //d->m_printDialog = NULL;
-    d->m_pDlg        = NULL;
-    d->m_printer     = NULL;
+    //d->m_printDialog          = 0;
+    d->m_pDlg                 = 0;
+    d->m_printer              = 0;
     d->m_infopageCurrentPhoto = 0;
 
     // Caption
@@ -259,7 +259,6 @@ Wizard::Wizard(QWidget* const parent)
     connect(d->m_cropUi->BtnCropRotateLeft, SIGNAL(clicked()),
             this, SLOT(BtnCropRotateLeft_clicked()));
 
-
     // don't crop
     connect(d->m_cropUi->m_disableCrop, SIGNAL(stateChanged(int)),
             this, SLOT(crop_selection(int)));
@@ -270,7 +269,7 @@ Wizard::Wizard(QWidget* const parent)
 
     connect(d->m_photoUi->m_pagesetup, SIGNAL(clicked()),
             this, SLOT(pagesetupclicked()));
-    
+
     // save JPG as
     connect ( d->m_cropUi->BtnSaveAs, SIGNAL (clicked()),
             this, SLOT (BtnSaveAs_clicked()) );
@@ -457,9 +456,10 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
                 size = QSizeF(e.attribute(QLatin1String("width"),  QLatin1String("0")).toFloat(),
                               e.attribute(QLatin1String("height"), QLatin1String("0")).toFloat());
                 unit = e.attribute(QLatin1String("unit"), QLatin1String("mm"));
+
                 qCDebug(KIPIPLUGINS_LOG) <<  e.tagName() << QLatin1String(" name=") << e.attribute(QLatin1String("name"), QLatin1String("??"))
-                         << " size= " << size
-                         << " unit= " << unit;
+                                         << " size= " << size
+                                         << " unit= " << unit;
 
                 if (size == QSizeF(0.0, 0.0) && size == pageSize)
                 {
@@ -635,7 +635,7 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
 void Wizard::initPhotoSizes(const QSizeF& pageSize)
 {
     qCDebug(KIPIPLUGINS_LOG) << "New page size " << pageSize
-             << ", old page size " << d->m_pageSize;
+                             << ", old page size " << d->m_pageSize;
 
     // don't refresh anything if we haven't changed page sizes.
     if (pageSize == d->m_pageSize)
@@ -911,7 +911,7 @@ QString Wizard::captionFormatter(TPhoto* const photo) const
     // %r resolution
     // %a aperture
     // %l focal length
-    
+
     KPImageInfo info(photo->filename);
     format.replace(QString::fromUtf8("%f"), fi.fileName());
     format.replace(QString::fromUtf8("%c"), info.description());
@@ -1071,7 +1071,7 @@ bool Wizard::paintOnePage(QPainter& p, const QList<TPhoto*>& photos, const QList
             int orientatation   = photo->rotation;
 
             // ROT_90_HFLIP .. ROT_270
-            
+
             if (exifOrientation == MetadataProcessor::ROT_90_HFLIP ||
                 exifOrientation == MetadataProcessor::ROT_90       ||
                 exifOrientation == MetadataProcessor::ROT_90_VFLIP ||
@@ -1674,9 +1674,9 @@ void Wizard::increaseCopies()
 void Wizard::pageChanged(int curr)
 {
     QWizardPage* const current = page(curr);
-    
+
     if (!current) return;
-    
+
     QWizardPage* const before  = visitedPages().isEmpty() ? 0 : page(visitedPages().last());
 
     //Change cursor to waitCursor during transition
@@ -2567,7 +2567,7 @@ void Wizard::accept()
             QMessageBox::information(this, QString(), i18n("Empty output path."));
             return;
         }
-        
+
         qCDebug(KIPIPLUGINS_LOG) << path;
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
         printPhotosToFile(d->m_photos, path, s);
@@ -2597,10 +2597,10 @@ void Wizard::pagesetupdialogexit()
     //     d->m_pageSize = d->m_printer.paperSize(QPrinter::Millimeter);
 #ifdef NOT_YET
     qCDebug(KIPIPLUGINS_LOG) << " dialog exited num of copies: " << printer->numCopies()
-             << " inside:   " << d->m_printer->numCopies();
+                             << " inside:   " << d->m_printer->numCopies();
 
     qCDebug(KIPIPLUGINS_LOG) << " dialog exited from : " << printer->fromPage()
-             << " to:   " << d->m_printer->toPage();
+                             << " to:   " << d->m_printer->toPage();
 #endif
 }
 

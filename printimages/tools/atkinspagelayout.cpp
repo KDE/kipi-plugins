@@ -39,8 +39,8 @@ namespace KIPIPrintImagesPlugin
 
 class AtkinsPageLayout::Private
 {
-
 public:
+
     Private()
     {
         tree = 0;
@@ -52,7 +52,7 @@ public:
 };
 
 AtkinsPageLayout::AtkinsPageLayout(const QRectF& pageRect)
-                : d(new Private)
+    : d(new Private)
 {
     d->pageRect = pageRect;
     d->tree     = new LayoutTree(aspectRatio(d->pageRect.size()), absoluteArea(d->pageRect.size()));

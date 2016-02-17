@@ -80,7 +80,7 @@ public:
         Draw a filled rectangle with color <color> at position <x>/<y> (relative
         to template-origin) and width <w> and height <h>.
     */
-    void fillRect( int x, int y, int w, int h, const QColor& color );
+    void fillRect(int x, int y, int w, int h, const QColor& color);
 
 private:
 
