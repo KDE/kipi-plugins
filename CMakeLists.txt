@@ -49,7 +49,6 @@ set(ECM_MIN_VERSION      "1.5.0")
 set(KF5_MIN_VERSION      "5.1.0")
 set(QT_MIN_VERSION       "5.2.0")
 set(KIPI_MIN_VERSION     "5.0.0")
-set(CALENDAR_MIN_VERSION "4.81.0")                     # Calendar Core dependency
 cmake_minimum_required(VERSION ${CMAKE_MIN_VERSION})
 
 ############## ECM setup ######################
@@ -121,11 +120,6 @@ find_package(KF5 ${KF5_MIN_VERSION}
              ThreadWeaver # for Panorama
 )
 
-find_package(KF5 ${CALENDAR_MIN_VERSION}
-             OPTIONAL_COMPONENTS
-             CalendarCore # for Calendar
-)
-
 # Dependencies detection required by all plugins
 
 DETECT_LIBKIPI(${KIPI_MIN_VERSION})
@@ -168,7 +162,6 @@ if(KF5Kipi_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libthreadweaver" "https://projects.kde.org/projects/frameworks/threadweaver"       "(version >= ${KF5_MIN_VERSION})"      "Kipi-plugins will be compiled without libthreadweaver support." KF5ThreadWeaver_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libmediawiki"    "https://projects.kde.org/projects/extragear/libs/libmediawiki"   "(version >= ${KF5_MIN_VERSION})"      "Kipi-plugins will be compiled without libmediawiki support."    KF5MediaWiki_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte"   "https://projects.kde.org/projects/extragear/libs/libkvkontakte"  "(version >= 4.70.0)"                  "Kipi-plugins will be compiled without libkvkontakte support."   KF5Vkontakte_FOUND)
-    PRINT_OPTIONAL_LIBRARY_STATUS("libkcalcore"     "https://projects.kde.org/projects/kde/pim/kcalcore"              "(version >= ${CALENDAR_MIN_VERSION})" "Kipi-plugins will be compiled without libkcalcore support."     KF5CalendarCore_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libphonon"       "https://projects.kde.org/projects/kdesupport/phonon"             "(version >= 4.8.3)"                   "Kipi-plugins will be compiled without libphonon support."       Phonon4Qt5_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libqtkoauth"     "https://github.com/kypeli/kQOAuth"                               "(version >= 0.97)"                    "Kipi-plugins will be compiled without libqtkoauth support."     QTKOAUTH_FOUND)
 
@@ -214,7 +207,6 @@ if(KF5Kipi_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("VKontakte"          KF5Vkontakte_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("Mediawiki"          KF5MediaWiki_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("AdvancedSlideshow"  BUILD_VIEWERS)
-    PRINT_COMPONENT_COMPILE_STATUS("Calendar"           KF5CalendarCore_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("FlashExport"        KF5Archive_FOUND)
 
     # ==================================================================================================
@@ -295,10 +287,6 @@ if(KF5Kipi_FOUND)
 
         if(KF5MediaWiki_FOUND)
             add_subdirectory(mediawiki)
-        endif()
-
-        if(KF5CalendarCore_FOUND)
-            add_subdirectory(calendar)
         endif()
 
         if(KF5Vkontakte_FOUND)
