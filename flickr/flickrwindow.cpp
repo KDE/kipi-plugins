@@ -37,6 +37,7 @@
 #include <QApplication>
 #include <QMenu>
 #include <QMessageBox>
+#include <QWindow>
 
 // KDE includes
 
@@ -378,8 +379,10 @@ void FlickrWindow::readSettings(QString uname)
     m_dimensionSpinBox->setValue(grp.readEntry("Maximum Width",       1600));
     m_imageQualitySpinBox->setValue(grp.readEntry("Image Quality",    85));
 
+    winId();
     KConfigGroup dialogGroup = config.group(QString::fromLatin1("%1Export Dialog").arg(m_serviceName));
     KWindowConfig::restoreWindowSize(windowHandle(), dialogGroup);
+    resize(windowHandle()->size());
 }
 
 void FlickrWindow::writeSettings()
@@ -387,7 +390,8 @@ void FlickrWindow::writeSettings()
     KConfig config(QString::fromLatin1("kipirc"));
     qCDebug(KIPIPLUGINS_LOG) << "Group name is : "<<QString::fromLatin1("%1%2Export Settings").arg(m_serviceName,m_username);
 
-    if (QString::compare(QString::fromLatin1("%1Export Settings").arg(m_serviceName), QString::fromLatin1("%1%2Export Settings").arg(m_serviceName,m_username), Qt::CaseInsensitive) == 0)
+    if (QString::compare(QString::fromLatin1("%1Export Settings").arg(m_serviceName),
+        QString::fromLatin1("%1%2Export Settings").arg(m_serviceName,m_username), Qt::CaseInsensitive) == 0)
     {
         qCDebug(KIPIPLUGINS_LOG) << "Not writing entry of group " << QString::fromLatin1("%1%2Export Settings").arg(m_serviceName,m_username);
         return;

@@ -57,4 +57,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 037 ==> 356673 - MediaWiki export doesn't work.
 038 ==> 353626 - Processing of bracketed images fails after the first set is done.
 039 ==> 359257 - Image size spinbox doesn't allow values larger than 99.
-040 ==> 
+040 ==> 359478 - kipi flickr export plugin crashed on creating new set.
+041 ==> 

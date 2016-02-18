@@ -118,6 +118,8 @@ FlickrTalker::FlickrTalker(QWidget* const parent, const QString& serviceName)
 
     /* Initialize selected photo set as empty. */
     m_selectedPhotoSet = FPhotoSet();
+    /* Initialize photo sets list. */
+    m_photoSetsList    = new QLinkedList<FPhotoSet>();
 
     connect(this, SIGNAL(signalAuthenticate()),
             this, SLOT(slotAuthenticate()));
@@ -1361,7 +1363,6 @@ void FlickrTalker::parseResponseListPhotoSets(const QByteArray& data)
     QDomElement e;
 
     QString photoSet_id, photoSet_title, photoSet_description;
-    m_photoSetsList = new QLinkedList <FPhotoSet> ();
 
     while (!node.isNull())
     {
