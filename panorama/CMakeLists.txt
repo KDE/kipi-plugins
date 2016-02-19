@@ -9,6 +9,10 @@ if (POLICY CMP0063)
     cmake_policy(SET CMP0063 NEW)
 endif (POLICY CMP0063)
 
+while(CMAKE_C_FLAGS MATCHES "-std=iso9899:1990")
+    string(REPLACE "-std=iso9899:1990" "" CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
+endwhile()
+
 add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_panorama\")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/importwizard
