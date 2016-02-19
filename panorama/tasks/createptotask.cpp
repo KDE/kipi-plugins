@@ -51,7 +51,7 @@ CreatePtoTask::CreatePtoTask(const QString& workDirPath, PanoramaFileType fileTy
       huginVersion(huginVersion),
       m_iface(0),
       m_meta(0)
-{    
+{
     PluginLoader* const pl = PluginLoader::instance();
 
     if (pl)

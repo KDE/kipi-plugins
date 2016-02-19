@@ -61,6 +61,7 @@ struct PreviewPage::Private
         : title(0),
           previewWidget(0),
           previewBusy(false),
+          previewDone(false),
           stitchingBusy(false),
           stitchingDone(false),
           postProcessing(0),
@@ -76,11 +77,12 @@ struct PreviewPage::Private
 
     KPPreviewManager*      previewWidget;
     bool                   previewBusy;
+    bool                   previewDone;
     bool                   stitchingBusy;
     bool                   stitchingDone;
     KPBatchProgressWidget* postProcessing;
     int                    curProgress, totalProgress;
-    QMutex                 actionMutex;      // This is a precaution in case the user does a back / next action at the wrong moment
+    QMutex                 previewBusyMutex;      // This is a precaution in case the user does a back / next action at the wrong moment
     bool                   canceled;
 
     QString                output;
@@ -129,7 +131,7 @@ void PreviewPage::computePreview()
         cleanupPage();
     }
 
-    QMutexLocker lock(&d->actionMutex);
+    QMutexLocker lock(&d->previewBusyMutex);
 
     connect(d->mngr->thread(), SIGNAL(stepFinished(KIPIPanoramaPlugin::ActionData)),
             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
@@ -140,6 +142,7 @@ void PreviewPage::computePreview()
     d->canceled = false;
 
     d->previewWidget->setBusy(true, i18n("Processing Panorama Preview..."));
+    d->previewDone = false;
     d->previewBusy = true;
 
     d->mngr->resetPreviewPto();
@@ -160,16 +163,15 @@ void PreviewPage::computePreview()
 
 void PreviewPage::startStitching()
 {
-    // Cancel any preview being processed
-    bool previewReady = true;
+    QMutexLocker lock(&d->previewBusyMutex);
 
     if (d->previewBusy)
     {
-        previewReady = false;
-        cleanupPage();
+        // The real beginning of the stitching starts after preview has finished / failed
+        connect(this, SIGNAL(signalPreviewFinished()), this, SLOT(slotStartStitching()));
+        cleanupPage(lock);
+        return;
     }
-
-    QMutexLocker lock(&d->actionMutex);
 
     connect(d->mngr->thread(), SIGNAL(starting(KIPIPanoramaPlugin::ActionData)),
             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
@@ -196,7 +198,7 @@ void PreviewPage::startStitching()
     QSize panoSize      = d->mngr->viewAndCropOptimisePtoData()->project.size;
     QRect panoSelection = d->mngr->viewAndCropOptimisePtoData()->project.crop;
 
-    if (previewReady)
+    if (d->previewDone)
     {
         QSize previewSize = d->mngr->previewPtoData()->project.size;
         QRectF selection  = d->previewWidget->getSelectionArea();
@@ -271,22 +273,16 @@ bool PreviewPage::validatePage()
 
 void PreviewPage::cleanupPage()
 {
+    QMutexLocker lock(&d->previewBusyMutex);
+    cleanupPage(lock);
+}
+
+void PreviewPage::cleanupPage(QMutexLocker& lock)
+{
     d->canceled = true;
 
-    disconnect(d->mngr->thread(), SIGNAL(starting(KIPIPanoramaPlugin::ActionData)),
-               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
-
-    disconnect(d->mngr->thread(), SIGNAL(stepFinished(KIPIPanoramaPlugin::ActionData)),
-               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
-
-    disconnect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
-               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
-
     d->mngr->thread()->cancel();
-    d->mngr->thread()->finish();
     d->postProcessing->progressCompleted();
-
-    QMutexLocker lock(&d->actionMutex);
 
     if (d->previewBusy)
     {
@@ -305,16 +301,22 @@ void PreviewPage::slotCancel()
     d->dlg->reject();
 }
 
+void PreviewPage::slotStartStitching()
+{
+    disconnect(this, SIGNAL(signalPreviewFinished()), this, SLOT(slotStartStitching()));
+    startStitching();
+}
+
 void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
 {
     qCDebug(KIPIPLUGINS_LOG) << "SlotAction (preview)";
-    qCDebug(KIPIPLUGINS_LOG) << "starting, success, canceled, action: " << ad.starting << ad.success << d->canceled << ad.action;
-
-    qCDebug(KIPIPLUGINS_LOG) << "busy (preview / stitch):" << d->previewBusy << d->stitchingBusy;
+    qCDebug(KIPIPLUGINS_LOG) << "\tstarting, success, canceled, action: " << ad.starting << ad.success << d->canceled << ad.action;
 
     QString      text;
 
-    QMutexLocker lock(&d->actionMutex);
+    QMutexLocker lock(&d->previewBusyMutex);
+
+    qCDebug(KIPIPLUGINS_LOG) << "\tbusy (preview / stitch):" << d->previewBusy << d->stitchingBusy;
 
     if (!ad.starting)           // Something is complete...
     {
@@ -330,6 +332,8 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 {
                     if (!d->previewBusy)
                     {
+                        lock.unlock();
+                        emit signalPreviewFinished();
                         return;
                     }
 
@@ -342,6 +346,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     d->output      = ad.message;
                     d->previewWidget->setBusy(false);
                     d->previewBusy = false;
+
                     qCWarning(KIPIPLUGINS_LOG) << "Preview compilation failed: " << ad.message;
                     QString errorString(i18n("<h1><b>Error</b></h1><p>%1</p>",
                                               ad.message));
@@ -350,6 +355,9 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
 
                     setComplete(false);
                     emit completeChanged();
+
+                    lock.unlock();
+                    emit signalPreviewFinished();
 
                     break;
                 }
@@ -489,18 +497,20 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 case STITCHPREVIEW:
                 case HUGINEXECUTORPREVIEW:
                 {
-                    if (!d->previewBusy)
+                    if (d->previewBusy)
                     {
-                        return;
+                        disconnect(d->mngr->thread(), SIGNAL(stepFinished(KIPIPanoramaPlugin::ActionData)),
+                                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
+                        disconnect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
+                                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
                     }
 
-                    disconnect(d->mngr->thread(), SIGNAL(stepFinished(KIPIPanoramaPlugin::ActionData)),
-                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
-
-                    disconnect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
-                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
-
                     d->previewBusy = false;
+                    d->previewDone = true;
+
+                    lock.unlock();
+                    emit signalPreviewFinished();
 
                     d->title->setText(i18n("<qt>"
                                            "<h1>Panorama Preview</h1>"

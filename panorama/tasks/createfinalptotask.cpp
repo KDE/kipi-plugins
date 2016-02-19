@@ -67,8 +67,8 @@ void CreateFinalPtoTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 
     ptoData.project.crop = crop;
     ptoData.createFile(finalPtoUrl.toLocalFile());
-
     successFlag = true;
+
     return;
 }
 

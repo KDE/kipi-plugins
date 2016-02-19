@@ -30,6 +30,8 @@
 
 using namespace KIPIPlugins;
 
+class QMutexLocker;
+
 namespace KIPIPanoramaPlugin
 {
 
@@ -53,14 +55,17 @@ private:
     void initializePage();
     bool validatePage();
     void cleanupPage();
+    void cleanupPage(QMutexLocker& lock);
 
 Q_SIGNALS:
 
+    void signalPreviewFinished();
     void signalStitchingFinished();
 
 private Q_SLOTS:
 
     void slotCancel();
+    void slotStartStitching();
     void slotAction(const KIPIPanoramaPlugin::ActionData&);
 
 private:

@@ -51,6 +51,9 @@ void CommandTask::requestAbort()
 
 void CommandTask::runProcess(QStringList& args)
 {
+    if (isAbortedFlag)
+        return;
+
     process.reset(new QProcess());
     process->setWorkingDirectory(tmpDir.toLocalFile());
     process->setProcessChannelMode(QProcess::MergedChannels);
@@ -84,6 +87,8 @@ QString CommandTask::getCommandLine()
 
 QString CommandTask::getProcessError()
 {
+    if (isAbortedFlag)
+        return i18n("<b>Canceled</b>");
     if (process.isNull())
         return QString();
     return (i18n("<b>Cannot run <i>%1</i>:</b><p>%2</p>",

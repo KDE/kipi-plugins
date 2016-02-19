@@ -60,7 +60,11 @@ struct ActionThread::Private
     }
 
     ~Private()
-    {}
+    {
+        threadQueue->dequeue();
+        threadQueue->requestAbort();
+        threadQueue->finish();
+    }
 
     QSharedPointer<QTemporaryDir>   preprocessingTmpDir;
     QSharedPointer<Queue>           threadQueue;
@@ -85,15 +89,17 @@ ActionThread::~ActionThread()
 
 void ActionThread::cancel()
 {
-    qCDebug(KIPIPLUGINS_LOG) << "Cancel Main Thread";
+    qCDebug(KIPIPLUGINS_LOG) << "Cancel (Action Thread)";
     d->threadQueue->dequeue();
     d->threadQueue->requestAbort();
 }
 
 void ActionThread::finish()
 {
+    qCDebug(KIPIPLUGINS_LOG) << "Finish (Action Thread)";
     // Wait for all queued jobs to finish
     d->threadQueue->finish();
+    d->threadQueue->resume();
 }
 
 
@@ -361,6 +367,8 @@ void ActionThread::slotStarting(JobPointer j)
     ad.action       = t->action;
     ad.id           = -1;
 
+    qCDebug(KIPIPLUGINS_LOG) << "Starting (Action Thread) (action):" << ad.action;
+
     if (t->action == NONAFILE)
     {
         CompileMKStepTask* c = static_cast<CompileMKStepTask*>(t);
@@ -387,6 +395,8 @@ void ActionThread::slotStepDone(JobPointer j)
     ad.success      = t->success();
     ad.message      = t->errString;
 
+    qCDebug(KIPIPLUGINS_LOG) << "Step done (Action Thread) (action, success):" << ad.action << ad.success;
+
     if (t->action == NONAFILE)
     {
         CompileMKStepTask* c = static_cast<CompileMKStepTask*>(t);
@@ -398,10 +408,10 @@ void ActionThread::slotStepDone(JobPointer j)
         ad.id = p->id;
     }
 
-//     if (!ad.success)
-//     {
-//         d->threadQueue->dequeue();
-//     }
+    if (!ad.success)
+    {
+        d->threadQueue->dequeue();
+    }
 
     emit stepFinished(ad);
 }
@@ -417,6 +427,8 @@ void ActionThread::slotDone(JobPointer j)
     ad.id           = -1;
     ad.success      = t->success();
     ad.message      = t->errString;
+
+    qCDebug(KIPIPLUGINS_LOG) << "Done (Action Thread) (action, success):" << ad.action << ad.success;
 
     if (t->action == NONAFILE)
     {
