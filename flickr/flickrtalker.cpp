@@ -85,7 +85,7 @@ FlickrTalker::FlickrTalker(QWidget* const parent, const QString& serviceName)
     {
         m_iface = pl->interface();
     }
-        
+
     if (serviceName == QString::fromLatin1("23"))
     {
         m_apiUrl    = QString::fromLatin1("http://www.23hq.com/services/rest/");
@@ -190,7 +190,7 @@ void FlickrTalker::maxAllowedFileSize()
     qCDebug(KIPIPLUGINS_LOG) << "Get max file size url: " << url;
 
     KIO::TransferJob* job = 0;
-    
+
     if (m_serviceName == QString::fromLatin1("Zooomr"))
     {
         // Zooomr redirects the POST at this url to a GET; KIO doesn't follow
@@ -726,7 +726,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
             rawdec->loadRawPreview(QUrl::fromLocalFile(photoPath), image);
         }
     }
-    
+
     if (image.isNull())
     {
         image.load(photoPath);
@@ -1363,6 +1363,7 @@ void FlickrTalker::parseResponseListPhotoSets(const QByteArray& data)
     QDomElement e;
 
     QString photoSet_id, photoSet_title, photoSet_description;
+    m_photoSetsList->clear();
 
     while (!node.isNull())
     {

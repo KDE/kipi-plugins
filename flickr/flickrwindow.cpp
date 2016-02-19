@@ -367,11 +367,13 @@ void FlickrWindow::readSettings(QString uname)
     {
         m_resizeCheckBox->setChecked(true);
         m_dimensionSpinBox->setEnabled(true);
+        m_imageQualitySpinBox->setEnabled(true);
     }
     else
     {
         m_resizeCheckBox->setChecked(false);
         m_dimensionSpinBox->setEnabled(false);
+        m_imageQualitySpinBox->setEnabled(false);
     }
 
     //m_sendOriginalCheckBox->setChecked(grp.readEntry("Send original", false));
@@ -433,7 +435,7 @@ void FlickrWindow::slotTokenObtained(const QString& token)
     m_userId   = m_talker->getUserId();
     qCDebug(KIPIPLUGINS_LOG) << "SlotTokenObtained invoked setting user Display name to " << m_username;
     m_userNameDisplayLabel->setText(QString::fromLatin1("<b>%1</b>").arg(m_username));
-    
+
     KConfig config(QString::fromLatin1("kipirc"));
 
     foreach ( const QString& group, config.groupList() ) 
@@ -813,9 +815,9 @@ void FlickrWindow::slotAddPhotoNext()
             }
         }
     }
-    
+
     qCDebug(KIPIPLUGINS_LOG) << "Max allowed file size is : "<<((m_talker->getMaxAllowedFileSize()).toLongLong())<<"File Size is "<<info.size;
-    
+
     bool res = m_talker->addPhoto(pathComments.first.toLocalFile(), //the file path
                                   info,
                                   m_resizeCheckBox->isChecked(),
@@ -858,10 +860,10 @@ void FlickrWindow::slotAddPhotoFailed(const QString& msg)
                      i18n("Warning"),
                      i18n("Failed to upload photo into %1. %2\nDo you want to continue?", m_serviceName, msg),
                      QMessageBox::Yes | QMessageBox::No);
-    
+
     (warn.button(QMessageBox::Yes))->setText(i18n("Continue"));
     (warn.button(QMessageBox::No))->setText(i18n("Cancel"));
-    
+
     if (warn.exec() != QMessageBox::Yes)
     {
         m_uploadQueue.clear();
