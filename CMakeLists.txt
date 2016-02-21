@@ -19,7 +19,7 @@ set(KIPIPLUGINS_MINOR_VERSION "0")
 set(KIPIPLUGINS_PATCH_VERSION "0")
 
 # kipi-plugins release date
-set(KIPIPLUGINS_RELEASE_DATE "2016-02-14")
+set(KIPIPLUGINS_RELEASE_DATE "2016-02-28")
 
 # Suffix to add at end of version string. Usual values are:
 # "-git"   : alpha code unstable from git. Do not use in production
@@ -117,7 +117,6 @@ find_package(KF5 ${KF5_MIN_VERSION}
 find_package(KF5 ${KF5_MIN_VERSION}
              OPTIONAL_COMPONENTS
              Archive      # for FlashExport
-             ThreadWeaver # for Panorama
 )
 
 # Dependencies detection required by all plugins
@@ -131,8 +130,6 @@ if(KF5Kipi_FOUND)
     DETECT_LIBMEDIAWIKI(5.0.0)                                                 # For Mediawiki.
     DETECT_LIBKVKONTAKTE(4.70.0)                                               # For VKontakte.
     find_package(OpenGL)                                                       # For AdvancedSlideshow and ImageViewer.
-    find_package(FLEX)                                                         # For Panorama (must be found before KdepimLibs for MacOS).
-    find_package(BISON)                                                        # For Panorama (must be found before KdepimLibs for MacOS).
     find_package(QtKOAuth)                                                     # For Imgur Auhtenticated API.
     find_package(Phonon4Qt5)                                                   # For AdvancedSlideShow.
 
@@ -203,7 +200,6 @@ if(KF5Kipi_FOUND)
      endif()
 
     PRINT_COMPONENT_COMPILE_STATUS("ImageViewer"        BUILD_VIEWERS)
-    PRINT_COMPONENT_COMPILE_STATUS("Panorama"           FLEX_FOUND AND BISON_FOUND AND KF5ThreadWeaver_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("VKontakte"          KF5Vkontakte_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("Mediawiki"          KF5MediaWiki_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("AdvancedSlideshow"  BUILD_VIEWERS)
@@ -279,10 +275,6 @@ if(KF5Kipi_FOUND)
         if(BUILD_VIEWERS)
             add_subdirectory(advancedslideshow)
             add_subdirectory(imageviewer)
-        endif()
-
-        if(FLEX_FOUND AND BISON_FOUND AND KF5ThreadWeaver_FOUND)
-            add_subdirectory(panorama)
         endif()
 
         if(KF5MediaWiki_FOUND)
