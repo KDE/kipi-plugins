@@ -156,7 +156,6 @@ if(KF5Kipi_FOUND)
     # Optional shared libraries results.
 
     PRINT_OPTIONAL_LIBRARY_STATUS("libkarchive"     "https://projects.kde.org/projects/frameworks/karchive"           "(version >= ${KF5_MIN_VERSION})"      "Kipi-plugins will be compiled without libkarchive support."     KF5Archive_FOUND)
-    PRINT_OPTIONAL_LIBRARY_STATUS("libthreadweaver" "https://projects.kde.org/projects/frameworks/threadweaver"       "(version >= ${KF5_MIN_VERSION})"      "Kipi-plugins will be compiled without libthreadweaver support." KF5ThreadWeaver_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libmediawiki"    "https://projects.kde.org/projects/extragear/libs/libmediawiki"   "(version >= ${KF5_MIN_VERSION})"      "Kipi-plugins will be compiled without libmediawiki support."    KF5MediaWiki_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte"   "https://projects.kde.org/projects/extragear/libs/libkvkontakte"  "(version >= 4.70.0)"                  "Kipi-plugins will be compiled without libkvkontakte support."   KF5Vkontakte_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libphonon"       "https://projects.kde.org/projects/kdesupport/phonon"             "(version >= 4.8.3)"                   "Kipi-plugins will be compiled without libphonon support."       Phonon4Qt5_FOUND)
