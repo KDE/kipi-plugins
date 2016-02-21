@@ -31,7 +31,6 @@ Vkontakte          : A tool to export images to VKontakte web service (http://ww
 PhotoLayoutEditor  : A tool to assemble images together.
 ImageShack         : A tool to export images to ImageShack web service (http://imageshack.us)
 ImgurExport        : A tool to export images to ImgUr web service (http://imgur.com)
-Panorama           : A tool to assemble panoramic photo automatically.
 
 -- DEPENDENCIES -------------------------------------------------------
 
@@ -40,8 +39,6 @@ ECM             >= 1.7.0                        https://projects.kde.org/project
 libqt           >= 5.4.0                        http://www.qtsoftware.com
 libkde          >= 5.5.0                        http://www.kde.org
 libkipi         >= 5.0.0                        https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi
-Hugin           >= 0.8.0 (runtime dependency)   http://hugin.sourceforge.net
-Enblend         >= 3.0.0 (runtime dependency)   http://enblend.sourceforge.net
 
 Optional:
 
@@ -56,8 +53,6 @@ libX11          >= 1.1.5                        http://www.x11.org
 libqtopengl     >= 4.3.0                        http://www.qtsoftware.com
 libmesa         >= 11.0                         http://mesa3d.sourceforge.net
 libqtkoauth     >= 0.97                         https://github.com/kypeli/kQOAuth
-flex            >= 2.5.0                        http://flex.sourceforge.net
-bison           >= 2.5.0                        http://www.gnu.org/software/bison/bison.html
 
 Plugin Specific Dependencies (for compiling and for running) :
 
@@ -66,7 +61,6 @@ ImageViewer        : X11 (Linux Only), Mesa3D, and OpenGL support for libqt
 FaceBook           : libqjson.
 Mediawiki          : libmediawiki.
 Vkontakte          : libkvkontakte.
-Panorama           : Hugin command line tools, flex, bison (runtime dependency).
 Imgur              : libqtkoauth for Imgur.com's authenticated API.
 
 -- CONTACT ------------------------------------------------------------
