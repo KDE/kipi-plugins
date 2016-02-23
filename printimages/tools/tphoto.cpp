@@ -32,7 +32,9 @@
 
 #include <KIPI/PluginLoader>
 
-#define IMAGE_FILE_MASK "*"
+// Local includes
+
+#include "kipiplugins_debug.h"
 
 using namespace KIPI;
 
@@ -99,7 +101,6 @@ TPhoto::TPhoto (const TPhoto& photo)
     {
         m_iface = pl->interface();
     }
-
 }
 
 TPhoto::~TPhoto()
@@ -129,7 +130,9 @@ void TPhoto::loadCache()
 QPixmap& TPhoto::thumbnail()
 {
     if (!m_thumbnail)
+    {
         loadCache();
+    }
 
     return *m_thumbnail;
 }
@@ -160,7 +163,9 @@ QImage TPhoto::loadPhoto()
 QSize& TPhoto::size()  // private
 {
     if (m_size == 0)
+    {
         loadCache();
+    }
 
     return *m_size;
 }
@@ -168,12 +173,18 @@ QSize& TPhoto::size()  // private
 MetadataProcessor* TPhoto::metaIface()
 {
     if (!m_iface)
+    {
         return 0;
+    }
 
     if (!m_meta && !filename.url().isEmpty())
     {
         m_meta = m_iface->createMetadataProcessor();
-        m_meta->load(filename);
+
+        if (m_meta->load(filename))
+        {
+            qCDebug(KIPIPLUGINS_LOG) << "Cannot load metadata from file " << filename;
+        }
     }
 
     return m_meta;
