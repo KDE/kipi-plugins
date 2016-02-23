@@ -936,7 +936,10 @@ void KPImagesList::slotMoveUpItems()
     QTreeWidgetItem* const temp = listView()->takeTopLevelItem(aboveIndex.row());
     listView()->insertTopLevelItem(curIndex.row(), temp);
     // this is a quick fix. We loose the extra tags in flickr upload, but at list we don't get a crash
-    dynamic_cast<KIPIPlugins::KPImagesListViewItem*>(temp)->updateItemWidgets();
+    KPImagesListViewItem* const uw = dynamic_cast<KPImagesListViewItem*>(temp);
+    
+    if (uw)
+        uw->updateItemWidgets();
 
     emit signalImageListChanged();
     emit signalMoveUpItem();
@@ -963,7 +966,7 @@ void KPImagesList::slotMoveDownItems()
     listView()->insertTopLevelItem(curIndex.row(), temp);
 
     // This is a quick fix. We can loose extra tags in uploader, but at least we don't get a crash
-    KIPIPlugins::KPImagesListViewItem* const uw = dynamic_cast<KIPIPlugins::KPImagesListViewItem*>(temp);
+    KPImagesListViewItem* const uw = dynamic_cast<KPImagesListViewItem*>(temp);
 
     if (uw)
         uw->updateItemWidgets();
@@ -1297,7 +1300,7 @@ void KPImagesList::slotThumbnail(const QUrl& url, const QPixmap& pix)
     }
 }
 
-KIPIPlugins::KPImagesListViewItem* KIPIPlugins::KPImagesListView::getCurrentItem() const
+KPImagesListViewItem* KPImagesListView::getCurrentItem() const
 {
     QTreeWidgetItem* const currentTreeItem = currentItem();
 
@@ -1309,7 +1312,7 @@ KIPIPlugins::KPImagesListViewItem* KIPIPlugins::KPImagesListView::getCurrentItem
     return dynamic_cast<KPImagesListViewItem*>(currentTreeItem);
 }
 
-QUrl KIPIPlugins::KPImagesList::getCurrentUrl() const
+QUrl KPImagesList::getCurrentUrl() const
 {
     KPImagesListViewItem* const currentItem = d->listView->getCurrentItem();
 
