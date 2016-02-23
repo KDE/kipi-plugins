@@ -301,19 +301,21 @@ bool WMWindow::prepareImageForUpload(const QString& imgPath)
         else
         {
             // copy meta data from initial to temporary image
-            meta->load(QUrl::fromLocalFile(imgPath));
-
-            if (d->widget->resize())
+            
+            if (meta->load(QUrl::fromLocalFile(imgPath)))
             {
-                meta->setImageDimensions(image.size());
-            }
+                if (d->widget->resize())
+                {
+                    meta->setImageDimensions(image.size());
+                }
 
-            if (d->widget->removeGeo())
-            {
-                meta->removeGPSInfo();
-            }
+                if (d->widget->removeGeo())
+                {
+                    meta->removeGPSInfo();
+                }
 
-            meta->save(QUrl::fromLocalFile(d->tmpPath), true);
+                meta->save(QUrl::fromLocalFile(d->tmpPath), true);
+            }
         }
     }
 
