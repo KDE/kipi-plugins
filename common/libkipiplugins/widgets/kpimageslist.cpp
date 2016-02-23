@@ -992,13 +992,20 @@ void KPImagesList::slotLoadItems()
 
     if ( loadLevelsFile.isEmpty() )
     {
+        qCDebug(KIPIPLUGINS_LOG) << "empty url";
         return;
     }
 
     QFile file(loadLevelsFile.path());
 
     qCDebug(KIPIPLUGINS_LOG) << "file path " << loadLevelsFile.path();
-    file.open(QIODevice::ReadOnly);
+
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        qCDebug(KIPIPLUGINS_LOG) << "Cannot open file";
+        return;
+    }
+        
     QXmlStreamReader xmlReader;
     xmlReader.setDevice(&file);
 
