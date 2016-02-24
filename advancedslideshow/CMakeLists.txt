@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2010-2015, Gilles Caulier, <caulier dot gilles at gmail dot com>
+# Copyright (c) 2010-2016, Gilles Caulier, <caulier dot gilles at gmail dot com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
@@ -16,8 +16,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/dialogs
                     ${CMAKE_CURRENT_SOURCE_DIR}/widgets
                     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
                     ${PHONON_INCLUDE_DIR}
-
-                   )
+)
 
 set(kipiplugin_advancedslideshow_PART_SRCS dialogs/captiondialog.cpp
                                            dialogs/advanceddialog.cpp
@@ -44,20 +43,20 @@ if(Phonon4Qt5_FOUND)
         widgets/listsounditems.cpp
         dialogs/soundtrackdialog.cpp
         widgets/playbackwidget.cpp
-       )
-        
+    )
+
     ki18n_wrap_ui(kipiplugin_advancedslideshow_PART_SRCS
                   ui/soundtrackdialog.ui
                   ui/playbackwidget.ui
-                 )
+    )
 endif()
-   
+
 ki18n_wrap_ui(kipiplugin_advancedslideshow_PART_SRCS
               ui/maindialog.ui
               ui/captiondialog.ui
               ui/advanceddialog.ui
               ui/slideplaybackwidget.ui
-             )
+)
 
 add_library(kipiplugin_advancedslideshow MODULE ${kipiplugin_advancedslideshow_PART_SRCS})
 
@@ -77,13 +76,13 @@ target_link_libraries(kipiplugin_advancedslideshow
                       # For Linux only.
                       ${X11_LIBRARIES}
                       ${X11_Xrandr_LIB}
-                     )
+)
 
 if(Phonon4Qt5_FOUND)
     target_link_libraries(kipiplugin_advancedslideshow
                           PRIVATE
                           ${PHONON_LIBRARIES}
-                         )
+    )
 endif()
 
 configure_file(plugin/kipiplugin_advancedslideshow.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_advancedslideshow.desktop)
