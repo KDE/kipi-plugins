@@ -71,7 +71,7 @@ target_link_libraries(kipiplugin_advancedslideshow
                       KF5::KIOFileWidgets
                       KF5kipiplugins
 
-#                      ${OPENGL_LIBRARIES}
+                      ${OPENGL_LIBRARIES}
 
                       # For Linux only.
 #                      ${X11_LIBRARIES}
