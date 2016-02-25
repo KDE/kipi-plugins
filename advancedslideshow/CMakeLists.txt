@@ -72,10 +72,6 @@ target_link_libraries(kipiplugin_advancedslideshow
                       KF5kipiplugins
 
                       ${OPENGL_LIBRARIES}
-
-                      # For Linux only.
-#                      ${X11_LIBRARIES}
-#                      ${X11_Xrandr_LIB}
 )
 
 if(Phonon4Qt5_FOUND)

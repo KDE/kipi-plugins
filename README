@@ -49,15 +49,14 @@ libmediawiki    >= 5.0.0                        https://projects.kde.org/project
 libkvkontakte   >= 4.70.0                       https://projects.kde.org/projects/extragear/libs/libkvkontakte
 libxslt         >= 1.1.0                        http://xmlsoft.org/XSLT
 libxml2         >= 2.7.0                        http://xmlsoft.org
-libX11          >= 1.1.5                        http://www.x11.org
 libqtopengl     >= 4.3.0                        http://www.qtsoftware.com
 libmesa         >= 11.0                         http://mesa3d.sourceforge.net
 libqtkoauth     >= 0.97                         https://github.com/kypeli/kQOAuth
 
 Plugin Specific Dependencies (for compiling and for running) :
 
-AdvancedSlideShow  : libphonon, X11 (Linux Only), Mesa3D, and OpenGL support for libqt
-ImageViewer        : X11 (Linux Only), Mesa3D, and OpenGL support for libqt
+AdvancedSlideShow  : libphonon, Mesa3D, and OpenGL support for libqt
+ImageViewer        : Mesa3D, and OpenGL support for libqt
 FaceBook           : libqjson.
 Mediawiki          : libmediawiki.
 Vkontakte          : libkvkontakte.

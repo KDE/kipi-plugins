@@ -133,12 +133,6 @@ if(KF5Kipi_FOUND)
     find_package(QtKOAuth)                                                     # For Imgur Auhtenticated API.
     find_package(Phonon4Qt5)                                                   # For AdvancedSlideShow.
 
-    # -- X11 check, LINUX Only -------------------------------------------------------------------------
-
-    if(NOT WIN32 AND NOT APPLE)
-        find_package(X11)                                                      # For AdvancedSlideshow and ImageViewer.
-    endif()
-
     # ==================================================================================================
     # Log messages
 
@@ -164,39 +158,26 @@ if(KF5Kipi_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("native Opengl support"  "" "" "Kipi-plugins will be compiled without native OpenGL support."  OPENGL_FOUND AND OPENGL_GLU_FOUND)
     PRINT_OPTIONAL_QTMODULE_STATUS("Qt5 OpenGL"            Qt5OpenGL_FOUND)
 
-    # LINUX Only.
-    if(NOT WIN32 AND NOT APPLE)
-        PRINT_OPTIONAL_LIBRARY_STATUS("libX11" "http://www.x11.org" "(version >= 1.1.5)" "Kipi-plugins will be compiled without libX11 support." X11_FOUND AND X11_Xrandr_FOUND)
-    endif()
-
     # Optional plugins results ----------------------------------------------------------------------------
 
-     message(STATUS "")
+    message(STATUS "")
 
-     if(Qt5_FOUND AND KF5_FOUND AND KF5Kipi_FOUND)
-         set(KIPI_COMPILE_MESSAGE "kipi-plugins will be compiled")
-         FILL_WITH_DOTS(KIPI_COMPILE_MESSAGE)
-         message(STATUS " ${KIPI_COMPILE_MESSAGE} YES")
-         set(KIPIPLUGINS_CAN_BE_COMPILED true)
-     else()
-         message(FATAL_ERROR " kipi-plugins will not be compiled! Look README file for more details about dependencies...")
-         set(KIPIPLUGINS_CAN_BE_COMPILED false)
-     endif()
+    if(Qt5_FOUND AND KF5_FOUND AND KF5Kipi_FOUND)
+        set(KIPI_COMPILE_MESSAGE "kipi-plugins will be compiled")
+        FILL_WITH_DOTS(KIPI_COMPILE_MESSAGE)
+        message(STATUS " ${KIPI_COMPILE_MESSAGE} YES")
+        set(KIPIPLUGINS_CAN_BE_COMPILED true)
+    else()
+        message(FATAL_ERROR " kipi-plugins will not be compiled! Look README file for more details about dependencies...")
+        set(KIPIPLUGINS_CAN_BE_COMPILED false)
+    endif()
 
-     # decide if AdvancedSlideshow and ImageViewer can be built
-     if(NOT WIN32 AND NOT APPLE)
-         if(X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND AND Qt5OpenGL_FOUND)
-             set(BUILD_VIEWERS TRUE)
-         else()
-             set(BUILD_VIEWERS FALSE)
-         endif()
-     else()
-         if(OPENGL_FOUND AND OPENGL_GLU_FOUND AND Qt5OpenGL_FOUND)
-             set(BUILD_VIEWERS TRUE)
-         elseif()
-             set(BUILD_VIEWERS FALSE)
-         endif()
-     endif()
+    # decide if AdvancedSlideshow and ImageViewer can be built
+    if(OPENGL_FOUND AND OPENGL_GLU_FOUND AND Qt5OpenGL_FOUND)
+        set(BUILD_VIEWERS TRUE)
+    elseif()
+        set(BUILD_VIEWERS FALSE)
+    endif()
 
     PRINT_COMPONENT_COMPILE_STATUS("ImageViewer"        BUILD_VIEWERS)
     PRINT_COMPONENT_COMPILE_STATUS("VKontakte"          KF5Vkontakte_FOUND)

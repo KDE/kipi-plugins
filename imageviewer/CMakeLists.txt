@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2010-2015, Gilles Caulier, <caulier dot gilles at gmail dot com>
+# Copyright (c) 2010-2016, Gilles Caulier, <caulier dot gilles at gmail dot com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
@@ -27,10 +27,6 @@ target_link_libraries(kipiplugin_imageviewer
                       KF5kipiplugins
 
                       ${OPENGL_LIBRARIES}
-
-                      # For Linux Only.
-                      ${X11_LIBRARIES}
-                      ${X11_Xrandr_LIB}
                      )
 
 configure_file(kipiplugin_imageviewer.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_imageviewer.desktop)
