@@ -14,14 +14,10 @@ qt5_add_resources(libkipipluginsresources_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/../da
 set(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kipiplugins_debug.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kputil.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpimageinfo.cpp
-                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpbinaryiface.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpversion.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpaboutdata.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpthreadmanager.cpp
-                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpbinarysearch.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpprogresswidget.cpp
-                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kppreviewimage.cpp
-                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kppreviewmanager.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpsavesettingswidget.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpimageslist.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpsettingswidget.cpp
@@ -29,7 +25,6 @@ set(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kipiplugins_debug.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpimagedialog.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpbatchprogressdialog.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kptooldialog.cpp
-                         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpoutputdialog.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpnewalbumdialog.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kplogindialog.cpp
 
