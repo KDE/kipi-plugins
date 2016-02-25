@@ -236,7 +236,7 @@ SlideShowKB::SlideShowKB(const QList<QPair<QString, int> >& fileList,
     // -- playback widget -------------------------------
 
 #ifdef HAVE_PHONON
-    
+
     m_playbackWidget = new PlaybackWidget(this, m_sharedData->soundtrackUrls, m_sharedData);
     m_playbackWidget->hide();
     m_playbackWidget->move(m_deskX, m_deskY);

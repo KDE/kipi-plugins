@@ -47,15 +47,15 @@
 #include <QSvgRenderer>
 #include <QTimer>
 #include <QWheelEvent>
+#include <QApplication>
 
 // KDE includes
 
-#include <QApplication>
 #include <kconfiggroup.h>
 #include <kconfig.h>
 #include <klocalizedstring.h>
 
-// local includes
+// Local includes
 
 #include "kipiplugins_debug.h"
 #include "commoncontainer.h"
@@ -114,7 +114,7 @@ SlideShowGL::SlideShowGL(const QList<QPair<QString, int> >& fileList,
     m_playbackWidget->move(m_deskX, m_deskY);
 
 #endif
-    
+
     int w = m_slidePlaybackWidget->width();
     m_slidePlaybackWidget->move(m_deskX + m_deskWidth - w - 1, m_deskY);
 
