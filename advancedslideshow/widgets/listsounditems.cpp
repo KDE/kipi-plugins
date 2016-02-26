@@ -42,30 +42,53 @@
 
 #include <klocalizedstring.h>
 
+// Phonon includes
+
+#include <phonon/mediaobject.h>
+
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-SoundItem::SoundItem(QListWidget* const parent, const QUrl& url)
-    : QListWidgetItem(parent)
+class SoundItem::Private
 {
-    m_url = url;
+
+public:
+
+    Private()
+    {
+        mediaObject = 0;
+    }
+
+    QUrl                 url;
+    QString              artist;
+    QString              title;
+    QTime                totalTime;
+    Phonon::MediaObject* mediaObject;
+};
+
+SoundItem::SoundItem(QListWidget* const parent, const QUrl& url)
+    : QListWidgetItem(parent),
+      d(new Private)
+{
+    d->url = url;
     setIcon(QIcon::fromTheme(QString::fromLatin1("audio-x-generic")).pixmap(48, QIcon::Disabled));
 
-    m_totalTime   = QTime(0, 0, 0);
-    m_mediaObject = new Phonon::MediaObject();
-    m_mediaObject->setCurrentSource(url);
+    d->totalTime   = QTime(0, 0, 0);
+    d->mediaObject = new Phonon::MediaObject();
+    d->mediaObject->setCurrentSource(url);
 
-    connect(m_mediaObject, SIGNAL(stateChanged(Phonon::State,Phonon::State)),
+    connect(d->mediaObject, SIGNAL(stateChanged(Phonon::State,Phonon::State)),
             this, SLOT(slotMediaStateChanged(Phonon::State,Phonon::State)));
 }
 
 SoundItem::~SoundItem()
 {
+    delete d;
 }
 
 QUrl SoundItem::url() const
 {
-    return m_url;
+    return d->url;
 }
 
 void SoundItem::setName(const QString& text)
@@ -75,17 +98,17 @@ void SoundItem::setName(const QString& text)
 
 QString SoundItem::artist() const
 {
-    return m_artist;
+    return d->artist;
 }
 
 QString SoundItem::title() const
 {
-    return m_title;
+    return d->title;
 }
 
 QTime SoundItem::totalTime() const
 {
-    return m_totalTime;
+    return d->totalTime;
 }
 
 void SoundItem::slotMediaStateChanged(Phonon::State newstate, Phonon::State /*oldstate*/)
@@ -94,15 +117,15 @@ void SoundItem::slotMediaStateChanged(Phonon::State newstate, Phonon::State /*ol
     {
         QMessageBox msgBox(QApplication::activeWindow());
         msgBox.setWindowTitle(i18n("Phonon error"));
-        msgBox.setText(i18n("%1 is damaged and may not be playable.", m_url.fileName()));
-        msgBox.setDetailedText(m_mediaObject->errorString());
+        msgBox.setText(i18n("%1 is damaged and may not be playable.", d->url.fileName()));
+        msgBox.setDetailedText(d->mediaObject->errorString());
         msgBox.setStandardButtons(QMessageBox::Ok);
         msgBox.setDefaultButton(QMessageBox::Ok);
         msgBox.setIcon(QMessageBox::Critical);
         msgBox.exec();
 
-        m_artist = m_url.fileName();
-        m_title  = i18n("This file is damaged and may not be playable.");
+        d->artist = d->url.fileName();
+        d->title  = i18n("This file is damaged and may not be playable.");
         setText(i18nc("artist - title", "%1 - %2", artist(), title()));
         setBackground(QBrush(Qt::red));
         setForeground(QBrush(Qt::white));
@@ -116,20 +139,20 @@ void SoundItem::slotMediaStateChanged(Phonon::State newstate, Phonon::State /*ol
     if ( newstate != Phonon::StoppedState )
         return;
 
-    long int total = m_mediaObject->totalTime();
-    int hours      = (int)(total / (long int)( 60 * 60 * 1000 ));
+    long int total = d->mediaObject->totalTime();
+    int hours      = (int)(total  / (long int)( 60 * 60 * 1000 ));
     int mins       = (int)((total / (long int)( 60 * 1000 )) - (long int)(hours * 60));
     int secs       = (int)((total / (long int)1000) - (long int)(hours * 60 * 60) - (long int)(mins * 60));
-    m_totalTime    = QTime(hours, mins, secs);
-    m_artist       = (m_mediaObject->metaData(Phonon::ArtistMetaData)).join(QString::fromLatin1(","));
-    m_title        = (m_mediaObject->metaData(Phonon::TitleMetaData)).join(QString::fromLatin1(","));
+    d->totalTime    = QTime(hours, mins, secs);
+    d->artist       = (d->mediaObject->metaData(Phonon::ArtistMetaData)).join(QString::fromLatin1(","));
+    d->title        = (d->mediaObject->metaData(Phonon::TitleMetaData)).join(QString::fromLatin1(","));
 
-    if ( m_artist.isEmpty() && m_title.isEmpty() )
-        setText(m_url.fileName());
+    if ( d->artist.isEmpty() && d->title.isEmpty() )
+        setText(d->url.fileName());
     else
         setText(i18nc("artist - title", "%1 - %2", artist(), title()));
 
-    emit signalTotalTimeReady(m_url, m_totalTime);
+    emit signalTotalTimeReady(d->url, d->totalTime);
 }
 
 // ------------------------------------------------------------------

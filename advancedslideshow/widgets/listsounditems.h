@@ -34,15 +34,11 @@
 #include <QDragEnterEvent>
 #include <QListWidget>
 #include <QListWidgetItem>
+#include <QUrl>
 
 // Phonon includes
 
 #include <phonon/globalconfig.h>
-#include <phonon/mediaobject.h>
-
-// KDE includes
-
-#include <QUrl>
 
 namespace KIPIAdvancedSlideshowPlugin
 {
@@ -72,11 +68,8 @@ private Q_SLOTS:
 
 private:
 
-    QUrl                 m_url;
-    QString              m_artist;
-    QString              m_title;
-    QTime                m_totalTime;
-    Phonon::MediaObject* m_mediaObject;
+    class Private;
+    Private* const d;
 };
 
 // --------------------------------------------------------------------
