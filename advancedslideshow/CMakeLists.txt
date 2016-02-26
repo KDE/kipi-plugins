@@ -15,6 +15,7 @@ add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_advancedslideshow\")
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/dialogs
                     ${CMAKE_CURRENT_SOURCE_DIR}/widgets
                     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
+                    ${CMAKE_CURRENT_SOURCE_DIR}/common
                     ${PHONON_INCLUDE_DIR}
 )
 

@@ -63,7 +63,7 @@
 #include "slideplaybackwidget.h"
 #include "slideshowloader.h"
 #include "kpimageinfo.h"
-#include "common/kpsvgpixmaprenderer.h"
+#include "kpsvgpixmaprenderer.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {

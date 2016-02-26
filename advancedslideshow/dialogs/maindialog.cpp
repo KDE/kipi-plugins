@@ -55,7 +55,6 @@
 #include "slideshowgl.h"
 #include "slideshowkb.h"
 #include "kpimageslist.h"
-#include "common/kpsvgpixmaprenderer.h"
 
 using namespace KIPIPlugins;
 

@@ -35,7 +35,7 @@
 // Local includes
 
 #include "ui_maindialog.h"
-#include "common/kpsvgpixmaprenderer.h"
+#include "kpsvgpixmaprenderer.h"
 
 class QTreeWidgetItem;
 
