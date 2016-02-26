@@ -32,6 +32,7 @@
 // Local includes
 
 #include "slideshowkb.h"
+#include "slideshowkb_p.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {
@@ -68,7 +69,7 @@ Image* KBEffect::image(int img) const
 {
     Q_ASSERT (img >= 0 && img < 2);
 
-    return m_slideWidget->m_image[img];
+    return m_slideWidget->d->image[img];
 }
 
 KBEffect::Type KBEffect::chooseKBEffect(KBEffect::Type oldType)

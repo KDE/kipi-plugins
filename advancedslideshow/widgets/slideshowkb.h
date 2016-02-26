@@ -7,6 +7,7 @@
  * Description : a kipi plugin to slide images.
  *
  * Copyright (C) 2007-2009 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
+ * Copyright (C) 2012-2016 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * Parts of this code are based on
  * smoothslidesaver by Carsten Weinhold <carsten dot weinhold at gmx dot de>
@@ -50,72 +51,27 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class KBEffect;
-class ImageLoadThread;
 class SharedContainer;
-class PlaybackWidget;
-class ScreenProperties;
-
-// -------------------------------------------------------------------------
 
 class ViewTrans
 {
 
 public:
 
-    ViewTrans(bool m_zoomIn, float relAspect);
-    ViewTrans()
-    {
-        m_deltaX     = 0.0;
-        m_deltaY     = 0.0;
-        m_deltaScale = 0.0;
-        m_baseScale  = 0.0;
-        m_baseX      = 0.0;
-        m_baseY      = 0.0;
-        m_xScale     = 0.0;
-        m_yScale     = 0.0;
-    }
+    ViewTrans(bool zoomIn, float relAspect);
+    ViewTrans();
+    ~ViewTrans();
 
-    ~ViewTrans()
-    {
-    }
-
-    float transX(float pos) const
-    {
-        return m_baseX + m_deltaX * pos;
-    };
-
-    float transY(float pos) const
-    {
-        return m_baseY + m_deltaY * pos;
-    };
-
-    float scale (float pos) const
-    {
-        return m_baseScale * (1.0 + m_deltaScale * pos);
-    };
-
-    float m_xScaleCorrect() const
-    {
-        return m_xScale;
-    };
-
-    float m_yScaleCorrect() const
-    {
-        return m_yScale;
-    };
+    float transX(float pos) const;
+    float transY(float pos) const;
+    float scale(float pos)  const;
+    float xScaleCorrect()   const;
+    float yScaleCorrect()   const;
 
 private:
 
-    double rnd() const
-    {
-        return (double)qrand() / (double)RAND_MAX;
-    };
-
-    double rndSign() const
-    {
-        return (qrand() < RAND_MAX / 2) ? 1.0 : -1.0;
-    };
+    double rnd() const;
+    double rndSign() const;
 
 private:
 
@@ -200,38 +156,9 @@ private Q_SLOTS:
 
 private:
 
-    int                 m_deskX;
-    int                 m_deskY;
-    int                 m_deskWidth;
-    int                 m_deskHeight;
-
-    QStringList         m_commentsList;
-
-    ImageLoadThread*    m_imageLoadThread;
-    QTimer*             m_mouseMoveTimer;
-    QTimer*             m_timer;
-    ScreenProperties*   m_screen;
-    bool                m_haveImages;
-
-    Image*              m_image[2];
-    KBEffect*           m_effect;
-    int                 m_numKBEffectRepeated;
-    bool                m_zoomIn, m_initialized;
-    float               m_step;
-
-    bool                m_endOfShow;
-    bool                m_showingEnd;
-
-    // settings from config file
-    int                 m_delay;
-    bool                m_disableFadeInOut;
-    bool                m_disableCrossFade;
-    unsigned            m_forceFrameRate;
-
-    SharedContainer*    m_sharedData;
-
-    PlaybackWidget*     m_playbackWidget;
-
+    class Private;
+    Private* const d;
+    
     friend class KBEffect;
 };
 

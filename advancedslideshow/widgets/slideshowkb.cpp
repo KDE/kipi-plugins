@@ -7,6 +7,7 @@
  * Description : a kipi plugin to slide images.
  *
  * Copyright (C) 2007-2009 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
+ * Copyright (C) 2012-2016 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * Parts of this code are based on
  * smoothslidesaver by Carsten Weinhold <carsten dot weinhold at gmx dot de>
@@ -58,6 +59,7 @@
 #include "playbackwidget.h"
 #include "kipiplugins_debug.h"
 #include "screenproperties.h"
+#include "slideshowkb_p.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {
@@ -143,6 +145,57 @@ ViewTrans::ViewTrans(bool zoomIn, float relAspect)
     while ((bestDist < 0.3) && (++i < 10));
 }
 
+ViewTrans::ViewTrans()
+{
+    m_deltaX     = 0.0;
+    m_deltaY     = 0.0;
+    m_deltaScale = 0.0;
+    m_baseScale  = 0.0;
+    m_baseX      = 0.0;
+    m_baseY      = 0.0;
+    m_xScale     = 0.0;
+    m_yScale     = 0.0;
+}
+
+ViewTrans::~ViewTrans()
+{
+}
+
+float ViewTrans::transX(float pos) const
+{
+    return m_baseX + m_deltaX * pos;
+}
+
+float ViewTrans::transY(float pos) const
+{
+    return m_baseY + m_deltaY * pos;
+}
+
+float ViewTrans::scale (float pos) const
+{
+    return m_baseScale * (1.0 + m_deltaScale * pos);
+}
+
+float ViewTrans::xScaleCorrect() const
+{
+    return m_xScale;
+}
+
+float ViewTrans::yScaleCorrect() const
+{
+    return m_yScale;
+}
+
+double ViewTrans::rnd() const
+{
+    return (double)qrand() / (double)RAND_MAX;
+}
+
+double ViewTrans::rndSign() const
+{
+    return (qrand() < RAND_MAX / 2) ? 1.0 : -1.0;
+}
+
 // -------------------------------------------------------------------------
 
 Image::Image(ViewTrans* const viewTrans, float aspect)
@@ -164,70 +217,62 @@ Image::~Image()
 }
 
 // -------------------------------------------------------------------------
-
+ 
 SlideShowKB::SlideShowKB(const QList<QPair<QString, int> >& fileList,
                          const QStringList& commentsList,
                          SharedContainer* const sharedData)
-           : QGLWidget()
+    : QGLWidget(),
+      d(new Private)       
 {
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlags(Qt::X11BypassWindowManagerHint | Qt::WindowStaysOnTopHint | Qt::Popup);
 
     QRect deskRect = QApplication::desktop()->screenGeometry( QApplication::activeWindow() );
-    m_deskX        = deskRect.x();
-    m_deskY        = deskRect.y();
-    m_deskWidth    = deskRect.width();
-    m_deskHeight   = deskRect.height();
+    d->deskX        = deskRect.x();
+    d->deskY        = deskRect.y();
+    d->deskWidth    = deskRect.width();
+    d->deskHeight   = deskRect.height();
 
-    move(m_deskX, m_deskY);
-    resize(m_deskWidth, m_deskHeight);
+    move(d->deskX, d->deskY);
+    resize(d->deskWidth, d->deskHeight);
 
-    m_sharedData   = sharedData;
+    d->sharedData   = sharedData;
 
     // Avoid boring compile time "unused parameter" warning :P
     // These parameters could be useful for future implementations
-    m_commentsList = commentsList;
+    d->commentsList = commentsList;
 
     srand(QTime::currentTime().msec());
     readSettings();
 
-    m_screen = new ScreenProperties(this);
-    m_screen->enableVSync();
+    d->screen = new ScreenProperties(this);
+    d->screen->enableVSync();
 
     unsigned frameRate;
 
-    if (m_forceFrameRate == 0)
-        frameRate = m_screen->suggestFrameRate() * 2;
+    if (d->forceFrameRate == 0)
+        frameRate = d->screen->suggestFrameRate() * 2;
     else
-        frameRate = m_forceFrameRate;
+        frameRate = d->forceFrameRate;
 
-    m_image[0]    = new Image(0);
-    m_image[1]    = new Image(0);
+    d->image[0]                       = new Image(0);
+    d->image[1]                       = new Image(0);
+    d->step                           = 1.0 / ((float) (d->delay * frameRate));
+    QList<QPair<QString, int> > fList = fileList;
+    d->imageLoadThread                = new ImageLoadThread(fList, width(), height(), d->sharedData->loop);
+    d->timer                          = new QTimer;
 
-    m_effect      = 0;
-    m_step        = 1.0 / ((float) (m_delay * frameRate));
-    m_zoomIn      = qrand() < RAND_MAX / 2;
-    m_initialized = false;
-    m_haveImages  = true;
-
-    QList<QPair<QString, int> > m_fileList = fileList;
-
-    m_imageLoadThread = new ImageLoadThread(m_fileList, width(), height(), m_sharedData->loop);
-    m_timer           = new QTimer;
-    m_endOfShow       = false;
-    m_showingEnd      = false;
-
-    connect(m_timer, SIGNAL(timeout()),
+    connect(d->timer, SIGNAL(timeout()),
             this, SLOT(moveSlot()));
 
-    connect(m_imageLoadThread, SIGNAL(signalEndOfShow()),
+    connect(d->imageLoadThread, SIGNAL(signalEndOfShow()),
             this, SLOT(slotEndOfShow()));
 
     // -- hide cursor when not moved --------------------
 
-    m_mouseMoveTimer = new QTimer;
+    d->mouseMoveTimer = new QTimer;
 
-    connect(m_mouseMoveTimer, SIGNAL(timeout()),
+    connect(d->mouseMoveTimer, SIGNAL(timeout()),
             this, SLOT(slotMouseMoveTimeOut()));
 
     setMouseTracking(true);
@@ -238,37 +283,38 @@ SlideShowKB::SlideShowKB(const QList<QPair<QString, int> >& fileList,
 
 #ifdef HAVE_PHONON
 
-    m_playbackWidget = new PlaybackWidget(this, m_sharedData->soundtrackUrls, m_sharedData);
-    m_playbackWidget->hide();
-    m_playbackWidget->move(m_deskX, m_deskY);
+    d->playbackWidget = new PlaybackWidget(this, d->sharedData->soundtrackUrls, d->sharedData);
+    d->playbackWidget->hide();
+    d->playbackWidget->move(d->deskX, d->deskY);
 
 #endif
 
     // -- load image and let's start
 
-    m_imageLoadThread->start();
-    m_timer->start(1000 / frameRate);
+    d->imageLoadThread->start();
+    d->timer->start(1000 / frameRate);
 }
 
 SlideShowKB::~SlideShowKB()
 {
-    delete m_effect;
-    delete m_image[0];
-    delete m_image[1];
+    delete d->effect;
+    delete d->image[0];
+    delete d->image[1];
 
-    m_imageLoadThread->quit();
-    bool terminated = m_imageLoadThread->wait(10000);
+    d->imageLoadThread->quit();
+    bool terminated = d->imageLoadThread->wait(10000);
 
     if (!terminated)
     {
-        m_imageLoadThread->terminate();
-        terminated = m_imageLoadThread->wait(3000);
+        d->imageLoadThread->terminate();
+        terminated = d->imageLoadThread->wait(3000);
     }
 
-    delete m_imageLoadThread;
-    delete m_screen;
-    delete m_mouseMoveTimer;
-    delete m_timer;
+    delete d->imageLoadThread;
+    delete d->screen;
+    delete d->mouseMoveTimer;
+    delete d->timer;
+    delete d;
 }
 
 float SlideShowKB::aspect() const
@@ -279,48 +325,48 @@ float SlideShowKB::aspect() const
 void SlideShowKB::setNewKBEffect()
 {
     KBEffect::Type type;
-    bool needFadeIn = ((m_effect == 0) || (m_effect->type() == KBEffect::Fade));
+    bool needFadeIn = ((d->effect == 0) || (d->effect->type() == KBEffect::Fade));
 
     // we currently only have two effects
 
-    if (m_disableFadeInOut)
+    if (d->disableFadeInOut)
         type = KBEffect::Blend;
-    else if (m_disableCrossFade)
+    else if (d->disableCrossFade)
         type = KBEffect::Fade;
     else
-        type = KBEffect::chooseKBEffect((m_effect) ? m_effect->type() : KBEffect::Fade);
+        type = KBEffect::chooseKBEffect((d->effect) ? d->effect->type() : KBEffect::Fade);
 
-    delete m_effect;
+    delete d->effect;
 
     switch (type)
     {
 
         case KBEffect::Fade:
-            m_effect = new FadeKBEffect(this, needFadeIn);
+            d->effect = new FadeKBEffect(this, needFadeIn);
             break;
 
         case KBEffect::Blend:
-            m_effect = new BlendKBEffect(this, needFadeIn);
+            d->effect = new BlendKBEffect(this, needFadeIn);
             break;
 
         default:
             qCDebug(KIPIPLUGINS_LOG) << "Unknown transition effect, falling back to crossfade";
-            m_effect = new BlendKBEffect(this, needFadeIn);
+            d->effect = new BlendKBEffect(this, needFadeIn);
             break;
     }
 }
 
 void SlideShowKB::moveSlot()
 {
-    if (m_initialized)
+    if (d->initialized)
     {
-        if (m_effect->done())
+        if (d->effect->done())
         {
             setNewKBEffect();
-            m_imageLoadThread->requestNewImage();
+            d->imageLoadThread->requestNewImage();
         }
 
-        m_effect->advanceTime(m_step);
+        d->effect->advanceTime(d->step);
     }
 
     updateGL();
@@ -330,33 +376,33 @@ bool SlideShowKB::setupNewImage(int idx)
 {
     assert(idx >= 0 && idx < 2);
 
-    if ( !m_haveImages)
+    if ( !d->haveImages)
         return false;
 
     bool ok  = false;
-    m_zoomIn = !m_zoomIn;
+    d->zoomIn = !d->zoomIn;
 
-    if (m_imageLoadThread->grabImage())
+    if (d->imageLoadThread->grabImage())
     {
-        delete m_image[idx];
+        delete d->image[idx];
 
         // we have the image lock and there is an image
-        float imageAspect          = m_imageLoadThread->imageAspect();
-        ViewTrans* const viewTrans = new ViewTrans(m_zoomIn, aspect() / imageAspect);
-        m_image[idx]               = new Image(viewTrans, imageAspect);
+        float imageAspect          = d->imageLoadThread->imageAspect();
+        ViewTrans* const viewTrans = new ViewTrans(d->zoomIn, aspect() / imageAspect);
+        d->image[idx]               = new Image(viewTrans, imageAspect);
 
-        applyTexture(m_image[idx], m_imageLoadThread->image());
+        applyTexture(d->image[idx], d->imageLoadThread->image());
         ok = true;
 
     }
     else
     {
-        m_haveImages = false;
+        d->haveImages = false;
     }
 
     // don't forget to release the lock on the copy of the image
     // owned by the image loader thread
-    m_imageLoadThread->ungrabImage();
+    d->imageLoadThread->ungrabImage();
 
     return ok;
 }
@@ -365,21 +411,21 @@ void SlideShowKB::startSlideShowOnce()
 {
     // when the image loader thread is ready, it will already have loaded
     // the first image
-    if (m_initialized == false && m_imageLoadThread->ready())
+    if (d->initialized == false && d->imageLoadThread->ready())
     {
         setupNewImage(0);                     // setup the first image and
-        m_imageLoadThread->requestNewImage(); // load the next one in background
+        d->imageLoadThread->requestNewImage(); // load the next one in background
         setNewKBEffect();                     // set the initial effect
 
-        m_initialized = true;
+        d->initialized = true;
     }
 }
 
 void SlideShowKB::swapImages()
 {
-    Image* const tmp = m_image[0];
-    m_image[0]       = m_image[1];
-    m_image[1]       = tmp;
+    Image* const tmp = d->image[0];
+    d->image[0]       = d->image[1];
+    d->image[1]       = tmp;
 }
 
 void SlideShowKB::initializeGL()
@@ -411,8 +457,11 @@ void SlideShowKB::paintGL()
 
     // only clear the color buffer, if none of the active images is fully opaque
 
-    if (!((m_image[0]->m_paint && m_image[0]->m_opacity == 1.0) || (m_image[1]->m_paint && m_image[1]->m_opacity == 1.0)))
+    if (!((d->image[0]->m_paint && d->image[0]->m_opacity == 1.0) || 
+        (d->image[1]->m_paint && d->image[1]->m_opacity == 1.0)))
+    {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    }
 
     glLoadIdentity();
     glMatrixMode(GL_PROJECTION);
@@ -420,18 +469,18 @@ void SlideShowKB::paintGL()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    if (m_endOfShow && m_image[0]->m_paint && m_image[1]->m_paint)
+    if (d->endOfShow && d->image[0]->m_paint && d->image[1]->m_paint)
     {
         endOfShow();
-        m_timer->stop();
+        d->timer->stop();
     }
     else
     {
-        if (m_image[1]->m_paint)
-            paintTexture(m_image[1]);
+        if (d->image[1]->m_paint)
+            paintTexture(d->image[1]);
 
-        if (m_image[0]->m_paint)
-            paintTexture(m_image[0]);
+        if (d->image[0]->m_paint)
+            paintTexture(d->image[0]);
     }
 
     glFlush();
@@ -461,8 +510,8 @@ void SlideShowKB::paintTexture(Image* const img)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    float sx = img->m_viewTrans->m_xScaleCorrect();
-    float sy = img->m_viewTrans->m_yScaleCorrect();
+    float sx = img->m_viewTrans->xScaleCorrect();
+    float sy = img->m_viewTrans->yScaleCorrect();
 
     glTranslatef(img->m_viewTrans->transX(img->m_pos) * 2.0, img->m_viewTrans->transY(img->m_pos) * 2.0, 0.0);
     glScalef(img->m_viewTrans->scale(img->m_pos), img->m_viewTrans->scale(img->m_pos), 0.0);
@@ -495,17 +544,17 @@ void SlideShowKB::readSettings()
     KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup group = config.group("Advanced Slideshow Settings");
 
-    m_delay            = group.readEntry("Delay", 8000) / 1000;
-    m_disableFadeInOut = group.readEntry("KB Disable FadeInOut", false);
-    m_disableCrossFade = group.readEntry("KB Disable Crossfade", false);
-    m_forceFrameRate   = group.readEntry("KB Force Framerate", 0);
+    d->delay            = group.readEntry("Delay", 8000) / 1000;
+    d->disableFadeInOut = group.readEntry("KB Disable FadeInOut", false);
+    d->disableCrossFade = group.readEntry("KB Disable Crossfade", false);
+    d->forceFrameRate   = group.readEntry("KB Force Framerate", 0);
 
-    if (m_delay < 5)
-        m_delay = 5;
+    if (d->delay < 5)
+        d->delay = 5;
 
-//       if (m_delay > 20) m_delay = 20;
-    if (m_forceFrameRate > 120)
-        m_forceFrameRate = 120;
+//       if (d->delay > 20) d->delay = 20;
+    if (d->forceFrameRate > 120)
+        d->forceFrameRate = 120;
 }
 
 void SlideShowKB::endOfShow()
@@ -564,7 +613,7 @@ void SlideShowKB::endOfShow()
 
     glEnd();
 
-    m_showingEnd = true;
+    d->showingEnd = true;
 }
 
 QStringList SlideShowKB::effectNames()
@@ -590,7 +639,7 @@ void SlideShowKB::keyPressEvent(QKeyEvent* event)
         return;
 
 #ifdef HAVE_PHONON
-    m_playbackWidget->keyPressEvent(event);
+    d->playbackWidget->keyPressEvent(event);
 #endif
 
     if (event->key() == Qt::Key_Escape)
@@ -602,33 +651,33 @@ void SlideShowKB::mousePressEvent(QMouseEvent* e)
     if ( !e )
         return;
 
-    if (m_endOfShow && m_showingEnd)
+    if (d->endOfShow && d->showingEnd)
         slotClose();
 }
 
 void SlideShowKB::mouseMoveEvent(QMouseEvent* e)
 {
     setCursor(QCursor(Qt::ArrowCursor));
-    m_mouseMoveTimer->start(1000);
-    m_mouseMoveTimer->setSingleShot(true);
+    d->mouseMoveTimer->start(1000);
+    d->mouseMoveTimer->setSingleShot(true);
 
 #ifdef HAVE_PHONON
-    if (!m_playbackWidget->canHide())
+    if (!d->playbackWidget->canHide())
         return;
 
     QPoint pos(e->pos());
 
-    if ((pos.y() > (m_deskY + 20)) && (pos.y() < (m_deskY + m_deskHeight - 20 - 1)))
+    if ((pos.y() > (d->deskY + 20)) && (pos.y() < (d->deskY + d->deskHeight - 20 - 1)))
     {
-        if (m_playbackWidget->isHidden())
+        if (d->playbackWidget->isHidden())
             return;
         else
-            m_playbackWidget->hide();
+            d->playbackWidget->hide();
 
         return;
     }
 
-    m_playbackWidget->show();
+    d->playbackWidget->show();
 #else
     Q_UNUSED(e);
 #endif
@@ -636,14 +685,14 @@ void SlideShowKB::mouseMoveEvent(QMouseEvent* e)
 
 void SlideShowKB::slotEndOfShow()
 {
-    m_endOfShow = true;
+    d->endOfShow = true;
 }
 
 void SlideShowKB::slotMouseMoveTimeOut()
 {
     QPoint pos(QCursor::pos());
 
-    if ((pos.y() < (m_deskY + 20)) || (pos.y() > (m_deskY + m_deskHeight - 20 - 1)))
+    if ((pos.y() < (d->deskY + 20)) || (pos.y() > (d->deskY + d->deskHeight - 20 - 1)))
         return;
 
     setCursor(QCursor(Qt::BlankCursor));
