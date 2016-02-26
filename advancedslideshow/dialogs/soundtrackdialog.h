@@ -44,7 +44,6 @@ namespace KIPIAdvancedSlideshowPlugin
 {
 
 class PlaybackWidget;
-
 class SharedContainer;
 
 class SoundtrackPreview : public QDialog

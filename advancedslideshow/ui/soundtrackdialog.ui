@@ -165,9 +165,6 @@
            </widget>
           </item>
           <item>
-           <widget class="KSeparator" name="kseparator"/>
-          </item>
-          <item>
            <widget class="QPushButton" name="m_SoundFilesButtonLoad">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">

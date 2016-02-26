@@ -69,7 +69,6 @@ target_link_libraries(kipiplugin_advancedslideshow
 
                       KF5::Kipi
                       KF5::I18n
-                      KF5::KIOFileWidgets
                       KF5kipiplugins
 
                       ${OPENGL_LIBRARIES}
