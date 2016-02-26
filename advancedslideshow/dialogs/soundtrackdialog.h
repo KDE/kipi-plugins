@@ -28,9 +28,6 @@
 
 #include <QTime>
 #include <QMutex>
-
-// KDE includes
-
 #include <QUrl>
 #include <QDialog>
 
@@ -97,13 +94,8 @@ private Q_SLOTS:
 
 private:
 
-    QList<QUrl>             m_urlList;
-    SharedContainer*        m_sharedData;
-    QTime                   m_totalTime;
-    QTime                   m_imageTime;
-    QMap<QUrl, QTime>*      m_tracksTime;
-    QMap<QUrl, SoundItem*>* m_soundItems;
-    QMutex*                 m_timeMutex;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIAdvancedSlideshowPlugin

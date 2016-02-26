@@ -69,19 +69,42 @@ SoundtrackPreview::~SoundtrackPreview()
 
 // ------------------------------------------------------------------------------------
 
+
+class SoundtrackDialog::Private
+{
+public:
+
+    Private()
+    {
+        tracksTime = 0;
+        sharedData = 0;
+        soundItems = 0;
+        timeMutex  = 0;
+    }
+
+    QList<QUrl>             urlList;
+    SharedContainer*        sharedData;
+    QTime                   totalTime;
+    QTime                   imageTime;
+    QMap<QUrl, QTime>*      tracksTime;
+    QMap<QUrl, SoundItem*>* soundItems;
+    QMutex*                 timeMutex;
+};
+
 SoundtrackDialog::SoundtrackDialog(QWidget* const parent, SharedContainer* const sharedData)
-    : QWidget(parent)
+    : QWidget(parent),
+      d(new Private)
 {
     setupUi(this);
 
-    m_sharedData = sharedData;
-    m_totalTime  = QTime(0, 0, 0);
-    m_imageTime  = QTime(0, 0, 0);
-    m_tracksTime = new QMap<QUrl, QTime>();
-    m_soundItems = new QMap<QUrl, SoundItem*>();
-    m_timeMutex  = new QMutex();
+    d->sharedData = sharedData;
+    d->totalTime  = QTime(0, 0, 0);
+    d->imageTime  = QTime(0, 0, 0);
+    d->tracksTime = new QMap<QUrl, QTime>();
+    d->soundItems = new QMap<QUrl, SoundItem*>();
+    d->timeMutex  = new QMutex();
 
-    m_soundtrackTimeLabel->setText(m_totalTime.toString());
+    m_soundtrackTimeLabel->setText(d->totalTime.toString());
     m_previewButton->setEnabled(false);
 
     m_rememberSoundtrack->setToolTip(i18n("If set, the soundtrack for the current album "
@@ -145,29 +168,30 @@ SoundtrackDialog::SoundtrackDialog(QWidget* const parent, SharedContainer* const
     connect( m_previewButton, SIGNAL(clicked()),
              this, SLOT(slotPreviewButtonClicked()));
 
-    connect( m_sharedData->mainPage, SIGNAL(signalTotalTimeChanged(QTime)),
+    connect( d->sharedData->mainPage, SIGNAL(signalTotalTimeChanged(QTime)),
              this, SLOT(slotImageTotalTimeChanged(QTime)));
 }
 
 SoundtrackDialog::~SoundtrackDialog()
 {
-    delete m_sharedData;
-    delete m_tracksTime;
-    delete m_soundItems;
-    delete m_timeMutex;
+    delete d->sharedData;
+    delete d->tracksTime;
+    delete d->soundItems;
+    delete d->timeMutex;
+    delete d;
 }
 
 void SoundtrackDialog::readSettings()
 {
-    m_rememberSoundtrack->setChecked(m_sharedData->soundtrackRememberPlaylist);
-    m_loopCheckBox->setChecked(m_sharedData->soundtrackLoop);
+    m_rememberSoundtrack->setChecked(d->sharedData->soundtrackRememberPlaylist);
+    m_loopCheckBox->setChecked(d->sharedData->soundtrackLoop);
 
-    connect( m_sharedData->mainPage, SIGNAL(signalTotalTimeChanged(QTime)),
+    connect( d->sharedData->mainPage, SIGNAL(signalTotalTimeChanged(QTime)),
              this, SLOT(slotImageTotalTimeChanged(QTime)) );
 
-    // if tracks are already set in m_sharedData, add them now
-    if (!m_sharedData->soundtrackUrls.isEmpty())
-        addItems(m_sharedData->soundtrackUrls);
+    // if tracks are already set in d->sharedData, add them now
+    if (!d->sharedData->soundtrackUrls.isEmpty())
+        addItems(d->sharedData->soundtrackUrls);
 
     updateFileList();
     updateTracksNumber();
@@ -175,9 +199,9 @@ void SoundtrackDialog::readSettings()
 
 void SoundtrackDialog::saveSettings()
 {
-    m_sharedData->soundtrackRememberPlaylist = m_rememberSoundtrack->isChecked();
-    m_sharedData->soundtrackLoop             = m_loopCheckBox->isChecked();
-    m_sharedData->soundtrackUrls             = m_urlList;
+    d->sharedData->soundtrackRememberPlaylist = m_rememberSoundtrack->isChecked();
+    d->sharedData->soundtrackLoop             = m_loopCheckBox->isChecked();
+    d->sharedData->soundtrackUrls             = d->urlList;
 }
 
 void SoundtrackDialog::addItems(const QList<QUrl>& fileList)
@@ -191,17 +215,17 @@ void SoundtrackDialog::addItems(const QList<QUrl>& fileList)
     {
         QUrl currentFile             = *it;
         QUrl path                    = QUrl(currentFile.path().section(QLatin1Char('/'), 0, -1));
-        m_sharedData->soundtrackPath = path;
+        d->sharedData->soundtrackPath = path;
         SoundItem* const item        = new SoundItem(m_SoundFilesListBox, path);
         item->setName(currentFile.path().section(QLatin1Char('/'), -1));
         m_SoundFilesListBox->insertItem(m_SoundFilesListBox->count() - 1, item);
 
-        m_soundItems->insert(path, item);
+        d->soundItems->insert(path, item);
 
-        connect(m_soundItems->value(path), SIGNAL(signalTotalTimeReady(QUrl,QTime)),
+        connect(d->soundItems->value(path), SIGNAL(signalTotalTimeReady(QUrl,QTime)),
                 this, SLOT(slotAddNewTime(QUrl,QTime)));
 
-        m_urlList.append(path);
+        d->urlList.append(path);
     }
 
     m_SoundFilesListBox->setCurrentItem(m_SoundFilesListBox->item(m_SoundFilesListBox->count() - 1)) ;
@@ -220,7 +244,7 @@ void SoundtrackDialog::updateTracksNumber()
     {
         displayTime.addMSecs(1000 * (number - 1));
 
-        for (QMap<QUrl, QTime>::iterator it = m_tracksTime->begin(); it != m_tracksTime->end(); ++it)
+        for (QMap<QUrl, QTime>::iterator it = d->tracksTime->begin(); it != d->tracksTime->end(); ++it)
         {
             int hours = it.value().hour()   + displayTime.hour();
             int mins  = it.value().minute() + displayTime.minute();
@@ -241,7 +265,7 @@ void SoundtrackDialog::updateTracksNumber()
 
     m_soundtrackTimeLabel->setText(displayTime.toString());
 
-    m_totalTime = displayTime;
+    d->totalTime = displayTime;
 
     compareTimes();
 }
@@ -249,21 +273,21 @@ void SoundtrackDialog::updateTracksNumber()
 void SoundtrackDialog::updateFileList()
 {
     QList<QUrl> files = m_SoundFilesListBox->fileUrls();
-    m_urlList         = files;
+    d->urlList         = files;
 
     m_SoundFilesButtonUp->setEnabled(!files.isEmpty());
     m_SoundFilesButtonDown->setEnabled(!files.isEmpty());
     m_SoundFilesButtonDelete->setEnabled(!files.isEmpty());
     m_SoundFilesButtonSave->setEnabled(!files.isEmpty());
     m_SoundFilesButtonReset->setEnabled(!files.isEmpty());
-    m_sharedData->soundtrackPlayListNeedsUpdate = true;
+    d->sharedData->soundtrackPlayListNeedsUpdate = true;
 }
 
 void SoundtrackDialog::compareTimes()
 {
     QFont statusBarFont = m_statusBarLabel->font();
 
-    if ( m_imageTime > m_totalTime )
+    if ( d->imageTime > d->totalTime )
     {
         m_statusBarLabel->setText(i18n("Slide time is greater than soundtrack time. Suggestion: add more sound files."));
 
@@ -288,7 +312,7 @@ void SoundtrackDialog::compareTimes()
 
         QPalette paletteTimeLabel = m_soundtrackTimeLabel->palette();
 
-        if ( m_imageTime < m_totalTime )
+        if ( d->imageTime < d->totalTime )
             paletteTimeLabel.setColor(QPalette::WindowText, Qt::black);
         else
             paletteTimeLabel.setColor(QPalette::WindowText, Qt::green);
@@ -303,10 +327,10 @@ void SoundtrackDialog::compareTimes()
 
 void SoundtrackDialog::slotAddNewTime(const QUrl& url, const QTime& trackTime)
 {
-    m_timeMutex->lock();
-    m_tracksTime->insert(url, trackTime);
+    d->timeMutex->lock();
+    d->tracksTime->insert(url, trackTime);
     updateTracksNumber();
-    m_timeMutex->unlock();
+    d->timeMutex->unlock();
 }
 
 void SoundtrackDialog::slotSoundFilesSelected( int row )
@@ -332,7 +356,7 @@ void SoundtrackDialog::slotSoundFilesButtonAdd()
 {
     QPointer<QFileDialog> dlg = new QFileDialog(this,
                                                 i18n("Select sound files"),
-                                                m_sharedData->soundtrackPath.toString());
+                                                d->sharedData->soundtrackPath.toString());
 
     // Setting available mime-types (filtering out non audio mime-types)
     dlg->setMimeTypeFilters(Phonon::BackendCapabilities::availableMimeTypes().filter(QString::fromLatin1("audio/")));
@@ -359,12 +383,12 @@ void SoundtrackDialog::slotSoundFilesButtonDelete()
        return;
 
     SoundItem* const pitem = static_cast<SoundItem*>(m_SoundFilesListBox->takeItem(Index));
-    m_urlList.removeAll(pitem->url());
-    m_soundItems->remove(pitem->url());
-    m_timeMutex->lock();
-    m_tracksTime->remove(pitem->url());
+    d->urlList.removeAll(pitem->url());
+    d->soundItems->remove(pitem->url());
+    d->timeMutex->lock();
+    d->tracksTime->remove(pitem->url());
     updateTracksNumber();
-    m_timeMutex->unlock();
+    d->timeMutex->unlock();
     delete pitem;
     slotSoundFilesSelected(m_SoundFilesListBox->currentRow());
 
@@ -578,7 +602,7 @@ void SoundtrackDialog::slotPreviewButtonClicked()
     // Update SharedContainer from interface
     saveSettings();
 
-    QPointer<SoundtrackPreview> preview = new SoundtrackPreview(this, urlList, m_sharedData);
+    QPointer<SoundtrackPreview> preview = new SoundtrackPreview(this, urlList, d->sharedData);
     preview->exec();
 
     delete preview;
@@ -587,7 +611,7 @@ void SoundtrackDialog::slotPreviewButtonClicked()
 
 void SoundtrackDialog::slotImageTotalTimeChanged( const QTime& imageTotalTime )
 {
-    m_imageTime = imageTotalTime;
+    d->imageTime = imageTotalTime;
     m_slideTimeLabel->setText(imageTotalTime.toString());
     compareTimes();
 }
