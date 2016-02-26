@@ -41,20 +41,9 @@
 #include <QStringList>
 #include <QWheelEvent>
 
-// KDE includes
-
-#include <kconfig.h>
-
-class QColor;
-class QFont;
-class QTimer;
-
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class SlidePlaybackWidget;
-class PlaybackWidget;
-class SlideShowLoader;
 class SharedContainer;
 
 class SlideShowGL : public QGLWidget
@@ -128,51 +117,8 @@ private Q_SLOTS:
 
 private:
 
-    // config ------------------
-
-    uint                              m_cacheSize;
-
-    // -------------------------
-
-
-    QMap<QString, EffectMethod>       m_effects;
-
-    QList<QPair<QString, int> >       m_fileList;
-    QStringList                       m_commentsList;
-    QTimer*                           m_timer;
-    int                               m_fileIndex;
-
-    SlideShowLoader*                  m_imageLoader;
-    GLuint                            m_texture[2];
-    bool                              m_tex1First;
-    int                               m_curr;
-
-    int                               m_width;
-    int                               m_height;
-    int                               m_xMargin;
-    int                               m_yMargin;
-
-
-    EffectMethod                      m_effect;
-    bool                              m_effectRunning;
-    int                               m_timeout;
-    bool                              m_random;
-    bool                              m_endOfShow;
-
-    int                               m_i;
-    int                               m_dir;
-    float                             m_points[40][40][3];
-
-    SlidePlaybackWidget*              m_slidePlaybackWidget;
-    PlaybackWidget*                   m_playbackWidget;
-    QTimer*                           m_mouseMoveTimer;
-
-    int                               m_deskX;
-    int                               m_deskY;
-    int                               m_deskWidth;
-    int                               m_deskHeight;
-
-    SharedContainer*                  m_sharedData;
+    class Private;
+    Private* const d;
 };
 
 }  // namespace KIPIAdvancedSlideshowPlugin
