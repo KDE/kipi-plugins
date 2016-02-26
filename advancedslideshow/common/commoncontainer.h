@@ -100,7 +100,7 @@ public:
     bool                 soundtrackPlayListNeedsUpdate;
     QUrl                 soundtrackPath;
     QList<QUrl>          soundtrackUrls;
-    
+
     // --> Advanced page
     bool                 useMilliseconds;
     bool                 enableMouseWheel;

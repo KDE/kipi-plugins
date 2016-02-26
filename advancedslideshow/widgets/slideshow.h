@@ -128,7 +128,7 @@ private:
     EffectMethod getRandomEffect();
 
 private:
-    
+
     class Private;
     Private* const d;
 };

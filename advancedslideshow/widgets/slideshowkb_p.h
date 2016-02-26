@@ -64,7 +64,7 @@ public:
         sharedData          = 0;
         playbackWidget      = 0;
     }
-    
+
     int                 deskX;
     int                 deskY;
     int                 deskWidth;
