@@ -9,6 +9,7 @@
  * Copyright (C) 2006-2009 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
  * Copyright (C) 2009      by Andi Clemens <andi dot clemens at googlemail dot com>
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
+ * Copyright (C) 2012-2016 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -39,7 +40,6 @@
 class QKeyEvent;
 class QMouseEvent;
 class QPaintEvent;
-class QTimer;
 class QWheelEvent;
 
 namespace KIPIAdvancedSlideshowPlugin
@@ -48,13 +48,7 @@ namespace KIPIAdvancedSlideshowPlugin
 typedef QPair<QString, int>  FileAnglePair;
 typedef QList<FileAnglePair> FileList;
 
-class SlideShowLoader;
-class SlidePlaybackWidget;
 class SharedContainer;
-
-#ifdef HAVE_PHONON
-class PlaybackWidget;
-#endif
 
 class SlideShow : public QWidget
 {
@@ -103,7 +97,10 @@ protected:
 
     bool    m_simplyShow;
     bool    m_startPainter;
-    int     m_px, m_py, m_psx, m_psy, m_psw, m_psh;
+    int     m_px;
+    int     m_py;
+    int     m_psx;
+    int     m_psy;
     bool    m_endOfShow;
     QPixmap m_buffer;
 
@@ -131,66 +128,9 @@ private:
     EffectMethod getRandomEffect();
 
 private:
-
-    SharedContainer*            m_sharedData;
-
-    uint                        m_cacheSize;
-
-    // -------------------------
-
-    QMap<QString, EffectMethod> Effects;
-
-    SlideShowLoader*            m_imageLoader;
-    QPixmap                     m_currImage;
-
-#ifdef HAVE_PHONON
-    PlaybackWidget*             m_playbackWidget;
-#endif
-
-    FileList                    m_fileList;
-    QStringList                 m_commentsList;
-    QTimer*                     m_timer;
-    int                         m_fileIndex;
-
-    EffectMethod                m_effect;
-    bool                        m_effectRunning;
-    QString                     m_effectName;
-
-    // values for state of various effects:
-    int                         m_x;
-    int                         m_y;
-    int                         m_w;
-    int                         m_h;
-    int                         m_dx;
-    int                         m_dy;
-    int                         m_ix;
-    int                         m_iy;
-    int                         m_i;
-    int                         m_j;
-    int                         m_subType;
-    int                         m_x0;
-    int                         m_y0;
-    int                         m_x1;
-    int                         m_y1;
-    int                         m_wait;
-    double                      m_fx;
-    double                      m_fy;
-    double                      m_alpha;
-    double                      m_fd;
-    int*                        m_intArray;
-    bool                        m_pdone;
-    bool**                      m_pixelMatrix;
-
-    //static
-    QPolygon                    m_pa;
-
-    SlidePlaybackWidget*        m_slidePlaybackWidget;
-    QTimer*                     m_mouseMoveTimer;
-
-    int                         m_deskX;
-    int                         m_deskY;
-    int                         m_deskWidth;
-    int                         m_deskHeight;
+    
+    class Private;
+    Private* const d;
 };
 
 }  // namespace KIPIAdvancedSlideshowPlugin
