@@ -8,6 +8,7 @@
  *
  * Copyright (C) 2008-2009 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
  * Copyright (C) 2009      by Andi Clemens <andi dot clemens at googlemail dot com>
+ * Copyright (C) 2012-2016 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -61,22 +62,39 @@ using namespace KIPIPlugins;
 namespace KIPIAdvancedSlideshowPlugin
 {
 
+class MainDialog::Private
+{
+
+public:
+
+    Private()
+        : noPreviewPixmap(ICONSIZE, ICONSIZE)
+    {
+        sharedData         = 0;
+        imagesFilesListBox = 0;
+    }
+
+    SharedContainer*           sharedData;
+    QTime                      totalTime;
+    KPSvgPixmapRenderer        noPreviewPixmap;
+    KIPIPlugins::KPImagesList* imagesFilesListBox;
+};
+
 MainDialog::MainDialog(QWidget* const parent, SharedContainer* const sharedData)
     : QWidget(parent),
-      m_noPreviewPixmap(ICONSIZE, ICONSIZE)
+      d(new Private)
 {
     setupUi(this);
 
-    m_sharedData = sharedData;
-    m_thumbJob   = 0L;
+    d->sharedData = sharedData;
 
     // --------------------------------------------------------
 
-    QVBoxLayout* listBoxContainerLayout = new QVBoxLayout;
-    m_ImagesFilesListBox                = new KPImagesList(m_ImagesFilesListBoxContainer, 32);
-    m_ImagesFilesListBox->listView()->header()->hide();
+    QVBoxLayout* const listBoxContainerLayout = new QVBoxLayout;
+    d->imagesFilesListBox                     = new KPImagesList(m_ImagesFilesListBoxContainer, 32);
+    d->imagesFilesListBox->listView()->header()->hide();
 
-    listBoxContainerLayout->addWidget(m_ImagesFilesListBox);
+    listBoxContainerLayout->addWidget(d->imagesFilesListBox);
     listBoxContainerLayout->setContentsMargins(QMargins());
     listBoxContainerLayout->setSpacing(0);
     m_ImagesFilesListBoxContainer->setLayout(listBoxContainerLayout);
@@ -89,27 +107,28 @@ MainDialog::MainDialog(QWidget* const parent, SharedContainer* const sharedData)
 
 MainDialog::~MainDialog()
 {
+    delete d;
 }
 
 void MainDialog::readSettings()
 {
-    m_openglCheckBox->setChecked(m_sharedData->opengl);
-    m_openGlFullScale->setChecked(m_sharedData->openGlFullScale);
-    m_openGlFullScale->setEnabled(m_sharedData->opengl);
-    m_delaySpinBox->setValue(m_sharedData->delay);
-    m_printNameCheckBox->setChecked(m_sharedData->printFileName);
-    m_printProgressCheckBox->setChecked(m_sharedData->printProgress);
-    m_printCommentsCheckBox->setChecked(m_sharedData->printFileComments);
-    m_loopCheckBox->setChecked(m_sharedData->loop);
-    m_shuffleCheckBox->setChecked(m_sharedData->shuffle);
+    m_openglCheckBox->setChecked(d->sharedData->opengl);
+    m_openGlFullScale->setChecked(d->sharedData->openGlFullScale);
+    m_openGlFullScale->setEnabled(d->sharedData->opengl);
+    m_delaySpinBox->setValue(d->sharedData->delay);
+    m_printNameCheckBox->setChecked(d->sharedData->printFileName);
+    m_printProgressCheckBox->setChecked(d->sharedData->printProgress);
+    m_printCommentsCheckBox->setChecked(d->sharedData->printFileComments);
+    m_loopCheckBox->setChecked(d->sharedData->loop);
+    m_shuffleCheckBox->setChecked(d->sharedData->shuffle);
 
-    if (m_sharedData->showSelectedFilesOnly && m_selectedFilesButton->isEnabled() )
+    if (d->sharedData->showSelectedFilesOnly && m_selectedFilesButton->isEnabled() )
         m_selectedFilesButton->setChecked(true);
     else
         m_allFilesButton->setChecked(true);
 
     // Host application images has comments
-    if ( ! m_sharedData->ImagesHasComments )
+    if ( ! d->sharedData->ImagesHasComments )
     {
         m_printCommentsCheckBox->setEnabled(false);
         m_printCommentsCheckBox->setChecked(false);
@@ -117,10 +136,10 @@ void MainDialog::readSettings()
 
     // Switch to selected files only (it depends on showSelectedFilesOnly)
 
-    m_selectedFilesButton->setEnabled( m_sharedData->showSelectedFilesOnly );
+    m_selectedFilesButton->setEnabled( d->sharedData->showSelectedFilesOnly );
 
-    m_delaySpinBox->setValue(m_sharedData->useMilliseconds ? m_sharedData->delay
-                                                           : m_sharedData->delay / 1000 );
+    m_delaySpinBox->setValue(d->sharedData->useMilliseconds ? d->sharedData->delay
+                                                            : d->sharedData->delay / 1000 );
 
     slotUseMillisecondsToggled();
 
@@ -135,17 +154,17 @@ void MainDialog::readSettings()
 
 void MainDialog::saveSettings()
 {
-    m_sharedData->opengl                = m_openglCheckBox->isChecked();
-    m_sharedData->openGlFullScale       = m_openGlFullScale->isChecked();
-    m_sharedData->delay                 = m_sharedData->useMilliseconds ? m_delaySpinBox->value()
-                                                                        : m_delaySpinBox->value() * 1000;
+    d->sharedData->opengl                = m_openglCheckBox->isChecked();
+    d->sharedData->openGlFullScale       = m_openGlFullScale->isChecked();
+    d->sharedData->delay                 = d->sharedData->useMilliseconds ? m_delaySpinBox->value()
+                                                                         : m_delaySpinBox->value() * 1000;
 
-    m_sharedData->printFileName         = m_printNameCheckBox->isChecked();
-    m_sharedData->printProgress         = m_printProgressCheckBox->isChecked();
-    m_sharedData->printFileComments     = m_printCommentsCheckBox->isChecked();
-    m_sharedData->loop                  = m_loopCheckBox->isChecked();
-    m_sharedData->shuffle               = m_shuffleCheckBox->isChecked();
-    m_sharedData->showSelectedFilesOnly = m_selectedFilesButton->isChecked();
+    d->sharedData->printFileName         = m_printNameCheckBox->isChecked();
+    d->sharedData->printProgress         = m_printProgressCheckBox->isChecked();
+    d->sharedData->printFileComments     = m_printCommentsCheckBox->isChecked();
+    d->sharedData->loop                  = m_loopCheckBox->isChecked();
+    d->sharedData->shuffle               = m_shuffleCheckBox->isChecked();
+    d->sharedData->showSelectedFilesOnly = m_selectedFilesButton->isChecked();
 
     if (!m_openglCheckBox->isChecked())
     {
@@ -163,7 +182,7 @@ void MainDialog::saveSettings()
             }
         }
 
-        m_sharedData->effectName = effect;
+        d->sharedData->effectName = effect;
     }
     else
     {
@@ -198,14 +217,14 @@ void MainDialog::saveSettings()
             }
         }
 
-        m_sharedData->effectNameGL = effect;
+        d->sharedData->effectNameGL = effect;
     }
 }
 
 void MainDialog::showNumberImages()
 {
-    int numberOfImages = m_ImagesFilesListBox->imageUrls().count();
-    QTime totalDuration (0, 0, 0);
+    int numberOfImages = d->imagesFilesListBox->imageUrls().count();
+    QTime totalDuration(0, 0, 0);
 
     int transitionDuration = 2000;
 
@@ -214,7 +233,7 @@ void MainDialog::showNumberImages()
 
     if (numberOfImages != 0)
     {
-        if ( m_sharedData->useMilliseconds )
+        if ( d->sharedData->useMilliseconds )
             totalDuration = totalDuration.addMSecs(numberOfImages * m_delaySpinBox->text().toInt());
         else
             totalDuration = totalDuration.addSecs(numberOfImages * m_delaySpinBox->text().toInt());
@@ -222,10 +241,10 @@ void MainDialog::showNumberImages()
         totalDuration = totalDuration.addMSecs((numberOfImages - 1) * transitionDuration);
     }
 
-    m_totalTime = totalDuration;
+    d->totalTime = totalDuration;
 
     // Notify total time is changed
-    emit signalTotalTimeChanged(m_totalTime);
+    emit signalTotalTimeChanged(d->totalTime);
 
     m_label6->setText(i18np("%1 image [%2]", "%1 images [%2]", numberOfImages, totalDuration.toString()));
 }
@@ -248,7 +267,7 @@ void MainDialog::loadEffectNames()
 
     for (int i = 0; i < m_effectsComboBox->count(); ++i)
     {
-        if (effectNames[m_sharedData->effectName] == m_effectsComboBox->itemText(i))
+        if (effectNames[d->sharedData->effectName] == m_effectsComboBox->itemText(i))
         {
             m_effectsComboBox->setCurrentIndex(i);
             break;
@@ -283,7 +302,7 @@ void MainDialog::loadEffectNamesGL()
 
     for (int i = 0; i < m_effectsComboBox->count(); ++i)
     {
-        if (effectNames[m_sharedData->effectNameGL] == m_effectsComboBox->itemText(i))
+        if (effectNames[d->sharedData->effectNameGL] == m_effectsComboBox->itemText(i))
         {
             m_effectsComboBox->setCurrentIndex(i);
             break;
@@ -293,8 +312,8 @@ void MainDialog::loadEffectNamesGL()
 
 bool MainDialog::updateUrlList()
 {
-    m_sharedData->urlList.clear();
-    QTreeWidgetItemIterator it(m_ImagesFilesListBox->listView());
+    d->sharedData->urlList.clear();
+    QTreeWidgetItemIterator it(d->imagesFilesListBox->listView());
 
     while (*it)
     {
@@ -311,7 +330,7 @@ bool MainDialog::updateUrlList()
             return false;
         }
 
-        m_sharedData->urlList.append(QUrl::fromLocalFile(url));  // Input images files.
+        d->sharedData->urlList.append(QUrl::fromLocalFile(url));  // Input images files.
         ++it;
     }
 
@@ -320,10 +339,10 @@ bool MainDialog::updateUrlList()
 
 void MainDialog::slotImagesFilesSelected(QTreeWidgetItem* item)
 {
-    if (!item || m_ImagesFilesListBox->imageUrls().isEmpty())
+    if (!item || d->imagesFilesListBox->imageUrls().isEmpty())
     {
         m_label7->setText(QString::fromLatin1(""));
-        m_previewLabel->setPixmap(m_noPreviewPixmap.getPixmap());
+        m_previewLabel->setPixmap(d->noPreviewPixmap.getPixmap());
         return;
     }
 
@@ -335,12 +354,12 @@ void MainDialog::slotImagesFilesSelected(QTreeWidgetItem* item)
     QUrl url;
     url.setPath(pitem->url().path());
 
-    connect(m_sharedData->iface(), SIGNAL(gotThumbnail(QUrl,QPixmap)),
+    connect(d->sharedData->iface(), SIGNAL(gotThumbnail(QUrl,QPixmap)),
             this, SLOT(slotThumbnail(QUrl,QPixmap)));
 
-    m_sharedData->iface()->thumbnail(url, ICONSIZE);
+    d->sharedData->iface()->thumbnail(url, ICONSIZE);
 
-    QModelIndex index = m_ImagesFilesListBox->listView()->currentIndex();
+    QModelIndex index = d->imagesFilesListBox->listView()->currentIndex();
 
     if (index.isValid())
     {
@@ -356,8 +375,8 @@ void MainDialog::addItems(const QList<QUrl>& fileList)
 
     QList<QUrl> files = fileList;
 
-    m_ImagesFilesListBox->slotAddImages(files);
-    slotImagesFilesSelected(m_ImagesFilesListBox->listView()->currentItem());
+    d->imagesFilesListBox->slotAddImages(files);
+    slotImagesFilesSelected(d->imagesFilesListBox->listView()->currentItem());
 }
 
 void MainDialog::slotOpenGLToggled()
@@ -383,32 +402,32 @@ void MainDialog::slotEffectChanged()
     m_printProgressCheckBox->setEnabled(!isKB);
     m_printCommentsCheckBox->setEnabled(!isKB);
     m_openGlFullScale->setEnabled(!isKB && m_openglCheckBox->isChecked());
-    m_sharedData->captionPage->setEnabled((!isKB) && m_printCommentsCheckBox->isChecked());
+    d->sharedData->captionPage->setEnabled((!isKB) && m_printCommentsCheckBox->isChecked());
 }
 
 void MainDialog::slotDelayChanged( int delay )
 {
-    m_sharedData->delay = m_sharedData->useMilliseconds ? delay : delay * 1000;
+    d->sharedData->delay = d->sharedData->useMilliseconds ? delay : delay * 1000;
     showNumberImages();
 }
 
 void MainDialog::slotUseMillisecondsToggled()
 {
-    int delay = m_sharedData->delay;
+    int delay = d->sharedData->delay;
 
-    if ( m_sharedData->useMilliseconds )
+    if ( d->sharedData->useMilliseconds )
     {
         m_delayLabel->setText(i18n("Delay between images (ms):"));
 
-        m_delaySpinBox->setRange(m_sharedData->delayMsMinValue, m_sharedData->delayMsMaxValue);
-        m_delaySpinBox->setSingleStep(m_sharedData->delayMsLineStep);
+        m_delaySpinBox->setRange(d->sharedData->delayMsMinValue, d->sharedData->delayMsMaxValue);
+        m_delaySpinBox->setSingleStep(d->sharedData->delayMsLineStep);
     }
     else
     {
         m_delayLabel->setText(i18n("Delay between images (s):"));
 
-        m_delaySpinBox->setRange(m_sharedData->delayMsMinValue / 100, m_sharedData->delayMsMaxValue / 1000  );
-        m_delaySpinBox->setSingleStep(m_sharedData->delayMsLineStep / 100);
+        m_delaySpinBox->setRange(d->sharedData->delayMsMinValue / 100, d->sharedData->delayMsMaxValue / 1000  );
+        m_delaySpinBox->setSingleStep(d->sharedData->delayMsLineStep / 100);
         delay /= 1000;
 
     }
@@ -422,17 +441,17 @@ void MainDialog::slotSelection()
 
     if (m_selectedFilesButton->isChecked())
     {
-        m_ImagesFilesListBox->listView()->clear();
-        urlList = m_sharedData->iface()->currentSelection().images();
+        d->imagesFilesListBox->listView()->clear();
+        urlList = d->sharedData->iface()->currentSelection().images();
     }
     else if (m_allFilesButton->isChecked())
     {
-        QUrl currentPath = m_sharedData->iface()->currentAlbum().url();
+        QUrl currentPath = d->sharedData->iface()->currentAlbum().url();
         QList<KIPI::ImageCollection> albumList;
-        albumList        = m_sharedData->iface()->allAlbums();
+        albumList        = d->sharedData->iface()->allAlbums();
 
-        m_ImagesFilesListBox->listView()->clear();
-        urlList = m_sharedData->iface()->currentAlbum().images();
+        d->imagesFilesListBox->listView()->clear();
+        urlList          = d->sharedData->iface()->currentAlbum().images();
 
         QList<KIPI::ImageCollection>::iterator it;
 
@@ -452,14 +471,14 @@ void MainDialog::slotSelection()
         addItems(urlList);
     }
 
-    m_ImagesFilesListBox->enableControlButtons(customize);
-    m_ImagesFilesListBox->enableDragAndDrop(customize);
+    d->imagesFilesListBox->enableControlButtons(customize);
+    d->imagesFilesListBox->enableDragAndDrop(customize);
 }
 
 void MainDialog::slotPortfolioDurationChanged(int)
 {
     showNumberImages();
-    emit signalTotalTimeChanged( m_totalTime );
+    emit signalTotalTimeChanged( d->totalTime );
 }
 
 void MainDialog::slotThumbnail(const QUrl& /*url*/, const QPixmap& pix)
@@ -473,25 +492,25 @@ void MainDialog::slotThumbnail(const QUrl& /*url*/, const QPixmap& pix)
         m_previewLabel->setPixmap(pix.scaled(ICONSIZE, ICONSIZE, Qt::KeepAspectRatio));
     }
 
-    disconnect(m_sharedData->iface(), 0,
+    disconnect(d->sharedData->iface(), 0,
                this, 0);
 }
 
 void MainDialog::slotPrintCommentsToggled()
 {
-    m_sharedData->printFileComments =  m_printCommentsCheckBox->isChecked();
-    m_sharedData->captionPage->setEnabled(m_printCommentsCheckBox->isChecked());
+    d->sharedData->printFileComments =  m_printCommentsCheckBox->isChecked();
+    d->sharedData->captionPage->setEnabled(m_printCommentsCheckBox->isChecked());
 }
 
 void MainDialog::slotImageListChanged()
 {
     showNumberImages();
-    slotImagesFilesSelected(m_ImagesFilesListBox->listView()->currentItem());
+    slotImagesFilesSelected(d->imagesFilesListBox->listView()->currentItem());
 }
 
 void MainDialog::setupConnections()
 {
-    connect(m_sharedData->advancedPage, SIGNAL(useMillisecondsToggled()), this,
+    connect(d->sharedData->advancedPage, SIGNAL(useMillisecondsToggled()), this,
             SLOT(slotUseMillisecondsToggled()));
 
     connect(m_printCommentsCheckBox, SIGNAL(toggled(bool)),
@@ -509,13 +528,13 @@ void MainDialog::setupConnections()
     connect(m_effectsComboBox, SIGNAL(activated(int)),
             this, SLOT(slotEffectChanged()));
 
-    connect(m_ImagesFilesListBox, SIGNAL(signalImageListChanged()),
+    connect(d->imagesFilesListBox, SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
 
-    connect(m_ImagesFilesListBox, SIGNAL(signalItemClicked(QTreeWidgetItem*)),
+    connect(d->imagesFilesListBox, SIGNAL(signalItemClicked(QTreeWidgetItem*)),
             this, SLOT(slotImagesFilesSelected(QTreeWidgetItem*)));
 
-    if (m_sharedData->showSelectedFilesOnly)
+    if (d->sharedData->showSelectedFilesOnly)
     {
         connect(m_selectedFilesButton, SIGNAL(toggled(bool)),
                 this, SLOT(slotSelection()));
