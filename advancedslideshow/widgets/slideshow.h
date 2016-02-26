@@ -42,11 +42,11 @@ class QPaintEvent;
 class QTimer;
 class QWheelEvent;
 
-typedef QPair<QString, int>  FileAnglePair;
-typedef QList<FileAnglePair> FileList;
-
 namespace KIPIAdvancedSlideshowPlugin
 {
+
+typedef QPair<QString, int>  FileAnglePair;
+typedef QList<FileAnglePair> FileList;
 
 class SlideShowLoader;
 class SlidePlaybackWidget;
@@ -64,7 +64,9 @@ class SlideShow : public QWidget
 
 public:
 
-    SlideShow(const FileList& fileList, const QStringList& commentsList, SharedContainer* const sharedData);
+    SlideShow(const FileList& fileList,
+              const QStringList& commentsList,
+              SharedContainer* const sharedData);
     ~SlideShow();
 
     void registerEffects();
@@ -155,9 +157,26 @@ private:
     QString                     m_effectName;
 
     // values for state of various effects:
-    int                         m_x, m_y, m_w, m_h, m_dx, m_dy, m_ix, m_iy, m_i, m_j, m_subType;
-    int                         m_x0, m_y0, m_x1, m_y1, m_wait;
-    double                      m_fx, m_fy, m_alpha, m_fd;
+    int                         m_x;
+    int                         m_y;
+    int                         m_w;
+    int                         m_h;
+    int                         m_dx;
+    int                         m_dy;
+    int                         m_ix;
+    int                         m_iy;
+    int                         m_i;
+    int                         m_j;
+    int                         m_subType;
+    int                         m_x0;
+    int                         m_y0;
+    int                         m_x1;
+    int                         m_y1;
+    int                         m_wait;
+    double                      m_fx;
+    double                      m_fy;
+    double                      m_alpha;
+    double                      m_fd;
     int*                        m_intArray;
     bool                        m_pdone;
     bool**                      m_pixelMatrix;

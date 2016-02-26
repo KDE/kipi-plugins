@@ -29,15 +29,15 @@ set(kipiplugin_advancedslideshow_PART_SRCS dialogs/captiondialog.cpp
                                            widgets/slideshowgl.cpp
                                            widgets/slideshowkb.cpp
 
-                                           plugin/commoncontainer.cpp
-                                           plugin/screenproperties.cpp
-                                           plugin/slideshowloader.cpp
-                                           plugin/kbeffect.cpp
-                                           plugin/imageloadthread.cpp
-                                           plugin/plugin_advancedslideshow.cpp
-
+                                           common/commoncontainer.cpp
+                                           common/screenproperties.cpp
+                                           common/slideshowloader.cpp
+                                           common/kbeffect.cpp
+                                           common/imageloadthread.cpp
                                            common/kpsvgpixmaprenderer.cpp
-   )
+
+                                           plugin/plugin_advancedslideshow.cpp
+)
 
 if(Phonon4Qt5_FOUND)
     set(kipiplugin_advancedslideshow_PART_SRCS ${kipiplugin_advancedslideshow_PART_SRCS}

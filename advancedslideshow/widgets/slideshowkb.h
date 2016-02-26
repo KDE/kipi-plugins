@@ -120,9 +120,14 @@ private:
 private:
 
     // delta and scale values (begin to end) and the needed offsets
-    double m_deltaX, m_deltaY, m_deltaScale;
-    double m_baseScale, m_baseX, m_baseY;
-    float  m_xScale, m_yScale;
+    double m_deltaX;
+    double m_deltaY;
+    double m_deltaScale;
+    double m_baseScale;
+    double m_baseX;
+    double m_baseY;
+    float  m_xScale;
+    float  m_yScale;
 };
 
 // -------------------------------------------------------------------------
@@ -154,7 +159,8 @@ class SlideShowKB : public QGLWidget
 public:
 
     SlideShowKB(const QList<QPair<QString, int> >& fileList,
-                const QStringList& commentsList, SharedContainer* const sharedData);
+                const QStringList& commentsList,
+                SharedContainer* const sharedData);
 
     ~SlideShowKB();
 
@@ -163,11 +169,7 @@ public:
 
 private:
 
-    float aspect() const
-    {
-        return (float)width() / (float)height();
-    };
-
+    float    aspect() const;
     bool     setupNewImage(int imageIndex);
     void     startSlideShowOnce();
     void     swapImages();

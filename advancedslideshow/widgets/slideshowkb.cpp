@@ -166,7 +166,8 @@ Image::~Image()
 // -------------------------------------------------------------------------
 
 SlideShowKB::SlideShowKB(const QList<QPair<QString, int> >& fileList,
-                         const QStringList& commentsList, SharedContainer* const sharedData)
+                         const QStringList& commentsList,
+                         SharedContainer* const sharedData)
            : QGLWidget()
 {
     setAttribute(Qt::WA_DeleteOnClose);
@@ -268,6 +269,11 @@ SlideShowKB::~SlideShowKB()
     delete m_screen;
     delete m_mouseMoveTimer;
     delete m_timer;
+}
+
+float SlideShowKB::aspect() const
+{
+    return (float)width() / (float)height();
 }
 
 void SlideShowKB::setNewKBEffect()

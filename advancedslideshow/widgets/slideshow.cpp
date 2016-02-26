@@ -116,7 +116,7 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
             this, SLOT(slotClose()));
 
 #endif
-    
+
     // ---------------------------------------------------------------
 
     m_fileIndex     = -1; // start with -1
