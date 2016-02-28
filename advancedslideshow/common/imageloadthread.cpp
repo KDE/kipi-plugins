@@ -42,7 +42,10 @@
 // Local includes
 
 #include "kipiplugins_debug.h"
-#include "slideshowkb.h"
+
+#ifdef DHAVE_OPENGL
+#   include "slideshowkb.h"
+#endif
 
 using namespace KIPI;
 
@@ -206,10 +209,15 @@ bool ImageLoadThread::loadImage()
 
     m_imageLock.lock();
 
+    m_textureAspect = aspect;
+
+#ifdef DHAVE_OPENGL
     // this is the critical moment, when we make the new texture and
     // aspect available to the consumer
-    m_textureAspect = aspect;
     m_texture       = QGLWidget::convertToGLFormat(image);
+#else
+    m_texture       = image; 
+#endif
 
     m_imageLock.unlock();
 

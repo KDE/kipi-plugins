@@ -26,8 +26,11 @@
 
 #include "commoncontainer.h"
 #include "slideshow.h"
-#include "slideshowgl.h"
-#include "slideshowkb.h"
+
+#ifdef DHAVE_OPENGL
+#   include "slideshowgl.h"
+#   include "slideshowkb.h"
+#endif
 
 namespace KIPIAdvancedSlideshowPlugin
 {

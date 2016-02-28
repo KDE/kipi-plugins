@@ -174,15 +174,14 @@ if(KF5Kipi_FOUND)
 
     # decide if AdvancedSlideshow and ImageViewer can be built
     if(OPENGL_FOUND AND OPENGL_GLU_FOUND AND Qt5OpenGL_FOUND)
-        set(BUILD_VIEWERS TRUE)
+        set(OPENGLLIBS_FOUND FALSE)
     elseif()
-        set(BUILD_VIEWERS FALSE)
+        set(OPENGLLIBS_FOUND FALSE)
     endif()
 
-    PRINT_COMPONENT_COMPILE_STATUS("ImageViewer"        BUILD_VIEWERS)
+    PRINT_COMPONENT_COMPILE_STATUS("ImageViewer"        OPENGLLIBS_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("VKontakte"          KF5Vkontakte_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("Mediawiki"          KF5MediaWiki_FOUND)
-    PRINT_COMPONENT_COMPILE_STATUS("AdvancedSlideshow"  BUILD_VIEWERS)
     PRINT_COMPONENT_COMPILE_STATUS("FlashExport"        KF5Archive_FOUND)
 
     # ==================================================================================================
@@ -247,13 +246,13 @@ if(KF5Kipi_FOUND)
         add_subdirectory(dropbox)
         add_subdirectory(imgur)
         add_subdirectory(facebook)
+        add_subdirectory(advancedslideshow)
 
         if(KF5Archive_FOUND)
             add_subdirectory(flashexport)
         endif()
 
-        if(BUILD_VIEWERS)
-            add_subdirectory(advancedslideshow)
+        if(OPENGLLIBS_FOUND)
             add_subdirectory(imageviewer)
         endif()
 

@@ -52,10 +52,13 @@
 #include "commoncontainer.h"
 #include "advanceddialog.h"
 #include "captiondialog.h"
-#include "slideshow.h"
-#include "slideshowgl.h"
-#include "slideshowkb.h"
 #include "kpimageslist.h"
+#include "slideshow.h"
+
+#ifdef DHAVE_OPENGL
+#   include "slideshowgl.h"
+#   include "slideshowkb.h"
+#endif
 
 using namespace KIPIPlugins;
 
@@ -103,6 +106,11 @@ MainDialog::MainDialog(QWidget* const parent, SharedContainer* const sharedData)
 
     m_previewLabel->setMinimumWidth(ICONSIZE);
     m_previewLabel->setMinimumHeight(ICONSIZE);
+
+#ifndef DHAVE_OPENGL
+    m_openglCheckBox->setEnabled(false);
+    m_openGlFullScale->setEnabled(false);
+#endif
 }
 
 MainDialog::~MainDialog()
@@ -112,9 +120,11 @@ MainDialog::~MainDialog()
 
 void MainDialog::readSettings()
 {
+#ifndef DHAVE_OPENGL
     m_openglCheckBox->setChecked(d->sharedData->opengl);
     m_openGlFullScale->setChecked(d->sharedData->openGlFullScale);
     m_openGlFullScale->setEnabled(d->sharedData->opengl);
+#endif
     m_delaySpinBox->setValue(d->sharedData->delay);
     m_printNameCheckBox->setChecked(d->sharedData->printFileName);
     m_printProgressCheckBox->setChecked(d->sharedData->printProgress);
@@ -154,10 +164,12 @@ void MainDialog::readSettings()
 
 void MainDialog::saveSettings()
 {
+#ifndef DHAVE_OPENGL
     d->sharedData->opengl                = m_openglCheckBox->isChecked();
     d->sharedData->openGlFullScale       = m_openGlFullScale->isChecked();
+#endif
     d->sharedData->delay                 = d->sharedData->useMilliseconds ? m_delaySpinBox->value()
-                                                                         : m_delaySpinBox->value() * 1000;
+                                                                          : m_delaySpinBox->value() * 1000;
 
     d->sharedData->printFileName         = m_printNameCheckBox->isChecked();
     d->sharedData->printProgress         = m_printProgressCheckBox->isChecked();
@@ -184,6 +196,7 @@ void MainDialog::saveSettings()
 
         d->sharedData->effectName = effect;
     }
+#ifdef DHAVE_OPENGL
     else
     {
         QMap<QString, QString> effects;
@@ -219,6 +232,7 @@ void MainDialog::saveSettings()
 
         d->sharedData->effectNameGL = effect;
     }
+#endif
 }
 
 void MainDialog::showNumberImages()
@@ -228,8 +242,10 @@ void MainDialog::showNumberImages()
 
     int transitionDuration = 2000;
 
+#ifndef DHAVE_OPENGL
     if ( m_openglCheckBox->isChecked() )
         transitionDuration += 500;
+#endif
 
     if (numberOfImages != 0)
     {
@@ -277,6 +293,7 @@ void MainDialog::loadEffectNames()
 
 void MainDialog::loadEffectNamesGL()
 {
+#ifdef DHAVE_OPENGL
     m_effectsComboBox->clear();
 
     QStringList effects;
@@ -308,6 +325,7 @@ void MainDialog::loadEffectNamesGL()
             break;
         }
     }
+#endif
 }
 
 bool MainDialog::updateUrlList()
@@ -401,7 +419,9 @@ void MainDialog::slotEffectChanged()
     m_printNameCheckBox->setEnabled(!isKB);
     m_printProgressCheckBox->setEnabled(!isKB);
     m_printCommentsCheckBox->setEnabled(!isKB);
+#ifndef DHAVE_OPENGL
     m_openGlFullScale->setEnabled(!isKB && m_openglCheckBox->isChecked());
+#endif
     d->sharedData->captionPage->setEnabled((!isKB) && m_printCommentsCheckBox->isChecked());
 }
 

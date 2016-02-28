@@ -8,6 +8,12 @@ subdirs(icons)
 
 if(Phonon4Qt5_FOUND)
     add_definitions(-DHAVE_PHONON)
+    include_directories(${CMAKE_CURRENT_SOURCE_DIR}/audio)
+endif()
+
+if(OPENGLLIBS_FOUND)
+    add_definitions(-DHAVE_OPENGL)
+    include_directories(${CMAKE_CURRENT_SOURCE_DIR}/opengl)
 endif()
 
 add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_advancedslideshow\")
@@ -26,37 +32,42 @@ set(kipiplugin_advancedslideshow_PART_SRCS dialogs/captiondialog.cpp
 
                                            widgets/slideplaybackwidget.cpp
                                            widgets/slideshow.cpp
-                                           widgets/slideshowgl.cpp
-                                           widgets/slideshowkb.cpp
 
                                            common/commoncontainer.cpp
                                            common/screenproperties.cpp
                                            common/slideshowloader.cpp
-                                           common/kbeffect.cpp
                                            common/imageloadthread.cpp
                                            common/kpsvgpixmaprenderer.cpp
 
                                            plugin/plugin_advancedslideshow.cpp
 )
 
+if(OPENGLLIBS_FOUND)
+    set(kipiplugin_advancedslideshow_PART_SRCS ${kipiplugin_advancedslideshow_PART_SRCS}
+                                               opengl/slideshowgl.cpp
+                                               opengl/slideshowkb.cpp
+                                               opengl/kbeffect.cpp
+    )
+endif()
+
 if(Phonon4Qt5_FOUND)
     set(kipiplugin_advancedslideshow_PART_SRCS ${kipiplugin_advancedslideshow_PART_SRCS}
-        widgets/listsounditems.cpp
-        dialogs/soundtrackdialog.cpp
-        widgets/playbackwidget.cpp
+                                               audio/listsounditems.cpp
+                                               audio/soundtrackdialog.cpp
+                                               audio/playbackwidget.cpp
     )
 
     ki18n_wrap_ui(kipiplugin_advancedslideshow_PART_SRCS
-                  ui/soundtrackdialog.ui
-                  ui/playbackwidget.ui
+                  audio/soundtrackdialog.ui
+                  audio/playbackwidget.ui
     )
 endif()
 
 ki18n_wrap_ui(kipiplugin_advancedslideshow_PART_SRCS
-              ui/maindialog.ui
-              ui/captiondialog.ui
-              ui/advanceddialog.ui
-              ui/slideplaybackwidget.ui
+              dialogs/maindialog.ui
+              dialogs/captiondialog.ui
+              dialogs/advanceddialog.ui
+              widgets/slideplaybackwidget.ui
 )
 
 add_library(kipiplugin_advancedslideshow MODULE ${kipiplugin_advancedslideshow_PART_SRCS})
@@ -64,15 +75,21 @@ add_library(kipiplugin_advancedslideshow MODULE ${kipiplugin_advancedslideshow_P
 target_link_libraries(kipiplugin_advancedslideshow
                       PRIVATE
 
-                      Qt5::OpenGL
                       Qt5::Svg
 
                       KF5::Kipi
                       KF5::I18n
                       KF5kipiplugins
-
-                      ${OPENGL_LIBRARIES}
 )
+
+if(OPENGLLIBS_FOUND)
+    target_link_libraries(kipiplugin_advancedslideshow
+                          PRIVATE
+
+                          Qt5::OpenGL
+                          ${OPENGL_LIBRARIES}
+    )
+endif()
 
 if(Phonon4Qt5_FOUND)
     target_link_libraries(kipiplugin_advancedslideshow
