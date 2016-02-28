@@ -26,7 +26,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/dialogs
 set(kipiplugin_advancedslideshow_PART_SRCS dialogs/captionpage.cpp
                                            dialogs/advancedpage.cpp
                                            dialogs/mainpage.cpp
-                                           dialogs/slideshowconfig.cpp
+                                           dialogs/slideshowdlg.cpp
 
                                            widgets/slideplaybackwidget.cpp
                                            widgets/slideshow.cpp

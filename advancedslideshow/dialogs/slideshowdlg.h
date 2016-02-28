@@ -22,10 +22,10 @@
  *
  * ============================================================ */
 
-#ifndef SLIDESHOWCONFIG_H
-#define SLIDESHOWCONFIG_H
+#ifndef SLIDESHOW_DLG_H
+#define SLIDESHOW_DLG_H
 
-// KDE includes
+// Local includes
 
 #include "kptooldialog.h"
 
@@ -36,14 +36,14 @@ namespace KIPIAdvancedSlideshowPlugin
 
 class SharedContainer;
 
-class SlideShowConfig : public KPToolDialog
+class SlideShowDlg : public KPToolDialog
 {
     Q_OBJECT
 
 public:
 
-    SlideShowConfig(QWidget* const parent, SharedContainer* const sharedData);
-    ~SlideShowConfig();
+    SlideShowDlg(QWidget* const parent, SharedContainer* const sharedData);
+    ~SlideShowDlg();
 
 Q_SIGNALS:
 
@@ -68,4 +68,4 @@ private:
 
 } // namespace KIPIAdvancedSlideshowPlugin
 
-#endif //SLIDESHOWCONFIG_H
+#endif // SLIDESHOW_DLG_H
