@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef SOUNDTRACKDIALOG_H
-#define SOUNDTRACKDIALOG_H
+#ifndef SOUNDTRACK_PAGE_H
+#define SOUNDTRACK_PAGE_H
 
 // Qt includes
 
@@ -33,7 +33,7 @@
 
 // Local includes
 
-#include "ui_soundtrackdialog.h"
+#include "ui_soundtrackpage.h"
 #include "playbackwidget.h"
 #include "listsounditems.h"
 
@@ -58,14 +58,14 @@ private :
 
 // ----------------------------------------------------------------------
 
-class SoundtrackDialog : public QWidget, public Ui::SoundtrackDialog
+class SoundtrackPage : public QWidget, public Ui::SoundtrackPage
 {
     Q_OBJECT
 
 public:
 
-    SoundtrackDialog(QWidget* const parent, SharedContainer* const sharedData);
-    ~SoundtrackDialog();
+    SoundtrackPage(QWidget* const parent, SharedContainer* const sharedData);
+    ~SoundtrackPage();
 
     void readSettings();
     void saveSettings();
@@ -100,4 +100,4 @@ private:
 
 } // namespace KIPIAdvancedSlideshowPlugin
 
-#endif // SOUNDTRACKDIALOG_H
+#endif // SOUNDTRACK_PAGE_H

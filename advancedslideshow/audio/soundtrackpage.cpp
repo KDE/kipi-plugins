@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "soundtrackdialog.h"
+#include "soundtrackpage.h"
 
 // Qt includes
 
@@ -69,8 +69,7 @@ SoundtrackPreview::~SoundtrackPreview()
 
 // ------------------------------------------------------------------------------------
 
-
-class SoundtrackDialog::Private
+class SoundtrackPage::Private
 {
 public:
 
@@ -91,7 +90,7 @@ public:
     QMutex*                 timeMutex;
 };
 
-SoundtrackDialog::SoundtrackDialog(QWidget* const parent, SharedContainer* const sharedData)
+SoundtrackPage::SoundtrackPage(QWidget* const parent, SharedContainer* const sharedData)
     : QWidget(parent),
       d(new Private)
 {
@@ -172,7 +171,7 @@ SoundtrackDialog::SoundtrackDialog(QWidget* const parent, SharedContainer* const
              this, SLOT(slotImageTotalTimeChanged(QTime)));
 }
 
-SoundtrackDialog::~SoundtrackDialog()
+SoundtrackPage::~SoundtrackPage()
 {
     delete d->sharedData;
     delete d->tracksTime;
@@ -181,7 +180,7 @@ SoundtrackDialog::~SoundtrackDialog()
     delete d;
 }
 
-void SoundtrackDialog::readSettings()
+void SoundtrackPage::readSettings()
 {
     m_rememberSoundtrack->setChecked(d->sharedData->soundtrackRememberPlaylist);
     m_loopCheckBox->setChecked(d->sharedData->soundtrackLoop);
@@ -197,14 +196,14 @@ void SoundtrackDialog::readSettings()
     updateTracksNumber();
 }
 
-void SoundtrackDialog::saveSettings()
+void SoundtrackPage::saveSettings()
 {
     d->sharedData->soundtrackRememberPlaylist = m_rememberSoundtrack->isChecked();
     d->sharedData->soundtrackLoop             = m_loopCheckBox->isChecked();
     d->sharedData->soundtrackUrls             = d->urlList;
 }
 
-void SoundtrackDialog::addItems(const QList<QUrl>& fileList)
+void SoundtrackPage::addItems(const QList<QUrl>& fileList)
 {
     if (fileList.isEmpty())
         return;
@@ -235,7 +234,7 @@ void SoundtrackDialog::addItems(const QList<QUrl>& fileList)
     m_previewButton->setEnabled(true);
 }
 
-void SoundtrackDialog::updateTracksNumber()
+void SoundtrackPage::updateTracksNumber()
 {
     QTime displayTime(0, 0, 0);
     int number = m_SoundFilesListBox->count();
@@ -270,7 +269,7 @@ void SoundtrackDialog::updateTracksNumber()
     compareTimes();
 }
 
-void SoundtrackDialog::updateFileList()
+void SoundtrackPage::updateFileList()
 {
     QList<QUrl> files = m_SoundFilesListBox->fileUrls();
     d->urlList         = files;
@@ -283,7 +282,7 @@ void SoundtrackDialog::updateFileList()
     d->sharedData->soundtrackPlayListNeedsUpdate = true;
 }
 
-void SoundtrackDialog::compareTimes()
+void SoundtrackPage::compareTimes()
 {
     QFont statusBarFont = m_statusBarLabel->font();
 
@@ -325,7 +324,7 @@ void SoundtrackDialog::compareTimes()
     m_statusBarLabel->setFont(statusBarFont);
 }
 
-void SoundtrackDialog::slotAddNewTime(const QUrl& url, const QTime& trackTime)
+void SoundtrackPage::slotAddNewTime(const QUrl& url, const QTime& trackTime)
 {
     d->timeMutex->lock();
     d->tracksTime->insert(url, trackTime);
@@ -333,7 +332,7 @@ void SoundtrackDialog::slotAddNewTime(const QUrl& url, const QTime& trackTime)
     d->timeMutex->unlock();
 }
 
-void SoundtrackDialog::slotSoundFilesSelected( int row )
+void SoundtrackPage::slotSoundFilesSelected( int row )
 {
     QListWidgetItem* const item = m_SoundFilesListBox->item(row);
 
@@ -343,7 +342,7 @@ void SoundtrackDialog::slotSoundFilesSelected( int row )
     }
 }
 
-void SoundtrackDialog::slotAddDropItems(const QList<QUrl>& filesUrl)
+void SoundtrackPage::slotAddDropItems(const QList<QUrl>& filesUrl)
 {
     if (!filesUrl.isEmpty())
     {
@@ -352,7 +351,7 @@ void SoundtrackDialog::slotAddDropItems(const QList<QUrl>& filesUrl)
     }
 }
 
-void SoundtrackDialog::slotSoundFilesButtonAdd()
+void SoundtrackPage::slotSoundFilesButtonAdd()
 {
     QPointer<QFileDialog> dlg = new QFileDialog(this,
                                                 i18n("Select sound files"),
@@ -375,7 +374,7 @@ void SoundtrackDialog::slotSoundFilesButtonAdd()
     delete dlg;
 }
 
-void SoundtrackDialog::slotSoundFilesButtonDelete()
+void SoundtrackPage::slotSoundFilesButtonDelete()
 {
     int Index = m_SoundFilesListBox->currentRow();
 
@@ -398,7 +397,7 @@ void SoundtrackDialog::slotSoundFilesButtonDelete()
     updateFileList();
 }
 
-void SoundtrackDialog::slotSoundFilesButtonUp()
+void SoundtrackPage::slotSoundFilesButtonUp()
 {
     int Cpt = 0;
 
@@ -434,7 +433,7 @@ void SoundtrackDialog::slotSoundFilesButtonUp()
     updateFileList();
 }
 
-void SoundtrackDialog::slotSoundFilesButtonDown()
+void SoundtrackPage::slotSoundFilesButtonDown()
 {
     int Cpt = 0;
 
@@ -470,7 +469,7 @@ void SoundtrackDialog::slotSoundFilesButtonDown()
     updateFileList();
 }
 
-void SoundtrackDialog::slotSoundFilesButtonLoad()
+void SoundtrackPage::slotSoundFilesButtonLoad()
 {
     QPointer<QFileDialog> dlg = new QFileDialog(this, i18n("Load playlist"),
                                                 QString(), i18n("Playlist (*.m3u)"));
@@ -525,7 +524,7 @@ void SoundtrackDialog::slotSoundFilesButtonLoad()
     delete dlg;
 }
 
-void SoundtrackDialog::slotSoundFilesButtonSave()
+void SoundtrackPage::slotSoundFilesButtonSave()
 {
     QPointer<QFileDialog> dlg = new QFileDialog(this, i18n("Save playlist"),
                                                 QString(), i18n("Playlist (*.m3u)"));
@@ -569,13 +568,13 @@ void SoundtrackDialog::slotSoundFilesButtonSave()
     delete dlg;
 }
 
-void SoundtrackDialog::slotSoundFilesButtonReset()
+void SoundtrackPage::slotSoundFilesButtonReset()
 {
     m_SoundFilesListBox->clear();
     updateFileList();
 }
 
-void SoundtrackDialog::slotPreviewButtonClicked()
+void SoundtrackPage::slotPreviewButtonClicked()
 {
     QList<QUrl> urlList;
 
@@ -609,7 +608,7 @@ void SoundtrackDialog::slotPreviewButtonClicked()
     return;
 }
 
-void SoundtrackDialog::slotImageTotalTimeChanged( const QTime& imageTotalTime )
+void SoundtrackPage::slotImageTotalTimeChanged( const QTime& imageTotalTime )
 {
     d->imageTime = imageTotalTime;
     m_slideTimeLabel->setText(imageTotalTime.toString());

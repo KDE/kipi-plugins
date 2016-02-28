@@ -50,12 +50,12 @@ endif()
 if(Phonon4Qt5_FOUND)
     set(kipiplugin_advancedslideshow_PART_SRCS ${kipiplugin_advancedslideshow_PART_SRCS}
                                                audio/listsounditems.cpp
-                                               audio/soundtrackdialog.cpp
+                                               audio/soundtrackpage.cpp
                                                audio/playbackwidget.cpp
     )
 
     ki18n_wrap_ui(kipiplugin_advancedslideshow_PART_SRCS
-                  audio/soundtrackdialog.ui
+                  audio/soundtrackpage.ui
                   audio/playbackwidget.ui
     )
 endif()

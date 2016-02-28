@@ -41,7 +41,7 @@ class CaptionPage;
 class AdvancedPage;
 
 #ifdef HAVE_AUDIO
-class SoundtrackDialog;
+class SoundtrackPage;
 #endif
 
 class SharedContainer
@@ -67,7 +67,7 @@ public:
     MainPage*          mainPage;
     CaptionPage*       captionPage;
 #ifdef HAVE_AUDIO
-    SoundtrackDialog*    soundtrackPage;
+    SoundtrackPage*    soundtrackPage;
 #endif
     AdvancedPage*      advancedPage;
 
