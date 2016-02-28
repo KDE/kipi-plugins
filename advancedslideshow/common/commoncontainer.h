@@ -36,7 +36,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class MainDialog;
+class MainPage;
 class CaptionPage;
 class AdvancedPage;
 
@@ -64,7 +64,7 @@ public:
     bool                 ImagesHasComments;
     QList<QUrl>          urlList;
 
-    MainDialog*          mainPage;
+    MainPage*          mainPage;
     CaptionPage*       captionPage;
 #ifdef HAVE_AUDIO
     SoundtrackDialog*    soundtrackPage;

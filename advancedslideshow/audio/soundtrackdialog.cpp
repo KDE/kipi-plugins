@@ -39,7 +39,7 @@
 // Local includes
 
 #include "playbackwidget.h"
-#include "maindialog.h"
+#include "mainpage.h"
 #include "commoncontainer.h"
 
 namespace KIPIAdvancedSlideshowPlugin

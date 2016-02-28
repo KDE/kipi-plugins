@@ -47,7 +47,7 @@
 #include "kipiplugins_debug.h"
 #include "kpaboutdata.h"
 #include "commoncontainer.h"
-#include "maindialog.h"
+#include "mainpage.h"
 #include "captionpage.h"
 #include "soundtrackdialog.h"
 #include "advancedpage.h"
@@ -91,7 +91,7 @@ SlideShowConfig::SlideShowConfig(QWidget* const parent, SharedContainer* const s
 
     d->tab = new QTabWidget(this);
 
-    d->sharedData->mainPage  = new MainDialog(this, d->sharedData);
+    d->sharedData->mainPage  = new MainPage(this, d->sharedData);
     d->tab->addTab(d->sharedData->mainPage,
                    QIcon::fromTheme(QString::fromLatin1("view-presentation")),
                    i18n("Main Settings"));

@@ -25,7 +25,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/dialogs
 
 set(kipiplugin_advancedslideshow_PART_SRCS dialogs/captionpage.cpp
                                            dialogs/advancedpage.cpp
-                                           dialogs/maindialog.cpp
+                                           dialogs/mainpage.cpp
                                            dialogs/slideshowconfig.cpp
 
                                            widgets/slideplaybackwidget.cpp
@@ -61,7 +61,7 @@ if(Phonon4Qt5_FOUND)
 endif()
 
 ki18n_wrap_ui(kipiplugin_advancedslideshow_PART_SRCS
-              dialogs/maindialog.ui
+              dialogs/mainpage.ui
               dialogs/captionpage.ui
               dialogs/advancedpage.ui
               widgets/slideplaybackwidget.ui
