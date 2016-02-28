@@ -20,26 +20,26 @@
  *
  * ============================================================ */
 
-#ifndef ADVANCEDDIALOG_H
-#define ADVANCEDDIALOG_H
+#ifndef ADVANCED_PAGE_H
+#define ADVANCED_PAGE_H
 
 // Local includes
 
-#include "ui_advanceddialog.h"
+#include "ui_advancedpage.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {
 
 class SharedContainer;
 
-class AdvancedDialog : public QWidget, Ui::AdvancedDialog
+class AdvancedPage : public QWidget, Ui::AdvancedPage
 {
     Q_OBJECT
 
 public:
 
-    AdvancedDialog(QWidget* const parent, SharedContainer* const sharedData);
-    ~AdvancedDialog();
+    AdvancedPage(QWidget* const parent, SharedContainer* const sharedData);
+    ~AdvancedPage();
 
     void readSettings();
     void saveSettings();
@@ -60,4 +60,4 @@ private:
 
 } // namespace KIPIAdvancedSlideshowPlugin
 
-#endif //ADVANCEDDIALOG_H
+#endif // ADVANCED_PAGE_H

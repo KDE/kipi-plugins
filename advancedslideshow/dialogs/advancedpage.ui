@@ -1,6 +1,6 @@
 <ui version="4.0" >
- <class>AdvancedDialog</class>
- <widget class="QWidget" name="AdvancedDialog" >
+ <class>AdvancedPage</class>
+ <widget class="QWidget" name="AdvancedPage" >
   <property name="geometry" >
    <rect>
     <x>0</x>

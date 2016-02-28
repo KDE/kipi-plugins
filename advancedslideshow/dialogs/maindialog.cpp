@@ -50,7 +50,7 @@
 
 #include "kipiplugins_debug.h"
 #include "commoncontainer.h"
-#include "advanceddialog.h"
+#include "advancedpage.h"
 #include "captiondialog.h"
 #include "kpimageslist.h"
 #include "slideshow.h"

@@ -50,7 +50,7 @@
 #include "maindialog.h"
 #include "captiondialog.h"
 #include "soundtrackdialog.h"
-#include "advanceddialog.h"
+#include "advancedpage.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {
@@ -108,7 +108,7 @@ SlideShowConfig::SlideShowConfig(QWidget* const parent, SharedContainer* const s
                    i18n("Soundtrack"));
 #endif
 
-    d->sharedData->advancedPage  = new AdvancedDialog(this, d->sharedData);
+    d->sharedData->advancedPage  = new AdvancedPage(this, d->sharedData);
     d->tab->addTab(d->sharedData->advancedPage,
                    QIcon::fromTheme(QString::fromLatin1("configure")),
                    i18n("Advanced"));

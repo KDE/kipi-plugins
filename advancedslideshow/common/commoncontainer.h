@@ -38,7 +38,7 @@ namespace KIPIAdvancedSlideshowPlugin
 
 class MainDialog;
 class CaptionDialog;
-class AdvancedDialog;
+class AdvancedPage;
 
 #ifdef HAVE_AUDIO
 class SoundtrackDialog;
@@ -69,7 +69,7 @@ public:
 #ifdef HAVE_AUDIO
     SoundtrackDialog*    soundtrackPage;
 #endif
-    AdvancedDialog*      advancedPage;
+    AdvancedPage*      advancedPage;
 
     // Config file data
 
