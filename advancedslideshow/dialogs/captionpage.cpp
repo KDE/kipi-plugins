@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "captiondialog.h"
+#include "captionpage.h"
 
 // Qt includes
 
@@ -33,7 +33,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-CaptionDialog::CaptionDialog( QWidget* const parent, SharedContainer* const sharedData)
+CaptionPage::CaptionPage( QWidget* const parent, SharedContainer* const sharedData)
     : QWidget(parent)
 {
     setupUi(this);
@@ -41,11 +41,11 @@ CaptionDialog::CaptionDialog( QWidget* const parent, SharedContainer* const shar
     m_commentsFontChooser->setSampleText(i18n("This is a comment sample..."));
 }
 
-CaptionDialog::~CaptionDialog()
+CaptionPage::~CaptionPage()
 {
 }
 
-void CaptionDialog::readSettings()
+void CaptionPage::readSettings()
 {
     connect(m_commentsFontColor, SIGNAL(signalColorSelected(QColor)), 
             this, SLOT(slotCommentsFontColorChanged()));
@@ -62,7 +62,7 @@ void CaptionDialog::readSettings()
     m_commentsBgTransparency->setValue(m_sharedData->bgOpacity);
 }
 
-void CaptionDialog::saveSettings()
+void CaptionPage::saveSettings()
 {
     delete m_sharedData->captionFont;
     m_sharedData->captionFont         = new QFont(m_commentsFontChooser->font());
@@ -78,12 +78,12 @@ void CaptionDialog::saveSettings()
 
 // --- Slots
 
-void CaptionDialog::slotCommentsBgColorChanged()
+void CaptionPage::slotCommentsBgColorChanged()
 {
     m_commentsFontChooser->setBackgroundColor(m_commentsBgColor->color());
 }
 
-void CaptionDialog::slotCommentsFontColorChanged()
+void CaptionPage::slotCommentsFontColorChanged()
 {
     m_commentsFontChooser->setColor(m_commentsFontColor->color());
 }

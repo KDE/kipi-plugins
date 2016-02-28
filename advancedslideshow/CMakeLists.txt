@@ -23,7 +23,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/dialogs
                     ${PHONON_INCLUDE_DIR}
 )
 
-set(kipiplugin_advancedslideshow_PART_SRCS dialogs/captiondialog.cpp
+set(kipiplugin_advancedslideshow_PART_SRCS dialogs/captionpage.cpp
                                            dialogs/advancedpage.cpp
                                            dialogs/maindialog.cpp
                                            dialogs/slideshowconfig.cpp
@@ -62,7 +62,7 @@ endif()
 
 ki18n_wrap_ui(kipiplugin_advancedslideshow_PART_SRCS
               dialogs/maindialog.ui
-              dialogs/captiondialog.ui
+              dialogs/captionpage.ui
               dialogs/advancedpage.ui
               widgets/slideplaybackwidget.ui
 )

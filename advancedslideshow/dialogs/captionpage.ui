@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CaptionDialog</class>
- <widget class="QWidget" name="CaptionDialog">
+ <class>CaptionPage</class>
+ <widget class="QWidget" name="CaptionPage">
   <property name="geometry">
    <rect>
     <x>0</x>

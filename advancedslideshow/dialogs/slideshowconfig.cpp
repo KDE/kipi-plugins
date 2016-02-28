@@ -48,7 +48,7 @@
 #include "kpaboutdata.h"
 #include "commoncontainer.h"
 #include "maindialog.h"
-#include "captiondialog.h"
+#include "captionpage.h"
 #include "soundtrackdialog.h"
 #include "advancedpage.h"
 
@@ -96,7 +96,7 @@ SlideShowConfig::SlideShowConfig(QWidget* const parent, SharedContainer* const s
                    QIcon::fromTheme(QString::fromLatin1("view-presentation")),
                    i18n("Main Settings"));
 
-    d->sharedData->captionPage  = new CaptionDialog(this, d->sharedData);
+    d->sharedData->captionPage  = new CaptionPage(this, d->sharedData);
     d->tab->addTab(d->sharedData->captionPage,
                    QIcon::fromTheme(QString::fromLatin1("draw-freehand")),
                    i18nc("captions for the slideshow", "Caption"));

@@ -20,26 +20,26 @@
  *
  * ============================================================ */
 
-#ifndef CAPTIONDIALOG_H
-#define CAPTIONDIALOG_H
+#ifndef CAPTION_PAGE_H
+#define CAPTION_PAGE_H
 
 // Local includes
 
-#include "ui_captiondialog.h"
+#include "ui_captionpage.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {
 
 class SharedContainer;
 
-class CaptionDialog : public QWidget, Ui::CaptionDialog
+class CaptionPage : public QWidget, Ui::CaptionPage
 {
     Q_OBJECT
 
 public:
 
-    CaptionDialog(QWidget* const parent, SharedContainer* const sharedData);
-    ~CaptionDialog();
+    CaptionPage(QWidget* const parent, SharedContainer* const sharedData);
+    ~CaptionPage();
 
     void readSettings();
     void saveSettings();
@@ -56,4 +56,4 @@ private:
 
 } // namespace KIPIAdvancedSlideshowPlugin
 
-#endif //CAPTIONDIALOG_H
+#endif // CAPTION_PAGE_H
