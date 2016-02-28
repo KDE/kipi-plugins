@@ -40,7 +40,7 @@ SharedContainer::SharedContainer()
     captionPage                   = 0;
     advancedPage                  = 0;
 
-#ifdef HAVE_PHONON
+#ifdef HAVE_AUDIO
     soundtrackPage                = 0;
 #endif
 

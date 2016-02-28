@@ -281,7 +281,7 @@ SlideShowKB::SlideShowKB(const QList<QPair<QString, int> >& fileList,
 
     // -- playback widget -------------------------------
 
-#ifdef HAVE_PHONON
+#ifdef HAVE_AUDIO
 
     d->playbackWidget = new PlaybackWidget(this, d->sharedData->soundtrackUrls, d->sharedData);
     d->playbackWidget->hide();
@@ -638,7 +638,7 @@ void SlideShowKB::keyPressEvent(QKeyEvent* event)
     if (!event)
         return;
 
-#ifdef HAVE_PHONON
+#ifdef HAVE_AUDIO
     d->playbackWidget->keyPressEvent(event);
 #endif
 
@@ -661,7 +661,7 @@ void SlideShowKB::mouseMoveEvent(QMouseEvent* e)
     d->mouseMoveTimer->start(1000);
     d->mouseMoveTimer->setSingleShot(true);
 
-#ifdef HAVE_PHONON
+#ifdef HAVE_AUDIO
     if (!d->playbackWidget->canHide())
         return;
 

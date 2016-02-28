@@ -97,7 +97,7 @@ public:
         dir                 = 0;
         slidePlaybackWidget = 0;
 
-#ifdef HAVE_PHONON
+#ifdef HAVE_AUDIO
         playbackWidget      = 0;
 #endif
 
@@ -141,7 +141,7 @@ public:
 
     SlidePlaybackWidget*              slidePlaybackWidget;
 
-#ifdef HAVE_PHONON
+#ifdef HAVE_AUDIO
     PlaybackWidget*                   playbackWidget;
 #endif
 
@@ -196,7 +196,7 @@ SlideShowGL::SlideShowGL(const QList<QPair<QString, int> >& fileList,
     connect(d->slidePlaybackWidget, SIGNAL(signalClose()),
             this, SLOT(slotClose()));
 
-#ifdef HAVE_PHONON
+#ifdef HAVE_AUDIO
 
     d->playbackWidget = new PlaybackWidget(this, d->sharedData->soundtrackUrls, d->sharedData);
     d->playbackWidget->hide();
@@ -360,7 +360,7 @@ void SlideShowGL::keyPressEvent(QKeyEvent* event)
         return;
 
     d->slidePlaybackWidget->keyPressEvent(event);
-#ifdef HAVE_PHONON
+#ifdef HAVE_AUDIO
     d->playbackWidget->keyPressEvent(event);
 #endif
 }
@@ -391,7 +391,7 @@ void SlideShowGL::mouseMoveEvent(QMouseEvent* e)
     d->mouseMoveTimer->start(1000);
 
     if (!d->slidePlaybackWidget->canHide()
-#ifdef HAVE_PHONON
+#ifdef HAVE_AUDIO
         || !d->playbackWidget->canHide()
 #endif
        )
@@ -403,7 +403,7 @@ void SlideShowGL::mouseMoveEvent(QMouseEvent* e)
             (pos.y() < (d->deskY + d->deskHeight - 20 - 1)))
     {
         if (d->slidePlaybackWidget->isHidden()
-#ifdef HAVE_PHONON
+#ifdef HAVE_AUDIO
             || d->playbackWidget->isHidden()
 #endif
            )
@@ -413,7 +413,7 @@ void SlideShowGL::mouseMoveEvent(QMouseEvent* e)
         else
         {
             d->slidePlaybackWidget->hide();
-#ifdef HAVE_PHONON
+#ifdef HAVE_AUDIO
             d->playbackWidget->hide();
 #endif
         }
@@ -422,7 +422,7 @@ void SlideShowGL::mouseMoveEvent(QMouseEvent* e)
     }
 
     d->slidePlaybackWidget->show();
-#ifdef HAVE_PHONON
+#ifdef HAVE_AUDIO
     d->playbackWidget->show();
 #endif
 }

@@ -40,7 +40,7 @@ class MainDialog;
 class CaptionDialog;
 class AdvancedDialog;
 
-#ifdef HAVE_PHONON
+#ifdef HAVE_AUDIO
 class SoundtrackDialog;
 #endif
 
@@ -66,7 +66,7 @@ public:
 
     MainDialog*          mainPage;
     CaptionDialog*       captionPage;
-#ifdef HAVE_PHONON
+#ifdef HAVE_AUDIO
     SoundtrackDialog*    soundtrackPage;
 #endif
     AdvancedDialog*      advancedPage;

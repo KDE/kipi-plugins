@@ -101,7 +101,7 @@ SlideShowConfig::SlideShowConfig(QWidget* const parent, SharedContainer* const s
                    QIcon::fromTheme(QString::fromLatin1("draw-freehand")),
                    i18nc("captions for the slideshow", "Caption"));
 
-#ifdef HAVE_PHONON
+#ifdef HAVE_AUDIO
     d->sharedData->soundtrackPage  = new SoundtrackDialog(this, d->sharedData);
     d->tab->addTab(d->sharedData->soundtrackPage,
                    QIcon::fromTheme(QString::fromLatin1("speaker")),
@@ -188,7 +188,7 @@ void SlideShowConfig::readSettings()
 
     d->sharedData->commentsLinesLength = grp.readEntry("Comments Lines Length", 72);
 
-#ifdef HAVE_PHONON
+#ifdef HAVE_AUDIO
     // Soundtrack tab
     d->sharedData->soundtrackLoop             = grp.readEntry("Soundtrack Loop", false);
     d->sharedData->soundtrackPath             = QUrl(grp.readEntry("Soundtrack Path", "" ));
@@ -228,7 +228,7 @@ void SlideShowConfig::readSettings()
     d->sharedData->captionPage->readSettings();
     d->sharedData->advancedPage->readSettings();
 
-#ifdef HAVE_PHONON
+#ifdef HAVE_AUDIO
     d->sharedData->soundtrackPage->readSettings();
 #endif
 }
@@ -241,7 +241,7 @@ void SlideShowConfig::saveSettings()
     d->sharedData->captionPage->saveSettings();
     d->sharedData->advancedPage->saveSettings();
 
-#ifdef HAVE_PHONON
+#ifdef HAVE_AUDIO
     d->sharedData->soundtrackPage->saveSettings();
 #endif
 
@@ -275,7 +275,7 @@ void SlideShowConfig::saveSettings()
     grp.writeEntry("Effect Name (OpenGL)",     d->sharedData->effectNameGL);
     grp.writeEntry("Effect Name",              d->sharedData->effectName);
 
-#ifdef HAVE_PHONON
+#ifdef HAVE_AUDIO
     // Soundtrack tab
     grp.writeEntry("Soundtrack Loop",              d->sharedData->soundtrackLoop);
     grp.writeEntry("Soundtrack Path",              d->sharedData->soundtrackPath.toLocalFile());

@@ -7,7 +7,7 @@
 subdirs(icons)
 
 if(Phonon4Qt5_FOUND)
-    add_definitions(-DHAVE_PHONON)
+    add_definitions(-DHAVE_AUDIO)
     include_directories(${CMAKE_CURRENT_SOURCE_DIR}/audio)
 endif()
 
@@ -15,8 +15,6 @@ if(OPENGLLIBS_FOUND)
     add_definitions(-DHAVE_OPENGL)
     include_directories(${CMAKE_CURRENT_SOURCE_DIR}/opengl)
 endif()
-
-add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_advancedslideshow\")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/dialogs
                     ${CMAKE_CURRENT_SOURCE_DIR}/widgets
@@ -97,6 +95,8 @@ if(Phonon4Qt5_FOUND)
                           ${PHONON_LIBRARIES}
     )
 endif()
+
+add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_advancedslideshow\")
 
 configure_file(plugin/kipiplugin_advancedslideshow.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_advancedslideshow.desktop)
 

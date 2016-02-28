@@ -79,16 +79,15 @@ public:
         sharedData          = 0;
         cacheSize           = 0;
         imageLoader         = 0;
-        
-#ifdef HAVE_PHONON
+
+#ifdef HAVE_AUDIO
         playbackWidget      = 0;
 #endif
-        
+
         timer               = 0;
         fileIndex           = 0;
         effect              = 0;
         effectRunning       = false;
-        
         x                   = 0;
         y                   = 0;
         w                   = 0;
@@ -115,7 +114,6 @@ public:
 
         slidePlaybackWidget = 0;
         mouseMoveTimer      = 0;
-        
         deskX               = 0;
         deskY               = 0;
         deskWidth           = 0;
@@ -133,7 +131,7 @@ public:
     SlideShowLoader*            imageLoader;
     QPixmap                     currImage;
 
-#ifdef HAVE_PHONON
+#ifdef HAVE_AUDIO
     PlaybackWidget*             playbackWidget;
 #endif
 
@@ -182,7 +180,7 @@ public:
     int                         deskWidth;
     int                         deskHeight;
 };
-    
+
 SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, SharedContainer* const sharedData)
     : QWidget(0, Qt::WindowStaysOnTopHint | Qt::Popup | Qt::X11BypassWindowManagerHint),
     d(new Private)
@@ -208,7 +206,7 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
         d->slidePlaybackWidget->setEnabledPrev( false );
     }
 
-#ifdef HAVE_PHONON
+#ifdef HAVE_AUDIO
 
     // -- playback widget -------------------------------
 
@@ -315,19 +313,19 @@ void SlideShow::readSettings()
 
 void SlideShow::registerEffects()
 {
-    d->Effects.insert( QString::fromLatin1("None"), &SlideShow::effectNone );
-    d->Effects.insert( QString::fromLatin1("Chess Board"), &SlideShow::effectChessboard );
-    d->Effects.insert( QString::fromLatin1("Melt Down"), &SlideShow::effectMeltdown );
-    d->Effects.insert( QString::fromLatin1("Sweep"), &SlideShow::effectSweep );
-    d->Effects.insert( QString::fromLatin1("Mosaic"), &SlideShow::effectMosaic );
-    d->Effects.insert( QString::fromLatin1("Cubism"), &SlideShow::effectCubism );
-    d->Effects.insert( QString::fromLatin1("Growing"), &SlideShow::effectGrowing );
+    d->Effects.insert( QString::fromLatin1("None"),             &SlideShow::effectNone );
+    d->Effects.insert( QString::fromLatin1("Chess Board"),      &SlideShow::effectChessboard );
+    d->Effects.insert( QString::fromLatin1("Melt Down"),        &SlideShow::effectMeltdown );
+    d->Effects.insert( QString::fromLatin1("Sweep"),            &SlideShow::effectSweep );
+    d->Effects.insert( QString::fromLatin1("Mosaic"),           &SlideShow::effectMosaic );
+    d->Effects.insert( QString::fromLatin1("Cubism"),           &SlideShow::effectCubism );
+    d->Effects.insert( QString::fromLatin1("Growing"),          &SlideShow::effectGrowing );
     d->Effects.insert( QString::fromLatin1("Horizontal Lines"), &SlideShow::effectHorizLines );
-    d->Effects.insert( QString::fromLatin1("Vertical Lines"), &SlideShow::effectVertLines );
-    d->Effects.insert( QString::fromLatin1("Circle Out"), &SlideShow::effectCircleOut );
-    d->Effects.insert( QString::fromLatin1("MultiCircle Out"), &SlideShow::effectMultiCircleOut );
-    d->Effects.insert( QString::fromLatin1("Spiral In"), &SlideShow::effectSpiralIn );
-    d->Effects.insert( QString::fromLatin1("Blobs"), &SlideShow::effectBlobs );
+    d->Effects.insert( QString::fromLatin1("Vertical Lines"),   &SlideShow::effectVertLines );
+    d->Effects.insert( QString::fromLatin1("Circle Out"),       &SlideShow::effectCircleOut );
+    d->Effects.insert( QString::fromLatin1("MultiCircle Out"),  &SlideShow::effectMultiCircleOut );
+    d->Effects.insert( QString::fromLatin1("Spiral In"),        &SlideShow::effectSpiralIn );
+    d->Effects.insert( QString::fromLatin1("Blobs"),            &SlideShow::effectBlobs );
 }
 
 QStringList SlideShow::effectNames()
@@ -679,7 +677,7 @@ void SlideShow::keyPressEvent(QKeyEvent* event)
     if (!event)
         return;
 
-#ifdef HAVE_PHONON
+#ifdef HAVE_AUDIO
     d->playbackWidget->keyPressEvent(event);
 #endif
 
@@ -712,7 +710,7 @@ void SlideShow::mouseMoveEvent( QMouseEvent* e )
     d->mouseMoveTimer->start( 1000 );
 
     if (!d->slidePlaybackWidget->canHide()
-#ifdef HAVE_PHONON
+#ifdef HAVE_AUDIO
         || !d->playbackWidget->canHide()
 #endif
        )
@@ -724,7 +722,7 @@ void SlideShow::mouseMoveEvent( QMouseEvent* e )
         ( pos.y() < ( d->deskY + d->deskHeight - 20 - 1 ) ) )
     {
         if (!d->slidePlaybackWidget->canHide()
-#ifdef HAVE_PHONON
+#ifdef HAVE_AUDIO
             || !d->playbackWidget->canHide()
 #endif
            )
@@ -734,7 +732,7 @@ void SlideShow::mouseMoveEvent( QMouseEvent* e )
         else
         {
             d->slidePlaybackWidget->hide();
-#ifdef HAVE_PHONON
+#ifdef HAVE_AUDIO
             d->playbackWidget->hide();
 #endif
         }
@@ -765,7 +763,7 @@ void SlideShow::mouseMoveEvent( QMouseEvent* e )
 //    }
 
     d->slidePlaybackWidget->show();
-#ifdef HAVE_PHONON
+#ifdef HAVE_AUDIO
     d->playbackWidget->show();
 #endif
 }
