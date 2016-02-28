@@ -174,7 +174,7 @@ if(KF5Kipi_FOUND)
 
     # decide if AdvancedSlideshow and ImageViewer can be built
     if(OPENGL_FOUND AND OPENGL_GLU_FOUND AND Qt5OpenGL_FOUND)
-        set(OPENGLLIBS_FOUND FALSE)
+        set(OPENGLLIBS_FOUND TRUE)
     elseif()
         set(OPENGLLIBS_FOUND FALSE)
     endif()

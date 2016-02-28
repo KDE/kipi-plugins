@@ -55,7 +55,7 @@
 #include "kpimageslist.h"
 #include "slideshow.h"
 
-#ifdef DHAVE_OPENGL
+#ifdef HAVE_OPENGL
 #   include "slideshowgl.h"
 #   include "slideshowkb.h"
 #endif
@@ -107,7 +107,10 @@ MainDialog::MainDialog(QWidget* const parent, SharedContainer* const sharedData)
     m_previewLabel->setMinimumWidth(ICONSIZE);
     m_previewLabel->setMinimumHeight(ICONSIZE);
 
-#ifndef DHAVE_OPENGL
+#ifdef HAVE_OPENGL
+    m_openglCheckBox->setEnabled(true);
+    m_openGlFullScale->setEnabled(true);
+#else
     m_openglCheckBox->setEnabled(false);
     m_openGlFullScale->setEnabled(false);
 #endif
@@ -120,7 +123,7 @@ MainDialog::~MainDialog()
 
 void MainDialog::readSettings()
 {
-#ifndef DHAVE_OPENGL
+#ifdef HAVE_OPENGL
     m_openglCheckBox->setChecked(d->sharedData->opengl);
     m_openGlFullScale->setChecked(d->sharedData->openGlFullScale);
     m_openGlFullScale->setEnabled(d->sharedData->opengl);
@@ -164,7 +167,7 @@ void MainDialog::readSettings()
 
 void MainDialog::saveSettings()
 {
-#ifndef DHAVE_OPENGL
+#ifdef HAVE_OPENGL
     d->sharedData->opengl                = m_openglCheckBox->isChecked();
     d->sharedData->openGlFullScale       = m_openGlFullScale->isChecked();
 #endif
@@ -196,7 +199,7 @@ void MainDialog::saveSettings()
 
         d->sharedData->effectName = effect;
     }
-#ifdef DHAVE_OPENGL
+#ifdef HAVE_OPENGL
     else
     {
         QMap<QString, QString> effects;
@@ -242,7 +245,7 @@ void MainDialog::showNumberImages()
 
     int transitionDuration = 2000;
 
-#ifndef DHAVE_OPENGL
+#ifdef HAVE_OPENGL
     if ( m_openglCheckBox->isChecked() )
         transitionDuration += 500;
 #endif
@@ -293,7 +296,7 @@ void MainDialog::loadEffectNames()
 
 void MainDialog::loadEffectNamesGL()
 {
-#ifdef DHAVE_OPENGL
+#ifdef HAVE_OPENGL
     m_effectsComboBox->clear();
 
     QStringList effects;
@@ -419,7 +422,7 @@ void MainDialog::slotEffectChanged()
     m_printNameCheckBox->setEnabled(!isKB);
     m_printProgressCheckBox->setEnabled(!isKB);
     m_printCommentsCheckBox->setEnabled(!isKB);
-#ifndef DHAVE_OPENGL
+#ifdef HAVE_OPENGL
     m_openGlFullScale->setEnabled(!isKB && m_openglCheckBox->isChecked());
 #endif
     d->sharedData->captionPage->setEnabled((!isKB) && m_printCommentsCheckBox->isChecked());

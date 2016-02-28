@@ -66,7 +66,7 @@ extern "C"
 #include "commoncontainer.h"
 #include "kpimageinfo.h"
 
-#ifdef DHAVE_OPENGL
+#ifdef HAVE_OPENGL
 #   include "slideshowgl.h"
 #   include "slideshowkb.h"
 #endif
@@ -258,9 +258,9 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
         SlideShow* const slideShow = new SlideShow(fileList, commentsList, m_sharedData);
         slideShow->show();
     }
-#ifdef DHAVE_OPENGL
     else
     {
+#ifdef HAVE_OPENGL
         if (!QGLFormat::hasOpenGL())
         {
             QMessageBox::critical(QApplication::activeWindow(), QString(), 
@@ -279,10 +279,10 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
                 slideShow->show();
             }
         }
-    }
 #else
-    Q_UNUSED(wantKB);
+        Q_UNUSED(wantKB);
 #endif
+    }
 }
 
 }  // namespace KIPIAdvancedSlideshowPlugin

@@ -90,7 +90,7 @@ SlideShowConfig::SlideShowConfig(QWidget* const parent, SharedContainer* const s
     // --- Pages settings ---
 
     d->tab = new QTabWidget(this);
-    
+
     d->sharedData->mainPage  = new MainDialog(this, d->sharedData);
     d->tab->addTab(d->sharedData->mainPage,
                    QIcon::fromTheme(QString::fromLatin1("view-presentation")),
@@ -107,7 +107,7 @@ SlideShowConfig::SlideShowConfig(QWidget* const parent, SharedContainer* const s
                    QIcon::fromTheme(QString::fromLatin1("speaker")),
                    i18n("Soundtrack"));
 #endif
-    
+
     d->sharedData->advancedPage  = new AdvancedDialog(this, d->sharedData);
     d->tab->addTab(d->sharedData->advancedPage,
                    QIcon::fromTheme(QString::fromLatin1("configure")),

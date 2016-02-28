@@ -75,7 +75,7 @@ void LoadThread::run()
     QImage newImage;
 
     // check if it's a RAW file.
-    
+
     if (m_iface)
     {
         QPointer<RawProcessor> rawdec = m_iface->createRawProcessor();
@@ -125,7 +125,7 @@ SlideShowLoader::SlideShowLoader(FileList& pathList, uint cacheSize, int width, 
     m_imageLock      = new QMutex();
     m_threadLock     = new QMutex();
     m_sharedData     = sharedData;
-    
+
     QUrl filePath;
     int  orientation;
 

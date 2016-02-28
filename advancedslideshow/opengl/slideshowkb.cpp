@@ -44,6 +44,8 @@
 #include <QMouseEvent>
 #include <QDesktopWidget>
 #include <QApplication>
+#include <QScreen>
+#include <QWindow>
 
 // KDE includes
 
@@ -58,7 +60,6 @@
 #include "kbeffect.h"
 #include "playbackwidget.h"
 #include "kipiplugins_debug.h"
-#include "screenproperties.h"
 #include "slideshowkb_p.h"
 
 namespace KIPIAdvancedSlideshowPlugin
@@ -222,7 +223,7 @@ SlideShowKB::SlideShowKB(const QList<QPair<QString, int> >& fileList,
                          const QStringList& commentsList,
                          SharedContainer* const sharedData)
     : QGLWidget(),
-      d(new Private)       
+      d(new Private)
 {
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlags(Qt::X11BypassWindowManagerHint | Qt::WindowStaysOnTopHint | Qt::Popup);
@@ -245,15 +246,32 @@ SlideShowKB::SlideShowKB(const QList<QPair<QString, int> >& fileList,
     srand(QTime::currentTime().msec());
     readSettings();
 
-    d->screen = new ScreenProperties(this);
-    d->screen->enableVSync();
-
     unsigned frameRate;
 
     if (d->forceFrameRate == 0)
-        frameRate = d->screen->suggestFrameRate() * 2;
+    {
+        int rate = 25;
+
+        QWindow* const handle = windowHandle();
+
+        if (handle)
+        {
+            QScreen* const screen = handle->screen();
+
+            if (screen)
+            {
+                rate = (int)screen->refreshRate();
+            }
+        }
+
+        frameRate = rate * 2;
+    }
     else
+    {
         frameRate = d->forceFrameRate;
+    }
+
+    qCDebug(KIPIPLUGINS_LOG) << "Frame Rate : " << frameRate;
 
     d->image[0]                       = new Image(0);
     d->image[1]                       = new Image(0);
@@ -311,7 +329,6 @@ SlideShowKB::~SlideShowKB()
     }
 
     delete d->imageLoadThread;
-    delete d->screen;
     delete d->mouseMoveTimer;
     delete d->timer;
     delete d;

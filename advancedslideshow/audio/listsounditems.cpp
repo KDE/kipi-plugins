@@ -144,9 +144,9 @@ void SoundItem::slotMediaStateChanged(Phonon::State newstate, Phonon::State /*ol
     int hours      = (int)(total  / (long int)( 60 * 60 * 1000 ));
     int mins       = (int)((total / (long int)( 60 * 1000 )) - (long int)(hours * 60));
     int secs       = (int)((total / (long int)1000) - (long int)(hours * 60 * 60) - (long int)(mins * 60));
-    d->totalTime    = QTime(hours, mins, secs);
-    d->artist       = (d->mediaObject->metaData(Phonon::ArtistMetaData)).join(QString::fromLatin1(","));
-    d->title        = (d->mediaObject->metaData(Phonon::TitleMetaData)).join(QString::fromLatin1(","));
+    d->totalTime   = QTime(hours, mins, secs);
+    d->artist      = (d->mediaObject->metaData(Phonon::ArtistMetaData)).join(QString::fromLatin1(","));
+    d->title       = (d->mediaObject->metaData(Phonon::TitleMetaData)).join(QString::fromLatin1(","));
 
     if ( d->artist.isEmpty() && d->title.isEmpty() )
         setText(d->url.fileName());

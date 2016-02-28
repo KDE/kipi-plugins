@@ -62,7 +62,7 @@ public:
     int                  delayMsLineStep;
 
     bool                 ImagesHasComments;
-    QList<QUrl>           urlList;
+    QList<QUrl>          urlList;
 
     MainDialog*          mainPage;
     CaptionDialog*       captionPage;

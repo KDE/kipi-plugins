@@ -32,7 +32,6 @@ set(kipiplugin_advancedslideshow_PART_SRCS dialogs/captiondialog.cpp
                                            widgets/slideshow.cpp
 
                                            common/commoncontainer.cpp
-                                           common/screenproperties.cpp
                                            common/slideshowloader.cpp
                                            common/imageloadthread.cpp
                                            common/kpsvgpixmaprenderer.cpp

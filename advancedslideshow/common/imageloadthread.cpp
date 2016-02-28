@@ -43,7 +43,7 @@
 
 #include "kipiplugins_debug.h"
 
-#ifdef DHAVE_OPENGL
+#ifdef HAVE_OPENGL
 #   include "slideshowkb.h"
 #endif
 
@@ -168,13 +168,13 @@ bool ImageLoadThread::loadImage()
     QImage              image;
 
     // check if it's a RAW file.
-    
+
     PluginLoader* const pl = PluginLoader::instance();
 
     if (pl)
     {
         Interface* const iface = pl->interface();
-        
+
         if (iface)
         {
             QPointer<RawProcessor> rawdec = iface->createRawProcessor();
@@ -211,7 +211,7 @@ bool ImageLoadThread::loadImage()
 
     m_textureAspect = aspect;
 
-#ifdef DHAVE_OPENGL
+#ifdef HAVE_OPENGL
     // this is the critical moment, when we make the new texture and
     // aspect available to the consumer
     m_texture       = QGLWidget::convertToGLFormat(image);

@@ -81,7 +81,7 @@ PlaybackWidget::PlaybackWidget(QWidget* const parent, QList<QUrl>& urls, SharedC
 
     d->sharedData   = sharedData;
     d->urlList      = urls;
-    
+
     m_soundLabel->setPixmap(QIcon::fromTheme(QString::fromLatin1("speaker")).pixmap(64, 64));
 
     m_prevButton->setText(QString::fromLatin1(""));
@@ -154,7 +154,7 @@ PlaybackWidget::~PlaybackWidget()
     {
         d->mediaObject->stop();
     }
-    
+
     delete d;
 }
 

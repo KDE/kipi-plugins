@@ -52,7 +52,6 @@ public:
         imageLoadThread     = 0;
         mouseMoveTimer      = 0;
         timer               = 0;
-        screen              = 0;
         image[0]            = 0;
         image[1]            = 0;
         numKBEffectRepeated = 0;
@@ -75,7 +74,6 @@ public:
     ImageLoadThread*    imageLoadThread;
     QTimer*             mouseMoveTimer;
     QTimer*             timer;
-    ScreenProperties*   screen;
     bool                haveImages;
 
     Image*              image[2];
