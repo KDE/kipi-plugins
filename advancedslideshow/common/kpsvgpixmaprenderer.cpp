@@ -38,7 +38,7 @@ KPSvgPixmapRenderer::KPSvgPixmapRenderer(int width, int height, const QString& f
 {
     if (m_filename.isEmpty())
     {
-        m_filename = QString::fromLatin1(":/kipi-icon.svg");
+        m_filename = QString::fromLatin1(":/icons/kipi-icon.svg");
     }
 }
 
