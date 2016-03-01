@@ -48,7 +48,7 @@ class SoundtrackPreview : public QDialog
 
 public :
 
-    SoundtrackPreview(QWidget* const, QList<QUrl>&, SharedContainer* const);
+    SoundtrackPreview(QWidget* const, const QList<QUrl>&, SharedContainer* const);
     ~SoundtrackPreview();
 
 private :

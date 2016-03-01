@@ -185,11 +185,17 @@ bool ImageLoadThread::loadImage()
                 rawdec->loadRawPreview(QUrl::fromLocalFile(path), image);
             }
         }
-    } 
-    else
+    }
+
+    if (image.isNull())
     {
         // use the standard loader
         image = QImage(path);
+    }
+
+    if (image.isNull())
+    {
+        return false;
     }
 
     if (angle != 0)
@@ -197,11 +203,6 @@ bool ImageLoadThread::loadImage()
         QMatrix wm;
         wm.rotate(angle);
         image = image.transformed(wm);
-    }
-
-    if (image.isNull())
-    {
-        return false;
     }
 
     float aspect = (float)image.width() / (float)image.height();

@@ -29,10 +29,7 @@
 
 #include <QKeyEvent>
 #include <QUrl>
-
-// Phonon includes
-
-#include <phonon/globalconfig.h>
+#include <QMediaPlayer>
 
 // Local includes
 
@@ -49,7 +46,7 @@ class PlaybackWidget : public QWidget, public Ui::PlaybackWidget
 
 public:
 
-    PlaybackWidget(QWidget* const, QList<QUrl>&, SharedContainer* const sharedData);
+    PlaybackWidget(QWidget* const, const QList<QUrl>&, SharedContainer* const);
     ~PlaybackWidget();
 
     void enqueue(const QList<QUrl>&);
@@ -71,8 +68,9 @@ private Q_SLOTS:
     void slotNext();
     void slotTimeUpdaterTimeout();
     void slotError();
-    void slotMediaStateChanged(Phonon::State, Phonon::State);
-    void slotSongFinished();
+    void slotMediaStateChanged(QMediaPlayer::MediaStatus);
+    void slotPlayerStateChanged(QMediaPlayer::State);
+    void slotPlayerError(QMediaPlayer::Error);
 
 private:
 

@@ -6,7 +6,7 @@
 
 subdirs(icons)
 
-if(Phonon4Qt5_FOUND)
+if(Qt5Multimedia_FOUND)
     add_definitions(-DHAVE_AUDIO)
     include_directories(${CMAKE_CURRENT_SOURCE_DIR}/audio)
 endif()
@@ -20,7 +20,6 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/dialogs
                     ${CMAKE_CURRENT_SOURCE_DIR}/widgets
                     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
                     ${CMAKE_CURRENT_SOURCE_DIR}/common
-                    ${PHONON_INCLUDE_DIR}
 )
 
 set(kipiplugin_advancedslideshow_PART_SRCS dialogs/captionpage.cpp
@@ -47,7 +46,7 @@ if(OPENGLLIBS_FOUND)
     )
 endif()
 
-if(Phonon4Qt5_FOUND)
+if(Qt5Multimedia_FOUND)
     set(kipiplugin_advancedslideshow_PART_SRCS ${kipiplugin_advancedslideshow_PART_SRCS}
                                                audio/listsounditems.cpp
                                                audio/soundtrackpage.cpp
@@ -88,10 +87,10 @@ if(OPENGLLIBS_FOUND)
     )
 endif()
 
-if(Phonon4Qt5_FOUND)
+if(Qt5Multimedia_FOUND)
     target_link_libraries(kipiplugin_advancedslideshow
                           PRIVATE
-                          ${PHONON_LIBRARIES}
+                          Qt5::Multimedia
     )
 endif()
 

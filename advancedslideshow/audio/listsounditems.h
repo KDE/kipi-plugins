@@ -36,10 +36,7 @@
 #include <QListWidget>
 #include <QListWidgetItem>
 #include <QUrl>
-
-// Phonon includes
-
-#include <phonon/globalconfig.h>
+#include <QMediaPlayer>
 
 namespace KIPIAdvancedSlideshowPlugin
 {
@@ -65,7 +62,12 @@ Q_SIGNALS:
 
 private Q_SLOTS:
 
-    void slotMediaStateChanged(Phonon::State newstate, Phonon::State oldstate);
+    void slotMediaStateChanged(QMediaPlayer::MediaStatus status);
+    void slotPlayerError(QMediaPlayer::Error);
+
+private:
+
+    void showErrorDialog();
 
 private:
 

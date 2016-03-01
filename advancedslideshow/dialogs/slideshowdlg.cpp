@@ -191,7 +191,7 @@ void SlideShowDlg::readSettings()
 #ifdef HAVE_AUDIO
     // Soundtrack tab
     d->sharedData->soundtrackLoop             = grp.readEntry("Soundtrack Loop", false);
-    d->sharedData->soundtrackPath             = QUrl(grp.readEntry("Soundtrack Path", "" ));
+    d->sharedData->soundtrackPath             = QUrl::fromLocalFile(grp.readEntry("Soundtrack Path", "" ));
     d->sharedData->soundtrackRememberPlaylist = grp.readEntry("Soundtrack Remember Playlist", false);
 #endif
 

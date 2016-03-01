@@ -32,20 +32,17 @@
 #include <QMessageBox>
 #include <QDialogButtonBox>
 
-// Phonon includes
-
-#include <phonon/backendcapabilities.h>
-
 // Local includes
 
 #include "playbackwidget.h"
 #include "mainpage.h"
 #include "commoncontainer.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-SoundtrackPreview::SoundtrackPreview(QWidget* const parent, QList<QUrl>& urls, SharedContainer* const sharedData)
+SoundtrackPreview::SoundtrackPreview(QWidget* const parent, const QList<QUrl>& urls, SharedContainer* const sharedData)
     : QDialog(parent)
 {
     setModal(true);
@@ -212,19 +209,18 @@ void SoundtrackPage::addItems(const QList<QUrl>& fileList)
 
     for (QList<QUrl>::ConstIterator it = Files.constBegin(); it != Files.constEnd(); ++it)
     {
-        QUrl currentFile             = *it;
-        QUrl path                    = QUrl(currentFile.path().section(QLatin1Char('/'), 0, -1));
-        d->sharedData->soundtrackPath = path;
-        SoundItem* const item        = new SoundItem(m_SoundFilesListBox, path);
-        item->setName(currentFile.path().section(QLatin1Char('/'), -1));
+        QUrl currentFile              = *it;
+        d->sharedData->soundtrackPath = currentFile;
+        SoundItem* const item         = new SoundItem(m_SoundFilesListBox, currentFile);
+        item->setName(currentFile.fileName());
         m_SoundFilesListBox->insertItem(m_SoundFilesListBox->count() - 1, item);
 
-        d->soundItems->insert(path, item);
+        d->soundItems->insert(currentFile, item);
 
-        connect(d->soundItems->value(path), SIGNAL(signalTotalTimeReady(QUrl,QTime)),
+        connect(d->soundItems->value(currentFile), SIGNAL(signalTotalTimeReady(QUrl,QTime)),
                 this, SLOT(slotAddNewTime(QUrl,QTime)));
 
-        d->urlList.append(path);
+        d->urlList.append(currentFile);
     }
 
     m_SoundFilesListBox->setCurrentItem(m_SoundFilesListBox->item(m_SoundFilesListBox->count() - 1)) ;
@@ -271,14 +267,14 @@ void SoundtrackPage::updateTracksNumber()
 
 void SoundtrackPage::updateFileList()
 {
-    QList<QUrl> files = m_SoundFilesListBox->fileUrls();
-    d->urlList         = files;
+    d->urlList = m_SoundFilesListBox->fileUrls();
 
-    m_SoundFilesButtonUp->setEnabled(!files.isEmpty());
-    m_SoundFilesButtonDown->setEnabled(!files.isEmpty());
-    m_SoundFilesButtonDelete->setEnabled(!files.isEmpty());
-    m_SoundFilesButtonSave->setEnabled(!files.isEmpty());
-    m_SoundFilesButtonReset->setEnabled(!files.isEmpty());
+    m_SoundFilesButtonUp->setEnabled(!d->urlList.isEmpty());
+    m_SoundFilesButtonDown->setEnabled(!d->urlList.isEmpty());
+    m_SoundFilesButtonDelete->setEnabled(!d->urlList.isEmpty());
+    m_SoundFilesButtonSave->setEnabled(!d->urlList.isEmpty());
+    m_SoundFilesButtonReset->setEnabled(!d->urlList.isEmpty());
+
     d->sharedData->soundtrackPlayListNeedsUpdate = true;
 }
 
@@ -355,10 +351,14 @@ void SoundtrackPage::slotSoundFilesButtonAdd()
 {
     QPointer<QFileDialog> dlg = new QFileDialog(this,
                                                 i18n("Select sound files"),
-                                                d->sharedData->soundtrackPath.toString());
+                                                d->sharedData->soundtrackPath.adjusted(QUrl::RemoveFilename).path());
 
-    // Setting available mime-types (filtering out non audio mime-types)
-    dlg->setMimeTypeFilters(Phonon::BackendCapabilities::availableMimeTypes().filter(QString::fromLatin1("audio/")));
+    QStringList atm;
+    atm << QLatin1String("audio/mp3");
+    atm << QLatin1String("audio/wav");
+    atm << QLatin1String("audio/ogg");
+    atm << QLatin1String("audio/flac");
+    dlg->setMimeTypeFilters(atm);
     dlg->setAcceptMode(QFileDialog::AcceptOpen);
     dlg->setFileMode(QFileDialog::ExistingFiles);
     dlg->exec();
@@ -580,16 +580,16 @@ void SoundtrackPage::slotPreviewButtonClicked()
 
     for (int i = 0 ; i < m_SoundFilesListBox->count() ; ++i)
     {
-        SoundItem* const pitem = static_cast<SoundItem*>( m_SoundFilesListBox->item(i) );
+        SoundItem* const pitem = dynamic_cast<SoundItem*>(m_SoundFilesListBox->item(i));
         QString path           = pitem->url().toLocalFile();
 
         if (!QFile::exists(path))
         {
-            QMessageBox::critical(this, QString(), i18n("Cannot access file %1. Please check the path is correct.", path));
+            QMessageBox::critical(this, QString(), i18n("Cannot access file \"%1\". Please check the path is correct.", path));
             return;
         }
 
-        urlList.append(QUrl::fromLocalFile(path));  // Input sound files.
+        urlList << pitem->url();
     }
 
     if ( urlList.isEmpty() )
@@ -600,6 +600,8 @@ void SoundtrackPage::slotPreviewButtonClicked()
 
     // Update SharedContainer from interface
     saveSettings();
+
+    qCDebug(KIPIPLUGINS_LOG) << "Tracks : " << urlList;
 
     QPointer<SoundtrackPreview> preview = new SoundtrackPreview(this, urlList, d->sharedData);
     preview->exec();

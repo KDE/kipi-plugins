@@ -1,51 +1,52 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>PlaybackWidget</class>
- <widget class="QWidget" name="PlaybackWidget" >
-  <property name="geometry" >
+ <widget class="QWidget" name="PlaybackWidget">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>370</width>
-    <height>86</height>
+    <height>188</height>
    </rect>
   </property>
-  <property name="sizePolicy" >
-   <sizepolicy vsizetype="Minimum" hsizetype="Minimum" >
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_2" >
+  <layout class="QHBoxLayout" name="horizontalLayout_2">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_2" >
+    <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout" >
+      <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <layout class="QGridLayout" name="gridLayout" >
-         <item row="0" column="0" >
-          <widget class="QPushButton" name="m_playButton" >
-           <property name="text" >
+        <layout class="QGridLayout" name="gridLayout">
+         <item row="0" column="0">
+          <widget class="QPushButton" name="m_playButton">
+           <property name="text">
             <string>Play</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="1" >
-          <widget class="QPushButton" name="m_stopButton" >
-           <property name="text" >
+         <item row="0" column="1">
+          <widget class="QPushButton" name="m_stopButton">
+           <property name="text">
             <string>Stop</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="0" >
-          <widget class="QPushButton" name="m_prevButton" >
-           <property name="text" >
+         <item row="1" column="0">
+          <widget class="QPushButton" name="m_prevButton">
+           <property name="text">
             <string>Prev</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="1" >
-          <widget class="QPushButton" name="m_nextButton" >
-           <property name="text" >
+         <item row="1" column="1">
+          <widget class="QPushButton" name="m_nextButton">
+           <property name="text">
             <string>Next</string>
            </property>
           </widget>
@@ -53,10 +54,10 @@
         </layout>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout" >
+        <layout class="QVBoxLayout" name="verticalLayout">
          <item>
-          <widget class="QLabel" name="label" >
-           <property name="font" >
+          <widget class="QLabel" name="label">
+           <property name="font">
             <font>
              <weight>75</weight>
              <italic>false</italic>
@@ -65,37 +66,37 @@
              <kerning>false</kerning>
             </font>
            </property>
-           <property name="text" >
+           <property name="text">
             <string>Time</string>
            </property>
           </widget>
          </item>
          <item>
-          <layout class="QGridLayout" name="gridLayout_2" >
-           <item row="0" column="0" >
-            <widget class="QLabel" name="label_2" >
-             <property name="text" >
+          <layout class="QGridLayout" name="gridLayout_2">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_2">
+             <property name="text">
               <string>elapsed:</string>
              </property>
             </widget>
            </item>
-           <item row="0" column="1" >
-            <widget class="QLabel" name="m_elapsedTimeLabel" >
-             <property name="text" >
+           <item row="0" column="1">
+            <widget class="QLabel" name="m_elapsedTimeLabel">
+             <property name="text">
               <string>0:00:00</string>
              </property>
             </widget>
            </item>
-           <item row="1" column="0" >
-            <widget class="QLabel" name="label_3" >
-             <property name="text" >
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_3">
+             <property name="text">
               <string>total:</string>
              </property>
             </widget>
            </item>
-           <item row="1" column="1" >
-            <widget class="QLabel" name="m_totalTimeLabel" >
-             <property name="text" >
+           <item row="1" column="1">
+            <widget class="QLabel" name="m_totalTimeLabel">
+             <property name="text">
               <string>0:00:00</string>
              </property>
             </widget>
@@ -107,21 +108,26 @@
       </layout>
      </item>
      <item>
-      <widget class="QWidget" native="1" name="m_volumeWidget" >
+      <widget class="QSlider" name="m_volumeWidget">
+       <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
       </widget>
      </item>
     </layout>
    </item>
    <item>
-    <widget class="QLabel" name="m_soundLabel" >
-     <property name="text" >
+    <widget class="QLabel" name="m_soundLabel">
+     <property name="text">
+      <string/>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
- <customwidgets>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -38,14 +38,15 @@
 #include <QUrl>
 #include <QMessageBox>
 #include <QApplication>
+#include <QMediaMetaData>
 
 // KDE includes
 
 #include <klocalizedstring.h>
 
-// Phonon includes
+// Local includes
 
-#include <phonon/mediaobject.h>
+#include "kipiplugins_debug.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {
@@ -60,11 +61,11 @@ public:
         mediaObject = 0;
     }
 
-    QUrl                 url;
-    QString              artist;
-    QString              title;
-    QTime                totalTime;
-    Phonon::MediaObject* mediaObject;
+    QUrl          url;
+    QString       artist;
+    QString       title;
+    QTime         totalTime;
+    QMediaPlayer* mediaObject;
 };
 
 SoundItem::SoundItem(QListWidget* const parent, const QUrl& url)
@@ -75,11 +76,15 @@ SoundItem::SoundItem(QListWidget* const parent, const QUrl& url)
     setIcon(QIcon::fromTheme(QString::fromLatin1("audio-x-generic")).pixmap(48, QIcon::Disabled));
 
     d->totalTime   = QTime(0, 0, 0);
-    d->mediaObject = new Phonon::MediaObject();
-    d->mediaObject->setCurrentSource(url);
+    d->mediaObject = new QMediaPlayer();
 
-    connect(d->mediaObject, SIGNAL(stateChanged(Phonon::State,Phonon::State)),
-            this, SLOT(slotMediaStateChanged(Phonon::State,Phonon::State)));
+    connect(d->mediaObject, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)),
+            this, SLOT(slotMediaStateChanged(QMediaPlayer::MediaStatus)));
+
+    connect(d->mediaObject, SIGNAL(error(QMediaPlayer::Error)),
+            this, SLOT(slotPlayerError(QMediaPlayer::Error)));
+
+    d->mediaObject->setMedia(url);
 }
 
 SoundItem::~SoundItem()
@@ -112,41 +117,32 @@ QTime SoundItem::totalTime() const
     return d->totalTime;
 }
 
-void SoundItem::slotMediaStateChanged(Phonon::State newstate, Phonon::State /*oldstate*/)
+void SoundItem::slotPlayerError(QMediaPlayer::Error err)
 {
-    if ( newstate == Phonon::ErrorState )
+    if (err != QMediaPlayer::NoError)
     {
-        QMessageBox msgBox(QApplication::activeWindow());
-        msgBox.setWindowTitle(i18n("Phonon error"));
-        msgBox.setText(i18n("%1 is damaged and may not be playable.", d->url.fileName()));
-        msgBox.setDetailedText(d->mediaObject->errorString());
-        msgBox.setStandardButtons(QMessageBox::Ok);
-        msgBox.setDefaultButton(QMessageBox::Ok);
-        msgBox.setIcon(QMessageBox::Critical);
-        msgBox.exec();
+        qCDebug(KIPIPLUGINS_LOG) << "An error as occured while playing (" << err << ")";
+        showErrorDialog();
+    }
+}
 
-        d->artist = d->url.fileName();
-        d->title  = i18n("This file is damaged and may not be playable.");
-        setText(i18nc("artist - title", "%1 - %2", artist(), title()));
-        setBackground(QBrush(Qt::red));
-        setForeground(QBrush(Qt::white));
-        QFont errorFont = font();
-        errorFont.setBold(true);
-        errorFont.setItalic(true);
-        setFont(errorFont);
+void SoundItem::slotMediaStateChanged(QMediaPlayer::MediaStatus status)
+{
+    if (status == QMediaPlayer::UnknownMediaStatus ||
+        status == QMediaPlayer::NoMedia            ||
+        status == QMediaPlayer::InvalidMedia)
+    {
+        showErrorDialog();
         return;
     }
 
-    if ( newstate != Phonon::StoppedState )
-        return;
-
-    long int total = d->mediaObject->totalTime();
+    qint64 total = d->mediaObject->duration();
     int hours      = (int)(total  / (long int)( 60 * 60 * 1000 ));
     int mins       = (int)((total / (long int)( 60 * 1000 )) - (long int)(hours * 60));
     int secs       = (int)((total / (long int)1000) - (long int)(hours * 60 * 60) - (long int)(mins * 60));
     d->totalTime   = QTime(hours, mins, secs);
-    d->artist      = (d->mediaObject->metaData(Phonon::ArtistMetaData)).join(QString::fromLatin1(","));
-    d->title       = (d->mediaObject->metaData(Phonon::TitleMetaData)).join(QString::fromLatin1(","));
+    d->artist      = (d->mediaObject->metaData(QMediaMetaData::Author)).toStringList().join(QString::fromLatin1(","));
+    d->title       = (d->mediaObject->metaData(QMediaMetaData::Title)).toString();
 
     if ( d->artist.isEmpty() && d->title.isEmpty() )
         setText(d->url.fileName());
@@ -154,6 +150,28 @@ void SoundItem::slotMediaStateChanged(Phonon::State newstate, Phonon::State /*ol
         setText(i18nc("artist - title", "%1 - %2", artist(), title()));
 
     emit signalTotalTimeReady(d->url, d->totalTime);
+}
+
+void SoundItem::showErrorDialog()
+{
+    QMessageBox msgBox(QApplication::activeWindow());
+    msgBox.setWindowTitle(i18n("Error"));
+    msgBox.setText(i18n("%1 may not be playable.", d->url.fileName()));
+    msgBox.setDetailedText(d->mediaObject->errorString());
+    msgBox.setStandardButtons(QMessageBox::Ok);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    msgBox.setIcon(QMessageBox::Critical);
+    msgBox.exec();
+
+    d->artist = d->url.fileName();
+    d->title  = i18n("This file may not be playable.");
+    setText(i18nc("artist - title", "%1 - %2", artist(), title()));
+    setBackground(QBrush(Qt::red));
+    setForeground(QBrush(Qt::white));
+    QFont errorFont = font();
+    errorFont.setBold(true);
+    errorFont.setItalic(true);
+    setFont(errorFont);
 }
 
 // ------------------------------------------------------------------

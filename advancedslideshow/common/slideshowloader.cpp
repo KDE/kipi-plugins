@@ -131,7 +131,7 @@ SlideShowLoader::SlideShowLoader(FileList& pathList, uint cacheSize, int width, 
 
     for (uint i = 0; i < uint(m_cacheSize / 2) && i < uint(m_pathList.count()); ++i)
     {
-        filePath    = QUrl(m_pathList[i].first);
+        filePath    = QUrl::fromLocalFile(m_pathList[i].first);
         KPImageInfo info(filePath);
         orientation = info.orientation();
 
@@ -146,7 +146,7 @@ SlideShowLoader::SlideShowLoader(FileList& pathList, uint cacheSize, int width, 
     for (uint i = 0; i < (m_cacheSize % 2 == 0 ? (m_cacheSize % 2) : uint(m_cacheSize / 2) + 1); ++i)
     {
         int toLoad  = (m_currIndex - i) % m_pathList.count();
-        filePath    = QUrl(m_pathList[toLoad].first);
+        filePath    = QUrl::fromLocalFile(m_pathList[toLoad].first);
         KPImageInfo info(filePath);
         orientation = info.orientation();
 
@@ -169,9 +169,11 @@ SlideShowLoader::~SlideShowLoader()
         // better check for a valid pointer here
         if (it.value())
             it.value()->wait();
+
         delete it.value();
-        it = m_loadingThreads->erase(it);
     }
+
+    m_loadingThreads->clear();
 
     m_threadLock->unlock();
 
@@ -296,7 +298,7 @@ void SlideShowLoader::checkIsIn(int index)
     }
     else
     {
-        QUrl filePath   = QUrl(m_pathList[index].first);
+        QUrl filePath   = QUrl::fromLocalFile(m_pathList[index].first);
         KPImageInfo info(filePath);
         int orientation = info.orientation();
 
