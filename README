@@ -44,7 +44,6 @@ Optional:
 
 libthreadweaver >= 5.0.0                        https://projects.kde.org/projects/frameworks/threadweaver
 libkarchive     >= 5.0.0                        https://projects.kde.org/projects/frameworks/karchive
-libphonon       >= 5.0.0                        https://projects.kde.org/projects/kdesupport/phonon
 libmediawiki    >= 5.0.0                        https://projects.kde.org/projects/extragear/libs/libmediawiki
 libkvkontakte   >= 4.70.0                       https://projects.kde.org/projects/extragear/libs/libkvkontakte
 libxslt         >= 1.1.0                        http://xmlsoft.org/XSLT
@@ -55,7 +54,7 @@ libqtkoauth     >= 0.97                         https://github.com/kypeli/kQOAut
 
 Plugin Specific Dependencies (for compiling and for running) :
 
-AdvancedSlideShow  : libphonon, Mesa3D, and OpenGL support for libqt
+AdvancedSlideShow  : Mesa3D, and OpenGL support for libqt
 ImageViewer        : Mesa3D, and OpenGL support for libqt
 FaceBook           : libqjson.
 Mediawiki          : libmediawiki.
