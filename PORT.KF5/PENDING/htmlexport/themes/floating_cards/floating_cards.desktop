@@ -166,6 +166,7 @@ Allow non-square thumbnails=true
 
 [X-HTMLExport Parameter keyboard_navigation]
 Name=Keyboard navigation
+Name[ast]=Navegación de tecláu
 Name[bs]=Navigacija tastaturom
 Name[ca]=Navegació amb el teclat
 Name[ca@valencia]=Navegació amb el teclat
