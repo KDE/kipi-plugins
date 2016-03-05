@@ -334,11 +334,11 @@ void PlaybackWidget::slotTimeUpdaterTimeout()
 
     if (d->isZeroTime && d->mediaObject->duration() > 0)
     {
-        d->isZeroTime  = false;
-        qint64 total = d->mediaObject->duration();
-        hours        = (int)(total  / (qint64)(60 * 60 * 1000));
-        mins         = (int)((total / (qint64)(60 * 1000)) - (qint64)(hours * 60));
-        secs         = (int)((total / (qint64)1000) - (qint64)(hours * 60 + mins * 60));
+        d->isZeroTime = false;
+        qint64 total  = d->mediaObject->duration();
+        hours         = (int)(total  / (qint64)(60 * 60 * 1000));
+        mins          = (int)((total / (qint64)(60 * 1000)) - (qint64)(hours * 60));
+        secs          = (int)((total / (qint64)1000) - (qint64)(hours * 60 + mins * 60));
         QTime totalTime(hours, mins, secs);
         m_totalTimeLabel->setText(totalTime.toString(QString::fromLatin1("H:mm:ss")));
     }
