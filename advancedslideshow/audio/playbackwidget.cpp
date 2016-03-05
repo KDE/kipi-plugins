@@ -155,12 +155,12 @@ void PlaybackWidget::checkSkip()
     m_prevButton->setEnabled(true);
     m_nextButton->setEnabled(true);
 
-    if ( !d->sharedData->soundtrackLoop )
+    if (!d->sharedData->soundtrackLoop)
     {
-        if ( d->currIndex == 0 )
+        if (d->currIndex == 0)
             m_prevButton->setEnabled(false);
 
-        if ( d->currIndex == d->urlList.count() - 1 )
+        if (d->currIndex == d->urlList.count() - 1)
             m_nextButton->setEnabled(false);
     }
 }
@@ -278,9 +278,9 @@ void PlaybackWidget::slotPrev()
 {
     d->currIndex--;
 
-    if ( d->currIndex < 0 )
+    if (d->currIndex < 0)
     {
-        if ( d->sharedData->soundtrackLoop )
+        if (d->sharedData->soundtrackLoop)
         {
             d->currIndex = d->urlList.count() - 1;
         }
@@ -291,18 +291,18 @@ void PlaybackWidget::slotPrev()
         }
     }
 
-    setZeroTime();
     d->mediaObject->setMedia(d->urlList[d->currIndex]);
     d->mediaObject->play();
+    setZeroTime();
 }
 
 void PlaybackWidget::slotNext()
 {
     d->currIndex++;
 
-    if ( d->currIndex >= d->urlList.count() )
+    if (d->currIndex >= d->urlList.count())
     {
-        if ( d->sharedData->soundtrackLoop )
+        if (d->sharedData->soundtrackLoop)
         {
             d->currIndex = 0;
         }
@@ -313,9 +313,9 @@ void PlaybackWidget::slotNext()
         }
     }
 
-    setZeroTime();
     d->mediaObject->setMedia(d->urlList[d->currIndex]);
     d->mediaObject->play();
+    setZeroTime();
 }
 
 void PlaybackWidget::slotTimeUpdaterTimeout()
@@ -326,19 +326,19 @@ void PlaybackWidget::slotTimeUpdaterTimeout()
         return;
     }
 
-    long int current = d->mediaObject->position();
-    int hours        = (int)(current  / (long int)( 60 * 60 * 1000 ));
-    int mins         = (int)((current / (long int)( 60 * 1000 )) - (long int)(hours * 60));
-    int secs         = (int)((current / (long int)1000) - (long int)(hours * 60 + mins * 60));
+    qint64 current = d->mediaObject->position();
+    int hours      = (int)(current  / (qint64)(60 * 60 * 1000));
+    int mins       = (int)((current / (qint64)(60 * 1000)) - (qint64)(hours * 60));
+    int secs       = (int)((current / (qint64)1000) - (qint64)(hours * 60 + mins * 60));
     QTime elapsedTime(hours, mins, secs);
 
-    if ( d->isZeroTime )
+    if (d->isZeroTime && d->mediaObject->duration() > 0)
     {
-        d->isZeroTime   = false;
-        long int total = d->mediaObject->duration();
-        hours          = (int)(total  / (long int)( 60 * 60 * 1000 ));
-        mins           = (int)((total / (long int)( 60 * 1000 )) - (long int)(hours * 60));
-        secs           = (int)((total / (long int)1000) - (long int)(hours * 60 + mins * 60));
+        d->isZeroTime  = false;
+        qint64 total = d->mediaObject->duration();
+        hours        = (int)(total  / (qint64)(60 * 60 * 1000));
+        mins         = (int)((total / (qint64)(60 * 1000)) - (qint64)(hours * 60));
+        secs         = (int)((total / (qint64)1000) - (qint64)(hours * 60 + mins * 60));
         QTime totalTime(hours, mins, secs);
         m_totalTimeLabel->setText(totalTime.toString(QString::fromLatin1("H:mm:ss")));
     }
