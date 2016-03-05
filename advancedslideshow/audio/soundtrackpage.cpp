@@ -581,15 +581,19 @@ void SoundtrackPage::slotPreviewButtonClicked()
     for (int i = 0 ; i < m_SoundFilesListBox->count() ; ++i)
     {
         SoundItem* const pitem = dynamic_cast<SoundItem*>(m_SoundFilesListBox->item(i));
-        QString path           = pitem->url().toLocalFile();
 
-        if (!QFile::exists(path))
+        if (pitem)
         {
-            QMessageBox::critical(this, QString(), i18n("Cannot access file \"%1\". Please check the path is correct.", path));
-            return;
-        }
+            QString path           = pitem->url().toLocalFile();
 
-        urlList << pitem->url();
+            if (!QFile::exists(path))
+            {
+                QMessageBox::critical(this, QString(), i18n("Cannot access file \"%1\". Please check the path is correct.", path));
+                return;
+            }
+
+            urlList << pitem->url();
+        }
     }
 
     if ( urlList.isEmpty() )
