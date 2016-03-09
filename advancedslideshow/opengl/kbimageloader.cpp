@@ -49,70 +49,108 @@ using namespace KIPI;
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-KBImageLoader::KBImageLoader(QList<QPair<QString, int> >& fileList, int width, int height, bool loop)
-    : QThread()
+class KBImageLoader::Private
 {
-    m_initialized   = false;
-    m_needImage     = true;
-    m_haveImages    = false;
-    m_quitRequested = false;
-    m_fileIndex     = 0;
-    m_fileList      = fileList;
-    m_width         = width;
-    m_height        = height;
-    m_loop          = loop;
-    m_textureAspect = 0.0;
+
+public:
+
+    Private()
+    {
+        fileIndex     = 0;
+        width         = 0;
+        height        = 0;
+        initialized   = false;
+        needImage     = true;
+        haveImages    = false;
+        quitRequested = false;
+        loop          = false;
+        textureAspect = 0.0;
+    }
+
+    int                         fileIndex;
+    QList<QPair<QString, int> > fileList;
+
+    int                         width;
+    int                         height;
+
+    QWaitCondition              imageRequest;
+    QMutex                      condLock;
+    QMutex                      imageLock;
+
+    bool                        initialized;
+    bool                        needImage;
+    bool                        haveImages;
+    bool                        quitRequested;
+    bool                        loop;
+
+    float                       textureAspect;
+    QImage                      texture;
+};
+
+KBImageLoader::KBImageLoader(QList<QPair<QString, int> >& fileList, int width, int height, bool loop)
+    : QThread(),
+      d(new Private)
+{
+    d->fileList = fileList;
+    d->width    = width;
+    d->height   = height;
+    d->loop     = loop;
+}
+
+KBImageLoader::~KBImageLoader()
+{
+    delete d;
 }
 
 void KBImageLoader::quit()
 {
-    QMutexLocker locker(&m_condLock);
+    QMutexLocker locker(&d->condLock);
 
-    m_quitRequested = true;
-    m_imageRequest.wakeOne();
+    d->quitRequested = true;
+    d->imageRequest.wakeOne();
 }
 
 void KBImageLoader::requestNewImage()
 {
-    QMutexLocker locker(&m_condLock);
+    QMutexLocker locker(&d->condLock);
 
-    if ( !m_needImage)
+    if ( !d->needImage)
     {
-        m_needImage = true;
-        m_imageRequest.wakeOne();
+        d->needImage = true;
+        d->imageRequest.wakeOne();
     }
 }
 
 void KBImageLoader::run()
 {
-    QMutexLocker locker(&m_condLock);
+    QMutexLocker locker(&d->condLock);
 
-    // we enter the loop with m_needImage==true, so we will immediately
+    // we enter the loop with d->needImage==true, so we will immediately
     // try to load an image
 
     while (true)
     {
-        if (m_quitRequested)
+        if (d->quitRequested)
             break;
 
-        if (m_needImage)
+        if (d->needImage)
         {
-            if ( m_fileIndex == (int)m_fileList.count() )
+            if ( d->fileIndex == (int)d->fileList.count() )
             {
-                if ( m_loop )
+                if ( d->loop )
                 {
-                    m_fileIndex = 0;
+                    d->fileIndex = 0;
                 }
                 else
                 {
-                    m_needImage = false;
+                    d->needImage = false;
                     emit(signalEndOfShow());
                     continue;
                 }
             }
 
-            m_needImage = false;
-            m_condLock.unlock();
+            d->needImage = false;
+            d->condLock.unlock();
             bool ok;
 
             do
@@ -122,44 +160,44 @@ void KBImageLoader::run()
                 if ( !ok)
                     invalidateCurrentImageName();
             }
-            while ( !ok && m_fileIndex < (int)m_fileList.count());
+            while ( !ok && d->fileIndex < (int)d->fileList.count());
 
-            if ( m_fileIndex == (int)m_fileList.count() )
+            if ( d->fileIndex == (int)d->fileList.count() )
             {
 
                 emit(signalEndOfShow());
-                m_condLock.lock();
+                d->condLock.lock();
                 continue;
             }
 
             if ( !ok)
             {
                 // generate a black dummy image
-                m_texture = QImage(128, 128, QImage::Format_ARGB32);
-                m_texture.fill(Qt::black);
+                d->texture = QImage(128, 128, QImage::Format_ARGB32);
+                d->texture.fill(Qt::black);
             }
 
-            m_condLock.lock();
+            d->condLock.lock();
 
-            m_fileIndex++;
+            d->fileIndex++;
 
-            if ( !m_initialized)
+            if ( !d->initialized)
             {
-                m_haveImages  = ok;
-                m_initialized = true;
+                d->haveImages  = ok;
+                d->initialized = true;
             }
         }
         else
         {
             // wait for new requests from the consumer
-            m_imageRequest.wait(&m_condLock);
+            d->imageRequest.wait(&d->condLock);
         }
     }
 }
 
 bool KBImageLoader::loadImage()
 {
-    QPair<QString, int> fileAngle = m_fileList[m_fileIndex];
+    QPair<QString, int> fileAngle = d->fileList[d->fileIndex];
     QString             path(fileAngle.first);
     int                 angle(fileAngle.second);
     QImage              image;
@@ -203,51 +241,51 @@ bool KBImageLoader::loadImage()
     }
 
     float aspect = (float)image.width() / (float)image.height();
-    image        = image.scaled(m_width, m_height, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    image        = image.scaled(d->width, d->height, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
-    m_imageLock.lock();
+    d->imageLock.lock();
 
-    m_textureAspect = aspect;
+    d->textureAspect = aspect;
 
     // this is the critical moment, when we make the new texture and
     // aspect available to the consumer
-    m_texture       = QGLWidget::convertToGLFormat(image);
+    d->texture       = QGLWidget::convertToGLFormat(image);
 
-    m_imageLock.unlock();
+    d->imageLock.unlock();
 
     return true;
 }
 
 void KBImageLoader::invalidateCurrentImageName()
 {
-    m_fileList.removeAll(m_fileList[m_fileIndex]);
-    m_fileIndex++;
+    d->fileList.removeAll(d->fileList[d->fileIndex]);
+    d->fileIndex++;
 }
 
 bool KBImageLoader::grabImage()
 {
-    m_imageLock.lock();
-    return m_haveImages;
+    d->imageLock.lock();
+    return d->haveImages;
 }
 
 void KBImageLoader::ungrabImage()
 {
-    m_imageLock.unlock();
+    d->imageLock.unlock();
 }
 
 bool KBImageLoader::ready() const
 {
-    return m_initialized;
+    return d->initialized;
 }
 
 const QImage& KBImageLoader::image() const
 {
-    return m_texture;
+    return d->texture;
 }
 
 float KBImageLoader::imageAspect() const
 {
-    return m_textureAspect;
+    return d->textureAspect;
 }
 
 }  // namespace KIPIAdvancedSlideshowPlugin

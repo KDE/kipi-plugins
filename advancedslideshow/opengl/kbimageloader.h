@@ -46,6 +46,7 @@ class KBImageLoader : public QThread
 public:
 
     KBImageLoader(QList<QPair<QString, int> >& fileList, int width, int height, bool loop);
+    ~KBImageLoader();
 
     void  quit();
     void  requestNewImage();
@@ -68,17 +69,8 @@ protected:
 
 private:
 
-    int                         m_fileIndex;
-    QList<QPair<QString, int> > m_fileList;
-
-    int                         m_width, m_height;
-
-    QWaitCondition              m_imageRequest;
-    QMutex                      m_condLock, m_imageLock;
-    bool                        m_initialized, m_needImage, m_haveImages, m_quitRequested, m_loop;
-
-    float                       m_textureAspect;
-    QImage                      m_texture;
+    class Private;
+    Private* const d;
 };
 
 }  // namespace KIPIAdvancedSlideshowPlugin
