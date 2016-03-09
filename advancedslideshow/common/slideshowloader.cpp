@@ -34,6 +34,7 @@
 // Libkipi includes
 
 #include <KIPI/PluginLoader>
+#include <KIPI/Interface>
 
 // Local includes
 
@@ -41,75 +42,98 @@
 #include "kpimageinfo.h"
 #include "kipiplugins_debug.h"
 
+using namespace KIPI;
 using namespace KIPIPlugins;
 
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-LoadThread::LoadThread(LoadedImages* const loadedImages, QMutex* const imageLock, const QUrl& path,
-                       int orientation, int width, int height)
-    : QThread()
+typedef QMap<QUrl, QImage> LoadedImages;
+
+class LoadThread : public QThread
 {
-    m_path         = path;
-    m_orientation  = orientation;
-    m_swidth       = width;
-    m_sheight      = height;
-    m_imageLock    = imageLock;
-    m_loadedImages = loadedImages;
-    m_iface        = 0;
 
-    PluginLoader* const pl = PluginLoader::instance();
+public:
 
-    if (pl)
+    LoadThread(LoadedImages* const loadedImages, QMutex* const imageLock, const QUrl& path,
+               int orientation, int width, int height)
     {
-        m_iface = pl->interface();
-    }
-}
+        m_path         = path;
+        m_orientation  = orientation;
+        m_swidth       = width;
+        m_sheight      = height;
+        m_imageLock    = imageLock;
+        m_loadedImages = loadedImages;
+        m_iface        = 0;
 
-LoadThread::~LoadThread()
-{
-}
+        PluginLoader* const pl = PluginLoader::instance();
 
-void LoadThread::run()
-{
-    QImage newImage;
-
-    // check if it's a RAW file.
-
-    if (m_iface)
-    {
-        QPointer<RawProcessor> rawdec = m_iface->createRawProcessor();
-
-        // check if its a RAW file.
-        if (rawdec && rawdec->isRawFile(m_path))
+        if (pl)
         {
-            rawdec->loadRawPreview(m_path, newImage);
+            m_iface = pl->interface();
         }
     }
-
-    if (newImage.isNull())
+    
+    ~LoadThread()
     {
-        // use the standard loader
-        newImage = QImage(m_path.toLocalFile());
     }
 
-    // Rotate according to orientation flag
+protected:
 
-    if ( m_iface &&  m_orientation != MetadataProcessor::UNSPECIFIED )
+    void run()
     {
-        QPointer<MetadataProcessor> meta = m_iface->createMetadataProcessor();
+        QImage newImage;
 
-        if (meta)
-            meta->rotateExifQImage(newImage, m_orientation);
+        // check if it's a RAW file.
+
+        if (m_iface)
+        {
+            QPointer<RawProcessor> rawdec = m_iface->createRawProcessor();
+
+            // check if its a RAW file.
+            if (rawdec && rawdec->isRawFile(m_path))
+            {
+                rawdec->loadRawPreview(m_path, newImage);
+            }
+        }
+
+        if (newImage.isNull())
+        {
+            // use the standard loader
+            newImage = QImage(m_path.toLocalFile());
+        }
+
+        // Rotate according to orientation flag
+
+        if ( m_iface &&  m_orientation != MetadataProcessor::UNSPECIFIED )
+        {
+            QPointer<MetadataProcessor> meta = m_iface->createMetadataProcessor();
+
+            if (meta)
+                meta->rotateExifQImage(newImage, m_orientation);
+        }
+
+        newImage = newImage.scaled(m_swidth, m_sheight, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
+        m_imageLock->lock();
+        m_loadedImages->insert(m_path, newImage);
+        m_imageLock->unlock();
     }
 
-    newImage = newImage.scaled(m_swidth, m_sheight, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+private:
 
-    m_imageLock->lock();
-    m_loadedImages->insert(m_path, newImage);
-    m_imageLock->unlock();
-}
+    QMutex*       m_imageLock;
+    LoadedImages* m_loadedImages;
+    QUrl          m_path;
+    QString       m_filename;
+    int           m_orientation;
+    int           m_swidth;
+    int           m_sheight;
+    Interface*    m_iface;
+};
 
+typedef QMap<QUrl, LoadThread*> LoadingThreads;
+    
 // -----------------------------------------------------------------------------------------
 
 class SlideShowLoader::Private

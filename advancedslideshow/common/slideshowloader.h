@@ -34,50 +34,13 @@
 #include <QPair>
 #include <QUrl>
 
-// Libkipi includes
-
-#include <KIPI/Interface>
-
 typedef QPair<QString, int>  FileAnglePair;
 typedef QList<FileAnglePair> FileList;
-
-using namespace KIPI;
 
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-typedef QMap<QUrl, QImage> LoadedImages;
-
 class SharedContainer;
-
-class LoadThread : public QThread
-{
-
-public:
-
-    LoadThread(LoadedImages* const loadedImages, QMutex* const imageLock, const QUrl& path,
-               int orientation, int width, int height);
-    ~LoadThread();
-
-protected:
-
-    void run();
-
-private:
-
-    QMutex*       m_imageLock;
-    LoadedImages* m_loadedImages;
-    QUrl          m_path;
-    QString       m_filename;
-    int           m_orientation;
-    int           m_swidth;
-    int           m_sheight;
-    Interface*    m_iface;
-};
-
-// ----------------------------------------------------------------------------
-
-typedef QMap<QUrl, LoadThread*> LoadingThreads;
 
 class SlideShowLoader
 {
@@ -93,7 +56,7 @@ public:
 
     QImage  getCurrent();
     QString currFileName() const;
-    QUrl    currPath() const;
+    QUrl    currPath()     const;
 
 private:
 
