@@ -112,59 +112,93 @@ void LoadThread::run()
 
 // -----------------------------------------------------------------------------------------
 
+class SlideShowLoader::Private
+{
+
+public:
+
+    Private()
+    {
+        loadingThreads = 0;
+        loadedImages   = 0;
+        imageLock      = 0;
+        threadLock     = 0;
+        sharedData     = 0;
+        cacheSize      = 0;
+        currIndex      = 0;
+        swidth         = 0;
+        sheight        = 0;
+    }
+
+    LoadingThreads*  loadingThreads;
+    LoadedImages*    loadedImages;
+    FileList         pathList;
+
+    QMutex*          imageLock;
+    QMutex*          threadLock;
+
+    SharedContainer* sharedData;
+
+    uint             cacheSize;
+    int              currIndex;
+    int              swidth;
+    int              sheight;
+};
+
 SlideShowLoader::SlideShowLoader(FileList& pathList, uint cacheSize, int width, int height,
                                  SharedContainer* const sharedData, int beginAtIndex)
+    : d(new Private)
 {
-    m_currIndex      = beginAtIndex;
-    m_cacheSize      = cacheSize;
-    m_pathList       = pathList;
-    m_swidth         = width;
-    m_sheight        = height;
-    m_loadingThreads = new LoadingThreads();
-    m_loadedImages   = new LoadedImages();
-    m_imageLock      = new QMutex();
-    m_threadLock     = new QMutex();
-    m_sharedData     = sharedData;
+    d->currIndex      = beginAtIndex;
+    d->cacheSize      = cacheSize;
+    d->pathList       = pathList;
+    d->swidth         = width;
+    d->sheight        = height;
+    d->loadingThreads = new LoadingThreads();
+    d->loadedImages   = new LoadedImages();
+    d->imageLock      = new QMutex();
+    d->threadLock     = new QMutex();
+    d->sharedData     = sharedData;
 
     QUrl filePath;
     int  orientation;
 
-    for (uint i = 0; i < uint(m_cacheSize / 2) && i < uint(m_pathList.count()); ++i)
+    for (uint i = 0; i < uint(d->cacheSize / 2) && i < uint(d->pathList.count()); ++i)
     {
-        filePath    = QUrl::fromLocalFile(m_pathList[i].first);
+        filePath    = QUrl::fromLocalFile(d->pathList[i].first);
         KPImageInfo info(filePath);
         orientation = info.orientation();
 
-        LoadThread* const newThread = new LoadThread(m_loadedImages, m_imageLock,
-                                                     filePath, orientation, m_swidth, m_sheight);
-        m_threadLock->lock();
-        m_loadingThreads->insert(filePath, newThread);
+        LoadThread* const newThread = new LoadThread(d->loadedImages, d->imageLock,
+                                                     filePath, orientation, d->swidth, d->sheight);
+        d->threadLock->lock();
+        d->loadingThreads->insert(filePath, newThread);
         newThread->start();
-        m_threadLock->unlock();
+        d->threadLock->unlock();
     }
 
-    for (uint i = 0; i < (m_cacheSize % 2 == 0 ? (m_cacheSize % 2) : uint(m_cacheSize / 2) + 1); ++i)
+    for (uint i = 0; i < (d->cacheSize % 2 == 0 ? (d->cacheSize % 2) : uint(d->cacheSize / 2) + 1); ++i)
     {
-        int toLoad  = (m_currIndex - i) % m_pathList.count();
-        filePath    = QUrl::fromLocalFile(m_pathList[toLoad].first);
+        int toLoad  = (d->currIndex - i) % d->pathList.count();
+        filePath    = QUrl::fromLocalFile(d->pathList[toLoad].first);
         KPImageInfo info(filePath);
         orientation = info.orientation();
 
-        LoadThread* const newThread = new LoadThread(m_loadedImages, m_imageLock,
-                                                     filePath, orientation, m_swidth, m_sheight);
-        m_threadLock->lock();
-        m_loadingThreads->insert(filePath, newThread);
+        LoadThread* const newThread = new LoadThread(d->loadedImages, d->imageLock,
+                                                     filePath, orientation, d->swidth, d->sheight);
+        d->threadLock->lock();
+        d->loadingThreads->insert(filePath, newThread);
         newThread->start();
-        m_threadLock->unlock();
+        d->threadLock->unlock();
     }
 }
 
 SlideShowLoader::~SlideShowLoader()
 {
-    m_threadLock->lock();
+    d->threadLock->lock();
     LoadingThreads::Iterator it;
 
-    for (it = m_loadingThreads->begin(); it != m_loadingThreads->end(); ++it)
+    for (it = d->loadingThreads->begin(); it != d->loadingThreads->end(); ++it)
     {
         // better check for a valid pointer here
         if (it.value())
@@ -173,141 +207,142 @@ SlideShowLoader::~SlideShowLoader()
         delete it.value();
     }
 
-    m_loadingThreads->clear();
+    d->loadingThreads->clear();
 
-    m_threadLock->unlock();
+    d->threadLock->unlock();
 
-    delete m_loadedImages;
-    delete m_loadingThreads;
-    delete m_imageLock;
-    delete m_threadLock;
+    delete d->loadedImages;
+    delete d->loadingThreads;
+    delete d->imageLock;
+    delete d->threadLock;
+    delete d;
 }
 
 void SlideShowLoader::next()
 {
-    int victim = (m_currIndex - (m_cacheSize % 2 == 0 ? (m_cacheSize / 2) - 1
-                                                      :  int(m_cacheSize / 2))) % m_pathList.count();
+    int victim = (d->currIndex - (d->cacheSize % 2 == 0 ? (d->cacheSize / 2) - 1
+                                                      :  int(d->cacheSize / 2))) % d->pathList.count();
 
-    int newBorn = (m_currIndex + int(m_cacheSize / 2) + 1) % m_pathList.count();
+    int newBorn = (d->currIndex + int(d->cacheSize / 2) + 1) % d->pathList.count();
 
-    m_currIndex = (m_currIndex + 1) % m_pathList.count();
+    d->currIndex = (d->currIndex + 1) % d->pathList.count();
 
     if (victim == newBorn)
         return;
 
-    m_threadLock->lock();
+    d->threadLock->lock();
 
-    LoadThread* const oldThread = m_loadingThreads->value(QUrl::fromLocalFile(m_pathList[victim].first));
+    LoadThread* const oldThread = d->loadingThreads->value(QUrl::fromLocalFile(d->pathList[victim].first));
 
     if (oldThread)
         oldThread->wait();
 
     delete oldThread;
 
-    m_loadingThreads->remove(QUrl::fromLocalFile(m_pathList[victim].first));
-    m_imageLock->lock();
-    m_loadedImages->remove(QUrl::fromLocalFile(m_pathList[victim].first));
-    m_imageLock->unlock();
-    m_threadLock->unlock();
+    d->loadingThreads->remove(QUrl::fromLocalFile(d->pathList[victim].first));
+    d->imageLock->lock();
+    d->loadedImages->remove(QUrl::fromLocalFile(d->pathList[victim].first));
+    d->imageLock->unlock();
+    d->threadLock->unlock();
 
-    QUrl filePath   = QUrl::fromLocalFile((m_pathList[newBorn].first));
+    QUrl filePath   = QUrl::fromLocalFile((d->pathList[newBorn].first));
     KPImageInfo info(filePath);
     int orientation = info.orientation();
 
-    LoadThread* const newThread = new LoadThread(m_loadedImages, m_imageLock, filePath, orientation, m_swidth, m_sheight);
+    LoadThread* const newThread = new LoadThread(d->loadedImages, d->imageLock, filePath, orientation, d->swidth, d->sheight);
 
-    m_threadLock->lock();
+    d->threadLock->lock();
 
-    m_loadingThreads->insert(filePath, newThread);
+    d->loadingThreads->insert(filePath, newThread);
     newThread->start();
 
-    m_threadLock->unlock();
+    d->threadLock->unlock();
 }
 
 void SlideShowLoader::prev()
 {
-    int victim  = (m_currIndex + int(m_currIndex / 2)) % m_pathList.count();
-    int newBorn = (m_currIndex - ((m_cacheSize & 2) == 0 ? (m_cacheSize / 2)
-                                                         : int(m_cacheSize / 2) + 1)) % m_pathList.count();
+    int victim  = (d->currIndex + int(d->currIndex / 2)) % d->pathList.count();
+    int newBorn = (d->currIndex - ((d->cacheSize & 2) == 0 ? (d->cacheSize / 2)
+                                                         : int(d->cacheSize / 2) + 1)) % d->pathList.count();
 
-    m_currIndex = m_currIndex > 0 ? m_currIndex - 1 : m_pathList.count() - 1;
+    d->currIndex = d->currIndex > 0 ? d->currIndex - 1 : d->pathList.count() - 1;
 
     if (victim == newBorn)
         return;
 
-    m_threadLock->lock();
-    m_imageLock->lock();
+    d->threadLock->lock();
+    d->imageLock->lock();
 
-    LoadThread* const oldThread = m_loadingThreads->value(QUrl::fromLocalFile(m_pathList[victim].first));
+    LoadThread* const oldThread = d->loadingThreads->value(QUrl::fromLocalFile(d->pathList[victim].first));
 
     if (oldThread)
         oldThread->wait();
 
     delete oldThread;
 
-    m_loadingThreads->remove(QUrl::fromLocalFile(m_pathList[victim].first));
-    m_loadedImages->remove(QUrl::fromLocalFile(m_pathList[victim].first));
+    d->loadingThreads->remove(QUrl::fromLocalFile(d->pathList[victim].first));
+    d->loadedImages->remove(QUrl::fromLocalFile(d->pathList[victim].first));
 
-    m_imageLock->unlock();
-    m_threadLock->unlock();
+    d->imageLock->unlock();
+    d->threadLock->unlock();
 
-    QUrl filePath   = QUrl::fromLocalFile(m_pathList[newBorn].first);
+    QUrl filePath   = QUrl::fromLocalFile(d->pathList[newBorn].first);
     KPImageInfo info(filePath);
     int orientation = info.orientation();
 
-    LoadThread* const newThread = new LoadThread(m_loadedImages, m_imageLock, filePath, orientation, m_swidth, m_sheight);
+    LoadThread* const newThread = new LoadThread(d->loadedImages, d->imageLock, filePath, orientation, d->swidth, d->sheight);
 
-    m_threadLock->lock();
+    d->threadLock->lock();
 
-    m_loadingThreads->insert(filePath, newThread);
+    d->loadingThreads->insert(filePath, newThread);
     newThread->start();
 
-    m_threadLock->unlock();
+    d->threadLock->unlock();
 }
 
 QImage SlideShowLoader::getCurrent()
 {
-    checkIsIn(m_currIndex);
-    m_imageLock->lock();
-    QImage returned = (*m_loadedImages)[QUrl::fromLocalFile(m_pathList[m_currIndex].first)];
-    m_imageLock->unlock();
+    checkIsIn(d->currIndex);
+    d->imageLock->lock();
+    QImage returned = (*d->loadedImages)[QUrl::fromLocalFile(d->pathList[d->currIndex].first)];
+    d->imageLock->unlock();
 
     return returned;
 }
 
 QString SlideShowLoader::currFileName() const
 {
-    return QUrl::fromLocalFile(m_pathList[m_currIndex].first).fileName();
+    return QUrl::fromLocalFile(d->pathList[d->currIndex].first).fileName();
 }
 
 QUrl SlideShowLoader::currPath() const
 {
-    return QUrl::fromLocalFile(m_pathList[m_currIndex].first);
+    return QUrl::fromLocalFile(d->pathList[d->currIndex].first);
 }
 
 void SlideShowLoader::checkIsIn(int index)
 {
-    m_threadLock->lock();
+    d->threadLock->lock();
 
-    if (m_loadingThreads->contains(QUrl::fromLocalFile(m_pathList[index].first)))
+    if (d->loadingThreads->contains(QUrl::fromLocalFile(d->pathList[index].first)))
     {
-        if ((*m_loadingThreads)[QUrl::fromLocalFile(m_pathList[index].first)]->isRunning())
-            (*m_loadingThreads)[QUrl::fromLocalFile(m_pathList[index].first)]->wait();
+        if ((*d->loadingThreads)[QUrl::fromLocalFile(d->pathList[index].first)]->isRunning())
+            (*d->loadingThreads)[QUrl::fromLocalFile(d->pathList[index].first)]->wait();
 
-        m_threadLock->unlock();
+        d->threadLock->unlock();
     }
     else
     {
-        QUrl filePath   = QUrl::fromLocalFile(m_pathList[index].first);
+        QUrl filePath   = QUrl::fromLocalFile(d->pathList[index].first);
         KPImageInfo info(filePath);
         int orientation = info.orientation();
 
-        LoadThread* const newThread = new LoadThread(m_loadedImages, m_imageLock, filePath, orientation, m_swidth, m_sheight);
+        LoadThread* const newThread = new LoadThread(d->loadedImages, d->imageLock, filePath, orientation, d->swidth, d->sheight);
 
-        m_loadingThreads->insert(QUrl::fromLocalFile(m_pathList[index].first), newThread);
+        d->loadingThreads->insert(QUrl::fromLocalFile(d->pathList[index].first), newThread);
         newThread->start();
-        (*m_loadingThreads)[QUrl::fromLocalFile(m_pathList[index].first)]->wait();
-        m_threadLock->unlock();
+        (*d->loadingThreads)[QUrl::fromLocalFile(d->pathList[index].first)]->wait();
+        d->threadLock->unlock();
     }
 }
 

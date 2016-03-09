@@ -101,19 +101,8 @@ private:
 
 private:
 
-    LoadingThreads*  m_loadingThreads;
-    LoadedImages*    m_loadedImages;
-    FileList         m_pathList;
-
-    QMutex*          m_imageLock;
-    QMutex*          m_threadLock;
-
-    SharedContainer* m_sharedData;
-
-    uint             m_cacheSize;
-    int              m_currIndex;
-    int              m_swidth;
-    int              m_sheight;
+    class Private;
+    Private* const d;
 };
 
 }  // namespace KIPIAdvancedSlideshowPlugin
