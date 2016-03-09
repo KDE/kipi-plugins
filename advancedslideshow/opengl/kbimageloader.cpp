@@ -68,27 +68,27 @@ public:
         textureAspect = 0.0;
     }
 
-    int                         fileIndex;
-    QList<QPair<QString, int> > fileList;
+    int            fileIndex;
+    QStringList    fileList;
 
-    int                         width;
-    int                         height;
+    int            width;
+    int            height;
 
-    QWaitCondition              imageRequest;
-    QMutex                      condLock;
-    QMutex                      imageLock;
+    QWaitCondition imageRequest;
+    QMutex         condLock;
+    QMutex         imageLock;
 
-    bool                        initialized;
-    bool                        needImage;
-    bool                        haveImages;
-    bool                        quitRequested;
-    bool                        loop;
+    bool           initialized;
+    bool           needImage;
+    bool           haveImages;
+    bool           quitRequested;
+    bool           loop;
 
-    float                       textureAspect;
-    QImage                      texture;
+    float          textureAspect;
+    QImage         texture;
 };
 
-KBImageLoader::KBImageLoader(QList<QPair<QString, int> >& fileList, int width, int height, bool loop)
+KBImageLoader::KBImageLoader(const QStringList& fileList, int width, int height, bool loop)
     : QThread(),
       d(new Private)
 {
@@ -198,12 +198,8 @@ void KBImageLoader::run()
 
 bool KBImageLoader::loadImage()
 {
-    QPair<QString, int> fileAngle = d->fileList[d->fileIndex];
-    QString             path(fileAngle.first);
-    int                 angle(fileAngle.second);
-    QImage              image;
-
-    // check if it's a RAW file.
+    QString path = d->fileList[d->fileIndex];
+    QImage  image;
 
     PluginLoader* const pl = PluginLoader::instance();
 
@@ -213,13 +209,7 @@ bool KBImageLoader::loadImage()
 
         if (iface)
         {
-            QPointer<RawProcessor> rawdec = iface->createRawProcessor();
-
-            // check if its a RAW file.
-            if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(path)))
-            {
-                rawdec->loadRawPreview(QUrl::fromLocalFile(path), image);
-            }
+            image = iface->preview(QUrl::fromLocalFile(path));  
         }
     }
 
@@ -232,13 +222,6 @@ bool KBImageLoader::loadImage()
     if (image.isNull())
     {
         return false;
-    }
-
-    if (angle != 0)
-    {
-        QMatrix wm;
-        wm.rotate(angle);
-        image = image.transformed(wm);
     }
 
     float aspect = (float)image.width() / (float)image.height();

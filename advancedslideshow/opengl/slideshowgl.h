@@ -53,7 +53,7 @@ class SlideShowGL : public QGLWidget
 
 public:
 
-    SlideShowGL(const QList<QPair<QString, int> >& fileList,
+    SlideShowGL(const QStringList& fileList,
                 const QStringList& commentsList,
                 SharedContainer* const sharedData);
     ~SlideShowGL();

@@ -34,9 +34,7 @@
 #include <QThread>
 #include <QPair>
 #include <QUrl>
-
-typedef QPair<QString, int>  FileAnglePair;
-typedef QList<FileAnglePair> FileList;
+#include <QStringList>
 
 namespace KIPIAdvancedSlideshowPlugin
 {
@@ -47,7 +45,7 @@ class SlideShowLoader
 {
 public:
 
-    SlideShowLoader(FileList& pathList, uint cacheSize, int width, int height,
+    SlideShowLoader(const QStringList& pathList, uint cacheSize, int width, int height,
                     int beginAtIndex = 0);
     ~SlideShowLoader();
 

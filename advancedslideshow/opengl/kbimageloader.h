@@ -46,7 +46,7 @@ class KBImageLoader : public QThread
 
 public:
 
-    KBImageLoader(QList<QPair<QString, int> >& fileList, int width, int height, bool loop);
+    KBImageLoader(const QStringList& fileList, int width, int height, bool loop);
     ~KBImageLoader();
 
     void  quit();

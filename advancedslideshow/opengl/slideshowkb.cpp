@@ -219,7 +219,7 @@ Image::~Image()
 
 // -------------------------------------------------------------------------
  
-SlideShowKB::SlideShowKB(const QList<QPair<QString, int> >& fileList,
+SlideShowKB::SlideShowKB(const QStringList& fileList,
                          const QStringList& commentsList,
                          SharedContainer* const sharedData)
     : QGLWidget(),
@@ -273,12 +273,12 @@ SlideShowKB::SlideShowKB(const QList<QPair<QString, int> >& fileList,
 
     qCDebug(KIPIPLUGINS_LOG) << "Frame Rate : " << frameRate;
 
-    d->image[0]                       = new Image(0);
-    d->image[1]                       = new Image(0);
-    d->step                           = 1.0 / ((float) (d->delay * frameRate));
-    QList<QPair<QString, int> > fList = fileList;
-    d->imageLoadThread                = new KBImageLoader(fList, width(), height(), d->sharedData->loop);
-    d->timer                          = new QTimer;
+    d->image[0]        = new Image(0);
+    d->image[1]        = new Image(0);
+    d->step            = 1.0 / ((float) (d->delay * frameRate));
+    QStringList fList  = fileList;
+    d->imageLoadThread = new KBImageLoader(fList, width(), height(), d->sharedData->loop);
+    d->timer           = new QTimer;
 
     connect(d->timer, SIGNAL(timeout()),
             this, SLOT(moveSlot()));

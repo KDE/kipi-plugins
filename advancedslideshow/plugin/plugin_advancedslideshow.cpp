@@ -208,20 +208,13 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
         return;
     }
 
-    typedef QPair<QString, int>  FileAnglePair;
-    typedef QList<FileAnglePair> FileList;
-    FileList                     fileList;
-    QStringList                  commentsList;
+    QStringList fileList;
+    QStringList commentsList;
 
     for (QList<QUrl>::ConstIterator urlIt = m_urlList.constBegin(); urlIt != m_urlList.constEnd(); ++urlIt)
     {
-        fileList.append(FileAnglePair((*urlIt).toLocalFile(), 0));
+        fileList.append((*urlIt).toLocalFile());
         commentsList.append(QString());
-/*
-        KIPIPlugins::KPImageInfo info(m_interface, *urlIt);
-        fileList.append(FileAnglePair((*urlIt).toLocalFile(), info.orientation()));
-        commentsList.append(info.description());
-*/
     }
 
     m_urlList.clear();
@@ -232,8 +225,8 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
         gettimeofday(&tv, 0);
         srand(tv.tv_sec);
 
-        FileList::iterator it       = fileList.begin();
-        FileList::iterator it1;
+        QStringList::iterator it    = fileList.begin();
+        QStringList::iterator it1;
 
         QStringList::iterator itcom = commentsList.begin();
         QStringList::iterator itcom1;

@@ -114,7 +114,7 @@ class SlideShowKB : public QGLWidget
 
 public:
 
-    SlideShowKB(const QList<QPair<QString, int> >& fileList,
+    SlideShowKB(const QStringList& fileList,
                 const QStringList& commentsList,
                 SharedContainer* const sharedData);
 

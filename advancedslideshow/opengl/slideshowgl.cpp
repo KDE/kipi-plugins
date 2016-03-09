@@ -113,7 +113,7 @@ public:
 
     QMap<QString, EffectMethod>       effects;
 
-    QList<QPair<QString, int> >       fileList;
+    QStringList                       fileList;
     QStringList                       commentsList;
     QTimer*                           timer;
     int                               fileIndex;
@@ -155,7 +155,7 @@ public:
     SharedContainer*                  sharedData;
 };
     
-SlideShowGL::SlideShowGL(const QList<QPair<QString, int> >& fileList,
+SlideShowGL::SlideShowGL(const QStringList& fileList,
                          const QStringList& commentsList,
                          SharedContainer* const sharedData)
     : QGLWidget(0, 0, Qt::WindowStaysOnTopHint | Qt::Popup | Qt::X11BypassWindowManagerHint),
@@ -209,24 +209,24 @@ SlideShowGL::SlideShowGL(const QList<QPair<QString, int> >& fileList,
 
     // -- Minimal texture size (opengl specs) --------------
 
-    d->width  = 64;
-    d->height = 64;
+    d->width        = 64;
+    d->height       = 64;
 
     // -- Margin -------------------------------------------
 
-    d->xMargin = int (d->deskWidth / d->width);
-    d->yMargin = int (d->deskWidth / d->height);
+    d->xMargin      = int (d->deskWidth / d->width);
+    d->yMargin      = int (d->deskWidth / d->height);
 
     // --------------------------------------------------
 
-    d->fileList      = fileList;
-    d->commentsList  = commentsList;
-    d->cacheSize     = d->sharedData->enableCache ? d->sharedData->cacheSize : 1;
+    d->fileList     = fileList;
+    d->commentsList = commentsList;
+    d->cacheSize    = d->sharedData->enableCache ? d->sharedData->cacheSize : 1;
 
     // ------------------------------------------------------------------
 
-    d->timeout       = d->sharedData->delay;
-    d->imageLoader   = new SlideShowLoader(d->fileList, d->cacheSize, width(), height());
+    d->timeout      = d->sharedData->delay;
+    d->imageLoader  = new SlideShowLoader(d->fileList, d->cacheSize, width(), height());
 
     // --------------------------------------------------
 
@@ -664,7 +664,7 @@ void SlideShowGL::montage(QImage& top, QImage& bot)
 
 void SlideShowGL::printFilename(QImage& layer)
 {
-    QFileInfo fileinfo(d->fileList[d->fileIndex].first);
+    QFileInfo fileinfo(d->fileList[d->fileIndex]);
     QString filename = fileinfo.fileName();
     QPixmap pix      = generateOutlinedTextPixmap(filename);
 

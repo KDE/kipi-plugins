@@ -135,7 +135,7 @@ public:
     PlaybackWidget*             playbackWidget;
 #endif
 
-    FileList                    fileList;
+    QStringList                 fileList;
     QStringList                 commentsList;
     QTimer*                     timer;
     int                         fileIndex;
@@ -181,7 +181,7 @@ public:
     int                         deskHeight;
 };
 
-SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, SharedContainer* const sharedData)
+SlideShow::SlideShow(const QStringList& fileList, const QStringList& commentsList, SharedContainer* const sharedData)
     : QWidget(0, Qt::WindowStaysOnTopHint | Qt::Popup | Qt::X11BypassWindowManagerHint),
     d(new Private)
 {
@@ -257,7 +257,7 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
     else
         d->cacheSize = 1;
 
-    d->imageLoader = new SlideShowLoader( d->fileList, d->cacheSize, width(), height(), d->fileIndex);
+    d->imageLoader = new SlideShowLoader(d->fileList, d->cacheSize, width(), height(), d->fileIndex);
 
     // --------------------------------------------------
 

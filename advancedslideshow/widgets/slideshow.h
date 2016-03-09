@@ -45,9 +45,6 @@ class QWheelEvent;
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-typedef QPair<QString, int>  FileAnglePair;
-typedef QList<FileAnglePair> FileList;
-
 class SharedContainer;
 
 class SlideShow : public QWidget
@@ -58,7 +55,7 @@ class SlideShow : public QWidget
 
 public:
 
-    SlideShow(const FileList& fileList,
+    SlideShow(const QStringList& fileList,
               const QStringList& commentsList,
               SharedContainer* const sharedData);
     ~SlideShow();
