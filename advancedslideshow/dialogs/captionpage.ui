@@ -6,13 +6,24 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>559</width>
-    <height>679</height>
+    <width>569</width>
+    <height>476</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
-    <widget class="KFontChooser" name="m_commentsFontChooser"/>
+    <widget class="QPushButton" name="m_fontselectBtn">
+     <property name="text">
+      <string>Requested Font</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="m_fontSampleLbl">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -23,7 +34,7 @@
          <item>
           <widget class="QLabel" name="label_3">
            <property name="text">
-            <string>Line length (in characters)</string>
+            <string>Line length (in characters):</string>
            </property>
           </widget>
          </item>
@@ -56,19 +67,6 @@
            </property>
           </widget>
          </item>
-         <item>
-          <spacer name="horizontalSpacer_5">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
         </layout>
        </item>
        <item>
@@ -97,9 +95,6 @@
             </property>
            </spacer>
           </item>
-          <item row="1" column="3">
-           <widget class="KIPIPlugins::KPColorSelector" name="m_commentsFontColor"/>
-          </item>
           <item row="2" column="0">
            <widget class="QLabel" name="label_2">
             <property name="text">
@@ -119,9 +114,6 @@
              </size>
             </property>
            </spacer>
-          </item>
-          <item row="2" column="3">
-           <widget class="KIPIPlugins::KPColorSelector" name="m_commentsBgColor"/>
           </item>
           <item row="4" column="2">
            <spacer name="horizontalSpacer_4">
@@ -174,6 +166,12 @@
              <string>Outlined Text</string>
             </property>
            </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="KIPIPlugins::KPColorSelector" name="m_commentsFontColor"/>
+          </item>
+          <item row="2" column="3">
+           <widget class="KIPIPlugins::KPColorSelector" name="m_commentsBgColor"/>
           </item>
          </layout>
         </widget>

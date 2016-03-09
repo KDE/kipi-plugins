@@ -64,12 +64,12 @@ public:
     bool                 ImagesHasComments;
     QList<QUrl>          urlList;
 
-    MainPage*          mainPage;
-    CaptionPage*       captionPage;
+    MainPage*            mainPage;
+    CaptionPage*         captionPage;
 #ifdef HAVE_AUDIO
-    SoundtrackPage*    soundtrackPage;
+    SoundtrackPage*      soundtrackPage;
 #endif
-    AdvancedPage*      advancedPage;
+    AdvancedPage*        advancedPage;
 
     // Config file data
 
