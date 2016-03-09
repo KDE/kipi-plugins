@@ -257,7 +257,7 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
     else
         d->cacheSize = 1;
 
-    d->imageLoader = new SlideShowLoader( d->fileList, d->cacheSize, width(), height(), d->sharedData, d->fileIndex);
+    d->imageLoader = new SlideShowLoader( d->fileList, d->cacheSize, width(), height(), d->fileIndex);
 
     // --------------------------------------------------
 

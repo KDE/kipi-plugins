@@ -148,7 +148,6 @@ public:
         loadedImages   = 0;
         imageLock      = 0;
         threadLock     = 0;
-        sharedData     = 0;
         cacheSize      = 0;
         currIndex      = 0;
         swidth         = 0;
@@ -162,8 +161,6 @@ public:
     QMutex*          imageLock;
     QMutex*          threadLock;
 
-    SharedContainer* sharedData;
-
     uint             cacheSize;
     int              currIndex;
     int              swidth;
@@ -171,7 +168,7 @@ public:
 };
 
 SlideShowLoader::SlideShowLoader(FileList& pathList, uint cacheSize, int width, int height,
-                                 SharedContainer* const sharedData, int beginAtIndex)
+                                 int beginAtIndex)
     : d(new Private)
 {
     d->currIndex      = beginAtIndex;
@@ -183,7 +180,6 @@ SlideShowLoader::SlideShowLoader(FileList& pathList, uint cacheSize, int width, 
     d->loadedImages   = new LoadedImages();
     d->imageLock      = new QMutex();
     d->threadLock     = new QMutex();
-    d->sharedData     = sharedData;
 
     QUrl filePath;
     int  orientation;
@@ -246,7 +242,7 @@ SlideShowLoader::~SlideShowLoader()
 void SlideShowLoader::next()
 {
     int victim = (d->currIndex - (d->cacheSize % 2 == 0 ? (d->cacheSize / 2) - 1
-                                                      :  int(d->cacheSize / 2))) % d->pathList.count();
+                                                        :  int(d->cacheSize / 2))) % d->pathList.count();
 
     int newBorn = (d->currIndex + int(d->cacheSize / 2) + 1) % d->pathList.count();
 
@@ -288,7 +284,7 @@ void SlideShowLoader::prev()
 {
     int victim  = (d->currIndex + int(d->currIndex / 2)) % d->pathList.count();
     int newBorn = (d->currIndex - ((d->cacheSize & 2) == 0 ? (d->cacheSize / 2)
-                                                         : int(d->cacheSize / 2) + 1)) % d->pathList.count();
+                                                           : int(d->cacheSize / 2) + 1)) % d->pathList.count();
 
     d->currIndex = d->currIndex > 0 ? d->currIndex - 1 : d->pathList.count() - 1;
 

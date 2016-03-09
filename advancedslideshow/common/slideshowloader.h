@@ -48,7 +48,7 @@ class SlideShowLoader
 public:
 
     SlideShowLoader(FileList& pathList, uint cacheSize, int width, int height,
-                    SharedContainer* const sharedData, int beginAtIndex = 0);
+                    int beginAtIndex = 0);
     ~SlideShowLoader();
 
     void    next();

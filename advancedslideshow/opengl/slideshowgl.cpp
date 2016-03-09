@@ -226,7 +226,7 @@ SlideShowGL::SlideShowGL(const QList<QPair<QString, int> >& fileList,
     // ------------------------------------------------------------------
 
     d->timeout       = d->sharedData->delay;
-    d->imageLoader   = new SlideShowLoader(d->fileList, d->cacheSize, width(), height(), d->sharedData);
+    d->imageLoader   = new SlideShowLoader(d->fileList, d->cacheSize, width(), height());
 
     // --------------------------------------------------
 
