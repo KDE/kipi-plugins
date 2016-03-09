@@ -56,7 +56,7 @@
 // Local includes
 
 #include "commoncontainer.h"
-#include "imageloadthread.h"
+#include "kbimageloader.h"
 #include "kbeffect.h"
 #include "playbackwidget.h"
 #include "kipiplugins_debug.h"
@@ -277,7 +277,7 @@ SlideShowKB::SlideShowKB(const QList<QPair<QString, int> >& fileList,
     d->image[1]                       = new Image(0);
     d->step                           = 1.0 / ((float) (d->delay * frameRate));
     QList<QPair<QString, int> > fList = fileList;
-    d->imageLoadThread                = new ImageLoadThread(fList, width(), height(), d->sharedData->loop);
+    d->imageLoadThread                = new KBImageLoader(fList, width(), height(), d->sharedData->loop);
     d->timer                          = new QTimer;
 
     connect(d->timer, SIGNAL(timeout()),
@@ -406,7 +406,7 @@ bool SlideShowKB::setupNewImage(int idx)
         // we have the image lock and there is an image
         float imageAspect          = d->imageLoadThread->imageAspect();
         ViewTrans* const viewTrans = new ViewTrans(d->zoomIn, aspect() / imageAspect);
-        d->image[idx]               = new Image(viewTrans, imageAspect);
+        d->image[idx]              = new Image(viewTrans, imageAspect);
 
         applyTexture(d->image[idx], d->imageLoadThread->image());
         ok = true;
@@ -430,9 +430,9 @@ void SlideShowKB::startSlideShowOnce()
     // the first image
     if (d->initialized == false && d->imageLoadThread->ready())
     {
-        setupNewImage(0);                     // setup the first image and
+        setupNewImage(0);                      // setup the first image and
         d->imageLoadThread->requestNewImage(); // load the next one in background
-        setNewKBEffect();                     // set the initial effect
+        setNewKBEffect();                      // set the initial effect
 
         d->initialized = true;
     }

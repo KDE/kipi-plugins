@@ -32,7 +32,6 @@ set(kipiplugin_advancedslideshow_PART_SRCS dialogs/captionpage.cpp
 
                                            common/commoncontainer.cpp
                                            common/slideshowloader.cpp
-                                           common/imageloadthread.cpp
                                            common/kpsvgpixmaprenderer.cpp
 
                                            plugin/plugin_advancedslideshow.cpp
@@ -43,6 +42,7 @@ if(OPENGLLIBS_FOUND)
                                                opengl/slideshowgl.cpp
                                                opengl/slideshowkb.cpp
                                                opengl/kbeffect.cpp
+                                               opengl/kbimageloader.cpp
     )
 endif()
 

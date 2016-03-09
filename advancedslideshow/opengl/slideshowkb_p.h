@@ -28,7 +28,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class ImageLoadThread;
+class KBImageLoader;
 class ScreenProperties;
 class PlaybackWidget;
 
@@ -71,7 +71,7 @@ public:
 
     QStringList         commentsList;
 
-    ImageLoadThread*    imageLoadThread;
+    KBImageLoader*      imageLoadThread;
     QTimer*             mouseMoveTimer;
     QTimer*             timer;
     bool                haveImages;
