@@ -120,7 +120,7 @@ public:
         deskHeight          = 0;
     }
 
-    PresentationContainer*            sharedData;
+    PresentationContainer*      sharedData;
 
     uint                        cacheSize;
 
@@ -128,11 +128,11 @@ public:
 
     QMap<QString, EffectMethod> Effects;
 
-    PresentationLoader*            imageLoader;
+    PresentationLoader*         imageLoader;
     QPixmap                     currImage;
 
 #ifdef HAVE_AUDIO
-    PresentationAudioWidget*             playbackWidget;
+    PresentationAudioWidget*    playbackWidget;
 #endif
 
     QStringList                 fileList;
@@ -172,7 +172,7 @@ public:
     //static
     QPolygon                    pa;
 
-    PresentationCtrlWidget*        slidePresentationAudioWidget;
+    PresentationCtrlWidget*     slidePresentationAudioWidget;
     QTimer*                     mouseMoveTimer;
 
     int                         deskX;
