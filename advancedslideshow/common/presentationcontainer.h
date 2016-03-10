@@ -37,7 +37,7 @@ namespace KIPIAdvancedSlideshowPlugin
 {
 
 class PresentationMainPage;
-class CaptionPage;
+class PrensetationCaptionPage;
 class PresentationAdvPage;
 
 #ifdef HAVE_AUDIO
@@ -65,7 +65,7 @@ public:
     QList<QUrl>          urlList;
 
     PresentationMainPage*            mainPage;
-    CaptionPage*         captionPage;
+    PrensetationCaptionPage*         captionPage;
 #ifdef HAVE_AUDIO
     SoundtrackPage*      soundtrackPage;
 #endif

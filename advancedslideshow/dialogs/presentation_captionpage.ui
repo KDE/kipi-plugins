@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CaptionPage</class>
- <widget class="QWidget" name="CaptionPage">
+ <class>PrensetationCaptionPage</class>
+ <widget class="QWidget" name="PrensetationCaptionPage">
   <property name="geometry">
    <rect>
     <x>0</x>

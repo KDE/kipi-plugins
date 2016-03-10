@@ -51,7 +51,7 @@
 #include "kipiplugins_debug.h"
 #include "presentationcontainer.h"
 #include "presentation_advpage.h"
-#include "captionpage.h"
+#include "presentation_captionpage.h"
 #include "kpimageslist.h"
 #include "presentation.h"
 

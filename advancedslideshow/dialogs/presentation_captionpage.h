@@ -21,26 +21,26 @@
  *
  * ============================================================ */
 
-#ifndef CAPTION_PAGE_H
-#define CAPTION_PAGE_H
+#ifndef PRESENTATION_CAPTION_PAGE_H
+#define PRESENTATION_CAPTION_PAGE_H
 
 // Local includes
 
-#include "ui_captionpage.h"
+#include "ui_presentation_captionpage.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {
 
 class PresentationContainer;
 
-class CaptionPage : public QWidget, Ui::CaptionPage
+class PrensetationCaptionPage : public QWidget, Ui::PrensetationCaptionPage
 {
     Q_OBJECT
 
 public:
 
-    CaptionPage(QWidget* const parent, PresentationContainer* const sharedData);
-    ~CaptionPage();
+    PrensetationCaptionPage(QWidget* const parent, PresentationContainer* const sharedData);
+    ~PrensetationCaptionPage();
 
     void readSettings();
     void saveSettings();
@@ -58,4 +58,4 @@ private:
 
 } // namespace KIPIAdvancedSlideshowPlugin
 
-#endif // CAPTION_PAGE_H
+#endif // PRESENTATION_CAPTION_PAGE_H

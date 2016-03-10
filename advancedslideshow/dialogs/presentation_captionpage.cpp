@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "captionpage.h"
+#include "presentation_captionpage.h"
 
 // Qt includes
 
@@ -36,7 +36,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-CaptionPage::CaptionPage( QWidget* const parent, PresentationContainer* const sharedData)
+PrensetationCaptionPage::PrensetationCaptionPage( QWidget* const parent, PresentationContainer* const sharedData)
     : QWidget(parent)
 {
     setupUi(this);
@@ -45,11 +45,11 @@ CaptionPage::CaptionPage( QWidget* const parent, PresentationContainer* const sh
     m_fontSampleLbl->setAutoFillBackground(true);
 }
 
-CaptionPage::~CaptionPage()
+PrensetationCaptionPage::~PrensetationCaptionPage()
 {
 }
 
-void CaptionPage::readSettings()
+void PrensetationCaptionPage::readSettings()
 {
     connect(m_commentsFontColor, SIGNAL(signalColorSelected(QColor)),
             this, SLOT(slotCommentsFontColorChanged()));
@@ -71,7 +71,7 @@ void CaptionPage::readSettings()
     slotCommentsFontColorChanged();
 }
 
-void CaptionPage::saveSettings()
+void PrensetationCaptionPage::saveSettings()
 {
     delete m_sharedData->captionFont;
     m_sharedData->captionFont         = new QFont(m_fontSampleLbl->font());
@@ -86,21 +86,21 @@ void CaptionPage::saveSettings()
 
 // --- Slots
 
-void CaptionPage::slotCommentsBgColorChanged()
+void PrensetationCaptionPage::slotCommentsBgColorChanged()
 {
     QPalette palette = m_fontSampleLbl->palette();
     palette.setColor(m_fontSampleLbl->backgroundRole(), m_commentsBgColor->color());
     m_fontSampleLbl->setPalette(palette);
 }
 
-void CaptionPage::slotCommentsFontColorChanged()
+void PrensetationCaptionPage::slotCommentsFontColorChanged()
 {
     QPalette palette = m_fontSampleLbl->palette();
     palette.setColor(m_fontSampleLbl->foregroundRole(), m_commentsFontColor->color());
     m_fontSampleLbl->setPalette(palette);
 }
 
-void CaptionPage::slotOpenFontDialog()
+void PrensetationCaptionPage::slotOpenFontDialog()
 {
     bool ok = false;
     QFont f = QFontDialog::getFont(&ok, *(m_sharedData->captionFont), this);
