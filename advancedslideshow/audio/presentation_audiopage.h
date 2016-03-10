@@ -34,13 +34,13 @@
 // Local includes
 
 #include "ui_presentation_audiopage.h"
-#include "playbackwidget.h"
+#include "presentationaudiowidget.h"
 #include "listsounditems.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class PlaybackWidget;
+class PresentationAudioWidget;
 class PresentationContainer;
 
 class SoundtrackPreview : public QDialog
@@ -53,7 +53,7 @@ public :
 
 private :
 
-    PlaybackWidget* m_playbackWidget;
+    PresentationAudioWidget* m_playbackWidget;
 };
 
 // ----------------------------------------------------------------------

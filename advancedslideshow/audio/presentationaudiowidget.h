@@ -22,8 +22,8 @@
  *
  * ============================================================ */
 
-#ifndef PLAYBACKWIDGET_H
-#define PLAYBACKWIDGET_H
+#ifndef PRESENTATION_AUDIO_WIDGET_H
+#define PRESENTATION_AUDIO_WIDGET_H
 
 // Qt includes
 
@@ -33,21 +33,21 @@
 
 // Local includes
 
-#include "ui_playbackwidget.h"
+#include "ui_presentationaudiowidget.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {
 
 class PresentationContainer;
 
-class PlaybackWidget : public QWidget, public Ui::PlaybackWidget
+class PresentationAudioWidget : public QWidget, public Ui::PresentationAudioWidget
 {
     Q_OBJECT
 
 public:
 
-    PlaybackWidget(QWidget* const, const QList<QUrl>&, PresentationContainer* const);
-    ~PlaybackWidget();
+    PresentationAudioWidget(QWidget* const, const QList<QUrl>&, PresentationContainer* const);
+    ~PresentationAudioWidget();
 
     void enqueue(const QList<QUrl>&);
     bool canHide() const;
@@ -86,4 +86,4 @@ private:
 
 } // namespace KIPIAdvancedSlideshowPlugin
 
-#endif // PLAYBACKWIDGET_H
+#endif // PRESENTATION_AUDIO_WIDGET_H

@@ -33,7 +33,7 @@ namespace KIPIAdvancedSlideshowPlugin
 
 class KBImageLoader;
 class ScreenProperties;
-class PlaybackWidget;
+class PresentationAudioWidget;
 
 class PresentationKB::Private
 {
@@ -96,7 +96,7 @@ public:
 
     PresentationContainer* sharedData;
 
-    PlaybackWidget*        playbackWidget;
+    PresentationAudioWidget*        playbackWidget;
 };
 
 }  // namespace KIPIAdvancedSlideshowPlugin

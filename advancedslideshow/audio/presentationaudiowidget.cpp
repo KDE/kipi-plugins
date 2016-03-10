@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "playbackwidget.h"
+#include "presentationaudiowidget.h"
 
 // Qt includes
 
@@ -39,7 +39,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class PlaybackWidget::Private
+class PresentationAudioWidget::Private
 {
 
 public:
@@ -64,7 +64,7 @@ public:
     QMediaPlayer*        mediaObject;
 };
 
-PlaybackWidget::PlaybackWidget(QWidget* const parent, const QList<QUrl>& urls, PresentationContainer* const sharedData)
+PresentationAudioWidget::PresentationAudioWidget(QWidget* const parent, const QList<QUrl>& urls, PresentationContainer* const sharedData)
     : QWidget(parent),
       d(new Private)
 {
@@ -130,7 +130,7 @@ PlaybackWidget::PlaybackWidget(QWidget* const parent, const QList<QUrl>& urls, P
     setZeroTime();
 }
 
-PlaybackWidget::~PlaybackWidget()
+PresentationAudioWidget::~PresentationAudioWidget()
 {
     if (!d->urlList.empty())
     {
@@ -140,17 +140,17 @@ PlaybackWidget::~PlaybackWidget()
     delete d;
 }
 
-bool PlaybackWidget::canHide() const
+bool PresentationAudioWidget::canHide() const
 {
     return d->canHide;
 }
 
-bool PlaybackWidget::isPaused() const
+bool PresentationAudioWidget::isPaused() const
 {
     return (d->mediaObject->state() == QMediaPlayer::PausedState);
 }
 
-void PlaybackWidget::checkSkip()
+void PresentationAudioWidget::checkSkip()
 {
     m_prevButton->setEnabled(true);
     m_nextButton->setEnabled(true);
@@ -165,13 +165,13 @@ void PlaybackWidget::checkSkip()
     }
 }
 
-void PlaybackWidget::setGUIPlay(bool isPlaying)
+void PresentationAudioWidget::setGUIPlay(bool isPlaying)
 {
     m_playButton->setIcon(QIcon::fromTheme(isPlaying ? QString::fromLatin1("media-playback-start")
                                                      : QString::fromLatin1("media-playback-pause")));
 }
 
-void PlaybackWidget::setZeroTime()
+void PresentationAudioWidget::setZeroTime()
 {
     QTime zeroTime(0, 0, 0);
     m_elapsedTimeLabel->setText(zeroTime.toString(QString::fromLatin1("H:mm:ss")));
@@ -179,7 +179,7 @@ void PlaybackWidget::setZeroTime()
     d->isZeroTime = true;
 }
 
-void PlaybackWidget::enqueue(const QList<QUrl>& urls)
+void PresentationAudioWidget::enqueue(const QList<QUrl>& urls)
 {
     d->urlList   = urls;
     d->currIndex = 0;
@@ -194,7 +194,7 @@ void PlaybackWidget::enqueue(const QList<QUrl>& urls)
     m_playButton->setEnabled(true);
 }
 
-void PlaybackWidget::setPaused(bool val)
+void PresentationAudioWidget::setPaused(bool val)
 {
     if (val == isPaused())
         return;
@@ -202,7 +202,7 @@ void PlaybackWidget::setPaused(bool val)
     slotPlay();
 }
 
-void PlaybackWidget::keyPressEvent(QKeyEvent* event)
+void PresentationAudioWidget::keyPressEvent(QKeyEvent* event)
 {
     switch (event->key())
     {
@@ -243,7 +243,7 @@ void PlaybackWidget::keyPressEvent(QKeyEvent* event)
     event->accept();
 }
 
-void PlaybackWidget::slotPlay()
+void PresentationAudioWidget::slotPlay()
 {
     if (d->mediaObject->state() == QMediaPlayer::PlayingState || d->mediaObject->mediaStatus() == QMediaPlayer::BufferingMedia)
     {
@@ -263,7 +263,7 @@ void PlaybackWidget::slotPlay()
     }
 }
 
-void PlaybackWidget::slotStop()
+void PresentationAudioWidget::slotStop()
 {
     d->mediaObject->stop();
     d->stopCalled = true;
@@ -274,7 +274,7 @@ void PlaybackWidget::slotStop()
     setZeroTime();
 }
 
-void PlaybackWidget::slotPrev()
+void PresentationAudioWidget::slotPrev()
 {
     d->currIndex--;
 
@@ -296,7 +296,7 @@ void PlaybackWidget::slotPrev()
     setZeroTime();
 }
 
-void PlaybackWidget::slotNext()
+void PresentationAudioWidget::slotNext()
 {
     d->currIndex++;
 
@@ -318,7 +318,7 @@ void PlaybackWidget::slotNext()
     setZeroTime();
 }
 
-void PlaybackWidget::slotTimeUpdaterTimeout()
+void PresentationAudioWidget::slotTimeUpdaterTimeout()
 {
     if (!d->mediaObject->error() == QMediaPlayer::NoError)
     {
@@ -346,7 +346,7 @@ void PlaybackWidget::slotTimeUpdaterTimeout()
     m_elapsedTimeLabel->setText(elapsedTime.toString(QString::fromLatin1("H:mm:ss")));
 }
 
-void PlaybackWidget::slotMediaStateChanged(QMediaPlayer::MediaStatus status)
+void PresentationAudioWidget::slotMediaStateChanged(QMediaPlayer::MediaStatus status)
 {
     if (status == QMediaPlayer::EndOfMedia)
     {
@@ -354,7 +354,7 @@ void PlaybackWidget::slotMediaStateChanged(QMediaPlayer::MediaStatus status)
     }
 }
 
-void PlaybackWidget::slotPlayerError(QMediaPlayer::Error err)
+void PresentationAudioWidget::slotPlayerError(QMediaPlayer::Error err)
 {
     if (err != QMediaPlayer::NoError)
     {
@@ -363,7 +363,7 @@ void PlaybackWidget::slotPlayerError(QMediaPlayer::Error err)
     }
 }
 
-void PlaybackWidget::slotPlayerStateChanged(QMediaPlayer::State state)
+void PresentationAudioWidget::slotPlayerStateChanged(QMediaPlayer::State state)
 {
     switch (state)
     {
@@ -395,7 +395,7 @@ void PlaybackWidget::slotPlayerStateChanged(QMediaPlayer::State state)
     }
 }
 
-void PlaybackWidget::slotError()
+void PresentationAudioWidget::slotError()
 {
     /* TODO :
      * Display error on slideshow.

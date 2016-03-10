@@ -58,7 +58,7 @@
 #include "presentationcontainer.h"
 #include "kbimageloader.h"
 #include "kbeffect.h"
-#include "playbackwidget.h"
+#include "presentationaudiowidget.h"
 #include "kipiplugins_debug.h"
 #include "presentationkb_p.h"
 
@@ -301,7 +301,7 @@ PresentationKB::PresentationKB(const QStringList& fileList,
 
 #ifdef HAVE_AUDIO
 
-    d->playbackWidget = new PlaybackWidget(this, d->sharedData->soundtrackUrls, d->sharedData);
+    d->playbackWidget = new PresentationAudioWidget(this, d->sharedData->soundtrackUrls, d->sharedData);
     d->playbackWidget->hide();
     d->playbackWidget->move(d->deskX, d->deskY);
 

@@ -34,7 +34,7 @@
 
 // Local includes
 
-#include "playbackwidget.h"
+#include "presentationaudiowidget.h"
 #include "presentation_mainpage.h"
 #include "presentationcontainer.h"
 #include "kipiplugins_debug.h"
@@ -48,7 +48,7 @@ SoundtrackPreview::SoundtrackPreview(QWidget* const parent, const QList<QUrl>& u
     setModal(true);
     setWindowTitle(i18n("Soundtrack preview"));
 
-    m_playbackWidget                  = new PlaybackWidget(this, urls, sharedData);
+    m_playbackWidget                  = new PresentationAudioWidget(this, urls, sharedData);
     QDialogButtonBox* const buttonBox = new QDialogButtonBox(QDialogButtonBox::Close, this);
 
     connect(buttonBox, &QDialogButtonBox::rejected,
