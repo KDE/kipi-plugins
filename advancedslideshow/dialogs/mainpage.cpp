@@ -56,7 +56,7 @@
 #include "presentation.h"
 
 #ifdef HAVE_OPENGL
-#   include "slideshowgl.h"
+#   include "presentationgl.h"
 #   include "slideshowkb.h"
 #endif
 
@@ -207,7 +207,7 @@ void MainPage::saveSettings()
         QMap<QString, QString>::ConstIterator it;
 
         // Load slideshowgl effects
-        effectNames = SlideShowGL::effectNamesI18N();
+        effectNames = PresentationGL::effectNamesI18N();
 
         for (it = effectNames.constBegin(); it != effectNames.constEnd(); ++it)
         {
@@ -304,7 +304,7 @@ void MainPage::loadEffectNamesGL()
     QMap<QString, QString>::Iterator it;
 
     // Load slideshowgl effects
-    effectNames = SlideShowGL::effectNamesI18N();
+    effectNames = PresentationGL::effectNamesI18N();
 
     // Add Ken Burns effect
     effectNames.unite(SlideShowKB::effectNamesI18N());

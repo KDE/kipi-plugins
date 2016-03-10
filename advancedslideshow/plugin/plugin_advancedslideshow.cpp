@@ -67,7 +67,7 @@ extern "C"
 #include "kpimageinfo.h"
 
 #ifdef HAVE_OPENGL
-#   include "slideshowgl.h"
+#   include "presentationgl.h"
 #   include "slideshowkb.h"
 #endif
 
@@ -268,7 +268,7 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
             }
             else
             {
-                SlideShowGL* const slideShow = new SlideShowGL(fileList, commentsList, m_sharedData);
+                PresentationGL* const slideShow = new PresentationGL(fileList, commentsList, m_sharedData);
                 slideShow->show();
             }
         }

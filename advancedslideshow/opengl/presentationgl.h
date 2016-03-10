@@ -23,8 +23,8 @@
  *
  * ============================================================ */
 
-#ifndef SLIDESHOWGL_H
-#define SLIDESHOWGL_H
+#ifndef PRESENTATION_GL_H
+#define PRESENTATION_GL_H
 
 #ifdef _MSC_VER
 #include <winsock2.h>
@@ -47,16 +47,16 @@ namespace KIPIAdvancedSlideshowPlugin
 
 class PresentationContainer;
 
-class SlideShowGL : public QGLWidget
+class PresentationGL : public QGLWidget
 {
     Q_OBJECT
 
 public:
 
-    SlideShowGL(const QStringList& fileList,
-                const QStringList& commentsList,
-                PresentationContainer* const sharedData);
-    ~SlideShowGL();
+    PresentationGL(const QStringList& fileList,
+                   const QStringList& commentsList,
+                   PresentationContainer* const sharedData);
+    ~PresentationGL();
 
     void registerEffects();
 
@@ -76,7 +76,7 @@ protected:
 
 private:
 
-    typedef void (SlideShowGL::*EffectMethod)();
+    typedef void (PresentationGL::*EffectMethod)();
 
     QPixmap       generateOutlinedTextPixmap(const QString& text);
     QPixmap       generateOutlinedTextPixmap(const QString& text, QFont& fn);
@@ -124,4 +124,4 @@ private:
 
 }  // namespace KIPIAdvancedSlideshowPlugin
 
-#endif /* SLIDESHOWGL_H */
+#endif /* PRESENTATION_GL_H */

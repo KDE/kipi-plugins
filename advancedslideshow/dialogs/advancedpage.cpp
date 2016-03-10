@@ -28,7 +28,7 @@
 #include "presentation.h"
 
 #ifdef HAVE_OPENGL
-#   include "slideshowgl.h"
+#   include "presentationgl.h"
 #   include "slideshowkb.h"
 #endif
 

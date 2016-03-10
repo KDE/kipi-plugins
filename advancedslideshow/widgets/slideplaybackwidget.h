@@ -76,7 +76,7 @@ private:
     bool         m_canHide;
 
     friend class Presentation;
-    friend class SlideShowGL;
+    friend class PresentationGL;
 };
 
 } // namespace KIPIAdvancedSlideshowPlugin

@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "slideshowgl.h"
+#include "presentationgl.h"
 
 // C++ includes
 
@@ -69,7 +69,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class SlideShowGL::Private
+class PresentationGL::Private
 {
 
 public:
@@ -155,7 +155,7 @@ public:
     PresentationContainer*                  sharedData;
 };
     
-SlideShowGL::SlideShowGL(const QStringList& fileList,
+PresentationGL::PresentationGL(const QStringList& fileList,
                          const QStringList& commentsList,
                          PresentationContainer* const sharedData)
     : QGLWidget(0, 0, Qt::WindowStaysOnTopHint | Qt::Popup | Qt::X11BypassWindowManagerHint),
@@ -269,7 +269,7 @@ SlideShowGL::SlideShowGL(const QStringList& fileList,
     slotMouseMoveTimeOut();
 }
 
-SlideShowGL::~SlideShowGL()
+PresentationGL::~PresentationGL()
 {
 
     if (d->texture[0])
@@ -283,7 +283,7 @@ SlideShowGL::~SlideShowGL()
     delete d;
 }
 
-void SlideShowGL::initializeGL()
+void PresentationGL::initializeGL()
 {
     // Enable Texture Mapping
     glEnable(GL_TEXTURE_2D);
@@ -321,7 +321,7 @@ void SlideShowGL::initializeGL()
     loadImage();
 }
 
-void SlideShowGL::paintGL()
+void PresentationGL::paintGL()
 {
     glDisable(GL_DEPTH_TEST);
 
@@ -345,7 +345,7 @@ void SlideShowGL::paintGL()
     }
 }
 
-void SlideShowGL::resizeGL(int w, int h)
+void PresentationGL::resizeGL(int w, int h)
 {
     // Reset The Current Viewport And Perspective Transformation
     glViewport(0, 0, (GLint)w, (GLint)h);
@@ -354,7 +354,7 @@ void SlideShowGL::resizeGL(int w, int h)
     glLoadIdentity();
 }
 
-void SlideShowGL::keyPressEvent(QKeyEvent* event)
+void PresentationGL::keyPressEvent(QKeyEvent* event)
 {
     if (!event)
         return;
@@ -365,7 +365,7 @@ void SlideShowGL::keyPressEvent(QKeyEvent* event)
 #endif
 }
 
-void SlideShowGL::mousePressEvent(QMouseEvent* e)
+void PresentationGL::mousePressEvent(QMouseEvent* e)
 {
     if (d->endOfShow)
         slotClose();
@@ -384,7 +384,7 @@ void SlideShowGL::mousePressEvent(QMouseEvent* e)
     }
 }
 
-void SlideShowGL::mouseMoveEvent(QMouseEvent* e)
+void PresentationGL::mouseMoveEvent(QMouseEvent* e)
 {
     setCursor(QCursor(Qt::ArrowCursor));
     d->mouseMoveTimer->setSingleShot(true);
@@ -427,7 +427,7 @@ void SlideShowGL::mouseMoveEvent(QMouseEvent* e)
 #endif
 }
 
-void SlideShowGL::wheelEvent(QWheelEvent* e)
+void PresentationGL::wheelEvent(QWheelEvent* e)
 {
     if (!d->sharedData->enableMouseWheel)
         return;
@@ -451,20 +451,20 @@ void SlideShowGL::wheelEvent(QWheelEvent* e)
     }
 }
 
-void SlideShowGL::registerEffects()
+void PresentationGL::registerEffects()
 {
-    d->effects.insert(QString::fromLatin1("None"),    &SlideShowGL::effectNone);
-    d->effects.insert(QString::fromLatin1("Blend"),   &SlideShowGL::effectBlend);
-    d->effects.insert(QString::fromLatin1("Fade"),    &SlideShowGL::effectFade);
-    d->effects.insert(QString::fromLatin1("Rotate"),  &SlideShowGL::effectRotate);
-    d->effects.insert(QString::fromLatin1("Bend"),    &SlideShowGL::effectBend);
-    d->effects.insert(QString::fromLatin1("In Out"),  &SlideShowGL::effectInOut);
-    d->effects.insert(QString::fromLatin1("Slide"),   &SlideShowGL::effectSlide);
-    d->effects.insert(QString::fromLatin1("Flutter"), &SlideShowGL::effectFlutter);
-    d->effects.insert(QString::fromLatin1("Cube"),    &SlideShowGL::effectCube);
+    d->effects.insert(QString::fromLatin1("None"),    &PresentationGL::effectNone);
+    d->effects.insert(QString::fromLatin1("Blend"),   &PresentationGL::effectBlend);
+    d->effects.insert(QString::fromLatin1("Fade"),    &PresentationGL::effectFade);
+    d->effects.insert(QString::fromLatin1("Rotate"),  &PresentationGL::effectRotate);
+    d->effects.insert(QString::fromLatin1("Bend"),    &PresentationGL::effectBend);
+    d->effects.insert(QString::fromLatin1("In Out"),  &PresentationGL::effectInOut);
+    d->effects.insert(QString::fromLatin1("Slide"),   &PresentationGL::effectSlide);
+    d->effects.insert(QString::fromLatin1("Flutter"), &PresentationGL::effectFlutter);
+    d->effects.insert(QString::fromLatin1("Cube"),    &PresentationGL::effectCube);
 }
 
-QStringList SlideShowGL::effectNames()
+QStringList PresentationGL::effectNames()
 {
     QStringList effects;
 
@@ -482,7 +482,7 @@ QStringList SlideShowGL::effectNames()
     return effects;
 }
 
-QMap<QString, QString> SlideShowGL::effectNamesI18N()
+QMap<QString, QString> PresentationGL::effectNamesI18N()
 {
     QMap<QString, QString> effects;
 
@@ -500,7 +500,7 @@ QMap<QString, QString> SlideShowGL::effectNamesI18N()
     return effects;
 }
 
-SlideShowGL::EffectMethod SlideShowGL::getRandomEffect()
+PresentationGL::EffectMethod PresentationGL::getRandomEffect()
 {
     QMap<QString, EffectMethod>  tmpMap(d->effects);
 
@@ -513,7 +513,7 @@ SlideShowGL::EffectMethod SlideShowGL::getRandomEffect()
     return tmpMap[key];
 }
 
-void SlideShowGL::advanceFrame()
+void PresentationGL::advanceFrame()
 {
     d->fileIndex++;
     d->imageLoader->next();
@@ -545,7 +545,7 @@ void SlideShowGL::advanceFrame()
     d->curr      = (d->curr == 0) ? 1 : 0;
 }
 
-void SlideShowGL::previousFrame()
+void PresentationGL::previousFrame()
 {
     d->fileIndex--;
     d->imageLoader->prev();
@@ -578,7 +578,7 @@ void SlideShowGL::previousFrame()
     d->curr      = (d->curr == 0) ? 1 : 0;
 }
 
-void SlideShowGL::loadImage()
+void PresentationGL::loadImage()
 {
     QImage image = d->imageLoader->getCurrent();
 
@@ -630,7 +630,7 @@ void SlideShowGL::loadImage()
     }
 }
 
-void SlideShowGL::montage(QImage& top, QImage& bot)
+void PresentationGL::montage(QImage& top, QImage& bot)
 {
     int tw = top.width();
     int th = top.height();
@@ -662,7 +662,7 @@ void SlideShowGL::montage(QImage& top, QImage& bot)
     }
 }
 
-void SlideShowGL::printFilename(QImage& layer)
+void PresentationGL::printFilename(QImage& layer)
 {
     QFileInfo fileinfo(d->fileList[d->fileIndex]);
     QString filename = fileinfo.fileName();
@@ -676,7 +676,7 @@ void SlideShowGL::printFilename(QImage& layer)
     painter.end();
 }
 
-void SlideShowGL::printProgress(QImage& layer)
+void PresentationGL::printProgress(QImage& layer)
 {
     QString progress(QString::number(d->fileIndex + 1) + QLatin1Char('/') + QString::number(d->fileList.count()));
 
@@ -688,7 +688,7 @@ void SlideShowGL::printProgress(QImage& layer)
     painter.end();
 }
 
-void SlideShowGL::printComments(QImage& layer)
+void PresentationGL::printComments(QImage& layer)
 {
 //    QString comments = d->commentsList[d->fileIndex];
 
@@ -776,7 +776,7 @@ void SlideShowGL::printComments(QImage& layer)
     }
 }
 
-void SlideShowGL::showEndOfShow()
+void PresentationGL::showEndOfShow()
 {
     QPixmap pix(width(), height());
     pix.fill(Qt::black);
@@ -840,12 +840,12 @@ void SlideShowGL::showEndOfShow()
     glEnd();
 }
 
-void SlideShowGL::slotTimeOut()
+void PresentationGL::slotTimeOut()
 {
     if (!d->effect)
     {
-        qCWarning(KIPIPLUGINS_LOG) << "SlideShowGL: No transition method";
-        d->effect = &SlideShowGL::effectNone;
+        qCWarning(KIPIPLUGINS_LOG) << "PresentationGL: No transition method";
+        d->effect = &PresentationGL::effectNone;
     }
 
     if (d->effectRunning)
@@ -895,7 +895,7 @@ void SlideShowGL::slotTimeOut()
     d->timer->start(d->timeout);
 }
 
-void SlideShowGL::slotMouseMoveTimeOut()
+void PresentationGL::slotMouseMoveTimeOut()
 {
     QPoint pos(QCursor::pos());
 
@@ -906,7 +906,7 @@ void SlideShowGL::slotMouseMoveTimeOut()
     setCursor(QCursor(Qt::BlankCursor));
 }
 
-void SlideShowGL::paintTexture()
+void PresentationGL::paintTexture()
 {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -932,7 +932,7 @@ void SlideShowGL::paintTexture()
     glEnd();
 }
 
-void SlideShowGL::effectNone()
+void PresentationGL::effectNone()
 {
     paintTexture();
     d->effectRunning = false;
@@ -940,7 +940,7 @@ void SlideShowGL::effectNone()
     return;
 }
 
-void SlideShowGL::effectBlend()
+void PresentationGL::effectBlend()
 {
     if (d->i > 100)
     {
@@ -998,7 +998,7 @@ void SlideShowGL::effectBlend()
     d->i++;
 }
 
-void SlideShowGL::effectFade()
+void PresentationGL::effectFade()
 {
     if (d->i > 100)
     {
@@ -1047,7 +1047,7 @@ void SlideShowGL::effectFade()
     d->i++;
 }
 
-void SlideShowGL::effectRotate()
+void PresentationGL::effectRotate()
 {
     if (d->i > 100)
     {
@@ -1114,7 +1114,7 @@ void SlideShowGL::effectRotate()
     d->i++;
 }
 
-void SlideShowGL::effectBend()
+void PresentationGL::effectBend()
 {
     if (d->i > 100)
     {
@@ -1183,7 +1183,7 @@ void SlideShowGL::effectBend()
     d->i++;
 }
 
-void SlideShowGL::effectInOut()
+void PresentationGL::effectInOut()
 {
     if (d->i > 100)
     {
@@ -1247,7 +1247,7 @@ void SlideShowGL::effectInOut()
     d->i++;
 }
 
-void SlideShowGL::effectSlide()
+void PresentationGL::effectSlide()
 {
     if (d->i > 100)
     {
@@ -1317,7 +1317,7 @@ void SlideShowGL::effectSlide()
     d->i++;
 }
 
-void SlideShowGL::effectFlutter()
+void PresentationGL::effectFlutter()
 {
     if (d->i > 100)
     {
@@ -1427,7 +1427,7 @@ void SlideShowGL::effectFlutter()
     d->i++;
 }
 
-void SlideShowGL::effectCube()
+void PresentationGL::effectCube()
 {
     int tot      = 200;
     int rotStart = 50;
@@ -1611,7 +1611,7 @@ void SlideShowGL::effectCube()
     d->i++;
 }
 
-void SlideShowGL::slotPause()
+void PresentationGL::slotPause()
 {
     d->timer->stop();
 
@@ -1623,13 +1623,13 @@ void SlideShowGL::slotPause()
     }
 }
 
-void SlideShowGL::slotPlay()
+void PresentationGL::slotPlay()
 {
     d->slidePlaybackWidget->hide();
     slotTimeOut();
 }
 
-void SlideShowGL::slotPrev()
+void PresentationGL::slotPrev()
 {
     previousFrame();
 
@@ -1645,7 +1645,7 @@ void SlideShowGL::slotPrev()
     updateGL();
 }
 
-void SlideShowGL::slotNext()
+void PresentationGL::slotNext()
 {
     advanceFrame();
 
@@ -1661,12 +1661,12 @@ void SlideShowGL::slotNext()
     updateGL();
 }
 
-void SlideShowGL::slotClose()
+void PresentationGL::slotClose()
 {
     close();
 }
 
-QPixmap SlideShowGL::generateOutlinedTextPixmap(const QString& text)
+QPixmap PresentationGL::generateOutlinedTextPixmap(const QString& text)
 {
     QFont fn(font());
     fn.setPointSize(fn.pointSize());
@@ -1675,14 +1675,14 @@ QPixmap SlideShowGL::generateOutlinedTextPixmap(const QString& text)
     return generateOutlinedTextPixmap(text, fn);
 }
 
-QPixmap SlideShowGL::generateOutlinedTextPixmap(const QString& text, QFont& fn)
+QPixmap PresentationGL::generateOutlinedTextPixmap(const QString& text, QFont& fn)
 {
     QColor fgColor(Qt::white);
     QColor bgColor(Qt::black);
     return generateCustomOutlinedTextPixmap(text, fn, fgColor, bgColor, 0, true);
 }
 
-QPixmap SlideShowGL::generateCustomOutlinedTextPixmap(const QString& text, QFont& fn,
+QPixmap PresentationGL::generateCustomOutlinedTextPixmap(const QString& text, QFont& fn,
                                                       QColor& fgColor, QColor& bgColor,
                                                       int opacity, bool drawTextOutline)
 {

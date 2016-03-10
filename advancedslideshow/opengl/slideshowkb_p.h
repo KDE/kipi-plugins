@@ -64,36 +64,36 @@ public:
         playbackWidget      = 0;
     }
 
-    int                 deskX;
-    int                 deskY;
-    int                 deskWidth;
-    int                 deskHeight;
+    int                    deskX;
+    int                    deskY;
+    int                    deskWidth;
+    int                    deskHeight;
 
-    QStringList         commentsList;
+    QStringList            commentsList;
 
-    KBImageLoader*      imageLoadThread;
-    QTimer*             mouseMoveTimer;
-    QTimer*             timer;
-    bool                haveImages;
+    KBImageLoader*         imageLoadThread;
+    QTimer*                mouseMoveTimer;
+    QTimer*                timer;
+    bool                   haveImages;
 
-    Image*              image[2];
-    KBEffect*           effect;
-    int                 numKBEffectRepeated;
-    bool                zoomIn;
-    bool                initialized;
-    float               step;
+    Image*                 image[2];
+    KBEffect*              effect;
+    int                    numKBEffectRepeated;
+    bool                   zoomIn;
+    bool                   initialized;
+    float                  step;
 
-    bool                endOfShow;
-    bool                showingEnd;
+    bool                   endOfShow;
+    bool                   showingEnd;
 
-    int                 delay;
-    bool                disableFadeInOut;
-    bool                disableCrossFade;
-    unsigned            forceFrameRate;
+    int                    delay;
+    bool                   disableFadeInOut;
+    bool                   disableCrossFade;
+    unsigned               forceFrameRate;
 
-    PresentationContainer*    sharedData;
+    PresentationContainer* sharedData;
 
-    PlaybackWidget*     playbackWidget;
+    PlaybackWidget*        playbackWidget;
 };
 
 }  // namespace KIPIAdvancedSlideshowPlugin
