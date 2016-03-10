@@ -83,7 +83,7 @@ protected:
     void run()
     {
         QImage newImage;
-        
+
         if (m_iface)
         {
             newImage = m_iface->preview(m_path);
@@ -113,7 +113,7 @@ private:
 };
 
 typedef QMap<QUrl, LoadThread*> LoadingThreads;
-    
+
 // -----------------------------------------------------------------------------------------
 
 class SlideShowLoader::Private
