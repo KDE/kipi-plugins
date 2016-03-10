@@ -22,8 +22,8 @@
  *
  * ============================================================ */
 
-#ifndef SLIDESHOW_DLG_H
-#define SLIDESHOW_DLG_H
+#ifndef PRESENTATION_DLG_H
+#define PRESENTATION_DLG_H
 
 // Local includes
 
@@ -36,14 +36,14 @@ namespace KIPIAdvancedSlideshowPlugin
 
 class PresentationContainer;
 
-class SlideShowDlg : public KPToolDialog
+class PresentationDlg : public KPToolDialog
 {
     Q_OBJECT
 
 public:
 
-    SlideShowDlg(QWidget* const parent, PresentationContainer* const sharedData);
-    ~SlideShowDlg();
+    PresentationDlg(QWidget* const parent, PresentationContainer* const sharedData);
+    ~PresentationDlg();
 
 Q_SIGNALS:
 
@@ -68,4 +68,4 @@ private:
 
 } // namespace KIPIAdvancedSlideshowPlugin
 
-#endif // SLIDESHOW_DLG_H
+#endif // PRESENTATION_DLG_H

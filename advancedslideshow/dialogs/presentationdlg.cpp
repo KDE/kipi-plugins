@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "slideshowdlg.h"
+#include "presentationdlg.h"
 
 // Qt includes
 
@@ -55,7 +55,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class SlideShowDlg::Private
+class PresentationDlg::Private
 {
 
 public:
@@ -72,7 +72,7 @@ public:
     KConfig*         config;
 };
 
-SlideShowDlg::SlideShowDlg(QWidget* const parent, PresentationContainer* const sharedData)
+PresentationDlg::PresentationDlg(QWidget* const parent, PresentationContainer* const sharedData)
     : KPToolDialog(parent),
       d(new Private)
 {
@@ -138,18 +138,18 @@ SlideShowDlg::SlideShowDlg(QWidget* const parent, PresentationContainer* const s
     // Slot connections
 
     connect(startButton(), &QPushButton::clicked,
-            this, &SlideShowDlg::slotStartClicked);
+            this, &PresentationDlg::slotStartClicked);
 
     readSettings();
 }
 
-SlideShowDlg::~SlideShowDlg ()
+PresentationDlg::~PresentationDlg ()
 {
     delete d->config;
     delete d;
 }
 
-void SlideShowDlg::readSettings()
+void PresentationDlg::readSettings()
 {
     KConfigGroup grp = d->config->group(objectName());
 
@@ -233,7 +233,7 @@ void SlideShowDlg::readSettings()
 #endif
 }
 
-void SlideShowDlg::saveSettings()
+void PresentationDlg::saveSettings()
 {
     if (!d->config) return;
 
@@ -302,7 +302,7 @@ void SlideShowDlg::saveSettings()
     d->config->sync();
 }
 
-void SlideShowDlg::slotStartClicked()
+void PresentationDlg::slotStartClicked()
 {
     saveSettings();
 
@@ -312,7 +312,7 @@ void SlideShowDlg::slotStartClicked()
     return;
 }
 
-void SlideShowDlg::closeEvent(QCloseEvent* e)
+void PresentationDlg::closeEvent(QCloseEvent* e)
 {
     saveSettings();
     e->accept();

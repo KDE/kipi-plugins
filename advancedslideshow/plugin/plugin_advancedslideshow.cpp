@@ -61,7 +61,7 @@ extern "C"
 // Local includes
 
 #include "kipiplugins_debug.h"
-#include "slideshowdlg.h"
+#include "presentationdlg.h"
 #include "presentation.h"
 #include "presentationcontainer.h"
 #include "kpimageinfo.h"
@@ -150,7 +150,7 @@ void Plugin_AdvancedSlideshow::slotActivate()
         m_sharedData->showSelectedFilesOnly = false;
     }
 
-    SlideShowDlg* const slideShowConfig = new SlideShowDlg(QApplication::activeWindow(), m_sharedData);
+    PresentationDlg* const slideShowConfig = new PresentationDlg(QApplication::activeWindow(), m_sharedData);
 
     connect(slideShowConfig, SIGNAL(buttonStartClicked()),
             this, SLOT(slotSlideShow()));
