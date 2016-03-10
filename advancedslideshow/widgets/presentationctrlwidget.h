@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2008 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
  *
- * Partially based on Renchi Raju's SlidePlaybackWidget class.
+ * Partially based on Renchi Raju's PresentationCtrlWidget class.
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -22,8 +22,8 @@
  *
  * ============================================================ */
 
-#ifndef SLIDEPLAYBACKWIDGET_H
-#define SLIDEPLAYBACKWIDGET_H
+#ifndef PRENSENTATION_CTRL_WIDGET_H
+#define PRENSENTATION_CTRL_WIDGET_H
 
 // Qt includes
 
@@ -32,19 +32,19 @@
 
 // Local includes
 
-#include "ui_slideplaybackwidget.h"
+#include "ui_presentationctrlwidget.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class SlidePlaybackWidget : public QWidget, public Ui::SlidePlaybackWidget
+class PresentationCtrlWidget : public QWidget, public Ui::PresentationCtrlWidget
 {
     Q_OBJECT
 
 public:
 
-    explicit SlidePlaybackWidget(QWidget* const parent);
-    ~SlidePlaybackWidget();
+    explicit PresentationCtrlWidget(QWidget* const parent);
+    ~PresentationCtrlWidget();
 
     bool canHide()  const;
     bool isPaused() const;
@@ -81,4 +81,4 @@ private:
 
 } // namespace KIPIAdvancedSlideshowPlugin
 
-#endif // SLIDEPLAYBACKWIDGET_H
+#endif // PRENSENTATION_CTRL_WIDGET_H

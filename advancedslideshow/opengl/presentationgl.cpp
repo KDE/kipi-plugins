@@ -61,7 +61,7 @@
 #include "kipiplugins_debug.h"
 #include "presentationcontainer.h"
 #include "playbackwidget.h"
-#include "slideplaybackwidget.h"
+#include "presentationctrlwidget.h"
 #include "presentationloader.h"
 #include "kpimageinfo.h"
 #include "kpsvgpixmaprenderer.h"
@@ -139,7 +139,7 @@ public:
     int                               dir;
     float                             points[40][40][3];
 
-    SlidePlaybackWidget*              slidePlaybackWidget;
+    PresentationCtrlWidget*              slidePlaybackWidget;
 
 #ifdef HAVE_AUDIO
     PlaybackWidget*                   playbackWidget;
@@ -173,7 +173,7 @@ PresentationGL::PresentationGL(const QStringList& fileList,
 
     d->sharedData   = sharedData;
 
-    d->slidePlaybackWidget = new SlidePlaybackWidget(this);
+    d->slidePlaybackWidget = new PresentationCtrlWidget(this);
     d->slidePlaybackWidget->hide();
 
     if (!d->sharedData->loop)

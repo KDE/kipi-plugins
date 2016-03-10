@@ -1,6 +1,6 @@
 <ui version="4.0" >
- <class>SlidePlaybackWidget</class>
- <widget class="QWidget" name="SlidePlaybackWidget" >
+ <class>PresentationCtrlWidget</class>
+ <widget class="QWidget" name="PresentationCtrlWidget" >
   <property name="geometry" >
    <rect>
     <x>0</x>

@@ -27,7 +27,7 @@ set(kipiplugin_advancedslideshow_PART_SRCS dialogs/captionpage.cpp
                                            dialogs/mainpage.cpp
                                            dialogs/presentationdlg.cpp
 
-                                           widgets/slideplaybackwidget.cpp
+                                           widgets/presentationctrlwidget.cpp
                                            widgets/presentation.cpp
 
                                            common/presentationcontainer.cpp
@@ -63,7 +63,7 @@ ki18n_wrap_ui(kipiplugin_advancedslideshow_PART_SRCS
               dialogs/mainpage.ui
               dialogs/captionpage.ui
               dialogs/advancedpage.ui
-              widgets/slideplaybackwidget.ui
+              widgets/presentationctrlwidget.ui
 )
 
 add_library(kipiplugin_advancedslideshow MODULE ${kipiplugin_advancedslideshow_PART_SRCS})

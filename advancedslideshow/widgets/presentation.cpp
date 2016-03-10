@@ -60,7 +60,7 @@
 // Local includes
 
 #include "presentationcontainer.h"
-#include "slideplaybackwidget.h"
+#include "presentationctrlwidget.h"
 #include "presentationloader.h"
 #include "playbackwidget.h"
 #include "kpimageinfo.h"
@@ -172,7 +172,7 @@ public:
     //static
     QPolygon                    pa;
 
-    SlidePlaybackWidget*        slidePlaybackWidget;
+    PresentationCtrlWidget*        slidePlaybackWidget;
     QTimer*                     mouseMoveTimer;
 
     int                         deskX;
@@ -197,7 +197,7 @@ Presentation::Presentation(const QStringList& fileList, const QStringList& comme
     move( d->deskX, d->deskY );
     resize( d->deskWidth, d->deskHeight );
 
-    d->slidePlaybackWidget = new SlidePlaybackWidget( this );
+    d->slidePlaybackWidget = new PresentationCtrlWidget( this );
     d->slidePlaybackWidget->hide();
     d->slidePlaybackWidget->move(d->deskWidth - d->slidePlaybackWidget->width(), d->deskY);
 

@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "slideplaybackwidget.h"
+#include "presentationctrlwidget.h"
 
 // Qt includes
 
@@ -43,7 +43,7 @@
 
 namespace KIPIAdvancedSlideshowPlugin
 {
-SlidePlaybackWidget::SlidePlaybackWidget(QWidget* const parent)
+PresentationCtrlWidget::PresentationCtrlWidget(QWidget* const parent)
     : QWidget(parent)
 {
     setupUi(this);
@@ -83,21 +83,21 @@ SlidePlaybackWidget::SlidePlaybackWidget(QWidget* const parent)
     slotPlayButtonToggled();
 }
 
-SlidePlaybackWidget::~SlidePlaybackWidget()
+PresentationCtrlWidget::~PresentationCtrlWidget()
 {
 }
 
-bool SlidePlaybackWidget::canHide() const
+bool PresentationCtrlWidget::canHide() const
 {
     return m_canHide;
 }
 
-bool SlidePlaybackWidget::isPaused() const
+bool PresentationCtrlWidget::isPaused() const
 {
     return m_playButton->isChecked();
 }
 
-void SlidePlaybackWidget::setPaused(bool val)
+void PresentationCtrlWidget::setPaused(bool val)
 {
     if (val == isPaused())
         return;
@@ -107,22 +107,22 @@ void SlidePlaybackWidget::setPaused(bool val)
     slotPlayButtonToggled();
 }
 
-void SlidePlaybackWidget::setEnabledPlay(bool val)
+void PresentationCtrlWidget::setEnabledPlay(bool val)
 {
     m_playButton->setEnabled(val);
 }
 
-void SlidePlaybackWidget::setEnabledNext(bool val)
+void PresentationCtrlWidget::setEnabledNext(bool val)
 {
     m_nextButton->setEnabled(val);
 }
 
-void SlidePlaybackWidget::setEnabledPrev(bool val)
+void PresentationCtrlWidget::setEnabledPrev(bool val)
 {
     m_prevButton->setEnabled(val);
 }
 
-void SlidePlaybackWidget::slotPlayButtonToggled()
+void PresentationCtrlWidget::slotPlayButtonToggled()
 {
     if (m_playButton->isChecked())
     {
@@ -138,7 +138,7 @@ void SlidePlaybackWidget::slotPlayButtonToggled()
     }
 }
 
-void SlidePlaybackWidget::slotNexPrevClicked()
+void PresentationCtrlWidget::slotNexPrevClicked()
 {
     if (!m_playButton->isChecked())
     {
@@ -149,7 +149,7 @@ void SlidePlaybackWidget::slotNexPrevClicked()
     }
 }
 
-void SlidePlaybackWidget::keyPressEvent(QKeyEvent* event)
+void PresentationCtrlWidget::keyPressEvent(QKeyEvent* event)
 {
     switch (event->key())
     {
