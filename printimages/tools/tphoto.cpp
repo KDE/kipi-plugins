@@ -143,13 +143,7 @@ QImage TPhoto::loadPhoto()
 
     if (m_iface)
     {
-        QPointer<RawProcessor> rawdec = m_iface->createRawProcessor();
-
-        // check if its a RAW file.
-        if (rawdec && rawdec->isRawFile(filename))
-        {
-            rawdec->loadRawPreview(filename, photo);
-        }
+        photo = m_iface->preview(filename);
     }
 
     if (photo.isNull())

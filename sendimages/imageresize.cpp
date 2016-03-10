@@ -131,14 +131,8 @@ bool Task::imageResize(const EmailSettings& settings, const QUrl& orgUrl,
     QImage img;
 
     if (m_iface)
-    {
-        QPointer<RawProcessor> rawdec = m_iface->createRawProcessor();
-
-        // check if its a RAW file.
-        if (rawdec && rawdec->isRawFile(orgUrl))
-        {
-            rawdec->loadRawPreview(orgUrl, img);
-        }
+    {        
+        img = m_iface->preview(orgUrl);
     }
 
     if (img.isNull())

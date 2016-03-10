@@ -707,23 +707,13 @@ void SmugWindow::slotStartTransfer()
     }
 }
 
-bool SmugWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
+bool SmugWindow::prepareImageForUpload(const QString& imgPath)
 {
     QImage image;
 
-    if (isRAW)
+    if (iface())
     {
-        qCDebug(KIPIPLUGINS_LOG) << "Get RAW preview " << imgPath;
-        
-        if (iface())
-        {
-            QPointer<RawProcessor> rawdec = iface()->createRawProcessor();
-
-            if (rawdec)
-            {
-                rawdec->loadRawPreview(QUrl::fromLocalFile(imgPath), image);
-            }
-        }
+        image = iface()->preview(QUrl::fromLocalFile(imgPath));
     }
 
     if (image.isNull())
@@ -787,18 +777,9 @@ void SmugWindow::uploadNextPhoto()
 
     bool res;
 
-    // check if we have to RAW file -> use preview image then
-    bool isRAW = false;
-
-    if (iface())
+    if (m_widget->m_resizeChB->isChecked())
     {
-        QPointer<RawProcessor> rawdec = iface()->createRawProcessor();
-        isRAW = (rawdec && rawdec->isRawFile(imgPath));
-    }
-
-    if (isRAW || m_widget->m_resizeChB->isChecked())
-    {
-        if (!prepareImageForUpload(imgPath.toLocalFile(), isRAW))
+        if (!prepareImageForUpload(imgPath.toLocalFile()))
         {
             slotAddPhotoDone(666, i18n("Cannot open file"));
             return;

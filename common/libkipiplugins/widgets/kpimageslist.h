@@ -292,6 +292,7 @@ protected Q_SLOTS:
 private:
 
     void setIconSize(int size);
+    bool isRawFile(const QUrl& url) const;
 
 private:
 

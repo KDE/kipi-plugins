@@ -211,13 +211,7 @@ bool PiwigoTalker::addPhoto(int   albumId,
 
         if (m_iface)
         {
-            QPointer<RawProcessor> rawdec = m_iface->createRawProcessor();
-
-            // check if its a RAW file.
-            if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(mediaPath)))
-            {
-                rawdec->loadRawPreview(QUrl::fromLocalFile(mediaPath), image);
-            }
+            image = m_iface->preview(QUrl::fromLocalFile(mediaPath));
         }
 
         if (image.isNull())

@@ -556,13 +556,7 @@ void YandexFotkiWindow::updateNextPhoto()
 
             if (iface())
             {
-                QPointer<RawProcessor> rawdec = iface()->createRawProcessor();
-
-                // check if its a RAW file.
-                if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(photo.originalUrl())))
-                {
-                    rawdec->loadRawPreview(QUrl::fromLocalFile(photo.originalUrl()), image);
-                }
+                image = iface()->preview(QUrl::fromLocalFile(photo.originalUrl()));
             }
 
             if (image.isNull())

@@ -313,12 +313,7 @@ KPImageDialog::KPImageDialog(QWidget* const parent, bool singleSelect, bool only
 
     if (d->iface)
     {
-        QPointer<RawProcessor> rawdec = d->iface->createRawProcessor();
-
-        if (rawdec)
-        {
-            rawFiles = rawdec->rawFiles();
-        }
+        rawFiles = d->iface->rawFiles();
     }
     
     if (!d->onlyRaw)

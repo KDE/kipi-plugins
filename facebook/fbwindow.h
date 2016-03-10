@@ -104,7 +104,7 @@ private:
 
     void    setProfileAID(long long userID);
     QString getImageCaption(const QString& fileName);
-    bool    prepareImageForUpload(const QString& imgPath, bool isRAW, QString& caption);
+    bool    prepareImageForUpload(const QString& imgPath, QString& caption);
 
     void    uploadNextPhoto();
 

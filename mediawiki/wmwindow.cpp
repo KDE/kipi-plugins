@@ -250,13 +250,7 @@ bool WMWindow::prepareImageForUpload(const QString& imgPath)
     {
         if (iface())
         {
-            QPointer<RawProcessor> rawdec = iface()->createRawProcessor();
-
-            // check if its a RAW file.
-            if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(imgPath)))
-            {
-                rawdec->loadRawPreview(QUrl::fromLocalFile(imgPath), image);
-            }
+            image = iface()->preview(QUrl::fromLocalFile(imgPath));
         }
 
         if (image.isNull())

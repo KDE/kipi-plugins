@@ -559,16 +559,9 @@ void SimpleViewer::processQUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
         // Clear image.
         image = QImage();
 
-        // Check if RAW file.
         if (d->interface)
         {
-            QPointer<RawProcessor> rawdec = d->interface->createRawProcessor();
-
-            // check if its a RAW file.
-            if (rawdec && rawdec->isRawFile(url))
-            {
-                rawdec->loadRawPreview(url, image);
-            }
+            image = d->interface->preview(url);
         }
 
         if (image.isNull())

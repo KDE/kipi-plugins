@@ -818,6 +818,14 @@ bool KPImagesList::checkSelection()
     }
 }
 
+bool KPImagesList::isRawFile(const QUrl& url) const
+{
+    QString   rawFilesExt = d->iface->rawFiles();
+    QFileInfo fileInfo(url.toLocalFile());
+
+    return (rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper()));
+}
+
 void KPImagesList::slotAddImages(const QList<QUrl>& list)
 {
     if (list.count() == 0)
@@ -826,13 +834,7 @@ void KPImagesList::slotAddImages(const QList<QUrl>& list)
     }
 
     QList<QUrl> urls;
-    bool raw                      = false;
-    QPointer<RawProcessor> rawdec = 0;
-    
-    if (d->iface)
-    {
-        rawdec = d->iface->createRawProcessor();
-    }
+    bool raw = false;
 
     for (QList<QUrl>::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it)
     {
@@ -858,7 +860,7 @@ void KPImagesList::slotAddImages(const QList<QUrl>& list)
         if (d->allowDuplicate || !found)
         {
             // if RAW files are not allowed, skip the image
-            if (!d->allowRAW && rawdec && rawdec->isRawFile(imageUrl))
+            if (!d->allowRAW && isRawFile(imageUrl))
             {
                 raw = true;
                 continue;

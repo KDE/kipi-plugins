@@ -204,13 +204,7 @@ bool GDTalker::addPhoto(const QString& imgPath,const GSPhoto& info,const QString
 
     if (m_iface)
     {
-        QPointer<RawProcessor> rawdec = m_iface->createRawProcessor();
-
-        // check if its a RAW file.
-        if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(imgPath)))
-        {
-            rawdec->loadRawPreview(QUrl::fromLocalFile(imgPath), image);
-        }
+        image = m_iface->preview(QUrl::fromLocalFile(imgPath));
     }
 
     if (image.isNull())

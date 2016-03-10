@@ -292,21 +292,15 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QS
     }
 
     QUrl url(QString::fromLatin1("https://picasaweb.google.com/data/feed/api/user/default/albumid/") + albumId);
-    QString     auth_string = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
-    MPForm_Picasa      form;
+    QString auth_string = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
+    MPForm_Picasa form;
     
-    QString path = photoPath;
+    QString path        = photoPath;
     QImage image;
 
     if (m_iface)
     {
-        QPointer<RawProcessor> rawdec = m_iface->createRawProcessor();
-
-        // check if its a RAW file.
-        if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(photoPath)))
-        {
-            rawdec->loadRawPreview(QUrl::fromLocalFile(photoPath), image);
-        }
+        image = m_iface->preview(QUrl::fromLocalFile(photoPath));
     }
     
     if (image.isNull())
@@ -434,13 +428,7 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, con
 
     if (m_iface)
     {
-        QPointer<RawProcessor> rawdec = m_iface->createRawProcessor();
-
-        // check if its a RAW file.
-        if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(photoPath)))
-        {
-            rawdec->loadRawPreview(QUrl::fromLocalFile(photoPath), image);
-        }
+        image = m_iface->preview(QUrl::fromLocalFile(photoPath));
     }
 
     if (image.isNull())
@@ -460,7 +448,7 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, con
     if (rescale)
     {
         if (image.width() > maxDim || image.height() > maxDim)
-            image = image.scaled(maxDim,maxDim,Qt::KeepAspectRatio,Qt::SmoothTransformation);
+            image = image.scaled(maxDim,maxDim, Qt::KeepAspectRatio,Qt::SmoothTransformation);
         
         imgQualityToApply = imageQuality;
     }

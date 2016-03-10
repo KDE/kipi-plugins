@@ -362,17 +362,7 @@ bool DBTalker::addPhoto(const QString& imgPath, const QString& uploadFolder, boo
 
     if (m_iface)
     {
-        QPointer<RawProcessor> rawdec = m_iface->createRawProcessor();
-
-        // check if its a RAW file.
-        if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(imgPath)))
-        {
-            rawdec->loadRawPreview(QUrl::fromLocalFile(imgPath), image);
-        }
-        else
-        {
-            image.load(imgPath);
-        }
+        image = m_iface->preview(QUrl::fromLocalFile(imgPath));
     }
 
     if (image.isNull())

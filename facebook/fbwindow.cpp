@@ -559,23 +559,13 @@ QString FbWindow::getImageCaption(const QString& fileName)
     return descriptions.join(QString::fromLatin1("\n\n"));
 }
 
-bool FbWindow::prepareImageForUpload(const QString& imgPath, bool isRAW, QString& caption)
+bool FbWindow::prepareImageForUpload(const QString& imgPath, QString& caption)
 {
     QImage image;
 
-    if (isRAW)
+    if (iface())
     {
-        if (iface())
-        {
-            QPointer<RawProcessor> rawdec = iface()->createRawProcessor();
-
-            // check if its a RAW file.
-            if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(imgPath)))
-            {
-                qCDebug(KIPIPLUGINS_LOG) << "Get RAW preview " << imgPath;
-                rawdec->loadRawPreview(QUrl::fromLocalFile(imgPath), image);
-            }
-        }
+        image = iface()->preview(QUrl::fromLocalFile(imgPath));
     }
     
     if (image.isNull())
@@ -643,21 +633,12 @@ void FbWindow::uploadNextPhoto()
     d->m_progressBar->setMaximum(m_imagesTotal);
     d->m_progressBar->setValue(m_imagesCount);
 
-    // check if we have to RAW file -> use preview image then
-    bool isRAW = false;
-
-    if (iface())
-    {
-        QPointer<RawProcessor> rawdec = iface()->createRawProcessor();
-        isRAW = (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(imgPath)));
-    }
-    
     QString caption;
     bool    res;
 
-    if (isRAW || d->m_resizeChB->isChecked())
+    if (d->m_resizeChB->isChecked())
     {
-        if (!prepareImageForUpload(imgPath, isRAW, caption))
+        if (!prepareImageForUpload(imgPath, caption))
         {
             slotAddPhotoDone(666, i18n("Cannot open file"));
             return;

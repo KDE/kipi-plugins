@@ -580,13 +580,7 @@ AddPhotoCommand::AddPhotoCommand(const QString& tmpDir, const QString& path, uns
         
         if (iface)
         {
-            QPointer<RawProcessor> rawdec = iface->createRawProcessor();
-
-            // check if its a RAW file.
-            if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(path)))
-            {
-                rawdec->loadRawPreview(QUrl::fromLocalFile(path), m_image);
-            }
+            m_image = iface->preview(QUrl::fromLocalFile(path));
         }
     }
 

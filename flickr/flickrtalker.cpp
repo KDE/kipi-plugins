@@ -714,17 +714,9 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
     form.addPair(QString::fromLatin1("api_sig"), md5, QString::fromLatin1("text/plain"));
     QImage image;
 
-    // Check if RAW file.
-
     if (m_iface)
     {
-        QPointer<RawProcessor> rawdec = m_iface->createRawProcessor();
-
-        // check if its a RAW file.
-        if (rawdec && rawdec->isRawFile(QUrl::fromLocalFile(photoPath)))
-        {
-            rawdec->loadRawPreview(QUrl::fromLocalFile(photoPath), image);
-        }
+        image = m_iface->preview(QUrl::fromLocalFile(photoPath));
     }
 
     if (image.isNull())
