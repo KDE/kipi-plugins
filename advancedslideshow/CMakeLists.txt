@@ -49,12 +49,12 @@ endif()
 if(Qt5Multimedia_FOUND)
     set(kipiplugin_advancedslideshow_PART_SRCS ${kipiplugin_advancedslideshow_PART_SRCS}
                                                audio/listsounditems.cpp
-                                               audio/soundtrackpage.cpp
+                                               audio/presentation_audiopage.cpp
                                                audio/playbackwidget.cpp
     )
 
     ki18n_wrap_ui(kipiplugin_advancedslideshow_PART_SRCS
-                  audio/soundtrackpage.ui
+                  audio/presentation_audiopage.ui
                   audio/playbackwidget.ui
     )
 endif()

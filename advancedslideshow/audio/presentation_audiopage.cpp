@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "soundtrackpage.h"
+#include "presentation_audiopage.h"
 
 // Qt includes
 
@@ -66,7 +66,7 @@ SoundtrackPreview::~SoundtrackPreview()
 
 // ------------------------------------------------------------------------------------
 
-class SoundtrackPage::Private
+class PresentationAudioPage::Private
 {
 public:
 
@@ -87,7 +87,7 @@ public:
     QMutex*                 timeMutex;
 };
 
-SoundtrackPage::SoundtrackPage(QWidget* const parent, PresentationContainer* const sharedData)
+PresentationAudioPage::PresentationAudioPage(QWidget* const parent, PresentationContainer* const sharedData)
     : QWidget(parent),
       d(new Private)
 {
@@ -168,7 +168,7 @@ SoundtrackPage::SoundtrackPage(QWidget* const parent, PresentationContainer* con
              this, SLOT(slotImageTotalTimeChanged(QTime)));
 }
 
-SoundtrackPage::~SoundtrackPage()
+PresentationAudioPage::~PresentationAudioPage()
 {
     delete d->sharedData;
     delete d->tracksTime;
@@ -177,7 +177,7 @@ SoundtrackPage::~SoundtrackPage()
     delete d;
 }
 
-void SoundtrackPage::readSettings()
+void PresentationAudioPage::readSettings()
 {
     m_rememberSoundtrack->setChecked(d->sharedData->soundtrackRememberPlaylist);
     m_loopCheckBox->setChecked(d->sharedData->soundtrackLoop);
@@ -193,14 +193,14 @@ void SoundtrackPage::readSettings()
     updateTracksNumber();
 }
 
-void SoundtrackPage::saveSettings()
+void PresentationAudioPage::saveSettings()
 {
     d->sharedData->soundtrackRememberPlaylist = m_rememberSoundtrack->isChecked();
     d->sharedData->soundtrackLoop             = m_loopCheckBox->isChecked();
     d->sharedData->soundtrackUrls             = d->urlList;
 }
 
-void SoundtrackPage::addItems(const QList<QUrl>& fileList)
+void PresentationAudioPage::addItems(const QList<QUrl>& fileList)
 {
     if (fileList.isEmpty())
         return;
@@ -230,7 +230,7 @@ void SoundtrackPage::addItems(const QList<QUrl>& fileList)
     m_previewButton->setEnabled(true);
 }
 
-void SoundtrackPage::updateTracksNumber()
+void PresentationAudioPage::updateTracksNumber()
 {
     QTime displayTime(0, 0, 0);
     int number = m_SoundFilesListBox->count();
@@ -265,7 +265,7 @@ void SoundtrackPage::updateTracksNumber()
     compareTimes();
 }
 
-void SoundtrackPage::updateFileList()
+void PresentationAudioPage::updateFileList()
 {
     d->urlList = m_SoundFilesListBox->fileUrls();
 
@@ -278,7 +278,7 @@ void SoundtrackPage::updateFileList()
     d->sharedData->soundtrackPlayListNeedsUpdate = true;
 }
 
-void SoundtrackPage::compareTimes()
+void PresentationAudioPage::compareTimes()
 {
     QFont statusBarFont = m_statusBarLabel->font();
 
@@ -320,7 +320,7 @@ void SoundtrackPage::compareTimes()
     m_statusBarLabel->setFont(statusBarFont);
 }
 
-void SoundtrackPage::slotAddNewTime(const QUrl& url, const QTime& trackTime)
+void PresentationAudioPage::slotAddNewTime(const QUrl& url, const QTime& trackTime)
 {
     d->timeMutex->lock();
     d->tracksTime->insert(url, trackTime);
@@ -328,7 +328,7 @@ void SoundtrackPage::slotAddNewTime(const QUrl& url, const QTime& trackTime)
     d->timeMutex->unlock();
 }
 
-void SoundtrackPage::slotSoundFilesSelected( int row )
+void PresentationAudioPage::slotSoundFilesSelected( int row )
 {
     QListWidgetItem* const item = m_SoundFilesListBox->item(row);
 
@@ -338,7 +338,7 @@ void SoundtrackPage::slotSoundFilesSelected( int row )
     }
 }
 
-void SoundtrackPage::slotAddDropItems(const QList<QUrl>& filesUrl)
+void PresentationAudioPage::slotAddDropItems(const QList<QUrl>& filesUrl)
 {
     if (!filesUrl.isEmpty())
     {
@@ -347,7 +347,7 @@ void SoundtrackPage::slotAddDropItems(const QList<QUrl>& filesUrl)
     }
 }
 
-void SoundtrackPage::slotSoundFilesButtonAdd()
+void PresentationAudioPage::slotSoundFilesButtonAdd()
 {
     QPointer<QFileDialog> dlg = new QFileDialog(this,
                                                 i18n("Select sound files"),
@@ -374,7 +374,7 @@ void SoundtrackPage::slotSoundFilesButtonAdd()
     delete dlg;
 }
 
-void SoundtrackPage::slotSoundFilesButtonDelete()
+void PresentationAudioPage::slotSoundFilesButtonDelete()
 {
     int Index = m_SoundFilesListBox->currentRow();
 
@@ -397,7 +397,7 @@ void SoundtrackPage::slotSoundFilesButtonDelete()
     updateFileList();
 }
 
-void SoundtrackPage::slotSoundFilesButtonUp()
+void PresentationAudioPage::slotSoundFilesButtonUp()
 {
     int Cpt = 0;
 
@@ -433,7 +433,7 @@ void SoundtrackPage::slotSoundFilesButtonUp()
     updateFileList();
 }
 
-void SoundtrackPage::slotSoundFilesButtonDown()
+void PresentationAudioPage::slotSoundFilesButtonDown()
 {
     int Cpt = 0;
 
@@ -469,7 +469,7 @@ void SoundtrackPage::slotSoundFilesButtonDown()
     updateFileList();
 }
 
-void SoundtrackPage::slotSoundFilesButtonLoad()
+void PresentationAudioPage::slotSoundFilesButtonLoad()
 {
     QPointer<QFileDialog> dlg = new QFileDialog(this, i18n("Load playlist"),
                                                 QString(), i18n("Playlist (*.m3u)"));
@@ -524,7 +524,7 @@ void SoundtrackPage::slotSoundFilesButtonLoad()
     delete dlg;
 }
 
-void SoundtrackPage::slotSoundFilesButtonSave()
+void PresentationAudioPage::slotSoundFilesButtonSave()
 {
     QPointer<QFileDialog> dlg = new QFileDialog(this, i18n("Save playlist"),
                                                 QString(), i18n("Playlist (*.m3u)"));
@@ -568,13 +568,13 @@ void SoundtrackPage::slotSoundFilesButtonSave()
     delete dlg;
 }
 
-void SoundtrackPage::slotSoundFilesButtonReset()
+void PresentationAudioPage::slotSoundFilesButtonReset()
 {
     m_SoundFilesListBox->clear();
     updateFileList();
 }
 
-void SoundtrackPage::slotPreviewButtonClicked()
+void PresentationAudioPage::slotPreviewButtonClicked()
 {
     QList<QUrl> urlList;
 
@@ -614,7 +614,7 @@ void SoundtrackPage::slotPreviewButtonClicked()
     return;
 }
 
-void SoundtrackPage::slotImageTotalTimeChanged( const QTime& imageTotalTime )
+void PresentationAudioPage::slotImageTotalTimeChanged( const QTime& imageTotalTime )
 {
     d->imageTime = imageTotalTime;
     m_slideTimeLabel->setText(imageTotalTime.toString());

@@ -41,7 +41,7 @@ class PrensetationCaptionPage;
 class PresentationAdvPage;
 
 #ifdef HAVE_AUDIO
-class SoundtrackPage;
+class PresentationAudioPage;
 #endif
 
 class PresentationContainer
@@ -67,7 +67,7 @@ public:
     PresentationMainPage*            mainPage;
     PrensetationCaptionPage*         captionPage;
 #ifdef HAVE_AUDIO
-    SoundtrackPage*      soundtrackPage;
+    PresentationAudioPage*      soundtrackPage;
 #endif
     PresentationAdvPage*        advancedPage;
 

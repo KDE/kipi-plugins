@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef SOUNDTRACK_PAGE_H
-#define SOUNDTRACK_PAGE_H
+#ifndef PRESENTATION_AUDIO_PAGE_H
+#define PRESENTATION_AUDIO_PAGE_H
 
 // Qt includes
 
@@ -33,7 +33,7 @@
 
 // Local includes
 
-#include "ui_soundtrackpage.h"
+#include "ui_presentation_audiopage.h"
 #include "playbackwidget.h"
 #include "listsounditems.h"
 
@@ -58,14 +58,14 @@ private :
 
 // ----------------------------------------------------------------------
 
-class SoundtrackPage : public QWidget, public Ui::SoundtrackPage
+class PresentationAudioPage : public QWidget, public Ui::PresentationAudioPage
 {
     Q_OBJECT
 
 public:
 
-    SoundtrackPage(QWidget* const parent, PresentationContainer* const sharedData);
-    ~SoundtrackPage();
+    PresentationAudioPage(QWidget* const parent, PresentationContainer* const sharedData);
+    ~PresentationAudioPage();
 
     void readSettings();
     void saveSettings();
@@ -100,4 +100,4 @@ private:
 
 } // namespace KIPIAdvancedSlideshowPlugin
 
-#endif // SOUNDTRACK_PAGE_H
+#endif // PRESENTATION_AUDIO_PAGE_H

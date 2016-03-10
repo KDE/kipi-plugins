@@ -49,7 +49,7 @@
 #include "presentationcontainer.h"
 #include "presentation_mainpage.h"
 #include "presentation_captionpage.h"
-#include "soundtrackpage.h"
+#include "presentation_audiopage.h"
 #include "presentation_advpage.h"
 
 namespace KIPIAdvancedSlideshowPlugin
@@ -102,7 +102,7 @@ PresentationDlg::PresentationDlg(QWidget* const parent, PresentationContainer* c
                    i18nc("captions for the slideshow", "Caption"));
 
 #ifdef HAVE_AUDIO
-    d->sharedData->soundtrackPage  = new SoundtrackPage(this, d->sharedData);
+    d->sharedData->soundtrackPage  = new PresentationAudioPage(this, d->sharedData);
     d->tab->addTab(d->sharedData->soundtrackPage,
                    QIcon::fromTheme(QString::fromLatin1("speaker")),
                    i18n("Soundtrack"));
