@@ -45,7 +45,7 @@ class QWheelEvent;
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class SharedContainer;
+class PresentationContainer;
 
 class Presentation : public QWidget
 {
@@ -57,7 +57,7 @@ public:
 
     Presentation(const QStringList& fileList,
                  const QStringList& commentsList,
-                 SharedContainer* const sharedData);
+                 PresentationContainer* const sharedData);
     ~Presentation();
 
     void registerEffects();

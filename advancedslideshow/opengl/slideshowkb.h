@@ -51,7 +51,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class SharedContainer;
+class PresentationContainer;
 
 class ViewTrans
 {
@@ -116,7 +116,7 @@ public:
 
     SlideShowKB(const QStringList& fileList,
                 const QStringList& commentsList,
-                SharedContainer* const sharedData);
+                PresentationContainer* const sharedData);
 
     ~SlideShowKB();
 

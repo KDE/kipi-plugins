@@ -44,7 +44,7 @@ namespace KIPIPlugins
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class SharedContainer;
+class PresentationContainer;
 
 class MainPage : public QWidget, Ui::MainPage
 {
@@ -52,7 +52,7 @@ class MainPage : public QWidget, Ui::MainPage
 
 public:
 
-    MainPage(QWidget* const parent, SharedContainer* const sharedData);
+    MainPage(QWidget* const parent, PresentationContainer* const sharedData);
     ~MainPage();
 
     void readSettings();

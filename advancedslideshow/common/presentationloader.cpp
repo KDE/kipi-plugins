@@ -39,7 +39,7 @@
 
 // Local includes
 
-#include "commoncontainer.h"
+#include "presentationcontainer.h"
 #include "kpimageinfo.h"
 #include "kipiplugins_debug.h"
 

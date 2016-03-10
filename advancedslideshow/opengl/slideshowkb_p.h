@@ -91,7 +91,7 @@ public:
     bool                disableCrossFade;
     unsigned            forceFrameRate;
 
-    SharedContainer*    sharedData;
+    PresentationContainer*    sharedData;
 
     PlaybackWidget*     playbackWidget;
 };

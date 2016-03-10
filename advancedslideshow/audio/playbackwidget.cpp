@@ -33,7 +33,7 @@
 
 // Local includes
 
-#include "commoncontainer.h"
+#include "presentationcontainer.h"
 #include "kipiplugins_debug.h"
 
 namespace KIPIAdvancedSlideshowPlugin
@@ -54,7 +54,7 @@ public:
         isZeroTime  = false;
     }
 
-    SharedContainer*     sharedData;
+    PresentationContainer*     sharedData;
     QList<QUrl>          urlList;
     int                  currIndex;
     bool                 stopCalled;
@@ -64,7 +64,7 @@ public:
     QMediaPlayer*        mediaObject;
 };
 
-PlaybackWidget::PlaybackWidget(QWidget* const parent, const QList<QUrl>& urls, SharedContainer* const sharedData)
+PlaybackWidget::PlaybackWidget(QWidget* const parent, const QList<QUrl>& urls, PresentationContainer* const sharedData)
     : QWidget(parent),
       d(new Private)
 {

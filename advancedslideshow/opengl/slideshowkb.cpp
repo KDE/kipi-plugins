@@ -55,7 +55,7 @@
 
 // Local includes
 
-#include "commoncontainer.h"
+#include "presentationcontainer.h"
 #include "kbimageloader.h"
 #include "kbeffect.h"
 #include "playbackwidget.h"
@@ -221,7 +221,7 @@ Image::~Image()
  
 SlideShowKB::SlideShowKB(const QStringList& fileList,
                          const QStringList& commentsList,
-                         SharedContainer* const sharedData)
+                         PresentationContainer* const sharedData)
     : QGLWidget(),
       d(new Private)
 {

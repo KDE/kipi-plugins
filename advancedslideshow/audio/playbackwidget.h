@@ -38,7 +38,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class SharedContainer;
+class PresentationContainer;
 
 class PlaybackWidget : public QWidget, public Ui::PlaybackWidget
 {
@@ -46,7 +46,7 @@ class PlaybackWidget : public QWidget, public Ui::PlaybackWidget
 
 public:
 
-    PlaybackWidget(QWidget* const, const QList<QUrl>&, SharedContainer* const);
+    PlaybackWidget(QWidget* const, const QList<QUrl>&, PresentationContainer* const);
     ~PlaybackWidget();
 
     void enqueue(const QList<QUrl>&);

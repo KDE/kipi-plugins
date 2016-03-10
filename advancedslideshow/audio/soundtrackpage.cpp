@@ -36,13 +36,13 @@
 
 #include "playbackwidget.h"
 #include "mainpage.h"
-#include "commoncontainer.h"
+#include "presentationcontainer.h"
 #include "kipiplugins_debug.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-SoundtrackPreview::SoundtrackPreview(QWidget* const parent, const QList<QUrl>& urls, SharedContainer* const sharedData)
+SoundtrackPreview::SoundtrackPreview(QWidget* const parent, const QList<QUrl>& urls, PresentationContainer* const sharedData)
     : QDialog(parent)
 {
     setModal(true);
@@ -79,7 +79,7 @@ public:
     }
 
     QList<QUrl>             urlList;
-    SharedContainer*        sharedData;
+    PresentationContainer*        sharedData;
     QTime                   totalTime;
     QTime                   imageTime;
     QMap<QUrl, QTime>*      tracksTime;
@@ -87,7 +87,7 @@ public:
     QMutex*                 timeMutex;
 };
 
-SoundtrackPage::SoundtrackPage(QWidget* const parent, SharedContainer* const sharedData)
+SoundtrackPage::SoundtrackPage(QWidget* const parent, PresentationContainer* const sharedData)
     : QWidget(parent),
       d(new Private)
 {
@@ -602,7 +602,7 @@ void SoundtrackPage::slotPreviewButtonClicked()
         return;
     }
 
-    // Update SharedContainer from interface
+    // Update PresentationContainer from interface
     saveSettings();
 
     qCDebug(KIPIPLUGINS_LOG) << "Tracks : " << urlList;

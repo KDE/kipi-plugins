@@ -46,7 +46,7 @@
 
 #include "kipiplugins_debug.h"
 #include "kpaboutdata.h"
-#include "commoncontainer.h"
+#include "presentationcontainer.h"
 #include "mainpage.h"
 #include "captionpage.h"
 #include "soundtrackpage.h"
@@ -68,11 +68,11 @@ public:
     }
 
     QTabWidget*      tab;
-    SharedContainer* sharedData;
+    PresentationContainer* sharedData;
     KConfig*         config;
 };
 
-SlideShowDlg::SlideShowDlg(QWidget* const parent, SharedContainer* const sharedData)
+SlideShowDlg::SlideShowDlg(QWidget* const parent, PresentationContainer* const sharedData)
     : KPToolDialog(parent),
       d(new Private)
 {

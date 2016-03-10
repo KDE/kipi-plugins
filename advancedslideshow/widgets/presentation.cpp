@@ -59,7 +59,7 @@
 
 // Local includes
 
-#include "commoncontainer.h"
+#include "presentationcontainer.h"
 #include "slideplaybackwidget.h"
 #include "presentationloader.h"
 #include "playbackwidget.h"
@@ -120,7 +120,7 @@ public:
         deskHeight          = 0;
     }
 
-    SharedContainer*            sharedData;
+    PresentationContainer*            sharedData;
 
     uint                        cacheSize;
 
@@ -181,7 +181,7 @@ public:
     int                         deskHeight;
 };
 
-Presentation::Presentation(const QStringList& fileList, const QStringList& commentsList, SharedContainer* const sharedData)
+Presentation::Presentation(const QStringList& fileList, const QStringList& commentsList, PresentationContainer* const sharedData)
     : QWidget(0, Qt::WindowStaysOnTopHint | Qt::Popup | Qt::X11BypassWindowManagerHint),
       d(new Private)
 {

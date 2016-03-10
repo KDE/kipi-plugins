@@ -45,7 +45,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class SharedContainer;
+class PresentationContainer;
 
 class SlideShowGL : public QGLWidget
 {
@@ -55,7 +55,7 @@ public:
 
     SlideShowGL(const QStringList& fileList,
                 const QStringList& commentsList,
-                SharedContainer* const sharedData);
+                PresentationContainer* const sharedData);
     ~SlideShowGL();
 
     void registerEffects();

@@ -41,14 +41,14 @@ namespace KIPIAdvancedSlideshowPlugin
 {
 
 class PlaybackWidget;
-class SharedContainer;
+class PresentationContainer;
 
 class SoundtrackPreview : public QDialog
 {
 
 public :
 
-    SoundtrackPreview(QWidget* const, const QList<QUrl>&, SharedContainer* const);
+    SoundtrackPreview(QWidget* const, const QList<QUrl>&, PresentationContainer* const);
     ~SoundtrackPreview();
 
 private :
@@ -64,7 +64,7 @@ class SoundtrackPage : public QWidget, public Ui::SoundtrackPage
 
 public:
 
-    SoundtrackPage(QWidget* const parent, SharedContainer* const sharedData);
+    SoundtrackPage(QWidget* const parent, PresentationContainer* const sharedData);
     ~SoundtrackPage();
 
     void readSettings();

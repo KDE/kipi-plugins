@@ -30,7 +30,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class SharedContainer;
+class PresentationContainer;
 
 class AdvancedPage : public QWidget, Ui::AdvancedPage
 {
@@ -38,7 +38,7 @@ class AdvancedPage : public QWidget, Ui::AdvancedPage
 
 public:
 
-    AdvancedPage(QWidget* const parent, SharedContainer* const sharedData);
+    AdvancedPage(QWidget* const parent, PresentationContainer* const sharedData);
     ~AdvancedPage();
 
     void readSettings();
@@ -55,7 +55,7 @@ private Q_SLOTS:
 
 private:
 
-    SharedContainer* m_sharedData;
+    PresentationContainer* m_sharedData;
 };
 
 } // namespace KIPIAdvancedSlideshowPlugin

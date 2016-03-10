@@ -34,7 +34,7 @@ using namespace KIPIPlugins;
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class SharedContainer;
+class PresentationContainer;
 
 class SlideShowDlg : public KPToolDialog
 {
@@ -42,7 +42,7 @@ class SlideShowDlg : public KPToolDialog
 
 public:
 
-    SlideShowDlg(QWidget* const parent, SharedContainer* const sharedData);
+    SlideShowDlg(QWidget* const parent, PresentationContainer* const sharedData);
     ~SlideShowDlg();
 
 Q_SIGNALS:

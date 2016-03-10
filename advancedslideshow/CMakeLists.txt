@@ -30,7 +30,7 @@ set(kipiplugin_advancedslideshow_PART_SRCS dialogs/captionpage.cpp
                                            widgets/slideplaybackwidget.cpp
                                            widgets/presentation.cpp
 
-                                           common/commoncontainer.cpp
+                                           common/presentationcontainer.cpp
                                            common/presentationloader.cpp
                                            common/kpsvgpixmaprenderer.cpp
 

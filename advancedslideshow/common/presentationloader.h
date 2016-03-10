@@ -39,7 +39,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class SharedContainer;
+class PresentationContainer;
 
 class PresentationLoader
 {

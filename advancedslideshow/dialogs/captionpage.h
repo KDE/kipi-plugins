@@ -31,7 +31,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class SharedContainer;
+class PresentationContainer;
 
 class CaptionPage : public QWidget, Ui::CaptionPage
 {
@@ -39,7 +39,7 @@ class CaptionPage : public QWidget, Ui::CaptionPage
 
 public:
 
-    CaptionPage(QWidget* const parent, SharedContainer* const sharedData);
+    CaptionPage(QWidget* const parent, PresentationContainer* const sharedData);
     ~CaptionPage();
 
     void readSettings();
@@ -53,7 +53,7 @@ private Q_SLOTS:
 
 private:
 
-    SharedContainer* m_sharedData;
+    PresentationContainer* m_sharedData;
 };
 
 } // namespace KIPIAdvancedSlideshowPlugin

@@ -59,7 +59,7 @@
 // Local includes
 
 #include "kipiplugins_debug.h"
-#include "commoncontainer.h"
+#include "presentationcontainer.h"
 #include "playbackwidget.h"
 #include "slideplaybackwidget.h"
 #include "presentationloader.h"
@@ -152,12 +152,12 @@ public:
     int                               deskWidth;
     int                               deskHeight;
 
-    SharedContainer*                  sharedData;
+    PresentationContainer*                  sharedData;
 };
     
 SlideShowGL::SlideShowGL(const QStringList& fileList,
                          const QStringList& commentsList,
-                         SharedContainer* const sharedData)
+                         PresentationContainer* const sharedData)
     : QGLWidget(0, 0, Qt::WindowStaysOnTopHint | Qt::Popup | Qt::X11BypassWindowManagerHint),
       d(new Private)
 {

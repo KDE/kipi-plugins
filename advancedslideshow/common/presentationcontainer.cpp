@@ -22,12 +22,12 @@
 
 // Local includes
 
-#include "commoncontainer.h"
+#include "presentationcontainer.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-SharedContainer::SharedContainer()
+PresentationContainer::PresentationContainer()
 {
     setIface(0);
 
@@ -72,17 +72,17 @@ SharedContainer::SharedContainer()
     cacheSize                     = 0;
 }
 
-SharedContainer::~SharedContainer()
+PresentationContainer::~PresentationContainer()
 {
     delete captionFont;
 }
 
-KIPI::Interface* SharedContainer::iface() const
+KIPI::Interface* PresentationContainer::iface() const
 {
     return kipiIface;
 }
 
-void SharedContainer::setIface(KIPI::Interface* const iface)
+void PresentationContainer::setIface(KIPI::Interface* const iface)
 {
     kipiIface = iface;
 }

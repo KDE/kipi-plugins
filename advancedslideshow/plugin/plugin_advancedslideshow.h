@@ -44,7 +44,7 @@ namespace KIPI
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class SharedContainer;
+class PresentationContainer;
 
 class Plugin_AdvancedSlideshow : public KIPI::Plugin
 {
@@ -75,7 +75,7 @@ private:
     QAction *         m_actionSlideShow;
     KIPI::Interface* m_interface;
     QList<QUrl>       m_urlList;
-    SharedContainer* m_sharedData;
+    PresentationContainer* m_sharedData;
 };
 
 }  // namespace KIPIAdvancedSlideshowPlugin

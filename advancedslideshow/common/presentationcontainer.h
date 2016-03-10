@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef COMMONCONTAINER_H
-#define COMMONCONTAINER_H
+#ifndef PRESENTATIONCONTAINER_H
+#define PRESENTATIONCONTAINER_H
 
 // Qt includes
 
@@ -44,13 +44,13 @@ class AdvancedPage;
 class SoundtrackPage;
 #endif
 
-class SharedContainer
+class PresentationContainer
 {
 
 public:
 
-    SharedContainer();
-    ~SharedContainer();
+    PresentationContainer();
+    ~PresentationContainer();
 
     KIPI::Interface* iface() const;
     void             setIface(KIPI::Interface* const iface);
@@ -116,4 +116,4 @@ private :
 
 } // namespace KIPIAdvancedSlideshowPlugin
 
-#endif // COMMONCONTAINER_H
+#endif // PRESENTATIONCONTAINER_H

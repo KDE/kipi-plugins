@@ -24,7 +24,7 @@
 
 // Local includes
 
-#include "commoncontainer.h"
+#include "presentationcontainer.h"
 #include "presentation.h"
 
 #ifdef HAVE_OPENGL
@@ -35,7 +35,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-AdvancedPage::AdvancedPage(QWidget* const parent, SharedContainer* const sharedData)
+AdvancedPage::AdvancedPage(QWidget* const parent, PresentationContainer* const sharedData)
     : QWidget(parent)
 {
     setupUi(this);

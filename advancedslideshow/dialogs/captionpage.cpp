@@ -31,12 +31,12 @@
 
 // Local includes
 
-#include "commoncontainer.h"
+#include "presentationcontainer.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-CaptionPage::CaptionPage( QWidget* const parent, SharedContainer* const sharedData)
+CaptionPage::CaptionPage( QWidget* const parent, PresentationContainer* const sharedData)
     : QWidget(parent)
 {
     setupUi(this);

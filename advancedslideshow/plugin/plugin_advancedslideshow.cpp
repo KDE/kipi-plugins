@@ -63,7 +63,7 @@ extern "C"
 #include "kipiplugins_debug.h"
 #include "slideshowdlg.h"
 #include "presentation.h"
-#include "commoncontainer.h"
+#include "presentationcontainer.h"
 #include "kpimageinfo.h"
 
 #ifdef HAVE_OPENGL
@@ -137,7 +137,7 @@ void Plugin_AdvancedSlideshow::slotActivate()
         return;
     }
 
-    m_sharedData = new SharedContainer();
+    m_sharedData = new PresentationContainer();
 
     m_sharedData->setIface(m_interface);
     m_sharedData->showSelectedFilesOnly = true;

@@ -49,7 +49,7 @@
 // Local includes
 
 #include "kipiplugins_debug.h"
-#include "commoncontainer.h"
+#include "presentationcontainer.h"
 #include "advancedpage.h"
 #include "captionpage.h"
 #include "kpimageslist.h"
@@ -77,13 +77,13 @@ public:
         imagesFilesListBox = 0;
     }
 
-    SharedContainer*           sharedData;
+    PresentationContainer*           sharedData;
     QTime                      totalTime;
     KPSvgPixmapRenderer        noPreviewPixmap;
     KIPIPlugins::KPImagesList* imagesFilesListBox;
 };
 
-MainPage::MainPage(QWidget* const parent, SharedContainer* const sharedData)
+MainPage::MainPage(QWidget* const parent, PresentationContainer* const sharedData)
     : QWidget(parent),
       d(new Private)
 {
