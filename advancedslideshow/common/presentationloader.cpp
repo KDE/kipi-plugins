@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "slideshowloader.h"
+#include "presentationloader.h"
 
 // Qt includes
 
@@ -116,7 +116,7 @@ typedef QMap<QUrl, LoadThread*> LoadingThreads;
 
 // -----------------------------------------------------------------------------------------
 
-class SlideShowLoader::Private
+class PresentationLoader::Private
 {
 
 public:
@@ -146,7 +146,7 @@ public:
     int              sheight;
 };
 
-SlideShowLoader::SlideShowLoader(const QStringList& pathList, uint cacheSize, int width, int height,
+PresentationLoader::PresentationLoader(const QStringList& pathList, uint cacheSize, int width, int height,
                                  int beginAtIndex)
     : d(new Private)
 {
@@ -186,7 +186,7 @@ SlideShowLoader::SlideShowLoader(const QStringList& pathList, uint cacheSize, in
     }
 }
 
-SlideShowLoader::~SlideShowLoader()
+PresentationLoader::~PresentationLoader()
 {
     d->threadLock->lock();
     LoadingThreads::Iterator it;
@@ -211,7 +211,7 @@ SlideShowLoader::~SlideShowLoader()
     delete d;
 }
 
-void SlideShowLoader::next()
+void PresentationLoader::next()
 {
     int victim   = (d->currIndex - (d->cacheSize % 2 == 0 ? (d->cacheSize / 2) - 1
                                                           :  int(d->cacheSize / 2))) % d->pathList.count();
@@ -248,7 +248,7 @@ void SlideShowLoader::next()
     d->threadLock->unlock();
 }
 
-void SlideShowLoader::prev()
+void PresentationLoader::prev()
 {
     int victim   = (d->currIndex + int(d->currIndex / 2)) % d->pathList.count();
     int newBorn  = (d->currIndex - ((d->cacheSize & 2) == 0 ? (d->cacheSize / 2)
@@ -286,7 +286,7 @@ void SlideShowLoader::prev()
     d->threadLock->unlock();
 }
 
-QImage SlideShowLoader::getCurrent() const
+QImage PresentationLoader::getCurrent() const
 {
     checkIsIn(d->currIndex);
     d->imageLock->lock();
@@ -296,17 +296,17 @@ QImage SlideShowLoader::getCurrent() const
     return returned;
 }
 
-QString SlideShowLoader::currFileName() const
+QString PresentationLoader::currFileName() const
 {
     return QUrl::fromLocalFile(d->pathList[d->currIndex]).fileName();
 }
 
-QUrl SlideShowLoader::currPath() const
+QUrl PresentationLoader::currPath() const
 {
     return QUrl::fromLocalFile(d->pathList[d->currIndex]);
 }
 
-void SlideShowLoader::checkIsIn(int index) const
+void PresentationLoader::checkIsIn(int index) const
 {
     d->threadLock->lock();
 

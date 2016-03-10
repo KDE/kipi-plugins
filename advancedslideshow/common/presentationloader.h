@@ -22,8 +22,8 @@
  *
  * ============================================================ */
 
-#ifndef SLIDESHOWLOADER_H
-#define SLIDESHOWLOADER_H
+#ifndef PRESENTATIONLOADER_H
+#define PRESENTATIONLOADER_H
 
 // Qt includes
 
@@ -41,13 +41,13 @@ namespace KIPIAdvancedSlideshowPlugin
 
 class SharedContainer;
 
-class SlideShowLoader
+class PresentationLoader
 {
 public:
 
-    SlideShowLoader(const QStringList& pathList, uint cacheSize, int width, int height,
+    PresentationLoader(const QStringList& pathList, uint cacheSize, int width, int height,
                     int beginAtIndex = 0);
-    ~SlideShowLoader();
+    ~PresentationLoader();
 
     void    next();
     void    prev();
@@ -68,4 +68,4 @@ private:
 
 }  // namespace KIPIAdvancedSlideshowPlugin
 
-#endif // SLIDESHOWLOADER_H
+#endif // PRESENTATIONLOADER_H

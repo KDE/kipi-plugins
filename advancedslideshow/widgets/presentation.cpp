@@ -61,7 +61,7 @@
 
 #include "commoncontainer.h"
 #include "slideplaybackwidget.h"
-#include "slideshowloader.h"
+#include "presentationloader.h"
 #include "playbackwidget.h"
 #include "kpimageinfo.h"
 #include "kpsvgpixmaprenderer.h"
@@ -128,7 +128,7 @@ public:
 
     QMap<QString, EffectMethod> Effects;
 
-    SlideShowLoader*            imageLoader;
+    PresentationLoader*            imageLoader;
     QPixmap                     currImage;
 
 #ifdef HAVE_AUDIO
@@ -257,7 +257,7 @@ Presentation::Presentation(const QStringList& fileList, const QStringList& comme
     else
         d->cacheSize = 1;
 
-    d->imageLoader = new SlideShowLoader(d->fileList, d->cacheSize, width(), height(), d->fileIndex);
+    d->imageLoader = new PresentationLoader(d->fileList, d->cacheSize, width(), height(), d->fileIndex);
 
     // --------------------------------------------------
 

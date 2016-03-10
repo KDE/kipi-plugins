@@ -62,7 +62,7 @@
 #include "commoncontainer.h"
 #include "playbackwidget.h"
 #include "slideplaybackwidget.h"
-#include "slideshowloader.h"
+#include "presentationloader.h"
 #include "kpimageinfo.h"
 #include "kpsvgpixmaprenderer.h"
 
@@ -118,7 +118,7 @@ public:
     QTimer*                           timer;
     int                               fileIndex;
 
-    SlideShowLoader*                  imageLoader;
+    PresentationLoader*                  imageLoader;
     GLuint                            texture[2];
     bool                              tex1First;
     int                               curr;
@@ -226,7 +226,7 @@ SlideShowGL::SlideShowGL(const QStringList& fileList,
     // ------------------------------------------------------------------
 
     d->timeout      = d->sharedData->delay;
-    d->imageLoader  = new SlideShowLoader(d->fileList, d->cacheSize, width(), height());
+    d->imageLoader  = new PresentationLoader(d->fileList, d->cacheSize, width(), height());
 
     // --------------------------------------------------
 
