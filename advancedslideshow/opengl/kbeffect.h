@@ -30,8 +30,8 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class Image;
-class SlideShowKB;
+class KBImage;
+class PresentationKB;
 
 class KBEffect
 {
@@ -46,7 +46,7 @@ public:
 
 public:
 
-    explicit KBEffect(SlideShowKB* const parent, bool m_needFadeIn = true);
+    explicit KBEffect(PresentationKB* const parent, bool m_needFadeIn = true);
     virtual ~KBEffect();
 
     virtual bool fadeIn() const
@@ -62,19 +62,19 @@ public:
 
 protected:
 
-    void   setupNewImage(int img);
-    void   swapImages();
-    Image* image(int img) const;
+    void     setupNewImage(int img);
+    void     swapImages();
+    KBImage* image(int img) const;
 
 protected:
 
-    static int   m_numKBEffectRepeated;
-    bool         m_needFadeIn;
-    Image*       m_img[2];
+    static int      m_numKBEffectRepeated;
+    bool            m_needFadeIn;
+    KBImage*        m_img[2];
 
 private:
 
-    SlideShowKB* m_slideWidget;
+    PresentationKB* m_slideWidget;
 };
 
 // -------------------------------------------------------------------------
@@ -84,7 +84,7 @@ class FadeKBEffect: public KBEffect
 
 public:
 
-    explicit FadeKBEffect(SlideShowKB* const parent, bool m_needFadeIn = true);
+    explicit FadeKBEffect(PresentationKB* const parent, bool m_needFadeIn = true);
     virtual ~FadeKBEffect();
 
     virtual Type type()
@@ -103,7 +103,7 @@ class BlendKBEffect: public KBEffect
 
 public:
 
-    explicit BlendKBEffect(SlideShowKB* const parent, bool m_needFadeIn = true);
+    explicit BlendKBEffect(PresentationKB* const parent, bool m_needFadeIn = true);
     virtual ~BlendKBEffect();
 
     virtual Type type()

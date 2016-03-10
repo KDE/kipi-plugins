@@ -25,6 +25,9 @@
  *
  * ============================================================ */
 
+#ifndef PRESENTATION_KB_P_H
+#define PRESENTATION_KB_P_H
+
 namespace KIPIAdvancedSlideshowPlugin
 {
 
@@ -32,7 +35,7 @@ class KBImageLoader;
 class ScreenProperties;
 class PlaybackWidget;
 
-class SlideShowKB::Private
+class PresentationKB::Private
 {
 
 public:
@@ -76,7 +79,7 @@ public:
     QTimer*                timer;
     bool                   haveImages;
 
-    Image*                 image[2];
+    KBImage*               image[2];
     KBEffect*              effect;
     int                    numKBEffectRepeated;
     bool                   zoomIn;
@@ -97,3 +100,5 @@ public:
 };
 
 }  // namespace KIPIAdvancedSlideshowPlugin
+
+#endif // PRESENTATION_KB_P_H

@@ -25,8 +25,8 @@
  *
  * ============================================================ */
 
-#ifndef SLIDESHOWKB_H
-#define SLIDESHOWKB_H
+#ifndef PRESENTATION_KB_H
+#define PRESENTATION_KB_H
 
 // C++ includes
 
@@ -53,14 +53,14 @@ namespace KIPIAdvancedSlideshowPlugin
 
 class PresentationContainer;
 
-class ViewTrans
+class KBViewTrans
 {
 
 public:
 
-    ViewTrans(bool zoomIn, float relAspect);
-    ViewTrans();
-    ~ViewTrans();
+    KBViewTrans(bool zoomIn, float relAspect);
+    KBViewTrans();
+    ~KBViewTrans();
 
     float transX(float pos) const;
     float transY(float pos) const;
@@ -88,39 +88,39 @@ private:
 
 // -------------------------------------------------------------------------
 
-class Image
+class KBImage
 {
 
 public:
 
-    explicit Image(ViewTrans* const viewTrans, float aspect = 1.0);
-    ~Image();
+    explicit KBImage(KBViewTrans* const viewTrans, float aspect = 1.0);
+    ~KBImage();
 
 public:
 
-    ViewTrans* m_viewTrans;
-    float      m_aspect;
-    float      m_pos;
-    float      m_opacity;
-    bool       m_paint;
-    GLuint     m_texture;
+    KBViewTrans* m_viewTrans;
+    float        m_aspect;
+    float        m_pos;
+    float        m_opacity;
+    bool         m_paint;
+    GLuint       m_texture;
 };
 
 // -------------------------------------------------------------------------
 
-class SlideShowKB : public QGLWidget
+class PresentationKB : public QGLWidget
 {
     Q_OBJECT
 
 public:
 
-    SlideShowKB(const QStringList& fileList,
-                const QStringList& commentsList,
-                PresentationContainer* const sharedData);
+    PresentationKB(const QStringList& fileList,
+                   const QStringList& commentsList,
+                   PresentationContainer* const sharedData);
 
-    ~SlideShowKB();
+    ~PresentationKB();
 
-    static QStringList effectNames();
+    static QStringList            effectNames();
     static QMap<QString, QString> effectNamesI18N();
 
 private:
@@ -135,8 +135,8 @@ private:
     void     initializeGL();
     void     paintGL();
     void     resizeGL(int w, int h);
-    void     applyTexture(Image* const img, const QImage& image);
-    void     paintTexture(Image* const img);
+    void     applyTexture(KBImage* const img, const QImage& image);
+    void     paintTexture(KBImage* const img);
     unsigned suggestFrameRate(unsigned forceRate);
 
     void     readSettings();
@@ -164,4 +164,4 @@ private:
 
 }  // namespace KIPIAdvancedSlideshowPlugin
 
-#endif // SLIDESHOWKB_H
+#endif // PRESENTATION_KB_H

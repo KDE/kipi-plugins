@@ -57,7 +57,7 @@
 
 #ifdef HAVE_OPENGL
 #   include "presentationgl.h"
-#   include "slideshowkb.h"
+#   include "presentationkb.h"
 #endif
 
 using namespace KIPIPlugins;
@@ -215,7 +215,7 @@ void MainPage::saveSettings()
         }
 
         // Load Ken Burns effect
-        effectNames = SlideShowKB::effectNamesI18N();
+        effectNames = PresentationKB::effectNamesI18N();
 
         for (it = effectNames.constBegin(); it != effectNames.constEnd(); ++it)
         {
@@ -307,7 +307,7 @@ void MainPage::loadEffectNamesGL()
     effectNames = PresentationGL::effectNamesI18N();
 
     // Add Ken Burns effect
-    effectNames.unite(SlideShowKB::effectNamesI18N());
+    effectNames.unite(PresentationKB::effectNamesI18N());
 
     for (it = effectNames.begin(); it != effectNames.end(); ++it)
     {

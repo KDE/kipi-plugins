@@ -29,7 +29,7 @@
 
 #ifdef HAVE_OPENGL
 #   include "presentationgl.h"
-#   include "slideshowkb.h"
+#   include "presentationkb.h"
 #endif
 
 namespace KIPIAdvancedSlideshowPlugin

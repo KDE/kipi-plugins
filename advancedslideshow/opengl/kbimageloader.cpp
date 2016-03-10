@@ -43,7 +43,7 @@
 // Local includes
 
 #include "kipiplugins_debug.h"
-#include "slideshowkb.h"
+#include "presentationkb.h"
 
 using namespace KIPI;
 

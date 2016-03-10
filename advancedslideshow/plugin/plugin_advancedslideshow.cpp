@@ -68,7 +68,7 @@ extern "C"
 
 #ifdef HAVE_OPENGL
 #   include "presentationgl.h"
-#   include "slideshowkb.h"
+#   include "presentationkb.h"
 #endif
 
 namespace KIPIAdvancedSlideshowPlugin
@@ -263,7 +263,7 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
         {
             if (wantKB)
             {
-                SlideShowKB* const slideShow = new SlideShowKB(fileList, commentsList, m_sharedData);
+                PresentationKB* const slideShow = new PresentationKB(fileList, commentsList, m_sharedData);
                 slideShow->show();
             }
             else

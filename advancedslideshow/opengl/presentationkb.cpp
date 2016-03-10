@@ -25,7 +25,7 @@
  *
  * ============================================================ */
 
-#include "slideshowkb.h"
+#include "presentationkb.h"
 
 // C++ includes
 
@@ -60,12 +60,12 @@
 #include "kbeffect.h"
 #include "playbackwidget.h"
 #include "kipiplugins_debug.h"
-#include "slideshowkb_p.h"
+#include "presentationkb_p.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-ViewTrans::ViewTrans(bool zoomIn, float relAspect)
+KBViewTrans::KBViewTrans(bool zoomIn, float relAspect)
 {
     m_deltaX     = 0.0;
     m_deltaY     = 0.0;
@@ -146,7 +146,7 @@ ViewTrans::ViewTrans(bool zoomIn, float relAspect)
     while ((bestDist < 0.3) && (++i < 10));
 }
 
-ViewTrans::ViewTrans()
+KBViewTrans::KBViewTrans()
 {
     m_deltaX     = 0.0;
     m_deltaY     = 0.0;
@@ -158,48 +158,48 @@ ViewTrans::ViewTrans()
     m_yScale     = 0.0;
 }
 
-ViewTrans::~ViewTrans()
+KBViewTrans::~KBViewTrans()
 {
 }
 
-float ViewTrans::transX(float pos) const
+float KBViewTrans::transX(float pos) const
 {
     return m_baseX + m_deltaX * pos;
 }
 
-float ViewTrans::transY(float pos) const
+float KBViewTrans::transY(float pos) const
 {
     return m_baseY + m_deltaY * pos;
 }
 
-float ViewTrans::scale (float pos) const
+float KBViewTrans::scale (float pos) const
 {
     return m_baseScale * (1.0 + m_deltaScale * pos);
 }
 
-float ViewTrans::xScaleCorrect() const
+float KBViewTrans::xScaleCorrect() const
 {
     return m_xScale;
 }
 
-float ViewTrans::yScaleCorrect() const
+float KBViewTrans::yScaleCorrect() const
 {
     return m_yScale;
 }
 
-double ViewTrans::rnd() const
+double KBViewTrans::rnd() const
 {
     return (double)qrand() / (double)RAND_MAX;
 }
 
-double ViewTrans::rndSign() const
+double KBViewTrans::rndSign() const
 {
     return (qrand() < RAND_MAX / 2) ? 1.0 : -1.0;
 }
 
 // -------------------------------------------------------------------------
 
-Image::Image(ViewTrans* const viewTrans, float aspect)
+KBImage::KBImage(KBViewTrans* const viewTrans, float aspect)
 {
     this->m_viewTrans = viewTrans;
     this->m_aspect    = aspect;
@@ -209,7 +209,7 @@ Image::Image(ViewTrans* const viewTrans, float aspect)
     this->m_texture   = 0;
 }
 
-Image::~Image()
+KBImage::~KBImage()
 {
     delete m_viewTrans;
 
@@ -219,7 +219,7 @@ Image::~Image()
 
 // -------------------------------------------------------------------------
  
-SlideShowKB::SlideShowKB(const QStringList& fileList,
+PresentationKB::PresentationKB(const QStringList& fileList,
                          const QStringList& commentsList,
                          PresentationContainer* const sharedData)
     : QGLWidget(),
@@ -273,8 +273,8 @@ SlideShowKB::SlideShowKB(const QStringList& fileList,
 
     qCDebug(KIPIPLUGINS_LOG) << "Frame Rate : " << frameRate;
 
-    d->image[0]        = new Image(0);
-    d->image[1]        = new Image(0);
+    d->image[0]        = new KBImage(0);
+    d->image[1]        = new KBImage(0);
     d->step            = 1.0 / ((float) (d->delay * frameRate));
     QStringList fList  = fileList;
     d->imageLoadThread = new KBImageLoader(fList, width(), height(), d->sharedData->loop);
@@ -313,7 +313,7 @@ SlideShowKB::SlideShowKB(const QStringList& fileList,
     d->timer->start(1000 / frameRate);
 }
 
-SlideShowKB::~SlideShowKB()
+PresentationKB::~PresentationKB()
 {
     delete d->effect;
     delete d->image[0];
@@ -334,12 +334,12 @@ SlideShowKB::~SlideShowKB()
     delete d;
 }
 
-float SlideShowKB::aspect() const
+float PresentationKB::aspect() const
 {
     return (float)width() / (float)height();
 }
 
-void SlideShowKB::setNewKBEffect()
+void PresentationKB::setNewKBEffect()
 {
     KBEffect::Type type;
     bool needFadeIn = ((d->effect == 0) || (d->effect->type() == KBEffect::Fade));
@@ -373,7 +373,7 @@ void SlideShowKB::setNewKBEffect()
     }
 }
 
-void SlideShowKB::moveSlot()
+void PresentationKB::moveSlot()
 {
     if (d->initialized)
     {
@@ -389,7 +389,7 @@ void SlideShowKB::moveSlot()
     updateGL();
 }
 
-bool SlideShowKB::setupNewImage(int idx)
+bool PresentationKB::setupNewImage(int idx)
 {
     assert(idx >= 0 && idx < 2);
 
@@ -404,9 +404,9 @@ bool SlideShowKB::setupNewImage(int idx)
         delete d->image[idx];
 
         // we have the image lock and there is an image
-        float imageAspect          = d->imageLoadThread->imageAspect();
-        ViewTrans* const viewTrans = new ViewTrans(d->zoomIn, aspect() / imageAspect);
-        d->image[idx]              = new Image(viewTrans, imageAspect);
+        float imageAspect            = d->imageLoadThread->imageAspect();
+        KBViewTrans* const viewTrans = new KBViewTrans(d->zoomIn, aspect() / imageAspect);
+        d->image[idx]                = new KBImage(viewTrans, imageAspect);
 
         applyTexture(d->image[idx], d->imageLoadThread->image());
         ok = true;
@@ -424,7 +424,7 @@ bool SlideShowKB::setupNewImage(int idx)
     return ok;
 }
 
-void SlideShowKB::startSlideShowOnce()
+void PresentationKB::startSlideShowOnce()
 {
     // when the image loader thread is ready, it will already have loaded
     // the first image
@@ -438,14 +438,14 @@ void SlideShowKB::startSlideShowOnce()
     }
 }
 
-void SlideShowKB::swapImages()
+void PresentationKB::swapImages()
 {
-    Image* const tmp = d->image[0];
-    d->image[0]       = d->image[1];
-    d->image[1]       = tmp;
+    KBImage* const tmp = d->image[0];
+    d->image[0]         = d->image[1];
+    d->image[1]         = tmp;
 }
 
-void SlideShowKB::initializeGL()
+void PresentationKB::initializeGL()
 {
     // Enable Texture Mapping
     glEnable(GL_TEXTURE_2D);
@@ -465,7 +465,7 @@ void SlideShowKB::initializeGL()
     glClearDepth(1.0f);
 }
 
-void SlideShowKB::paintGL()
+void PresentationKB::paintGL()
 {
     startSlideShowOnce();
 
@@ -503,12 +503,12 @@ void SlideShowKB::paintGL()
     glFlush();
 }
 
-void SlideShowKB::resizeGL(int w, int h)
+void PresentationKB::resizeGL(int w, int h)
 {
     glViewport(0, 0, (GLint) w, (GLint) h);
 }
 
-void SlideShowKB::applyTexture(Image* const img, const QImage &texture)
+void PresentationKB::applyTexture(KBImage* const img, const QImage &texture)
 {
     /* create the texture */
     glGenTextures(1, &img->m_texture);
@@ -522,7 +522,7 @@ void SlideShowKB::applyTexture(Image* const img, const QImage &texture)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 }
 
-void SlideShowKB::paintTexture(Image* const img)
+void PresentationKB::paintTexture(KBImage* const img)
 {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -556,7 +556,7 @@ void SlideShowKB::paintTexture(Image* const img)
     glEnd();
 }
 
-void SlideShowKB::readSettings()
+void PresentationKB::readSettings()
 {
     KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup group = config.group("Advanced Slideshow Settings");
@@ -569,12 +569,11 @@ void SlideShowKB::readSettings()
     if (d->delay < 5)
         d->delay = 5;
 
-//       if (d->delay > 20) d->delay = 20;
     if (d->forceFrameRate > 120)
         d->forceFrameRate = 120;
 }
 
-void SlideShowKB::endOfShow()
+void PresentationKB::endOfShow()
 {
     QPixmap pix(512, 512);
     pix.fill(Qt::black);
@@ -633,7 +632,7 @@ void SlideShowKB::endOfShow()
     d->showingEnd = true;
 }
 
-QStringList SlideShowKB::effectNames()
+QStringList PresentationKB::effectNames()
 {
     QStringList effects;
 
@@ -641,7 +640,7 @@ QStringList SlideShowKB::effectNames()
     return effects;
 }
 
-QMap<QString, QString> SlideShowKB::effectNamesI18N()
+QMap<QString, QString> PresentationKB::effectNamesI18N()
 {
     QMap<QString, QString> effects;
 
@@ -650,7 +649,7 @@ QMap<QString, QString> SlideShowKB::effectNamesI18N()
     return effects;
 }
 
-void SlideShowKB::keyPressEvent(QKeyEvent* event)
+void PresentationKB::keyPressEvent(QKeyEvent* event)
 {
     if (!event)
         return;
@@ -663,7 +662,7 @@ void SlideShowKB::keyPressEvent(QKeyEvent* event)
         close();
 }
 
-void SlideShowKB::mousePressEvent(QMouseEvent* e)
+void PresentationKB::mousePressEvent(QMouseEvent* e)
 {
     if ( !e )
         return;
@@ -672,7 +671,7 @@ void SlideShowKB::mousePressEvent(QMouseEvent* e)
         slotClose();
 }
 
-void SlideShowKB::mouseMoveEvent(QMouseEvent* e)
+void PresentationKB::mouseMoveEvent(QMouseEvent* e)
 {
     setCursor(QCursor(Qt::ArrowCursor));
     d->mouseMoveTimer->start(1000);
@@ -700,12 +699,12 @@ void SlideShowKB::mouseMoveEvent(QMouseEvent* e)
 #endif
 }
 
-void SlideShowKB::slotEndOfShow()
+void PresentationKB::slotEndOfShow()
 {
     d->endOfShow = true;
 }
 
-void SlideShowKB::slotMouseMoveTimeOut()
+void PresentationKB::slotMouseMoveTimeOut()
 {
     QPoint pos(QCursor::pos());
 
@@ -715,7 +714,7 @@ void SlideShowKB::slotMouseMoveTimeOut()
     setCursor(QCursor(Qt::BlankCursor));
 }
 
-void SlideShowKB::slotClose()
+void PresentationKB::slotClose()
 {
     close();
 }

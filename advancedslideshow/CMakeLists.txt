@@ -40,7 +40,7 @@ set(kipiplugin_advancedslideshow_PART_SRCS dialogs/captionpage.cpp
 if(OPENGLLIBS_FOUND)
     set(kipiplugin_advancedslideshow_PART_SRCS ${kipiplugin_advancedslideshow_PART_SRCS}
                                                opengl/presentationgl.cpp
-                                               opengl/slideshowkb.cpp
+                                               opengl/presentationkb.cpp
                                                opengl/kbeffect.cpp
                                                opengl/kbimageloader.cpp
     )

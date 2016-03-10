@@ -32,8 +32,8 @@
 
 // Local includes
 
-#include "slideshowkb.h"
-#include "slideshowkb_p.h"
+#include "presentationkb.h"
+#include "presentationkb_p.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {
@@ -44,7 +44,7 @@ int KBEffect::m_numKBEffectRepeated = 0;
 
 // -------------------------------------------------------------------------
 
-KBEffect::KBEffect(SlideShowKB* const parent, bool needFadeIn)
+KBEffect::KBEffect(PresentationKB* const parent, bool needFadeIn)
 {
     m_img[0]      = 0;
     m_img[1]      = 0;
@@ -66,7 +66,7 @@ void KBEffect::swapImages()
     m_slideWidget->swapImages();
 }
 
-Image* KBEffect::image(int img) const
+KBImage* KBEffect::image(int img) const
 {
     Q_ASSERT (img >= 0 && img < 2);
 
@@ -94,7 +94,7 @@ KBEffect::Type KBEffect::chooseKBEffect(KBEffect::Type oldType)
 
 // -------------------------------------------------------------------------
 
-FadeKBEffect::FadeKBEffect(SlideShowKB* const parent, bool needFadeIn)
+FadeKBEffect::FadeKBEffect(PresentationKB* const parent, bool needFadeIn)
     : KBEffect(parent, needFadeIn)
 {
     m_img[0] = image(0);
@@ -132,7 +132,7 @@ void FadeKBEffect::advanceTime(float step)
 
 // -------------------------------------------------------------------------
 
-BlendKBEffect::BlendKBEffect(SlideShowKB* const parent, bool needFadeIn)
+BlendKBEffect::BlendKBEffect(PresentationKB* const parent, bool needFadeIn)
     : KBEffect(parent, needFadeIn)
 {
     m_img[0] = image(0);
