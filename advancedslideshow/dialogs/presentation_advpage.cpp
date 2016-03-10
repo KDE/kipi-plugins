@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "advancedpage.h"
+#include "presentation_advpage.h"
 
 // Local includes
 
@@ -35,7 +35,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-AdvancedPage::AdvancedPage(QWidget* const parent, PresentationContainer* const sharedData)
+PresentationAdvPage::PresentationAdvPage(QWidget* const parent, PresentationContainer* const sharedData)
     : QWidget(parent)
 {
     setupUi(this);
@@ -49,11 +49,11 @@ AdvancedPage::AdvancedPage(QWidget* const parent, PresentationContainer* const s
             this, SLOT(slotCacheToggled()));
 }
 
-AdvancedPage::~AdvancedPage()
+PresentationAdvPage::~PresentationAdvPage()
 {
 }
 
-void AdvancedPage::readSettings()
+void PresentationAdvPage::readSettings()
 {
     m_enableMouseWheelCheckBox->setChecked(m_sharedData->enableMouseWheel);
     m_useMillisecondsCheckBox->setChecked(m_sharedData->useMilliseconds);
@@ -65,7 +65,7 @@ void AdvancedPage::readSettings()
     slotCacheToggled();
 }
 
-void AdvancedPage::saveSettings()
+void PresentationAdvPage::saveSettings()
 {
     m_sharedData->useMilliseconds    = m_useMillisecondsCheckBox->isChecked();
     m_sharedData->enableMouseWheel   = m_enableMouseWheelCheckBox->isChecked();
@@ -77,13 +77,13 @@ void AdvancedPage::saveSettings()
 
 // --- Slots
 
-void AdvancedPage::slotUseMillisecondsToggled()
+void PresentationAdvPage::slotUseMillisecondsToggled()
 {
     m_sharedData->useMilliseconds = m_useMillisecondsCheckBox->isChecked();
     emit useMillisecondsToggled();
 }
 
-void AdvancedPage::slotCacheToggled()
+void PresentationAdvPage::slotCacheToggled()
 {
     bool isEnabled = m_cacheCheckBox->isChecked();
 

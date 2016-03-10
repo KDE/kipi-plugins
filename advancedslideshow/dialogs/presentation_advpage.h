@@ -20,26 +20,26 @@
  *
  * ============================================================ */
 
-#ifndef ADVANCED_PAGE_H
-#define ADVANCED_PAGE_H
+#ifndef PRENSENTION_ADVANCED_PAGE_H
+#define PRENSENTION_ADVANCED_PAGE_H
 
 // Local includes
 
-#include "ui_advancedpage.h"
+#include "ui_presentation_advpage.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {
 
 class PresentationContainer;
 
-class AdvancedPage : public QWidget, Ui::AdvancedPage
+class PresentationAdvPage : public QWidget, Ui::PresentationAdvPage
 {
     Q_OBJECT
 
 public:
 
-    AdvancedPage(QWidget* const parent, PresentationContainer* const sharedData);
-    ~AdvancedPage();
+    PresentationAdvPage(QWidget* const parent, PresentationContainer* const sharedData);
+    ~PresentationAdvPage();
 
     void readSettings();
     void saveSettings();
@@ -60,4 +60,4 @@ private:
 
 } // namespace KIPIAdvancedSlideshowPlugin
 
-#endif // ADVANCED_PAGE_H
+#endif // PRENSENTION_ADVANCED_PAGE_H

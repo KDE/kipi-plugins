@@ -50,7 +50,7 @@
 #include "mainpage.h"
 #include "captionpage.h"
 #include "soundtrackpage.h"
-#include "advancedpage.h"
+#include "presentation_advpage.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {
@@ -108,7 +108,7 @@ PresentationDlg::PresentationDlg(QWidget* const parent, PresentationContainer* c
                    i18n("Soundtrack"));
 #endif
 
-    d->sharedData->advancedPage  = new AdvancedPage(this, d->sharedData);
+    d->sharedData->advancedPage  = new PresentationAdvPage(this, d->sharedData);
     d->tab->addTab(d->sharedData->advancedPage,
                    QIcon::fromTheme(QString::fromLatin1("configure")),
                    i18n("Advanced"));

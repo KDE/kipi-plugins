@@ -38,7 +38,7 @@ namespace KIPIAdvancedSlideshowPlugin
 
 class MainPage;
 class CaptionPage;
-class AdvancedPage;
+class PresentationAdvPage;
 
 #ifdef HAVE_AUDIO
 class SoundtrackPage;
@@ -69,7 +69,7 @@ public:
 #ifdef HAVE_AUDIO
     SoundtrackPage*      soundtrackPage;
 #endif
-    AdvancedPage*        advancedPage;
+    PresentationAdvPage*        advancedPage;
 
     // Config file data
 

@@ -1,6 +1,6 @@
 <ui version="4.0" >
- <class>AdvancedPage</class>
- <widget class="QWidget" name="AdvancedPage" >
+ <class>PresentationAdvPage</class>
+ <widget class="QWidget" name="PresentationAdvPage" >
   <property name="geometry" >
    <rect>
     <x>0</x>

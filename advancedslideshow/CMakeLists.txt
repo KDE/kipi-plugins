@@ -23,7 +23,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/dialogs
 )
 
 set(kipiplugin_advancedslideshow_PART_SRCS dialogs/captionpage.cpp
-                                           dialogs/advancedpage.cpp
+                                           dialogs/presentation_advpage.cpp
                                            dialogs/mainpage.cpp
                                            dialogs/presentationdlg.cpp
 
@@ -62,7 +62,7 @@ endif()
 ki18n_wrap_ui(kipiplugin_advancedslideshow_PART_SRCS
               dialogs/mainpage.ui
               dialogs/captionpage.ui
-              dialogs/advancedpage.ui
+              dialogs/presentation_advpage.ui
               widgets/presentationctrlwidget.ui
 )
 
