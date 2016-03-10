@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "listsounditems.h"
+#include "presentationaudiolist.h"
 
 // Qt includes
 
@@ -51,7 +51,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class SoundItem::Private
+class PresentationAudioListItem::Private
 {
 
 public:
@@ -68,7 +68,7 @@ public:
     QMediaPlayer* mediaObject;
 };
 
-SoundItem::SoundItem(QListWidget* const parent, const QUrl& url)
+PresentationAudioListItem::PresentationAudioListItem(QListWidget* const parent, const QUrl& url)
     : QListWidgetItem(parent),
       d(new Private)
 {
@@ -87,37 +87,37 @@ SoundItem::SoundItem(QListWidget* const parent, const QUrl& url)
     d->mediaObject->setMedia(url);
 }
 
-SoundItem::~SoundItem()
+PresentationAudioListItem::~PresentationAudioListItem()
 {
     delete d;
 }
 
-QUrl SoundItem::url() const
+QUrl PresentationAudioListItem::url() const
 {
     return d->url;
 }
 
-void SoundItem::setName(const QString& text)
+void PresentationAudioListItem::setName(const QString& text)
 {
     setText(text);
 }
 
-QString SoundItem::artist() const
+QString PresentationAudioListItem::artist() const
 {
     return d->artist;
 }
 
-QString SoundItem::title() const
+QString PresentationAudioListItem::title() const
 {
     return d->title;
 }
 
-QTime SoundItem::totalTime() const
+QTime PresentationAudioListItem::totalTime() const
 {
     return d->totalTime;
 }
 
-void SoundItem::slotPlayerError(QMediaPlayer::Error err)
+void PresentationAudioListItem::slotPlayerError(QMediaPlayer::Error err)
 {
     if (err != QMediaPlayer::NoError)
     {
@@ -126,7 +126,7 @@ void SoundItem::slotPlayerError(QMediaPlayer::Error err)
     }
 }
 
-void SoundItem::slotMediaStateChanged(QMediaPlayer::MediaStatus status)
+void PresentationAudioListItem::slotMediaStateChanged(QMediaPlayer::MediaStatus status)
 {
     if (status == QMediaPlayer::UnknownMediaStatus ||
         status == QMediaPlayer::NoMedia            ||
@@ -152,7 +152,7 @@ void SoundItem::slotMediaStateChanged(QMediaPlayer::MediaStatus status)
     emit signalTotalTimeReady(d->url, d->totalTime);
 }
 
-void SoundItem::showErrorDialog()
+void PresentationAudioListItem::showErrorDialog()
 {
     QMessageBox msgBox(QApplication::activeWindow());
     msgBox.setWindowTitle(i18n("Error"));
@@ -176,7 +176,7 @@ void SoundItem::showErrorDialog()
 
 // ------------------------------------------------------------------
 
-ListSoundItems::ListSoundItems(QWidget* const parent)
+PresentationAudioList::PresentationAudioList(QWidget* const parent)
     : QListWidget(parent)
 {
     setSelectionMode(QAbstractItemView::SingleSelection);
@@ -185,19 +185,19 @@ ListSoundItems::ListSoundItems(QWidget* const parent)
     setIconSize(QSize(32, 32));
 }
 
-void ListSoundItems::dragEnterEvent(QDragEnterEvent* e)
+void PresentationAudioList::dragEnterEvent(QDragEnterEvent* e)
 {
     if (e->mimeData()->hasUrls())
         e->acceptProposedAction();
 }
 
-void ListSoundItems::dragMoveEvent(QDragMoveEvent* e)
+void PresentationAudioList::dragMoveEvent(QDragMoveEvent* e)
 {
     if (e->mimeData()->hasUrls())
         e->acceptProposedAction();
 }
 
-void ListSoundItems::dropEvent(QDropEvent* e)
+void PresentationAudioList::dropEvent(QDropEvent* e)
 {
     QList<QUrl> list = e->mimeData()->urls();
     QList<QUrl> urls;
@@ -216,13 +216,13 @@ void ListSoundItems::dropEvent(QDropEvent* e)
         emit signalAddedDropItems(urls);
 }
 
-QList<QUrl> ListSoundItems::fileUrls()
+QList<QUrl> PresentationAudioList::fileUrls()
 {
     QList<QUrl> files;
 
     for (int i = 0; i < count(); ++i)
     {
-        SoundItem* const sitem = dynamic_cast<SoundItem*>(item(i));
+        PresentationAudioListItem* const sitem = dynamic_cast<PresentationAudioListItem*>(item(i));
 
         if (sitem)
         {

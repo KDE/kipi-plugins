@@ -26,7 +26,7 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <widget class="KIPIAdvancedSlideshowPlugin::ListSoundItems" name="m_SoundFilesListBox"/>
+         <widget class="KIPIAdvancedSlideshowPlugin::PresentationAudioList" name="m_SoundFilesListBox"/>
         </item>
         <item>
          <layout class="QVBoxLayout" name="verticalLayout">
@@ -432,9 +432,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>KIPIAdvancedSlideshowPlugin::ListSoundItems</class>
+   <class>KIPIAdvancedSlideshowPlugin::PresentationAudioList</class>
    <extends>QListWidget</extends>
-   <header>listsounditems.h</header>
+   <header>presentationaudiolist.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

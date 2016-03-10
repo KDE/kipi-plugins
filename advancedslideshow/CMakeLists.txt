@@ -48,7 +48,7 @@ endif()
 
 if(Qt5Multimedia_FOUND)
     set(kipiplugin_advancedslideshow_PART_SRCS ${kipiplugin_advancedslideshow_PART_SRCS}
-                                               audio/listsounditems.cpp
+                                               audio/presentationaudiolist.cpp
                                                audio/presentation_audiopage.cpp
                                                audio/presentationaudiowidget.cpp
     )

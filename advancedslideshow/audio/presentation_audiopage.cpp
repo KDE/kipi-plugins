@@ -83,7 +83,7 @@ public:
     QTime                   totalTime;
     QTime                   imageTime;
     QMap<QUrl, QTime>*      tracksTime;
-    QMap<QUrl, SoundItem*>* soundItems;
+    QMap<QUrl, PresentationAudioListItem*>* soundItems;
     QMutex*                 timeMutex;
 };
 
@@ -97,7 +97,7 @@ PresentationAudioPage::PresentationAudioPage(QWidget* const parent, Presentation
     d->totalTime  = QTime(0, 0, 0);
     d->imageTime  = QTime(0, 0, 0);
     d->tracksTime = new QMap<QUrl, QTime>();
-    d->soundItems = new QMap<QUrl, SoundItem*>();
+    d->soundItems = new QMap<QUrl, PresentationAudioListItem*>();
     d->timeMutex  = new QMutex();
 
     m_soundtrackTimeLabel->setText(d->totalTime.toString());
@@ -211,7 +211,7 @@ void PresentationAudioPage::addItems(const QList<QUrl>& fileList)
     {
         QUrl currentFile              = *it;
         d->sharedData->soundtrackPath = currentFile;
-        SoundItem* const item         = new SoundItem(m_SoundFilesListBox, currentFile);
+        PresentationAudioListItem* const item         = new PresentationAudioListItem(m_SoundFilesListBox, currentFile);
         item->setName(currentFile.fileName());
         m_SoundFilesListBox->insertItem(m_SoundFilesListBox->count() - 1, item);
 
@@ -381,7 +381,7 @@ void PresentationAudioPage::slotSoundFilesButtonDelete()
     if( Index < 0 )
        return;
 
-    SoundItem* const pitem = static_cast<SoundItem*>(m_SoundFilesListBox->takeItem(Index));
+    PresentationAudioListItem* const pitem = static_cast<PresentationAudioListItem*>(m_SoundFilesListBox->takeItem(Index));
     d->urlList.removeAll(pitem->url());
     d->soundItems->remove(pitem->url());
     d->timeMutex->lock();
@@ -425,7 +425,7 @@ void PresentationAudioPage::slotSoundFilesButtonUp()
         return;
     }
 
-    SoundItem* const pitem = static_cast<SoundItem*>(m_SoundFilesListBox->takeItem(Index));
+    PresentationAudioListItem* const pitem = static_cast<PresentationAudioListItem*>(m_SoundFilesListBox->takeItem(Index));
 
     m_SoundFilesListBox->insertItem(Index - 1, pitem);
     m_SoundFilesListBox->setCurrentItem(pitem);
@@ -461,7 +461,7 @@ void PresentationAudioPage::slotSoundFilesButtonDown()
         return;
     }
 
-    SoundItem* const pitem = static_cast<SoundItem*>(m_SoundFilesListBox->takeItem(Index));
+    PresentationAudioListItem* const pitem = static_cast<PresentationAudioListItem*>(m_SoundFilesListBox->takeItem(Index));
 
     m_SoundFilesListBox->insertItem(Index + 1, pitem);
     m_SoundFilesListBox->setCurrentItem(pitem);
@@ -580,7 +580,7 @@ void PresentationAudioPage::slotPreviewButtonClicked()
 
     for (int i = 0 ; i < m_SoundFilesListBox->count() ; ++i)
     {
-        SoundItem* const pitem = dynamic_cast<SoundItem*>(m_SoundFilesListBox->item(i));
+        PresentationAudioListItem* const pitem = dynamic_cast<PresentationAudioListItem*>(m_SoundFilesListBox->item(i));
 
         if (pitem)
         {

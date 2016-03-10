@@ -22,8 +22,8 @@
  *
  * ============================================================ */
 
-#ifndef LISTSOUNDITEM_H
-#define LISTSOUNDITEM_H
+#ifndef PRESENTATION_AUDIO_LIST_H
+#define PRESENTATION_AUDIO_LIST_H
 
 // Qt includes
 
@@ -41,14 +41,14 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class SoundItem : public QObject, public QListWidgetItem
+class PresentationAudioListItem : public QObject, public QListWidgetItem
 {
     Q_OBJECT
 
 public:
 
-    SoundItem(QListWidget* const parent, const QUrl& url);
-    ~SoundItem();
+    PresentationAudioListItem(QListWidget* const parent, const QUrl& url);
+    ~PresentationAudioListItem();
 
     QUrl    url()       const;
     QString artist()    const;
@@ -77,13 +77,13 @@ private:
 
 // --------------------------------------------------------------------
 
-class ListSoundItems : public QListWidget
+class PresentationAudioList : public QListWidget
 {
     Q_OBJECT
 
 public:
 
-    explicit ListSoundItems(QWidget* const parent = 0);
+    explicit PresentationAudioList(QWidget* const parent = 0);
 
 public:
 
@@ -102,4 +102,4 @@ protected:
 
 }  // namespace KIPIAdvancedSlideshowPlugin
 
-#endif /* LISTSOUNDITEM_H */
+#endif /* PRESENTATION_AUDIO_LIST_H */

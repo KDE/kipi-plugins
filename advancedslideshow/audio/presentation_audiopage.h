@@ -35,7 +35,7 @@
 
 #include "ui_presentation_audiopage.h"
 #include "presentationaudiowidget.h"
-#include "listsounditems.h"
+#include "presentationaudiolist.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {
