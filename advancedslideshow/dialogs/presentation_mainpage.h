@@ -22,8 +22,8 @@
  *
  * ============================================================ */
 
-#ifndef MAIN_PAGE_H
-#define MAIN_PAGE_H
+#ifndef PRESENTATION_MAIN_PAGE_H
+#define PRESENTATION_MAIN_PAGE_H
 
 // Qt includes
 
@@ -31,7 +31,7 @@
 
 // Local includes
 
-#include "ui_mainpage.h"
+#include "ui_presentation_mainpage.h"
 #include "kpsvgpixmaprenderer.h"
 
 class QTreeWidgetItem;
@@ -46,14 +46,14 @@ namespace KIPIAdvancedSlideshowPlugin
 
 class PresentationContainer;
 
-class MainPage : public QWidget, Ui::MainPage
+class PresentationMainPage : public QWidget, Ui::PresentationMainPage
 {
     Q_OBJECT
 
 public:
 
-    MainPage(QWidget* const parent, PresentationContainer* const sharedData);
-    ~MainPage();
+    PresentationMainPage(QWidget* const parent, PresentationContainer* const sharedData);
+    ~PresentationMainPage();
 
     void readSettings();
     void saveSettings();
@@ -94,4 +94,4 @@ private:
 
 } // namespace KIPIAdvancedSlideshowPlugin
 
-#endif // MAIN_PAGE_H
+#endif // PRESENTATION_MAIN_PAGE_H

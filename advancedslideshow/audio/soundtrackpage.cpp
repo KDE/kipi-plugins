@@ -35,7 +35,7 @@
 // Local includes
 
 #include "playbackwidget.h"
-#include "mainpage.h"
+#include "presentation_mainpage.h"
 #include "presentationcontainer.h"
 #include "kipiplugins_debug.h"
 

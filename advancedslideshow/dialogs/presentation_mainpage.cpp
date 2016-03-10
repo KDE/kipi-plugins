@@ -24,7 +24,7 @@
 
 #define ICONSIZE 256
 
-#include "mainpage.h"
+#include "presentation_mainpage.h"
 
 // Qt includes
 
@@ -65,7 +65,7 @@ using namespace KIPIPlugins;
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class MainPage::Private
+class PresentationMainPage::Private
 {
 
 public:
@@ -83,7 +83,7 @@ public:
     KIPIPlugins::KPImagesList* imagesFilesListBox;
 };
 
-MainPage::MainPage(QWidget* const parent, PresentationContainer* const sharedData)
+PresentationMainPage::PresentationMainPage(QWidget* const parent, PresentationContainer* const sharedData)
     : QWidget(parent),
       d(new Private)
 {
@@ -116,12 +116,12 @@ MainPage::MainPage(QWidget* const parent, PresentationContainer* const sharedDat
 #endif
 }
 
-MainPage::~MainPage()
+PresentationMainPage::~PresentationMainPage()
 {
     delete d;
 }
 
-void MainPage::readSettings()
+void PresentationMainPage::readSettings()
 {
 #ifdef HAVE_OPENGL
     m_openglCheckBox->setChecked(d->sharedData->opengl);
@@ -165,7 +165,7 @@ void MainPage::readSettings()
     slotSelection();
 }
 
-void MainPage::saveSettings()
+void PresentationMainPage::saveSettings()
 {
 #ifdef HAVE_OPENGL
     d->sharedData->opengl                = m_openglCheckBox->isChecked();
@@ -238,7 +238,7 @@ void MainPage::saveSettings()
 #endif
 }
 
-void MainPage::showNumberImages()
+void PresentationMainPage::showNumberImages()
 {
     int numberOfImages = d->imagesFilesListBox->imageUrls().count();
     QTime totalDuration(0, 0, 0);
@@ -268,7 +268,7 @@ void MainPage::showNumberImages()
     m_label6->setText(i18np("%1 image [%2]", "%1 images [%2]", numberOfImages, totalDuration.toString()));
 }
 
-void MainPage::loadEffectNames()
+void PresentationMainPage::loadEffectNames()
 {
     m_effectsComboBox->clear();
 
@@ -294,7 +294,7 @@ void MainPage::loadEffectNames()
     }
 }
 
-void MainPage::loadEffectNamesGL()
+void PresentationMainPage::loadEffectNamesGL()
 {
 #ifdef HAVE_OPENGL
     m_effectsComboBox->clear();
@@ -331,7 +331,7 @@ void MainPage::loadEffectNamesGL()
 #endif
 }
 
-bool MainPage::updateUrlList()
+bool PresentationMainPage::updateUrlList()
 {
     d->sharedData->urlList.clear();
     QTreeWidgetItemIterator it(d->imagesFilesListBox->listView());
@@ -358,7 +358,7 @@ bool MainPage::updateUrlList()
     return true;
 }
 
-void MainPage::slotImagesFilesSelected(QTreeWidgetItem* item)
+void PresentationMainPage::slotImagesFilesSelected(QTreeWidgetItem* item)
 {
     if (!item || d->imagesFilesListBox->imageUrls().isEmpty())
     {
@@ -389,7 +389,7 @@ void MainPage::slotImagesFilesSelected(QTreeWidgetItem* item)
     }
 }
 
-void MainPage::addItems(const QList<QUrl>& fileList)
+void PresentationMainPage::addItems(const QList<QUrl>& fileList)
 {
     if (fileList.isEmpty())
         return;
@@ -400,7 +400,7 @@ void MainPage::addItems(const QList<QUrl>& fileList)
     slotImagesFilesSelected(d->imagesFilesListBox->listView()->currentItem());
 }
 
-void MainPage::slotOpenGLToggled()
+void PresentationMainPage::slotOpenGLToggled()
 {
     if (m_openglCheckBox->isChecked())
     {
@@ -415,7 +415,7 @@ void MainPage::slotOpenGLToggled()
     slotEffectChanged();
 }
 
-void MainPage::slotEffectChanged()
+void PresentationMainPage::slotEffectChanged()
 {
     bool isKB = m_effectsComboBox->currentText() == i18n("Ken Burns");
 
@@ -428,13 +428,13 @@ void MainPage::slotEffectChanged()
     d->sharedData->captionPage->setEnabled((!isKB) && m_printCommentsCheckBox->isChecked());
 }
 
-void MainPage::slotDelayChanged( int delay )
+void PresentationMainPage::slotDelayChanged( int delay )
 {
     d->sharedData->delay = d->sharedData->useMilliseconds ? delay : delay * 1000;
     showNumberImages();
 }
 
-void MainPage::slotUseMillisecondsToggled()
+void PresentationMainPage::slotUseMillisecondsToggled()
 {
     int delay = d->sharedData->delay;
 
@@ -458,7 +458,7 @@ void MainPage::slotUseMillisecondsToggled()
     m_delaySpinBox->setValue(delay);
 }
 
-void MainPage::slotSelection()
+void PresentationMainPage::slotSelection()
 {
     QList<QUrl> urlList;
 
@@ -498,13 +498,13 @@ void MainPage::slotSelection()
     d->imagesFilesListBox->enableDragAndDrop(customize);
 }
 
-void MainPage::slotPortfolioDurationChanged(int)
+void PresentationMainPage::slotPortfolioDurationChanged(int)
 {
     showNumberImages();
     emit signalTotalTimeChanged( d->totalTime );
 }
 
-void MainPage::slotThumbnail(const QUrl& /*url*/, const QPixmap& pix)
+void PresentationMainPage::slotThumbnail(const QUrl& /*url*/, const QPixmap& pix)
 {
     if (pix.isNull())
     {
@@ -519,19 +519,19 @@ void MainPage::slotThumbnail(const QUrl& /*url*/, const QPixmap& pix)
                this, 0);
 }
 
-void MainPage::slotPrintCommentsToggled()
+void PresentationMainPage::slotPrintCommentsToggled()
 {
     d->sharedData->printFileComments =  m_printCommentsCheckBox->isChecked();
     d->sharedData->captionPage->setEnabled(m_printCommentsCheckBox->isChecked());
 }
 
-void MainPage::slotImageListChanged()
+void PresentationMainPage::slotImageListChanged()
 {
     showNumberImages();
     slotImagesFilesSelected(d->imagesFilesListBox->listView()->currentItem());
 }
 
-void MainPage::setupConnections()
+void PresentationMainPage::setupConnections()
 {
     connect(d->sharedData->advancedPage, SIGNAL(useMillisecondsToggled()), this,
             SLOT(slotUseMillisecondsToggled()));

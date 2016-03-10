@@ -47,7 +47,7 @@
 #include "kipiplugins_debug.h"
 #include "kpaboutdata.h"
 #include "presentationcontainer.h"
-#include "mainpage.h"
+#include "presentation_mainpage.h"
 #include "captionpage.h"
 #include "soundtrackpage.h"
 #include "presentation_advpage.h"
@@ -91,7 +91,7 @@ PresentationDlg::PresentationDlg(QWidget* const parent, PresentationContainer* c
 
     d->tab = new QTabWidget(this);
 
-    d->sharedData->mainPage  = new MainPage(this, d->sharedData);
+    d->sharedData->mainPage  = new PresentationMainPage(this, d->sharedData);
     d->tab->addTab(d->sharedData->mainPage,
                    QIcon::fromTheme(QString::fromLatin1("view-presentation")),
                    i18n("Main Settings"));

@@ -24,7 +24,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/dialogs
 
 set(kipiplugin_advancedslideshow_PART_SRCS dialogs/captionpage.cpp
                                            dialogs/presentation_advpage.cpp
-                                           dialogs/mainpage.cpp
+                                           dialogs/presentation_mainpage.cpp
                                            dialogs/presentationdlg.cpp
 
                                            widgets/presentationctrlwidget.cpp
@@ -60,7 +60,7 @@ if(Qt5Multimedia_FOUND)
 endif()
 
 ki18n_wrap_ui(kipiplugin_advancedslideshow_PART_SRCS
-              dialogs/mainpage.ui
+              dialogs/presentation_mainpage.ui
               dialogs/captionpage.ui
               dialogs/presentation_advpage.ui
               widgets/presentationctrlwidget.ui
