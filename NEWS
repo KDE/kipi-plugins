@@ -59,4 +59,6 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 039 ==> 359257 - Image size spinbox doesn't allow values larger than 99.
 040 ==> 359478 - kipi flickr export plugin crashed on creating new set.
 041 ==> 321647 - Kenburns effect from AdvancedSlideshow forgets to auto-rotate photos
-042 ==> 
+042 ==> 356939 - Advanced slide show: playing sound track does not work.
+043 ==> 
+
