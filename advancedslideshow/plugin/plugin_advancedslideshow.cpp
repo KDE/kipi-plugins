@@ -62,7 +62,7 @@ extern "C"
 
 #include "kipiplugins_debug.h"
 #include "slideshowdlg.h"
-#include "slideshow.h"
+#include "presentation.h"
 #include "commoncontainer.h"
 #include "kpimageinfo.h"
 
@@ -248,8 +248,8 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
 
     if (!opengl)
     {
-        SlideShow* const slideShow = new SlideShow(fileList, commentsList, m_sharedData);
-        slideShow->show();
+        Presentation* const presentation = new Presentation(fileList, commentsList, m_sharedData);
+        presentation->show();
     }
     else
     {

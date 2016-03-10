@@ -28,7 +28,7 @@ set(kipiplugin_advancedslideshow_PART_SRCS dialogs/captionpage.cpp
                                            dialogs/slideshowdlg.cpp
 
                                            widgets/slideplaybackwidget.cpp
-                                           widgets/slideshow.cpp
+                                           widgets/presentation.cpp
 
                                            common/commoncontainer.cpp
                                            common/slideshowloader.cpp

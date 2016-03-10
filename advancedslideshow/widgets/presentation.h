@@ -23,8 +23,8 @@
  *
  * ============================================================ */
 
-#ifndef SLIDESHOW_H
-#define SLIDESHOW_H
+#ifndef PRESENTATION_H
+#define PRESENTATION_H
 
 // Qt includes
 
@@ -47,18 +47,18 @@ namespace KIPIAdvancedSlideshowPlugin
 
 class SharedContainer;
 
-class SlideShow : public QWidget
+class Presentation : public QWidget
 {
     Q_OBJECT
 
-    typedef int (SlideShow::*EffectMethod)(bool);
+    typedef int (Presentation::*EffectMethod)(bool);
 
 public:
 
-    SlideShow(const QStringList& fileList,
-              const QStringList& commentsList,
-              SharedContainer* const sharedData);
-    ~SlideShow();
+    Presentation(const QStringList& fileList,
+                 const QStringList& commentsList,
+                 SharedContainer* const sharedData);
+    ~Presentation();
 
     void registerEffects();
 
@@ -132,4 +132,4 @@ private:
 
 }  // namespace KIPIAdvancedSlideshowPlugin
 
-#endif /* SLIDESHOW_H */
+#endif /* PRESENTATION_H */

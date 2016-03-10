@@ -75,7 +75,7 @@ private:
 
     bool         m_canHide;
 
-    friend class SlideShow;
+    friend class Presentation;
     friend class SlideShowGL;
 };
 

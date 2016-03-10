@@ -25,7 +25,7 @@
 // Local includes
 
 #include "commoncontainer.h"
-#include "slideshow.h"
+#include "presentation.h"
 
 #ifdef HAVE_OPENGL
 #   include "slideshowgl.h"

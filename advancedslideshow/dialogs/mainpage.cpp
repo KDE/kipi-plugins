@@ -53,7 +53,7 @@
 #include "advancedpage.h"
 #include "captionpage.h"
 #include "kpimageslist.h"
-#include "slideshow.h"
+#include "presentation.h"
 
 #ifdef HAVE_OPENGL
 #   include "slideshowgl.h"
@@ -185,7 +185,7 @@ void MainPage::saveSettings()
     {
 
         QString effect;
-        QMap<QString, QString> effectNames = SlideShow::effectNamesI18N();
+        QMap<QString, QString> effectNames = Presentation::effectNamesI18N();
         QMap<QString, QString>::ConstIterator it;
 
         for (it = effectNames.constBegin(); it != effectNames.constEnd(); ++it)
@@ -272,7 +272,7 @@ void MainPage::loadEffectNames()
 {
     m_effectsComboBox->clear();
 
-    QMap<QString, QString> effectNames = SlideShow::effectNamesI18N();
+    QMap<QString, QString> effectNames = Presentation::effectNamesI18N();
     QStringList effects;
 
     QMap<QString, QString>::Iterator it;
