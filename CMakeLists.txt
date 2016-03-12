@@ -94,11 +94,6 @@ find_package(Qt5 ${QT_MIN_VERSION} REQUIRED NO_MODULE COMPONENTS
              Network
 )
 
-find_package(Qt5 ${QT_MIN_VERSION} OPTIONAL_COMPONENTS
-             OpenGL
-             Multimedia
-)
-
 if(BUILD_TESTING)
     find_package(Qt5 ${QT_MIN_VERSION} REQUIRED NO_MODULE COMPONENTS
                  Test)
@@ -130,7 +125,6 @@ if(KF5Kipi_FOUND)
 
     DETECT_LIBMEDIAWIKI(5.0.0)                                                 # For Mediawiki.
     DETECT_LIBKVKONTAKTE(4.70.0)                                               # For VKontakte.
-    find_package(OpenGL)                                                       # For AdvancedSlideshow and ImageViewer.
     find_package(QtKOAuth)                                                     # For Imgur Auhtenticated API.
 
     # ==================================================================================================
@@ -153,10 +147,6 @@ if(KF5Kipi_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libmediawiki"    "https://projects.kde.org/projects/extragear/libs/libmediawiki"   "(version >= ${KF5_MIN_VERSION})"      "Kipi-plugins will be compiled without libmediawiki support."    KF5MediaWiki_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte"   "https://projects.kde.org/projects/extragear/libs/libkvkontakte"  "(version >= 4.70.0)"                  "Kipi-plugins will be compiled without libkvkontakte support."   KF5Vkontakte_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libqtkoauth"     "https://github.com/kypeli/kQOAuth"                               "(version >= 0.97)"                    "Kipi-plugins will be compiled without libqtkoauth support."     QTKOAUTH_FOUND)
-
-    PRINT_OPTIONAL_LIBRARY_STATUS("native Opengl support"  "" "" "Kipi-plugins will be compiled without native OpenGL support."  OPENGL_FOUND AND OPENGL_GLU_FOUND)
-    PRINT_OPTIONAL_QTMODULE_STATUS("Qt5 OpenGL"            Qt5OpenGL_FOUND)
-    PRINT_OPTIONAL_QTMODULE_STATUS("Qt5 Multimedia"        Qt5Multimedia_FOUND)
 
     # Optional plugins results ----------------------------------------------------------------------------
 
@@ -246,14 +236,9 @@ if(KF5Kipi_FOUND)
         add_subdirectory(dropbox)
         add_subdirectory(imgur)
         add_subdirectory(facebook)
-        add_subdirectory(advancedslideshow)
 
         if(KF5Archive_FOUND)
             add_subdirectory(flashexport)
-        endif()
-
-        if(OPENGLLIBS_FOUND)
-            add_subdirectory(imageviewer)
         endif()
 
         if(KF5MediaWiki_FOUND)

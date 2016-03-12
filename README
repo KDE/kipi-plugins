@@ -15,12 +15,10 @@ kipi-plugins is based in part on the work of the Independent JPEG Group.
 
 Facebook           : A tool to import/export images to/from a remote Facebook web service (http://www.facebook.com).
 Flickr             : A tool to export images to a remote Flickr based web service (http://www.flickr.com). Also compatible with Zooomr and 23HQ 
-ImageViewer        : A tool to preview images using OpenGL.
 GoogleServices     : A tool to export images to Google web services.
 PrintImage         : A tool to print images in various format.
 SendImages         : A tool to send images by e-mail.
 FlashExport        : A tool to export images to Flash using SimpleViewer (http://www.airtightinteractive.com/simpleviewer).
-AdvancedSlideShow  : A tool to Slide images with 2D and 3D effects using OpenGL.
 Smug               : A tool to import/export images to/from a remote SmugMug web service (http://www.smugmug.com).
 RemoteStorage      : A tool to export images to remote storage using network protocol (FTP, SSH, SAMBA, etc...).
 Piwigo             : A tool to export images to a remote Piwigo (PHPWebGallery) server (http://piwigo.org).
@@ -48,14 +46,10 @@ libmediawiki    >= 5.0.0                        https://projects.kde.org/project
 libkvkontakte   >= 4.70.0                       https://projects.kde.org/projects/extragear/libs/libkvkontakte
 libxslt         >= 1.1.0                        http://xmlsoft.org/XSLT
 libxml2         >= 2.7.0                        http://xmlsoft.org
-libqtopengl     >= 4.3.0                        http://www.qtsoftware.com
-libmesa         >= 11.0                         http://mesa3d.sourceforge.net
 libqtkoauth     >= 0.97                         https://github.com/kypeli/kQOAuth
 
 Plugin Specific Dependencies (for compiling and for running) :
 
-AdvancedSlideShow  : Mesa3D, and OpenGL support for libqt
-ImageViewer        : Mesa3D, and OpenGL support for libqt
 FaceBook           : libqjson.
 Mediawiki          : libmediawiki.
 Vkontakte          : libkvkontakte.
