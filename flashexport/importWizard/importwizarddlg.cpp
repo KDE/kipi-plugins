@@ -245,7 +245,7 @@ bool ImportWizardDlg::checkIfFolderExist()
 
     if (!job->error())
     {
-        int ret = QMessageBox::warning(this, i18n("Target Directory Exists"),
+        int ret = QMessageBox::warning(this, i18n("Target Folder Exists"),
                                        i18n("Target folder %1 already exists.\n"
                                             "Do you want to overwrite it? All data in this folder will be lost.",
                                             d->settings->exportUrl.path()),
@@ -261,7 +261,7 @@ bool ImportWizardDlg::checkIfFolderExist()
 
                 if (!deleteJob->exec())
                 {
-                    QMessageBox::critical(this, i18n("Cannot Delete Directory"),
+                    QMessageBox::critical(this, i18n("Cannot Delete Folder"),
                                           i18n("Could not delete %1.\n"
                                                "Please choose another export folder.",
                                                d->settings->exportUrl.path()));
