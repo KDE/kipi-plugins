@@ -40,12 +40,9 @@ libkipi         >= 5.0.0                        https://projects.kde.org/project
 
 Optional:
 
-libthreadweaver >= 5.0.0                        https://projects.kde.org/projects/frameworks/threadweaver
 libkarchive     >= 5.0.0                        https://projects.kde.org/projects/frameworks/karchive
 libmediawiki    >= 5.0.0                        https://projects.kde.org/projects/extragear/libs/libmediawiki
 libkvkontakte   >= 4.70.0                       https://projects.kde.org/projects/extragear/libs/libkvkontakte
-libxslt         >= 1.1.0                        http://xmlsoft.org/XSLT
-libxml2         >= 2.7.0                        http://xmlsoft.org
 libqtkoauth     >= 0.97                         https://github.com/kypeli/kQOAuth
 
 Plugin Specific Dependencies (for compiling and for running) :
