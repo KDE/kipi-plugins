@@ -101,11 +101,11 @@ bool MPForm_Picasa::addPair(const QString& name, const QString& value, const QSt
     return true;
 }
 
-bool MPForm_Picasa::addFile(const QString& name,const QString& path)
+bool MPForm_Picasa::addFile(const QString& name, const QString& path)
 {
     QMimeDatabase db;
     QMimeType ptr = db.mimeTypeForUrl(QUrl::fromLocalFile(path));
-    QString mime       = ptr.name();
+    QString mime  = ptr.name();
 
     if (mime.isEmpty())
     {
@@ -142,10 +142,9 @@ bool MPForm_Picasa::addFile(const QString& name,const QString& path)
     m_buffer.append(str);
 
     int oldSize = m_buffer.size();
-    m_buffer.resize(oldSize + imageData.size() + 2);
+    m_buffer.resize(oldSize + imageData.size());
     memcpy(m_buffer.data() + oldSize, imageData.data(), imageData.size());
-    m_buffer[m_buffer.size()-2] = '\r';
-    m_buffer[m_buffer.size()-1] = '\n';
+    m_buffer.append("\r\n");
 
     return true;
 }
