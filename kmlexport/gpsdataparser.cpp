@@ -84,15 +84,17 @@ bool GPSDataParser::matchDate(const QDateTime& photoDateTime, int maxGapTime, in
         // Here we check a possible accuracy in seconds between the
         // Camera GMT time and the GPS device GMT time.
 
-        nbSecs = abs(cameraGMTDateTime.secsTo( it.key() ));
+        nbSecs = qAbs(cameraGMTDateTime.secsTo( it.key() ));
 //         qCDebug(KIPIPLUGINS_LOG) << it.key() << cameraGMTDateTime << nbSecs;
 //         qCDebug(KIPIPLUGINS_LOG) << it.key().timeSpec() << cameraGMTDateTime.timeSpec() << nbSecs;
 
         // We tring to find the minimal accuracy.
-        if( nbSecs < maxGapTime && nbSecs < nbSecItem)
+        if (nbSecs < maxGapTime && nbSecs < nbSecItem)
         {
             if (gpsData)
+            {
                 *gpsData = m_GPSDataMap[it.key()];
+            }
 
             findItem  = true;
             nbSecItem = nbSecs;
