@@ -20,13 +20,11 @@
 *
 * ============================================================ */
 
-#ifndef YANDEXFOTKiWIDGET_H
+#ifndef YANDEXFOTKIWIDGET_H
 #define YANDEXFOTKIWIDGET_H
 
-//Qt includes
+// Local includes
 
-
-//local includes
 #include "kpsettingswidget.h"
 
 namespace KIPIPlugins
@@ -55,6 +53,7 @@ public:
     };     
 
 public:
+
     YandexFotkiWidget(QWidget* const parent, KIPI::Interface* const iface, const QString& pluginName);
     ~YandexFotkiWidget();
     
@@ -63,17 +62,16 @@ public:
 private:
 
     // upload settings
-    QComboBox*               m_accessCombo;
-    QCheckBox*               m_hideOriginalCheck;
-    QCheckBox*               m_disableCommentsCheck;
-    QCheckBox*               m_adultCheck;
-    QButtonGroup*            m_policyGroup;
+    QComboBox*    m_accessCombo;
+    QCheckBox*    m_hideOriginalCheck;
+    QCheckBox*    m_disableCommentsCheck;
+    QCheckBox*    m_adultCheck;
+    QButtonGroup* m_policyGroup;
     
-friend class YandexFotkiWindow;    
+    friend class YandexFotkiWindow;    
     
-
 }; // class YandexFotkiWidget
 
 }  // namespace KIPIYandexFotkiPlugin
 
-#endif // YANDEXFOTKiWIDGET_H
+#endif // YANDEXFOTKIWIDGET_H
