@@ -116,6 +116,13 @@ FlickrTalker::FlickrTalker(QWidget* const parent, const QString& serviceName)
         m_secret    = QString::fromLatin1("34b39925e6273ffd");
     }
 
+    QString prefix = QDir::tempPath() + QLatin1String("/kipi-") + serviceName +
+                     QLatin1String("exportplugin-XXXXXX");
+
+    m_tmpDir = new QTemporaryDir(prefix);
+
+    qCDebug(KIPIPLUGINS_LOG) << "Temp dir : " << m_tmpDir->path();
+
     /* Initialize selected photo set as empty. */
     m_selectedPhotoSet = FPhotoSet();
     /* Initialize photo sets list. */
@@ -133,6 +140,7 @@ FlickrTalker::~FlickrTalker()
     }
 
     delete m_photoSetsList;
+    delete m_tmpDir;
 }
 
 /** Compute MD5 signature using url queries keys and values following Flickr notice:
@@ -655,10 +663,10 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
         m_job = 0;
     }
 
-    QUrl    url(m_uploadUrl);
+    QUrl url(m_uploadUrl);
 
-    // We dont' want to modify url as such, we just used the KURL object for storing the query items.
-    QUrl  url2(QString::fromLatin1(""));
+    // We dont' want to modify url as such, we just used the QUrl object for storing the query items.
+    QUrl url2(QString::fromLatin1(""));
     QUrlQuery urlQuery;
     QString path = photoPath;
     MPForm  form;
@@ -726,15 +734,21 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
 
     if (!image.isNull())
     {
-        path = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QString::fromLatin1("/") + QFileInfo(photoPath).baseName().trimmed() + QString::fromLatin1(".jpg");
+        if (!m_lastTmpFile.isEmpty())
+        {
+            QFile::remove(m_lastTmpFile);
+        }
+
+        path = m_tmpDir->path() + QString::fromLatin1("/") + QFileInfo(photoPath).baseName().trimmed() + QString::fromLatin1(".jpg");
 
         if (rescale)
         {
             if (image.width() > maxDim || image.height() > maxDim)
                 image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-
-            image.save(path, "JPEG", imageQuality);
         }
+
+        image.save(path, "JPEG", imageQuality);
+        m_lastTmpFile = path;
 
         // Restore all metadata.
 

@@ -26,11 +26,12 @@
 
 // Qt includes
 
-#include <QList>
 #include <QUrl>
+#include <QList>
 #include <QPair>
 #include <QString>
 #include <QObject>
+#include <QTemporaryDir>
 #include <QCryptographicHash>
 
 // KDE includes
@@ -155,27 +156,30 @@ private Q_SLOTS:
 
 private:
 
-    QWidget*   m_parent;
-//  QString    m_cookie;
-    QByteArray m_buffer;
+    QWidget*       m_parent;
+//  QString        m_cookie;
+    QByteArray     m_buffer;
 
-    QString    m_serviceName;
-    QString    m_apiUrl;
-    QString    m_authUrl;
-    QString    m_uploadUrl;
-    QString    m_apikey;
-    QString    m_secret;
-    QString    m_frob;
-    QString    m_maxSize;
-    QString    m_token;
-    QString    m_username;
-    QString    m_userId;
+    QString        m_serviceName;
+    QString        m_apiUrl;
+    QString        m_authUrl;
+    QString        m_uploadUrl;
+    QString        m_apikey;
+    QString        m_secret;
+    QString        m_frob;
+    QString        m_maxSize;
+    QString        m_token;
+    QString        m_username;
+    QString        m_userId;
+    QString        m_lastTmpFile;
 
-    KIO::Job*  m_job;
+    QTemporaryDir* m_tmpDir;
 
-    State      m_state;
-    
-    Interface* m_iface;
+    KIO::Job*      m_job;
+
+    State          m_state;
+
+    Interface*     m_iface;
 };
 
 } // namespace KIPIFlickrPlugin

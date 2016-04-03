@@ -66,7 +66,7 @@
 namespace KIPIFlickrPlugin
 {
 
-FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, const QString& serviceName, SelectUserDlg* const dlg)
+FlickrWindow::FlickrWindow(QWidget* const /*parent*/, const QString& serviceName, SelectUserDlg* const dlg)
     : KPToolDialog(0)
 {
     m_serviceName = serviceName;
@@ -96,7 +96,6 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
     }
 
     m_select                    = dlg;
-    m_tmp                       = tmpFolder;
     m_uploadCount               = 0;
     m_uploadTotal               = 0;
     m_widget                    = new FlickrWidget(this, iface(), serviceName);

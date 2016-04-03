@@ -60,5 +60,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 040 ==> 359478 - kipi flickr export plugin crashed on creating new set.
 041 ==> 321647 - Kenburns effect from AdvancedSlideshow forgets to auto-rotate photos
 042 ==> 356939 - Advanced slide show: playing sound track does not work.
-043 ==> 
-
+043 ==> 361329 - Flickr uploader does not clean /tmp after upload.
+044 ==> 

@@ -84,7 +84,7 @@ class FlickrWindow : public KPToolDialog
 
 public:
 
-    FlickrWindow(const QString& tmpFolder, QWidget* const parent, const QString& serviceName, SelectUserDlg* const dlg);
+    FlickrWindow(QWidget* const parent, const QString& serviceName, SelectUserDlg* const dlg);
     ~FlickrWindow();
 
     /**
@@ -169,7 +169,6 @@ private:
     QString                                m_username;
     QString                                m_userId;
     QString                                m_lastSelectedAlbum;
-    QString                                m_tmp;
 
     QLabel*                                m_userNameDisplayLabel;
 
