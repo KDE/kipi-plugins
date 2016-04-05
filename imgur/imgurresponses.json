@@ -5,9 +5,7 @@
 		"method":"post",
 		"format":"json",
 		"parameters":"key = 2da1cc4923f33dc72885aa32adede5c3asd"
-	 }
-}
-{
+	 },
 	"upload": {
 		"image": {
 			"name":null,
@@ -31,9 +29,7 @@
 			"small_square":"http://i.imgur.com/yVOGus.jpg",
 			"large_thumbnail":"http://i.imgur.com/yVOGul.jpg"
 		}
-	}
-}
-{
+	},
 	"upload": {
 		"image": { 
 			"name":null,
