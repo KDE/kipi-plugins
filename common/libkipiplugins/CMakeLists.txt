@@ -32,6 +32,7 @@ set(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kipiplugins_debug.cpp
 )
 
 add_library(KF5kipiplugins SHARED ${kipiplugins_LIB_SRCS})
+add_dependencies(KF5kipiplugins kipiplugins-gitversion)
 
 generate_export_header(KF5kipiplugins BASE_NAME kipiplugins EXPORT_MACRO_NAME KIPIPLUGINS_EXPORT)
 
