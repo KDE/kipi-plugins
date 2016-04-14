@@ -60,7 +60,7 @@ public:
     {
         m_pluginName         = pluginName;
         mainLayout           = new QHBoxLayout(widget);
-        m_imgList            = new KPImagesList(widget);  
+        m_imgList            = new KPImagesList(widget);
         settingsScrollArea   = new QScrollArea(widget);
         m_settingsBox        = new QWidget(settingsScrollArea);
         m_settingsBoxLayout  = new QVBoxLayout(m_settingsBox);
@@ -76,17 +76,17 @@ public:
         m_reloadAlbumsBtn    = new QPushButton(m_accountBox);
         m_sizeBox            = new QGroupBox(i18n("Max Dimension"), m_settingsBox);
         m_sizeBoxLayout      = new QVBoxLayout(m_sizeBox);
-        m_dlDimensionCoB     = new QComboBox(m_sizeBox);  
+        m_dlDimensionCoB     = new QComboBox(m_sizeBox);
         m_uploadBox          = new QGroupBox(i18n("Destination"), m_settingsBox);
         m_uploadWidget       = iface->uploadWidget(m_uploadBox);
         m_uploadBoxLayout    = new QVBoxLayout(m_uploadBox);
         m_optionsBox         = new QGroupBox(i18n("Options"),m_settingsBox);
-        m_optionsBoxLayout   = new QGridLayout(m_optionsBox);    
+        m_optionsBoxLayout   = new QGridLayout(m_optionsBox);
         m_resizeChB          = new QCheckBox(m_optionsBox);
         m_dimensionSpB       = new QSpinBox(m_optionsBox);
         m_imageQualitySpB    = new QSpinBox(m_optionsBox);
         m_progressBar        = new KPProgressWidget(m_settingsBox);
-        
+
     }
 
     KPImagesList*                  m_imgList;
@@ -106,30 +106,30 @@ public:
     QCheckBox*                     m_resizeChB;
     QSpinBox*                      m_dimensionSpB;
     QSpinBox*                      m_imageQualitySpB;
-    
+
     QHBoxLayout*                   mainLayout;
-    
+
     QWidget*                       m_settingsBox;
     QVBoxLayout*                   m_settingsBoxLayout;
-    
+
     QGroupBox*                     m_albBox;
     QGridLayout*                   m_albumsBoxLayout;
-    
+
     QGroupBox*                     m_optionsBox;
     QGridLayout*                   m_optionsBoxLayout;
-    
+
     QGroupBox*                     m_uploadBox;
     QVBoxLayout*                   m_uploadBoxLayout;
-    
+
     QGroupBox*                     m_sizeBox;
     QVBoxLayout*                   m_sizeBoxLayout;
-    
+
     QGroupBox*                     m_accountBox;
     QGridLayout*                   m_accountBoxLayout;
 
     KPProgressWidget*              m_progressBar;
-};        
-    
+};
+
 KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const iface, const QString& pluginName)
     : QWidget(parent),
       d(new Private(this,iface,pluginName))
@@ -145,9 +145,9 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
     d->m_imgList->setAllowRAW(true);
     d->m_imgList->loadImagesFromCurrentSelection();
     d->m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your %1 account.",d->m_pluginName));
-    
+
     d->settingsScrollArea->setMinimumSize(400,500);
-    d->settingsScrollArea->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
+    d->settingsScrollArea->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     d->settingsScrollArea->setWidget(d->m_settingsBox);
     d->settingsScrollArea->setWidgetResizable(true);
     d->settingsScrollArea->setFrameShadow(QFrame::Plain);
@@ -158,13 +158,12 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
 
     //------------------------------------------------------------
 
-    d->m_accountBox->setWhatsThis(i18n("This is the %1 account that is currently logged in.",d->m_pluginName));    
+    d->m_accountBox->setWhatsThis(i18n("This is the %1 account that is currently logged in.",d->m_pluginName));
 
     QLabel* const userNameLbl = new QLabel(i18nc("account settings","Name:"),d->m_accountBox);
     d->m_changeUserBtn->setText(i18n("Change Account"));
     d->m_changeUserBtn->setIcon(QIcon::fromTheme(QString::fromLatin1("system-switch-user")).pixmap(16));
     d->m_changeUserBtn->setToolTip(i18n("Change %1 account for transfer",d->m_pluginName));
-      
 
     d->m_accountBoxLayout->addWidget(userNameLbl,             0, 0, 1, 2);
     d->m_accountBoxLayout->addWidget(d->m_userNameDisplayLbl, 0, 2, 1, 2);
@@ -174,10 +173,10 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
 
     //-------------------------------------------------------------
 
-    d->m_albBox->setWhatsThis(i18n("This is the %1 folder to/from which selected photos will be uploaded/downloaded.",d->m_pluginName)); 
-    
+    d->m_albBox->setWhatsThis(i18n("This is the %1 folder to/from which selected photos will be uploaded/downloaded.",d->m_pluginName));
+
     QLabel* const albLbl = new QLabel(i18n("Album:"),d->m_albBox);
-    
+
     d->m_albumsCoB->setEditable(false);
 
     d->m_newAlbumBtn->setText(i18n("New Album"));
@@ -186,15 +185,15 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
 
     d->m_reloadAlbumsBtn->setText(i18nc("album list","Reload"));
     d->m_reloadAlbumsBtn->setIcon(QIcon::fromTheme(QString::fromLatin1("view-refresh")).pixmap(16));
-    d->m_reloadAlbumsBtn->setToolTip(i18n("Reload album list"));    
+    d->m_reloadAlbumsBtn->setToolTip(i18n("Reload album list"));
 
     d->m_albumsBoxLayout->addWidget(albLbl,               0, 0, 1, 1);
     d->m_albumsBoxLayout->addWidget(d->m_albumsCoB,       0, 1, 1, 4);
     d->m_albumsBoxLayout->addWidget(d->m_newAlbumBtn,     1, 3, 1, 1);
     d->m_albumsBoxLayout->addWidget(d->m_reloadAlbumsBtn, 1, 4, 1, 1);
-    
+
     //----------------------------------------------------------
-    
+
     d->m_sizeBox->setWhatsThis(i18n("This is the maximum dimension of the images. Images larger than this will be scaled down."));
     d->m_dlDimensionCoB->addItem(i18n("Original Size"), QString::fromLatin1("d"));
     d->m_dlDimensionCoB->addItem(i18n("1600 px"), QString::fromLatin1("1600"));
@@ -204,7 +203,7 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
     d->m_dlDimensionCoB->addItem(i18n("1024 px"), QString::fromLatin1("1024"));
     d->m_dlDimensionCoB->setCurrentIndex(0);
     d->m_sizeBoxLayout->addWidget(d->m_dlDimensionCoB);
-    
+
     // ------------------------------------------------------------------------
 
     d->m_uploadBox->setWhatsThis(i18n("This is the location where %1 images will be downloaded.",d->m_pluginName));
@@ -234,7 +233,7 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
     d->m_imageQualitySpB->setEnabled(false);
 
     QLabel* const imageQualityLbl = new QLabel(i18n("JPEG Quality:"),d->m_optionsBox);
-    
+
     d->m_optionsBoxLayout->addWidget(d->m_resizeChB,       0, 0, 1, 5);
     d->m_optionsBoxLayout->addWidget(imageQualityLbl,      1, 1, 1, 1);
     d->m_optionsBoxLayout->addWidget(d->m_imageQualitySpB, 1, 2, 1, 1);
@@ -268,8 +267,8 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
 
     //-------------------------------------------------------
 
-    connect(d->m_resizeChB,SIGNAL(clicked()),
-            this,SLOT(slotResizeChecked()));
+    connect(d->m_resizeChB, SIGNAL(clicked()),
+            this, SLOT(slotResizeChecked()));
 }
 
 KPSettingsWidget::~KPSettingsWidget()
@@ -307,7 +306,7 @@ void KPSettingsWidget::addWidgetToSettingsBox(QWidget* const widget)
 
 void KPSettingsWidget::replaceImageList(QWidget* const imgList)
 {
-    d->m_imgList->hide();           
+    d->m_imgList->hide();
     d->mainLayout->removeWidget(d->m_imgList);
     d->mainLayout->insertWidget(0, imgList);
 }

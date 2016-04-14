@@ -123,14 +123,14 @@ private:
     GoogleServicesWidget*         m_widget;
     NewAlbumDlg*                  m_albumDlg;
     NewAlbumDlg*                  m_picasa_albumdlg;
-    
+
     GDTalker*                     m_talker;
     PicasawebTalker*              m_picsasa_talker;
 
     QString                       m_currentAlbumId;
 
     QList< QPair<QUrl, GSPhoto> > m_transferQueue;
-    
+
     QPointer<MetadataProcessor>   m_meta;
 };
 

@@ -56,7 +56,7 @@ public:
     void getAlbumProperties(GSFolder& album);
 
 private:
-    
+
     QString        m_serviceName;
     QRadioButton*  m_publicRBtn;
     QRadioButton*  m_unlistedRBtn;

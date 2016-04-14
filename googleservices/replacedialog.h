@@ -61,7 +61,7 @@ public:
     ReplaceDialog(QWidget* const parent, const QString& caption,
                            Interface* const iface, const QUrl& src, const QUrl& dest);
     ~ReplaceDialog();
-    
+
     int getResult();
 
 public Q_SLOTS:

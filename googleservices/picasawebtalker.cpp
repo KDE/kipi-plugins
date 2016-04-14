@@ -88,11 +88,11 @@ PicasawebTalker::PicasawebTalker(QWidget* const parent)
     if (pl)
     {
         m_iface = pl->interface();
-        
+
         if (m_iface)
             m_meta = m_iface->createMetadataProcessor();
     }
-    
+
     connect(this, SIGNAL(signalError(QString)),
             this, SLOT(slotError(QString)));
 }
@@ -294,7 +294,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QS
     QUrl url(QString::fromLatin1("https://picasaweb.google.com/data/feed/api/user/default/albumid/") + albumId);
     QString auth_string = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
     MPForm_Picasa form;
-    
+
     QString path        = photoPath;
     QImage image;
 
@@ -302,7 +302,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QS
     {
         image = m_iface->preview(QUrl::fromLocalFile(photoPath));
     }
-    
+
     if (image.isNull())
     {
         image.load(photoPath);
@@ -312,7 +312,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QS
     {
         return false;
     }
-    
+
     path = QDir::tempPath() + QLatin1Char('/') + QFileInfo(photoPath).baseName().trimmed() + QString::fromLatin1(".jpg");
     int imgQualityToApply = 100;
 
@@ -320,7 +320,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QS
     {
         if(image.width() > maxDim || image.height() > maxDim)
             image = image.scaled(maxDim,maxDim,Qt::KeepAspectRatio,Qt::SmoothTransformation);
-        
+
         imgQualityToApply = imageQuality;
     }
 
@@ -440,16 +440,16 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, con
     {
         return false;
     }
-    
+
     path = QDir::tempPath() + QLatin1Char('/') + QFileInfo(photoPath).baseName().trimmed() + QString::fromLatin1(".jpg");
-    
+
     int imgQualityToApply = 100;
 
     if (rescale)
     {
         if (image.width() > maxDim || image.height() > maxDim)
             image = image.scaled(maxDim,maxDim, Qt::KeepAspectRatio,Qt::SmoothTransformation);
-        
+
         imgQualityToApply = imageQuality;
     }
 
@@ -658,7 +658,7 @@ void PicasawebTalker::slotError(const QString & error)
         default:
             transError=i18n("Unknown error");
     };
-    
+
     QMessageBox::critical(QApplication::activeWindow(), i18nc("@title:window", "Error"),
                           i18n("Error occurred: %1\nUnable to proceed further.",transError + error));
 }
@@ -685,7 +685,7 @@ void PicasawebTalker::slotResult(KJob *job)
     switch (m_state)
     {
         case (FE_LOGOUT):
-            break;        
+            break;
         case (FE_CREATEALBUM):
             parseResponseCreateAlbum(m_buffer);
             break;
@@ -734,7 +734,7 @@ void PicasawebTalker::parseResponseListAlbums(const QByteArray& data)
         {
             m_loginName = node.toElement().text();
         }
-        
+
         if (node.isElement() && node.nodeName() == QString::fromLatin1("gphoto:user"))
         {
             m_username = node.toElement().text();
@@ -817,7 +817,7 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
                     {
                         //fps.title = detailsElem.text();
                     }
-                    
+
                     if (detailsNode.nodeName() == QString::fromLatin1("summary"))
                     {
                         fps.description = detailsElem.text();
@@ -966,7 +966,7 @@ void PicasawebTalker::parseResponseAddPhoto(const QByteArray& data)
         emit signalAddPhotoDone(0, i18n("Failed to upload photo"), QString::fromLatin1("-1"));
         return;
     }
-    
+
     // parse the new album name
     QDomElement docElem = doc.documentElement();
     QString photoId(QString::fromLatin1(""));

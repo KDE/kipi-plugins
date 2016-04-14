@@ -64,7 +64,7 @@ public:
         progressTimer = 0;
         result        =-1;
     }
-    
+
     QPushButton*                 bAdd;
     QPushButton*                 bAddAll;
     QPushButton*                 bReplace;
@@ -94,42 +94,42 @@ ReplaceDialog::ReplaceDialog(QWidget* const parent, const QString& _caption,
     d->iface = _iface;
 
     setWindowTitle(_caption);
-    
+
     QDialogButtonBox* const buttonBox = new QDialogButtonBox();
-    
+
     buttonBox->addButton(QDialogButtonBox::Cancel);
     connect(buttonBox->button(QDialogButtonBox::Cancel), SIGNAL(clicked()),
             this, SLOT(cancelPressed()));
-    
+
     d->bAdd = new QPushButton(buttonBox);
     d->bAdd->setText(i18n("Add As New"));
     d->bAdd->setToolTip(i18n("Item will be added alongside the linked version."));
     connect(d->bAdd, SIGNAL(clicked()),
             this, SLOT(addPressed()));
-    
+
     d->bAddAll = new QPushButton(buttonBox);
     d->bAddAll->setText(i18n("Add All"));
     d->bAddAll->setToolTip(i18n("Items will be added alongside the linked version. You will not be prompted again."));
     connect(d->bAddAll, SIGNAL(clicked()),
-            this, SLOT(addAllPressed()));    
-    
+            this, SLOT(addAllPressed()));
+
     d->bReplace = new QPushButton(buttonBox);
     d->bReplace->setText(i18n("Replace"));
     d->bReplace->setToolTip(i18n("Item will be replacing the linked version."));
     connect(d->bReplace, SIGNAL(clicked()),
             this, SLOT(replacePressed()));
-    
+
     d->bReplaceAll = new QPushButton(buttonBox);
     d->bReplaceAll->setText(i18n("Replace All"));
     d->bReplaceAll->setToolTip(i18n("Items will be replacing the linked version. You will not be prompted again."));
     connect(d->bReplaceAll, SIGNAL(clicked()),
             this, SLOT(replaceAllPressed()));
-    
+
     buttonBox->addButton(d->bAdd, QDialogButtonBox::AcceptRole);
     buttonBox->addButton(d->bAddAll, QDialogButtonBox::AcceptRole);
     buttonBox->addButton(d->bReplace, QDialogButtonBox::AcceptRole);
     buttonBox->addButton(d->bReplaceAll, QDialogButtonBox::AcceptRole);
-    
+
     connect(buttonBox, SIGNAL(accepted()),
             this, SLOT(accept()));
 
@@ -230,6 +230,7 @@ void ReplaceDialog::slotResult(KJob *job)
     {
         return;
     }
+
     if (!d->buffer.isEmpty())
     {
         QPixmap pxm;

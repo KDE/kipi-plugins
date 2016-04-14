@@ -51,7 +51,7 @@ using namespace KIPIPlugins;
 
 namespace KIPIGoogleServicesPlugin
 {
-  
+
 enum PicasawebTagsBehaviour
 {
     PwTagLeaf = 0,
@@ -71,7 +71,7 @@ public:
     virtual void updateLabels(const QString& name = QString(), const QString& url = QString());
 
 private:
-  
+
     PluginName                     m_pluginName;
     QButtonGroup*                  m_tagsBGrp;
 

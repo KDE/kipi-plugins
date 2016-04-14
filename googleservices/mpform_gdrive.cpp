@@ -93,7 +93,7 @@ void MPForm_GDrive::addPair(const QString& name, const QString& description, con
     QVariantList parents;
     parents << parentId;
     photoInfo.insert(QString::fromLatin1("parents"),QJsonValue(QJsonArray::fromVariantList(parents)));
-    
+
     QJsonDocument doc(photoInfo);
     QByteArray json = doc.toJson();
 

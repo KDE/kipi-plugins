@@ -36,12 +36,12 @@
 #include <kio/job.h>
 
 namespace KIPIGoogleServicesPlugin
-{  
-    
+{
+
 class Authorize : public QObject
 {
     Q_OBJECT
-    
+
 public:
 
     Authorize(QWidget* const parent, const QString & scope);
@@ -60,7 +60,7 @@ protected Q_SLOTS:
     void data(KIO::Job* job,const QByteArray& data);
 
 private Q_SLOTS:
-  
+
     void slotAuthResult(KJob* job);
     void slotAccept();
     void slotReject();
@@ -89,10 +89,10 @@ private:
         GD_ACCESSTOKEN=0,
         GD_REFRESHTOKEN
     };
-    
+
 private:
 
-    QDialog*     window;    
+    QDialog*     window;
 
 protected:
 

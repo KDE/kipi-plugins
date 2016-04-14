@@ -65,7 +65,7 @@ Q_SIGNALS:
     void signalSetUserName(const QString& msg);
 
 private Q_SLOTS:
-  
+
     void slotResult(KJob* job);
 
 public:

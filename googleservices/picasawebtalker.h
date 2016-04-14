@@ -131,7 +131,7 @@ private:
     KIO::Job*                   m_job;
 
     State                       m_state;
-    
+
     Interface*                  m_iface;
     QPointer<MetadataProcessor> m_meta;
 };

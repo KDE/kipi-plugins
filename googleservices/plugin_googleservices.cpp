@@ -63,7 +63,7 @@ Plugin_GoogleServices::Plugin_GoogleServices(QObject* const parent, const QVaria
 
     setUiBaseName("kipiplugin_googleservicesui.rc");
     setupXML();
-    
+
     m_actionGDriveExport = 0;
     m_actionPicasaExport = 0;
     m_actionPicasaImport = 0;
