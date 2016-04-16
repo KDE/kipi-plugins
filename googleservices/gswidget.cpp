@@ -49,13 +49,13 @@ GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interfac
 {
     m_pluginName = pluginName;
 
+    QGroupBox* m_LeafBox = new QGroupBox(QString::fromLatin1(""), getSettingsBox());
+    QGridLayout* leafLayout = new QGridLayout(m_LeafBox);
+
+    m_tagsBGrp = new QButtonGroup(m_LeafBox);
+
     if (m_pluginName == PluginName::PicasaExport)
     {
-        QGroupBox* m_LeafBox = new QGroupBox(QString::fromLatin1(""), getSettingsBox());
-        QGridLayout* leafLayout = new QGridLayout(m_LeafBox);
-
-        m_tagsBGrp = new QButtonGroup(m_LeafBox);
-
         QSpacerItem* const spacer = new QSpacerItem(1, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
         QLabel* const tagsLbl     = new QLabel(i18n("Tag path behavior :"), m_LeafBox);
 
@@ -82,6 +82,7 @@ GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interfac
     switch(m_pluginName)
     {
         case PluginName::PicasaImport:
+            m_LeafBox->hide();
             imagesList()->hide();
             getNewAlbmBtn()->hide();
             getOptionsBox()->hide();
