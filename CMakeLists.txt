@@ -105,7 +105,6 @@ find_package(KF5 ${KF5_MIN_VERSION}
              WindowSystem
              XmlGui
              I18n
-             KIO
              Service      # for SendImages (KToolInvocation)
              IconThemes   # for GoogleServices (KIO/PixmapLoader)
 )
@@ -113,13 +112,14 @@ find_package(KF5 ${KF5_MIN_VERSION}
 find_package(KF5 ${KF5_MIN_VERSION}
              OPTIONAL_COMPONENTS
              Archive      # for FlashExport
+             KIO          # Whole kipi-plugins depends of KIO. Make is optional for whole compilation.
 )
 
 # Dependencies detection required by all plugins
 
 DETECT_LIBKIPI(${KIPI_MIN_VERSION})
 
-if(KF5Kipi_FOUND)
+if(KF5Kipi_FOUND AND KF5KIO_FOUND)
 
     # -- Optional dependencies detection required by some plugins -------------------------------------
 
@@ -259,7 +259,9 @@ else()
 
     message(STATUS "")
     message(STATUS "----------------------------------------------------------------------------------")
-    message(STATUS " libkipi not found. ${PROJECT_NAME} ${KIPIPLUGINS_VERSION_STRING} will not be compiled")
+    message(STATUS " ${PROJECT_NAME} ${KIPIPLUGINS_VERSION_STRING} will not be compiled")
+    PRINT_LIBRARY_STATUS("libkio"    "https://projects.kde.org/projects/frameworks/kio"                 "(version >= ${KF5_MIN_VERSION})"    KF5KIO_FOUND)
+    PRINT_LIBRARY_STATUS("libkipi"   "https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi"   "(version >= ${KIPI_MIN_VERSION}))"  KF5Kipi_FOUND)
     message(STATUS "")
 
 endif()
