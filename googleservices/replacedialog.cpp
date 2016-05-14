@@ -82,8 +82,11 @@ public:
     int                          result;
 };
 
-ReplaceDialog::ReplaceDialog(QWidget* const parent, const QString& _caption,
-                             Interface* const _iface, const QUrl& _src, const QUrl& _dest)
+ReplaceDialog::ReplaceDialog(QWidget* const parent,
+                             const QString& _caption,
+                             Interface* const _iface,
+                             const QUrl& _src,
+                             const QUrl& _dest)
     : QDialog(parent),
       d(new Private)
 {
@@ -96,8 +99,8 @@ ReplaceDialog::ReplaceDialog(QWidget* const parent, const QString& _caption,
     setWindowTitle(_caption);
 
     QDialogButtonBox* const buttonBox = new QDialogButtonBox();
-
     buttonBox->addButton(QDialogButtonBox::Cancel);
+
     connect(buttonBox->button(QDialogButtonBox::Cancel), SIGNAL(clicked()),
             this, SLOT(cancelPressed()));
 
@@ -136,13 +139,13 @@ ReplaceDialog::ReplaceDialog(QWidget* const parent, const QString& _caption,
     connect(buttonBox, SIGNAL(rejected()),
             this, SLOT(reject()));
 
-    QVBoxLayout* const pLayout = new QVBoxLayout(this);
-    pLayout->addStrut(360);	// makes dlg at least that wide
+    QVBoxLayout* const pLayout    = new QVBoxLayout(this);
+    pLayout->addStrut(360);                          // makes dlg at least that wide
 
     QGridLayout* const gridLayout = new QGridLayout();
     pLayout->addLayout(gridLayout);
 
-    QLabel* const lb1 = new QLabel(this);
+    QLabel* const lb1             = new QLabel(this);
     lb1->setText(i18n("A linked item already exists."));
     lb1->setAlignment(Qt::AlignHCenter);
     gridLayout->addWidget(lb1, 0, 0, 1, 3);

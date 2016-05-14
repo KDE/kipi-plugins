@@ -58,8 +58,11 @@ class ReplaceDialog : public QDialog
 
 public:
 
-    ReplaceDialog(QWidget* const parent, const QString& caption,
-                           Interface* const iface, const QUrl& src, const QUrl& dest);
+    ReplaceDialog(QWidget* const parent,
+                  const QString& caption,
+                  Interface* const iface,
+                  const QUrl& src,
+                  const QUrl& dest);
     ~ReplaceDialog();
 
     int getResult();
@@ -74,9 +77,9 @@ public Q_SLOTS:
 
 private Q_SLOTS:
 
-    void slotResult(KJob *job);
-    void slotData(KIO::Job *job, const QByteArray& data);
-    void slotThumbnail(const QUrl& url, const QPixmap& pix);
+    void slotResult(KJob*);
+    void slotData(KIO::Job*, const QByteArray&);
+    void slotThumbnail(const QUrl&, const QPixmap&);
     void slotProgressTimerDone();
 
 private:
