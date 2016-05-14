@@ -24,6 +24,7 @@
 
 // Qt includes
 
+#include <QIcon>
 #include <QLabel>
 #include <QLayout>
 #include <QPainter>
@@ -35,7 +36,10 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kio/pixmaploader.h>
+
+#ifdef HAVE_KICONTHEMES
+#   include <kio/pixmaploader.h>
+#endif()
 
 // Local includes
 
@@ -150,7 +154,12 @@ ReplaceDialog::ReplaceDialog(QWidget* const parent,
     lb1->setAlignment(Qt::AlignHCenter);
     gridLayout->addWidget(lb1, 0, 0, 1, 3);
 
+#ifdef HAVE_KICONTHEMES
     d->mimePix = KIO::pixmapForUrl(d->dest);
+#else
+    d->mimePix = QIcon::fromTheme(QLatin1String("image-jpeg2000"));
+#endif
+
     d->lbDest  = new QLabel(this);
     d->lbDest->setPixmap(d->mimePix);
     d->lbDest->setAlignment(Qt::AlignCenter);

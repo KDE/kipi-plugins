@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2010-2015, Gilles Caulier, <caulier dot gilles at gmail dot com>
+# Copyright (c) 2010-2016, Gilles Caulier, <caulier dot gilles at gmail dot com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
@@ -7,6 +7,10 @@
 subdirs(icons)
 
 add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_googleservices\")
+
+if (KF5IconThemes_FOUND)
+    add_definitions("HAVE_KICONTHEMES")
+endif()
 
 set(kipiplugin_googleservices_PART_SRCS
     authorize.cpp
@@ -33,6 +37,13 @@ target_link_libraries(kipiplugin_googleservices
                       KF5::IconThemes
                       KF5kipiplugins
 )
+
+if (KF5IconThemes_FOUND)
+    target_link_libraries(kipiplugin_googleservices
+                          PRIVATE
+                          KF5::IconThemes
+    )
+endif()
 
 configure_file(kipiplugin_googleservices.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_googleservices.desktop)
 

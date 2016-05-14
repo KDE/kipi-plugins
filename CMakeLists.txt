@@ -106,11 +106,11 @@ find_package(KF5 ${KF5_MIN_VERSION}
              XmlGui
              I18n
              Service      # for SendImages (KToolInvocation)
-             IconThemes   # for GoogleServices (KIO/PixmapLoader)
 )
 
 find_package(KF5 ${KF5_MIN_VERSION}
              OPTIONAL_COMPONENTS
+             IconThemes   # for GoogleServices (KIO/PixmapLoader)
              Archive      # for FlashExport
              KIO          # Whole kipi-plugins depends of KIO. Make is optional for whole compilation.
 )
@@ -162,14 +162,6 @@ if(KF5Kipi_FOUND AND KF5KIO_FOUND)
         set(KIPIPLUGINS_CAN_BE_COMPILED false)
     endif()
 
-    # decide if AdvancedSlideshow and ImageViewer can be built
-    if(OPENGL_FOUND AND OPENGL_GLU_FOUND AND Qt5OpenGL_FOUND)
-        set(OPENGLLIBS_FOUND TRUE)
-    elseif()
-        set(OPENGLLIBS_FOUND FALSE)
-    endif()
-
-    PRINT_COMPONENT_COMPILE_STATUS("ImageViewer"        OPENGLLIBS_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("VKontakte"          KF5Vkontakte_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("Mediawiki"          KF5MediaWiki_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("FlashExport"        KF5Archive_FOUND)
@@ -249,7 +241,7 @@ if(KF5Kipi_FOUND AND KF5KIO_FOUND)
             add_subdirectory(vkontakte)
         endif()
 
-        if (BUILD_TESTING)
+        if(BUILD_TESTING)
             add_subdirectory(tests)
         endif()
 
