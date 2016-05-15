@@ -73,7 +73,7 @@ KioImportWindow::KioImportWindow(QWidget* const /*parent*/)
     connect(m_importWidget->imagesList(), SIGNAL(signalImageListChanged()),
             this, SLOT(slotSourceAndTargetUpdated()));
 
-    connect(m_importWidget->uploadWidget(), SIGNAL(selectionChanged),
+    connect(m_importWidget->uploadWidget(), SIGNAL(selectionChanged()),
             this, SLOT(slotSourceAndTargetUpdated()));
 
     // about data and help button
@@ -107,15 +107,15 @@ void KioImportWindow::slotImport()
     KIO::CopyJob* const copyJob = KIO::copy(m_importWidget->imagesList()->imageUrls(),
                                   m_importWidget->uploadWidget()->selectedImageCollection().uploadUrl());
 
-    connect(copyJob, SIGNAL(copyingDone(KIO::Job*,QUrl,QUrl,time_t,bool,bool)),
-            this, SLOT(slotCopyingDone(KIO::Job*,QUrl,QUrl,time_t,bool,bool)));
+    connect(copyJob, SIGNAL(copyingDone(KIO::Job*,QUrl,QUrl,QDateTime,bool,bool)),
+            this, SLOT(slotCopyingDone(KIO::Job*,QUrl,QUrl,QDateTime,bool,bool)));
 
     connect(copyJob, SIGNAL(result(KJob*)),
             this, SLOT(slotCopyingFinished(KJob*)));
 }
 
-void KioImportWindow::slotCopyingDone(KIO::Job* job, const QUrl& from,
-                                      const QUrl& to, time_t mtime, bool directory, bool renamed)
+void KioImportWindow::slotCopyingDone(KIO::Job* job, const QUrl& from, const QUrl& to,
+                                      const QDateTime& mtime, bool directory, bool renamed)
 {
     Q_UNUSED(job);
     Q_UNUSED(to);
@@ -136,10 +136,10 @@ void KioImportWindow::slotCopyingFinished(KJob* job)
 
     if (!m_importWidget->imagesList()->imageUrls().empty())
     {
-        QMessageBox::information(this,  i18n("Import not completed"),
+        QMessageBox::information(this, i18n("Import not completed"),
                                  i18n("Some of the images have not been transferred "
-                                            "and are still in the list. "
-                                            "You can retry to import these images now."));
+                                      "and are still in the list. "
+                                      "You can retry to import these images now."));
     }
 }
 

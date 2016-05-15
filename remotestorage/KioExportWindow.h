@@ -98,7 +98,7 @@ private Q_SLOTS:
      * Removes the copied image from the image list.
      */
     void slotCopyingDone(KIO::Job* job, const QUrl& from, const QUrl& to,
-                         time_t mtime, bool directory, bool renamed);
+                         const QDateTime& mtime, bool directory, bool renamed);
 
     /**
      * Re-enables the dialog after the job finished and displays a warning if
