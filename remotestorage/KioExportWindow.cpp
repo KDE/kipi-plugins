@@ -172,8 +172,8 @@ void KioExportWindow::updateUploadButton()
              << m_exportWidget->targetUrl().isValid();
 }
 
-void KioExportWindow::slotCopyingDone(KIO::Job *job, const QUrl& from,
-                                      const QUrl& to, time_t mtime, bool directory, bool renamed)
+void KioExportWindow::slotCopyingDone(KIO::Job *job, const QUrl& from, const QUrl& to,
+                                      const QDateTime& mtime, bool directory, bool renamed)
 {
     Q_UNUSED(job);
     Q_UNUSED(to);
@@ -210,8 +210,8 @@ void KioExportWindow::slotUpload()
     KIO::CopyJob* copyJob = KIO::copy(m_exportWidget->imagesList()->imageUrls(),
                             m_exportWidget->targetUrl());
 
-    connect(copyJob, SIGNAL(copyingDone(KIO::Job*,QUrl,QUrl,time_t,bool,bool)),
-            this, SLOT(slotCopyingDone(KIO::Job*,QUrl,QUrl,time_t,bool,bool)));
+    connect(copyJob, SIGNAL(copyingDone(KIO::Job*,QUrl,QUrl,QDateTime,bool,bool)),
+            this, SLOT(slotCopyingDone(KIO::Job*,QUrl,QUrl,QDateTime,bool,bool)));
 
     connect(copyJob, SIGNAL(result(KJob*)),
             this, SLOT(slotCopyingFinished(KJob*)));

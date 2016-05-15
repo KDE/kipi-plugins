@@ -39,7 +39,7 @@
 
 #ifdef HAVE_KICONTHEMES
 #   include <kio/pixmaploader.h>
-#endif()
+#endif
 
 // Local includes
 
