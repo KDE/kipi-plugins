@@ -119,7 +119,7 @@ find_package(KF5 ${KF5_MIN_VERSION}
 
 DETECT_LIBKIPI(${KIPI_MIN_VERSION})
 
-if(KF5Kipi_FOUND AND KF5KIO_FOUND)
+if(KF5Kipi_FOUND)
 
     # -- Optional dependencies detection required by some plugins -------------------------------------
 
@@ -217,29 +217,36 @@ if(KF5Kipi_FOUND AND KF5KIO_FOUND)
         add_subdirectory(printimages)
         add_subdirectory(kmlexport)
         add_subdirectory(sendimages)
-        add_subdirectory(flickr)
-        add_subdirectory(smug)
-        add_subdirectory(imageshack)
-        add_subdirectory(piwigo)
-        add_subdirectory(remotestorage)
-        add_subdirectory(yandexfotki)
-        add_subdirectory(rajce)
-        add_subdirectory(googleservices)
-        add_subdirectory(dropbox)
-        add_subdirectory(imgur)
-        add_subdirectory(facebook)
 
-        if(KF5Archive_FOUND)
-            add_subdirectory(flashexport)
+
+        if(KF5KIO_FOUND)
+
+            add_subdirectory(remotestorage)
+            add_subdirectory(imgur)
+            add_subdirectory(dropbox)
+            add_subdirectory(facebook)
+            add_subdirectory(flickr)
+            add_subdirectory(googleservices)
+            add_subdirectory(imageshack)
+            add_subdirectory(piwigo)
+            add_subdirectory(rajce)
+            add_subdirectory(smug)
+            add_subdirectory(yandexfotki)
+
+            if(KF5Archive_FOUND)
+                add_subdirectory(flashexport)
+            endif()
+
+            if(KF5MediaWiki_FOUND)
+                add_subdirectory(mediawiki)
+            endif()
+
+            if(KF5Vkontakte_FOUND)
+                add_subdirectory(vkontakte)    # KIO needs for RenameDialog only
+            endif()
+
         endif()
 
-        if(KF5MediaWiki_FOUND)
-            add_subdirectory(mediawiki)
-        endif()
-
-        if(KF5Vkontakte_FOUND)
-            add_subdirectory(vkontakte)
-        endif()
 
         if(BUILD_TESTING)
             add_subdirectory(tests)

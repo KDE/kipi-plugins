@@ -40,12 +40,12 @@ extern "C"
 #include <QApplication>
 #include <QMessageBox>
 #include <QIODevice>
+#include <QDir>
 
 // KDE includes
 
 #include <kconfig.h>
 #include <kconfiggroup.h>
-#include <kio/copyjob.h>
 #include <klocalizedstring.h>
 
 // Libkipi includes
@@ -530,8 +530,14 @@ void KmlExport::generate()
     delete m_kmlDocument;
     m_kmlDocument = 0;
 
-    KIO::moveAs(QUrl::fromLocalFile(m_tempDestDir.absolutePath()), QUrl::fromLocalFile(m_baseDestDir), KIO::HideProgressInfo | KIO::Overwrite);
     logInfo(i18n("Move to final directory"));
+    QDir dir;
+
+    if (!dir.rename(m_tempDestDir.absolutePath(), m_baseDestDir))
+    {
+        logWarning(i18n("Cannot move data to destination directory"));
+    }
+
     m_progressDialog->close();
 }
 

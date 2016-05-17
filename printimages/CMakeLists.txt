@@ -45,7 +45,6 @@ target_link_libraries(kipiplugin_printimages
                       Qt5::PrintSupport
                       Qt5::Gui
 
-                      KF5::KIOCore
                       KF5::Kipi
                       KF5::I18n
 
