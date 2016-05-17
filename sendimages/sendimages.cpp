@@ -487,7 +487,7 @@ bool SendImages::invokeMailAgent()
                     args.append(QLatin1String("/c"));
                     args.append(QLatin1String("start"));
                     args.append(prog);
-                    prog = QLatin1String("cmd"));
+                    prog = QLatin1String("cmd");
 #endif
 
                     args.append(QLatin1String("--compose"));
