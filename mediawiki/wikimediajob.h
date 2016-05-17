@@ -29,10 +29,10 @@
 #include <QString>
 #include <QList>
 #include <QMap>
+#include <QUrl>
 
 // KDE includes
 
-#include <QUrl>
 #include <kjob.h>
 
 namespace mediawiki
