@@ -23,6 +23,7 @@ set(kipiplugin_printimages_PART_SRCS
     wizard/printhelper.cpp
     wizard/customdlg.cpp
     wizard/printoptionspage.cpp
+    wizard/printimagesconfig.cpp
     wizard/wizard.cpp
    )
 
@@ -32,10 +33,6 @@ ki18n_wrap_ui(kipiplugin_printimages_PART_SRCS
                   ui/customlayout.ui
                   ui/printoptionspage.ui
                  )
-
-kconfig_add_kcfg_files(kipiplugin_printimages_PART_SRCS
-                    ${CMAKE_CURRENT_SOURCE_DIR}/wizard/printimagesconfig.kcfgc
-                   )
 
 add_library(kipiplugin_printimages MODULE ${kipiplugin_printimages_PART_SRCS})
 
