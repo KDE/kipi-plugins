@@ -37,7 +37,6 @@
 
 #include <kio/job.h>
 #include <kio/jobclasses.h>
-#include <kio/jobuidelegate.h>
 
 // Local includes
 
