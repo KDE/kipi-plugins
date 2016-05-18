@@ -115,6 +115,19 @@ find_package(KF5 ${KF5_MIN_VERSION}
              KIO          # Whole kipi-plugins depends of KIO. Make is optional for whole compilation.
 )
 
+# Check if KIO have been compiled with KIOWidgets. We only needs this one.
+if(KF5KIO_FOUND)
+    get_target_property(KIOWidgets_INCLUDE_DIRS KF5::KIOWidgets INTERFACE_INCLUDE_DIRECTORIES)
+    message(STATUS "KF5::KIOWidgets include dirs: ${KIOWidgets_INCLUDE_DIRS}")
+
+    if(NOT KIOWidgets_INCLUDE_DIRS)
+        message(STATUS "KF5::KIOWidgets not available in shared KIO library. Some tools will not be compiled.")
+        set(KF5KIOWidgets_FOUND FALSE)
+    else()
+        set(KF5KIOWidgets_FOUND TRUE)
+    endif()
+endif()
+
 # Dependencies detection required by all plugins
 
 DETECT_LIBKIPI(${KIPI_MIN_VERSION})
@@ -222,29 +235,36 @@ if(KF5Kipi_FOUND)
 
         if(KF5KIO_FOUND)
 
-            add_subdirectory(remotestorage)
+            # Tools that only depend of KIO core.
+
             add_subdirectory(imgur)
-            add_subdirectory(dropbox)
-            add_subdirectory(facebook)
-            add_subdirectory(flickr)
-            add_subdirectory(googleservices)
-            add_subdirectory(imageshack)
-            add_subdirectory(piwigo)
-            add_subdirectory(rajce)
-            add_subdirectory(smug)
-            add_subdirectory(yandexfotki)
 
-            if(KF5Archive_FOUND)
-                add_subdirectory(flashexport)
-            endif()
+            # Tools which need KIO Widgets.
 
-            if(KF5MediaWiki_FOUND)
-                add_subdirectory(mediawiki)
-            endif()
+            if(KF5KIOWidgets_FOUND)
+                add_subdirectory(remotestorage)
+                add_subdirectory(dropbox)
+                add_subdirectory(facebook)
+                add_subdirectory(flickr)
+                add_subdirectory(googleservices)
+                add_subdirectory(imageshack)
+                add_subdirectory(piwigo)
+                add_subdirectory(rajce)
+                add_subdirectory(smug)
+                add_subdirectory(yandexfotki)
 
-            if(KF5Vkontakte_FOUND)
-                add_subdirectory(vkontakte)    # KIO needs for RenameDialog only
-            endif()
+                if(KF5Archive_FOUND)
+                    add_subdirectory(flashexport)
+                endif()
+
+                if(KF5MediaWiki_FOUND)
+                    add_subdirectory(mediawiki)
+                endif()
+
+                if(KF5Vkontakte_FOUND)
+                    add_subdirectory(vkontakte)    # KIO needs for RenameDialog only
+                endif()
+           endif()
 
         endif()
 
