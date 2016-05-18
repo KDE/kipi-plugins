@@ -238,6 +238,12 @@ if(KF5Kipi_FOUND)
             # Tools that only depend of KIO core.
 
             add_subdirectory(imgur)
+            add_subdirectory(imageshack)
+                add_subdirectory(yandexfotki)
+
+            if(KF5MediaWiki_FOUND)
+                add_subdirectory(mediawiki)
+            endif()
 
             # Tools which need KIO Widgets.
 
@@ -247,18 +253,12 @@ if(KF5Kipi_FOUND)
                 add_subdirectory(facebook)
                 add_subdirectory(flickr)
                 add_subdirectory(googleservices)
-                add_subdirectory(imageshack)
                 add_subdirectory(piwigo)
                 add_subdirectory(rajce)
                 add_subdirectory(smug)
-                add_subdirectory(yandexfotki)
 
                 if(KF5Archive_FOUND)
                     add_subdirectory(flashexport)
-                endif()
-
-                if(KF5MediaWiki_FOUND)
-                    add_subdirectory(mediawiki)
                 endif()
 
                 if(KF5Vkontakte_FOUND)
