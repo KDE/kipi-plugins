@@ -90,7 +90,6 @@ find_package(Qt5 ${QT_MIN_VERSION} REQUIRED NO_MODULE COMPONENTS
              XmlPatterns
              Svg
              Concurrent
-             WebKitWidgets
              Network
 )
 
