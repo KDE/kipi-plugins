@@ -238,7 +238,7 @@ if(KF5Kipi_FOUND)
 
             add_subdirectory(imgur)
             add_subdirectory(imageshack)
-                add_subdirectory(yandexfotki)
+            add_subdirectory(yandexfotki)
 
             if(KF5MediaWiki_FOUND)
                 add_subdirectory(mediawiki)
@@ -257,7 +257,7 @@ if(KF5Kipi_FOUND)
                 add_subdirectory(smug)
 
                 if(KF5Archive_FOUND)
-                    add_subdirectory(flashexport)
+                    add_subdirectory(flashexport)  # KIO needs to get SimpleViewer archive from remote repository
                 endif()
 
                 if(KF5Vkontakte_FOUND)
