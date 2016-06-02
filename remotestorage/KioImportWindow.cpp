@@ -81,14 +81,14 @@ KioImportWindow::KioImportWindow(QWidget* const /*parent*/)
     KPAboutData* const about = new KPAboutData(ki18n("Import from remote storage"),
                              0,
                              KAboutLicense::GPL,
-                             ki18n("A Kipi plugin to import images over network using KIO-Slave"),
+                             ki18n("A Kipi plugin to import images over network"),
                              ki18n("(c) 2009, Johannes Wienke"));
 
     about->addAuthor(ki18n("Johannes Wienke").toString(),
                      ki18n("Developer and maintainer").toString(),
                      QString::fromLatin1("languitar at semipol dot de"));
 
-    about->setHandbookEntry(QString::fromLatin1("kioexport"));
+    about->setHandbookEntry(QString::fromLatin1("remotestorage"));
     setAboutData(about);
 
     slotSourceAndTargetUpdated();

@@ -236,12 +236,12 @@ if(KF5Kipi_FOUND)
 
             # Tools that only depend of KIO core.
 
-            add_subdirectory(imgur)
-            add_subdirectory(imageshack)
-            add_subdirectory(yandexfotki)
+            add_subdirectory(imgur)                # imgurtalker.cpp
+            add_subdirectory(imageshack)           # imageshacktalker.cpp
+            add_subdirectory(yandexfotki)          # yftalker.cpp
 
             if(KF5MediaWiki_FOUND)
-                add_subdirectory(mediawiki)
+                add_subdirectory(mediawiki)        # wikimediajob.cpp
             endif()
 
             # Tools which need KIO Widgets.

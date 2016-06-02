@@ -49,7 +49,7 @@ namespace KIPIRemoteStoragePlugin
 {
 
 /**
- * Main dialog used for the kio import tool.
+ * Main dialog used for the import tool.
  */
 class KioImportWindow : public KPToolDialog
 {

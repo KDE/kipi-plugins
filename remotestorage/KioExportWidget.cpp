@@ -46,7 +46,7 @@ namespace KIPIRemoteStoragePlugin
 KioExportWidget::KioExportWidget(QWidget* const parent)
     : QWidget(parent)
 {
-    // setup kio target selection
+    // setup remote target selection
 
     KPHBox* const hbox  = new KPHBox(this);
     QLabel* const label = new QLabel(hbox);
