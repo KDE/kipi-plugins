@@ -244,17 +244,9 @@ if(KF5Kipi_FOUND)
                 add_subdirectory(mediawiki)        # wikimediajob.cpp
             endif()
 
-            # Tools which need KIO Widgets.
+            # Tools which need KIO Widgets too.
 
             if(KF5KIOWidgets_FOUND)
-                add_subdirectory(remotestorage)
-                add_subdirectory(dropbox)
-                add_subdirectory(facebook)
-                add_subdirectory(flickr)
-                add_subdirectory(googleservices)
-                add_subdirectory(piwigo)
-                add_subdirectory(rajce)
-                add_subdirectory(smug)
 
                 if(KF5Archive_FOUND)
                     add_subdirectory(flashexport)  # KIO needs to get SimpleViewer archive from remote repository
@@ -263,6 +255,16 @@ if(KF5Kipi_FOUND)
                 if(KF5Vkontakte_FOUND)
                     add_subdirectory(vkontakte)    # KIO needs for RenameDialog only
                 endif()
+
+                add_subdirectory(dropbox)          # dbtalker.cpp
+                add_subdirectory(facebook)         # fbtalker.cpp
+                add_subdirectory(flickr)           # flickrtalker.cpp
+                add_subdirectory(piwigo)           # piwigotalker.cpp
+                add_subdirectory(rajce)            # rajcesession.cpp
+                add_subdirectory(smug)             # smugtalker.cpp
+                add_subdirectory(remotestorage)    # kioimportwindow.cpp, kioexportwindow.cpp
+                add_subdirectory(googleservices)   # autorize.cpp, picasawebtalker.cpp, replacedialog.cpp, gdtalker.cpp, gswindow.cpp
+
            endif()
 
         endif()

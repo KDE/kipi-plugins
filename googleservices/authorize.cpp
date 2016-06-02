@@ -49,7 +49,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kio/job.h>
 #include <kio/jobuidelegate.h>
 #include <kjobwidgets.h>
 #include <kconfiggroup.h>

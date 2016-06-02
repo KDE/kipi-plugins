@@ -52,7 +52,6 @@
 
 // KDE includes
 
-#include <kio/job.h>
 #include <kio/jobuidelegate.h>
 
 // Local includes

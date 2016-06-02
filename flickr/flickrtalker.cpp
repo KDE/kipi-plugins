@@ -50,7 +50,6 @@
 // KDE includes
 
 #include <kjobwidgets.h>
-#include <kio/jobuidelegate.h>
 
 // Libkipi includes
 

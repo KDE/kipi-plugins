@@ -37,7 +37,6 @@
 // KDE includes
 
 #include <kjobwidgets.h>
-#include <kio/job.h>
 #include <kio/jobuidelegate.h>
 
 // Local includes

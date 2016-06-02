@@ -50,7 +50,6 @@
 
 // KDE includes
 
-#include <kio/job.h>
 #include <kio/jobuidelegate.h>
 #include <kjobwidgets.h>
 
