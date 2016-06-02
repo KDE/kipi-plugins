@@ -40,10 +40,6 @@
 #include <QtCore/QMimeType>
 #include <QUrlQuery>
 
-// KDE includes
-
-#include <kio/job.h>
-
 // Local includes
 
 #include "kpversion.h"
