@@ -33,11 +33,6 @@
 #include <QFile>
 #include <QFileInfo>
 
-// KDE includes
-
-#include <kio/job.h>
-#include <kio/jobclasses.h>
-
 // Local includes
 
 #include "kipiplugins_debug.h"

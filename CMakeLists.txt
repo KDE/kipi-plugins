@@ -111,7 +111,7 @@ find_package(KF5 ${KF5_MIN_VERSION}
              OPTIONAL_COMPONENTS
              IconThemes   # for GoogleServices (KIO/PixmapLoader)
              Archive      # for FlashExport
-             KIO          # Whole kipi-plugins depends of KIO. Make is optional for whole compilation.
+             KIO          # Some kipi-plugins depends of KIO indeep..
 )
 
 # Check if KIO have been compiled with KIOWidgets. We only needs this one.
