@@ -23,11 +23,6 @@
 
 #include "mpform.h"
 
-// C++ includes
-
-#include <cstring>
-#include <cstdio>
-
 // Qt includes
 
 #include <QFile>
@@ -148,7 +143,6 @@ bool MPForm::addFile(const QString& name, const QString& path)
     str += "\r\n\r\n";
 
     m_buffer.append(str);
-    //int oldSize = m_buffer.size();
     m_buffer.append(imageData);
     m_buffer.append("\r\n");
 
@@ -157,7 +151,7 @@ bool MPForm::addFile(const QString& name, const QString& path)
 
 QString MPForm::contentType() const
 {
-    return QString(QString::fromLatin1("Content-Type: multipart/form-data; boundary=") + QLatin1String(m_boundary));
+    return QString(QString::fromLatin1("multipart/form-data; boundary=") + QLatin1String(m_boundary));
 }
 
 QString MPForm::boundary() const

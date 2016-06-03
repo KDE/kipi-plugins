@@ -23,13 +23,6 @@
 
 #include "flickrtalker.h"
 
-// C++ includes
-
-#include <cstring>
-#include <cstdio>
-#include <cstdlib>
-#include <string>
-
 // Qt includes
 
 #include <QByteArray>
@@ -43,13 +36,9 @@
 #include <QProgressDialog>
 #include <QUrlQuery>
 #include <QStandardPaths>
-#include <QtWidgets/QApplication>
+#include <QApplication>
 #include <QDesktopServices>
 #include <QMessageBox>
-
-// KDE includes
-
-#include <kjobwidgets.h>
 
 // Libkipi includes
 
@@ -71,7 +60,8 @@ namespace KIPIFlickrPlugin
 FlickrTalker::FlickrTalker(QWidget* const parent, const QString& serviceName)
 {
     m_parent          = parent;
-    m_job             = 0;
+    m_netMngr         = 0;
+    m_reply           = 0;
     m_photoSetsList   = 0;
     m_authProgressDlg = 0;
     m_state           = FE_LOGOUT;
@@ -122,6 +112,11 @@ FlickrTalker::FlickrTalker(QWidget* const parent, const QString& serviceName)
 
     qCDebug(KIPIPLUGINS_LOG) << "Temp dir : " << m_tmpDir->path();
 
+    m_netMngr = new QNetworkAccessManager(this);
+
+    connect(m_netMngr, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(slotFinished(QNetworkReply*)));
+
     /* Initialize selected photo set as empty. */
     m_selectedPhotoSet = FPhotoSet();
     /* Initialize photo sets list. */
@@ -133,9 +128,9 @@ FlickrTalker::FlickrTalker(QWidget* const parent, const QString& serviceName)
 
 FlickrTalker::~FlickrTalker()
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
+        m_reply->abort();
     }
 
     delete m_photoSetsList;
@@ -179,10 +174,10 @@ QString FlickrTalker::getMaxAllowedFileSize()
 
 void FlickrTalker::maxAllowedFileSize()
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     QUrl url(m_apiUrl);
@@ -196,32 +191,24 @@ void FlickrTalker::maxAllowedFileSize()
     url.setQuery(urlQuery);
     qCDebug(KIPIPLUGINS_LOG) << "Get max file size url: " << url;
 
-    KIO::TransferJob* job = 0;
-
     if (m_serviceName == QString::fromLatin1("Zooomr"))
     {
-        // Zooomr redirects the POST at this url to a GET; KIO doesn't follow
-        // the redirect.
-        job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
+        // Zooomr redirects the POST at this url to a GET.
+        m_reply = m_netMngr->get(QNetworkRequest(url));
     }
     else
     {
         QByteArray tmp;
-        job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
-        job->addMetaData(QString::fromLatin1("content-type"), QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
+        QNetworkRequest netRequest(url);
+        netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
+
+        m_reply = m_netMngr->post(netRequest, tmp);
     }
-
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(slotData(KIO::Job*,QByteArray)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
 
     m_state = FE_GETMAXSIZE;
     m_authProgressDlg->setLabelText(i18n("Getting the maximum allowed file size."));
     m_authProgressDlg->setMaximum(4);
     m_authProgressDlg->setValue(1);
-    m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
 }
@@ -250,10 +237,10 @@ QString FlickrTalker::getApiSig(const QString& secret, const QStringList &header
 */
 void FlickrTalker::getFrob()
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     QUrl url(m_apiUrl);
@@ -267,42 +254,34 @@ void FlickrTalker::getFrob()
     url.setQuery(urlQuery);
     qCDebug(KIPIPLUGINS_LOG) << "Get frob url: " << url;
 
-    KIO::TransferJob* job = 0;
-
     if (m_serviceName == QString::fromLatin1("Zooomr"))
     {
-        // Zooomr redirects the POST at this url to a GET; KIO doesn't follow
-        // the redirect.
-        job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
+        // Zooomr redirects the POST at this url to a GET.
+        m_reply = m_netMngr->get(QNetworkRequest(url));
     }
     else
     {
         QByteArray tmp;
-        job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
-        job->addMetaData(QString::fromLatin1("content-type"), QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
+        QNetworkRequest netRequest(url);
+        netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
+
+        m_reply = m_netMngr->post(netRequest, tmp);
     }
-
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(slotData(KIO::Job*,QByteArray)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
 
     m_state = FE_GETFROB;
     m_authProgressDlg->setLabelText(i18n("Getting the Frob"));
     m_authProgressDlg->setMaximum(4);
     m_authProgressDlg->setValue(1);
-    m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
 }
 
 void FlickrTalker::checkToken(const QString& token)
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     QUrl url(m_apiUrl);
@@ -314,45 +293,36 @@ void FlickrTalker::checkToken(const QString& token)
     QString md5 = getApiSig(m_secret, url);
     urlQuery.addQueryItem(QString::fromLatin1("api_sig"), md5);
     url.setQuery(urlQuery);
-
     qCDebug(KIPIPLUGINS_LOG) << "Check token url: " << url;
-    QByteArray tmp;
-
-    KIO::TransferJob* job = 0;
 
     if (m_serviceName == QString::fromLatin1("Zooomr"))
     {
-        // Zooomr redirects the POST at this url to a GET; KIO doesn't follow the
-        // redirect
-        job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
+        // Zooomr redirects the POST at this url to a GET.
+        m_reply = m_netMngr->get(QNetworkRequest(url));
     }
     else
     {
-        job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
-        job->addMetaData(QString::fromLatin1("content-type"), QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
+        QByteArray tmp;
+        QNetworkRequest netRequest(url);
+        netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
+
+        m_reply = m_netMngr->post(netRequest, tmp);
     }
-
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(slotData(KIO::Job*,QByteArray)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
 
     m_state = FE_CHECKTOKEN;
     m_authProgressDlg->setLabelText(i18n("Checking if previous token is still valid"));
     m_authProgressDlg->setMaximum(4);
     m_authProgressDlg->setValue(1);
-    m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
 }
 
 void FlickrTalker::slotAuthenticate()
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     QUrl url(m_authUrl);
@@ -395,10 +365,10 @@ void FlickrTalker::slotAuthenticate()
 
 void FlickrTalker::getToken()
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     QUrl url(m_apiUrl);
@@ -412,29 +382,21 @@ void FlickrTalker::getToken()
     url.setQuery(urlQuery);
     qCDebug(KIPIPLUGINS_LOG) << "Get token url: " << url;
 
-    KIO::TransferJob* job = 0;
-
     if (m_serviceName == QString::fromLatin1("Zooomr"))
     {
-        // Zooomr redirects the POST at this url to a GET; KIO doesn't follow
-        // the redirect.
-        job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
+        // Zooomr redirects the POST at this url to a GET.
+        m_reply = m_netMngr->get(QNetworkRequest(url));
     }
     else
     {
         QByteArray tmp;
-        job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
-        job->addMetaData(QString::fromLatin1("content-type"), QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
+        QNetworkRequest netRequest(url);
+        netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
+
+        m_reply = m_netMngr->post(netRequest, tmp);
     }
 
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(slotData(KIO::Job*,QByteArray)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
-
     m_state = FE_GETTOKEN;
-    m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
     m_authProgressDlg->setLabelText(i18n("Getting the Token from the server"));
@@ -444,10 +406,10 @@ void FlickrTalker::getToken()
 
 void FlickrTalker::listPhotoSets()
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     qCDebug(KIPIPLUGINS_LOG) << "List photoset invoked";
@@ -461,39 +423,32 @@ void FlickrTalker::listPhotoSets()
     urlQuery.addQueryItem(QString::fromLatin1("api_sig"), md5);
     url.setQuery(urlQuery);
     qCDebug(KIPIPLUGINS_LOG) << "List photoset URL" << url;
-    QByteArray tmp;
-    KIO::TransferJob* job = 0;
 
     if (m_serviceName == QString::fromLatin1("Zooomr"))
     {
-        // Zooomr redirects the POST at this url to a GET; KIO doesn't follow
-        // the redirect.
-        job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
+        // Zooomr redirects the POST at this url to a GET.
+        m_reply = m_netMngr->get(QNetworkRequest(url));
     }
     else
     {
-        job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
-        job->addMetaData(QString::fromLatin1("content-type"), QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
+        QByteArray tmp;
+        QNetworkRequest netRequest(url);
+        netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
+
+        m_reply = m_netMngr->post(netRequest, tmp);
     }
 
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(slotData(KIO::Job*,QByteArray)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
-
     m_state = FE_LISTPHOTOSETS;
-    m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
 }
 
 void FlickrTalker::getPhotoProperty(const QString& method, const QStringList& argList)
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     QUrl url(m_apiUrl);
@@ -513,29 +468,22 @@ void FlickrTalker::getPhotoProperty(const QString& method, const QStringList& ar
     urlQuery.addQueryItem(QString::fromLatin1("api_sig"), md5);
     url.setQuery(urlQuery);
     qCDebug(KIPIPLUGINS_LOG) << "Get photo property url: " << url;
-    QByteArray tmp;
-    KIO::TransferJob* job = 0;
 
     if (m_serviceName == QString::fromLatin1("Zooomr"))
     {
-        // Zooomr redirects the POST at this url to a GET; KIO doesn't follow
-        // the redirect.
-        job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
+        // Zooomr redirects the POST at this url to a GET.
+        m_reply = m_netMngr->get(QNetworkRequest(url));
     }
     else
     {
-        job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
-        job->addMetaData(QString::fromLatin1("content-type"), QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
+        QByteArray tmp;
+        QNetworkRequest netRequest(url);
+        netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
+
+        m_reply = m_netMngr->post(netRequest, tmp);
     }
 
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(slotData(KIO::Job*,QByteArray)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
-
     m_state = FE_GETPHOTOPROPERTY;
-    m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
 
@@ -551,10 +499,10 @@ void FlickrTalker::listPhotos(const QString& /*albumName*/)
 void FlickrTalker::createPhotoSet(const QString& /*albumName*/, const QString& albumTitle,
                                   const QString& albumDescription, const QString& primaryPhotoId)
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     qCDebug(KIPIPLUGINS_LOG) << "create photoset invoked";
@@ -572,31 +520,22 @@ void FlickrTalker::createPhotoSet(const QString& /*albumName*/, const QString& a
     urlQuery.addQueryItem(QString::fromLatin1("api_sig"), md5);
     url.setQuery(urlQuery);
     qCDebug(KIPIPLUGINS_LOG) << "List photo sets url: " << url;
-    QByteArray tmp;
-    KIO::TransferJob* job = 0;
 
     if (m_serviceName == QString::fromLatin1("Zooomr"))
     {
-        // Zooomr redirects the POST at this url to a GET; KIO doesn't follow
-        // the redirect (although this function should never get called when
-        // using Zooomr).
-        job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
+        // Zooomr redirects the POST at this url to a GET.
+        m_reply = m_netMngr->get(QNetworkRequest(url));
     }
     else
     {
-        job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
-        job->addMetaData(QString::fromLatin1("content-type"), QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
+        QByteArray tmp;
+        QNetworkRequest netRequest(url);
+        netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
+
+        m_reply = m_netMngr->post(netRequest, tmp);
     }
 
-
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(slotData(KIO::Job*,QByteArray)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
-
     m_state = FE_CREATEPHOTOSET;
-    m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
 }
@@ -604,10 +543,10 @@ void FlickrTalker::createPhotoSet(const QString& /*albumName*/, const QString& a
 void FlickrTalker::addPhotoToPhotoSet(const QString& photoId,
                                       const QString& photoSetId)
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     qCDebug(KIPIPLUGINS_LOG) << "addPhotoToPhotoSet invoked";
@@ -634,20 +573,15 @@ void FlickrTalker::addPhotoToPhotoSet(const QString& photoId,
         QString md5 = getApiSig(m_secret, url);
         urlQuery.addQueryItem(QString::fromLatin1("api_sig"), md5);
         url.setQuery(urlQuery);
+        qCDebug(KIPIPLUGINS_LOG) << "Add photo to Photo set url: " << url;
 
         QByteArray tmp;
-        qCDebug(KIPIPLUGINS_LOG) << "Add photo to Photo set url: " << url;
-        KIO::TransferJob* job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
-        job->addMetaData(QString::fromLatin1("content-type"), QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
+        QNetworkRequest netRequest(url);
+        netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
 
-        connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-                this, SLOT(slotData(KIO::Job*,QByteArray)));
-
-        connect(job, SIGNAL(result(KJob*)),
-                this, SLOT(slotResult(KJob*)));
+        m_reply = m_netMngr->post(netRequest, tmp);
 
         m_state = FE_ADDPHOTOTOPHOTOSET;
-        m_job   = job;
         m_buffer.resize(0);
         emit signalBusy(true);
     }
@@ -656,10 +590,10 @@ void FlickrTalker::addPhotoToPhotoSet(const QString& photoId,
 bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
                             bool rescale, int maxDim, int imageQuality)
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     QUrl url(m_uploadUrl);
@@ -792,17 +726,12 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
 
     form.finish();
 
-    KIO::TransferJob* const job = KIO::http_post(url, form.formData(), KIO::HideProgressInfo);
-    job->addMetaData(QString::fromLatin1("content-type"), form.contentType());
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, form.contentType());
 
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(slotData(KIO::Job*,QByteArray)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
+    m_reply = m_netMngr->post(netRequest, form.formData());
 
     m_state = FE_ADDPHOTO;
-    m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
     return true;
@@ -820,28 +749,16 @@ QString FlickrTalker::getUserId() const
 
 void FlickrTalker::cancel()
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     if (m_authProgressDlg && !m_authProgressDlg->isHidden())
     {
         m_authProgressDlg->hide();
     }
-}
-
-void FlickrTalker::slotData(KIO::Job*, const QByteArray& data)
-{
-    if (data.isEmpty())
-    {
-        return;
-    }
-
-    int oldSize = m_buffer.size();
-    m_buffer.resize(m_buffer.size() + data.size());
-    memcpy(m_buffer.data() + oldSize, data.data(), data.size());
 }
 
 void FlickrTalker::slotError(const QString& error)
@@ -925,27 +842,33 @@ void FlickrTalker::slotError(const QString& error)
                           i18n("Error Occurred: %1\nCannot proceed any further.", transError));
 }
 
-void FlickrTalker::slotResult(KJob* kjob)
+void FlickrTalker::slotFinished(QNetworkReply* reply)
 {
-    m_job               = 0;
     emit signalBusy(false);
-    KIO::Job* const job = static_cast<KIO::Job*>(kjob);
 
-    if (job->error())
+    if (reply != m_reply)
+    {
+        return;
+    }
+
+    m_reply = 0;
+
+    if (reply->error() != QNetworkReply::NoError)
     {
         if (m_state == FE_ADDPHOTO)
         {
-            emit signalAddPhotoFailed(job->errorString());
+            emit signalAddPhotoFailed(reply->errorString());
         }
         else
         {
-            KIO::JobUiDelegate* const job_ui = static_cast<KIO::JobUiDelegate*>(job->ui());
-            KJobWidgets::setWindow(job, m_parent);
-            job_ui->showErrorMessage();
+            QMessageBox::critical(QApplication::activeWindow(),
+                                  i18n("Error"), reply->errorString());
         }
 
         return;
     }
+
+    m_buffer.append(reply->readAll());
 
     switch (m_state)
     {
@@ -1000,6 +923,8 @@ void FlickrTalker::slotResult(KJob* kjob)
         default:  // FR_LOGOUT
             break;
     }
+
+    reply->deleteLater();
 }
 
 void FlickrTalker::parseResponseMaxSize(const QByteArray& data)
@@ -1052,6 +977,8 @@ void FlickrTalker::parseResponseMaxSize(const QByteArray& data)
 
         node = node.nextSibling();
     }
+
+    m_authProgressDlg->reset();
 }
 
 void FlickrTalker::parseResponseGetFrob(const QByteArray& data)

@@ -32,12 +32,9 @@
 #include <QString>
 #include <QObject>
 #include <QTemporaryDir>
+#include <QNetworkReply>
 #include <QCryptographicHash>
-
-// KDE includes
-
-#include <kio/job.h>
-#include <kio/jobuidelegate.h>
+#include <QNetworkAccessManager>
 
 // Libkipi includes
 
@@ -151,35 +148,36 @@ private Q_SLOTS:
 
     void slotError(const QString& msg);
     void slotAuthenticate();
-    void slotData(KIO::Job* job, const QByteArray& data);
-    void slotResult(KJob* job);
+    void slotFinished(QNetworkReply* reply);
 
 private:
 
-    QWidget*       m_parent;
-//  QString        m_cookie;
-    QByteArray     m_buffer;
+    QWidget*               m_parent;
+//  QString                m_cookie;
+    QByteArray             m_buffer;
 
-    QString        m_serviceName;
-    QString        m_apiUrl;
-    QString        m_authUrl;
-    QString        m_uploadUrl;
-    QString        m_apikey;
-    QString        m_secret;
-    QString        m_frob;
-    QString        m_maxSize;
-    QString        m_token;
-    QString        m_username;
-    QString        m_userId;
-    QString        m_lastTmpFile;
+    QString                m_serviceName;
+    QString                m_apiUrl;
+    QString                m_authUrl;
+    QString                m_uploadUrl;
+    QString                m_apikey;
+    QString                m_secret;
+    QString                m_frob;
+    QString                m_maxSize;
+    QString                m_token;
+    QString                m_username;
+    QString                m_userId;
+    QString                m_lastTmpFile;
 
-    QTemporaryDir* m_tmpDir;
+    QNetworkAccessManager* m_netMngr;
 
-    KIO::Job*      m_job;
+    QTemporaryDir*         m_tmpDir;
 
-    State          m_state;
+    QNetworkReply*         m_reply;
 
-    Interface*     m_iface;
+    State                  m_state;
+
+    Interface*             m_iface;
 };
 
 } // namespace KIPIFlickrPlugin

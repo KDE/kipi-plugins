@@ -230,6 +230,7 @@ if(KF5Kipi_FOUND)
         add_subdirectory(printimages)
         add_subdirectory(kmlexport)
         add_subdirectory(sendimages)
+        add_subdirectory(flickr)
 
 
         if(KF5KIO_FOUND)
@@ -258,7 +259,6 @@ if(KF5Kipi_FOUND)
 
                 add_subdirectory(dropbox)          # dbtalker.cpp
                 add_subdirectory(facebook)         # fbtalker.cpp
-                add_subdirectory(flickr)           # flickrtalker.cpp
                 add_subdirectory(piwigo)           # piwigotalker.cpp
                 add_subdirectory(rajce)            # rajcesession.cpp
                 add_subdirectory(smug)             # smugtalker.cpp
