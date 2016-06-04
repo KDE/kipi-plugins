@@ -88,6 +88,7 @@ void SelectionPage::setPageContent(int choice)
     {
         d->imageList = new KPImagesList(d->vbox);
         d->imageList->setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
+        d->imageList->loadImagesFromCurrentSelection();
     }
 
     setPageWidget(d->vbox);
