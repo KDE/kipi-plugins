@@ -100,7 +100,7 @@ IntroPage::IntroPage(KPWizardDialog* const dlg)
     QLabel* const getImageLabel = new QLabel(i18n("&Choose image selection method:"),hbox2);
     d->imageGetOption           = new QComboBox(hbox2);
     QString collection          = i18nc("Collections",     "Collections");
-    QString dialog              = i18nc("Image Dialog",    "Image Dialog");
+    QString dialog              = i18nc("Images",          "Images");
     d->imageGetOption->insertItem(SimpleViewerSettingsContainer::COLLECTION,  collection);
     d->imageGetOption->insertItem(SimpleViewerSettingsContainer::IMAGEDIALOG, dialog);
 
