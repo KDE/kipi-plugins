@@ -26,7 +26,7 @@
 
 // Qt includes
 
-#include <QtWidgets/QAction>
+#include <QAction>
 
 // Libkipi includes
 

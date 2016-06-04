@@ -25,14 +25,14 @@
 
 // Qt includes
 
-#include <QtWidgets/QFormLayout>
-#include <QtWidgets/QVBoxLayout>
-#include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QGroupBox>
-#include <QtWidgets/QGridLayout>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QPushButton>
-#include <QtWidgets/QComboBox>
+#include <QFormLayout>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QGroupBox>
+#include <QGridLayout>
+#include <QLabel>
+#include <QPushButton>
+#include <QComboBox>
 #include <QLineEdit>
 #include <QTextEdit>
 #include <QMessageBox>

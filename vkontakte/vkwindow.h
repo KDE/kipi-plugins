@@ -84,7 +84,7 @@ Q_SIGNALS:
 protected Q_SLOTS:
 
     // requesting photo information
-    void slotPhotoUploadDone(KJob *kjob);
+    void slotPhotoUploadDone(KJob* kjob);
 
     void slotStartTransfer();
 
@@ -127,14 +127,14 @@ protected:
     AlbumChooserWidget*            m_albumsBox;
 
     /// options
-//     QCheckBox*                  m_checkKeepOriginal;
+    //QCheckBox*                    m_checkKeepOriginal;
 
     KPImagesList*                  m_imgList;
     UploadWidget*                  m_uploadWidget;
 
     KPProgressWidget*              m_progressBar;
 
-    /** Pointers to running jobs */
+    /// Pointers to running jobs
     QList<KJob*>                   m_jobs;
 
     Vkontakte::VkApi*              m_vkapi;

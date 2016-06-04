@@ -397,7 +397,7 @@ void VkontakteWindow::slotStartTransfer()
     m_progressBar->progressThumbnailChanged(QIcon::fromTheme(QString::fromLatin1("kipi")).pixmap(22, 22));
 }
 
-void VkontakteWindow::slotPhotoUploadDone(KJob *kjob)
+void VkontakteWindow::slotPhotoUploadDone(KJob* kjob)
 {
     Vkontakte::UploadPhotosJob* const job = dynamic_cast<Vkontakte::UploadPhotosJob*>(kjob);
     Q_ASSERT(job);

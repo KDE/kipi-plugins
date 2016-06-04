@@ -26,7 +26,7 @@
 
 // Qt includes
 
-#include <QtWidgets/QDialog>
+#include <QDialog>
 
 class QComboBox;
 class QTextEdit;
