@@ -59,7 +59,7 @@ public:
     ImageCollectionSelector* imageCollectionSelector;
     KPImagesList*            imageList;
     FlashManager*            manager;
-    KPVBox*                   vbox;
+    KPVBox*                  vbox;
 };
 
 SelectionPage::SelectionPage(FlashManager* const mngr, KPWizardDialog* const dlg)

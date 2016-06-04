@@ -33,11 +33,12 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kjobwidgets.h>
 #include <kconfig.h>
+#include <kconfiggroup.h>
+
+#include <kjobwidgets.h>
 #include <kio/job.h>
 #include <kio/deletejob.h>
-#include <kconfiggroup.h>
 
 // Libkipi includes
 
@@ -315,42 +316,43 @@ void ImportWizardDlg::readSettings()
     KConfig config(QLatin1String("kipirc"));
     KConfigGroup group = config.group("FlashExport Settings");
 
-    d->settings->thumbnailRows        = group.readEntry("ThumbnailRows", 3);
-    d->settings->thumbnailColumns     = group.readEntry("ThumbnailColumns", 3);
-    d->settings->backgroundColor      = group.readEntry("BackgroundColor", QColor("#181818"));
-    d->settings->frameColor           = group.readEntry("FrameColor", QColor("#ffffff"));
-    d->settings->frameWidth           = group.readEntry("FrameWidth", 1);
-    d->settings->title                = group.readEntry("Title", QString());
-    d->settings->exportUrl            = group.readEntry("ExportUrl", QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + QLatin1String("/simpleviewer")));
-    d->settings->resizeExportImages   = group.readEntry("ResizeExportImages", true);
-    d->settings->imagesExportSize     = group.readEntry("ImagesExportSize", 640);
-    d->settings->showComments         = group.readEntry("ShowComments", true);
+    d->settings->thumbnailRows        = group.readEntry("ThumbnailRows",        3);
+    d->settings->thumbnailColumns     = group.readEntry("ThumbnailColumns",     3);
+    d->settings->backgroundColor      = group.readEntry("BackgroundColor",      QColor("#181818"));
+    d->settings->frameColor           = group.readEntry("FrameColor",           QColor("#ffffff"));
+    d->settings->frameWidth           = group.readEntry("FrameWidth",           1);
+    d->settings->title                = group.readEntry("Title",                QString());
+    d->settings->exportUrl            = group.readEntry("ExportUrl",            QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + QLatin1String("/simpleviewer")));
+    d->settings->resizeExportImages   = group.readEntry("ResizeExportImages",   true);
+    d->settings->imagesExportSize     = group.readEntry("ImagesExportSize",     640);
+    d->settings->showComments         = group.readEntry("ShowComments",         true);
     d->settings->enableRightClickOpen = group.readEntry("EnableRightClickOpen", false);
-    d->settings->fixOrientation       = group.readEntry("FixOrientation", true);
-    d->settings->openInKonqueror      = group.readEntry("OpenInKonqueror", true);
-    d->settings->showKeywords         = group.readEntry("ShowKeywords", true);
+    d->settings->fixOrientation       = group.readEntry("FixOrientation",       true);
+    d->settings->openInKonqueror      = group.readEntry("OpenInKonqueror",      true);
+    d->settings->showKeywords         = group.readEntry("ShowKeywords",         true);
 
     //---Simpleviewer settings ----
-    d->settings->textColor            = group.readEntry("TextColor", QColor("#ffffff"));
-    d->settings->thumbnailPosition    = (SimpleViewerSettingsContainer::ThumbPosition)group.readEntry("ThumbnailPosition", (int)SimpleViewerSettingsContainer::RIGHT);
-    d->settings->stagePadding         = group.readEntry("StagePadding", 20);
-    d->settings->maxImageDimension    = group.readEntry("MaxImageDimension", 640);
+    d->settings->textColor            = group.readEntry("TextColor",            QColor("#ffffff"));
+    d->settings->thumbnailPosition    = (SimpleViewerSettingsContainer::ThumbPosition)group.readEntry("ThumbnailPosition", 
+                                                                                (int)SimpleViewerSettingsContainer::RIGHT);
+    d->settings->stagePadding         = group.readEntry("StagePadding",         20);
+    d->settings->maxImageDimension    = group.readEntry("MaxImageDimension",    640);
 
     //---Autoviewer settings ----
-    d->settings->imagePadding         = group.readEntry("ImagePadding", 20);
-    d->settings->displayTime          = group.readEntry("DisplayTime", 6);
+    d->settings->imagePadding         = group.readEntry("ImagePadding",         20);
+    d->settings->displayTime          = group.readEntry("DisplayTime",          6);
 
     //---Tiltviewer settings ----
-    d->settings->showFlipButton       = group.readEntry("ShowFlipButton", true);
-    d->settings->useReloadButton      = group.readEntry("UseReloadButton",true);
+    d->settings->showFlipButton       = group.readEntry("ShowFlipButton",       true);
+    d->settings->useReloadButton      = group.readEntry("UseReloadButton",      true);
     d->settings->bkgndInnerColor      = group.readEntry("BackgroundInnerColor", QColor("#ffffff"));
     d->settings->bkgndOuterColor      = group.readEntry("BackgroundOuterColor", QColor("#ffffff"));
-    d->settings->backColor            = group.readEntry("BackColor", QColor("#FFDCA8"));
+    d->settings->backColor            = group.readEntry("BackColor",            QColor("#FFDCA8"));
 
     //---Postcardviewer settings ----
-    d->settings->cellDimension        = group.readEntry("CellDimension", 800);
-    d->settings->zoomOutPerc          = group.readEntry("ZoomOutPerc", 15);
-    d->settings->zoomInPerc           = group.readEntry("ZoomInPerc", 100);
+    d->settings->cellDimension        = group.readEntry("CellDimension",        800);
+    d->settings->zoomOutPerc          = group.readEntry("ZoomOutPerc",          15);
+    d->settings->zoomInPerc           = group.readEntry("ZoomInPerc",           100);
 
     d->generalPage->setSettings(d->settings);
     d->lookPage->setSettings(d->settings);
@@ -365,42 +367,42 @@ void ImportWizardDlg::saveSettings()
     KConfig config(QLatin1String("kipirc"));
     KConfigGroup group = config.group("FlashExport Settings");
 
-    group.writeEntry("ThumbnailRows", d->settings->thumbnailRows);
-    group.writeEntry("ThumbnailColumns", d->settings->thumbnailColumns);
-    group.writeEntry("BackgroundColor", d->settings->backgroundColor);
-    group.writeEntry("FrameColor", d->settings->frameColor);
-    group.writeEntry("FrameWidth", d->settings->frameWidth);
-    group.writeEntry("Title", d->settings->title);
-    group.writeEntry("ExportUrl", QUrl(d->settings->exportUrl));
-    group.writeEntry("ResizeExportImages", d->settings->resizeExportImages);
-    group.writeEntry("ImagesExportSize", d->settings->imagesExportSize);
-    group.writeEntry("ShowComments", d->settings->showComments);
-    group.writeEntry("EnableRightClickOpen", d->settings->enableRightClickOpen);
-    group.writeEntry("FixOrientation", d->settings->fixOrientation);
-    group.writeEntry("OpenInKonqueror", d->settings->openInKonqueror);
-    group.writeEntry("ShowKeywords", d->settings->showKeywords);
+    group.writeEntry("ThumbnailRows",           d->settings->thumbnailRows);
+    group.writeEntry("ThumbnailColumns",        d->settings->thumbnailColumns);
+    group.writeEntry("BackgroundColor",         d->settings->backgroundColor);
+    group.writeEntry("FrameColor",              d->settings->frameColor);
+    group.writeEntry("FrameWidth",              d->settings->frameWidth);
+    group.writeEntry("Title",                   d->settings->title);
+    group.writeEntry("ExportUrl",               QUrl(d->settings->exportUrl));
+    group.writeEntry("ResizeExportImages",      d->settings->resizeExportImages);
+    group.writeEntry("ImagesExportSize",        d->settings->imagesExportSize);
+    group.writeEntry("ShowComments",            d->settings->showComments);
+    group.writeEntry("EnableRightClickOpen",    d->settings->enableRightClickOpen);
+    group.writeEntry("FixOrientation",          d->settings->fixOrientation);
+    group.writeEntry("OpenInKonqueror",         d->settings->openInKonqueror);
+    group.writeEntry("ShowKeywords",            d->settings->showKeywords);
 
     //---Simpleviewer settings ---
-    group.writeEntry("ThumbnailPosition", (int)d->settings->thumbnailPosition);
-    group.writeEntry("TextColor", d->settings->textColor);
-    group.writeEntry("StagePadding", d->settings->stagePadding);
-    group.writeEntry("MaxImageDimension", d->settings->maxImageDimension);
+    group.writeEntry("ThumbnailPosition",       (int)d->settings->thumbnailPosition);
+    group.writeEntry("TextColor",               d->settings->textColor);
+    group.writeEntry("StagePadding",            d->settings->stagePadding);
+    group.writeEntry("MaxImageDimension",       d->settings->maxImageDimension);
 
     //---Autoviewer settings ---
-    group.writeEntry("ImagePadding",d->settings->imagePadding);
-    group.writeEntry("DisplayTime",d->settings->displayTime);
+    group.writeEntry("ImagePadding",            d->settings->imagePadding);
+    group.writeEntry("DisplayTime",             d->settings->displayTime);
 
     //---Tiltviewer settings ----
-    group.writeEntry("ShowFlipButton", d->settings->showFlipButton);
-    group.writeEntry("UseReloadButton",d->settings->useReloadButton);
-    group.writeEntry("BackgroundInnerColor", d->settings->bkgndInnerColor);
-    group.writeEntry("BackgroundOuterColor", d->settings->bkgndOuterColor);
-    group.writeEntry("BackColor", d->settings->backColor);
+    group.writeEntry("ShowFlipButton",          d->settings->showFlipButton);
+    group.writeEntry("UseReloadButton",         d->settings->useReloadButton);
+    group.writeEntry("BackgroundInnerColor",    d->settings->bkgndInnerColor);
+    group.writeEntry("BackgroundOuterColor",    d->settings->bkgndOuterColor);
+    group.writeEntry("BackColor",               d->settings->backColor);
 
     //---Postcardviewer settings ----
-    group.writeEntry("CellDimension", d->settings->cellDimension);
-    group.writeEntry("ZoomOutPerc", d->settings->zoomOutPerc);
-    group.writeEntry("ZoomInPerc", d->settings->zoomInPerc);
+    group.writeEntry("CellDimension",           d->settings->cellDimension);
+    group.writeEntry("ZoomOutPerc",             d->settings->zoomOutPerc);
+    group.writeEntry("ZoomInPerc",              d->settings->zoomInPerc);
 
     config.sync();
     d->simple->setSettings(d->settings);

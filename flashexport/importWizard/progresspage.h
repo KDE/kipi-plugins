@@ -31,7 +31,7 @@ using namespace KIPIPlugins;
 
 namespace KIPIFlashExportPlugin
 {
-    
+
 class FlashManager;
 
 class ProgressPage : public KPWizardPage

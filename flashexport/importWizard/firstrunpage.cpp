@@ -57,7 +57,7 @@ public:
         urlRequester = 0;
     }
 
-    QUrl           url;
+    QUrl            url;
 
     KPFileSelector* urlRequester;
 };

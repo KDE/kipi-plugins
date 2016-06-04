@@ -71,7 +71,7 @@ private:
 
     QWidget*      m_parentWidget;
 
-    QAction *      m_action;
+    QAction*      m_action;
 
     FlashManager* m_manager;
 

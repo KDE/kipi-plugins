@@ -61,21 +61,21 @@ public:
         exportUrl          = 0;
         rightClick         = 0;
         fixOrientation     = 0;
-        openInKonqueror    = 0;
+        openInBrowser      = 0;
         showKeywords       = 0;
     }
 
-    QLineEdit*     title;
+    QLineEdit*      title;
 
-    QCheckBox*     resizeExportImages;
-    QCheckBox*     showComments;
-    QCheckBox*     rightClick;
-    QCheckBox*     fixOrientation;
-    QCheckBox*     openInKonqueror;
-    QCheckBox*     showKeywords;
+    QCheckBox*      resizeExportImages;
+    QCheckBox*      showComments;
+    QCheckBox*      rightClick;
+    QCheckBox*      fixOrientation;
+    QCheckBox*      openInBrowser;
+    QCheckBox*      showKeywords;
 
-    QSpinBox*      imagesExportSize;
-    QSpinBox*      maxImageDimension;
+    QSpinBox*       imagesExportSize;
+    QSpinBox*       maxImageDimension;
 
     KPFileSelector* exportUrl;
 };
@@ -84,9 +84,8 @@ GeneralPage::GeneralPage(KPWizardDialog* const dlg)
     : KPWizardPage(dlg, i18n("General Settings")),
       d(new Private)
 {
-    const int spacing = QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
-
-    KPVBox* vbox             = new KPVBox(this);
+    const int spacing       = QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
+    KPVBox* const vbox      = new KPVBox(this);
 
     // ------------------------------------------------------------------------
 
@@ -113,9 +112,9 @@ GeneralPage::GeneralPage(KPWizardDialog* const dlg)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* box3       = new QGroupBox(i18n("Image Properties"), vbox);
-    QGridLayout* grid     = new QGridLayout(box3);
-    d->resizeExportImages = new QCheckBox(i18n("Resize Target Images"), this);
+    QGroupBox* const box3   = new QGroupBox(i18n("Image Properties"), vbox);
+    QGridLayout* const grid = new QGridLayout(box3);
+    d->resizeExportImages   = new QCheckBox(i18n("Resize Target Images"), this);
     d->resizeExportImages->setChecked(true);
     d->resizeExportImages->setWhatsThis(i18n("If you enable this option, "
                                              "all target images can be resized.") );
@@ -127,8 +126,8 @@ GeneralPage::GeneralPage(KPWizardDialog* const dlg)
                                          "the images' orientations will be set according "
                                          "to their Exif information."));
 
-    KPHBox* hbox         = new KPHBox;
-    QLabel* label       = new QLabel(i18n("&Target Images' Size:"), hbox);
+    KPHBox* const hbox  = new KPHBox;
+    QLabel* const label = new QLabel(i18n("&Target Images' Size:"), hbox);
     d->imagesExportSize = new QSpinBox(hbox);
     d->imagesExportSize->setRange(200, 2000);
     d->imagesExportSize->setSingleStep(1);
@@ -144,8 +143,8 @@ GeneralPage::GeneralPage(KPWizardDialog* const dlg)
     connect(d->resizeExportImages, SIGNAL(toggled(bool)),
             d->fixOrientation, SLOT(setEnabled(bool)));
 
-    KPHBox* hbox2         = new KPHBox;
-    QLabel* label2       = new QLabel(i18n("&Displayed Images' Size:"), hbox2);
+    KPHBox* const hbox2  = new KPHBox;
+    QLabel* const label2 = new QLabel(i18n("&Displayed Images' Size:"), hbox2);
     d->maxImageDimension = new QSpinBox(hbox2);
     d->maxImageDimension->setRange(200, 2000);
     d->maxImageDimension->setSingleStep(1);
@@ -166,10 +165,10 @@ GeneralPage::GeneralPage(KPWizardDialog* const dlg)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* box4    = new QGroupBox(i18n("Misc"), vbox);
-    QVBoxLayout* vlay4 = new QVBoxLayout(box4);
+    QGroupBox* const box4    = new QGroupBox(i18n("Misc"), vbox);
+    QVBoxLayout* const vlay4 = new QVBoxLayout(box4);
 
-    d->showComments = new QCheckBox(i18n("Display Captions"), this);
+    d->showComments          = new QCheckBox(i18n("Display Captions"), this);
     d->showComments->setChecked(true);
     d->showComments->setWhatsThis(i18n("If this option is enabled, "
                                        "the images' captions will be shown."));
@@ -184,9 +183,9 @@ GeneralPage::GeneralPage(KPWizardDialog* const dlg)
                                      "the user will be able to open the target image in a separate window "
                                      "using the right mouse button."));
 
-    d->openInKonqueror = new QCheckBox(i18n("Open gallery in Browser"), this);
-    d->openInKonqueror->setChecked(true);
-    d->openInKonqueror->setWhatsThis(i18n("If this option is enabled, the "
+    d->openInBrowser = new QCheckBox(i18n("Open gallery in Browser"), this);
+    d->openInBrowser->setChecked(true);
+    d->openInBrowser->setWhatsThis(i18n("If this option is enabled, the "
                                           "gallery will be opened in Konqueror automatically."));
 
 
@@ -194,7 +193,7 @@ GeneralPage::GeneralPage(KPWizardDialog* const dlg)
     vlay4->setSpacing(spacing);
     vlay4->addWidget(d->showComments);
     vlay4->addWidget(d->rightClick);
-    vlay4->addWidget(d->openInKonqueror);
+    vlay4->addWidget(d->openInBrowser);
     vlay4->addWidget(d->showKeywords);
 
     // ------------------------------------------------------------------------
@@ -218,7 +217,7 @@ void GeneralPage::setSettings(const SimpleViewerSettingsContainer* const setting
     d->showComments->setChecked(settings->showComments);
     d->rightClick->setChecked(settings->enableRightClickOpen);
     d->fixOrientation->setChecked(settings->fixOrientation);
-    d->openInKonqueror->setChecked(settings->openInKonqueror);
+    d->openInBrowser->setChecked(settings->openInBrowser);
     d->showKeywords->setChecked(settings->showKeywords);
 }
 
@@ -232,7 +231,7 @@ void GeneralPage::settings(SimpleViewerSettingsContainer* const settings)
     settings->showComments         = d->showComments->isChecked();
     settings->enableRightClickOpen = d->rightClick->isChecked();
     settings->fixOrientation       = d->fixOrientation->isChecked();
-    settings->openInKonqueror      = d->openInKonqueror->isChecked();
+    settings->openInBrowser      = d->openInBrowser->isChecked();
     settings->showKeywords         = d->showKeywords->isChecked();
 }
 

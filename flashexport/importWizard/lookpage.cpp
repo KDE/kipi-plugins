@@ -75,32 +75,32 @@ public:
     }
 
     KPVBox*          vbox;
-    QComboBox*      thumbnailPosition;
+    QComboBox*       thumbnailPosition;
 
     KPColorSelector* textColor;
     KPColorSelector* backgroundColor;
     KPColorSelector* frameColor;
 
-    QSpinBox*       frameWidth;
-    QSpinBox*       stagePadding;
-    QSpinBox*       thumbnailColumns;
-    QSpinBox*       thumbnailRows;
+    QSpinBox*        frameWidth;
+    QSpinBox*        stagePadding;
+    QSpinBox*        thumbnailColumns;
+    QSpinBox*        thumbnailRows;
 
     // ---Autoviewer------
-    QSpinBox*       displayTime;
-    QSpinBox*       imagePadding;
+    QSpinBox*        displayTime;
+    QSpinBox*        imagePadding;
 
     // ---Tiltviewer------
     KPColorSelector* bkgndInnerColor;
     KPColorSelector* bkgndOuterColor;
     KPColorSelector* backColor;
-    QCheckBox*      useReloadButton;
-    QCheckBox*      showFlipButton;
+    QCheckBox*       useReloadButton;
+    QCheckBox*       showFlipButton;
 
     // ---Postcardviewer----
-    QSpinBox*       cellDimension;
-    QSpinBox*       zoomInPerc;
-    QSpinBox*       zoomOutPerc;
+    QSpinBox*        cellDimension;
+    QSpinBox*        zoomInPerc;
+    QSpinBox*        zoomOutPerc;
 };
 
 LookPage::LookPage(KPWizardDialog* const dlg)
@@ -125,39 +125,40 @@ void LookPage::setPageContent(int plugType)
     const int spacing = QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
 
     d->vbox = new KPVBox(this);
-    /* Every plugin have it's own settings
-    * Keep a page for every plugin for a easier maintenance
-    * even if some settings are common
-    */
+
+    // Every plugin have it's own settings
+    // Keep a page for every plugin for a easier maintenance
+    // even if some settings are common.
+
     switch(plugType)
     {
         case 0:
         {
             //---Navigation Options -------------------------
-            QGroupBox* box    = new QGroupBox(i18nc("Settings for flash export navigation", "Navigation"), d->vbox);
-            QVBoxLayout* vlay = new QVBoxLayout(box);
+            QGroupBox* const box    = new QGroupBox(i18nc("Settings for flash export navigation", "Navigation"), d->vbox);
+            QVBoxLayout* const vlay = new QVBoxLayout(box);
 
-            KPHBox* hbox       = new KPHBox;
-            QLabel* label     = new QLabel(i18n("Thumbnail &Rows:"), hbox);
-            d->thumbnailRows  = new QSpinBox(hbox);
+            KPHBox* const hbox      = new KPHBox;
+            QLabel* const label     = new QLabel(i18n("Thumbnail &Rows:"), hbox);
+            d->thumbnailRows        = new QSpinBox(hbox);
             d->thumbnailRows->setRange(1, 10);
             d->thumbnailRows->setSingleStep(1);
             d->thumbnailRows->setValue(3);
             d->thumbnailRows->setWhatsThis(i18n("Number of thumbnails rows"));
             label->setBuddy(d->thumbnailRows);
 
-            KPHBox* hbox2        = new KPHBox;
-            QLabel* label2      = new QLabel(i18n("Thumbnail &Columns:"), hbox2);
-            d->thumbnailColumns = new QSpinBox(hbox2);
+            KPHBox* const hbox2     = new KPHBox;
+            QLabel* const label2    = new QLabel(i18n("Thumbnail &Columns:"), hbox2);
+            d->thumbnailColumns     = new QSpinBox(hbox2);
             d->thumbnailColumns->setRange(1, 10);
             d->thumbnailColumns->setSingleStep(1);
             d->thumbnailColumns->setValue(3);
             d->thumbnailColumns->setWhatsThis(i18n("Number of thumbnails columns"));
             label2->setBuddy(d->thumbnailColumns);
 
-            KPHBox* hbox3         = new KPHBox;
-            QLabel* label3       = new QLabel(i18n("Thumbnail &Position:"), hbox3);
-            d->thumbnailPosition = new QComboBox(hbox3);
+            KPHBox* const hbox3      = new KPHBox;
+            QLabel* const label3     = new QLabel(i18n("Thumbnail &Position:"), hbox3);
+            d->thumbnailPosition     = new QComboBox(hbox3);
             QString pos_right  = i18nc("thumbnail position: right",  "Right");
             QString pos_left   = i18nc("thumbnail position: left",   "Left");
             QString pos_top    = i18nc("thumbnail position: top",    "Top");
@@ -177,25 +178,25 @@ void LookPage::setPageContent(int plugType)
 
             //---Colors Options -----------------------------------------------
 
-            QGroupBox* box2    = new QGroupBox(i18n("Colors"), d->vbox);
-            QVBoxLayout* vlay2 = new QVBoxLayout(box2);
+            QGroupBox* const box2    = new QGroupBox(i18n("Colors"), d->vbox);
+            QVBoxLayout* const vlay2 = new QVBoxLayout(box2);
 
-            KPHBox* hbox4    = new KPHBox;
-            QLabel* label4  = new QLabel(i18n("&Text Color:"), hbox4);
-            d->textColor    = new KPColorSelector(hbox4);
+            KPHBox* const hbox4      = new KPHBox;
+            QLabel* const label4     = new QLabel(i18n("&Text Color:"), hbox4);
+            d->textColor             = new KPColorSelector(hbox4);
             d->textColor->setColor(QColor("#FFFFFF"));
             d->textColor->setWhatsThis(i18n("Color of title and caption text"));
             label4->setBuddy(d->textColor);
 
-            KPHBox* hbox5       = new KPHBox;
-            QLabel* label5     = new QLabel(i18n("&Background Color:"), hbox5);
-            d->backgroundColor = new KPColorSelector(hbox5);
+            KPHBox* const hbox5      = new KPHBox;
+            QLabel* const label5     = new QLabel(i18n("&Background Color:"), hbox5);
+            d->backgroundColor       = new KPColorSelector(hbox5);
             d->backgroundColor->setColor(QColor("#181818"));
             label5->setBuddy(d->backgroundColor);
 
-            KPHBox* hbox6    = new KPHBox;
-            QLabel* label6  = new QLabel(i18n("&Frame Color:"), hbox6);
-            d->frameColor   = new KPColorSelector(hbox6);
+            KPHBox* const hbox6      = new KPHBox;
+            QLabel* const label6     = new QLabel(i18n("&Frame Color:"), hbox6);
+            d->frameColor            = new KPColorSelector(hbox6);
             d->frameColor->setColor(QColor("#FFFFFF"));
             d->frameColor->setWhatsThis(i18n("Color of image frame, viewed icon, load bars, thumbnail arrows"));
             label6->setBuddy(d->frameColor);
@@ -208,21 +209,21 @@ void LookPage::setPageContent(int plugType)
 
             // ----Style Options------------------------------------------------
 
-            QGroupBox* box3    = new QGroupBox(i18n("Style"), d->vbox);
-            QVBoxLayout* vlay3 = new QVBoxLayout(box3);
+            QGroupBox* const box3    = new QGroupBox(i18n("Style"), d->vbox);
+            QVBoxLayout* const vlay3 = new QVBoxLayout(box3);
 
-            KPHBox* hbox7   = new KPHBox;
-            QLabel* label7 = new QLabel(i18n("&Frame Width:"), hbox7);
-            d->frameWidth  = new QSpinBox(hbox7);
+            KPHBox* const hbox7      = new KPHBox;
+            QLabel* const label7     = new QLabel(i18n("&Frame Width:"), hbox7);
+            d->frameWidth            = new QSpinBox(hbox7);
             d->frameWidth->setRange(0, 10);
             d->frameWidth->setSingleStep(1);
             d->frameWidth->setValue(1);
             d->frameWidth->setWhatsThis(i18n("Width of image frame in pixels."));
             label7->setBuddy(d->frameWidth);
 
-            KPHBox* hbox8    = new KPHBox;
-            QLabel* label8  = new QLabel(i18n("&Stage Padding:"), hbox8);
-            d->stagePadding = new QSpinBox(hbox8);
+            KPHBox* const hbox8      = new KPHBox;
+            QLabel* const label8     = new QLabel(i18n("&Stage Padding:"), hbox8);
+            d->stagePadding          = new QSpinBox(hbox8);
             d->stagePadding->setRange(10, 100);
             d->stagePadding->setSingleStep(1);
             d->stagePadding->setValue(20);
@@ -239,12 +240,12 @@ void LookPage::setPageContent(int plugType)
         case 1:
         {
             //---Navigation Options -------------------------
-            QGroupBox* box    = new QGroupBox(i18nc("Settings for flash export navigation", "Navigation"), d->vbox);
-            QVBoxLayout* vlay = new QVBoxLayout(box);
+            QGroupBox* const box    = new QGroupBox(i18nc("Settings for flash export navigation", "Navigation"), d->vbox);
+            QVBoxLayout* const vlay = new QVBoxLayout(box);
 
-            KPHBox* hbox          = new KPHBox;
-            QLabel* label        = new QLabel(i18n("&Display Time:"), hbox);
-            d->displayTime = new QSpinBox(hbox);
+            KPHBox* const hbox      = new KPHBox;
+            QLabel* const label     = new QLabel(i18n("&Display Time:"), hbox);
+            d->displayTime          = new QSpinBox(hbox);
             d->displayTime->setRange(1, 15);
             d->displayTime->setSingleStep(1);
             d->displayTime->setValue(3);
@@ -257,18 +258,18 @@ void LookPage::setPageContent(int plugType)
 
             //---Colors Options -----------------------------------------------
 
-            QGroupBox* box2    = new QGroupBox(i18n("Colors"), d->vbox);
-            QVBoxLayout* vlay2 = new QVBoxLayout(box2);
+            QGroupBox* const box2    = new QGroupBox(i18n("Colors"), d->vbox);
+            QVBoxLayout* const vlay2 = new QVBoxLayout(box2);
 
-            KPHBox* hbox2       = new KPHBox;
-            QLabel* label2     = new QLabel(i18n("&Background Color:"), hbox2);
-            d->backgroundColor = new KPColorSelector(hbox2);
+            KPHBox* const hbox2      = new KPHBox;
+            QLabel* const label2     = new QLabel(i18n("&Background Color:"), hbox2);
+            d->backgroundColor       = new KPColorSelector(hbox2);
             d->backgroundColor->setColor(QColor("#181818"));
             label2->setBuddy(d->backgroundColor);
 
-            KPHBox* hbox3    = new KPHBox;
-            QLabel* label3  = new QLabel(i18n("&Frame Color:"), hbox3);
-            d->frameColor   = new KPColorSelector(hbox3);
+            KPHBox* const hbox3   = new KPHBox;
+            QLabel* const label3  = new QLabel(i18n("&Frame Color:"), hbox3);
+            d->frameColor         = new KPColorSelector(hbox3);
             d->frameColor->setColor(QColor("#FFFFFF"));
             d->frameColor->setWhatsThis(i18n("Color of image frame, viewed icon, load bars, thumbnail arrows"));
             label3->setBuddy(d->frameColor);
@@ -280,21 +281,21 @@ void LookPage::setPageContent(int plugType)
 
             // ----Style Options------------------------------------------------
 
-            QGroupBox* box3    = new QGroupBox(i18n("Style"), d->vbox);
-            QVBoxLayout* vlay3 = new QVBoxLayout(box3);
+            QGroupBox* const box3    = new QGroupBox(i18n("Style"), d->vbox);
+            QVBoxLayout* const vlay3 = new QVBoxLayout(box3);
 
-            KPHBox* hbox4    = new KPHBox;
-            QLabel* label4  = new QLabel(i18n("&Frame Width:"), hbox4);
-            d->frameWidth = new QSpinBox(hbox4);
+            KPHBox* const hbox4      = new KPHBox;
+            QLabel* const label4     = new QLabel(i18n("&Frame Width:"), hbox4);
+            d->frameWidth            = new QSpinBox(hbox4);
             d->frameWidth->setRange(0, 10);
             d->frameWidth->setSingleStep(1);
             d->frameWidth->setValue(1);
             d->frameWidth->setWhatsThis(i18n("Width of image frame in pixels."));
             label4->setBuddy(d->frameWidth);
 
-            KPHBox* hbox5    = new KPHBox;
-            QLabel* label5  = new QLabel(i18n("&Image Padding:"), hbox5);
-            d->imagePadding = new QSpinBox(hbox5);
+            KPHBox* const hbox5  = new KPHBox;
+            QLabel* const label5 = new QLabel(i18n("&Image Padding:"), hbox5);
+            d->imagePadding      = new QSpinBox(hbox5);
             d->imagePadding->setRange(10, 100);
             d->imagePadding->setSingleStep(1);
             d->imagePadding->setValue(20);
@@ -311,21 +312,21 @@ void LookPage::setPageContent(int plugType)
         case 2:
         {
             //---Navigation Options -------------------------
-            QGroupBox* box    = new QGroupBox(i18nc("Settings for flash export navigation", "Navigation"), d->vbox);
-            QVBoxLayout* vlay = new QVBoxLayout(box);
+            QGroupBox* const box    = new QGroupBox(i18nc("Settings for flash export navigation", "Navigation"), d->vbox);
+            QVBoxLayout* const vlay = new QVBoxLayout(box);
 
-            KPHBox* hbox      = new KPHBox;
-            QLabel* label    = new QLabel(i18n(" &Rows:"), hbox);
-            d->thumbnailRows = new QSpinBox(hbox);
+            KPHBox* const hbox      = new KPHBox;
+            QLabel* const label     = new QLabel(i18n(" &Rows:"), hbox);
+            d->thumbnailRows        = new QSpinBox(hbox);
             d->thumbnailRows->setRange(1, 10);
             d->thumbnailRows->setSingleStep(1);
             d->thumbnailRows->setValue(3);
             d->thumbnailRows->setWhatsThis(i18n("Number of rows of images to display."));
             label->setBuddy(d->thumbnailRows);
 
-            KPHBox* hbox2        = new KPHBox;
-            QLabel* label2      = new QLabel(i18n(" &Columns:"), hbox2);
-            d->thumbnailColumns = new QSpinBox(hbox2);
+            KPHBox* const hbox2     = new KPHBox;
+            QLabel* const label2    = new QLabel(i18n(" &Columns:"), hbox2);
+            d->thumbnailColumns     = new QSpinBox(hbox2);
             d->thumbnailColumns->setRange(1, 10);
             d->thumbnailColumns->setSingleStep(1);
             d->thumbnailColumns->setValue(3);
@@ -352,26 +353,26 @@ void LookPage::setPageContent(int plugType)
 
             //---Colors Options -----------------------------------------------
 
-            QGroupBox* box2    = new QGroupBox(i18nc("Settings for flash export navigation", "Colors"), d->vbox);
-            QVBoxLayout* vlay2 = new QVBoxLayout(box2);
+            QGroupBox* const box2    = new QGroupBox(i18nc("Settings for flash export navigation", "Colors"), d->vbox);
+            QVBoxLayout* const vlay2 = new QVBoxLayout(box2);
 
-            KPHBox* hbox3    = new KPHBox;
-            QLabel* label3  = new QLabel(i18n("&Frame Color:"), hbox3);
-            d->frameColor   = new KPColorSelector(hbox3);
+            KPHBox* const hbox3      = new KPHBox;
+            QLabel* const label3     = new QLabel(i18n("&Frame Color:"), hbox3);
+            d->frameColor            = new KPColorSelector(hbox3);
             d->frameColor->setColor(QColor("#FFFFFF"));
             d->frameColor->setWhatsThis(i18n("Color of image frame, viewed icon, load bars, thumbnail arrows"));
             label3->setBuddy(d->frameColor);
 
-            KPHBox* hbox4       = new KPHBox;
-            QLabel* label4     = new QLabel(i18n("Background &Inner Color:"), hbox4);
-            d->bkgndInnerColor = new KPColorSelector(hbox4);
+            KPHBox* const hbox4      = new KPHBox;
+            QLabel* const label4     = new QLabel(i18n("Background &Inner Color:"), hbox4);
+            d->bkgndInnerColor       = new KPColorSelector(hbox4);
             d->bkgndInnerColor->setColor(QColor("#FFFFFF"));
             d->bkgndInnerColor->setWhatsThis(i18n("Color of the stage background gradient center."));
             label4->setBuddy(d->bkgndInnerColor);
 
-            KPHBox* hbox5       = new KPHBox;
-            QLabel* label5     = new QLabel(i18n("Background &Outer Color:"), hbox5);
-            d->bkgndOuterColor = new KPColorSelector(hbox5);
+            KPHBox* const hbox5      = new KPHBox;
+            QLabel* const label5     = new QLabel(i18n("Background &Outer Color:"), hbox5);
+            d->bkgndOuterColor       = new KPColorSelector(hbox5);
             d->bkgndOuterColor->setColor(QColor("#FFFFFF"));
             d->bkgndOuterColor->setWhatsThis(i18n("Color of the stage background gradient edge."));
             label5->setBuddy(d->bkgndOuterColor);
@@ -395,21 +396,21 @@ void LookPage::setPageContent(int plugType)
         case 3:
         {
             //---Navigation Options -------------------------
-            QGroupBox* box    = new QGroupBox(i18nc("Settings for flash export navigation", "Navigation"), d->vbox);
-            QVBoxLayout* vlay = new QVBoxLayout(box);
+            QGroupBox* const box    = new QGroupBox(i18nc("Settings for flash export navigation", "Navigation"), d->vbox);
+            QVBoxLayout* const vlay = new QVBoxLayout(box);
 
-            KPHBox* hbox      = new KPHBox;
-            QLabel* label    = new QLabel(i18n("Cell Dimension:"), hbox);
-            d->cellDimension = new QSpinBox(hbox);
+            KPHBox* const hbox      = new KPHBox;
+            QLabel* const label     = new QLabel(i18n("Cell Dimension:"), hbox);
+            d->cellDimension        = new QSpinBox(hbox);
             d->cellDimension->setRange(500, 1500);
             d->cellDimension->setSingleStep(1);
             d->cellDimension->setValue(800);
             d->cellDimension->setWhatsThis(i18n("Dimension of displayed image cells. Please use a higher value if you set high image size"));
             label->setBuddy(d->cellDimension);
 
-            KPHBox* hbox2        = new KPHBox;
-            QLabel* label2      = new QLabel(i18n(" &Columns:"), hbox2);
-            d->thumbnailColumns = new QSpinBox(hbox2);
+            KPHBox* const hbox2     = new KPHBox;
+            QLabel* const label2    = new QLabel(i18n(" &Columns:"), hbox2);
+            d->thumbnailColumns     = new QSpinBox(hbox2);
             d->thumbnailColumns->setRange(1, 10);
             d->thumbnailColumns->setSingleStep(1);
             d->thumbnailColumns->setValue(3);
@@ -424,25 +425,25 @@ void LookPage::setPageContent(int plugType)
 
             //---Colors Options -----------------------------------------------
 
-            QGroupBox* box2    = new QGroupBox(i18n("Colors"), d->vbox);
-            QVBoxLayout* vlay2 = new QVBoxLayout(box2);
+            QGroupBox* const box2    = new QGroupBox(i18n("Colors"), d->vbox);
+            QVBoxLayout* const vlay2 = new QVBoxLayout(box2);
 
-            KPHBox* hbox3    = new KPHBox;
-            QLabel* label3  = new QLabel(i18n("&Caption Color:"), hbox3);
-            d->textColor    = new KPColorSelector(hbox3);
+            KPHBox* const hbox3      = new KPHBox;
+            QLabel* const label3     = new QLabel(i18n("&Caption Color:"), hbox3);
+            d->textColor             = new KPColorSelector(hbox3);
             d->textColor->setColor(QColor("#FFFFFF"));
             d->textColor->setWhatsThis(i18n("Color of title and caption text"));
             label3->setBuddy(d->textColor);
 
-            KPHBox* hbox4       = new KPHBox;
-            QLabel* label4     = new QLabel(i18n("&Background Color:"), hbox4);
-            d->backgroundColor = new KPColorSelector(hbox4);
+            KPHBox* const hbox4      = new KPHBox;
+            QLabel* const label4     = new QLabel(i18n("&Background Color:"), hbox4);
+            d->backgroundColor       = new KPColorSelector(hbox4);
             d->backgroundColor->setColor(QColor("#181818"));
             label4->setBuddy(d->backgroundColor);
 
-            KPHBox* hbox5    = new KPHBox;
-            QLabel* label5  = new QLabel(i18n("&Frame Color:"), hbox5);
-            d->frameColor   = new KPColorSelector(hbox5);
+            KPHBox* const hbox5      = new KPHBox;
+            QLabel* const label5     = new QLabel(i18n("&Frame Color:"), hbox5);
+            d->frameColor            = new KPColorSelector(hbox5);
             d->frameColor->setColor(QColor("#FFFFFF"));
             d->frameColor->setWhatsThis(i18n("Color of image frame, viewed icon, load bars, thumbnail arrows"));
             label5->setBuddy(d->frameColor);
@@ -455,30 +456,30 @@ void LookPage::setPageContent(int plugType)
 
             // ----Style Options------------------------------------------------
 
-            QGroupBox* box3    = new QGroupBox(i18n("Style"), d->vbox);
-            QVBoxLayout* vlay3 = new QVBoxLayout(box3);
+            QGroupBox* const box3    = new QGroupBox(i18n("Style"), d->vbox);
+            QVBoxLayout* const vlay3 = new QVBoxLayout(box3);
 
-            KPHBox* hbox6   = new KPHBox;
-            QLabel* label6 = new QLabel(i18n("&Zoom In Percentage:"), hbox6);
-            d->zoomInPerc  = new QSpinBox(hbox6);
+            KPHBox* const hbox6      = new KPHBox;
+            QLabel* const label6     = new QLabel(i18n("&Zoom In Percentage:"), hbox6);
+            d->zoomInPerc            = new QSpinBox(hbox6);
             d->zoomInPerc->setRange(0, 100);
             d->zoomInPerc->setSingleStep(1);
             d->zoomInPerc->setValue(100);
             d->zoomInPerc->setWhatsThis(i18n("The amount of scale when zoomed in (percentage)"));
             label6->setBuddy(d->zoomInPerc);
 
-            KPHBox* hbox7   = new KPHBox;
-            QLabel* label7 = new QLabel(i18n("&Zoom Out Percentage:"), hbox7);
-            d->zoomOutPerc = new QSpinBox(hbox7);
+            KPHBox* const hbox7  = new KPHBox;
+            QLabel* const label7 = new QLabel(i18n("&Zoom Out Percentage:"), hbox7);
+            d->zoomOutPerc       = new QSpinBox(hbox7);
             d->zoomOutPerc->setRange(0, 100);
             d->zoomOutPerc->setSingleStep(1);
             d->zoomOutPerc->setValue(15);
             d->zoomOutPerc->setWhatsThis(i18n("The amount of scale when zoomed out (percentage)"));
             label7->setBuddy(d->zoomOutPerc);
 
-            KPHBox* hbox8   = new KPHBox;
-            QLabel* label8 = new QLabel(i18n("&Frame Width:"), hbox8);
-            d->frameWidth  = new QSpinBox(hbox8);
+            KPHBox* const hbox8  = new KPHBox;
+            QLabel* const label8 = new QLabel(i18n("&Frame Width:"), hbox8);
+            d->frameWidth        = new QSpinBox(hbox8);
             d->frameWidth->setRange(0, 15);
             d->frameWidth->setSingleStep(1);
             d->frameWidth->setValue(3);
@@ -541,7 +542,7 @@ void LookPage::setSettings(const SimpleViewerSettingsContainer* const settings)
            d->backColor->setColor(settings->backColor);
            d->useReloadButton->setChecked(settings->useReloadButton);
            d->showFlipButton->setChecked(settings->showFlipButton);
-           break;        
+           break;
       }
       case 3:
       {
@@ -597,10 +598,10 @@ void LookPage::settings(SimpleViewerSettingsContainer* const settings)
             settings->showFlipButton    = d->showFlipButton->isChecked();
             settings->useReloadButton   = d->useReloadButton->isChecked();
             break;
-        } 
+        }
         case 3:
         {
-    
+
             settings->cellDimension     = d->cellDimension->value();
             settings->zoomInPerc        = d->zoomInPerc->value();
             settings->zoomOutPerc       = d->zoomOutPerc->value();

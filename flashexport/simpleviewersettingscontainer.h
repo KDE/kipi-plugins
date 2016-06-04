@@ -243,7 +243,7 @@ public:
     int                          zoomInPerc;
 
     QList<KIPI::ImageCollection> collections;
-    QList<QUrl>                   imageDialogList;
+    QList<QUrl>                  imageDialogList;
 };
 
 }  // namespace KIPIFlashExportPlugin

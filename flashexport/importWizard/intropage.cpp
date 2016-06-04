@@ -95,7 +95,7 @@ IntroPage::IntroPage(KPWizardDialog* const dlg)
 
     // ComboBox for image selection method
 
-    KPHBox* const hbox2          = new KPHBox(vbox);
+    KPHBox* const hbox2         = new KPHBox(vbox);
     QLabel* const getImageLabel = new QLabel(i18n("&Choose image selection method:"),hbox2);
     d->imageGetOption           = new QComboBox(hbox2);
     QString collection          = i18nc("Collections",     "Collections");
