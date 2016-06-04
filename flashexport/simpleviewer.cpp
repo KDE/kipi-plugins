@@ -288,7 +288,7 @@ void SimpleViewer::slotProcess()
                                     SuccessMessage);
         emit signalProcessingDone();
 
-        if (d->settings->openInKonqueror)
+        if (d->settings->openInBrowser)
             QDesktopServices::openUrl(d->settings->exportUrl);
     }
 }

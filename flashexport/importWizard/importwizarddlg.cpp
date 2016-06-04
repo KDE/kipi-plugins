@@ -328,7 +328,7 @@ void ImportWizardDlg::readSettings()
     d->settings->showComments         = group.readEntry("ShowComments",         true);
     d->settings->enableRightClickOpen = group.readEntry("EnableRightClickOpen", false);
     d->settings->fixOrientation       = group.readEntry("FixOrientation",       true);
-    d->settings->openInKonqueror      = group.readEntry("OpenInKonqueror",      true);
+    d->settings->openInBrowser      = group.readEntry("OpenInKonqueror",      true);
     d->settings->showKeywords         = group.readEntry("ShowKeywords",         true);
 
     //---Simpleviewer settings ----
@@ -379,7 +379,7 @@ void ImportWizardDlg::saveSettings()
     group.writeEntry("ShowComments",            d->settings->showComments);
     group.writeEntry("EnableRightClickOpen",    d->settings->enableRightClickOpen);
     group.writeEntry("FixOrientation",          d->settings->fixOrientation);
-    group.writeEntry("OpenInKonqueror",         d->settings->openInKonqueror);
+    group.writeEntry("OpenInKonqueror",         d->settings->openInBrowser);
     group.writeEntry("ShowKeywords",            d->settings->showKeywords);
 
     //---Simpleviewer settings ---

@@ -81,7 +81,7 @@ public:
         resizeExportImages   = false;
         showComments         = false;
         fixOrientation       = false;
-        openInKonqueror      = false;
+        openInBrowser        = false;
         showKeywords         = false;
 
         title                = QString();
@@ -204,7 +204,7 @@ public:
     bool                         resizeExportImages;
     bool                         showComments;
     bool                         fixOrientation;
-    bool                         openInKonqueror;
+    bool                         openInBrowser;
     bool                         showKeywords;
 
     QString                      title;
