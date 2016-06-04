@@ -51,8 +51,6 @@
 #include <kconfig.h>
 #include <kconfiggroup.h>
 
-#include <kio/renamedialog.h>
-
 // libkvkontakte includes
 
 #include <Vkontakte/UploadPhotosJob>

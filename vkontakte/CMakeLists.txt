@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2010-2015, Gilles Caulier, <caulier dot gilles at gmail dot com>
+# Copyright (c) 2010-2016, Gilles Caulier, <caulier dot gilles at gmail dot com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
@@ -23,8 +23,7 @@ target_link_libraries(kipiplugin_vkontakte
                       KF5::I18n
                       KF5::Kipi
                       KF5::WindowSystem
-                      KF5::KIOFileWidgets
-                      
+
                       KF5kipiplugins
 
                       ${LIBKVKONTAKTE_LIBRARIES}

@@ -232,6 +232,10 @@ if(KF5Kipi_FOUND)
         add_subdirectory(sendimages)
         add_subdirectory(flickr)
 
+        if(KF5Vkontakte_FOUND)
+            add_subdirectory(vkontakte)
+        endif()
+
         if(KF5KIO_FOUND)
 
             # Tools that only depend of KIO core. Code relying to KIO is listed on the right side.
@@ -252,9 +256,6 @@ if(KF5Kipi_FOUND)
                     add_subdirectory(flashexport)  # simpleviever.cpp
                 endif()
 
-                if(KF5Vkontakte_FOUND)
-                    add_subdirectory(vkontakte)    # vkwindows.cpp : KIO::RenameDialog is only used
-                endif()
 
                 add_subdirectory(dropbox)          # dbtalker.cpp
                 add_subdirectory(facebook)         # fbtalker.cpp
