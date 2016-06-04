@@ -114,7 +114,7 @@ find_package(KF5 ${KF5_MIN_VERSION}
              KIO          # Some kipi-plugins depends of KIO indeep..
 )
 
-# Check if KIO have been compiled with KIOWidgets. We only needs this one.
+# Check if KIO have been compiled with KIOWidgets. Some tools rely only to KIO core, some other with KIOWidgets too..
 if(KF5KIO_FOUND)
     get_target_property(KIOWidgets_INCLUDE_DIRS KF5::KIOWidgets INTERFACE_INCLUDE_DIRECTORIES)
     message(STATUS "KF5::KIOWidgets include dirs: ${KIOWidgets_INCLUDE_DIRS}")
@@ -232,10 +232,9 @@ if(KF5Kipi_FOUND)
         add_subdirectory(sendimages)
         add_subdirectory(flickr)
 
-
         if(KF5KIO_FOUND)
 
-            # Tools that only depend of KIO core.
+            # Tools that only depend of KIO core. Code relying to KIO is listed on the right side.
 
             add_subdirectory(imgur)                # imgurtalker.cpp
             add_subdirectory(imageshack)           # imageshacktalker.cpp
@@ -250,11 +249,11 @@ if(KF5Kipi_FOUND)
             if(KF5KIOWidgets_FOUND)
 
                 if(KF5Archive_FOUND)
-                    add_subdirectory(flashexport)  # KIO needs to get SimpleViewer archive from remote repository
+                    add_subdirectory(flashexport)  # KIO needs only to get SimpleViewer archive from remote repository
                 endif()
 
                 if(KF5Vkontakte_FOUND)
-                    add_subdirectory(vkontakte)    # KIO needs for RenameDialog only
+                    add_subdirectory(vkontakte)    # KIO needs for RenameDialog use only
                 endif()
 
                 add_subdirectory(dropbox)          # dbtalker.cpp
