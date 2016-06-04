@@ -6,7 +6,8 @@
  * Date        : 2011-09-19
  * Description : a plugin to export images to flash
  *
- * Copyright (C) 2011 by Veaceslav Munteanu
+ * Copyright (C) 2011-2013 by Veaceslav Munteanu <slavuttici at gmail dot com>
+ * Copyright (C) 2009-2016 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -42,8 +43,8 @@ public:
                       KAboutLicense::GPL,
                       ki18n("A Kipi plugin to export images to Flash using the SimpleViewer's components."),
                       ki18n("(c) 2005-2006, Joern Ahrens\n"
-                            "(c) 2008-2012, Gilles Caulier\n"
-                            "(c) 2011, Veaceslav Munteanu"))
+                            "(c) 2008-2016, Gilles Caulier\n"
+                            "(c) 2011-2013, Veaceslav Munteanu"))
 
     {
         setHandbookEntry(QLatin1String("flashexport"));
@@ -78,4 +79,4 @@ public:
 
 } // namespace KIPIFlashExportPlugin
 
-#endif /* ABOUTDATA_H */
+#endif // ABOUTDATA_H
