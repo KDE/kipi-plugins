@@ -40,11 +40,12 @@
 
 // KDE includes
 
+#include <klocalizedstring.h>
+
 #include <kio/job.h>
 #include <kio/copyjob.h>
 #include <kio/deletejob.h>
 #include <kjobwidgets.h>
-#include <klocalizedstring.h>
 
 // Libkipi includes
 

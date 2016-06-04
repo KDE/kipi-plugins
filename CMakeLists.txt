@@ -249,11 +249,11 @@ if(KF5Kipi_FOUND)
             if(KF5KIOWidgets_FOUND)
 
                 if(KF5Archive_FOUND)
-                    add_subdirectory(flashexport)  # KIO needs only to get SimpleViewer archive from remote repository
+                    add_subdirectory(flashexport)  # simpleviever.cpp
                 endif()
 
                 if(KF5Vkontakte_FOUND)
-                    add_subdirectory(vkontakte)    # KIO needs for RenameDialog use only
+                    add_subdirectory(vkontakte)    # vkwindows.cpp : KIO::RenameDialog is only used
                 endif()
 
                 add_subdirectory(dropbox)          # dbtalker.cpp

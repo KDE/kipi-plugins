@@ -49,8 +49,9 @@
 // KDE includes
 
 #include <kconfig.h>
-#include <kio/renamedialog.h>
 #include <kconfiggroup.h>
+
+#include <kio/renamedialog.h>
 
 // libkvkontakte includes
 
