@@ -36,10 +36,6 @@
 #include <kconfig.h>
 #include <kconfiggroup.h>
 
-#include <kjobwidgets.h>
-#include <kio/job.h>
-#include <kio/deletejob.h>
-
 // Libkipi includes
 
 #include <KIPI/Interface>
@@ -240,16 +236,12 @@ void ImportWizardDlg::slotCurrentIdChanged(int id)
 
 bool ImportWizardDlg::checkIfFolderExist()
 {
-    KIO::StatJob* const job = KIO::stat(d->settings->exportUrl, KIO::StatJob::DestinationSide, 0);
-    KJobWidgets::setWindow(job, QApplication::activeWindow());
-    job->exec();
-
-    if (!job->error())
+    if (!QDir(d->settings->exportPath).exists())
     {
         int ret = QMessageBox::warning(this, i18n("Target Folder Exists"),
                                        i18n("Target folder %1 already exists.\n"
                                             "Do you want to overwrite it? All data in this folder will be lost.",
-                                            d->settings->exportUrl.path()),
+                                            d->settings->exportPath),
                                        QMessageBox::StandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel)
                                       );
 
@@ -257,15 +249,14 @@ bool ImportWizardDlg::checkIfFolderExist()
         {
             case QMessageBox::Yes:
             {
-                auto deleteJob = KIO::del(d->settings->exportUrl);
-                KJobWidgets::setWindow(deleteJob, QApplication::activeWindow());
+                QDir delDir(d->settings->exportPath);
 
-                if (!deleteJob->exec())
+                if (!delDir.removeRecursively())
                 {
                     QMessageBox::critical(this, i18n("Cannot Delete Folder"),
                                           i18n("Could not delete %1.\n"
                                                "Please choose another export folder.",
-                                               d->settings->exportUrl.path()));
+                                               d->settings->exportPath));
                     return false;
                 }
 
@@ -322,13 +313,14 @@ void ImportWizardDlg::readSettings()
     d->settings->frameColor           = group.readEntry("FrameColor",           QColor("#ffffff"));
     d->settings->frameWidth           = group.readEntry("FrameWidth",           1);
     d->settings->title                = group.readEntry("Title",                QString());
-    d->settings->exportUrl            = group.readEntry("ExportUrl",            QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + QLatin1String("/simpleviewer")));
+    d->settings->exportPath           = group.readEntry("ExportUrl",            QString::fromUtf8("%1%2").append(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation))
+                                                                                                         .append(QLatin1String("/simpleviewer")));
     d->settings->resizeExportImages   = group.readEntry("ResizeExportImages",   true);
     d->settings->imagesExportSize     = group.readEntry("ImagesExportSize",     640);
     d->settings->showComments         = group.readEntry("ShowComments",         true);
     d->settings->enableRightClickOpen = group.readEntry("EnableRightClickOpen", false);
     d->settings->fixOrientation       = group.readEntry("FixOrientation",       true);
-    d->settings->openInBrowser      = group.readEntry("OpenInKonqueror",      true);
+    d->settings->openInBrowser        = group.readEntry("OpenInKonqueror",      true);
     d->settings->showKeywords         = group.readEntry("ShowKeywords",         true);
 
     //---Simpleviewer settings ----
@@ -373,7 +365,7 @@ void ImportWizardDlg::saveSettings()
     group.writeEntry("FrameColor",              d->settings->frameColor);
     group.writeEntry("FrameWidth",              d->settings->frameWidth);
     group.writeEntry("Title",                   d->settings->title);
-    group.writeEntry("ExportUrl",               QUrl(d->settings->exportUrl));
+    group.writeEntry("ExportUrl",               d->settings->exportPath);
     group.writeEntry("ResizeExportImages",      d->settings->resizeExportImages);
     group.writeEntry("ImagesExportSize",        d->settings->imagesExportSize);
     group.writeEntry("ShowComments",            d->settings->showComments);

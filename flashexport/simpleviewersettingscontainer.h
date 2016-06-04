@@ -72,10 +72,10 @@ public:
 
     SimpleViewerSettingsContainer()
     {
-        /** All items must be initialized in constructor to avoid warinings **/
+        // All items must be initialized in constructor to avoid warnings
         plugType             = SIMPLE;
         imgGetOption         = COLLECTION;
-        exportUrl            = QUrl();
+        exportPath           = QString();
 
         enableRightClickOpen = false;
         resizeExportImages   = false;
@@ -198,7 +198,7 @@ public:
 
 
     //Settings for all plug-ins
-    QUrl                         exportUrl;
+    QString                      exportPath;
 
     bool                         enableRightClickOpen;
     bool                         resizeExportImages;

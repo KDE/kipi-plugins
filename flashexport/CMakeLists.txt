@@ -31,9 +31,6 @@ target_link_libraries(kipiplugin_flashexport
                       KF5::Kipi
                       KF5::I18n
 
-                      KF5::KIOCore
-                      KF5::JobWidgets
-
                       KF5kipiplugins
 )
 

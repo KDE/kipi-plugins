@@ -42,11 +42,6 @@
 
 #include <klocalizedstring.h>
 
-#include <kio/job.h>
-#include <kio/copyjob.h>
-#include <kio/deletejob.h>
-#include <kjobwidgets.h>
-
 // Libkipi includes
 
 #include <KIPI/PluginLoader>
@@ -273,13 +268,12 @@ void SimpleViewer::slotProcess()
         int ret = QMessageBox::warning(QApplication::activeWindow(),
                                        i18n("Export was canceled"),
                                        i18n("Do you want to delete files in %1 that have already been created?",
-                                            d->settings->exportUrl.path()),
+                                            d->settings->exportPath),
                                        QMessageBox::StandardButtons(QMessageBox::Yes | QMessageBox::No));
         if (ret == QMessageBox::Yes)
         {
-            auto deleteJob = KIO::del(d->settings->exportUrl);
-            KJobWidgets::setWindow(deleteJob, QApplication::activeWindow());
-            deleteJob->exec();
+            QDir delDir(d->settings->exportPath);
+            delDir.removeRecursively();
         }
     }
 
@@ -290,7 +284,7 @@ void SimpleViewer::slotProcess()
         emit signalProcessingDone();
 
         if (d->settings->openInBrowser)
-            QDesktopServices::openUrl(d->settings->exportUrl);
+            QDesktopServices::openUrl(QUrl::fromLocalFile(d->settings->exportPath + QLatin1String("index.html")));
     }
 }
 
@@ -305,45 +299,35 @@ bool SimpleViewer::createExportDirectories() const
 
     d->progressWdg->addedAction(i18n("Creating directories..."), StartingMessage);
 
-    QUrl root = d->settings->exportUrl;
-    qCDebug(KIPIPLUGINS_LOG) << "export url is" << root.url();
+    QString root = d->settings->exportPath;
+    qCDebug(KIPIPLUGINS_LOG) << "export path is" << root;
 
-    auto mkdirJob = KIO::mkdir(root);
-    KJobWidgets::setWindow(mkdirJob, QApplication::activeWindow());
-
-    if (!mkdirJob->exec())
+    if (!QDir().mkpath(root))
     {
-        d->progressWdg->addedAction(i18n("Could not create folder '%1'", root.url()),
+        d->progressWdg->addedAction(i18n("Could not create folder '%1'", root),
                                     ErrorMessage);
         return false;
     }
 
     if (d->settings->plugType == 0)
     {
-        QUrl thumbsDir = QUrl::fromLocalFile(d->tempDir->path());
-        thumbsDir.setPath(thumbsDir.path() + QLatin1String("/thumbs"));
+        QString thumbsDir = d->tempDir->path() + QLatin1String("/thumbs");
+        qCDebug(KIPIPLUGINS_LOG) << "image thumbs path is" << thumbsDir;
 
-        auto mkdirJob2 = KIO::mkdir(thumbsDir);
-        KJobWidgets::setWindow(mkdirJob2, QApplication::activeWindow());
-
-        if (!mkdirJob2->exec())
+        if (!QDir().mkpath(thumbsDir))
         {
-            d->progressWdg->addedAction(i18n("Could not create folder '%1'", thumbsDir.url()),
+            d->progressWdg->addedAction(i18n("Could not create folder '%1'", thumbsDir),
                                         ErrorMessage);
             return false;
         }
     }
 
-    QUrl imagesDir = QUrl::fromLocalFile(d->tempDir->path());
-    imagesDir.setPath(imagesDir.path() + QLatin1String("/images"));
-    qCDebug(KIPIPLUGINS_LOG) << "image folder url is" << imagesDir.url();
+    QString imagesDir = d->tempDir->path() + QLatin1String("/images");
+    qCDebug(KIPIPLUGINS_LOG) << "image folder path is" << imagesDir;
 
-    auto mkdirJob3 = KIO::mkdir(imagesDir);
-    KJobWidgets::setWindow(mkdirJob3, QApplication::activeWindow());
-
-    if (!mkdirJob3->exec())
+    if (!QDir().mkpath(imagesDir))
     {
-        d->progressWdg->addedAction(i18n("Could not create folder '%1'", imagesDir.url()),
+        d->progressWdg->addedAction(i18n("Could not create folder '%1'", imagesDir),
                                     ErrorMessage);
         return false;
     }
@@ -991,23 +975,21 @@ bool SimpleViewer::copySimpleViewer() const
     d->progressWdg->addedAction(i18n("Copying flash files..."), StartingMessage);
 
     // Due to its license, simpleviewer is installed in $KDEHOME
-    QList<QUrl> files;
-    QStringList entries;
-    QDir        dir;
 
+    QDir dir;
     dir.setPath(d->dataDir);
-    qCDebug(KIPIPLUGINS_LOG) << "Data dir is " << d->dataDir; 
-    entries = dir.entryList(QDir::Files);
+    qCDebug(KIPIPLUGINS_LOG) << "Data dir is " << d->dataDir;
+
+    QStringList files;
+    QStringList  entries = dir.entryList(QDir::Files);
+    qCDebug(KIPIPLUGINS_LOG) << "Files to copy " << entries;
 
     for (QStringList::ConstIterator it = entries.constBegin(); it != entries.constEnd(); ++it)
     {
-        files.append(QUrl::fromLocalFile(dir.absolutePath() + QLatin1Char('/') + *it));
+        files.append(dir.absolutePath() + QLatin1Char('/') + *it);
     }
 
-    auto copyJob = KIO::copy(files, QUrl::fromLocalFile(d->tempDir->path()), KIO::HideProgressInfo);
-    KJobWidgets::setWindow(copyJob, 0);
-
-    if (!copyJob->exec())
+    if (!copyFiles(files, d->tempDir->path()))
         return false;
 
     d->progressWdg->addedAction(i18n("Flash files copied..."), SuccessMessage);
@@ -1020,15 +1002,52 @@ bool SimpleViewer::upload() const
     if (d->canceled)
         return false;
 
-    d->progressWdg->addedAction(i18n("Uploading gallery..."), StartingMessage);
+    d->progressWdg->addedAction(i18n("Copying gallery..."), StartingMessage);
 
-    auto dircopyJob = KIO::copyAs(QUrl::fromLocalFile(d->tempDir->path()), d->settings->exportUrl, KIO::Overwrite);
-    KJobWidgets::setWindow(dircopyJob, 0);
-
-    if (!dircopyJob->exec())
+    if (!copyFolderRecursively(d->tempDir->path(), d->settings->exportPath))
         return false;
 
-    d->progressWdg->addedAction(i18n("Gallery uploaded..."), SuccessMessage);
+    d->progressWdg->addedAction(i18n("Gallery copied..."), SuccessMessage);
+
+    return true;
+}
+
+bool SimpleViewer::copyFolderRecursively(const QString& srcPath, const QString& dstPath) const
+{
+    QDir srcDir(srcPath);
+    QString newCopyPath = dstPath + QLatin1Char('/') + srcDir.dirName();
+
+    if (!srcDir.mkpath(newCopyPath))
+    {
+        return false;
+    }
+
+    foreach (const QFileInfo& fileInfo, srcDir.entryInfoList(QDir::Files))
+    {
+        QString copyPath = newCopyPath + QLatin1Char('/') + fileInfo.fileName();
+
+        if (!QFile::copy(fileInfo.filePath(), copyPath))
+            return false;
+    }
+
+    foreach (const QFileInfo& fileInfo, srcDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot))
+    {
+        copyFolderRecursively(fileInfo.filePath(), newCopyPath);
+    }
+
+    return true;
+}
+
+bool SimpleViewer::copyFiles(const QStringList& srcPaths, const QString& dstPath) const
+{
+    foreach (const QString& path, srcPaths)
+    {
+        QFileInfo fileInfo(path);
+        QString copyPath = dstPath + QLatin1Char('/') + fileInfo.fileName();
+
+        if (!QFile::copy(fileInfo.filePath(), copyPath))
+            return false;
+    }
 
     return true;
 }

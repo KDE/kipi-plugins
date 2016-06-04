@@ -232,6 +232,10 @@ if(KF5Kipi_FOUND)
         add_subdirectory(sendimages)
         add_subdirectory(flickr)
 
+        if(KF5Archive_FOUND)
+            add_subdirectory(flashexport)  # simpleviever.cpp
+        endif()
+
         if(KF5Vkontakte_FOUND)
             add_subdirectory(vkontakte)
         endif()
@@ -251,11 +255,6 @@ if(KF5Kipi_FOUND)
             # Tools which need KIO Widgets too.
 
             if(KF5KIOWidgets_FOUND)
-
-                if(KF5Archive_FOUND)
-                    add_subdirectory(flashexport)  # simpleviever.cpp
-                endif()
-
 
                 add_subdirectory(dropbox)          # dbtalker.cpp
                 add_subdirectory(facebook)         # fbtalker.cpp

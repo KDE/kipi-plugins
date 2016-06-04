@@ -58,7 +58,7 @@ public:
         showComments       = 0;
         imagesExportSize   = 0;
         maxImageDimension  = 0;
-        exportUrl          = 0;
+        exportPath         = 0;
         rightClick         = 0;
         fixOrientation     = 0;
         openInBrowser      = 0;
@@ -77,7 +77,7 @@ public:
     QSpinBox*       imagesExportSize;
     QSpinBox*       maxImageDimension;
 
-    KPFileSelector* exportUrl;
+    KPFileSelector* exportPath;
 };
 
 GeneralPage::GeneralPage(KPWizardDialog* const dlg)
@@ -102,13 +102,13 @@ GeneralPage::GeneralPage(KPWizardDialog* const dlg)
 
     QGroupBox* const box2    = new QGroupBox(i18n("Save Gallery To"), vbox);
     QVBoxLayout* const vlay2 = new QVBoxLayout(box2);
-    d->exportUrl             = new KPFileSelector(this);
-    d->exportUrl->lineEdit()->setText(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + QLatin1String("/simpleviewer"));
-    d->exportUrl->setFileDlgMode(QFileDialog::Directory);
+    d->exportPath             = new KPFileSelector(this);
+    d->exportPath->lineEdit()->setText(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + QLatin1String("/simpleviewer"));
+    d->exportPath->setFileDlgMode(QFileDialog::Directory);
 
     vlay2->setContentsMargins(spacing, spacing, spacing, spacing);
     vlay2->setSpacing(spacing);
-    vlay2->addWidget(d->exportUrl);
+    vlay2->addWidget(d->exportPath);
 
     // ------------------------------------------------------------------------
 
@@ -210,7 +210,7 @@ GeneralPage::~GeneralPage()
 void GeneralPage::setSettings(const SimpleViewerSettingsContainer* const settings)
 {
     d->title->setText(settings->title);
-    d->exportUrl->lineEdit()->setText(settings->exportUrl.toLocalFile());
+    d->exportPath->lineEdit()->setText(settings->exportPath);
     d->resizeExportImages->setChecked(settings->resizeExportImages);
     d->imagesExportSize->setValue(settings->imagesExportSize);
     d->maxImageDimension->setValue(settings->maxImageDimension);
@@ -224,14 +224,14 @@ void GeneralPage::setSettings(const SimpleViewerSettingsContainer* const setting
 void GeneralPage::settings(SimpleViewerSettingsContainer* const settings)
 {
     settings->title                = d->title->text();
-    settings->exportUrl            = QUrl::fromLocalFile(d->exportUrl->lineEdit()->text());
+    settings->exportPath           = d->exportPath->lineEdit()->text();
     settings->resizeExportImages   = d->resizeExportImages->isChecked();
     settings->imagesExportSize     = d->imagesExportSize->value();
     settings->maxImageDimension    = d->maxImageDimension->value();
     settings->showComments         = d->showComments->isChecked();
     settings->enableRightClickOpen = d->rightClick->isChecked();
     settings->fixOrientation       = d->fixOrientation->isChecked();
-    settings->openInBrowser      = d->openInBrowser->isChecked();
+    settings->openInBrowser        = d->openInBrowser->isChecked();
     settings->showKeywords         = d->showKeywords->isChecked();
 }
 
