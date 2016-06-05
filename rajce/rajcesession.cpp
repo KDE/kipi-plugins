@@ -75,7 +75,7 @@ PreparedImage _prepareImageForUpload(const QString& saveDir, const QImage& img, 
     QImage image(img);
 
     // get temporary file name
-    QString baseName    = saveDir + QFileInfo(imagePath).baseName().trimmed();
+    QString baseName    = saveDir  + QFileInfo(imagePath).baseName().trimmed();
     ret.scaledImagePath = baseName + QString::fromLatin1(".jpg");
     ret.thumbPath       = baseName + QString::fromLatin1(".thumb.jpg");
 
@@ -129,9 +129,8 @@ public:
     void processResponse(const QString& response, SessionState& state);
 
     RajceCommandType commandType() const;
-
-    virtual QByteArray encode()   const;
-    virtual QString contentType() const;
+    virtual QByteArray encode()    const;
+    virtual QString contentType()  const;
 
 protected:
 
@@ -234,12 +233,12 @@ public:
     virtual ~AddPhotoCommand();
 
     virtual QByteArray encode() const;
-    virtual QString contentType() const;
+    virtual QString    contentType() const;
 
 protected:
 
-    virtual void cleanUpOnError(KIPIRajcePlugin::SessionState& state);
-    virtual void parseResponse(QXmlQuery& query, KIPIRajcePlugin::SessionState& state);
+    virtual void    cleanUpOnError(KIPIRajcePlugin::SessionState& state);
+    virtual void    parseResponse(QXmlQuery& query, KIPIRajcePlugin::SessionState& state);
     virtual QString additionalXml() const;
 
 private:
@@ -305,7 +304,7 @@ bool RajceCommand::_parseError(QXmlQuery& query, SessionState& state)
 
     if (results.trimmed().length() > 0)
     {
-        state.lastErrorCode() = results.toUInt();
+        state.lastErrorCode()    = results.toUInt();
         query.setQuery(QString::fromLatin1("/response/string(result)"));
         query.evaluateTo(&results);
         state.lastErrorMessage() = results.trimmed();
@@ -398,11 +397,11 @@ void LoginCommand::parseResponse(QXmlQuery& q, SessionState& state)
 
     q.setQuery(QString::fromLatin1("/response/string(maxWidth)"));
     q.evaluateTo(&results);
-    state.maxWidth() = results.toUInt();
+    state.maxWidth()     = results.toUInt();
 
     q.setQuery(QString::fromLatin1("/response/string(maxHeight)"));
     q.evaluateTo(&results);
-    state.maxHeight() = results.toUInt();
+    state.maxHeight()    = results.toUInt();
 
     q.setQuery(QString::fromLatin1("/response/string(quality)"));
     q.evaluateTo(&results);
@@ -410,13 +409,13 @@ void LoginCommand::parseResponse(QXmlQuery& q, SessionState& state)
 
     q.setQuery(QString::fromLatin1("/response/string(nick)"));
     q.evaluateTo(&results);
-    state.nickname() = results.trimmed();
+    state.nickname()     = results.trimmed();
 
     q.setQuery(QString::fromLatin1("data(/response/sessionToken)"));
     q.evaluateTo(&results);
     state.sessionToken() = results.trimmed();
 
-    state.username() = parameters()[QString::fromLatin1("login")];
+    state.username()     = parameters()[QString::fromLatin1("login")];
 }
 
 void LoginCommand::cleanUpOnError(SessionState& state)
@@ -495,11 +494,11 @@ void AlbumListCommand::parseResponse(QXmlQuery& q, SessionState& state)
 
         q.setQuery(QString::fromLatin1("data(./@id)"));
         q.evaluateTo(&detail);
-        album.id = detail.toUInt();
+        album.id          = detail.toUInt();
 
         q.setQuery(QString::fromLatin1("data(./albumName)"));
         q.evaluateTo(&detail);
-        album.name = detail.trimmed();
+        album.name        = detail.trimmed();
 
         q.setQuery(QString::fromLatin1("data(./description)"));
         q.evaluateTo(&detail);
@@ -507,28 +506,28 @@ void AlbumListCommand::parseResponse(QXmlQuery& q, SessionState& state)
 
         q.setQuery(QString::fromLatin1("data(./url)"));
         q.evaluateTo(&detail);
-        album.url = detail.trimmed();
+        album.url         = detail.trimmed();
 
         q.setQuery(QString::fromLatin1("data(./thumbUrl)"));
         q.evaluateTo(&detail);
-        album.thumbUrl = detail.trimmed();
+        album.thumbUrl    = detail.trimmed();
 
         q.setQuery(QString::fromLatin1("data(./createDate)"));
         q.evaluateTo(&detail);
-        album.createDate = QDateTime::fromString(detail.trimmed(), QString::fromLatin1("yyyy-MM-dd hh:mm:ss"));
+        album.createDate  = QDateTime::fromString(detail.trimmed(), QString::fromLatin1("yyyy-MM-dd hh:mm:ss"));
 
         qCDebug(KIPIPLUGINS_LOG) << "Create date: " << detail.trimmed() << " = " << QDateTime::fromString(detail.trimmed(), QString::fromLatin1("yyyy-MM-dd hh:mm:ss"));
 
         q.setQuery(QString::fromLatin1("data(./updateDate)"));
         q.evaluateTo(&detail);
-        album.updateDate = QDateTime::fromString(detail.trimmed(), QString::fromLatin1("yyyy-MM-dd hh:mm:ss"));
+        album.updateDate  = QDateTime::fromString(detail.trimmed(), QString::fromLatin1("yyyy-MM-dd hh:mm:ss"));
 
         q.evaluateTo(&detail);
-        album.isHidden = detail.toUInt() != 0;
+        album.isHidden    = detail.toUInt() != 0;
 
         q.setQuery(QString::fromLatin1("data(./secure)"));
         q.evaluateTo(&detail);
-        album.isSecure = detail.toUInt() != 0;
+        album.isSecure    = detail.toUInt() != 0;
 
         q.setQuery(QString::fromLatin1("data(./startDateInterval)"));
         q.evaluateTo(&detail);
@@ -595,10 +594,11 @@ AddPhotoCommand::AddPhotoCommand(const QString& tmpDir, const QString& path, uns
         return;
     }
 
-    m_maxDimension             = state.maxHeight() > state.maxWidth() ? state.maxWidth() : state.maxHeight();
+    m_maxDimension                                  = (state.maxHeight() > state.maxWidth()) ? state.maxWidth() 
+                                                                                             : state.maxHeight();
     parameters()[QString::fromLatin1("token")]      = state.sessionToken();
     parameters()[QString::fromLatin1("albumToken")] = state.openAlbumToken();
-    m_form                     = new MPForm;
+    m_form                                          = new MPForm;
 }
 
 AddPhotoCommand::~AddPhotoCommand()
@@ -634,9 +634,9 @@ QString AddPhotoCommand::additionalXml() const
     metadata[QString::fromLatin1("FileSize")]              = QString::number(f.size());
 
     //TODO extract these from exif
-    metadata[QString::fromLatin1("Title")]           = QString::fromLatin1("");
-    metadata[QString::fromLatin1("KeywordSet")]      = QString::fromLatin1("");
-    metadata[QString::fromLatin1("PeopleRegionSet")] = QString::fromLatin1("");
+    metadata[QString::fromLatin1("Title")]                 = QString::fromLatin1("");
+    metadata[QString::fromLatin1("KeywordSet")]            = QString::fromLatin1("");
+    metadata[QString::fromLatin1("PeopleRegionSet")]       = QString::fromLatin1("");
 
     qsrand((uint)QTime::currentTime().msec());
     QString id = QString::number(qrand());
@@ -680,14 +680,18 @@ QByteArray AddPhotoCommand::encode() const
         return QByteArray();
     }
 
-    PreparedImage prepared = _prepareImageForUpload(m_tmpDir, m_image, m_imagePath, m_desiredDimension, THUMB_SIZE, m_jpgQuality);
+    PreparedImage prepared                      = _prepareImageForUpload(m_tmpDir, 
+                                                                         m_image, 
+                                                                         m_imagePath,
+                                                                         m_desiredDimension, 
+                                                                         THUMB_SIZE, 
+                                                                         m_jpgQuality);
 
     //add the rest of the parameters to be encoded as xml
     QImage scaled(prepared.scaledImagePath);
     parameters()[QString::fromLatin1("width")]  = QString::number(scaled.width());
     parameters()[QString::fromLatin1("height")] = QString::number(scaled.height());
-
-    QString xml = getXml();
+    QString xml                                 = getXml();
 
     qCDebug(KIPIPLUGINS_LOG) << "Really sending:\n" << xml;
 
@@ -712,7 +716,10 @@ QByteArray AddPhotoCommand::encode() const
 /// RajceSession impl
 
 RajceSession::RajceSession(QWidget* const parent, const QString& tmpDir)
-    : QObject(parent), m_queueAccess(QMutex::Recursive), m_tmpDir(tmpDir), m_currentJob(0)
+    : QObject(parent),
+      m_queueAccess(QMutex::Recursive),
+      m_tmpDir(tmpDir),
+      m_currentJob(0)
 {
 }
 
@@ -775,7 +782,7 @@ void RajceSession::data(KIO::Job*, const QByteArray& data)
 
 void RajceSession::finished(KJob*)
 {
-    QString response = QString::fromUtf8(m_buffer.data());
+    QString response      = QString::fromUtf8(m_buffer.data());
 
     qCDebug(KIPIPLUGINS_LOG) << response;
 
@@ -792,22 +799,22 @@ void RajceSession::finished(KJob*)
 
     qCDebug(KIPIPLUGINS_LOG) << "State after command: " << m_state;
 
-    //let the users react on the command before we
-    //let the next queued command in.
-    //This enables the connected slots to read in
-    //reliable values from the state and/or
-    //clear the error state once it's handled.
+    // Let the users react on the command before we
+    // let the next queued command in.
+    // This enables the connected slots to read in
+    // reliable values from the state and/or
+    // clear the error state once it's handled.
     emit busyFinished(type);
 
-    //only deque the command after the above signal has been
-    //emitted so that the users can queue other commands
-    //without them being started straight away in the enqueue
-    //method which would happen if the command was dequed
-    //before the signal and the signal was emitted in the same
-    //thread (which is the case (always?)).
+    // Only dequeue the command after the above signal has been
+    // emitted so that the users can queue other commands
+    // without them being started straight away in the enqueue
+    // method which would happen if the command was dequed
+    // before the signal and the signal was emitted in the same
+    // thread (which is the case (always?)).
     m_commandQueue.dequeue();
 
-    //see if there's something to continue with
+    // see if there's something to continue with
     if (m_commandQueue.size() > 0)
     {
         _startJob(m_commandQueue.head());
