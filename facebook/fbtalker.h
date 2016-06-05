@@ -117,7 +117,7 @@ private Q_SLOTS:
 
 private:
 
-    QDialog*     dialog; 
+    QDialog*     m_dialog; 
     QWidget*     m_parent;
 
     QByteArray   m_buffer;

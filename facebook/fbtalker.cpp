@@ -88,7 +88,7 @@ FbTalker::FbTalker(QWidget* const parent)
     m_apiURL          = QUrl(QString::fromLatin1("https://graph.facebook.com"));
     m_secretKey       = QString::fromLatin1("5b0b5cd096e110cd4f4c72f517e2c544");
     m_appID           = QString::fromLatin1("400589753481372");
-    dialog            = 0;
+    m_dialog          = 0;
 }
 
 FbTalker::~FbTalker()
@@ -278,32 +278,32 @@ void FbTalker::doOAuth()
 
     emit signalBusy(false);
 
-    dialog = new QDialog(QApplication::activeWindow(), 0);
-    dialog->setModal(true);
-    dialog->setWindowTitle(i18n("Facebook Application Authorization"));
+    m_dialog = new QDialog(QApplication::activeWindow(), 0);
+    m_dialog->setModal(true);
+    m_dialog->setWindowTitle(i18n("Facebook Application Authorization"));
     QLineEdit* const textbox        = new QLineEdit();
-    QDialogButtonBox* const buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, dialog);
+    QDialogButtonBox* const buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, m_dialog);
     buttons->button(QDialogButtonBox::Ok)->setDefault(true);
     
-    dialog->connect(buttons, SIGNAL(accepted()), 
-                    this, SLOT(slotAccept()));
+    m_dialog->connect(buttons, SIGNAL(accepted()), 
+                      this, SLOT(slotAccept()));
     
-    dialog->connect(buttons, SIGNAL(rejected()), 
-                    this, SLOT(slotReject()));    
+    m_dialog->connect(buttons, SIGNAL(rejected()), 
+                      this, SLOT(slotReject()));    
     
     QPlainTextEdit* const infobox = new QPlainTextEdit(i18n("Please follow the instructions in the browser window. "
                                                             "When done, copy the Internet address from your browser into the textbox below and press \"OK\"."));
     infobox->setReadOnly(true);
 
-    QVBoxLayout* const vbx = new QVBoxLayout(dialog);
+    QVBoxLayout* const vbx = new QVBoxLayout(m_dialog);
     vbx->addWidget(infobox);
     vbx->addWidget(textbox);
     vbx->addWidget(buttons);
-    dialog->setLayout(vbx);
+    m_dialog->setLayout(vbx);
     
-    dialog->exec();
+    m_dialog->exec();
     
-    if( dialog->result()  == QDialog::Accepted )
+    if( m_dialog->result()  == QDialog::Accepted )
     {
         // Error code and reason from the Facebook service
         QString errorReason;
@@ -901,14 +901,14 @@ void FbTalker::parseResponseListAlbums(const QByteArray& data)
 
 void FbTalker::slotAccept()
 {
-    dialog->close();
-    dialog->setResult(QDialog::Accepted); 
+    m_dialog->close();
+    m_dialog->setResult(QDialog::Accepted); 
 }
 
 void FbTalker::slotReject()
 {
-    dialog->close();   
-    dialog->setResult(QDialog::Rejected);
+    m_dialog->close();   
+    m_dialog->setResult(QDialog::Rejected);
 }
 
 } // namespace KIPIFacebookPlugin
