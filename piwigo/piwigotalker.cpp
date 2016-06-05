@@ -189,11 +189,11 @@ bool PiwigoTalker::addPhoto(int   albumId,
     m_state       = GE_CHECKPHOTOEXIST;
     m_talker_buffer.resize(0);
 
-    m_path    = mediaPath; // By default, m_path contains the original file
-    m_tmpPath = QString::fromLatin1(""); // By default, no temporary file (except with rescaling)
-    m_albumId = albumId;
+    m_path        = mediaPath;           // By default, m_path contains the original file
+    m_tmpPath     = QString::fromLatin1(""); // By default, no temporary file (except with rescaling)
+    m_albumId     = albumId;
 
-    m_md5sum  = computeMD5Sum(mediaPath);
+    m_md5sum      = computeMD5Sum(mediaPath);
 
     qCDebug(KIPIPLUGINS_LOG) << mediaPath << " " << m_md5sum.toHex();
 
@@ -247,7 +247,7 @@ bool PiwigoTalker::addPhoto(int   albumId,
             if (m_iface)
             {
                 QPointer<MetadataProcessor> meta = m_iface->createMetadataProcessor();
-            
+
                 if (meta && meta->load(QUrl::fromLocalFile(mediaPath)))
                 {
                     meta->setImageProgramId(QString::fromLatin1("Kipi-plugins"), kipipluginsVersion());
@@ -286,10 +286,10 @@ bool PiwigoTalker::addPhoto(int   albumId,
     if (info.hasDate())
         m_date = info.date();
 
-    qCDebug(KIPIPLUGINS_LOG) << "Title: " << m_title;
+    qCDebug(KIPIPLUGINS_LOG) << "Title: "   << m_title;
     qCDebug(KIPIPLUGINS_LOG) << "Comment: " << m_comment;
-    qCDebug(KIPIPLUGINS_LOG) << "Author: " << m_author;
-    qCDebug(KIPIPLUGINS_LOG) << "Date: " << m_date;
+    qCDebug(KIPIPLUGINS_LOG) << "Author: "  << m_author;
+    qCDebug(KIPIPLUGINS_LOG) << "Date: "    << m_date;
 
     QStringList qsl;
     qsl.append(QLatin1String("method=pwg.images.exist"));
@@ -322,14 +322,13 @@ void PiwigoTalker::slotTalkerData(KIO::Job*, const QByteArray& data)
     if (data.isEmpty())
         return;
 
-	m_talker_buffer.append(data);
+    m_talker_buffer.append(data);
 }
 
 void PiwigoTalker::slotResult(KJob* job)
 {
     KIO::Job* const tempjob = static_cast<KIO::Job*>(job);
-    State state             = m_state; // Can change in the treatment itself
-                                       // so we cache it
+    State state             = m_state; // Can change in the treatment itself, so we cache it
 
     if (tempjob->error())
     {
@@ -407,7 +406,7 @@ void PiwigoTalker::slotResult(KJob* job)
 
 void PiwigoTalker::parseResponseLogin(const QByteArray& data)
 {
-    m_job   = 0;
+    m_job              = 0;
 
     QXmlStreamReader ts(data);
     QString line;
@@ -424,14 +423,15 @@ void PiwigoTalker::parseResponseLogin(const QByteArray& data)
         {
             foundResponse = true;
 
-            if (ts.name() == QString::fromLatin1("rsp") && ts.attributes().value(QString::fromLatin1("stat")) == QString::fromLatin1("ok"))
+            if (ts.name() == QString::fromLatin1("rsp") && 
+                ts.attributes().value(QString::fromLatin1("stat")) == QString::fromLatin1("ok"))
             {
                 m_loggedIn = true;
 
                 /** Request Version */
-                m_state   = GE_GETVERSION;
+                m_state           = GE_GETVERSION;
                 m_talker_buffer.resize(0);
-                m_version = -1;
+                m_version         = -1;
 
                 QByteArray buffer = "method=pwg.getVersion";
                 m_job             = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
@@ -483,7 +483,8 @@ void PiwigoTalker::parseResponseGetVersion(const QByteArray& data)
         {
             foundResponse = true;
 
-            if (ts.name() == QString::fromLatin1("rsp") && ts.attributes().value(QString::fromLatin1("stat")) == QString::fromLatin1("ok"))
+            if (ts.name() == QString::fromLatin1("rsp") && 
+                ts.attributes().value(QString::fromLatin1("stat")) == QString::fromLatin1("ok"))
             {
                 QString v = ts.readElementText();
 
@@ -506,7 +507,6 @@ void PiwigoTalker::parseResponseGetVersion(const QByteArray& data)
         emit signalLoginFailed(i18n("Upload to Piwigo version < 2.4 is no longer supported"));
         return;
     }
-
 }
 
 void PiwigoTalker::parseResponseListAlbums(const QByteArray& data)
@@ -532,7 +532,8 @@ void PiwigoTalker::parseResponseListAlbums(const QByteArray& data)
 
         if (ts.isStartElement())
         {
-            if (ts.name() == QString::fromLatin1("rsp") && ts.attributes().value(QString::fromLatin1("stat")) == QString::fromLatin1("ok"))
+            if (ts.name() == QString::fromLatin1("rsp") && 
+                ts.attributes().value(QString::fromLatin1("stat")) == QString::fromLatin1("ok"))
             {
                 foundResponse = true;
             }
@@ -593,8 +594,7 @@ void PiwigoTalker::parseResponseListAlbums(const QByteArray& data)
 
 void PiwigoTalker::parseResponseDoesPhotoExist(const QByteArray& data)
 {
-    m_job   = 0;
-
+    m_job              = 0;
     QString str        = QString::fromUtf8(data);
     QXmlStreamReader ts(data);
     QString line;
@@ -605,7 +605,6 @@ void PiwigoTalker::parseResponseDoesPhotoExist(const QByteArray& data)
 
     while (!ts.atEnd())
     {
-
         ts.readNext();
 
         if (ts.name() == QString::fromLatin1("rsp"))
@@ -632,7 +631,7 @@ void PiwigoTalker::parseResponseDoesPhotoExist(const QByteArray& data)
 
                     emit signalProgressInfo(i18n("Photo '%1' already exists.", m_title));
 
-                    m_state = GE_GETINFO;
+                    m_state   = GE_GETINFO;
                     m_talker_buffer.resize(0);
 
                     QStringList qsl;
@@ -642,7 +641,7 @@ void PiwigoTalker::parseResponseDoesPhotoExist(const QByteArray& data)
                     QByteArray buffer;
                     buffer.append(dataParameters.toUtf8());
 
-                    m_job = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
+                    m_job     = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
                     m_job->addMetaData(QString::fromLatin1("content-type"),
                                        QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
                     m_job->addMetaData(QString::fromLatin1("customHTTPHeader"),
@@ -676,11 +675,11 @@ void PiwigoTalker::parseResponseDoesPhotoExist(const QByteArray& data)
     {
         QFileInfo fi(m_path);
 
-        m_state   = GE_ADDPHOTOCHUNK;
+        m_state      = GE_ADDPHOTOCHUNK;
         m_talker_buffer.resize(0);
         // Compute the number of chunks for the image
         m_nbOfChunks = (fi.size() / CHUNK_MAX_SIZE) + 1;
-        m_chunkId = 0;
+        m_chunkId    = 0;
 
         addNextChunk();
     }
@@ -693,8 +692,7 @@ void PiwigoTalker::parseResponseDoesPhotoExist(const QByteArray& data)
 
 void PiwigoTalker::parseResponseGetInfo(const QByteArray& data)
 {
-    m_job   = 0;
-
+    m_job              = 0;
     QString str        = QString::fromUtf8(data);
     QXmlStreamReader ts(data);
     QString line;
@@ -713,7 +711,9 @@ void PiwigoTalker::parseResponseGetInfo(const QByteArray& data)
             if (ts.name() == QString::fromLatin1("rsp"))
             {
                 foundResponse = true;
-                if (ts.attributes().value(QString::fromLatin1("stat")) == QString::fromLatin1("ok")) success = true;
+
+                if (ts.attributes().value(QString::fromLatin1("stat")) == QString::fromLatin1("ok"))
+                    success = true;
             }
 
             if (ts.name() == QString::fromLatin1("category"))
@@ -797,7 +797,10 @@ void PiwigoTalker::parseResponseSetInfo(const QByteArray& data)
             if (ts.name() == QString::fromLatin1("rsp"))
             {
                 foundResponse = true;
-                if (ts.attributes().value(QString::fromLatin1("stat")) == QString::fromLatin1("ok")) success = true;
+
+                if (ts.attributes().value(QString::fromLatin1("stat")) == QString::fromLatin1("ok")) 
+                    success = true;
+
                 break;
             }
         }
@@ -879,7 +882,10 @@ void PiwigoTalker::parseResponseAddPhotoChunk(const QByteArray& data)
             if (ts.name() == QString::fromLatin1("rsp"))
             {
                 foundResponse = true;
-                if (ts.attributes().value(QString::fromLatin1("stat")) == QString::fromLatin1("ok")) success = true;
+
+                if (ts.attributes().value(QString::fromLatin1("stat")) == QString::fromLatin1("ok"))
+                    success = true;
+
                 break;
             }
         }
@@ -911,12 +917,18 @@ void PiwigoTalker::addPhotoSummary()
     qsl.append(QLatin1String("original_sum=") + QString::fromLatin1(m_md5sum.toHex()));
     qsl.append(QLatin1String("original_filename=") + QString::fromUtf8(QUrl(m_path).fileName().toUtf8().toPercentEncoding()));
     qsl.append(QLatin1String("name=") + QString::fromUtf8(m_title.toUtf8().toPercentEncoding()));
-    if (!m_author.isEmpty()) qsl.append(QLatin1String("author=") + QString::fromUtf8(m_author.toUtf8().toPercentEncoding()));
-    if (!m_comment.isEmpty()) qsl.append(QLatin1String("comment=") + QString::fromUtf8(m_comment.toUtf8().toPercentEncoding()));
+
+    if (!m_author.isEmpty())
+        qsl.append(QLatin1String("author=") + QString::fromUtf8(m_author.toUtf8().toPercentEncoding()));
+
+    if (!m_comment.isEmpty())
+        qsl.append(QLatin1String("comment=") + QString::fromUtf8(m_comment.toUtf8().toPercentEncoding()));
+
     qsl.append(QLatin1String("categories=") + QString::number(m_albumId));
     qsl.append(QLatin1String("file_sum=") + QString::fromLatin1(computeMD5Sum(m_path).toHex()));
     qsl.append(QLatin1String("date_creation=") +
                QString::fromUtf8(m_date.toString(QLatin1String("yyyy-MM-dd hh:mm:ss")).toUtf8().toPercentEncoding()));
+
     //qsl.append("tag_ids="); // TODO Implement this function
     QString dataParameters = qsl.join(QLatin1String("&"));
     QByteArray buffer;
@@ -956,7 +968,10 @@ void PiwigoTalker::parseResponseAddPhotoSummary(const QByteArray& data)
             if (ts.name() == QString::fromLatin1("rsp"))
             {
                 foundResponse = true;
-                if (ts.attributes().value(QString::fromLatin1("stat")) == QString::fromLatin1("ok")) success = true;
+
+                if (ts.attributes().value(QString::fromLatin1("stat")) == QString::fromLatin1("ok"))
+                    success = true;
+
                 break;
             }
         }
@@ -981,7 +996,8 @@ void PiwigoTalker::parseResponseAddPhotoSummary(const QByteArray& data)
 
 void PiwigoTalker::deleteTemporaryFile()
 {
-    if (m_tmpPath.size()) {
+    if (m_tmpPath.size())
+    {
         QFile(m_tmpPath).remove();
         m_tmpPath = QString::fromLatin1("");
     }
