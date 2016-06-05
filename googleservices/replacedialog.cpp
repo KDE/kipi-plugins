@@ -66,24 +66,24 @@ public:
         lbDest        = 0;
         progressCount = 0;
         progressTimer = 0;
-        result        =-1;
+        result        = -1;
     }
 
-    QPushButton*                 bAdd;
-    QPushButton*                 bAddAll;
-    QPushButton*                 bReplace;
-    QPushButton*                 bReplaceAll;
-    QUrl                         src;
-    QUrl                         dest;
-    Interface*                   iface;
-    QLabel*                      lbSrc;
-    QLabel*                      lbDest;
-    QByteArray                   buffer;
-    QPixmap                      mimePix;
-    KPWorkingPixmap              progressPix;
-    int                          progressCount;
-    QTimer*                      progressTimer;
-    int                          result;
+    QPushButton*    bAdd;
+    QPushButton*    bAddAll;
+    QPushButton*    bReplace;
+    QPushButton*    bReplaceAll;
+    QUrl            src;
+    QUrl            dest;
+    Interface*      iface;
+    QLabel*         lbSrc;
+    QLabel*         lbDest;
+    QByteArray      buffer;
+    QPixmap         mimePix;
+    KPWorkingPixmap progressPix;
+    int             progressCount;
+    QTimer*         progressTimer;
+    int             result;
 };
 
 ReplaceDialog::ReplaceDialog(QWidget* const parent,
@@ -111,30 +111,34 @@ ReplaceDialog::ReplaceDialog(QWidget* const parent,
     d->bAdd = new QPushButton(buttonBox);
     d->bAdd->setText(i18n("Add As New"));
     d->bAdd->setToolTip(i18n("Item will be added alongside the linked version."));
+
     connect(d->bAdd, SIGNAL(clicked()),
             this, SLOT(addPressed()));
 
     d->bAddAll = new QPushButton(buttonBox);
     d->bAddAll->setText(i18n("Add All"));
     d->bAddAll->setToolTip(i18n("Items will be added alongside the linked version. You will not be prompted again."));
+
     connect(d->bAddAll, SIGNAL(clicked()),
             this, SLOT(addAllPressed()));
 
     d->bReplace = new QPushButton(buttonBox);
     d->bReplace->setText(i18n("Replace"));
     d->bReplace->setToolTip(i18n("Item will be replacing the linked version."));
+
     connect(d->bReplace, SIGNAL(clicked()),
             this, SLOT(replacePressed()));
 
     d->bReplaceAll = new QPushButton(buttonBox);
     d->bReplaceAll->setText(i18n("Replace All"));
     d->bReplaceAll->setToolTip(i18n("Items will be replacing the linked version. You will not be prompted again."));
+
     connect(d->bReplaceAll, SIGNAL(clicked()),
             this, SLOT(replaceAllPressed()));
 
-    buttonBox->addButton(d->bAdd, QDialogButtonBox::AcceptRole);
-    buttonBox->addButton(d->bAddAll, QDialogButtonBox::AcceptRole);
-    buttonBox->addButton(d->bReplace, QDialogButtonBox::AcceptRole);
+    buttonBox->addButton(d->bAdd,        QDialogButtonBox::AcceptRole);
+    buttonBox->addButton(d->bAddAll,     QDialogButtonBox::AcceptRole);
+    buttonBox->addButton(d->bReplace,    QDialogButtonBox::AcceptRole);
     buttonBox->addButton(d->bReplaceAll, QDialogButtonBox::AcceptRole);
 
     connect(buttonBox, SIGNAL(accepted()),
@@ -165,7 +169,7 @@ ReplaceDialog::ReplaceDialog(QWidget* const parent,
     d->lbDest->setAlignment(Qt::AlignCenter);
     gridLayout->addWidget(d->lbDest, 1, 0, 1, 1);
 
-    d->lbSrc = new QLabel(this);
+    d->lbSrc   = new QLabel(this);
     d->lbSrc->setPixmap(KIO::pixmapForUrl(d->src));
     d->lbSrc->setAlignment(Qt::AlignCenter);
     gridLayout->addWidget(d->lbSrc, 1, 2, 1, 1);
@@ -208,8 +212,8 @@ ReplaceDialog::ReplaceDialog(QWidget* const parent,
     // get source thumbnail
     if (d->iface && d->src.isValid())
     {
-        connect(d->iface, SIGNAL(gotThumbnail(QUrl,QPixmap)),
-                this, SLOT(slotThumbnail(QUrl,QPixmap)));
+        connect(d->iface, SIGNAL(gotThumbnail(QUrl, QPixmap)),
+                this, SLOT(slotThumbnail(QUrl, QPixmap)));
 
         d->iface->thumbnail(d->src, 48);
     }
@@ -224,8 +228,8 @@ ReplaceDialog::ReplaceDialog(QWidget* const parent,
         job->addMetaData(QString::fromLatin1("content-type"),
                          QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
 
-        connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-                this, SLOT(slotData(KIO::Job*,QByteArray)));
+        connect(job, SIGNAL(data(KIO::Job*, QByteArray)),
+                this, SLOT(slotData(KIO::Job*, QByteArray)));
 
         connect(job, SIGNAL(result(KJob*)),
                 this, SLOT(slotResult(KJob*)));

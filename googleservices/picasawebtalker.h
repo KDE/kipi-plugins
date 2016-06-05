@@ -81,11 +81,15 @@ public:
     void listAlbums();
     void listPhotos(const QString& albumId,
                     const QString& imgmax = QString());
+
     void createAlbum(const GSFolder& newAlbum);
+
     bool addPhoto(const QString& photoPath, GSPhoto& info, const QString& albumId, 
                   bool rescale, int maxDim, int imageQuality);
+
     bool updatePhoto(const QString& photoPath, GSPhoto& info/*, const QString& albumId*/,
                      bool rescale, int maxDim, int imageQuality);
+
     void getPhoto(const QString& imgPath);
 
     QString getLoginName()   const;

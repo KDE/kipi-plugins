@@ -446,8 +446,7 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, con
         return false;
     }
 
-    path = QDir::tempPath() + QLatin1Char('/') + QFileInfo(photoPath).baseName().trimmed() + QString::fromLatin1(".jpg");
-
+    path                  = QDir::tempPath() + QLatin1Char('/') + QFileInfo(photoPath).baseName().trimmed() + QString::fromLatin1(".jpg");
     int imgQualityToApply = 100;
 
     if (rescale)
@@ -473,20 +472,20 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, con
         QString::fromLatin1("xml"),
         QString::fromLatin1("version='1.0' encoding='UTF-8'"));
     docMeta.appendChild(instr);
-    QDomElement entryElem = docMeta.createElement(QString::fromLatin1("entry"));
+    QDomElement entryElem           = docMeta.createElement(QString::fromLatin1("entry"));
     docMeta.appendChild(entryElem);
     entryElem.setAttribute(
         QString::fromLatin1("xmlns"),
         QString::fromLatin1("http://www.w3.org/2005/Atom"));
-    QDomElement titleElem = docMeta.createElement(QString::fromLatin1("title"));
+    QDomElement titleElem           = docMeta.createElement(QString::fromLatin1("title"));
     entryElem.appendChild(titleElem);
-    QDomText titleText = docMeta.createTextNode(QFileInfo(path).fileName());
+    QDomText titleText              = docMeta.createTextNode(QFileInfo(path).fileName());
     titleElem.appendChild(titleText);
-    QDomElement summaryElem = docMeta.createElement(QString::fromLatin1("summary"));
+    QDomElement summaryElem         = docMeta.createElement(QString::fromLatin1("summary"));
     entryElem.appendChild(summaryElem);
-    QDomText summaryText = docMeta.createTextNode(info.description);
+    QDomText summaryText            = docMeta.createTextNode(info.description);
     summaryElem.appendChild(summaryText);
-    QDomElement categoryElem = docMeta.createElement(QString::fromLatin1("category"));
+    QDomElement categoryElem        = docMeta.createElement(QString::fromLatin1("category"));
     entryElem.appendChild(categoryElem);
     categoryElem.setAttribute(
         QString::fromLatin1("scheme"),
@@ -494,15 +493,15 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, con
     categoryElem.setAttribute(
         QString::fromLatin1("term"),
         QString::fromLatin1("http://schemas.google.com/photos/2007#photo"));
-    QDomElement mediaGroupElem = docMeta.createElementNS(
+    QDomElement mediaGroupElem      = docMeta.createElementNS(
         QString::fromLatin1("http://search.yahoo.com/mrss/"),
         QString::fromLatin1("media:group"));
     entryElem.appendChild(mediaGroupElem);
-    QDomElement mediaKeywordsElem = docMeta.createElementNS(
+    QDomElement mediaKeywordsElem   = docMeta.createElementNS(
         QString::fromLatin1("http://search.yahoo.com/mrss/"),
         QString::fromLatin1("media:keywords"));
     mediaGroupElem.appendChild(mediaKeywordsElem);
-    QDomText mediaKeywordsText = docMeta.createTextNode(info.tags.join(QString::fromLatin1(",")));
+    QDomText mediaKeywordsText      = docMeta.createTextNode(info.tags.join(QString::fromLatin1(",")));
     mediaKeywordsElem.appendChild(mediaKeywordsText);
 
     if (!info.gpsLat.isEmpty() && !info.gpsLon.isEmpty())
@@ -515,11 +514,11 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, con
             QString::fromLatin1("http://www.opengis.net/gml"),
             QString::fromLatin1("gml:Point"));
         whereElem.appendChild(pointElem);
-        QDomElement gpsElem = docMeta.createElementNS(
+        QDomElement gpsElem   = docMeta.createElementNS(
             QString::fromLatin1("http://www.opengis.net/gml"),
             QString::fromLatin1("gml:pos"));
         pointElem.appendChild(gpsElem);
-        QDomText gpsVal = docMeta.createTextNode(info.gpsLat + QLatin1Char(' ') + info.gpsLon);
+        QDomText gpsVal       = docMeta.createTextNode(info.gpsLat + QLatin1Char(' ') + info.gpsLon);
         gpsElem.appendChild(gpsVal);
     }
 
@@ -530,7 +529,7 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, con
 
     form.finish();
 
-    QString auth_string = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
+    QString auth_string              = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
     KIO::TransferJob* const job      = KIO::put(info.editUrl, -1, KIO::HideProgressInfo);
     KIO::JobUiDelegate* const job_ui = static_cast<KIO::JobUiDelegate*>(job->ui());
     job_ui->setWindow(m_parent);
@@ -542,8 +541,8 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, con
 
     m_jobData.insert(job, form.formData());
 
-    connect(job, SIGNAL(dataReq(KIO::Job*,QByteArray&)),
-            this, SLOT(dataReq(KIO::Job*,QByteArray&)));
+    connect(job, SIGNAL(dataReq(KIO::Job*, QByteArray&)),
+            this, SLOT(dataReq(KIO::Job*, QByteArray&)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
@@ -568,8 +567,8 @@ void PicasawebTalker::getPhoto(const QString& imgPath)
     KIO::TransferJob* const job = KIO::get(QUrl(imgPath), KIO::Reload, KIO::HideProgressInfo);
     //job->addMetaData("customHTTPHeader", "Authorization: " + auth_string );
 
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(data(KIO::Job*,QByteArray)));
+    connect(job, SIGNAL(data(KIO::Job*, QByteArray)),
+            this, SLOT(data(KIO::Job*, QByteArray)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
@@ -629,37 +628,53 @@ void PicasawebTalker::slotError(const QString & error)
     switch (errorNo)
     {
         case 2:
-            transError=i18n("No photo specified");break;
+            transError=i18n("No photo specified");
+            break;
         case 3:
-            transError=i18n("General upload failure");break;
+            transError=i18n("General upload failure");
+            break;
         case 4:
-            transError=i18n("File-size was zero");break;
+            transError=i18n("File-size was zero");
+            break;
         case 5:
-            transError=i18n("File-type was not recognized");break;
+            transError=i18n("File-type was not recognized");
+            break;
         case 6:
-            transError=i18n("User exceeded upload limit");break;
+            transError=i18n("User exceeded upload limit");
+            break;
         case 96:
-            transError=i18n("Invalid signature"); break;
+            transError=i18n("Invalid signature");
+            break;
         case 97:
-            transError=i18n("Missing signature"); break;
+            transError=i18n("Missing signature");
+            break;
         case 98:
-            transError=i18n("Login failed / Invalid auth token"); break;
+            transError=i18n("Login failed / Invalid auth token");
+            break;
         case 100:
-            transError=i18n("Invalid API Key"); break;
+            transError=i18n("Invalid API Key");
+            break;
         case 105:
-            transError=i18n("Service currently unavailable");break;
+            transError=i18n("Service currently unavailable");
+            break;
         case 108:
-            transError=i18n("Invalid Frob");break;
+            transError=i18n("Invalid Frob");
+            break;
         case 111:
-            transError=i18n("Format \"xxx\" not found"); break;
+            transError=i18n("Format \"xxx\" not found");
+            break;
         case 112:
-            transError=i18n("Method \"xxx\" not found"); break;
+            transError=i18n("Method \"xxx\" not found");
+            break;
         case 114:
-            transError=i18n("Invalid SOAP envelope");break;
+            transError=i18n("Invalid SOAP envelope");
+            break;
         case 115:
-            transError=i18n("Invalid XML-RPC Method Call");break;
+            transError=i18n("Invalid XML-RPC Method Call");
+            break;
         case 116:
-            transError=i18n("The POST method is now required for all setters."); break;
+            transError=i18n("The POST method is now required for all setters.");
+            break;
         default:
             transError=i18n("Unknown error");
     };
@@ -716,19 +731,19 @@ void PicasawebTalker::slotResult(KJob *job)
 void PicasawebTalker::parseResponseListAlbums(const QByteArray& data)
 {
     QDomDocument doc(QString::fromLatin1("feed"));
-    QString err;
-    int line;
-    int columns;
+    QString      err;
+    int          line;
+    int          columns;
 
     if ( !doc.setContent( data, false, &err, &line, &columns ) )
     {
-        qCCritical(KIPIPLUGINS_LOG)<<"error is "<<err<< " at line "<<line<<" at columns "<<columns;
+        qCCritical(KIPIPLUGINS_LOG) << "error is "<< err << " at line " << line << " at columns " << columns;
         emit signalListAlbumsDone(0, i18n("Failed to fetch photo-set list"), QList<GSFolder>());
         return;
     }
 
     QDomElement docElem = doc.documentElement();
-    QDomNode node = docElem.firstChild();
+    QDomNode node       = docElem.firstChild();
     QDomElement e;
 
     QList<GSFolder> albumList;
@@ -890,16 +905,16 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
                                     fps.originalURL.isEmpty())
                                 {
                                     fps.originalURL = QUrl(contentElem.attribute(QString::fromLatin1("url")));
-                                    fps.title = fps.originalURL.fileName();
-                                    fps.mimeType = contentElem.attribute(QString::fromLatin1("type"));
+                                    fps.title       = fps.originalURL.fileName();
+                                    fps.mimeType    = contentElem.attribute(QString::fromLatin1("type"));
                                 }
 
                                 if ((contentElem.attribute(QString::fromLatin1("medium")) == QString::fromLatin1("video")) &&
                                     (contentElem.attribute(QString::fromLatin1("type")) == QString::fromLatin1("video/mpeg4")))
                                 {
                                     fps.originalURL = QUrl(contentElem.attribute(QString::fromLatin1("url")));
-                                    fps.title = fps.originalURL.fileName();
-                                    fps.mimeType = contentElem.attribute(QString::fromLatin1("type"));
+                                    fps.title       = fps.originalURL.fileName();
+                                    fps.mimeType    = contentElem.attribute(QString::fromLatin1("type"));
                                 }
                             }
                         }
@@ -948,7 +963,8 @@ void PicasawebTalker::parseResponseCreateAlbum(const QByteArray& data)
                     albumId = node.toElement().text();
                 }
              }
-            node = node.nextSibling();
+
+             node = node.nextSibling();
         }
     }
 
@@ -989,6 +1005,7 @@ void PicasawebTalker::parseResponseAddPhoto(const QByteArray& data)
                     photoId = node.toElement().text();
                 }
             }
+
             node = node.nextSibling();
         }
     }
