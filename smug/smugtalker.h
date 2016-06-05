@@ -112,8 +112,8 @@ private:
 
 private Q_SLOTS:
 
-    void data(KIO::Job *job, const QByteArray& data);
-    void slotResult(KJob *job);
+    void data(KIO::Job* job, const QByteArray& data);
+    void slotResult(KJob* job);
 
 private:
 
@@ -150,4 +150,4 @@ private:
 
 } // namespace KIPISmugPlugin
 
-#endif /* SMUGTALKER_H */
+#endif // SMUGTALKER_H
