@@ -38,9 +38,10 @@ enum PluginName
     PicasaImport
 };
 
+// -----------------------------------------------------------
+
 class GSPhoto
 {
-
 public:
 
     GSPhoto()
@@ -50,6 +51,8 @@ public:
         gpsLon     = QStringLiteral("");
         gpsLat     = QStringLiteral("");
     }
+
+public:
 
     QString     id;
     QString     title;
@@ -67,26 +70,30 @@ public:
     QUrl        editUrl;
 };
 
+// -----------------------------------------------------------
+
 class GSFolder
 {
-
 public:
+
     GSFolder()
     {
         id         = QStringLiteral("-1");
         canComment = true;
     }
 
-    QString   id;
-    QString   title;
-    QString   timestamp;
-    QString   description;
-    QString   location;
-    QString   access;
-    bool      canComment;
+public:
+
+    QString     id;
+    QString     title;
+    QString     timestamp;
+    QString     description;
+    QString     location;
+    QString     access;
+    bool        canComment;
     QStringList tags;
 };
 
 } // namespace KIPIGoogleServicesPlugin
 
-#endif /* GSITEM_H */
+#endif // GSITEM_H
