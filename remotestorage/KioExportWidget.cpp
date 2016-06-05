@@ -59,10 +59,9 @@ KioExportWidget::KioExportWidget(QWidget* const parent)
     m_targetLabel->comboBox()->setEditable(true);
 
     label->setText(i18n("Target location: "));
-    m_targetLabel->setWhatsThis(i18n(
-                    "Sets the target address to upload the images to. "
-                    "This can be any address as used in Dolphin or Konqueror, "
-                    "e.g. ftp://my.server.org/sub/folder."));
+    m_targetLabel->setWhatsThis(i18n("Sets the target address to upload the images to. "
+                                     "This can be any address as used in Dolphin or Konqueror, "
+                                     "e.g. ftp://my.server.org/sub/folder."));
 
     m_targetSearchButton = new QPushButton(i18n("Select target location..."), this);
     m_targetSearchButton->setIcon(QIcon::fromTheme(QString::fromLatin1("folder-remote")));
@@ -109,7 +108,7 @@ QList<QUrl> KioExportWidget::history() const
 {
     QList<QUrl> urls;
 
-    for (int i=0; i <= m_targetLabel->comboBox()->count(); i++)
+    for (int i = 0 ; i <= m_targetLabel->comboBox()->count() ; i++)
         urls << QUrl(m_targetLabel->comboBox()->itemText(i));
 
     return urls;
@@ -151,8 +150,8 @@ void KioExportWidget::slotShowTargetDialogClicked(bool checked)
 void KioExportWidget::updateTargetLabel()
 {
     qCDebug(KIPIPLUGINS_LOG) << "Call for url "
-             << m_targetUrl.toDisplayString() << ", valid = "
-             << m_targetUrl.isValid();
+                             << m_targetUrl.toDisplayString() << ", valid = "
+                             << m_targetUrl.isValid();
 
     QString urlString = i18n("<not selected>");
 

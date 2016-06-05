@@ -49,15 +49,14 @@ KioImportWidget::KioImportWidget(QWidget* const parent, Interface* const interfa
     // setup image list
     m_imageList = new KPImagesList(this);
     m_imageList->setAllowRAW(true);
-    m_imageList->listView()->setWhatsThis(i18n(
-                    "This is the list of images to import "
-                    "into the current album."));
+    m_imageList->listView()->setWhatsThis(i18n("This is the list of images to import "
+                                               "into the current album."));
 
     // setup upload widget
-    m_uploadWidget      = interface->uploadWidget(this);
+    m_uploadWidget            = interface->uploadWidget(this);
 
     // layout dialog
-    QVBoxLayout* layout = new QVBoxLayout(this);
+    QVBoxLayout* const layout = new QVBoxLayout(this);
 
     layout->addWidget(m_imageList);
     layout->addWidget(m_uploadWidget);

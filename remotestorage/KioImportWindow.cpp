@@ -79,10 +79,10 @@ KioImportWindow::KioImportWindow(QWidget* const /*parent*/)
     // about data and help button
 
     KPAboutData* const about = new KPAboutData(ki18n("Import from remote storage"),
-                             0,
-                             KAboutLicense::GPL,
-                             ki18n("A Kipi plugin to import images over network"),
-                             ki18n("(c) 2009, Johannes Wienke"));
+                                               0,
+                                               KAboutLicense::GPL,
+                                               ki18n("A Kipi plugin to import images over network"),
+                                               ki18n("(c) 2009, Johannes Wienke"));
 
     about->addAuthor(ki18n("Johannes Wienke").toString(),
                      ki18n("Developer and maintainer").toString(),
@@ -107,8 +107,8 @@ void KioImportWindow::slotImport()
     KIO::CopyJob* const copyJob = KIO::copy(m_importWidget->imagesList()->imageUrls(),
                                   m_importWidget->uploadWidget()->selectedImageCollection().uploadUrl());
 
-    connect(copyJob, SIGNAL(copyingDone(KIO::Job*,QUrl,QUrl,QDateTime,bool,bool)),
-            this, SLOT(slotCopyingDone(KIO::Job*,QUrl,QUrl,QDateTime,bool,bool)));
+    connect(copyJob, SIGNAL(copyingDone(KIO::Job*, QUrl, QUrl, QDateTime, bool, bool)),
+            this, SLOT(slotCopyingDone(KIO::Job*, QUrl, QUrl, QDateTime, bool, bool)));
 
     connect(copyJob, SIGNAL(result(KJob*)),
             this, SLOT(slotCopyingFinished(KJob*)));
@@ -149,7 +149,7 @@ void KioImportWindow::slotSourceAndTargetUpdated()
     bool hasTarget      = m_importWidget->uploadWidget()->selectedImageCollection().uploadUrl().isValid();
 
     qCDebug(KIPIPLUGINS_LOG) << "switching import button activity with: hasUrlToImport = "
-                  << hasUrlToImport << ", hasTarget = " << hasTarget;
+                             << hasUrlToImport << ", hasTarget = " << hasTarget;
 
     startButton()->setEnabled(hasUrlToImport && hasTarget);
 }
