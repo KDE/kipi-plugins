@@ -80,7 +80,7 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
 
     if (QString::compare(m_serviceName, QString::fromLatin1("googledriveexport"), Qt::CaseInsensitive) == 0)
     {
-        name = PluginName::GDrive;
+        name         = PluginName::GDrive;
         m_pluginName = QString::fromLatin1("Google Drive");
     }
     else if (QString::compare(m_serviceName, QString::fromLatin1("picasawebexport"), Qt::CaseInsensitive) == 0)
@@ -98,8 +98,7 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
     m_imagesCount = 0;
     m_imagesTotal = 0;
     m_renamingOpt = 0;
-
-    m_widget = new GoogleServicesWidget(this, iface(), name, m_pluginName);
+    m_widget      = new GoogleServicesWidget(this, iface(), name, m_pluginName);
 
     setMainWidget(m_widget);
     setModal(false);
@@ -142,8 +141,8 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
             connect(m_talker,SIGNAL(signalTextBoxEmpty()),
                     this,SLOT(slotTextBoxEmpty()));
 
-            connect(m_talker,SIGNAL(signalAccessTokenFailed(int,QString)),
-                    this,SLOT(slotAccessTokenFailed(int,QString)));
+            connect(m_talker,SIGNAL(signalAccessTokenFailed(int, QString)),
+                    this,SLOT(slotAccessTokenFailed(int, QString)));
 
             connect(m_talker,SIGNAL(signalAccessTokenObtained()),
                     this,SLOT(slotAccessTokenObtained()));
@@ -154,14 +153,14 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
             connect(m_talker,SIGNAL(signalSetUserName(QString)),
                     this,SLOT(slotSetUserName(QString)));
 
-            connect(m_talker,SIGNAL(signalListAlbumsDone(int,QString,QList<GSFolder>)),
-                    this,SLOT(slotListAlbumsDone(int,QString,QList<GSFolder>)));
+            connect(m_talker,SIGNAL(signalListAlbumsDone(int, QString, QList<GSFolder>)),
+                    this,SLOT(slotListAlbumsDone(int, QString, QList<GSFolder>)));
 
-            connect(m_talker,SIGNAL(signalCreateFolderDone(int,QString)),
-                    this,SLOT(slotCreateFolderDone(int,QString)));
+            connect(m_talker,SIGNAL(signalCreateFolderDone(int, QString)),
+                    this,SLOT(slotCreateFolderDone(int, QString)));
 
-            connect(m_talker,SIGNAL(signalAddPhotoDone(int,QString,QString)),
-                    this,SLOT(slotAddPhotoDone(int,QString,QString)));
+            connect(m_talker,SIGNAL(signalAddPhotoDone(int, QString, QString)),
+                    this,SLOT(slotAddPhotoDone(int, QString, QString)));
 
             readSettings();
             buttonStateChange(false);
@@ -181,15 +180,15 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
         case PluginName::PicasaExport:
 
             about = new KPAboutData(ki18n("Google Photos/PicasaWeb Export"),
-                                        0,
-                                        KAboutLicense::GPL,
-                                        ki18n("A Kipi plugin to export image collections to "
-                                                "Google Photos/Picasa web service."),
-                                        ki18n("(c) 2007-2009, Vardhman Jain\n"
-                                              "(c) 2008-2015, Gilles Caulier\n"
-                                              "(c) 2009, Luka Renko\n"
-                                              "(c) 2010, Jens Mueller\n"
-                                              "(c) 2015, Shourya Singh Gupta"));
+                                    0,
+                                    KAboutLicense::GPL,
+                                    ki18n("A Kipi plugin to export image collections to "
+                                          "Google Photos/Picasa web service."),
+                                    ki18n("(c) 2007-2009, Vardhman Jain\n"
+                                          "(c) 2008-2015, Gilles Caulier\n"
+                                          "(c) 2009, Luka Renko\n"
+                                          "(c) 2010, Jens Mueller\n"
+                                          "(c) 2015, Shourya Singh Gupta"));
 
             about->addAuthor(i18n( "Vardhman Jain" ), i18n("Author and maintainer"),
                              QString::fromLatin1("Vardhman at gmail dot com"));
@@ -239,8 +238,8 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
             connect(m_picsasa_talker, SIGNAL(signalTextBoxEmpty()),
                     this, SLOT(slotTextBoxEmpty()));
 
-            connect(m_picsasa_talker, SIGNAL(signalAccessTokenFailed(int,QString)),
-                    this, SLOT(slotAccessTokenFailed(int,QString)));
+            connect(m_picsasa_talker, SIGNAL(signalAccessTokenFailed(int, QString)),
+                    this, SLOT(slotAccessTokenFailed(int, QString)));
 
             connect(m_picsasa_talker, SIGNAL(signalAccessTokenObtained()),
                     this, SLOT(slotAccessTokenObtained()));
@@ -248,17 +247,17 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
             connect(m_picsasa_talker, SIGNAL(signalRefreshTokenObtained(QString)),
                     this, SLOT(slotRefreshTokenObtained(QString)));
 
-            connect(m_picsasa_talker, SIGNAL(signalListAlbumsDone(int,QString,QList<GSFolder>)),
-                    this, SLOT(slotListAlbumsDone(int,QString,QList<GSFolder>)));
+            connect(m_picsasa_talker, SIGNAL(signalListAlbumsDone(int, QString, QList<GSFolder>)),
+                    this, SLOT(slotListAlbumsDone(int, QString, QList<GSFolder>)));
 
-            connect(m_picsasa_talker, SIGNAL(signalCreateAlbumDone(int,QString,QString)),
-                    this, SLOT(slotCreateFolderDone(int,QString,QString)));
+            connect(m_picsasa_talker, SIGNAL(signalCreateAlbumDone(int, QString, QString)),
+                    this, SLOT(slotCreateFolderDone(int, QString, QString)));
 
-            connect(m_picsasa_talker, SIGNAL(signalAddPhotoDone(int,QString,QString)),
+            connect(m_picsasa_talker, SIGNAL(signalAddPhotoDone(int, QString, QString)),
                     this, SLOT(slotAddPhotoDone(int,QString,QString)));
 
-            connect(m_picsasa_talker, SIGNAL(signalGetPhotoDone(int,QString,QByteArray)),
-                    this, SLOT(slotGetPhotoDone(int,QString,QByteArray)));
+            connect(m_picsasa_talker, SIGNAL(signalGetPhotoDone(int, QString, QByteArray)),
+                    this, SLOT(slotGetPhotoDone(int, QString, QByteArray)));
 
             readSettings();
             buttonStateChange(false);
@@ -312,7 +311,6 @@ void GSWindow::reactivate()
 void GSWindow::readSettings()
 {
     KConfig config(QString::fromLatin1("kipirc"));
-
     KConfigGroup grp;
 
     switch (name)
@@ -341,7 +339,7 @@ void GSWindow::readSettings()
         m_widget->getImgQualitySpB()->setEnabled(false);
     }
 
-    m_widget->getDimensionSpB()->setValue(grp.readEntry("Maximum Width",    1600));
+    m_widget->getDimensionSpB()->setValue(grp.readEntry("Maximum Width",  1600));
     m_widget->getImgQualitySpB()->setValue(grp.readEntry("Image Quality", 90));
 
     if (name == PluginName::PicasaExport)
@@ -380,14 +378,14 @@ void GSWindow::writeSettings()
             break;
     }
 
-    grp.writeEntry("refresh_token",refresh_token);
-    grp.writeEntry("Current Album",m_currentAlbumId);
-    grp.writeEntry("Resize",          m_widget->getResizeCheckBox()->isChecked());
-    grp.writeEntry("Maximum Width",   m_widget->getDimensionSpB()->value());
-    grp.writeEntry("Image Quality",   m_widget->getImgQualitySpB()->value());
+    grp.writeEntry("refresh_token", refresh_token);
+    grp.writeEntry("Current Album", m_currentAlbumId);
+    grp.writeEntry("Resize",        m_widget->getResizeCheckBox()->isChecked());
+    grp.writeEntry("Maximum Width", m_widget->getDimensionSpB()->value());
+    grp.writeEntry("Image Quality", m_widget->getImgQualitySpB()->value());
 
     if (name == PluginName::PicasaExport)
-        grp.writeEntry("Tag Paths",     m_widget->m_tagsBGrp->checkedId());
+        grp.writeEntry("Tag Paths", m_widget->m_tagsBGrp->checkedId());
 
     KConfigGroup dialogGroup;
 
@@ -415,8 +413,8 @@ void GSWindow::slotSetUserName(const QString& msg)
 
 void GSWindow::slotListPhotosDoneForDownload(int errCode, const QString& errMsg, const QList <GSPhoto>& photosList)
 {
-    disconnect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GSPhoto>)),
-               this, SLOT(slotListPhotosDoneForDownload(int,QString,QList<GSPhoto>)));
+    disconnect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int, QString, QList<GSPhoto>)),
+               this, SLOT(slotListPhotosDoneForDownload(int, QString, QList<GSPhoto>)));
 
     if (errCode == 0)
     {
@@ -453,8 +451,9 @@ void GSWindow::slotListPhotosDoneForDownload(int errCode, const QString& errMsg,
 void GSWindow::slotListPhotosDoneForUpload(int errCode, const QString& errMsg, const QList <GSPhoto>& photosList)
 {
     qCCritical(KIPIPLUGINS_LOG)<< "err Code is "<< errCode <<" Err Message is "<< errMsg;
-    disconnect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GSPhoto>)),
-               this, SLOT(slotListPhotosDoneForUpload(int,QString,QList<GSPhoto>)));
+
+    disconnect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int, QString, QList<GSPhoto>)),
+               this, SLOT(slotListPhotosDoneForUpload(int, QString, QList<GSPhoto>)));
 
     if (errCode == 0)
     {
@@ -622,8 +621,8 @@ void GSWindow::picasaTransferHandler()
     {
         case PluginName::PicasaImport:
             // list photos of the album, then start download
-            connect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GSPhoto>)),
-                    this, SLOT(slotListPhotosDoneForDownload(int,QString,QList<GSPhoto>)));
+            connect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int, QString, QList<GSPhoto>)),
+                    this, SLOT(slotListPhotosDoneForDownload(int, QString, QList<GSPhoto>)));
 
             m_picsasa_talker->listPhotos(
                 m_widget->getAlbumsCoB()->itemData(m_widget->getAlbumsCoB()->currentIndex()).toString(),
@@ -632,8 +631,8 @@ void GSWindow::picasaTransferHandler()
 
         default:
             // list photos of the album, then start upload with add/update items
-            connect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GSPhoto>)),
-                    this, SLOT(slotListPhotosDoneForUpload(int,QString,QList<GSPhoto>)));
+            connect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int, QString, QList<GSPhoto>)),
+                    this, SLOT(slotListPhotosDoneForUpload(int, QString, QList<GSPhoto>)));
 
             m_picsasa_talker->listPhotos(
                 m_widget->getAlbumsCoB()->itemData(m_widget->getAlbumsCoB()->currentIndex()).toString());
@@ -738,10 +737,10 @@ void GSWindow::slotStartTransfer()
                 break;
         }
 
-        temp.description    = info.description().section(QString::fromLatin1("\n"), 0, 0);
+        temp.description = info.description().section(QString::fromLatin1("\n"), 0, 0);
         temp.gpsLat.setNum(info.latitude());
         temp.gpsLon.setNum(info.longitude());
-        temp.tags = info.tagsPath();
+        temp.tags        = info.tagsPath();
 
         m_transferQueue.append(Pair(m_widget->imagesList()->imageUrls().value(i),temp));
     }
@@ -781,10 +780,12 @@ void GSWindow::uploadNextPhoto()
     {
         case PluginName::GDrive:
         {
-            res = m_talker->addPhoto(pathComments.first.toLocalFile(),info,m_currentAlbumId,
-                                    m_widget->getResizeCheckBox()->isChecked(),
-                                    m_widget->getDimensionSpB()->value(),
-                                    m_widget->getImgQualitySpB()->value());
+            res = m_talker->addPhoto(pathComments.first.toLocalFile(),
+                                     info,
+                                     m_currentAlbumId,
+                                     m_widget->getResizeCheckBox()->isChecked(),
+                                     m_widget->getDimensionSpB()->value(),
+                                     m_widget->getImgQualitySpB()->value());
             break;
         }
 
@@ -834,6 +835,7 @@ void GSWindow::uploadNextPhoto()
             }
 
             //adjust tags according to radio button clicked
+
             switch (m_widget->m_tagsBGrp->checkedId())
             {
                 case PwTagLeaf:
@@ -902,14 +904,17 @@ void GSWindow::uploadNextPhoto()
             {
                 if (bAdd)
                 {
-                    res = m_picsasa_talker->addPhoto(pathComments.first.toLocalFile(),info,m_currentAlbumId,
-                                                    m_widget->getResizeCheckBox()->isChecked(),
-                                                    m_widget->getDimensionSpB()->value(),
-                                                    m_widget->getImgQualitySpB()->value());
+                    res = m_picsasa_talker->addPhoto(pathComments.first.toLocalFile(),
+                                                     info,
+                                                     m_currentAlbumId,
+                                                     m_widget->getResizeCheckBox()->isChecked(),
+                                                     m_widget->getDimensionSpB()->value(),
+                                                     m_widget->getImgQualitySpB()->value());
                 }
                 else
                 {
-                    res = m_picsasa_talker->updatePhoto(pathComments.first.toLocalFile(), info,
+                    res = m_picsasa_talker->updatePhoto(pathComments.first.toLocalFile(),
+                                                        info,
                                                         m_widget->getResizeCheckBox()->isChecked(),
                                                         m_widget->getDimensionSpB()->value(),
                                                         m_widget->getImgQualitySpB()->value());
@@ -949,7 +954,7 @@ void GSWindow::downloadNextPhoto()
 void GSWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteArray& photoData)
 {
     GSPhoto item = m_transferQueue.first().second;
-    QUrl tmpUrl = QUrl::fromLocalFile(QString(m_tmp + item.title));
+    QUrl tmpUrl  = QUrl::fromLocalFile(QString(m_tmp + item.title));
 
     if (item.mimeType == QString::fromLatin1("video/mpeg4"))
     {
@@ -1067,6 +1072,7 @@ void GSWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
 
                     case KIO::R_AUTO_SKIP:
                         m_renamingOpt = KIO::R_AUTO_SKIP;
+
                     case KIO::R_SKIP:
                         bSkip = true;
                         break;
@@ -1077,6 +1083,7 @@ void GSWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
 
                     case KIO::R_OVERWRITE_ALL:
                         m_renamingOpt = KIO::R_OVERWRITE_ALL;
+
                     case KIO::R_OVERWRITE:
                     default:    // Overwrite.
                         break;
@@ -1096,22 +1103,6 @@ void GSWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
         {
             QFile::remove(newUrl.toLocalFile());
         }
-
-/*
-        //jmueller: rename from tmpDir to home does not work for me
-        int ret;
-#if KDE_IS_VERSION(4,2,85)
-        // KDE 4.3.0
-        // KDE::rename() takes care of QString -> bytestring encoding
-        ret = KDE::rename(tmpUrl.toLocalFile(),
-                          newUrl.toLocalFile());
-#else
-        // KDE 4.2.x or 4.1.x
-        ret = KDE_rename(QFile::encodeName(tmpUrl.toLocalFile()),
-                         newUrl.toLocalFile());
-#endif
-        if (ret != 0)
-*/
 
         if (!QFile::rename(tmpUrl.toLocalFile(), newUrl.toLocalFile()))
         {
@@ -1291,7 +1282,7 @@ void GSWindow::slotCreateFolderDone(int code, const QString& msg, const QString&
             {
                 m_currentAlbumId = albumId;
                 m_picsasa_talker->listAlbums();
-            }            
+            }
             break;
     }
 }

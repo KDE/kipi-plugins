@@ -42,13 +42,6 @@
 
 class QCloseEvent;
 
-class KProgressDialog;
-
-namespace KIPIPlugins
-{
-    class KPAboutData;
-}
-
 using namespace KIPI;
 using namespace KIPIPlugins;
 
@@ -136,4 +129,4 @@ private:
 
 } // namespace KIPIGoogleServicesPlugin
 
-#endif /* GSWINDOW_H */
+#endif // GSWINDOW_H
