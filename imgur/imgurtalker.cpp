@@ -229,43 +229,43 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
         if (jsonObject.contains(QString::fromLatin1("upload")))
         {
             ImgurSuccess success;
-            QJsonObject obj1 = jsonObject[QString::fromLatin1("upload")].toObject();
-            QJsonObject obj2 = obj1[QString::fromLatin1("image")].toObject();
-            QJsonObject obj3 = obj1[QString::fromLatin1("links")].toObject();
+            QJsonObject obj1         = jsonObject[QString::fromLatin1("upload")].toObject();
+            QJsonObject obj2         = obj1[QString::fromLatin1("image")].toObject();
+            QJsonObject obj3         = obj1[QString::fromLatin1("links")].toObject();
 
-            success.image.name = obj2[QString::fromLatin1("name")].toString();
-            qCDebug(KIPIPLUGINS_LOG)<<"Name is "<<success.image.name;
+            success.image.name       = obj2[QString::fromLatin1("name")].toString();
+            qCDebug(KIPIPLUGINS_LOG) << "Name is " << success.image.name;
 
-            success.image.title = obj2[QString::fromLatin1("title")].toString();
+            success.image.title           = obj2[QString::fromLatin1("title")].toString();
 
-            success.image.caption = obj2[QString::fromLatin1("caption")].toString();
+            success.image.caption         = obj2[QString::fromLatin1("caption")].toString();
 
-            success.image.hash = obj2[QString::fromLatin1("hash")].toString();
+            success.image.hash            = obj2[QString::fromLatin1("hash")].toString();
 
-            success.image.deletehash = obj2[QString::fromLatin1("deletehash")].toString();
+            success.image.deletehash      = obj2[QString::fromLatin1("deletehash")].toString();
 
-            success.image.type = obj2[QString::fromLatin1("type")].toString();
+            success.image.type            = obj2[QString::fromLatin1("type")].toString();
 
-            success.image.animated = (obj2[QString::fromLatin1("animated")].toString() == QString::fromLatin1("true"));
+            success.image.animated        = (obj2[QString::fromLatin1("animated")].toString() == QString::fromLatin1("true"));
 
-            success.image.width = obj2[QString::fromLatin1("width")].toString().toInt();
+            success.image.width           = obj2[QString::fromLatin1("width")].toString().toInt();
 
-            success.image.height = obj2[QString::fromLatin1("height")].toString().toInt();
+            success.image.height          = obj2[QString::fromLatin1("height")].toString().toInt();
 
-            success.image.size = obj2[QString::fromLatin1("size")].toString().toInt();
+            success.image.size            = obj2[QString::fromLatin1("size")].toString().toInt();
 
-            success.image.views = obj2[QString::fromLatin1("views")].toString().toInt();
+            success.image.views           = obj2[QString::fromLatin1("views")].toString().toInt();
 
-            success.image.bandwidth = obj2[QString::fromLatin1("bandwidth")].toString().toLongLong();
+            success.image.bandwidth       = obj2[QString::fromLatin1("bandwidth")].toString().toLongLong();
 
-            success.links.original = QUrl(obj3[QString::fromLatin1("original")].toString());
-            qCDebug(KIPIPLUGINS_LOG)<<"Link original is "<<success.links.original;
+            success.links.original        = QUrl(obj3[QString::fromLatin1("original")].toString());
+            qCDebug(KIPIPLUGINS_LOG) << "Link original is " << success.links.original;
 
-            success.links.imgur_page = QUrl(obj3[QString::fromLatin1("imgur_page")].toString());
+            success.links.imgur_page      = QUrl(obj3[QString::fromLatin1("imgur_page")].toString());
 
-            success.links.delete_page = QUrl(obj3[QString::fromLatin1("delete_page")].toString());
+            success.links.delete_page     = QUrl(obj3[QString::fromLatin1("delete_page")].toString());
 
-            success.links.small_square = QUrl(obj3[QString::fromLatin1("small_square")].toString());
+            success.links.small_square    = QUrl(obj3[QString::fromLatin1("small_square")].toString());
 
             success.links.large_thumbnail = QUrl(obj3[QString::fromLatin1("largeThumbnail")].toString());
 
@@ -275,11 +275,11 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
         if (jsonObject.contains(QString::fromLatin1("error")))
         {
             ImgurError error;
-            QJsonObject obj = jsonObject[QString::fromLatin1("error")].toObject();
+            QJsonObject obj  = jsonObject[QString::fromLatin1("error")].toObject();
 
-            error.message   = obj[QString::fromLatin1("message")].toString();
+            error.message    = obj[QString::fromLatin1("message")].toString();
 
-            error.request = obj[QString::fromLatin1("request")].toString();
+            error.request    = obj[QString::fromLatin1("request")].toString();
 
             error.parameters = obj[QString::fromLatin1("parameters")].toString();
 
