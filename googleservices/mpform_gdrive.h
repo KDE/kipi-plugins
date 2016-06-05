@@ -41,7 +41,7 @@ public:
     void finish();
     void reset();
 
-    void addPair(const QString& name,const QString& description,const QString& mimetype,const QString& id);
+    void addPair(const QString& name, const QString& description, const QString& mimetype, const QString& id);
     bool addFile(const QString& path);
 
     QString contentType() const;
@@ -53,9 +53,9 @@ private:
 
     QByteArray m_buffer;
     QByteArray m_boundary;
-    QString m_file_size;
+    QString    m_file_size;
 };
 
 } // namespace KIPIGoogleServicesPlugin
 
-#endif /* MPFORM_GDRIVE_H */
+#endif // MPFORM_GDRIVE_H

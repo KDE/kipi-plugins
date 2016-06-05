@@ -50,7 +50,7 @@ namespace KIPIGoogleServicesPlugin
 {
 
 MPForm_GDrive::MPForm_GDrive()
-    : m_boundary(KIPIPlugins::KPRandomGenerator::randomString(42+13).toLatin1())
+    : m_boundary(KIPIPlugins::KPRandomGenerator::randomString(42 + 13).toLatin1())
 {
     reset();
 }
@@ -84,15 +84,15 @@ void MPForm_GDrive::addPair(const QString& name, const QString& description, con
 
     // Generate JSON
     QJsonObject photoInfo;
-    photoInfo.insert(QString::fromLatin1("title"),QJsonValue(name));
-    photoInfo.insert(QString::fromLatin1("description"),QJsonValue(description));
-    photoInfo.insert(QString::fromLatin1("mimeType"),QJsonValue(mime));
+    photoInfo.insert(QString::fromLatin1("title"),       QJsonValue(name));
+    photoInfo.insert(QString::fromLatin1("description"), QJsonValue(description));
+    photoInfo.insert(QString::fromLatin1("mimeType"),    QJsonValue(mime));
 
     QVariantMap parentId;
     parentId.insert(QString::fromLatin1("id"), id);
     QVariantList parents;
     parents << parentId;
-    photoInfo.insert(QString::fromLatin1("parents"),QJsonValue(QJsonArray::fromVariantList(parents)));
+    photoInfo.insert(QString::fromLatin1("parents"),     QJsonValue(QJsonArray::fromVariantList(parents)));
 
     QJsonDocument doc(photoInfo);
     QByteArray json = doc.toJson();
@@ -108,14 +108,14 @@ void MPForm_GDrive::addPair(const QString& name, const QString& description, con
     m_buffer.append(str);
 }
 
-bool MPForm_GDrive::addFile(const QString &path)
+bool MPForm_GDrive::addFile(const QString& path)
 {
     QByteArray str;
     qCDebug(KIPIPLUGINS_LOG) << "in addfile" << path;
 
     QMimeDatabase db;
     QMimeType ptr = db.mimeTypeForUrl(QUrl::fromLocalFile(path));
-    QString mime = ptr.name();
+    QString mime  = ptr.name();
     str += "--";
     str += m_boundary;
     str += "\r\n";
