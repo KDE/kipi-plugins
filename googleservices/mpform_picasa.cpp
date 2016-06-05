@@ -98,6 +98,7 @@ bool MPForm_Picasa::addPair(const QString& name, const QString& value, const QSt
     str += "\r\n";
 
     m_buffer.append(str);
+
     return true;
 }
 

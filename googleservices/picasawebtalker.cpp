@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Picasa web service
  *
  * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2016 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009      by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
@@ -102,13 +102,13 @@ PicasawebTalker::~PicasawebTalker()
         m_job->kill();
 }
 
-/** PicasaWeb's Album listing request/response
-  * First a request is sent to the url below and then we might(?) get a redirect URL
-  * WE then need to send the GET request to the Redirect url (this however gets taken care off by the
-  * KIO libraries.
-  * This uses the authenticated album list fetching to get all the albums included the unlisted-albums
-  * which is not returned for an unauthorised request as done without the Authorization header.
-*/
+/**
+ * PicasaWeb's Album listing request/response
+ * First a request is sent to the url below and then we might(?) get a redirect URL
+ * We then need to send the GET request to the Redirect url (this however gets taken care off by the KIO libraries.
+ * This uses the authenticated album list fetching to get all the albums included the unlisted-albums
+ * which is not returned for an unauthorised request as done without the Authorization header.
+ */
 void PicasawebTalker::listAlbums()
 {
     if (m_job)
@@ -116,8 +116,9 @@ void PicasawebTalker::listAlbums()
         m_job->kill();
         m_job = 0;
     }
+
     QUrl url(QString::fromLatin1("https://picasaweb.google.com/data/feed/api/user/default"));
-    KIO::TransferJob* const job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
+    KIO::TransferJob* const job      = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
     KIO::JobUiDelegate* const job_ui = static_cast<KIO::JobUiDelegate*>(job->ui());
     job_ui->setWindow(m_parent);
     job->addMetaData(QString::fromLatin1("content-type"),
@@ -162,7 +163,7 @@ void PicasawebTalker::listPhotos(const QString& albumId,
 
     url.setQuery(q);
 
-    KIO::TransferJob* const job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
+    KIO::TransferJob* const job      = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
     KIO::JobUiDelegate* const job_ui = static_cast<KIO::JobUiDelegate*>(job->ui());
     job_ui->setWindow(m_parent);
     job->addMetaData(QString::fromLatin1("content-type"),
@@ -174,8 +175,8 @@ void PicasawebTalker::listPhotos(const QString& albumId,
         job->addMetaData(QString::fromLatin1("customHTTPHeader"), auth_string);
     }
 
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(data(KIO::Job*,QByteArray)));
+    connect(job, SIGNAL(data(KIO::Job*, QByteArray)),
+            this, SLOT(data(KIO::Job*, QByteArray)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
@@ -199,43 +200,44 @@ void PicasawebTalker::createAlbum(const GSFolder& album)
     QDomProcessingInstruction instr = docMeta.createProcessingInstruction(
         QString::fromLatin1("xml"), QString::fromLatin1("version='1.0' encoding='UTF-8'"));
     docMeta.appendChild(instr);
-    QDomElement entryElem = docMeta.createElement(QString::fromLatin1("entry"));
+    QDomElement entryElem           = docMeta.createElement(QString::fromLatin1("entry"));
     docMeta.appendChild(entryElem);
     entryElem.setAttribute(QString::fromLatin1("xmlns"), QString::fromLatin1("http://www.w3.org/2005/Atom"));
-    QDomElement titleElem = docMeta.createElement(QString::fromLatin1("title"));
+    QDomElement titleElem           = docMeta.createElement(QString::fromLatin1("title"));
     entryElem.appendChild(titleElem);
-    QDomText titleText = docMeta.createTextNode(album.title);
+    QDomText titleText              = docMeta.createTextNode(album.title);
     titleElem.appendChild(titleText);
-    QDomElement summaryElem = docMeta.createElement(QString::fromLatin1("summary"));
+    QDomElement summaryElem         = docMeta.createElement(QString::fromLatin1("summary"));
     entryElem.appendChild(summaryElem);
-    QDomText summaryText = docMeta.createTextNode(album.description);
+    QDomText summaryText            = docMeta.createTextNode(album.description);
     summaryElem.appendChild(summaryText);
-    QDomElement locationElem = docMeta.createElementNS(
+    QDomElement locationElem        = docMeta.createElementNS(
         QString::fromLatin1("http://schemas.google.com/photos/2007"),
         QString::fromLatin1("gphoto:location"));
     entryElem.appendChild(locationElem);
-    QDomText locationText = docMeta.createTextNode(album.location);
+    QDomText locationText           = docMeta.createTextNode(album.location);
     locationElem.appendChild(locationText);
-    QDomElement accessElem = docMeta.createElementNS(
+    QDomElement accessElem          = docMeta.createElementNS(
         QString::fromLatin1("http://schemas.google.com/photos/2007"),
         QString::fromLatin1("gphoto:access"));
     entryElem.appendChild(accessElem);
-    QDomText accessText = docMeta.createTextNode(album.access);
+    QDomText accessText             = docMeta.createTextNode(album.access);
     accessElem.appendChild(accessText);
-    QDomElement commentElem = docMeta.createElementNS(
+    QDomElement commentElem         = docMeta.createElementNS(
         QString::fromLatin1("http://schemas.google.com/photos/2007"),
         QString::fromLatin1("gphoto:commentingEnabled"));
     entryElem.appendChild(commentElem);
-    QDomText commentText = docMeta.createTextNode(
-        album.canComment ? QString::fromLatin1("true") : QString::fromLatin1("false"));
+    QDomText commentText            = docMeta.createTextNode(
+        album.canComment ? QString::fromLatin1("true") 
+                         : QString::fromLatin1("false"));
     commentElem.appendChild(commentText);
-    QDomElement timestampElem = docMeta.createElementNS(
+    QDomElement timestampElem       = docMeta.createElementNS(
         QString::fromLatin1("http://schemas.google.com/photos/2007"),
         QString::fromLatin1("gphoto:timestamp"));
     entryElem.appendChild(timestampElem);
-    QDomText timestampText = docMeta.createTextNode(album.timestamp);
+    QDomText timestampText          = docMeta.createTextNode(album.timestamp);
     timestampElem.appendChild(timestampText);
-    QDomElement categoryElem = docMeta.createElement(QString::fromLatin1("category"));
+    QDomElement categoryElem        = docMeta.createElement(QString::fromLatin1("category"));
     entryElem.appendChild(categoryElem);
     categoryElem.setAttribute(
         QString::fromLatin1("scheme"),
@@ -243,23 +245,23 @@ void PicasawebTalker::createAlbum(const GSFolder& album)
     categoryElem.setAttribute(
         QString::fromLatin1("term"),
         QString::fromLatin1("http://schemas.google.com/photos/2007#album"));
-    QDomElement mediaGroupElem = docMeta.createElementNS(
+    QDomElement mediaGroupElem      = docMeta.createElementNS(
         QString::fromLatin1("http://search.yahoo.com/mrss/"),
         QString::fromLatin1("media:group"));
     entryElem.appendChild(mediaGroupElem);
-    QDomElement mediaKeywordsElem = docMeta.createElementNS(
+    QDomElement mediaKeywordsElem   = docMeta.createElementNS(
         QString::fromLatin1("http://search.yahoo.com/mrss/"),
         QString::fromLatin1("media:keywords"));
     mediaGroupElem.appendChild(mediaKeywordsElem);
-    QDomText mediaKeywordsText = docMeta.createTextNode(album.tags.join(QString::fromLatin1(",")));
+    QDomText mediaKeywordsText      = docMeta.createTextNode(album.tags.join(QString::fromLatin1(",")));
     mediaKeywordsElem.appendChild(mediaKeywordsText);
 
     QByteArray buffer;
     buffer.append(docMeta.toString().toUtf8());
 
     QUrl url(QString::fromLatin1("https://picasaweb.google.com/data/feed/api/user/default"));
-    QString auth_string = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
-    KIO::TransferJob* const job = KIO::http_post(url, buffer, KIO::HideProgressInfo);
+    QString auth_string              = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
+    KIO::TransferJob* const job      = KIO::http_post(url, buffer, KIO::HideProgressInfo);
     KIO::JobUiDelegate* const job_ui = static_cast<KIO::JobUiDelegate*>(job->ui());
     job_ui->setWindow(m_parent);
     job->addMetaData(
@@ -270,8 +272,8 @@ void PicasawebTalker::createAlbum(const GSFolder& album)
         QString::fromLatin1("Content-Length: %1").arg(buffer.length()));
     job->addMetaData(QString::fromLatin1("customHTTPHeader"), auth_string);
 
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(data(KIO::Job*,QByteArray)));
+    connect(job, SIGNAL(data(KIO::Job*, QByteArray)),
+            this, SLOT(data(KIO::Job*, QByteArray)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
@@ -282,7 +284,8 @@ void PicasawebTalker::createAlbum(const GSFolder& album)
     emit signalBusy(true);
 }
 
-bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QString& albumId,bool rescale,int maxDim,int imageQuality)
+bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QString& albumId,
+                               bool rescale, int maxDim, int imageQuality)
 {
     if (m_job)
     {
@@ -312,18 +315,19 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QS
         return false;
     }
 
-    path = QDir::tempPath() + QLatin1Char('/') + QFileInfo(photoPath).baseName().trimmed() + QString::fromLatin1(".jpg");
+    path                  = QDir::tempPath() + QLatin1Char('/') + QFileInfo(photoPath).baseName().trimmed() + 
+                            QString::fromLatin1(".jpg");
     int imgQualityToApply = 100;
 
     if (rescale)
     {
         if(image.width() > maxDim || image.height() > maxDim)
-            image = image.scaled(maxDim,maxDim,Qt::KeepAspectRatio,Qt::SmoothTransformation);
+            image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
         imgQualityToApply = imageQuality;
     }
 
-    image.save(path,"JPEG",imgQualityToApply);
+    image.save(path, "JPEG", imgQualityToApply);
 
     if (m_meta && m_meta->load(QUrl::fromLocalFile(photoPath)))
     {
@@ -333,21 +337,22 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QS
     }
 
     //Create the Body in atom-xml
+
     QDomDocument docMeta;
     QDomProcessingInstruction instr = docMeta.createProcessingInstruction(QString::fromLatin1("xml"), QString::fromLatin1("version='1.0' encoding='UTF-8'"));
     docMeta.appendChild(instr);
-    QDomElement entryElem = docMeta.createElement(QString::fromLatin1("entry"));
+    QDomElement entryElem           = docMeta.createElement(QString::fromLatin1("entry"));
     docMeta.appendChild(entryElem);
     entryElem.setAttribute(QString::fromLatin1("xmlns"), QString::fromLatin1("http://www.w3.org/2005/Atom"));
-    QDomElement titleElem = docMeta.createElement(QString::fromLatin1("title"));
+    QDomElement titleElem           = docMeta.createElement(QString::fromLatin1("title"));
     entryElem.appendChild(titleElem);
-    QDomText titleText = docMeta.createTextNode(QFileInfo(path).fileName()); // NOTE: Do not use info.title as arg here to set titleText because we change the format of image as .jpg before uploading.
+    QDomText titleText              = docMeta.createTextNode(QFileInfo(path).fileName()); // NOTE: Do not use info.title as arg here to set titleText because we change the format of image as .jpg before uploading.
     titleElem.appendChild(titleText);
-    QDomElement summaryElem = docMeta.createElement(QString::fromLatin1("summary"));
+    QDomElement summaryElem         = docMeta.createElement(QString::fromLatin1("summary"));
     entryElem.appendChild(summaryElem);
-    QDomText summaryText = docMeta.createTextNode(info.description);
+    QDomText summaryText            = docMeta.createTextNode(info.description);
     summaryElem.appendChild(summaryText);
-    QDomElement categoryElem = docMeta.createElement(QString::fromLatin1("category"));
+    QDomElement categoryElem        = docMeta.createElement(QString::fromLatin1("category"));
     entryElem.appendChild(categoryElem);
     categoryElem.setAttribute(
         QString::fromLatin1("scheme"),
@@ -355,15 +360,15 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QS
     categoryElem.setAttribute(
         QString::fromLatin1("term"),
         QString::fromLatin1("http://schemas.google.com/photos/2007#photo"));
-    QDomElement mediaGroupElem = docMeta.createElementNS(
+    QDomElement mediaGroupElem      = docMeta.createElementNS(
         QString::fromLatin1("http://search.yahoo.com/mrss/"),
         QString::fromLatin1("media:group"));
     entryElem.appendChild(mediaGroupElem);
-    QDomElement mediaKeywordsElem = docMeta.createElementNS(
+    QDomElement mediaKeywordsElem   = docMeta.createElementNS(
         QString::fromLatin1("http://search.yahoo.com/mrss/"),
         QString::fromLatin1("media:keywords"));
     mediaGroupElem.appendChild(mediaKeywordsElem);
-    QDomText mediaKeywordsText = docMeta.createTextNode(info.tags.join(QString::fromLatin1(",")));
+    QDomText mediaKeywordsText      = docMeta.createTextNode(info.tags.join(QString::fromLatin1(",")));
     mediaKeywordsElem.appendChild(mediaKeywordsText);
 
     if (!info.gpsLat.isEmpty() && !info.gpsLon.isEmpty())
@@ -376,11 +381,11 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QS
             QString::fromLatin1("http://www.opengis.net/gml"),
             QString::fromLatin1("gml:Point"));
         whereElem.appendChild(pointElem);
-        QDomElement gpsElem = docMeta.createElementNS(
+        QDomElement gpsElem   = docMeta.createElementNS(
             QString::fromLatin1("http://www.opengis.net/gml"),
             QString::fromLatin1("gml:pos"));
         pointElem.appendChild(gpsElem);
-        QDomText gpsVal = docMeta.createTextNode(info.gpsLat + QLatin1Char(' ') + info.gpsLon);
+        QDomText gpsVal       = docMeta.createTextNode(info.gpsLat + QLatin1Char(' ') + info.gpsLon);
         gpsElem.appendChild(gpsVal);
     }
 
@@ -391,7 +396,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QS
 
     form.finish();
 
-    KIO::TransferJob* const job = KIO::http_post(url, form.formData(), KIO::HideProgressInfo);
+    KIO::TransferJob* const job      = KIO::http_post(url, form.formData(), KIO::HideProgressInfo);
     KIO::JobUiDelegate* const job_ui = static_cast<KIO::JobUiDelegate*>(job->ui());
     job_ui->setWindow(m_parent);
     job->addMetaData(QString::fromLatin1("content-type"), form.contentType());
@@ -400,8 +405,8 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QS
     job->addMetaData(QString::fromLatin1("customHTTPHeader"),
                      auth_string + QString::fromLatin1("\nMIME-version: 1.0"));
 
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(data(KIO::Job*,QByteArray)));
+    connect(job, SIGNAL(data(KIO::Job*, QByteArray)),
+            this, SLOT(data(KIO::Job*, QByteArray)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
@@ -413,7 +418,8 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QS
     return true;
 }
 
-bool PicasawebTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, const QString& albumId*/,bool rescale,int maxDim,int imageQuality)
+bool PicasawebTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, const QString& albumId*/,
+                                  bool rescale, int maxDim, int imageQuality)
 {
     if (m_job)
     {

@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Picasa web service
  *
  * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2016 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -80,15 +80,18 @@ public:
 
     void listAlbums();
     void listPhotos(const QString& albumId,
-                    const QString& imgmax=QString());
+                    const QString& imgmax = QString());
     void createAlbum(const GSFolder& newAlbum);
-    bool addPhoto(const QString& photoPath, GSPhoto& info, const QString& albumId,bool rescale,int maxDim,int imageQuality);
-    bool updatePhoto(const QString& photoPath, GSPhoto& info/*, const QString& albumId*/,bool rescale,int maxDim,int imageQuality);
+    bool addPhoto(const QString& photoPath, GSPhoto& info, const QString& albumId, 
+                  bool rescale, int maxDim, int imageQuality);
+    bool updatePhoto(const QString& photoPath, GSPhoto& info/*, const QString& albumId*/,
+                     bool rescale, int maxDim, int imageQuality);
     void getPhoto(const QString& imgPath);
 
     QString getLoginName()   const;
     QString getUserName()    const;
     QString getUserEmailId() const;
+
     QString token()          const
     {
         return m_access_token;
@@ -138,4 +141,4 @@ private:
 
 } // namespace KIPIGoogleServicesPlugin
 
-#endif /* PICASAWEBTALKER_H */
+#endif // PICASAWEBTALKER_H

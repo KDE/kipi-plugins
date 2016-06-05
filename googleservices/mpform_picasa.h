@@ -43,7 +43,7 @@ public:
     void finish();
     void reset();
 
-    bool addPair(const QString& name, const QString& value, const QString& contentType=QString());
+    bool addPair(const QString& name, const QString& value, const QString& contentType = QString());
     bool addFile(const QString& name, const QString& path);
 
     QString    contentType() const;
@@ -52,10 +52,10 @@ public:
 
 private:
 
-    QByteArray  m_buffer;
+    QByteArray m_buffer;
     QByteArray m_boundary;
 };
 
 } // namespace KIPIGoogleServicesPlugin
 
-#endif /* MPFORM_PICASA_H */
+#endif // MPFORM_PICASA_H

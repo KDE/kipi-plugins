@@ -46,11 +46,10 @@ namespace KIPIGoogleServicesPlugin
 {
 
 NewAlbumDlg::NewAlbumDlg(QWidget* const parent, const QString& serviceName, const QString& pluginName)
-    : KPNewAlbumDialog(parent,pluginName)
+    : KPNewAlbumDialog(parent, pluginName)
 {
-    m_serviceName = serviceName;
-
-    const int spacing = QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
+    m_serviceName            = serviceName;
+    const int spacing        = QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
 
     QGroupBox* const privBox = new QGroupBox(i18n("Access Level"), getMainWidget());
     privBox->setWhatsThis(i18n("These are security and privacy settings for the new Google Photos/PicasaWeb album."));
@@ -96,7 +95,7 @@ void NewAlbumDlg::getAlbumProperties(GSFolder& album)
 {
     if (QString::compare(m_serviceName, QString::fromLatin1("googledriveexport"), Qt::CaseInsensitive) == 0)
     {
-        album.title       = getTitleEdit()->text();
+        album.title = getTitleEdit()->text();
         return;
     }
 
