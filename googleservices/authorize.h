@@ -90,10 +90,6 @@ private:
         GD_REFRESHTOKEN
     };
 
-private:
-
-    QDialog*     window;
-
 protected:
 
     QWidget*     m_parent;
@@ -115,7 +111,11 @@ protected:
     KIO::Job*    m_job;
 
     Auth_State   m_Authstate;
-    int          continuePos;
+    int          m_continuePos;
+
+private:
+
+    QDialog*     m_window;
 };
 
 } // namespace KIPIGoogleServicesPlugin
