@@ -92,7 +92,8 @@ GDTalker::~GDTalker()
 {
 }
 
-/** Gets username
+/**
+ * Gets username
  */
 void GDTalker::getUserName()
 {
@@ -101,18 +102,18 @@ void GDTalker::getUserName()
     urlQuery.addQueryItem(QString::fromLatin1("scope"), m_scope);
     urlQuery.addQueryItem(QString::fromLatin1("access_token"), m_access_token);
     url.setQuery(urlQuery);
-    QString auth = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
+    QString auth                = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
 
-    KIO::TransferJob* job = KIO::get(url,KIO::NoReload,KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::get(url,KIO::NoReload,KIO::HideProgressInfo);
     job->addMetaData(QString::fromLatin1("content-type"),
                      QString::fromLatin1("Content-Type: application/json"));
     job->addMetaData(QString::fromLatin1("customHTTPHeader"), auth);
 
-    connect(job,SIGNAL(data(KIO::Job*,QByteArray)),
-            this,SLOT(data(KIO::Job*,QByteArray)));
+    connect(job, SIGNAL(data(KIO::Job*, QByteArray)),
+            this, SLOT(data(KIO::Job*, QByteArray)));
 
-    connect(job,SIGNAL(result(KJob*)),
-            this,SLOT(slotResult(KJob*)));
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 
     m_state = GD_USERNAME;
     m_job   = job;
@@ -120,23 +121,24 @@ void GDTalker::getUserName()
     emit signalBusy(true);
 }
 
-/** Gets list of folder of user in json format
+/**
+ * Gets list of folder of user in json format
  */
 void GDTalker::listFolders()
 {
     QUrl url(QString::fromLatin1("https://www.googleapis.com/drive/v2/files?q=mimeType = 'application/vnd.google-apps.folder'"));
-    QString auth = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
+    QString auth                = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
     qCDebug(KIPIPLUGINS_LOG) << auth;
     KIO::TransferJob* const job = KIO::get(url,KIO::NoReload,KIO::HideProgressInfo);
     job->addMetaData(QString::fromLatin1("content-type"),
                      QString::fromLatin1("Content-Type: application/json"));
     job->addMetaData(QString::fromLatin1("customHTTPHeader"), auth);
 
-    connect(job,SIGNAL(data(KIO::Job*,QByteArray)),
-            this,SLOT(data(KIO::Job*,QByteArray)));
+    connect(job, SIGNAL(data(KIO::Job*, QByteArray)),
+            this, SLOT(data(KIO::Job*, QByteArray)));
 
-    connect(job,SIGNAL(result(KJob*)),
-            this,SLOT(slotResult(KJob*)));
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 
     m_state = GD_LISTFOLDERS;
     m_job   = job;
@@ -144,9 +146,10 @@ void GDTalker::listFolders()
     emit signalBusy(true);
 }
 
-/** Creates folder inside any folder(of which id is passed)
+/**
+ * Creates folder inside any folder(of which id is passed)
  */
-void GDTalker::createFolder(const QString& title,const QString& id)
+void GDTalker::createFolder(const QString& title, const QString& id)
 {
     if (m_job)
     {
@@ -169,17 +172,17 @@ void GDTalker::createFolder(const QString& title,const QString& id)
     data += "}\r\n";
 
     qCDebug(KIPIPLUGINS_LOG) << "data:" << data;
-    QString auth = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
+    QString auth                = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
     KIO::TransferJob* const job = KIO::http_post(url,data,KIO::HideProgressInfo);
     job->addMetaData(QString::fromLatin1("content-type"),
                      QString::fromLatin1("Content-Type: application/json"));
     job->addMetaData(QString::fromLatin1("customHTTPHeader"), auth);
 
-    connect(job,SIGNAL(data(KIO::Job*,QByteArray)),
-            this,SLOT(data(KIO::Job*,QByteArray)));
+    connect(job, SIGNAL(data(KIO::Job*, QByteArray)),
+            this, SLOT(data(KIO::Job*, QByteArray)));
 
-    connect(job,SIGNAL(result(KJob*)),
-            this,SLOT(slotResult(KJob*)));
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 
     m_state = GD_CREATEFOLDER;
     m_job   = job;
@@ -187,7 +190,8 @@ void GDTalker::createFolder(const QString& title,const QString& id)
     emit signalBusy(true);
 }
 
-bool GDTalker::addPhoto(const QString& imgPath,const GSPhoto& info,const QString& id,bool rescale,int maxDim,int imageQuality)
+bool GDTalker::addPhoto(const QString& imgPath, const GSPhoto& info,
+                        const QString& id, bool rescale, int maxDim, int imageQuality)
 {
     if (m_job)
     {
@@ -216,7 +220,8 @@ bool GDTalker::addPhoto(const QString& imgPath,const GSPhoto& info,const QString
         return false;
     }
 
-    path = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QString::fromLatin1("/") + QFileInfo(imgPath).baseName().trimmed() + QString::fromLatin1(".jpg");
+    path = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QString::fromLatin1("/") + 
+                                            QFileInfo(imgPath).baseName().trimmed() + QString::fromLatin1(".jpg");
 
     int imgQualityToApply = 100;
 
@@ -250,7 +255,7 @@ bool GDTalker::addPhoto(const QString& imgPath,const GSPhoto& info,const QString
 
     form.finish();
 
-    QString auth = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
+    QString auth          = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
     QUrl url(QString::fromLatin1("https://www.googleapis.com/upload/drive/v2/files?uploadType=multipart"));
     KIO::TransferJob* job = KIO::http_post(url, form.formData(), KIO::HideProgressInfo);
     job->addMetaData(QString::fromLatin1("content-type"), form.contentType());
@@ -259,11 +264,11 @@ bool GDTalker::addPhoto(const QString& imgPath,const GSPhoto& info,const QString
     job->addMetaData(QString::fromLatin1("customHTTPHeader"), auth);
     job->addMetaData(QString::fromLatin1("host"), QString::fromLatin1("Host:www.googleapis.com"));
 
-    connect(job,SIGNAL(data(KIO::Job*,QByteArray)),
-            this,SLOT(data(KIO::Job*,QByteArray)));
+    connect(job, SIGNAL(data(KIO::Job*, QByteArray)),
+            this, SLOT(data(KIO::Job*, QByteArray)));
 
-    connect(job,SIGNAL(result(KJob*)),
-            this,SLOT(slotResult(KJob*)));
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 
     qCDebug(KIPIPLUGINS_LOG) << "In add photo";
     m_state = GD_ADDPHOTO;
@@ -275,7 +280,7 @@ bool GDTalker::addPhoto(const QString& imgPath,const GSPhoto& info,const QString
 
 void GDTalker::slotResult(KJob* kjob)
 {
-    m_job = 0;
+    m_job               = 0;
     KIO::Job* const job = static_cast<KIO::Job*>(kjob);
 
     if (job->error())
@@ -300,11 +305,11 @@ void GDTalker::slotResult(KJob* kjob)
             parseResponseCreateFolder(m_buffer);
             break;
         case (GD_ADDPHOTO):
-            qCDebug(KIPIPLUGINS_LOG) << "In GD_ADDPHOTO";// << m_buffer;
+            qCDebug(KIPIPLUGINS_LOG) << "In GD_ADDPHOTO"; // << m_buffer;
             parseResponseAddPhoto(m_buffer);
             break;
         case (GD_USERNAME):
-            qCDebug(KIPIPLUGINS_LOG) << "In GD_USERNAME";// << m_buffer;
+            qCDebug(KIPIPLUGINS_LOG) << "In GD_USERNAME"; // << m_buffer;
             parseResponseUserName(m_buffer);
             break;
         default:
@@ -325,7 +330,7 @@ void GDTalker::parseResponseUserName(const QByteArray& data)
 
     QJsonObject jsonObject = doc.object();
     qCDebug(KIPIPLUGINS_LOG)<<"User Name is: " << jsonObject[QString::fromLatin1("name")].toString();
-    QString temp = jsonObject[QString::fromLatin1("name")].toString();
+    QString temp           = jsonObject[QString::fromLatin1("name")].toString();
 
     qCDebug(KIPIPLUGINS_LOG) << "in parseResponseUserName";
 
@@ -347,19 +352,19 @@ void GDTalker::parseResponseListFolders(const QByteArray& data)
     }
 
     QJsonObject jsonObject = doc.object();
-    QJsonArray jsonArray = jsonObject[QString::fromLatin1("items")].toArray();
+    QJsonArray jsonArray   = jsonObject[QString::fromLatin1("items")].toArray();
 
     QList<GSFolder> albumList;
     GSFolder fps;
-    fps.id = m_rootid;
+    fps.id    = m_rootid;
     fps.title = m_rootfoldername;
     albumList.append(fps);
 
-    foreach (const QJsonValue & value, jsonArray) 
+    foreach (const QJsonValue& value, jsonArray) 
     {
         QJsonObject obj = value.toObject();
-        fps.id    = obj[QString::fromLatin1("id")].toString();
-        fps.title = obj[QString::fromLatin1("title")].toString();
+        fps.id          = obj[QString::fromLatin1("id")].toString();
+        fps.title       = obj[QString::fromLatin1("title")].toString();
         albumList.append(fps);
     }
 
@@ -421,11 +426,11 @@ void GDTalker::parseResponseAddPhoto(const QByteArray& data)
 
     if (!success)
     {
-        emit signalAddPhotoDone(0,i18n("Failed to upload photo"),QString::fromLatin1("-1"));
+        emit signalAddPhotoDone(0, i18n("Failed to upload photo"), QString::fromLatin1("-1"));
     }
     else
     {
-        emit signalAddPhotoDone(1,QString(),photoId);
+        emit signalAddPhotoDone(1, QString(), photoId);
     }
 }
 
