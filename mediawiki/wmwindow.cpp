@@ -80,7 +80,7 @@ public:
     {
         widget       = 0;
         mediawiki    = 0;
-        uploadtalker = 0;
+        uploadTalker = 0;
     }
 
     QString    tmpDir;
@@ -93,7 +93,7 @@ public:
     WmWidget*  widget;
     MediaWiki* mediawiki;
 
-    WMTalker*  uploadtalker;
+    WMTalker*  uploadTalker;
 };
 
 WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
@@ -103,7 +103,7 @@ WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     d->tmpPath.clear();
     d->tmpDir       = tmpFolder;
     d->widget       = new WmWidget(this);
-    d->uploadtalker = 0;
+    d->uploadTalker = 0;
     d->login        = QString();
     d->pass         = QString();
 
@@ -333,21 +333,21 @@ void WMWindow::slotStartTransfer()
         }
     }
 
-    d->uploadtalker->setImageMap(imagesDesc);
+    d->uploadTalker->setImageMap(imagesDesc);
 
     d->widget->progressBar()->setRange(0, 100);
     d->widget->progressBar()->setValue(0);
 
-    connect(d->uploadtalker, SIGNAL(uploadProgress(int)),
+    connect(d->uploadTalker, SIGNAL(uploadProgress(int)),
             d->widget->progressBar(), SLOT(setValue(int)));
 
-    connect(d->uploadtalker, SIGNAL(endUpload()),
+    connect(d->uploadTalker, SIGNAL(endUpload()),
             this, SLOT(slotEndUpload()));
 
     d->widget->progressBar()->show();
     d->widget->progressBar()->progressScheduled(i18n("MediaWiki export"), true, true);
     d->widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme(QLatin1String("kipi")).pixmap(22, 22));
-    d->uploadtalker->begin();
+    d->uploadTalker->begin();
 }
 
 void WMWindow::slotChangeUserClicked()
@@ -379,12 +379,12 @@ int WMWindow::slotLoginHandle(KJob* loginJob)
     {
         d->login.clear();
         d->pass.clear();
-        d->uploadtalker = 0;
+        d->uploadTalker = 0;
         QMessageBox::critical(this, i18n("Login Error"), i18n("Please check your credentials and try again."));
     }
     else
     {
-        d->uploadtalker = new WMTalker(iface(), d->mediawiki, this);
+        d->uploadTalker = new WMTalker(iface(), d->mediawiki, this);
         startButton()->setEnabled(true);
         d->widget->invertAccountLoginBox();
         d->widget->updateLabels(d->login, d->wikiName, d->wikiUrl.toString());
@@ -395,10 +395,10 @@ int WMWindow::slotLoginHandle(KJob* loginJob)
 
 void WMWindow::slotEndUpload()
 {
-    disconnect(d->uploadtalker, SIGNAL(uploadProgress(int)),
+    disconnect(d->uploadTalker, SIGNAL(uploadProgress(int)),
                d->widget->progressBar(),SLOT(setValue(int)));
 
-    disconnect(d->uploadtalker, SIGNAL(endUpload()),
+    disconnect(d->uploadTalker, SIGNAL(endUpload()),
                this, SLOT(slotEndUpload()));
 
     QMessageBox::information(this, QString(), i18n("Upload finished with no errors."));
