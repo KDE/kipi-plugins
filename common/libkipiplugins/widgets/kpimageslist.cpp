@@ -199,8 +199,8 @@ void KPImagesListViewItem::setPixmap(const QPixmap& pix)
 
 void KPImagesListViewItem::setThumb(const QPixmap& pix, bool hasThumb)
 {
-    qCDebug(KIPIPLUGINS_LOG) << "Received new thumbnail for url " << d->url
-                             << ". My view is " << d->view;
+    qCDebug(KIPIPLUGINS_LOG) << "(" << hasThumb << ") :: Received new thumbnail for url "
+                             << d->url << " for view " << d->view;
 
     if (!d->view)
     {
