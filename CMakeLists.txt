@@ -234,7 +234,7 @@ if(KF5Kipi_FOUND)
         add_subdirectory(dropbox)
 
         if(KF5Archive_FOUND)
-            add_subdirectory(flashexport)  # simpleviever.cpp
+            add_subdirectory(flashexport)
         endif()
 
         if(KF5Vkontakte_FOUND)
@@ -262,7 +262,7 @@ if(KF5Kipi_FOUND)
                 add_subdirectory(rajce)            # rajcesession.cpp
                 add_subdirectory(smug)             # smugtalker.cpp
                 add_subdirectory(remotestorage)    # kioimportwindow.cpp, kioexportwindow.cpp
-                add_subdirectory(googleservices)   # autorize.cpp, picasawebtalker.cpp, replacedialog.cpp, gdtalker.cpp, gswindow.cpp
+                add_subdirectory(googleservices)   # autorize.cpp, gptalker.cpp, replacedialog.cpp, gdtalker.cpp, gswindow.cpp
 
            endif()
 
