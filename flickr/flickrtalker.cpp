@@ -198,11 +198,10 @@ void FlickrTalker::maxAllowedFileSize()
     }
     else
     {
-        QByteArray tmp;
         QNetworkRequest netRequest(url);
         netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
 
-        m_reply = m_netMngr->post(netRequest, tmp);
+        m_reply = m_netMngr->post(netRequest, QByteArray());
     }
 
     m_state = FE_GETMAXSIZE;
@@ -261,11 +260,10 @@ void FlickrTalker::getFrob()
     }
     else
     {
-        QByteArray tmp;
         QNetworkRequest netRequest(url);
         netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
 
-        m_reply = m_netMngr->post(netRequest, tmp);
+        m_reply = m_netMngr->post(netRequest, QByteArray());
     }
 
     m_state = FE_GETFROB;
@@ -302,11 +300,10 @@ void FlickrTalker::checkToken(const QString& token)
     }
     else
     {
-        QByteArray tmp;
         QNetworkRequest netRequest(url);
         netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
 
-        m_reply = m_netMngr->post(netRequest, tmp);
+        m_reply = m_netMngr->post(netRequest, QByteArray());
     }
 
     m_state = FE_CHECKTOKEN;
@@ -389,11 +386,10 @@ void FlickrTalker::getToken()
     }
     else
     {
-        QByteArray tmp;
         QNetworkRequest netRequest(url);
         netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
 
-        m_reply = m_netMngr->post(netRequest, tmp);
+        m_reply = m_netMngr->post(netRequest, QByteArray());
     }
 
     m_state = FE_GETTOKEN;
@@ -431,11 +427,10 @@ void FlickrTalker::listPhotoSets()
     }
     else
     {
-        QByteArray tmp;
         QNetworkRequest netRequest(url);
         netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
 
-        m_reply = m_netMngr->post(netRequest, tmp);
+        m_reply = m_netMngr->post(netRequest, QByteArray());
     }
 
     m_state = FE_LISTPHOTOSETS;
@@ -476,11 +471,10 @@ void FlickrTalker::getPhotoProperty(const QString& method, const QStringList& ar
     }
     else
     {
-        QByteArray tmp;
         QNetworkRequest netRequest(url);
         netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
 
-        m_reply = m_netMngr->post(netRequest, tmp);
+        m_reply = m_netMngr->post(netRequest, QByteArray());
     }
 
     m_state = FE_GETPHOTOPROPERTY;
@@ -528,11 +522,10 @@ void FlickrTalker::createPhotoSet(const QString& /*albumName*/, const QString& a
     }
     else
     {
-        QByteArray tmp;
         QNetworkRequest netRequest(url);
         netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
 
-        m_reply = m_netMngr->post(netRequest, tmp);
+        m_reply = m_netMngr->post(netRequest, QByteArray());
     }
 
     m_state = FE_CREATEPHOTOSET;
@@ -575,11 +568,10 @@ void FlickrTalker::addPhotoToPhotoSet(const QString& photoId,
         url.setQuery(urlQuery);
         qCDebug(KIPIPLUGINS_LOG) << "Add photo to Photo set url: " << url;
 
-        QByteArray tmp;
         QNetworkRequest netRequest(url);
         netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
 
-        m_reply = m_netMngr->post(netRequest, tmp);
+        m_reply = m_netMngr->post(netRequest, QByteArray());
 
         m_state = FE_ADDPHOTOTOPHOTOSET;
         m_buffer.resize(0);
@@ -865,6 +857,7 @@ void FlickrTalker::slotFinished(QNetworkReply* reply)
                                   i18n("Error"), reply->errorString());
         }
 
+        reply->deleteLater();
         return;
     }
 
