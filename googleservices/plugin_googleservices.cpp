@@ -6,7 +6,8 @@
  * Date        : 2013-11-18
  * Description : a kipi plugin to export images to Google-Drive web service
  *
- * Copyright (C) 2013 by Pankaj Kumar <me at panks dot me>
+ * Copyright (C) 2013      by Pankaj Kumar <me at panks dot me>
+ * Copyright (C) 2008-2016 by Caulier Gilles <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -59,18 +60,18 @@ K_PLUGIN_FACTORY(GoogleDriveFactory, registerPlugin<Plugin_GoogleServices>(); )
 Plugin_GoogleServices::Plugin_GoogleServices(QObject* const parent, const QVariantList& /*args*/)
     : Plugin(parent, "Google Services")
 {
-    qCDebug(KIPIPLUGINS_LOG) << "Plugin_GoogleDrive/PicasaWeb(Google Photos) Plugin Loaded";
+    qCDebug(KIPIPLUGINS_LOG) << "Plugin_GoogleServices Plugin Loaded";
 
     setUiBaseName("kipiplugin_googleservicesui.rc");
     setupXML();
 
     m_actionGDriveExport = 0;
-    m_actionPicasaExport = 0;
-    m_actionPicasaImport = 0;
+    m_actionGPhotoExport = 0;
+    m_actionGPhotoImport = 0;
 
     m_dlgGDriveExport    = 0;
-    m_dlgPicasaExport    = 0;
-    m_dlgPicasaImport    = 0;
+    m_dlgGPhotoExport    = 0;
+    m_dlgGPhotoImport    = 0;
 }
 
 Plugin_GoogleServices::~Plugin_GoogleServices()
@@ -80,8 +81,8 @@ Plugin_GoogleServices::~Plugin_GoogleServices()
 void Plugin_GoogleServices::setup(QWidget* const widget)
 {
     m_dlgGDriveExport = 0;
-    m_dlgPicasaExport = 0;
-    m_dlgPicasaImport = 0;
+    m_dlgGPhotoExport = 0;
+    m_dlgGPhotoImport = 0;
 
     Plugin::setup(widget);
 
@@ -96,7 +97,7 @@ void Plugin_GoogleServices::setup(QWidget* const widget)
 
 void Plugin_GoogleServices::setupActions()
 {
-    setDefaultCategory(ExportPlugin);// uncomment if import feature is added to google drive
+    setDefaultCategory(ExportPlugin);
     m_actionGDriveExport = new QAction(this);
     m_actionGDriveExport->setText(i18n("Export to &Google Drive..."));
     m_actionGDriveExport->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-googledrive")));
@@ -107,30 +108,32 @@ void Plugin_GoogleServices::setupActions()
 
     addAction(QString::fromLatin1("googledriveexport"), m_actionGDriveExport);
 
-    m_actionPicasaExport = new QAction(this);
-    m_actionPicasaExport->setText(i18n("Export to &Google Photos/PicasaWeb..."));
-    m_actionPicasaExport->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-picasa")));
-    m_actionPicasaExport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::Key_P));
+    m_actionGPhotoExport = new QAction(this);
+    m_actionGPhotoExport->setText(i18n("Export to &Google Photos/PicasaWeb..."));
+    m_actionGPhotoExport->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-googlephoto")));
+    m_actionGPhotoExport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::Key_P));
 
-    connect(m_actionPicasaExport, SIGNAL(triggered(bool)),
+    connect(m_actionGPhotoExport, SIGNAL(triggered(bool)),
             this, SLOT(slotPicasaExport()));
 
-    addAction(QString::fromLatin1("picasawebexport"), m_actionPicasaExport);
+    addAction(QString::fromLatin1("googlephotoexport"), m_actionGPhotoExport);
 
-    m_actionPicasaImport = new QAction(this);
-    m_actionPicasaImport->setText(i18n("Import from &Google Photos/PicasaWeb..."));
-    m_actionPicasaImport->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-picasa")));
-    m_actionPicasaImport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_P));
+    m_actionGPhotoImport = new QAction(this);
+    m_actionGPhotoImport->setText(i18n("Import from &Google Photos/PicasaWeb..."));
+    m_actionGPhotoImport->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-googlephoto")));
+    m_actionGPhotoImport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_P));
 
-    connect(m_actionPicasaImport, SIGNAL(triggered(bool)),
+    connect(m_actionGPhotoImport, SIGNAL(triggered(bool)),
             this, SLOT(slotPicasaImport()) );
 
-    addAction(QString::fromLatin1("picasawebimport"), m_actionPicasaImport, ImportPlugin);
+    addAction(QString::fromLatin1("googlephotoimport"), m_actionGPhotoImport, ImportPlugin);
 }
 
 void Plugin_GoogleServices::slotGDriveExport()
 {
-    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation)+ QString::fromLatin1("/")+ QString::fromLatin1("kipi-gs-") + QString::number(getpid()) + QString::fromLatin1("/");
+    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation) +
+                  QString::fromLatin1("/")  + QString::fromLatin1("kipi-gs-") +
+                  QString::number(getpid()) + QString::fromLatin1("/");
     QDir().mkpath(tmp);
 
     if(!m_dlgGDriveExport)
@@ -151,50 +154,54 @@ void Plugin_GoogleServices::slotGDriveExport()
     m_dlgGDriveExport->reactivate();
 }
 
-void Plugin_GoogleServices::slotPicasaExport()
+void Plugin_GoogleServices::slotGPhotoExport()
 {
-    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation)+ QString::fromLatin1("/")+ QString::fromLatin1("kipi-gs-") + QString::number(getpid()) + QString::fromLatin1("/");
+    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation) +
+                  QString::fromLatin1("/")  + QString::fromLatin1("kipi-gs-") +
+                  QString::number(getpid()) + QString::fromLatin1("/");
     QDir().mkpath(tmp);
 
-    if(!m_dlgPicasaExport)
+    if(!m_dlgGPhotoExport)
     {
-        m_dlgPicasaExport = new GSWindow(tmp, QApplication::activeWindow(),
+        m_dlgGPhotoExport = new GSWindow(tmp, QApplication::activeWindow(),
                                          QString::fromLatin1("picasawebexport"));
     }
     else
     {
-        if(m_dlgPicasaExport->isMinimized())
+        if(m_dlgGPhotoExport->isMinimized())
         {
-            KWindowSystem::unminimizeWindow(m_dlgPicasaExport->winId());
+            KWindowSystem::unminimizeWindow(m_dlgGPhotoExport->winId());
         }
 
-        KWindowSystem::activateWindow(m_dlgPicasaExport->winId());
+        KWindowSystem::activateWindow(m_dlgGPhotoExport->winId());
     }
 
-    m_dlgPicasaExport->reactivate();
+    m_dlgGPhotoExport->reactivate();
 }
 
-void Plugin_GoogleServices::slotPicasaImport()
+void Plugin_GoogleServices::slotGPhotoImport()
 {
-    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation)+ QString::fromLatin1("/")+ QString::fromLatin1("kipi-gs-") + QString::number(getpid()) + QString::fromLatin1("/");
+    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation) +
+                  QString::fromLatin1("/")  + QString::fromLatin1("kipi-gs-") +
+                  QString::number(getpid()) + QString::fromLatin1("/");
     QDir().mkpath(tmp);
 
-    if(!m_dlgPicasaImport)
+    if(!m_dlgGPhotoImport)
     {
-        m_dlgPicasaImport = new GSWindow(tmp, QApplication::activeWindow(),
+        m_dlgGPhotoImport = new GSWindow(tmp, QApplication::activeWindow(),
                                          QString::fromLatin1("picasawebimport"));
     }
     else
     {
-        if(m_dlgPicasaImport->isMinimized())
+        if(m_dlgGPhotoImport->isMinimized())
         {
-            KWindowSystem::unminimizeWindow(m_dlgPicasaImport->winId());
+            KWindowSystem::unminimizeWindow(m_dlgGPhotoImport->winId());
         }
 
-        KWindowSystem::activateWindow(m_dlgPicasaImport->winId());
+        KWindowSystem::activateWindow(m_dlgGPhotoImport->winId());
     }
 
-    m_dlgPicasaImport->reactivate();
+    m_dlgGPhotoImport->reactivate();
 }
 
 } // namespace KIPIGoogleServicesPlugin

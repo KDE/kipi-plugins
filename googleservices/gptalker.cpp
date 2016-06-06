@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2007-16-07
- * Description : a kipi plugin to export images to Picasa web service
+ * Description : a kipi plugin to export images to Google Photo web service
  *
  * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008-2016 by Gilles Caulier <caulier dot gilles at gmail dot com>
@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "picasawebtalker.h"
+#include "gptalker.h"
 
 // C++ includes
 
@@ -65,18 +65,18 @@
 // Local includes
 
 #include "kpversion.h"
-#include "mpform_picasa.h"
+#include "mpform_gphoto.h"
 #include "kipiplugins_debug.h"
 
 namespace KIPIGoogleServicesPlugin
 {
 
-static bool picasaLessThan(GSFolder& p1, GSFolder& p2)
+static bool gphotoLessThan(GSFolder& p1, GSFolder& p2)
 {
     return (p1.title.toLower() < p2.title.toLower());
 }
 
-PicasawebTalker::PicasawebTalker(QWidget* const parent)
+GPTalker::GPTalker(QWidget* const parent)
     : Authorize(parent, QString::fromLatin1("https://picasaweb.google.com/data/")),
       m_job(0),
       m_state(FE_LOGOUT),
@@ -96,7 +96,7 @@ PicasawebTalker::PicasawebTalker(QWidget* const parent)
             this, SLOT(slotError(QString)));
 }
 
-PicasawebTalker::~PicasawebTalker()
+GPTalker::~GPTalker()
 {
     if (m_job)
         m_job->kill();
@@ -109,7 +109,7 @@ PicasawebTalker::~PicasawebTalker()
  * This uses the authenticated album list fetching to get all the albums included the unlisted-albums
  * which is not returned for an unauthorised request as done without the Authorization header.
  */
-void PicasawebTalker::listAlbums()
+void GPTalker::listAlbums()
 {
     if (m_job)
     {
@@ -142,7 +142,7 @@ void PicasawebTalker::listAlbums()
     emit signalBusy( true );
 }
 
-void PicasawebTalker::listPhotos(const QString& albumId,
+void GPTalker::listPhotos(const QString& albumId,
                                  const QString& imgmax)
 {
     if (m_job)
@@ -187,7 +187,7 @@ void PicasawebTalker::listPhotos(const QString& albumId,
     emit signalBusy( true );
 }
 
-void PicasawebTalker::createAlbum(const GSFolder& album)
+void GPTalker::createAlbum(const GSFolder& album)
 {
     if (m_job)
     {
@@ -284,7 +284,7 @@ void PicasawebTalker::createAlbum(const GSFolder& album)
     emit signalBusy(true);
 }
 
-bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QString& albumId,
+bool GPTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QString& albumId,
                                bool rescale, int maxDim, int imageQuality)
 {
     if (m_job)
@@ -295,7 +295,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QS
 
     QUrl url(QString::fromLatin1("https://picasaweb.google.com/data/feed/api/user/default/albumid/") + albumId);
     QString auth_string = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
-    MPForm_Picasa form;
+    MPForm_GPhoto form;
 
     QString path        = photoPath;
     QImage image;
@@ -418,7 +418,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QS
     return true;
 }
 
-bool PicasawebTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, const QString& albumId*/,
+bool GPTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, const QString& albumId*/,
                                   bool rescale, int maxDim, int imageQuality)
 {
     if (m_job)
@@ -427,7 +427,7 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, con
         m_job = 0;
     }
 
-    MPForm_Picasa form;
+    MPForm_GPhoto form;
     QString path = photoPath;
     QImage image;
 
@@ -554,7 +554,7 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, con
     return true;
 }
 
-void PicasawebTalker::getPhoto(const QString& imgPath)
+void GPTalker::getPhoto(const QString& imgPath)
 {
     if (m_job)
     {
@@ -578,22 +578,22 @@ void PicasawebTalker::getPhoto(const QString& imgPath)
     m_buffer.resize(0);
 }
 
-QString PicasawebTalker::getUserName() const
+QString GPTalker::getUserName() const
 {
     return m_username;
 }
 
-QString PicasawebTalker::getUserEmailId() const
+QString GPTalker::getUserEmailId() const
 {
     return m_userEmailId;
 }
 
-QString PicasawebTalker::getLoginName() const
+QString GPTalker::getLoginName() const
 {
     return m_loginName;
 }
 
-void PicasawebTalker::cancel()
+void GPTalker::cancel()
 {
     if (m_job)
     {
@@ -604,11 +604,11 @@ void PicasawebTalker::cancel()
     emit signalBusy(false);
 }
 
-void PicasawebTalker::info(KIO::Job* /*job*/, const QString& /*str*/)
+void GPTalker::info(KIO::Job* /*job*/, const QString& /*str*/)
 {
 }
 
-void PicasawebTalker::dataReq(KIO::Job* job, QByteArray& data)
+void GPTalker::dataReq(KIO::Job* job, QByteArray& data)
 {
     if (m_jobData.contains(job))
     {
@@ -617,7 +617,7 @@ void PicasawebTalker::dataReq(KIO::Job* job, QByteArray& data)
     }
 }
 
-void PicasawebTalker::slotError(const QString & error)
+void GPTalker::slotError(const QString & error)
 {
     QString transError;
     int     errorNo = 0;
@@ -683,7 +683,7 @@ void PicasawebTalker::slotError(const QString & error)
                           i18n("Error occurred: %1\nUnable to proceed further.",transError + error));
 }
 
-void PicasawebTalker::slotResult(KJob *job)
+void GPTalker::slotResult(KJob *job)
 {
     m_job = 0;
     emit signalBusy(false);
@@ -728,7 +728,7 @@ void PicasawebTalker::slotResult(KJob *job)
     }
 }
 
-void PicasawebTalker::parseResponseListAlbums(const QByteArray& data)
+void GPTalker::parseResponseListAlbums(const QByteArray& data)
 {
     QDomDocument doc(QString::fromLatin1("feed"));
     QString      err;
@@ -795,11 +795,11 @@ void PicasawebTalker::parseResponseListAlbums(const QByteArray& data)
         node = node.nextSibling();
     }
 
-    qSort(albumList.begin(), albumList.end(), picasaLessThan);
+    qSort(albumList.begin(), albumList.end(), gphotoLessThan);
     emit signalListAlbumsDone(1, QString::fromLatin1(""), albumList);
 }
 
-void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
+void GPTalker::parseResponseListPhotos(const QByteArray& data)
 {
     QDomDocument doc(QString::fromLatin1("feed"));
 
@@ -933,7 +933,7 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
     emit signalListPhotosDone(1, QString::fromLatin1(""), photoList);
 }
 
-void PicasawebTalker::parseResponseCreateAlbum(const QByteArray& data)
+void GPTalker::parseResponseCreateAlbum(const QByteArray& data)
 {
     bool success = false;
 
@@ -978,7 +978,7 @@ void PicasawebTalker::parseResponseCreateAlbum(const QByteArray& data)
     }
 }
 
-void PicasawebTalker::parseResponseAddPhoto(const QByteArray& data)
+void GPTalker::parseResponseAddPhoto(const QByteArray& data)
 {
     QDomDocument doc(QString::fromLatin1("AddPhoto Response"));
 

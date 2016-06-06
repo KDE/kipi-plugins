@@ -4,10 +4,11 @@
  * http://www.digikam.org
  *
  * Date        : 2013-11-18
- * Description : a kipi plugin to export images to Google-Drive web service
+ * Description : a kipi plugin to export images to Google web service
  *
- * Copyright (C) 2013 by Pankaj Kumar <me at panks dot me>
- * Copyright (C) 2015 by Shourya Singh Gupta <shouryasgupta at gmail dot com>
+ * Copyright (C) 2013      by Pankaj Kumar <me at panks dot me>
+ * Copyright (C) 2015      by Shourya Singh Gupta <shouryasgupta at gmail dot com>
+ * Copyright (C) 2008-2016 by Caulier Gilles <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -61,7 +62,7 @@
 #include "gsitem.h"
 #include "newalbumdlg.h"
 #include "gswidget.h"
-#include "picasawebtalker.h"
+#include "gptalker.h"
 #include "replacedialog.h"
 #include "kipiplugins_debug.h"
 
@@ -83,7 +84,7 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
         name         = PluginName::GDrive;
         m_pluginName = QString::fromLatin1("Google Drive");
     }
-    else if (QString::compare(m_serviceName, QString::fromLatin1("picasawebexport"), Qt::CaseInsensitive) == 0)
+    else if (QString::compare(m_serviceName, QString::fromLatin1("googlephotoexport"), Qt::CaseInsensitive) == 0)
     {
         name         = PluginName::PicasaExport;
         m_pluginName = QString::fromLatin1("Google Photos/PicasaWeb");
@@ -185,7 +186,7 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
                                     ki18n("A Kipi plugin to export image collections to "
                                           "Google Photos/Picasa web service."),
                                     ki18n("(c) 2007-2009, Vardhman Jain\n"
-                                          "(c) 2008-2015, Gilles Caulier\n"
+                                          "(c) 2008-2016, Gilles Caulier\n"
                                           "(c) 2009, Luka Renko\n"
                                           "(c) 2010, Jens Mueller\n"
                                           "(c) 2015, Shourya Singh Gupta"));
@@ -230,7 +231,7 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
             }
 
             m_picasa_albumdlg = new NewAlbumDlg(this,m_serviceName,m_pluginName);
-            m_picsasa_talker  = new PicasawebTalker(this);
+            m_picsasa_talker  = new GPTalker(this);
 
             connect(m_picsasa_talker, SIGNAL(signalBusy(bool)),
                     this, SLOT(slotBusy(bool)));

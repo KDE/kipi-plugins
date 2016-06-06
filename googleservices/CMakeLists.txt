@@ -16,13 +16,13 @@ set(kipiplugin_googleservices_PART_SRCS
     authorize.cpp
     replacedialog.cpp
     mpform_gdrive.cpp
-    mpform_picasa.cpp
+    mpform_gphoto.cpp
     plugin_googleservices.cpp
     gswidget.cpp
     gswindow.cpp
     newalbumdlg.cpp
     gdtalker.cpp
-    picasawebtalker.cpp
+    gptalker.cpp
    )
 
 add_library(kipiplugin_googleservices MODULE ${kipiplugin_googleservices_PART_SRCS})

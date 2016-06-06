@@ -4,10 +4,10 @@
  * http://www.digikam.org
  *
  * Date        : 2005-07-07
- * Description : a kipi plugin to export images to Picasa web service
+ * Description : a kipi plugin to export images to Google Photo web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2013 by Caulier Gilles <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2016 by Caulier Gilles <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "mpform_picasa.h"
+#include "mpform_gphoto.h"
 
 // C++ includes
 
@@ -44,21 +44,21 @@
 namespace KIPIGoogleServicesPlugin
 {
 
-MPForm_Picasa::MPForm_Picasa()
+MPForm_GPhoto::MPForm_GPhoto()
     : m_boundary(QByteArray("----------") + KIPIPlugins::KPRandomGenerator::randomString(42 + 13).toLatin1())
 {
 }
 
-MPForm_Picasa::~MPForm_Picasa()
+MPForm_GPhoto::~MPForm_GPhoto()
 {
 }
 
-void MPForm_Picasa::reset()
+void MPForm_GPhoto::reset()
 {
     m_buffer.resize(0);
 }
 
-void MPForm_Picasa::finish()
+void MPForm_GPhoto::finish()
 {
     QByteArray str;
     str += "--";
@@ -68,7 +68,7 @@ void MPForm_Picasa::finish()
     m_buffer.append(str);
 }
 
-bool MPForm_Picasa::addPair(const QString& name, const QString& value, const QString& contentType)
+bool MPForm_GPhoto::addPair(const QString& name, const QString& value, const QString& contentType)
 {
     QByteArray str;
     QString content_length = QString::number(value.length());
@@ -102,7 +102,7 @@ bool MPForm_Picasa::addPair(const QString& name, const QString& value, const QSt
     return true;
 }
 
-bool MPForm_Picasa::addFile(const QString& name, const QString& path)
+bool MPForm_GPhoto::addFile(const QString& name, const QString& path)
 {
     QMimeDatabase db;
     QMimeType ptr = db.mimeTypeForUrl(QUrl::fromLocalFile(path));
@@ -150,17 +150,17 @@ bool MPForm_Picasa::addFile(const QString& name, const QString& path)
     return true;
 }
 
-QString MPForm_Picasa::contentType() const
+QString MPForm_GPhoto::contentType() const
 {
     return QString::fromLatin1("Content-Type: multipart/related; boundary=") + QString::fromLatin1(m_boundary);
 }
 
-QString MPForm_Picasa::boundary() const
+QString MPForm_GPhoto::boundary() const
 {
     return QString::fromLatin1(m_boundary);
 }
 
-QByteArray MPForm_Picasa::formData() const
+QByteArray MPForm_GPhoto::formData() const
 {
     return m_buffer;
 }

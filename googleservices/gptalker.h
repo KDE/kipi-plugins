@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2007-16-07
- * Description : a kipi plugin to export images to Picasa web service
+ * Description : a kipi plugin to export images to Google Photo web service
  *
  * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008-2016 by Gilles Caulier <caulier dot gilles at gmail dot com>
@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef PICASAWEBTALKER_H
-#define PICASAWEBTALKER_H
+#ifndef GP_TALKER_H
+#define GP_TALKER_H
 
 // Qt includes
 
@@ -56,7 +56,7 @@ namespace KIO
 namespace KIPIGoogleServicesPlugin
 {
 
-class PicasawebTalker : public Authorize
+class GPTalker : public Authorize
 {
     Q_OBJECT
 
@@ -75,8 +75,8 @@ public:
 
 public:
 
-    PicasawebTalker(QWidget* const parent);
-    ~PicasawebTalker();
+    GPTalker(QWidget* const parent);
+    ~GPTalker();
 
     void listAlbums();
     void listPhotos(const QString& albumId,
@@ -145,4 +145,4 @@ private:
 
 } // namespace KIPIGoogleServicesPlugin
 
-#endif // PICASAWEBTALKER_H
+#endif // GP_TALKER_H

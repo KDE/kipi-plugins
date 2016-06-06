@@ -4,10 +4,10 @@
  * http://www.digikam.org
  *
  * Date        : 2005-07-07
- * Description : a kipi plugin to export images to Picasa web service
+ * Description : a kipi plugin to export images to Google Photo web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2013 by Caulier Gilles <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2016 by Caulier Gilles <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef MPFORM_PICASA_H
-#define MPFORM_PICASA_H
+#ifndef MPFORM_GPHOTO_H
+#define MPFORM_GPHOTO_H
 
 // Qt includes
 
@@ -32,13 +32,13 @@
 namespace KIPIGoogleServicesPlugin
 {
 
-class MPForm_Picasa
+class MPForm_GPhoto
 {
 
 public:
 
-    MPForm_Picasa();
-    ~MPForm_Picasa();
+    MPForm_GPhoto();
+    ~MPForm_GPhoto();
 
     void finish();
     void reset();
@@ -58,4 +58,4 @@ private:
 
 } // namespace KIPIGoogleServicesPlugin
 
-#endif // MPFORM_PICASA_H
+#endif // MPFORM_GPHOTO_H
