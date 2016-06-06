@@ -231,6 +231,7 @@ if(KF5Kipi_FOUND)
         add_subdirectory(kmlexport)
         add_subdirectory(sendimages)
         add_subdirectory(flickr)
+        add_subdirectory(dropbox)
 
         if(KF5Archive_FOUND)
             add_subdirectory(flashexport)  # simpleviever.cpp
@@ -256,7 +257,6 @@ if(KF5Kipi_FOUND)
 
             if(KF5KIOWidgets_FOUND)
 
-                add_subdirectory(dropbox)          # dbtalker.cpp
                 add_subdirectory(facebook)         # fbtalker.cpp
                 add_subdirectory(piwigo)           # piwigotalker.cpp
                 add_subdirectory(rajce)            # rajcesession.cpp

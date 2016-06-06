@@ -50,11 +50,7 @@
 #include <QDesktopServices>
 #include <QPushButton>
 #include <QUrlQuery>
-
-// KDE includes
-
-#include <kio/jobuidelegate.h>
-#include <kjobwidgets.h>
+#include <QMessageBox>
 
 // Libkipi includes
 
@@ -82,12 +78,17 @@ DBTalker::DBTalker(QWidget* const parent)
     m_nonce                  = generateNonce(8);
     m_timestamp              = QDateTime::currentMSecsSinceEpoch()/1000;
     m_root                   = QString::fromLatin1("dropbox");
-    m_job                    = 0;
     m_state                  = DB_REQ_TOKEN;
     m_auth                   = false;
     m_dialog                 = 0;
     m_meta                   = 0;
     m_iface                  = 0;
+    m_reply                  = 0;
+
+    m_netMngr = new QNetworkAccessManager(this);
+
+    connect(m_netMngr, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(slotFinished(QNetworkReply*)));
 
     PluginLoader* const pl = PluginLoader::instance();
 
@@ -132,19 +133,13 @@ void DBTalker::obtain_req_token()
     q.addQueryItem(QString::fromLatin1("oauth_version"), m_oauth_version);
     url.setQuery(q);
 
-    KIO::TransferJob* const job = KIO::http_post(url,"",KIO::HideProgressInfo);
-    job->addMetaData(QString::fromLatin1("content-type"),
-                     QString::fromLatin1("Content-Type : application/x-www-form-urlencoded"));
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
 
-    connect(job,SIGNAL(data(KIO::Job*,QByteArray)),
-            this,SLOT(data(KIO::Job*,QByteArray)));
-
-    connect(job,SIGNAL(result(KJob*)),
-            this,SLOT(slotResult(KJob*)));
+    m_reply = m_netMngr->post(netRequest, QByteArray());
 
     m_auth  = false;
     m_state = DB_REQ_TOKEN;
-    m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
 }
@@ -190,11 +185,11 @@ void DBTalker::doOAuth()
     QDialogButtonBox* const buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, m_dialog);
     buttons->button(QDialogButtonBox::Ok)->setDefault(true);
 
-    m_dialog->connect(buttons, SIGNAL(accepted()), 
+    m_dialog->connect(buttons, SIGNAL(accepted()),
                       this, SLOT(slotAccept()));
 
-    m_dialog->connect(buttons, SIGNAL(rejected()), 
-                      this, SLOT(slotReject()));    
+    m_dialog->connect(buttons, SIGNAL(rejected()),
+                      this, SLOT(slotReject()));
 
     QPlainTextEdit* const infobox = new QPlainTextEdit(i18n("Please follow the instructions in the browser. "
                                                             "After logging in and authorizing the application, press OK."));
@@ -232,18 +227,12 @@ void DBTalker::getAccessToken()
     q.addQueryItem(QString::fromLatin1("oauth_token"), m_oauthToken);
     url.setQuery(q);
 
-    KIO::TransferJob* const job = KIO::http_post(url, "", KIO::HideProgressInfo);
-    job->addMetaData(QString::fromLatin1("content-type"),
-                     QString::fromLatin1("Content-Type : application/x-www-form-urlencoded"));
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
 
-    connect(job,SIGNAL(data(KIO::Job*,QByteArray)),
-            this,SLOT(data(KIO::Job*,QByteArray)));
-
-    connect(job,SIGNAL(result(KJob*)),
-            this,SLOT(slotResult(KJob*)));
+    m_reply = m_netMngr->post(netRequest, QByteArray());
 
     m_state = DB_ACCESSTOKEN;
-    m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
 }
@@ -268,18 +257,12 @@ void DBTalker::createFolder(const QString& path)
     q.addQueryItem(QString::fromLatin1("oauth_token"), m_oauthToken);
     url.setQuery(q);
 
-    KIO::TransferJob* const job = KIO::http_post(url,"",KIO::HideProgressInfo);
-    job->addMetaData(QString::fromLatin1("content-type"),
-                     QString::fromLatin1("Content-Type : application/x-www-form-urlencoded"));
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
 
-    connect(job,SIGNAL(data(KIO::Job*,QByteArray)),
-            this,SLOT(data(KIO::Job*,QByteArray)));
-
-    connect(job,SIGNAL(result(KJob*)),
-            this,SLOT(slotResult(KJob*)));
+    m_reply = m_netMngr->post(netRequest, QByteArray());
 
     m_state = DB_CREATEFOLDER;
-    m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
 }
@@ -299,18 +282,12 @@ void DBTalker::getUserName()
     q.addQueryItem(QString::fromLatin1("oauth_token"), m_oauthToken);
     url.setQuery(q);
 
-    KIO::TransferJob* const job = KIO::http_post(url,"",KIO::HideProgressInfo);
-    job->addMetaData(QString::fromLatin1("content-type"),
-                     QString::fromLatin1("Content-Type : application/x-www-form-urlencoded"));
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
 
-    connect(job,SIGNAL(data(KIO::Job*,QByteArray)),
-            this,SLOT(data(KIO::Job*,QByteArray)));
-
-    connect(job,SIGNAL(result(KJob*)),
-            this,SLOT(slotResult(KJob*)));
+    m_reply = m_netMngr->post(netRequest, QByteArray());
 
     m_state = DB_USERNAME;
-    m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
 }
@@ -331,28 +308,22 @@ void DBTalker::listFolders(const QString& path)
     q.addQueryItem(QString::fromLatin1("oauth_token"), m_oauthToken);
     url.setQuery(q);
 
-    KIO::TransferJob* const job = KIO::get(url,KIO::NoReload,KIO::HideProgressInfo);
-    job->addMetaData(QString::fromLatin1("content-type"),
-                     QString::fromLatin1("Content-Type : application/x-www-form-urlencoded"));
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
 
-    connect(job,SIGNAL(data(KIO::Job*,QByteArray)),
-            this,SLOT(data(KIO::Job*,QByteArray)));
-
-    connect(job,SIGNAL(result(KJob*)),
-            this,SLOT(slotResult(KJob*)));
+    m_reply = m_netMngr->get(netRequest);
 
     m_state = DB_LISTFOLDERS;
-    m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
 }
 
 bool DBTalker::addPhoto(const QString& imgPath, const QString& uploadFolder, bool rescale, int maxDim, int imageQuality)
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     emit signalBusy(true);
@@ -406,18 +377,12 @@ bool DBTalker::addPhoto(const QString& imgPath, const QString& uploadFolder, boo
     q.addQueryItem(QString::fromLatin1("overwrite"), QString::fromLatin1("false"));
     url.setQuery(q);
 
-    KIO::TransferJob* const job = KIO::http_post(url,form.formData(),KIO::HideProgressInfo);
-    job->addMetaData(QString::fromLatin1("content-type"),
-                     QString::fromLatin1("Content-Type : application/x-www-form-urlencoded"));
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("multipart/mixed"));
 
-    connect(job,SIGNAL(data(KIO::Job*,QByteArray)),
-            this,SLOT(data(KIO::Job*,QByteArray)));
-
-    connect(job,SIGNAL(result(KJob*)),
-            this,SLOT(slotResult(KJob*)));
+    m_reply = m_netMngr->post(netRequest, form.formData());
 
     m_state = DB_ADDPHOTO;
-    m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
     return true;
@@ -425,47 +390,43 @@ bool DBTalker::addPhoto(const QString& imgPath, const QString& uploadFolder, boo
 
 void DBTalker::cancel()
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     emit signalBusy(false);
 }
 
-void DBTalker::data(KIO::Job*,const QByteArray& data)
+void DBTalker::slotFinished(QNetworkReply* reply)
 {
-    if(data.isEmpty())
+    if (reply != m_reply)
     {
         return;
     }
 
-    int oldsize = m_buffer.size();
-    m_buffer.resize(m_buffer.size() + data.size());
-    memcpy(m_buffer.data()+oldsize,data.data(),data.size());
-}
+    m_reply = 0;
 
-void DBTalker::slotResult(KJob* kjob)
-{
-    m_job               = 0;
-    KIO::Job* const job = static_cast<KIO::Job*>(kjob);
-
-    if (job->error())
+    if (reply->error() != QNetworkReply::NoError)
     {
         if (m_state ==  DB_REQ_TOKEN)
         {
             emit signalBusy(false);
-            emit signalRequestTokenFailed(job->error(),job->errorText());
+            emit signalRequestTokenFailed(reply->error(), reply->errorString());
         }
         else
         {
             emit signalBusy(false);
-            KJobWidgets::setWindow(job, m_parent);
-            job->ui()->showErrorMessage();
+            QMessageBox::critical(QApplication::activeWindow(),
+                                  i18n("Error"), reply->errorString());
         }
+
+        reply->deleteLater();
         return;
     }
+
+    m_buffer.append(reply->readAll());
 
     switch(m_state)
     {
@@ -496,6 +457,8 @@ void DBTalker::slotResult(KJob* kjob)
         default:
             break;
     }
+
+    reply->deleteLater();
 }
 
 void DBTalker::parseResponseAddPhoto(const QByteArray& data)
@@ -619,19 +582,19 @@ void DBTalker::parseResponseCreateFolder(const QByteArray& data)
     }
     else
     {
-        emit signalCreateFolderSucceeded();   
+        emit signalCreateFolderSucceeded();
     }
 }
 
 void DBTalker::slotAccept()
 {
     m_dialog->close();
-    m_dialog->setResult(QDialog::Accepted); 
+    m_dialog->setResult(QDialog::Accepted);
 }
 
 void DBTalker::slotReject()
 {
-    m_dialog->close();   
+    m_dialog->close();
     m_dialog->setResult(QDialog::Rejected);
 }
 

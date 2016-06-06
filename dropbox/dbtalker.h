@@ -31,10 +31,8 @@
 #include <QPair>
 #include <QQueue>
 #include <QDialog>
-
-// KDE includes
-
-#include <kio/job.h>
+#include <QNetworkReply>
+#include <QNetworkAccessManager>
 
 // Libkipi includes
 
@@ -89,10 +87,9 @@ Q_SIGNALS:
 
 private Q_SLOTS:
 
-    void data(KIO::Job* job, const QByteArray& data);
-    void slotResult(KJob* job);
+    void slotFinished(QNetworkReply* reply);
     void slotAccept();
-    void slotReject();      
+    void slotReject();
 
 private:
 
@@ -132,9 +129,12 @@ private:
 
     QWidget*                        m_parent;
 
+    QNetworkAccessManager*          m_netMngr;
+
+    QNetworkReply*                  m_reply;
+
     State                           m_state;
 
-    KIO::Job*                       m_job;
     QByteArray                      m_buffer;
     QQueue<QString>                 m_queue;
 
