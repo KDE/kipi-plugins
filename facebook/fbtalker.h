@@ -30,10 +30,8 @@
 #include <QTime>
 #include <QObject>
 #include <QUrl>
-
-// KDE includes
-
-#include <kio/job.h>
+#include <QNetworkReply>
+#include <QNetworkAccessManager>
 
 // local includes
 
@@ -110,37 +108,38 @@ private:
 
 private Q_SLOTS:
 
-    void data(KIO::Job* job, const QByteArray& data);
-    void slotResult(KJob* job);
+    void slotFinished(QNetworkReply* reply);
     void slotAccept();
-    void slotReject();    
+    void slotReject();
 
 private:
 
-    QDialog*     m_dialog; 
-    QWidget*     m_parent;
+    QDialog*               m_dialog;
+    QWidget*               m_parent;
 
-    QByteArray   m_buffer;
+    QByteArray             m_buffer;
 
-    QUrl         m_apiURL;
-    QString      m_apiVersion;
-    QString      m_secretKey;
-    QString      m_appID;
+    QUrl                   m_apiURL;
+    QString                m_apiVersion;
+    QString                m_secretKey;
+    QString                m_appID;
 
-    bool         m_loginInProgress;
-    QString      m_accessToken;
+    bool                   m_loginInProgress;
+    QString                m_accessToken;
 
     /* Session expiration
      * 0 = doesn't expire or has been invalidated; rest = time of expiry
      */
-    unsigned int m_sessionExpires;      
-    QTime        m_callID;
+    unsigned int           m_sessionExpires;
+    QTime                  m_callID;
 
-    FbUser       m_user;
+    FbUser                 m_user;
 
-    KIO::Job*    m_job;
+    QNetworkAccessManager* m_netMngr;
 
-    State        m_state;
+    QNetworkReply*         m_reply;
+
+    State                  m_state;
 };
 
 } // namespace KIPIFacebookPlugin
