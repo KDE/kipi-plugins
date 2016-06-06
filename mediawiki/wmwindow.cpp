@@ -64,7 +64,7 @@
 #include "kpimageslist.h"
 #include "kpprogresswidget.h"
 #include "wmwidget.h"
-#include "wikimediajob.h"
+#include "wmtalker.h"
 
 using namespace KIPI;
 using namespace mediawiki;
@@ -78,22 +78,22 @@ public:
 
     Private()
     {
-        widget    = 0;
-        mediawiki = 0;
-        uploadJob = 0;
+        widget       = 0;
+        mediawiki    = 0;
+        uploadtalker = 0;
     }
 
-    QString       tmpDir;
-    QString       tmpPath;
-    QString       login;
-    QString       pass;
-    QString       wikiName;
-    QUrl          wikiUrl;
+    QString    tmpDir;
+    QString    tmpPath;
+    QString    login;
+    QString    pass;
+    QString    wikiName;
+    QUrl       wikiUrl;
 
-    WmWidget*     widget;
-    MediaWiki*    mediawiki;
+    WmWidget*  widget;
+    MediaWiki* mediawiki;
 
-    WikiMediaJob* uploadJob;
+    WMTalker*  uploadtalker;
 };
 
 WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
@@ -101,11 +101,11 @@ WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
       d(new Private)
 {
     d->tmpPath.clear();
-    d->tmpDir    = tmpFolder;
-    d->widget    = new WmWidget(this);
-    d->uploadJob = 0;
-    d->login     = QString();
-    d->pass      = QString();
+    d->tmpDir       = tmpFolder;
+    d->widget       = new WmWidget(this);
+    d->uploadtalker = 0;
+    d->login        = QString();
+    d->pass         = QString();
 
     setMainWidget(d->widget);
     setWindowIcon(QIcon::fromTheme(QLatin1String("kipi-wikimedia")));
@@ -156,8 +156,8 @@ WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     connect(d->widget, SIGNAL(signalChangeUserRequest()),
             this, SLOT(slotChangeUserClicked()));
 
-    connect(d->widget, SIGNAL(signalLoginRequest(QString,QString,QString,QUrl)),
-            this, SLOT(slotDoLogin(QString,QString,QString,QUrl)));
+    connect(d->widget, SIGNAL(signalLoginRequest(QString, QString, QString, QUrl)),
+            this, SLOT(slotDoLogin(QString, QString, QString, QUrl)));
 
     connect(d->widget->progressBar(), SIGNAL(signalProgressCanceled()),
             this, SLOT(slotProgressCanceled()));
@@ -295,7 +295,7 @@ bool WMWindow::prepareImageForUpload(const QString& imgPath)
         else
         {
             // copy meta data from initial to temporary image
-            
+
             if (meta->load(QUrl::fromLocalFile(imgPath)))
             {
                 if (d->widget->resize())
@@ -333,21 +333,21 @@ void WMWindow::slotStartTransfer()
         }
     }
 
-    d->uploadJob->setImageMap(imagesDesc);
+    d->uploadtalker->setImageMap(imagesDesc);
 
     d->widget->progressBar()->setRange(0, 100);
     d->widget->progressBar()->setValue(0);
 
-    connect(d->uploadJob, SIGNAL(uploadProgress(int)),
+    connect(d->uploadtalker, SIGNAL(uploadProgress(int)),
             d->widget->progressBar(), SLOT(setValue(int)));
 
-    connect(d->uploadJob, SIGNAL(endUpload()),
+    connect(d->uploadtalker, SIGNAL(endUpload()),
             this, SLOT(slotEndUpload()));
 
     d->widget->progressBar()->show();
     d->widget->progressBar()->progressScheduled(i18n("MediaWiki export"), true, true);
     d->widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme(QLatin1String("kipi")).pixmap(22, 22));
-    d->uploadJob->begin();
+    d->uploadtalker->begin();
 }
 
 void WMWindow::slotChangeUserClicked()
@@ -379,12 +379,12 @@ int WMWindow::slotLoginHandle(KJob* loginJob)
     {
         d->login.clear();
         d->pass.clear();
-        d->uploadJob = 0;
+        d->uploadtalker = 0;
         QMessageBox::critical(this, i18n("Login Error"), i18n("Please check your credentials and try again."));
     }
     else
     {
-        d->uploadJob = new WikiMediaJob(iface(), d->mediawiki, this);
+        d->uploadtalker = new WMTalker(iface(), d->mediawiki, this);
         startButton()->setEnabled(true);
         d->widget->invertAccountLoginBox();
         d->widget->updateLabels(d->login, d->wikiName, d->wikiUrl.toString());
@@ -395,10 +395,10 @@ int WMWindow::slotLoginHandle(KJob* loginJob)
 
 void WMWindow::slotEndUpload()
 {
-    disconnect(d->uploadJob, SIGNAL(uploadProgress(int)),
+    disconnect(d->uploadtalker, SIGNAL(uploadProgress(int)),
                d->widget->progressBar(),SLOT(setValue(int)));
 
-    disconnect(d->uploadJob, SIGNAL(endUpload()),
+    disconnect(d->uploadtalker, SIGNAL(endUpload()),
                this, SLOT(slotEndUpload()));
 
     QMessageBox::information(this, QString(), i18n("Upload finished with no errors."));

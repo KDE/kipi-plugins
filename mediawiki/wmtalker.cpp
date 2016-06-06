@@ -24,7 +24,7 @@
  *
  * ============================================================ */
 
-#include "wikimediajob.h"
+#include "wmtalker.h"
 
 // Qt includes
 
@@ -54,7 +54,7 @@
 namespace KIPIWikiMediaPlugin
 {
 
-class WikiMediaJob::Private
+class WMTalker::Private
 {
 public:
 
@@ -72,7 +72,7 @@ public:
     QMap <QString, QMap <QString, QString> > imageDesc;
 };
 
-WikiMediaJob::WikiMediaJob(Interface* const interface, MediaWiki* const mediawiki, QObject* const parent)
+WMTalker::WMTalker(Interface* const interface, MediaWiki* const mediawiki, QObject* const parent)
     : KJob(parent),
       d(new Private)
 {
@@ -80,43 +80,43 @@ WikiMediaJob::WikiMediaJob(Interface* const interface, MediaWiki* const mediawik
     d->mediawiki = mediawiki;
 }
 
-WikiMediaJob::~WikiMediaJob()
+WMTalker::~WMTalker()
 {
     delete d;
 }
 
-void WikiMediaJob::start()
+void WMTalker::start()
 {
     QTimer::singleShot(0, this, SLOT(uploadHandle()));
 }
 
-void WikiMediaJob::begin()
+void WMTalker::begin()
 {
     start();
 }
 
-void WikiMediaJob::setImageMap(const QMap <QString,QMap <QString,QString> >& imageDesc)
+void WMTalker::setImageMap(const QMap <QString,QMap <QString,QString> >& imageDesc)
 {
     d->imageDesc = imageDesc;
     qCDebug(KIPIPLUGINS_LOG) << "Map length:" << imageDesc.size();
 }
 
-void WikiMediaJob::uploadHandle(KJob* j)
+void WMTalker::uploadHandle(KJob* j)
 {
-    if(j != 0)
+    if (j != 0)
     {
         qCDebug(KIPIPLUGINS_LOG) << "Upload error" << j->error() << j->errorString() << j->errorText();
         emit uploadProgress(100);
 
-        disconnect(j, SIGNAL(result(KJob*)), 
+        disconnect(j, SIGNAL(result(KJob*)),
                    this, SLOT(uploadHandle(KJob*)));
 
-        disconnect(j, SIGNAL(percent(KJob*,ulong)),
-                   this, SLOT(slotUploadProgress(KJob*,ulong)));
+        disconnect(j, SIGNAL(percent(KJob*, ulong)),
+                   this, SLOT(slotUploadProgress(KJob*, ulong)));
 
         // Error from previous upload
 
-        if((int)j->error() != 0)
+        if ((int)j->error() != 0)
         {
             const QString errorText = j->errorText();
 
@@ -133,7 +133,7 @@ void WikiMediaJob::uploadHandle(KJob* j)
 
     // Upload next image
 
-    if(!d->imageDesc.isEmpty())
+    if (!d->imageDesc.isEmpty())
     {
         QList<QString> keys        = d->imageDesc.keys();
         QMap<QString,QString> info = d->imageDesc.take(keys.first());
@@ -166,8 +166,8 @@ void WikiMediaJob::uploadHandle(KJob* j)
         connect(e1, SIGNAL(result(KJob*)),
                 this, SLOT(uploadHandle(KJob*)));
 
-        connect(e1, SIGNAL(percent(KJob*,ulong)),
-                this, SLOT(slotUploadProgress(KJob*,ulong)));
+        connect(e1, SIGNAL(percent(KJob*, ulong)),
+                this, SLOT(slotUploadProgress(KJob*, ulong)));
 
         emit uploadProgress(0);
         e1->start();
@@ -189,7 +189,7 @@ void WikiMediaJob::uploadHandle(KJob* j)
     }
 }
 
-QString WikiMediaJob::buildWikiText(const QMap<QString, QString>& info) const
+QString WMTalker::buildWikiText(const QMap<QString, QString>& info) const
 {
     QString text = QString::fromUtf8("=={{int:filedesc}}==");
     text.append(QLatin1String("\n{{Information"));
@@ -258,7 +258,7 @@ QString WikiMediaJob::buildWikiText(const QMap<QString, QString>& info) const
     return text;
 }
 
-void WikiMediaJob::slotUploadProgress(KJob* job, unsigned long percent)
+void WMTalker::slotUploadProgress(KJob* job, unsigned long percent)
 {
     Q_UNUSED(job)
     emit uploadProgress((int)percent);

@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef WIKIMEDIAJOB_H
-#define WIKIMEDIAJOB_H
+#ifndef WM_TALKER_H
+#define WM_TALKER_H
 
 // Qt includes
 
@@ -51,14 +51,14 @@ using namespace mediawiki;
 namespace KIPIWikiMediaPlugin
 {
 
-class WikiMediaJob : public KJob
+class WMTalker : public KJob
 {
     Q_OBJECT
 
 public:
 
-    WikiMediaJob(Interface* const interface, MediaWiki* const mediawiki, QObject* const parent=0);
-    ~WikiMediaJob();
+    WMTalker(Interface* const interface, MediaWiki* const mediawiki, QObject* const parent=0);
+    ~WMTalker();
 
     QString buildWikiText(const QMap<QString, QString>& info) const;
 
@@ -84,4 +84,4 @@ private:
 
 } // namespace KIPIWikiMediaPlugin
 
-#endif // WIKIMEDIAJOB_H
+#endif // WM_TALKER_H

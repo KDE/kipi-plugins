@@ -14,7 +14,7 @@ include_directories(${LIBMEDIAWIKI_INCLUDES})
 set(kipiplugin_wikimedia_PART_SRCS
     plugin_wikimedia.cpp
     wmwidget.cpp
-    wikimediajob.cpp
+    wmtalker.cpp
     wmwindow.cpp
    )
 

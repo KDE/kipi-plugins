@@ -250,7 +250,7 @@ if(KF5Kipi_FOUND)
             add_subdirectory(yandexfotki)          # yftalker.cpp
 
             if(KF5MediaWiki_FOUND)
-                add_subdirectory(mediawiki)        # wikimediajob.cpp
+                add_subdirectory(mediawiki)        # wmtalker.cpp
             endif()
 
             # Tools which need KIO Widgets too.
