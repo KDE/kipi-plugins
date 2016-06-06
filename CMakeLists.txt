@@ -241,6 +241,10 @@ if(KF5Kipi_FOUND)
             add_subdirectory(vkontakte)
         endif()
 
+        if(KF5MediaWiki_FOUND)
+            add_subdirectory(mediawiki)
+        endif()
+
         if(KF5KIO_FOUND)
 
             # Tools that only depend of KIO core. Code relying to KIO is listed on the right side.
@@ -249,9 +253,6 @@ if(KF5Kipi_FOUND)
             add_subdirectory(imageshack)           # imageshacktalker.cpp
             add_subdirectory(yandexfotki)          # yftalker.cpp
 
-            if(KF5MediaWiki_FOUND)
-                add_subdirectory(mediawiki)        # wmtalker.cpp
-            endif()
 
             # Tools which need KIO Widgets too.
 
