@@ -334,7 +334,6 @@ void KPImagesListView::drawRow(QPainter* p, const QStyleOptionViewItem& opt, con
 
         if (view)
         {
-            
             view->updateThumbnail(item->url());
         }
     }
@@ -1297,6 +1296,8 @@ void KPImagesList::updateThumbnail(const QUrl& url)
 
 void KPImagesList::slotThumbnail(const QUrl& url, const QPixmap& pix)
 {
+    qCDebug(KIPIPLUGINS_LOG) << "KIPI host send thumb (" << pix.size() << ") for " << url;
+
     QTreeWidgetItemIterator it(d->listView);
 
     while (*it)
@@ -1307,7 +1308,7 @@ void KPImagesList::slotThumbnail(const QUrl& url, const QPixmap& pix)
         {
             if (!pix.isNull())
             {
-                qCDebug(KIPIPLUGINS_LOG) << "KIPI host send thumb for " << url;
+                qCDebug(KIPIPLUGINS_LOG) << "Update thumb in list for " << url;
                 item->setThumb(pix.scaled(d->iconSize, d->iconSize, Qt::KeepAspectRatio));
             }
 
