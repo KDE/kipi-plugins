@@ -199,8 +199,11 @@ void KPImagesListViewItem::setPixmap(const QPixmap& pix)
 
 void KPImagesListViewItem::setThumb(const QPixmap& pix, bool hasThumb)
 {
-    qCDebug(KIPIPLUGINS_LOG) << "(" << hasThumb << ") :: Received new thumbnail for url "
-                             << d->url << " for view " << d->view;
+    if (hasThumb)
+    {
+        qCDebug(KIPIPLUGINS_LOG) << "Received new thumbnail for url "
+                                 << d->url << " for view " << d->view;
+    }
 
     if (!d->view)
     {
@@ -331,6 +334,7 @@ void KPImagesListView::drawRow(QPainter* p, const QStyleOptionViewItem& opt, con
 
         if (view)
         {
+            
             view->updateThumbnail(item->url());
         }
     }
@@ -1282,6 +1286,7 @@ void KPImagesList::updateThumbnail(const QUrl& url)
 {
     if (d->iface)
     {
+        qCDebug(KIPIPLUGINS_LOG) << "Request to update thumbnail for " << url;
         d->iface->thumbnails(QList<QUrl>() << url, DEFAULTSIZE);
     }
     else
@@ -1302,6 +1307,7 @@ void KPImagesList::slotThumbnail(const QUrl& url, const QPixmap& pix)
         {
             if (!pix.isNull())
             {
+                qCDebug(KIPIPLUGINS_LOG) << "KIPI host send thumb for " << url;
                 item->setThumb(pix.scaled(d->iconSize, d->iconSize, Qt::KeepAspectRatio));
             }
 
