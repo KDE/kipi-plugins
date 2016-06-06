@@ -23,6 +23,10 @@
 
 #include "fbtalker.h"
 
+// C++ includes
+
+#include <ctime>
+
 // Qt includes
 
 #include <QJsonDocument>
