@@ -54,7 +54,7 @@ GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interfac
 
     m_tagsBGrp = new QButtonGroup(m_LeafBox);
 
-    if (m_pluginName == PluginName::PicasaExport)
+    if (m_pluginName == PluginName::GPhotoExport)
     {
         QSpacerItem* const spacer = new QSpacerItem(1, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
         QLabel* const tagsLbl     = new QLabel(i18n("Tag path behavior :"), m_LeafBox);
@@ -66,9 +66,9 @@ GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interfac
         QRadioButton* const combinedTagsBtn = new QRadioButton(i18n("Combined String"), m_LeafBox);
         combinedTagsBtn->setWhatsThis(i18n("Build a combined tag string."));
 
-        m_tagsBGrp->addButton(leafTagsBtn, PwTagLeaf);
-        m_tagsBGrp->addButton(splitTagsBtn, PwTagSplit);
-        m_tagsBGrp->addButton(combinedTagsBtn, PwTagCombined);
+        m_tagsBGrp->addButton(leafTagsBtn,     GPTagLeaf);
+        m_tagsBGrp->addButton(splitTagsBtn,    GPTagSplit);
+        m_tagsBGrp->addButton(combinedTagsBtn, GPTagCombined);
 
         leafLayout->addItem(spacer,             0, 1, 1, 1);
         leafLayout->addWidget(tagsLbl,          1, 1, 1, 1);
@@ -81,7 +81,7 @@ GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interfac
 
     switch(m_pluginName)
     {
-        case PluginName::PicasaImport:
+        case PluginName::GPhotoImport:
             m_LeafBox->hide();
             imagesList()->hide();
             getNewAlbmBtn()->hide();
@@ -104,7 +104,7 @@ void GoogleServicesWidget::updateLabels(const QString& name, const QString& url)
     {
         case PluginName::GDrive:
         {
-            QString web(QString::fromLatin1("http://www.drive.google.com"));
+            QString web(QString::fromLatin1("https://drive.google.com"));
             getHeaderLbl()->setText(QString::fromLatin1(
                 "<b><h2><a href='%1'>"
                 "<font color=\"#9ACD32\">Google Drive</font>"
@@ -113,7 +113,7 @@ void GoogleServicesWidget::updateLabels(const QString& name, const QString& url)
         }
         default:
             getHeaderLbl()->setText(QString::fromLatin1(
-                "<b><h2><a href='http://picasaweb.google.com/%1'>"
+                "<b><h2><a href='https://photos.google.com/%1'>"
                 "<font color=\"#9ACD32\">Google Photos/PicasaWeb</font>"
                 "</a></h2></b>").arg(url));
             break;

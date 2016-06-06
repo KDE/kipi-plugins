@@ -103,7 +103,7 @@ GPTalker::~GPTalker()
 }
 
 /**
- * PicasaWeb's Album listing request/response
+ * Google Photo's Album listing request/response
  * First a request is sent to the url below and then we might(?) get a redirect URL
  * We then need to send the GET request to the Redirect url (this however gets taken care off by the KIO libraries.
  * This uses the authenticated album list fetching to get all the albums included the unlisted-albums

@@ -34,8 +34,8 @@ namespace KIPIGoogleServicesPlugin
 enum PluginName
 {
     GDrive = 1,
-    PicasaExport,
-    PicasaImport
+    GPhotoExport,
+    GPhotoImport
 };
 
 // -----------------------------------------------------------

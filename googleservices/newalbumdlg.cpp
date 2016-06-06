@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2010-02-01
- * Description : a kipi plugin to export images to Picasa web service
+ * Description : a kipi plugin to export images to Google Photo web service
  *
  * Copyright (C) 2010 by Jens Mueller <tschenser at gmx dot de>
  *

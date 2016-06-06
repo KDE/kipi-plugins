@@ -76,7 +76,7 @@ private:
 
     void buttonStateChange(bool state);
     void closeEvent(QCloseEvent*);
-    void picasaTransferHandler();
+    void googlePhotoTransferHandler();
 
 private Q_SLOTS:
 
@@ -110,16 +110,16 @@ private:
 
     QString                       m_serviceName;
     QString                       m_pluginName;
-    PluginName                    name;
+    PluginName                    m_name;
     QString                       m_tmp;
-    QString                       refresh_token;
+    QString                       m_refresh_token;
 
     GoogleServicesWidget*         m_widget;
     NewAlbumDlg*                  m_albumDlg;
-    NewAlbumDlg*                  m_picasa_albumdlg;
+    NewAlbumDlg*                  m_gphoto_albumdlg;
 
     GDTalker*                     m_talker;
-    GPTalker*              m_picsasa_talker;
+    GPTalker*                     m_gphoto_talker;
 
     QString                       m_currentAlbumId;
 

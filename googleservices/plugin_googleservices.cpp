@@ -114,7 +114,7 @@ void Plugin_GoogleServices::setupActions()
     m_actionGPhotoExport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::Key_P));
 
     connect(m_actionGPhotoExport, SIGNAL(triggered(bool)),
-            this, SLOT(slotPicasaExport()));
+            this, SLOT(slotGPhotoExport()));
 
     addAction(QString::fromLatin1("googlephotoexport"), m_actionGPhotoExport);
 
@@ -124,7 +124,7 @@ void Plugin_GoogleServices::setupActions()
     m_actionGPhotoImport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_P));
 
     connect(m_actionGPhotoImport, SIGNAL(triggered(bool)),
-            this, SLOT(slotPicasaImport()) );
+            this, SLOT(slotGPhotoImport()) );
 
     addAction(QString::fromLatin1("googlephotoimport"), m_actionGPhotoImport, ImportPlugin);
 }
@@ -164,7 +164,7 @@ void Plugin_GoogleServices::slotGPhotoExport()
     if(!m_dlgGPhotoExport)
     {
         m_dlgGPhotoExport = new GSWindow(tmp, QApplication::activeWindow(),
-                                         QString::fromLatin1("picasawebexport"));
+                                         QString::fromLatin1("googlephotoexport"));
     }
     else
     {
@@ -189,7 +189,7 @@ void Plugin_GoogleServices::slotGPhotoImport()
     if(!m_dlgGPhotoImport)
     {
         m_dlgGPhotoImport = new GSWindow(tmp, QApplication::activeWindow(),
-                                         QString::fromLatin1("picasawebimport"));
+                                         QString::fromLatin1("googlephotoimport"));
     }
     else
     {

@@ -52,11 +52,11 @@ using namespace KIPIPlugins;
 namespace KIPIGoogleServicesPlugin
 {
 
-enum PicasawebTagsBehaviour
+enum GPhotoTagsBehaviour
 {
-    PwTagLeaf = 0,
-    PwTagSplit,
-    PwTagCombined
+    GPTagLeaf = 0,
+    GPTagSplit,
+    GPTagCombined
 };
 
 class GoogleServicesWidget : public KPSettingsWidget
