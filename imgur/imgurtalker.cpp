@@ -328,7 +328,7 @@ void ImgurTalker::imageUpload (const QUrl& filePath)
     q.addQueryItem(QString::fromLatin1("type"), QString::fromLatin1("file"));
     exportUrl.setQuery(q);
 
-    form.addFile(QString::fromLatin1("image"), filePath.path());
+    form.addFile(QString::fromLatin1("image"), filePath.toLocalFile());
     form.finish();
 
     QNetworkRequest netRequest(exportUrl);
