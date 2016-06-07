@@ -79,6 +79,7 @@ Plugin_Imgur::Plugin_Imgur(QObject* const parent, const QVariantList& /*args*/)
 
 Plugin_Imgur::~Plugin_Imgur()
 {
+    delete d->winExport;
     delete d;
 }
 

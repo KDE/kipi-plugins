@@ -31,10 +31,10 @@
 #include <QJsonValue>
 #include <QJsonArray>
 #include <QUrlQuery>
+#include <QNetworkAccessManager>
 
 // KDE includes
 
-#include <kio/job.h>
 #include <klocalizedstring.h>
 
 // Libkipi includes
@@ -58,25 +58,25 @@ public:
 
     Private()
     {
-        parent                    = 0;
-        interface                 = 0;
-        job                       = 0;
-        continueUpload            = true;
-        userAgent                 = QLatin1String("KIPI-Plugins-ImgurExport") + QLatin1String("/") + kipipluginsVersion();
-        const char _imgurApiKey[] = _IMGUR_API_ANONYMOUS_KEY;
-        anonymousKey              = QByteArray( _imgurApiKey );
+        parent                      = 0;
+        interface                   = 0;
+        netMngr                     = 0;
+        reply                       = 0;
+        continueUpload              = true;
+        userAgent                   = QLatin1String("KIPI-Plugins-ImgurExport") + QLatin1String("/") + kipipluginsVersion();
+        const char _imgurClientId[] = _IMGUR_API_ANONYMOUS_CLIENT_ID;
+        anonymousClientId           = QByteArray(_imgurClientId);
     }
 
-    bool       continueUpload;
-    QString    userAgent;
+    bool                   continueUpload;
+    QString                userAgent;
 
-    QByteArray anonymousKey;
+    QByteArray             anonymousClientId;
 
-    QWidget*   parent;
-    Interface* interface;
-    QByteArray buffer;
-
-    KIO::Job*  job;
+    QWidget*               parent;
+    Interface*             interface;
+    QNetworkAccessManager* netMngr;
+    QNetworkReply*         reply;
 };
 
 ImgurTalker::ImgurTalker(Interface* const interface, QWidget* const parent)
@@ -84,9 +84,14 @@ ImgurTalker::ImgurTalker(Interface* const interface, QWidget* const parent)
 {
     d->parent    = parent;
     d->interface = interface;
-    d->job       = 0;
+    d->reply     = 0;
     m_queue      = new QList<QUrl>();
     m_state      = IR_LOGOUT;
+
+    d->netMngr   = new QNetworkAccessManager(this);
+
+    connect(d->netMngr, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(slotFinished(QNetworkReply*)));
 
     connect(this, SIGNAL(signalUploadDone(QUrl)),
             this, SLOT(slotUploadDone(QUrl)));
@@ -103,28 +108,12 @@ ImgurTalker::ImgurTalker(Interface* const interface, QWidget* const parent)
 
 ImgurTalker::~ImgurTalker()
 {
-    if (d->job)
+    if (d->reply)
     {
-        d->job->kill();
+        d->reply->abort();
     }
 
     delete d;
-}
-
-void ImgurTalker::slotData(KIO::Job* j, const QByteArray& data)
-{
-    if (data.isEmpty())
-    {
-        return;
-    }
-
-    int oldSize = d->buffer.size();
-    int newSize = data.size();
-
-    d->buffer.resize(d->buffer.size() + newSize);
-    memcpy(d->buffer.data()+oldSize, data.data(), newSize);
-
-    emit signalUploadProgress(j->percent());
 }
 
 void ImgurTalker::parseResponse(const QByteArray& buffer)
@@ -157,22 +146,26 @@ void ImgurTalker::parseResponse(const QByteArray& buffer)
     emit signalBusy(false);
 }
 
-void ImgurTalker::slotResult(KJob* kjob)
+void ImgurTalker::slotFinished(QNetworkReply* reply)
 {
-    KIO::Job* const job = static_cast<KIO::Job*>(kjob);
+    if (reply != d->reply)
+    {
+        return;
+    }
 
-    if ( job->error() )
+    d->reply = 0;
+
+    if (reply->error() != QNetworkReply::NoError)
     {
         ImgurError err;
         err.message = i18n("Upload failed");
-        emit signalError(m_currentUrl, err); //job->errorString()
-        qCDebug(KIPIPLUGINS_LOG) << "Error :" << job->errorString();
+        emit signalError(m_currentUrl, err); //reply->errorString()
+        qCDebug(KIPIPLUGINS_LOG) << "Error :" << reply->errorString();
     }
 
-    parseResponse(d->buffer);
+    parseResponse(reply->readAll());
 
-    d->buffer.resize(0);
-
+    reply->deleteLater();
     return;
 }
 
@@ -213,7 +206,7 @@ bool ImgurTalker::parseResponseImageRemove(const QByteArray& data)
 
 bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
 {
-    qCDebug(KIPIPLUGINS_LOG)<<"Upload Image data is "<<data;
+    qCDebug(KIPIPLUGINS_LOG) << "Upload Image data is " << data;
 
     if (data.isEmpty())
         return false;
@@ -226,48 +219,38 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
     {
         QJsonObject jsonObject = doc.object();
 
-        if (jsonObject.contains(QString::fromLatin1("upload")))
+        if (jsonObject.contains(QString::fromLatin1("data")))
         {
             ImgurSuccess success;
-            QJsonObject obj1         = jsonObject[QString::fromLatin1("upload")].toObject();
-            QJsonObject obj2         = obj1[QString::fromLatin1("image")].toObject();
-            QJsonObject obj3         = obj1[QString::fromLatin1("links")].toObject();
+            QJsonObject obj1          = jsonObject[QString::fromLatin1("data")].toObject();
 
-            success.image.name       = obj2[QString::fromLatin1("name")].toString();
+            success.image.id          = obj1[QString::fromLatin1("id")].toString();
+
+            success.image.type        = obj1[QString::fromLatin1("type")].toString();
+
+            success.image.name        = obj1[QString::fromLatin1("name")].toString();
             qCDebug(KIPIPLUGINS_LOG) << "Name is " << success.image.name;
 
-            success.image.title           = obj2[QString::fromLatin1("title")].toString();
+            success.image.title       = obj1[QString::fromLatin1("title")].toString();
 
-            success.image.caption         = obj2[QString::fromLatin1("caption")].toString();
+            success.image.description = obj1[QString::fromLatin1("description")].toString();
 
-            success.image.hash            = obj2[QString::fromLatin1("hash")].toString();
+            success.image.deletehash  = obj1[QString::fromLatin1("deletehash")].toString();
 
-            success.image.deletehash      = obj2[QString::fromLatin1("deletehash")].toString();
+            success.image.animated    = (obj1[QString::fromLatin1("animated")].toString() == QString::fromLatin1("true"));
 
-            success.image.type            = obj2[QString::fromLatin1("type")].toString();
+            success.image.width       = obj1[QString::fromLatin1("width")].toString().toInt();
 
-            success.image.animated        = (obj2[QString::fromLatin1("animated")].toString() == QString::fromLatin1("true"));
+            success.image.height      = obj1[QString::fromLatin1("height")].toString().toInt();
 
-            success.image.width           = obj2[QString::fromLatin1("width")].toString().toInt();
+            success.image.size        = obj1[QString::fromLatin1("size")].toString().toInt();
 
-            success.image.height          = obj2[QString::fromLatin1("height")].toString().toInt();
+            success.image.views       = obj1[QString::fromLatin1("views")].toString().toInt();
 
-            success.image.size            = obj2[QString::fromLatin1("size")].toString().toInt();
+            success.image.bandwidth   = obj1[QString::fromLatin1("bandwidth")].toString().toLongLong();
 
-            success.image.views           = obj2[QString::fromLatin1("views")].toString().toInt();
-
-            success.image.bandwidth       = obj2[QString::fromLatin1("bandwidth")].toString().toLongLong();
-
-            success.links.original        = QUrl(obj3[QString::fromLatin1("original")].toString());
-            qCDebug(KIPIPLUGINS_LOG) << "Link original is " << success.links.original;
-
-            success.links.imgur_page      = QUrl(obj3[QString::fromLatin1("imgur_page")].toString());
-
-            success.links.delete_page     = QUrl(obj3[QString::fromLatin1("delete_page")].toString());
-
-            success.links.small_square    = QUrl(obj3[QString::fromLatin1("small_square")].toString());
-
-            success.links.large_thumbnail = QUrl(obj3[QString::fromLatin1("largeThumbnail")].toString());
+            success.image.link        = QUrl(obj1[QString::fromLatin1("link")].toString());
+            qCDebug(KIPIPLUGINS_LOG) << "Link original is " << success.image.link;
 
             emit signalSuccess(m_currentUrl, success);
         }
@@ -334,7 +317,6 @@ void ImgurTalker::imageUpload (const QUrl& filePath)
 
     QUrl exportUrl = QUrl(ImgurConnection::APIuploadURL());
     QUrlQuery q(exportUrl);
-    q.addQueryItem(QString::fromLatin1("key"), QString::fromUtf8(d->anonymousKey));
     q.addQueryItem(QString::fromLatin1("name"), filePath.fileName());
 
     // This should be replaced with something the user submits
@@ -349,17 +331,12 @@ void ImgurTalker::imageUpload (const QUrl& filePath)
     form.addFile(QString::fromLatin1("image"), filePath.path());
     form.finish();
 
-    KIO::TransferJob* const job = KIO::http_post(exportUrl, form.formData(), KIO::HideProgressInfo);
-    job->addMetaData(QString::fromLatin1("content-type"), form.contentType());
-    job->addMetaData(QString::fromLatin1("content-length"),
-                     QString::fromLatin1("Content-Length: %1").arg(form.formData().length()));
-    job->addMetaData(QString::fromLatin1("UserAgent"), d->userAgent);
+    QNetworkRequest netRequest(exportUrl);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, form.contentType());
+    netRequest.setRawHeader("Authorization", "Client-ID " + d->anonymousClientId);
+    netRequest.setHeader(QNetworkRequest::UserAgentHeader, d->userAgent);
 
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(slotData(KIO::Job*,QByteArray)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
+    d->reply = d->netMngr->post(netRequest, form.formData());
 }
 
 bool ImgurTalker::imageRemove(const QString& delete_hash)
@@ -372,9 +349,11 @@ bool ImgurTalker::imageRemove(const QString& delete_hash)
 
     form.finish();
 
-    KIO::TransferJob* const job = KIO::http_post(removeUrl, form.formData(), KIO::HideProgressInfo);
-    job->addMetaData(QString::fromLatin1("content-type"), form.contentType());
-    job->addMetaData(QString::fromLatin1("UserAgent"), d->userAgent);
+    QNetworkRequest netRequest(removeUrl);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, form.contentType());
+    netRequest.setHeader(QNetworkRequest::UserAgentHeader, d->userAgent);
+
+    d->reply = d->netMngr->post(netRequest, form.formData());
 
     m_state = IE_REMOVEPHOTO;
 
@@ -386,10 +365,10 @@ bool ImgurTalker::imageRemove(const QString& delete_hash)
 
 void ImgurTalker::cancel()
 {
-    if (d->job)
+    if (d->reply)
     {
-        d->job->kill();
-        d->job = 0;
+        d->reply->abort();
+        d->reply = 0;
     }
 
     emit signalBusy(false);

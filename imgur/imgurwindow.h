@@ -77,7 +77,7 @@ public Q_SLOTS:
     void slotAddPhotoSuccess(const QUrl& currentImage, const ImgurSuccess& success);
     void slotAddPhotoError(const QUrl& currentImage, const ImgurError& error);
 //    void slotAuthenticated(bool yes);
-    void slotAuthenticated(bool yes, const QString& message = QStringLiteral(""));
+    void slotAuthenticated(bool yes, const QString& message = QLatin1String(""));
 
     void slotStartUpload();
     void slotFinished();
@@ -93,9 +93,12 @@ Q_SIGNALS:
 private:
 
     void setContinueUpload(bool state);
-    void closeEvent(QCloseEvent* e);
     void readSettings();
     void saveSettings();
+
+protected:
+
+    void closeEvent(QCloseEvent* e);
 
 private:
 

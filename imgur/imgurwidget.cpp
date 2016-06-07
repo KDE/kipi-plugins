@@ -247,14 +247,14 @@ void ImgurWidget::slotImageUploadSuccess(const QUrl& imgPath, const ImgurSuccess
 
         if (meta && meta->load(imgPath))
         {
-            meta->setXmpTagString(QLatin1String("Xmp.kipi.ImgurHash"),       success.image.hash);
+            meta->setXmpTagString(QLatin1String("Xmp.kipi.ImgurId"),         success.image.id);
             meta->setXmpTagString(QLatin1String("Xmp.kipi.ImgurDeleteHash"), success.image.deletehash);
             bool saved = meta->applyChanges();
             qCDebug(KIPIPLUGINS_LOG) << "Metadata" << (saved ? "Saved" : "Not Saved") << "to" << imgPath;
         }
     }
 
-    qCDebug(KIPIPLUGINS_LOG) << "URL" << ImgurConnection::pageURL(success.image.hash);
+    qCDebug(KIPIPLUGINS_LOG) << "URL" << ImgurConnection::pageURL(success.image.id);
     qCDebug(KIPIPLUGINS_LOG) << "Delete URL" << ImgurConnection::deleteURL(success.image.deletehash);
 
     imagesList()->processed(imgPath, true);

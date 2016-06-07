@@ -24,7 +24,7 @@
 #define IMGURTALKER_COMMON_H
 
 // API key from imgur
-#define _IMGUR_API_ANONYMOUS_KEY "2da1cc4923f33dc72885aa32adede5c3";
+#define _IMGUR_API_ANONYMOUS_CLIENT_ID "048d0b40574528c";
 
 #ifdef OAUTH_ENABLED
 #   define _IMGUR_API_CONSUMER_KEY "9ad9d48124b7137d9cc9e0397219f52004fcba12a";
@@ -46,51 +46,51 @@ public:
 
     static QString APIuploadURL()
     {
-        return QStringLiteral("https://api.imgur.com/2/upload.json");
+        return QLatin1String("https://api.imgur.com/3/image.json");
     }
 
     static QString APIdeleteURL()
     {
-        return QStringLiteral("https://api.imgur.com/2/delete.json");
+        return QLatin1String("https://api.imgur.com/3/delete.json");
     }
 
     static QString OAuthTokenEndPoint()
     {
-        return QStringLiteral("https://api.imgur.com/oauth/request_token");
+        return QLatin1String("https://api.imgur.com/oauth/request_token");
     }
 
     static QString OAuthAccessEndPoint()
     {
-        return QStringLiteral("https://api.imgur.com/oauth/access_token");
+        return QLatin1String("https://api.imgur.com/oauth/access_token");
     }
 
     static QString OAuthAuthorizationEndPoint()
     {
-        return QStringLiteral("https://api.imgur.com/oauth/authorize");
+        return QLatin1String("https://api.imgur.com/oauth/authorize");
     }
 
     static QUrl originalURL(QString imageHash)
     {
-        return QUrl(QStringLiteral("http://i.imgur.com/") + imageHash + QStringLiteral(".jpg"));
+        return QUrl(QLatin1String("http://i.imgur.com/") + imageHash + QLatin1String(".jpg"));
     } // this is wrong
 
-    static QUrl pageURL(QString imageHash)
+    static QUrl pageURL(QString imageId)
     {
-        return QUrl(QStringLiteral("http://imgur.com/") + imageHash);
+        return QUrl(QLatin1String("http://imgur.com/") + imageId);
     }
 
     static QUrl deleteURL(QString deleteHash)
     {
-        return QUrl(QStringLiteral("http://imgur.com/delete/") + deleteHash);
+        return QUrl(QLatin1String("http://imgur.com/delete/") + deleteHash);
     }
 };
 
 /*
-QString ImgurConnection::uploadURL = QStringLiteral("https://api.imgur.com/2/upload.json");
-QString ImgurConnection::deleteURL = QStringLiteral("https://api.imgur.com/2/delete.json");
-QString ImgurConnection::OAuthTokenEndPoint = QStringLiteral("https://api.imgur.com/oauth/request_token");
-QString ImgurConnection::OAuthAccessEndPoint = QStringLiteral("https://api.imgur.com/oauth/access_token");
-QString ImgurConnection::OAuthAuthorizationEndPoint = QStringLiteral("https://api.imgur.com/oauth/authorize");
+QString ImgurConnection::uploadURL = QLatin1String("https://api.imgur.com/2/upload.json");
+QString ImgurConnection::deleteURL = QLatin1String("https://api.imgur.com/2/delete.json");
+QString ImgurConnection::OAuthTokenEndPoint = QLatin1String("https://api.imgur.com/oauth/request_token");
+QString ImgurConnection::OAuthAccessEndPoint = QLatin1String("https://api.imgur.com/oauth/access_token");
+QString ImgurConnection::OAuthAuthorizationEndPoint = QLatin1String("https://api.imgur.com/oauth/authorize");
 */
 
 struct ImgurError
@@ -136,29 +136,21 @@ struct ImgurSuccess
 {
     struct ImgurImage
     {
+        QString    id;
+        QString    type;       // maybe enum
         QString    name;
         QString    title;
-        QString    caption;
-        QString    hash;
+        QString    description;
         QString    deletehash;
         QDateTime  datetime;
-        QString    type;       // maybe enum
         bool       animated;
         uint       width;
         uint       height;
         uint       size;
         uint       views;
         qulonglong bandwidth;
+        QUrl       link;
     } image;
-
-    struct ImgurLinks
-    {
-        QUrl original;
-        QUrl imgur_page;
-        QUrl delete_page;
-        QUrl small_square;
-        QUrl large_thumbnail;
-    } links;
 };
 
 } // namespace KIPIImgurPlugin

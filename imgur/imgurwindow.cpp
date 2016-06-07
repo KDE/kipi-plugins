@@ -24,6 +24,7 @@
 
 // Qt includes
 
+#include <QWindow>
 #include <QCloseEvent>
 #include <QMessageBox>
 
@@ -168,6 +169,8 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
 ImgurWindow::~ImgurWindow()
 {
     saveSettings();
+
+    delete d->webService;
     delete d;
 }
 
@@ -299,7 +302,9 @@ void ImgurWindow::readSettings()
     //KConfigGroup group = config.group(QString("Imgur Settings"));
 
     KConfigGroup group2 = config.group("Imgur Dialog");
+    winId();
     KWindowConfig::restoreWindowSize(windowHandle(), group2);
+    resize(windowHandle()->size());
 }
 
 void ImgurWindow::saveSettings()

@@ -30,6 +30,7 @@
 #include <QFileInfo>
 #include <QSettings>
 #include <QUrl>
+#include <QNetworkReply>
 
 // Libkipi includes
 
@@ -38,13 +39,6 @@
 // Local includes
 
 #include "imgurtalker_common.h"
-
-namespace KIO
-{
-    class Job;
-}
-
-class KJob;
 
 using namespace KIPI;
 
@@ -80,7 +74,6 @@ public:
 
 Q_SIGNALS:
 
-    void signalUploadProgress(int);
     void signalBusy(bool busy);
     void signalUploadStart(const QUrl& currentFile);
     void signalUploadDone(const QUrl& currentFile);
@@ -95,8 +88,7 @@ private:
 
 protected Q_SLOTS:
 
-    void slotResult(KJob* job);
-    void slotData(KIO::Job* job, const QByteArray& data);
+    void slotFinished(QNetworkReply* reply);
     void slotAddItems(const QList<QUrl>& list);
     void slotRemoveItems(const QList<QUrl>& list);
     void slotUploadDone(const QUrl& currentFile);

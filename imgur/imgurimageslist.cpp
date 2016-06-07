@@ -95,8 +95,8 @@ void ImgurImagesList::slotAddImages(const QList<QUrl>& list)
 
             if (meta && meta->load(imageUrl))
             {
-                const QString sUrl       = meta->getXmpTagString(QLatin1String("Xmp.kipi.Imgur.Hash"));
-                const QString sDeleteUrl = meta->getXmpTagString(QLatin1String("Xmp.kipi.Imgur.Delete"));
+                const QString sUrl       = meta->getXmpTagString(QLatin1String("Xmp.kipi.ImgurId"));
+                const QString sDeleteUrl = meta->getXmpTagString(QLatin1String("Xmp.kipi.ImgurDeleteHash"));
 
                 for (int i = 0; i < listView()->topLevelItemCount(); ++i)
                 {
@@ -108,12 +108,12 @@ void ImgurImagesList::slotAddImages(const QList<QUrl>& list)
 
                         if (!sUrl.isEmpty())
                         {
-                            currItem->setUrl(sUrl);
+                            currItem->setUrl(QLatin1String(ImgurConnection::pageURL(sUrl).toEncoded()));
                         }
 
                         if (!sDeleteUrl.isEmpty())
                         {
-                            currItem->setDeleteUrl(sDeleteUrl);
+                            currItem->setDeleteUrl(QLatin1String(ImgurConnection::deleteURL(sDeleteUrl).toEncoded()));
                         }
 
                         break;
@@ -147,15 +147,15 @@ void ImgurImagesList::slotUploadSuccess(const QUrl& localFile, const ImgurSucces
 
         if (currItem && currItem->url() == localFile)
         {
-            if (!success.links.imgur_page.isEmpty())
+            if (!success.image.id.isEmpty())
             {
-                const QString sUrl = QString::fromLatin1(success.links.imgur_page.toEncoded());
+                const QString sUrl = QLatin1String(ImgurConnection::pageURL(success.image.id).toEncoded());
                 currItem->setUrl(sUrl);
             }
 
-            if (!success.links.delete_page.isEmpty())
+            if (!success.image.deletehash.isEmpty())
             {
-                const QString sDeleteUrl = QString::fromLatin1(success.links.delete_page.toEncoded());
+                const QString sDeleteUrl = QLatin1String(ImgurConnection::deleteURL(success.image.deletehash).toEncoded());
                 currItem->setDeleteUrl(sDeleteUrl);
             }
 
