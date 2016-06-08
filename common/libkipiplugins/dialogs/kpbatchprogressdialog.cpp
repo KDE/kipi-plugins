@@ -267,7 +267,7 @@ KPBatchProgressWidget* KPBatchProgressDialog::progressWidget() const
 
 void KPBatchProgressDialog::setButtonClose()
 {
-    d->buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon::fromTheme(QString::fromLatin1("dialog-close")));
+    d->buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon::fromTheme(QString::fromLatin1("window-close")));
     d->buttonBox->button(QDialogButtonBox::Cancel)->setText(i18n("Close"));
 
     // Clicking "Close" now does two things:
