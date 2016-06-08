@@ -233,6 +233,7 @@ if(KF5Kipi_FOUND)
         add_subdirectory(flickr)
         add_subdirectory(dropbox)
         add_subdirectory(facebook)
+        add_subdirectory(imgur)
 
         if(KF5Archive_FOUND)
             add_subdirectory(flashexport)
@@ -250,7 +251,6 @@ if(KF5Kipi_FOUND)
 
             # Tools that only depend of KIO core. Code relying to KIO is listed on the right side.
 
-            add_subdirectory(imgur)                # imgurtalker.cpp
             add_subdirectory(imageshack)           # imageshacktalker.cpp
             add_subdirectory(yandexfotki)          # yftalker.cpp
 
