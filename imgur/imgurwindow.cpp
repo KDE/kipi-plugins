@@ -195,6 +195,7 @@ void ImgurWindow::slotCancel()
 
 void ImgurWindow::slotFinished()
 {
+    d->widget->progressBar()->progressCompleted();
     d->widget->imagesList()->listView()->clear();
     saveSettings();
 }
@@ -212,6 +213,11 @@ void ImgurWindow::closeEvent(QCloseEvent* e)
 
 void ImgurWindow::slotStartUpload()
 {
+    d->widget->progressBar()->setValue(0);
+    d->widget->progressBar()->setFormat(i18n("%v / %m"));
+    d->widget->progressBar()->progressScheduled(i18n("Export to Imgur"), true, true);
+    d->widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme(QString::fromLatin1("kipi")).pixmap(22, 22));
+
     setContinueUpload(true);
 }
 
@@ -292,7 +298,14 @@ void ImgurWindow::slotBusy(bool val)
     else
     {
         setCursor(Qt::ArrowCursor);
-        startButton()->setEnabled(!d->webService->imageQueue()->isEmpty());
+
+        if (d->webService->imageQueue()->isEmpty())
+        {
+            setContinueUpload(false);
+            startButton()->setEnabled(true);
+            d->widget->progressBar()->setVisible(false);
+            d->widget->progressBar()->progressCompleted();
+        }
     }
 }
 

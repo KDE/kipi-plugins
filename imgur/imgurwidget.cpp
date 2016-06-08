@@ -113,10 +113,6 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
     d->progressBar = new KPProgressWidget(settingsBox);
     d->progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     d->progressBar->setVisible(false);
-    d->progressBar->setValue(0);
-    d->progressBar->setFormat(i18n("%v / %m"));
-    d->progressBar->progressScheduled(i18n("Export to Imgur"), true, true);
-    d->progressBar->progressThumbnailChanged(QIcon::fromTheme(QString::fromLatin1("kipi")).pixmap(22, 22));
 
     // ------------------------------------------------------------------------
 
@@ -196,7 +192,6 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
            this, SLOT(slotLoadedNamePass(QString,QString)));
 */
 #endif //OAUTH_ENABLED
-
 }
 
 ImgurWidget::~ImgurWidget()

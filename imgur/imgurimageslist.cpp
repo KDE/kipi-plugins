@@ -91,38 +91,34 @@ void ImgurImagesList::slotAddImages(const QList<QUrl>& list)
 
         if (iface())
         {
+            for (int i = 0; i < listView()->topLevelItemCount(); ++i)
+            {
+                ImgurImageListViewItem* const currItem = dynamic_cast<ImgurImageListViewItem*>(listView()->topLevelItem(i));
+
+                if (currItem && currItem->url() == imageUrl)
+                {
+                    found = true;
+                    break;
+                }
+            }
+
             QPointer<MetadataProcessor> meta = iface()->createMetadataProcessor();
 
-            if (meta && meta->load(imageUrl))
+            if (!found && meta && meta->load(imageUrl))
             {
+                ImgurImageListViewItem* const currItem = new ImgurImageListViewItem(listView(), imageUrl);
+
                 const QString sUrl       = meta->getXmpTagString(QLatin1String("Xmp.kipi.ImgurId"));
                 const QString sDeleteUrl = meta->getXmpTagString(QLatin1String("Xmp.kipi.ImgurDeleteHash"));
 
-                for (int i = 0; i < listView()->topLevelItemCount(); ++i)
+                if (!sUrl.isEmpty())
                 {
-                    ImgurImageListViewItem* const currItem = dynamic_cast<ImgurImageListViewItem*>(listView()->topLevelItem(i));
-
-                    if (currItem && currItem->url() == imageUrl)
-                    {
-                        found = true;
-
-                        if (!sUrl.isEmpty())
-                        {
-                            currItem->setUrl(QLatin1String(ImgurConnection::pageURL(sUrl).toEncoded()));
-                        }
-
-                        if (!sDeleteUrl.isEmpty())
-                        {
-                            currItem->setDeleteUrl(QLatin1String(ImgurConnection::deleteURL(sDeleteUrl).toEncoded()));
-                        }
-
-                        break;
-                    }
+                    currItem->setUrl(QLatin1String(ImgurConnection::pageURL(sUrl).toEncoded()));
                 }
 
-                if (!found)
+                if (!sDeleteUrl.isEmpty())
                 {
-                    new ImgurImageListViewItem(listView(), imageUrl);
+                    currItem->setDeleteUrl(QLatin1String(ImgurConnection::deleteURL(sDeleteUrl).toEncoded()));
                 }
             }
         }
@@ -179,7 +175,7 @@ void ImgurImagesList::slotDoubleClick(QTreeWidgetItem* element, int i)
 ImgurImageListViewItem::ImgurImageListViewItem(KPImagesListView* const view, const QUrl& url)
     : KPImagesListViewItem(view, url)
 {
-    const QColor blue = QColor (0, 0, 255);
+    const QColor blue = QColor (50, 50, 255);
 
     setTextColor(3, blue);
     setTextColor(4, blue);

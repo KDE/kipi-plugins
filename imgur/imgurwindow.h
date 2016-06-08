@@ -92,13 +92,10 @@ Q_SIGNALS:
 
 private:
 
+    void closeEvent(QCloseEvent* e);
     void setContinueUpload(bool state);
     void readSettings();
     void saveSettings();
-
-protected:
-
-    void closeEvent(QCloseEvent* e);
 
 private:
 
