@@ -63,7 +63,7 @@ public:
                 setIcon(QIcon::fromTheme(QString::fromLatin1("system-run")).pixmap(16, 16));
                 break;
             case SuccessMessage:
-                setIcon(QIcon::fromTheme(QString::fromLatin1("dialog-ok")).pixmap(16, 16));
+                setIcon(QIcon::fromTheme(QString::fromLatin1("dialog-ok-apply")).pixmap(16, 16));
                 break;
             case WarningMessage:
                 setIcon(QIcon::fromTheme(QString::fromLatin1("dialog-warning")).pixmap(16, 16));

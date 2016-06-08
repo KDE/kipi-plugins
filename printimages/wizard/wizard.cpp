@@ -337,8 +337,8 @@ Wizard::Wizard(QWidget* const parent)
             this, SLOT(slotXMLCustomElement(QXmlStreamReader&)));
 
     // To get rid of icons that sometime are not shown
-    d->m_photoUi->BtnPreviewPageUp->setIcon(QIcon::fromTheme(QLatin1String("arrow-right")).pixmap(16, 16));
-    d->m_photoUi->BtnPreviewPageDown->setIcon(QIcon::fromTheme(QLatin1String("arrow-left")).pixmap(16, 16));
+    d->m_photoUi->BtnPreviewPageUp->setIcon(QIcon::fromTheme(QLatin1String("go-next")).pixmap(16, 16));
+    d->m_photoUi->BtnPreviewPageDown->setIcon(QIcon::fromTheme(QLatin1String("go-previous")).pixmap(16, 16));
 
     //arrow-up-double
     d->m_currentPreviewPage = 0;
