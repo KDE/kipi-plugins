@@ -197,6 +197,7 @@ void ImgurWindow::slotFinished()
 {
     d->widget->progressBar()->progressCompleted();
     d->widget->imagesList()->listView()->clear();
+    d->webService->imageQueue()->clear();
     saveSettings();
 }
 
