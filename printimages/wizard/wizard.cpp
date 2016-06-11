@@ -930,7 +930,7 @@ bool Wizard::paintOnePage(QPainter& p, const QList<TPhoto*>& photos, const QList
 {
     Q_ASSERT(layouts.count() > 1);
 
-    if (photos.count() == 0) 
+    if (photos.count() == 0)
         return true;   // no photos => last photo
 
     QList<QRect*>::const_iterator it = layouts.begin();
@@ -1377,7 +1377,7 @@ void Wizard::slotXMLCustomElement(QXmlStreamReader& xmlReader)
 
     // reset preview page number
     d->m_currentPreviewPage      = 0;
-    initPhotoSizes(d->m_printer->paperSize(QPrinter::Millimeter));   
+    initPhotoSizes(d->m_printer->paperSize(QPrinter::Millimeter));
     QList<QListWidgetItem*> list = d->m_photoUi->ListPhotoSizes->findItems(d->m_savedPhotoSize, Qt::MatchExactly);
 
     if (list.count())
@@ -2551,7 +2551,7 @@ void Wizard::accept()
 
         if (!launchExternalApp(prog, args))
         {
-            QMessageBox::information(this, QString(), 
+            QMessageBox::information(this, QString(),
                                      i18n("There was an error launching the GIMP. Please make sure it is properly installed."));
             return;
         }

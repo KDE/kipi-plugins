@@ -305,7 +305,7 @@ MagickImage* ProcessImage::transition(const MagickImage& from, const MagickImage
     return dst;
 }
 
-GeoImage* ProcessImage::getGeometry(const GeoImage& from, const GeoImage& to, int image_width, int image_height, 
+GeoImage* ProcessImage::getGeometry(const GeoImage& from, const GeoImage& to, int image_width, int image_height,
                                     int step, int steps) const
 {
     GeoImage* const geometry = new GeoImage();

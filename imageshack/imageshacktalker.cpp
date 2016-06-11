@@ -197,7 +197,7 @@ void ImageshackTalker::authenticate()
 
     m_state = IMGHCK_AUTHENTICATING;
     m_job = job;
-    m_buffer.resize(0);    
+    m_buffer.resize(0);
 }
 
 void ImageshackTalker::getGalleries()
@@ -240,7 +240,7 @@ void ImageshackTalker::checkRegistrationCodeDone(int errCode, const QString& err
 
 void ImageshackTalker::parseAccessToken(const QByteArray &data)
 {
-    qCDebug(KIPIPLUGINS_LOG) << "Data received is "<< data;  
+    qCDebug(KIPIPLUGINS_LOG) << "Data received is "<< data;
 
     QJsonParseError err;
     QJsonDocument doc = QJsonDocument::fromJson(data, &err);
@@ -253,7 +253,7 @@ void ImageshackTalker::parseAccessToken(const QByteArray &data)
 
     QJsonObject jsonObject = doc.object();
 
-    if(jsonObject[QString::fromLatin1("success")].toBool())    
+    if(jsonObject[QString::fromLatin1("success")].toBool())
     {
         m_imageshack->m_loggedIn = true;
         QJsonObject obj          = jsonObject[QString::fromLatin1("result")].toObject();

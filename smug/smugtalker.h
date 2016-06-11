@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2008-12-01
- * Description : a kipi plugin to import/export images to/from 
+ * Description : a kipi plugin to import/export images to/from
                  SmugMug web service
  *
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
@@ -60,7 +60,7 @@ public:
 
     void    listAlbums(const QString& nickName = QString());
     void    listPhotos(qint64 albumID,
-                       const QString& albumKey, 
+                       const QString& albumKey,
                        const QString& albumPassword = QString(),
                        const QString& sitePassword = QString());
     void    listAlbumTmpl();
@@ -77,7 +77,7 @@ public:
 Q_SIGNALS:
 
     void signalBusy(bool val);
-    void signalLoginProgress(int step, int maxStep = 0, 
+    void signalLoginProgress(int step, int maxStep = 0,
                              const QString& label = QString());
     void signalLoginDone(int errCode, const QString& errMsg);
     void signalAddPhotoDone(int errCode, const QString& errMsg);

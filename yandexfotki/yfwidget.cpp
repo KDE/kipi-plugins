@@ -55,7 +55,7 @@ YandexFotkiWidget::YandexFotkiWidget(QWidget* const parent, KIPI::Interface* con
 {
     QGroupBox* const optionsBox         = getOptionsBox();
     QGridLayout* const optionsBoxLayout = getOptionsBoxLayout();
-    
+
     QSpacerItem* const spacer1 = new QSpacerItem(1, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QSpacerItem* const spacer2 = new QSpacerItem(1, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QLabel* const policyLabel  = new QLabel(i18n("Update policy:"), optionsBox);
@@ -85,7 +85,7 @@ YandexFotkiWidget::YandexFotkiWidget(QWidget* const parent, KIPI::Interface* con
     m_policyGroup->addButton(policyRadio1, POLICY_UPDATE_MERGE);
     m_policyGroup->addButton(policyRadio3, POLICY_SKIP);
     m_policyGroup->addButton(policyRadio4, POLICY_ADDNEW);
-    
+
     optionsBoxLayout->addItem(spacer1,                  3, 0, 1, 5);
     optionsBoxLayout->addWidget(accessLabel,            4, 0, 1, 5);
     optionsBoxLayout->addWidget(m_accessCombo,          5, 1, 1, 4);

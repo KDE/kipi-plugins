@@ -78,13 +78,13 @@ bool MPForm::addPair(const QString& name, const QString& value, const QString& c
     str += m_boundary;
     str += "\r\n";
 
-    if (!name.isEmpty()) 
-    { 
+    if (!name.isEmpty())
+    {
       	str += "Content-Disposition: form-data; name=\"";
     	str += name.toLatin1();
     	str += "\"\r\n";
     }
-    if (!contentType.isEmpty()) 
+    if (!contentType.isEmpty())
     {
         str += "Content-Type: " + QByteArray(contentType.toLatin1());
         str += "\r\n";
@@ -96,7 +96,7 @@ bool MPForm::addPair(const QString& name, const QString& value, const QString& c
     str += "\r\n\r\n";
     str += value.toUtf8();
 
-    m_buffer.append(str); 
+    m_buffer.append(str);
     m_buffer.append("\r\n");
     return true;
 }

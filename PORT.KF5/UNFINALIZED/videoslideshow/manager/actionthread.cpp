@@ -131,7 +131,7 @@ void ActionThread::run()
         Q_EMIT frameCompleted(ad);
 
         upperBound      = getTransitionFrames(d->item);
-        processItem(upperBound, img, imgnext, TYPE_TRANSITION); 
+        processItem(upperBound, img, imgnext, TYPE_TRANSITION);
 
         ActionData tad;
         tad.action      = TYPE_TRANSITION;
@@ -397,7 +397,7 @@ void ActionThread::ProcessFrame(Frame* const frm)
             MagickImage* imgnextout = 0;
 
             // we may have to geoscale the current and next image
-            int step   = getTransitionFrames(frm->item->getPrevImageItem()) + frm->item->getPrevImageItem()->getTime() * 
+            int step   = getTransitionFrames(frm->item->getPrevImageItem()) + frm->item->getPrevImageItem()->getTime() *
                                              d->framerate + frm->number;
             imgout     = getDynamicImage(frm->item->getPrevImageItem(), frm->img, step);
             imgnextout = getDynamicImage(frm->item, frm->imgnext, frm->number);

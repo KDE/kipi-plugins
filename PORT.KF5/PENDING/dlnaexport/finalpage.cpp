@@ -123,10 +123,10 @@ void FinalPage::turnOff()
 {
     // Image sharing stopped.
     emit sharing(false);
-    
+
     delete d->Hdlna;
     d->Hdlna = 0;
-    
+
     d->startButton->setEnabled(true);
     d->stopButton->setEnabled(false);
 }
@@ -137,7 +137,7 @@ void FinalPage::turnOn()
     emit sharing(true);
 
     startHupnpMediaServer();
-    
+
     d->startButton->setEnabled(false);
     d->stopButton->setEnabled(true);
 }

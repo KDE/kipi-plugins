@@ -39,7 +39,7 @@
 #include <QDir>
 #include <QCheckBox>
 
-// KDE includes 
+// KDE includes
 
 #include <kpushbutton.h>
 #include <klocalizeddate.h>
@@ -335,7 +335,7 @@ void SlideShowSettingsWidget::setUpPPMSettings()
     mainLayout->addWidget(effectLabel,        1, 0, 1, 1);
     mainLayout->addWidget(d->effects,         1, 1, 1, 1);
     mainLayout->addWidget(transitionLabel,    2, 0, 1, 1);
-    mainLayout->addWidget(d->transitions,     2, 1, 1, 1); 
+    mainLayout->addWidget(d->transitions,     2, 1, 1, 1);
     mainLayout->addWidget(transSpeedLabel,    3, 0, 1, 1);
     mainLayout->addWidget(d->transitionSpeed, 3, 1, 1, 1);
 

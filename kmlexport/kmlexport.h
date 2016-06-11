@@ -42,7 +42,7 @@
 
 class QImage;
 
-namespace KIPIPlugins 
+namespace KIPIPlugins
 {
     class KPBatchProgressDialog;
 }
@@ -50,7 +50,7 @@ namespace KIPIPlugins
 using namespace KIPI;
 using namespace KIPIPlugins;
 
-namespace KIPIKMLExportPlugin 
+namespace KIPIKMLExportPlugin
 {
 
 /**
@@ -197,7 +197,7 @@ private:
     ImageCollection             m_hostSelection;
     Interface*                  m_iface;
     QPointer<MetadataProcessor> m_meta;
-    
+
     /*! the root document, used to create all QDomElements */
     QDomDocument*               m_kmlDocument;
 

@@ -67,7 +67,7 @@ public:
 };
 
 Plugin_SendImages::Plugin_SendImages(QObject* const parent, const QVariantList&)
-    : Plugin(parent, "SendImages"), 
+    : Plugin(parent, "SendImages"),
       d(new Private)
 {
     qCDebug(KIPIPLUGINS_LOG) << "Plugin_SendImages plugin loaded";

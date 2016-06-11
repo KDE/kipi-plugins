@@ -62,8 +62,8 @@ using namespace KIPIPlugins;
 
 namespace KIPIYandexFotkiPlugin
 {
-    
-class YandexFotkiWidget;    
+
+class YandexFotkiWidget;
 
 class YandexFotkiWindow : public KPToolDialog
 {
@@ -124,7 +124,7 @@ protected:
 
     // Plugin
     bool                        m_import;
-    YandexFotkiWidget*          m_widget; 
+    YandexFotkiWidget*          m_widget;
 
     // User interface
     QLabel*                     m_loginLabel;
@@ -157,7 +157,7 @@ protected:
     YandexFotkiTalker           m_talker;
 
     QStack<YandexFotkiPhoto>    m_transferQueue;
-    
+
     QPointer<MetadataProcessor> m_meta;
 
     // XMP id const for images

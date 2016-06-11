@@ -12,7 +12,7 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -37,7 +37,7 @@ using namespace KIPIPlugins;
 namespace KIPIPhotivoIntegrationPlugin
 {
 
-/* NOTE: As we only need to use known properties for this purpose we can use 
+/* NOTE: As we only need to use known properties for this purpose we can use
  * simple structs. This simple, fast and less error prone.
  * For more generic requirements a hash map could be used instead. */
 

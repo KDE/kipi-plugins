@@ -42,7 +42,7 @@
 
 namespace KIPIPlugins
 {
-    
+
 class KIPIPLUGINS_EXPORT KPJob : public QObject,
                                  public QRunnable
 {
@@ -85,7 +85,7 @@ protected:
     bool m_cancel;
 };
 
-/** Define a map of job/priority to process by KPThreadManager manager. 
+/** Define a map of job/priority to process by KPThreadManager manager.
  *  Priority value can be used to control the run queue's order of execution.
  *  Zero priority want mean to process job with higher priority.
  */

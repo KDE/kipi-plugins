@@ -296,7 +296,7 @@ void DsWindow::uploadNextPhoto()
     else
     {
         m_tmpPath.clear();
-        res = m_talker->addScreenshot(imgPath, m_widget->m_pkgLineEdit->text(), 
+        res = m_talker->addScreenshot(imgPath, m_widget->m_pkgLineEdit->text(),
                                       m_widget->m_versionsComboBox->currentText(),
                                       m_widget->m_descriptionLineEdit->text());
     }

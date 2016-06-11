@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2008-12-07
- * Description : a kipi plugin to import/export images to/from 
+ * Description : a kipi plugin to import/export images to/from
                  SmugMug web service
  *
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>

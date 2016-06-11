@@ -953,7 +953,7 @@ void FlickrTalker::parseResponseMaxSize(const QByteArray& data)
                         QDomAttr a = e.attributeNode(QString::fromLatin1("maxupload"));
                         m_maxSize = a.value();
                         qCDebug(KIPIPLUGINS_LOG) << "Max upload size is"<<m_maxSize;
-                    } 
+                    }
                 }
 
                 details = details.nextSibling();

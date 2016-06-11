@@ -71,7 +71,7 @@ private:
     FlickrWindow*  m_dlgFlickr;
     FlickrWindow*  m_dlg23;
     FlickrWindow*  m_dlgZooomr;
-    
+
     SelectUserDlg* selectFlickr;
     SelectUserDlg* select23;
     SelectUserDlg* selectZoomr;

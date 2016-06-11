@@ -370,7 +370,7 @@ QGridLayout* KPSettingsWidget::getAccountBoxLayout() const
 {
     return d->m_accountBoxLayout;
 }
-    
+
 QLabel* KPSettingsWidget::getHeaderLbl() const
 {
     return d->m_headerLbl;

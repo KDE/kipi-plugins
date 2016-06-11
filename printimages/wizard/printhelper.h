@@ -3,7 +3,7 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2009-02-08 
+ * Date        : 2009-02-08
  * Description : a kipi plugin to print images
  *
  * Copyright 2009-2012 by Angelo Naselli <anaselli at linux dot it>

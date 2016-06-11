@@ -100,7 +100,7 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
     m_import = import;
     m_tmpDir = makeTemporaryDir("kipi-yandexfotki").absolutePath() + QString::fromLatin1("/");
     m_widget = new YandexFotkiWidget(this, iface(), QString::fromLatin1("Yandex.Fotki"));
-    
+
     m_loginLabel           = m_widget->getUserNameLabel();
     m_headerLabel          = m_widget->getHeaderLbl();
     m_changeUserButton     = m_widget->getChangeUserBtn();
@@ -111,12 +111,12 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
     m_dimensionSpin        = m_widget->getDimensionSpB();
     m_imageQualitySpin     = m_widget->getImgQualitySpB();
     m_imgList              = m_widget->imagesList();
-    m_progressBar          = m_widget->progressBar(); 
+    m_progressBar          = m_widget->progressBar();
     m_accessCombo          = m_widget->m_accessCombo;
     m_hideOriginalCheck    = m_widget->m_hideOriginalCheck;
     m_disableCommentsCheck = m_widget->m_disableCommentsCheck;
     m_adultCheck           = m_widget->m_adultCheck;
-    m_policyGroup          = m_widget->m_policyGroup;  
+    m_policyGroup          = m_widget->m_policyGroup;
     m_albumsBox            = m_widget->getAlbumBox();
     m_meta                 = 0;
 
@@ -124,20 +124,20 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
     {
         m_meta = iface()->createMetadataProcessor();
     }
-        
+
     connect(m_changeUserButton, SIGNAL(clicked()),
             this, SLOT(slotChangeUserClicked()));
-    
+
     connect(m_newAlbumButton, SIGNAL(clicked()),
             this, SLOT(slotNewAlbumRequest()) );
 
 
     connect(m_reloadAlbumsButton, SIGNAL(clicked()),
-            this, SLOT(slotReloadAlbumsRequest()) );    
-    
+            this, SLOT(slotReloadAlbumsRequest()) );
+
     setMainWidget(m_widget);
     m_widget->setMinimumSize(800, 700);
-    
+
     KPAboutData* const about = new KPAboutData(ki18n("Yandex.Fotki Plugin"),
                                                0,
                                                KAboutLicense::GPL,
@@ -457,7 +457,7 @@ void YandexFotkiWindow::slotListPhotosDoneForUpload(const QList <YandexFotkiPhot
         // check if photo alredy uploaded
 
         int oldPhotoId = -1;
-        
+
         if (m_meta && m_meta->load(url))
         {
             QString localId = m_meta->getXmpTagString(QLatin1String(XMP_SERVICE_ID));

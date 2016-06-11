@@ -45,7 +45,7 @@ class KIPIPLUGINS_EXPORT KPImageInfo
 public:
 
     /** Contructor with item url that you want to manage. KIPI interface from plugin loader instance is used
-     *  to fill item info from kipi host. If no interface is available, for ex when plugin is loaded as 
+     *  to fill item info from kipi host. If no interface is available, for ex when plugin is loaded as
      *  stand-alone application, some info are filled with image file metadata.
      */
     KPImageInfo(const QUrl& url);

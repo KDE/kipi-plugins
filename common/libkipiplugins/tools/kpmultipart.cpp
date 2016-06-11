@@ -57,7 +57,7 @@ bool KPMultiPart::appendPair(const QString& name, const QString& value, const QS
                         QVariant(QString("form-data; name=\"%1\"").arg(name)));
     metaPart.setHeader(QNetworkRequest::ContentLengthHeader, QVariant(QString("%1").arg(value.length())));
     metaPart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant(contentType));
-    
+
     metaPart.setBody(QByteArray(value.toUtf8()));
     m_multiPart->append(metaPart);
     return true;

@@ -5,7 +5,7 @@
  * <a href="http://www.digikam.org">http://www.digikam.org</a>
  *
  * @date   2012-07-01
- * @brief  convert images to ppm format 
+ * @brief  convert images to ppm format
  *
  * @author Copyright (C) 2012 by A Janardhan Reddy <annapareddyjanardhanreddy at gmail dot com>
  *
@@ -42,7 +42,7 @@ using namespace KIPIPlugins;
 
 namespace KIPIVideoSlideShowPlugin
 {
- 
+
 class ActionThread : public QThread
 {
     Q_OBJECT
@@ -76,7 +76,7 @@ private:
 
         MagickImage*         img;
         MagickImage*         imgnext;
-        MagickImage*         imgout; 
+        MagickImage*         imgout;
     };
 
 private:

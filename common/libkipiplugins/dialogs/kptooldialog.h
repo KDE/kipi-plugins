@@ -118,9 +118,9 @@ public:
     virtual ~KPWizardDialog();
 
 private:
-    
+
     QPushButton* helpButton() const;
-    
+
     friend class KPDialogBase;
 };
 

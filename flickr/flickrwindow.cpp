@@ -437,7 +437,7 @@ void FlickrWindow::slotTokenObtained(const QString& token)
 
     KConfig config(QString::fromLatin1("kipirc"));
 
-    foreach ( const QString& group, config.groupList() ) 
+    foreach ( const QString& group, config.groupList() )
     {
         if(!(group.contains(m_serviceName)))
             continue;

@@ -55,9 +55,9 @@ namespace KIPIFlickrPlugin
 
 FlickrWidget::FlickrWidget(QWidget* const parent, KIPI::Interface* const iface, const QString& serviceName)
     : KPSettingsWidget(parent,iface,serviceName)
-{    
+{
     m_serviceName = serviceName;
-    
+
     //Adding Remove Account button
     m_removeAccount              = new QPushButton(getAccountBox());
     m_removeAccount->setText(i18n("Remove Account"));
@@ -223,17 +223,17 @@ FlickrWidget::FlickrWidget(QWidget* const parent, KIPI::Interface* const iface, 
     publicationBoxLayout->addWidget(m_extendedPublicationBox,    3, 0, 1, 2);
 
     // -- Add these extra widgets to settings box -------------------------------------------------
-    
+
     addWidgetToSettingsBox(publicationBox);
     addWidgetToSettingsBox(tagsBox);
-    
+
     //hiding widgets not required.
     getUploadBox()->hide();
     getSizeBox()->hide();
-    
+
     //Removing KPImageLists inherited from KPSettingsWidget and replacing it with more specific FlickrList
     replaceImageList(m_imglst);
-    
+
     updateLabels();
 
     connect(m_imglst, SIGNAL(signalPermissionChanged(FlickrList::FieldType,Qt::CheckState)),
@@ -317,7 +317,7 @@ void FlickrWidget::updateLabels(const QString& /*name*/, const QString& /*url*/)
                                   "<font color=\"#0065DE\">flick</font>"
                                   "<font color=\"#FF0084\">r</font></a>"
                                   " Export"
-                                  "</h2></b>"));    
+                                  "</h2></b>"));
 }
 
 void FlickrWidget::slotPermissionChanged(FlickrList::FieldType checkbox, Qt::CheckState state)

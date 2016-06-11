@@ -35,8 +35,8 @@ using namespace KIPI;
 
 namespace KIPIYandexFotkiPlugin
 {
-    
-class YandexFotkiWindow;    
+
+class YandexFotkiWindow;
 
 class Plugin_YandexFotki : public Plugin
 {

@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2008-12-01
- * Description : a kipi plugin to import/export images to/from 
+ * Description : a kipi plugin to import/export images to/from
                  SmugMug web service
  *
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
@@ -104,7 +104,7 @@ void SmugTalker::login(const QString& email, const QString& password)
     QUrl url(m_apiURL);
     QUrlQuery q;
 
-    if (email.isEmpty()) 
+    if (email.isEmpty())
     {
         q.addQueryItem(QString::fromLatin1("method"), QString::fromLatin1("smugmug.login.anonymously"));
         q.addQueryItem(QString::fromLatin1("APIKey"), m_apiKey);

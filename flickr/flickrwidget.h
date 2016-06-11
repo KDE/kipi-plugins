@@ -64,7 +64,7 @@ public:
 
     FlickrWidget(QWidget* const parent, KIPI::Interface* const iface, const QString& serviceName);
     ~FlickrWidget();
-    
+
     virtual void updateLabels(const QString& name = QString(), const QString& url = QString());
 
 private Q_SLOTS:

@@ -69,26 +69,26 @@ public:
     KPImagesList*     imagesList()  const;
     KPProgressWidget* progressBar() const;
     void              replaceImageList(QWidget* const widget);
-    
+
     QWidget*          getSettingsBox() const;
     QVBoxLayout*      getSettingsBoxLayout() const;
     void              addWidgetToSettingsBox(QWidget* const widget);
-    
+
     QGroupBox*        getAlbumBox() const;
     QGridLayout*      getAlbumBoxLayout() const;
-    
+
     QGroupBox*        getOptionsBox() const;
     QGridLayout*      getOptionsBoxLayout() const;
-    
+
     QGroupBox*        getUploadBox() const;
     QVBoxLayout*      getUploadBoxLayout() const;
-    
+
     QGroupBox*        getSizeBox() const;
     QVBoxLayout*      getSizeBoxLayout() const;
-    
+
     QGroupBox*        getAccountBox() const;
     QGridLayout*      getAccountBoxLayout() const;
-    
+
     QLabel*           getHeaderLbl() const;
     QLabel*           getUserNameLabel() const;
     QPushButton*      getChangeUserBtn() const;
@@ -99,14 +99,14 @@ public:
     QSpinBox*         getDimensionSpB() const;
     QSpinBox*         getImgQualitySpB() const;
     QComboBox*        getAlbumsCoB() const;
-    
-    
+
+
 protected Q_SLOTS:
 
     void slotResizeChecked();
 
 private:
-    
+
     class Private;
     Private* const d;
 };

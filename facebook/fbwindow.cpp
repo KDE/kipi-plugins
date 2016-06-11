@@ -60,7 +60,7 @@
 
 namespace KIPIFacebookPlugin
 {
-    
+
 class FbWindow::Private
 {
 public:
@@ -89,7 +89,7 @@ public:
     QSpinBox*                      m_dimensionSpB;
     QSpinBox*                      m_imageQualitySpB;
     KPProgressWidget*              m_progressBar;
-};        
+};
 
 
 FbWindow::FbWindow(const QString& tmpFolder, QWidget* const /*parent*/)
@@ -294,7 +294,7 @@ void FbWindow::writeSettings()
             grp.deleteEntry("Session Secret");
         }
     }
-    
+
     grp.writeEntry("Session Expires", m_sessionExpires);
     grp.writeEntry("Current Album",   m_currentAlbumID);
     grp.writeEntry("Resize",          d->m_resizeChB->isChecked());
@@ -567,7 +567,7 @@ bool FbWindow::prepareImageForUpload(const QString& imgPath, QString& caption)
     {
         image = iface()->preview(QUrl::fromLocalFile(imgPath));
     }
-    
+
     if (image.isNull())
     {
         image.load(imgPath);
@@ -596,7 +596,7 @@ bool FbWindow::prepareImageForUpload(const QString& imgPath, QString& caption)
     image.save(m_tmpPath, "JPEG", d->m_imageQualitySpB->value());
 
     // copy meta data to temporary image
-    
+
     if (iface())
     {
         QPointer<MetadataProcessor> meta = iface()->createMetadataProcessor();

@@ -45,7 +45,7 @@ public:
     bool    albumVisible()     const;
 
 private:
-    
+
     QCheckBox* m_albumVisible;
 };
 

@@ -58,4 +58,4 @@ private:
 
 }  // namespace KIPISendimagesPlugin
 
-#endif // SETTINGSWIDGET_H 
+#endif // SETTINGSWIDGET_H

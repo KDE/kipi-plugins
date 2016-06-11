@@ -43,7 +43,7 @@ namespace KIPIImageshackPlugin
 
 NewAlbumDlg::NewAlbumDlg(QWidget* const parent, const QString& pluginName)
     : KPNewAlbumDialog(parent,pluginName)
-{   
+{
     hideDateTime();
     hideDesc();
     hideLocation();

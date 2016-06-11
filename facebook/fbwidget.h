@@ -85,17 +85,17 @@ private:
 
 //     KIPIPlugins::KPImagesList*     m_imgList;
 //     KIPI::UploadWidget*            m_uploadWidget;
-// 
+//
 //     QLabel*                        m_headerLbl;
 //     QLabel*                        m_userNameDisplayLbl;
 //     QLabel*                        m_permissionLbl;
 //     QPushButton*                   m_changeUserBtn;
-// 
+//
 //     QButtonGroup*                  m_dlGrp;
 //     QComboBox*                     m_albumsCoB;
 //     QPushButton*                   m_newAlbumBtn;
 //     QPushButton*                   m_reloadAlbumsBtn;
-// 
+//
 //     QCheckBox*                     m_resizeChB;
 //     QSpinBox*                      m_dimensionSpB;
 //     QSpinBox*                      m_imageQualitySpB;

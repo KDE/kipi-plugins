@@ -912,7 +912,7 @@ void Canvas::scale(qreal factor, const QPoint & center)
  * Scales canvas view to fit in rect
  #############################################################################################################################*/
 void Canvas::scale(const QRect & rect)
-{   
+{
     QRectF r(this->mapToScene(rect.topLeft()),
              this->mapToScene(rect.bottomRight()));
     QSizeF viewSize = r.size();

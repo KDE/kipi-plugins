@@ -207,7 +207,7 @@ MagickImage* MagickApi::loadQImage(const QImage& qimage)
     if (!img)
         return 0;
 
-    if (!(image = ResizeImage(img->getImage(), qimage.width(), qimage.height(), SCALE_FILTER_FAST, 
+    if (!(image = ResizeImage(img->getImage(), qimage.width(), qimage.height(), SCALE_FILTER_FAST,
           1.0, &img->getImage()->exception)))
     {
         Q_EMIT signalsAPIError("ResizeImage() failed\n");
@@ -614,7 +614,7 @@ bool MagickApi::overlayImage(MagickImage& dst, int dx, int dy, const MagickImage
     return bitblitImage(dst, dx, dy, src, 0, 0, src.getWidth(), src.getHeight());
 }
 
-int MagickApi::scaleblitImage(MagickImage& dimg, int dx, int dy, int dw, int dh, const MagickImage& simg, 
+int MagickApi::scaleblitImage(MagickImage& dimg, int dx, int dy, int dw, int dh, const MagickImage& simg,
                               int sx, int sy, int sw, int sh)
 {
     /* scale the source image */

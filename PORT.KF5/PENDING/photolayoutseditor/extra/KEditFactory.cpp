@@ -30,7 +30,7 @@
 #include <QSlider>
 #include <QDebug>
 
-KSpinBoxFactory::KSpinBoxFactory(QObject* parent) 
+KSpinBoxFactory::KSpinBoxFactory(QObject* parent)
     : QtSpinBoxFactory(parent)
 {
 }

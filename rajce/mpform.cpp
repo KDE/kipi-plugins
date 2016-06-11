@@ -108,8 +108,8 @@ bool MPForm::addFile(const QString& name,const QString& path)
 {
     QMimeDatabase db;
     QMimeType ptr = db.mimeTypeForUrl(QUrl::fromLocalFile(path));
-    QString mime  = ptr.name(); 
-    
+    QString mime  = ptr.name();
+
     if (mime.isEmpty())
     {
         // if we ourselves can't determine the mime of the local file,

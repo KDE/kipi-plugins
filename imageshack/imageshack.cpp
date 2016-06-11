@@ -123,7 +123,7 @@ void Imageshack::saveSettings()
 {
     KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup group = config.group("Imageshack Settings");
-    
+
     config.sync();
 }
 

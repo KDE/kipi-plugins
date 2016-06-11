@@ -98,7 +98,7 @@ SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool
     m_emailLbl          = new QLabel(i18nc("smug account settings", "Email:"), accountBox);
     m_email             = new QLabel(accountBox);
     m_changeUserBtn     = new QPushButton(accountBox);
-    
+
     m_changeUserBtn->setText(i18n("Change Account"));
     m_changeUserBtn->setIcon(QIcon::fromTheme(QString::fromLatin1("system-switch-user")));
     m_changeUserBtn->setToolTip(i18n("Change SmugMug Account used to authenticate"));
@@ -135,7 +135,7 @@ SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool
     m_newAlbumBtn->setText(i18n("New Album"));
     m_newAlbumBtn->setIcon(QIcon::fromTheme(QString::fromLatin1("list-add")));
     m_newAlbumBtn->setToolTip(i18n("Create new SmugMug album"));
-    
+
     m_reloadAlbumsBtn = new QPushButton(accountBox);
     m_reloadAlbumsBtn->setText(i18nc("reload album list", "Reload"));
     m_reloadAlbumsBtn->setIcon(QIcon::fromTheme(QString::fromLatin1("view-refresh")));

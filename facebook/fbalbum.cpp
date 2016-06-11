@@ -44,7 +44,7 @@ namespace KIPIFacebookPlugin
 
 FbNewAlbum::FbNewAlbum(QWidget* const parent, const QString& pluginName)
     : KPNewAlbumDialog(parent, pluginName)
-{   
+{
     hideDateTime();
 
     m_privacyCoB        = new QComboBox;
@@ -61,7 +61,7 @@ FbNewAlbum::FbNewAlbum(QWidget* const parent, const QString& pluginName)
     m_privacyCoB->addItem(QIcon::fromTheme(QString::fromLatin1("applications-internet")),
                           i18n("Everyone"),                FB_EVERYONE);
     m_privacyCoB->setCurrentIndex(1);
-    
+
     addToMainLayout(m_privacyCoB);
 }
 

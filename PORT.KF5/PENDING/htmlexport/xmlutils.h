@@ -118,11 +118,11 @@ public:
                 BAD_CAST it.value().toUtf8().data());
         }
     }
-    
+
     void append(const QString& key, const QString& value) {
         mMap[key]=value;
     }
-    
+
     void append(const QString& key, int value) {
         mMap[key]=QString::number(value);
     }

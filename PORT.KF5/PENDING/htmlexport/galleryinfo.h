@@ -49,7 +49,7 @@ public:
 	QString fullFormatString() const {
 		return getEnumString("fullFormat");
 	}
-	
+
 	QString thumbnailFormatString() const {
 		return getEnumString("thumbnailFormat");
 	}

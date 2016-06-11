@@ -453,7 +453,7 @@ FlickrListViewItem::FlickrListViewItem(KPImagesListView* const view,
 
 FlickrListViewItem::~FlickrListViewItem()
 {
-    
+
 }
 
 void FlickrListViewItem::updateItemWidgets()

@@ -520,7 +520,7 @@ void SmugWindow::slotListCategoriesDone(int errCode, const QString& errMsg,
         m_albumDlg->m_categCoB->addItem(
             categoriesList.at(i).name,
             categoriesList.at(i).id);
-        
+
         if (m_currentCategoryID == categoriesList.at(i).id)
             m_albumDlg->m_categCoB->setCurrentIndex(i);
     }

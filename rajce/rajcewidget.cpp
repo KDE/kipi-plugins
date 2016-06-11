@@ -76,10 +76,10 @@ RajceWidget::RajceWidget(KIPI::Interface* const interface, const QString& tmpFol
     m_progressBar     = progressBar();
     m_imgList         = imagesList();
     m_changeUserBtn   = getChangeUserBtn();
-    
+
     getUploadBox()->hide();
-    getSizeBox()->hide();    
-    
+    getSizeBox()->hide();
+
     updateLabels();
 
     // ------------------------------------------------------------------------
@@ -202,7 +202,7 @@ void RajceWidget::updateLabels(const QString&, const QString&)
             case NonexistentTarget:                                                                                break;
             default:                                                                                               break;
         }
-        
+
         QPalette palette = m_progressBar->palette();
         palette.setColor(QPalette::Active, QPalette::Background, Qt::darkRed);
         m_progressBar->setPalette(palette);

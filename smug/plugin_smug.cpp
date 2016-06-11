@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2008-12-01
- * Description : a kipi plugin to import/export images to/from 
+ * Description : a kipi plugin to import/export images to/from
  *               SmugMug web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>

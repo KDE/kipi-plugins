@@ -63,7 +63,7 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
     : KPSettingsWidget(parent, iface, pluginName),
       m_imageshack(imageshack)
 {
-    
+
     m_imgList            = imagesList();
     m_headerLbl          = getHeaderLbl();
     m_accountNameLbl     = getUserNameLabel();
@@ -71,31 +71,31 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
     m_reloadGalleriesBtn = getReloadBtn();
     m_galleriesCob       = getAlbumsCoB();
     m_progressBar        = progressBar();
-    
+
     connect(m_reloadGalleriesBtn, SIGNAL(clicked()),
-            this, SLOT(slotReloadGalleries()));    
-    
+            this, SLOT(slotReloadGalleries()));
+
     QGroupBox* const tagsBox      = new QGroupBox(QString::fromLatin1(""), getSettingsBox());
     QGridLayout* const tagsLayout = new QGridLayout(tagsBox);
-    
+
     m_privateImagesChb = new QCheckBox(tagsBox);
     m_privateImagesChb->setText(i18n("Make private"));
     m_privateImagesChb->setChecked(false);
-    
+
     m_tagsFld             = new QLineEdit(tagsBox);
     QLabel* const tagsLbl = new QLabel(i18n("Tags (optional):"), tagsBox);
 
     m_remBarChb           = new QCheckBox(i18n("Remove information bar on thumbnails"));
     m_remBarChb->setChecked(false);
-    
+
     tagsLayout->addWidget(m_privateImagesChb, 0, 0);
     tagsLayout->addWidget(tagsLbl,            1, 0);
     tagsLayout->addWidget(m_tagsFld,          1, 1);
-    
+
     addWidgetToSettingsBox(tagsBox);
-    
+
     getUploadBox()->hide();
-    getSizeBox()->hide();    
+    getSizeBox()->hide();
 
     updateLabels();
 }
@@ -123,8 +123,8 @@ void ImageshackWidget::slotGetGalleries(const QStringList &gTexts, const QString
     m_galleriesCob->clear();
 
     m_galleriesCob->addItem(i18nc("@item:inlistbox", "Add to root folder"),
-                            QString::fromLatin1("--add-to-root--"));    
-    
+                            QString::fromLatin1("--add-to-root--"));
+
     m_galleriesCob->addItem(i18nc("@item:inlistbox", "Create new gallery"),
                             QString::fromLatin1("--new-gallery--"));
 
@@ -132,7 +132,7 @@ void ImageshackWidget::slotGetGalleries(const QStringList &gTexts, const QString
     for (int i = 0; i < gTexts.size(); ++i)
     {
         qCDebug(KIPIPLUGINS_LOG) << "gTexts is "<<gTexts[i] << " gNames is "<<gNames[i];
-        m_galleriesCob->addItem(gTexts[i], gNames[i]);        
+        m_galleriesCob->addItem(gTexts[i], gNames[i]);
     }
 
 //     slotEnableNewGalleryLE(m_galleriesCob->currentIndex());

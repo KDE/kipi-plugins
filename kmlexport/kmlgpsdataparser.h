@@ -32,7 +32,7 @@
 
 #include <QDomDocument>
 
-namespace KIPIKMLExportPlugin 
+namespace KIPIKMLExportPlugin
 {
 
 /*! a classe derivated from GPSDataParser mainly to transform GPS data to KML
@@ -104,6 +104,6 @@ private:
     QDomDocument* kmlDocument;
 };
 
-} // namespace KIPIKMLExportPlugin 
+} // namespace KIPIKMLExportPlugin
 
 #endif // KIPIGPSSYNCPLUGINKMLGPSDATAPARSER_H

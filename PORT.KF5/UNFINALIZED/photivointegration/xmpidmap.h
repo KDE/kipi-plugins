@@ -36,7 +36,7 @@ namespace KIPIPhotivoIntegrationPlugin
 {
 
 /*! ***************************************************************************
- * Thread-safe singelton wrapper around QSettings 
+ * Thread-safe singelton wrapper around QSettings
  */
 class XmpIDMap
 {

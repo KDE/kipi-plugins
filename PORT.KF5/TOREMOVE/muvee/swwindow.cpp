@@ -321,9 +321,9 @@ void SwWindow::slotListAlbumsDone(int errCode, const QString& errMsg, const QLis
        }
     }
 
-    // if the call was successful, then it means the authentication credentials are valid, 
+    // if the call was successful, then it means the authentication credentials are valid,
     // it means we can just enable the UI
-    buttonStateChange(true); 
+    buttonStateChange(true);
 }
 
 void SwWindow::buttonStateChange(bool state)

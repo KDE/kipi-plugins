@@ -315,7 +315,7 @@ KPImageDialog::KPImageDialog(QWidget* const parent, bool singleSelect, bool only
     {
         rawFiles = d->iface->rawFiles();
     }
-    
+
     if (!d->onlyRaw)
     {
         patternList = d->iface->supportedImageMimeTypes();

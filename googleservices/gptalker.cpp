@@ -228,7 +228,7 @@ void GPTalker::createAlbum(const GSFolder& album)
         QString::fromLatin1("gphoto:commentingEnabled"));
     entryElem.appendChild(commentElem);
     QDomText commentText            = docMeta.createTextNode(
-        album.canComment ? QString::fromLatin1("true") 
+        album.canComment ? QString::fromLatin1("true")
                          : QString::fromLatin1("false"));
     commentElem.appendChild(commentText);
     QDomElement timestampElem       = docMeta.createElementNS(
@@ -315,7 +315,7 @@ bool GPTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QString& 
         return false;
     }
 
-    path                  = QDir::tempPath() + QLatin1Char('/') + QFileInfo(photoPath).baseName().trimmed() + 
+    path                  = QDir::tempPath() + QLatin1Char('/') + QFileInfo(photoPath).baseName().trimmed() +
                             QString::fromLatin1(".jpg");
     int imgQualityToApply = 100;
 

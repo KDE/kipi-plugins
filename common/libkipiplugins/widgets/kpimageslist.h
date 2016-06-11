@@ -225,7 +225,7 @@ public:
     void                setAllowDuplicate(bool allow);
 
     void                loadImagesFromCurrentSelection();
-    
+
     /** A function to load all the images from the album if no image has been selected by user.
      */
     void                loadImagesFromCurrentAlbum();

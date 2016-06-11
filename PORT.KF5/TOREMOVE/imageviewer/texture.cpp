@@ -77,7 +77,7 @@ public:
         if (pl)
         {
             iface = pl->interface();
-        } 
+        }
     }
 
     float                              rdx, rdy, z, ux, uy, rtx, rty;
@@ -153,7 +153,7 @@ bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
     if (d->iface && info.orientation() != MetadataProcessor::UNSPECIFIED )
     {
         QPointer<MetadataProcessor> meta = d->iface->createMetadataProcessor();
-        
+
         if (meta)
             meta->rotateExifQImage(d->qimage, info.orientation());
     }
@@ -454,7 +454,7 @@ void Texture::rotate()
     if (d->iface)
     {
         QPointer<MetadataProcessor> meta = d->iface->createMetadataProcessor();
-        
+
         if (meta)
             meta->rotateExifQImage(d->qimage, d->rotate_list[d->rotate_idx%4]);
     }

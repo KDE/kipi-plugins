@@ -391,8 +391,8 @@ void PrintOptionsPage::setAdditionalInfo()
                 d->m_photos->at(i)->pAddInfo->mPrintHeight =  height ? height : PrintImagesConfig::printHeight();
             }
 //           qCDebug(KIPIPLUGINS_LOG) << " photo " << i << " printWidth " <<  pPhoto->pAddInfo->mPrintWidth
-//                    << " printHeight " << pPhoto->pAddInfo->mPrintHeight; 
-//     
+//                    << " printHeight " << pPhoto->pAddInfo->mPrintHeight;
+//
         }
     }
 }

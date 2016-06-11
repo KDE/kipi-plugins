@@ -172,7 +172,7 @@ void Plugin_PrintImages::slotPrintAssistantActivate()
     QWidget* const parent = QApplication::activeWindow();
     Wizard printAssistant(parent);
 
-    QString tempPath        = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + 
+    QString tempPath        = QStandardPaths::writableLocation(QStandardPaths::TempLocation) +
                               QLatin1String("kipi-printassistantdplugin-") + QString::number(getpid()) + QLatin1String("/");
     QDir().mkpath(tempPath);
     printAssistant.print(fileList, tempPath);

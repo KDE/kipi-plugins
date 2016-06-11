@@ -64,7 +64,7 @@ YandexFotkiAlbumDialog::YandexFotkiAlbumDialog(QWidget* const parent, YandexFotk
 
     albumBox->setLayout(albumBoxLayout);
     addToMainLayout(albumBox);
-    
+
     connect(getButtonBox(), SIGNAL(accepted()),
             this, SLOT(slotOkClicked()));
 }

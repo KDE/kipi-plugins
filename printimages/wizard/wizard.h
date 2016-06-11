@@ -113,7 +113,7 @@ private:
     void infopage_setCaptionButtons();
     void infopage_readCaptionSettings();
 
-    // fn filename, pageSize in mm 
+    // fn filename, pageSize in mm
     void parseTemplateFile( const QString& fn, const QSizeF& pageSize );
 
     void updateCaption(TPhoto* const);

@@ -37,7 +37,7 @@ QTEST_MAIN(TestGPXParsing)
 
 /**
  * @brief Test how well QDateTime deals with various string representations
- * 
+ *
  * The behavior of QDateTime::fromString changed in some Qt version, so here
  * we can test what the current behavior is and quickly detect if Qt changes
  * again.

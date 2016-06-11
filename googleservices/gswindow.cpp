@@ -118,7 +118,7 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
 
             about->addAuthor(i18n("Saurabh Patel"),i18n("Author and maintainer"),
                              QString::fromLatin1("saurabhpatel7717 at gmail dot com"));
- 
+
             about->addAuthor(i18n( "Shourya Singh Gupta" ), i18n("Developer"),
                              QString::fromLatin1("shouryasgupta at gmail dot com"));
 

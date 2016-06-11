@@ -531,7 +531,7 @@ Scene::Scene(const QRectF & dimension, QObject * parent) :
     y_grid(0),
     grid_item(0),
     grid_changed(true)
-{   
+{
     if (!OUTSIDE_SCENE_COLOR.isValid())
     {
         QPalette pal = this->palette();
@@ -1428,7 +1428,7 @@ QDomDocument Scene::toSvg(ProgressObserver * observer, bool asTemplate)
 
         if (photo)
         {
-            if (observer) 
+            if (observer)
                 observer->progresName( i18n("Saving %1...", photo->name()) );
 
             QDomDocument photoItemDocument = asTemplate ? photo->toTemplateSvg() : photo->toSvg();

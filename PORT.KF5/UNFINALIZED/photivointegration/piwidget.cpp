@@ -12,7 +12,7 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -73,7 +73,7 @@ PIWidget::PIWidget(QWidget* const parent /* = 0 */)
     d->imagesList = new PIImgList(this);
     d->imagesList->loadImagesFromCurrentSelection();
 
-    // group all information widgets 
+    // group all information widgets
     QWidget* infoBox = new QWidget(this);
 
     // link to Photivo homepage

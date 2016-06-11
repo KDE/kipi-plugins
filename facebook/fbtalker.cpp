@@ -256,7 +256,7 @@ void FbTalker::doOAuth()
     // just in case
     m_loginInProgress = true;
 
-    // TODO (Dirk): 
+    // TODO (Dirk):
     // Find out whether this signalBusy is used here appropriately.
     emit signalBusy(true);
 

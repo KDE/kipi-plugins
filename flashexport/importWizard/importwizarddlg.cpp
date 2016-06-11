@@ -326,7 +326,7 @@ void ImportWizardDlg::readSettings()
 
     //---Simpleviewer settings ----
     d->settings->textColor            = group.readEntry("TextColor",            QColor("#ffffff"));
-    d->settings->thumbnailPosition    = (SimpleViewerSettingsContainer::ThumbPosition)group.readEntry("ThumbnailPosition", 
+    d->settings->thumbnailPosition    = (SimpleViewerSettingsContainer::ThumbPosition)group.readEntry("ThumbnailPosition",
                                                                                 (int)SimpleViewerSettingsContainer::RIGHT);
     d->settings->stagePadding         = group.readEntry("StagePadding",         20);
     d->settings->maxImageDimension    = group.readEntry("MaxImageDimension",    640);

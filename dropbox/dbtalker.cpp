@@ -542,7 +542,7 @@ void DBTalker::parseResponseListFolders(const QByteArray& data)
     list.clear();
     list.append(qMakePair(QString::fromLatin1("/"), QString::fromLatin1("root")));
 
-    foreach (const QJsonValue& value, jsonArray) 
+    foreach (const QJsonValue& value, jsonArray)
     {
         QString path(QString::fromLatin1(""));
         bool isDir;

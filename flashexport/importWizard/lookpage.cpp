@@ -532,7 +532,7 @@ void LookPage::setSettings(const SimpleViewerSettingsContainer* const settings)
            d->imagePadding->setValue(settings->imagePadding);
            d->backgroundColor->setColor(settings->backgroundColor);
            break;
-      } 
+      }
       case 2:
       {
            d->thumbnailRows->setValue(settings->thumbnailRows);
@@ -564,7 +564,7 @@ void LookPage::setSettings(const SimpleViewerSettingsContainer* const settings)
 }
 
 void LookPage::settings(SimpleViewerSettingsContainer* const settings)
-{   
+{
     switch(settings->plugType)
     {
         case 0:

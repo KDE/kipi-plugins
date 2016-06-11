@@ -68,7 +68,7 @@ class ThemeListBoxItem : public QListWidgetItem
 public:
 
     ThemeListBoxItem(QListWidget* const list, Theme::Ptr theme)
-        : QListWidgetItem(theme->name(), list), 
+        : QListWidgetItem(theme->name(), list),
           mTheme(theme)
     {
     }
@@ -336,7 +336,7 @@ void Wizard::slotThemeSelectionChanged()
         setAppropriate(d->mThemeParametersPage->page(), parameterList.size() > 0);
 
         d->mImageSettingsPage->kcfg_thumbnailSquare->setEnabled(allowNonsquareThumbnails);
-        
+
         if (!allowNonsquareThumbnails)
             d->mImageSettingsPage->kcfg_thumbnailSquare->setChecked(true);
 

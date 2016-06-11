@@ -37,7 +37,7 @@ namespace KIPIPlugins
 {
 
 class KPWizardDialog;
-    
+
 class KIPIPLUGINS_EXPORT KPWizardPage : public QWizardPage
 {
 
@@ -53,7 +53,7 @@ public:
 
     void setComplete(bool b);
     bool isComplete() const;
-    
+
     int  id() const;
 
     KPWizardDialog* assistant() const;

@@ -86,7 +86,7 @@ private:
     {
         None = 0,
         ImageIsRaw,
-        ResizeRequired, 
+        ResizeRequired,
         NotPNG
     };
 

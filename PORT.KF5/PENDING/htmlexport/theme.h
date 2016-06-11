@@ -23,7 +23,7 @@
 // vim: set tabstop=4 shiftwidth=4 noexpandtab:
 
 #ifndef THEME_H
-#define THEME_H   
+#define THEME_H
 
 // Qt
 #include <QString>

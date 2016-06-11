@@ -43,7 +43,7 @@ using namespace KIPIPlugins;
 namespace KIPIFlashExportPlugin
 {
 
-class FlashManager; 
+class FlashManager;
 
 class SelectionPage: public KPWizardPage
 {

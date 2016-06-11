@@ -56,7 +56,7 @@ void DebianScreenshotsJob::start()
 //     QString sessionKey    = cfgGroup.readEntry("Key", QString());
 //     QString sessionSecret = cfgGroup.readEntry("Secret", QString());
 //     uint sessionExpires   = cfgGroup.readEntry("Expires", 0);
-// 
+//
 //     setPercent(20);
 //     talk.authenticate(sessionKey, sessionSecret, sessionExpires);
 }
@@ -70,14 +70,14 @@ void DebianScreenshotsJob::start()
 //         emitResult();
 //         return;
 //     }
-//     
+//
 //     KConfig cfg(KGlobal::mainComponent());
 //     KConfigGroup cfgGroup = cfg.group("DebianScreenshots");
 //     cfgGroup.writeEntry("Key",     talk.getSessionKey());
 //     cfgGroup.writeEntry("Secret",  talk.getSessionSecret());
 //     cfgGroup.writeEntry("Expires", talk.getSessionExpires());
 //     cfgGroup.sync();
-//     
+//
 //     qCDebug(KIPIPLUGINS_LOG) << "logged in" << talk.getSessionExpires();
 //     talk.listAlbums();
 //}
@@ -91,7 +91,7 @@ void DebianScreenshotsJob::start()
 //         emitResult();
 //         return;
 //     }
-//     
+//
 //     setPercent(25);
 //     QString id = QString();
 //     foreach(const FbAlbum& album, albums)
@@ -102,13 +102,13 @@ void DebianScreenshotsJob::start()
 //             break;
 //         }
 //     }
-//     
+//
 //     if(id.isEmpty())
 //     {
 //         FbAlbum album;
 //         album.title=m_albumName;
 //         album.description=i18n("Photos taken with KDE");
-//         
+//
 //         talk.createAlbum(album);
 //     }
 //     else
@@ -116,7 +116,7 @@ void DebianScreenshotsJob::start()
 //         m_albumId = id;
 //         addPhoto(0, QString());
 //     }
-//     
+//
 //     qCDebug(KIPIPLUGINS_LOG) << "listed" << id;
 //}
 
@@ -127,7 +127,7 @@ void DebianScreenshotsJob::addScreenshot(int code, const QString& message)
 //         QUrl url = m_urls.takeLast();
 //         bool c = talk.addPhoto(url.toLocalFile(), m_albumId, url.fileName());
 //         Q_ASSERT(c && "could not add the photo to the album");             //FIXME: Report error
-//         
+//
 //         setPercent(count);
 //     } else {
 //         if(code!=0) {

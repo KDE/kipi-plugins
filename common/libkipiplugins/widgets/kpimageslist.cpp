@@ -102,11 +102,11 @@ KPImagesListViewItem::KPImagesListViewItem(KPImagesListView* const view, const Q
     setUrl(url);
     setRating(-1);
     setFlags(Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
-    
+
     d->view      = view;
     int iconSize = d->view->iconSize().width();
     setThumb(QIcon::fromTheme(QString::fromLatin1("image-x-generic")).pixmap(iconSize, iconSize, QIcon::Disabled), false);
-    
+
     qCDebug(KIPIPLUGINS_LOG) << "Creating new ImageListViewItem with url " << d->url
                              << " for list view " << d->view;
 }
@@ -399,7 +399,7 @@ QModelIndex KPImagesListView::indexFromItem(KPImagesListViewItem* item, int colu
 {
   return QTreeWidget::indexFromItem(item, column);
 }
- 
+
 void KPImagesListView::contextMenuEvent(QContextMenuEvent* e)
 {
     QTreeWidget::contextMenuEvent(e);
@@ -577,14 +577,14 @@ KPImagesList::KPImagesList(QWidget* const parent, int iconSize)
 
     if (d->iface)
     {
-        connect(d->iface, &Interface::gotThumbnail, 
+        connect(d->iface, &Interface::gotThumbnail,
                 this, &KPImagesList::slotThumbnail);
     }
 
-    connect(d->listView, &KPImagesListView::signalItemClicked, 
+    connect(d->listView, &KPImagesListView::signalItemClicked,
             this, &KPImagesList::signalItemClicked);
 
-    connect(d->listView, &KPImagesListView::signalContextMenuRequested, 
+    connect(d->listView, &KPImagesListView::signalContextMenuRequested,
             this, &KPImagesList::signalContextMenuRequested);
 
     // queue this connection because itemSelectionChanged is emitted
@@ -598,28 +598,28 @@ KPImagesList::KPImagesList(QWidget* const parent, int iconSize)
 
     // --------------------------------------------------------
 
-    connect(d->addButton, &CtrlButton::clicked, 
+    connect(d->addButton, &CtrlButton::clicked,
             this, &KPImagesList::slotAddItems);
 
-    connect(d->removeButton, &CtrlButton::clicked, 
+    connect(d->removeButton, &CtrlButton::clicked,
             this, &KPImagesList::slotRemoveItems);
 
-    connect(d->moveUpButton, &CtrlButton::clicked, 
+    connect(d->moveUpButton, &CtrlButton::clicked,
             this, &KPImagesList::slotMoveUpItems);
 
-    connect(d->moveDownButton, &CtrlButton::clicked, 
+    connect(d->moveDownButton, &CtrlButton::clicked,
             this, &KPImagesList::slotMoveDownItems);
 
-    connect(d->clearButton, &CtrlButton::clicked, 
+    connect(d->clearButton, &CtrlButton::clicked,
             this, &KPImagesList::slotClearItems);
 
-    connect(d->loadButton, &CtrlButton::clicked, 
+    connect(d->loadButton, &CtrlButton::clicked,
             this, &KPImagesList::slotLoadItems);
 
-    connect(d->saveButton, &CtrlButton::clicked, 
+    connect(d->saveButton, &CtrlButton::clicked,
             this, &KPImagesList::slotSaveItems);
 
-    connect(d->progressTimer, &QTimer::timeout, 
+    connect(d->progressTimer, &QTimer::timeout,
             this, &KPImagesList::slotProgressTimerDone);
 
     // --------------------------------------------------------
@@ -867,8 +867,8 @@ void KPImagesList::slotAddImages(const QList<QUrl>& list)
             {
                 raw = true;
                 continue;
-            }                
-                    
+            }
+
             new KPImagesListViewItem(listView(), imageUrl);
             urls.append(imageUrl);
         }
@@ -942,7 +942,7 @@ void KPImagesList::slotMoveUpItems()
     listView()->insertTopLevelItem(curIndex.row(), temp);
     // this is a quick fix. We loose the extra tags in flickr upload, but at list we don't get a crash
     KPImagesListViewItem* const uw = dynamic_cast<KPImagesListViewItem*>(temp);
-    
+
     if (uw)
         uw->updateItemWidgets();
 
@@ -1010,7 +1010,7 @@ void KPImagesList::slotLoadItems()
         qCDebug(KIPIPLUGINS_LOG) << "Cannot open file";
         return;
     }
-        
+
     QXmlStreamReader xmlReader;
     xmlReader.setDevice(&file);
 
@@ -1036,7 +1036,7 @@ void KPImagesList::slotLoadItems()
             {
                 //allow plugins to append a new file
                 slotAddImages(urls);
-                // read plugin Image custom attributes and children element  
+                // read plugin Image custom attributes and children element
                 emit signalXMLLoadImageElement(xmlReader);
             }
         }
@@ -1157,7 +1157,7 @@ QList<QUrl> KPImagesList::imageUrls(bool onlyUnprocessed) const
     while (*it)
     {
         KPImagesListViewItem* const item = dynamic_cast<KPImagesListViewItem*>(*it);
-        
+
         if (item)
         {
             if ((onlyUnprocessed == false) || (item->state() != KPImagesListViewItem::Success))

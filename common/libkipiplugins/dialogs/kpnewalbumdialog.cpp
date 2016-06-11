@@ -122,7 +122,7 @@ KPNewAlbumDialog::KPNewAlbumDialog(QWidget* const parent, const QString& pluginN
 
     d->m_descEdt->setToolTip(i18n("Description of the album that will be created (optional)."));
 
-    d->m_locEdt->setToolTip(i18n("Location of the album that will be created (optional).")); 
+    d->m_locEdt->setToolTip(i18n("Location of the album that will be created (optional)."));
 
     d->albumBoxLayout->addWidget(d->titleLabel, 0, 0);
     d->albumBoxLayout->addWidget(d->m_titleEdt, 0, 1);

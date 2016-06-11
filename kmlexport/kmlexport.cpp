@@ -316,7 +316,7 @@ void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum 
           * MetadataProcessor seems to take Original dateTime first so it shoul be alright now.
           */
         QDateTime datetime;
-        
+
         if (m_meta)
             m_meta->getImageDateTime();
 

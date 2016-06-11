@@ -97,7 +97,7 @@ PreparedImage _prepareImageForUpload(const QString& saveDir, const QImage& img, 
     if (pl)
     {
         Interface* const iface = pl->interface();
-        
+
         if (iface)
         {
             // copy meta data to temporary image
@@ -576,7 +576,7 @@ AddPhotoCommand::AddPhotoCommand(const QString& tmpDir, const QString& path, uns
     if (pl)
     {
         Interface* const iface = pl->interface();
-        
+
         if (iface)
         {
             m_image = iface->preview(QUrl::fromLocalFile(path));
@@ -594,7 +594,7 @@ AddPhotoCommand::AddPhotoCommand(const QString& tmpDir, const QString& path, uns
         return;
     }
 
-    m_maxDimension                                  = (state.maxHeight() > state.maxWidth()) ? state.maxWidth() 
+    m_maxDimension                                  = (state.maxHeight() > state.maxWidth()) ? state.maxWidth()
                                                                                              : state.maxHeight();
     parameters()[QString::fromLatin1("token")]      = state.sessionToken();
     parameters()[QString::fromLatin1("albumToken")] = state.openAlbumToken();
@@ -680,11 +680,11 @@ QByteArray AddPhotoCommand::encode() const
         return QByteArray();
     }
 
-    PreparedImage prepared                      = _prepareImageForUpload(m_tmpDir, 
-                                                                         m_image, 
+    PreparedImage prepared                      = _prepareImageForUpload(m_tmpDir,
+                                                                         m_image,
                                                                          m_imagePath,
-                                                                         m_desiredDimension, 
-                                                                         THUMB_SIZE, 
+                                                                         m_desiredDimension,
+                                                                         THUMB_SIZE,
                                                                          m_jpgQuality);
 
     //add the rest of the parameters to be encoded as xml

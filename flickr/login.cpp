@@ -58,10 +58,10 @@ FlickrLogin::FlickrLogin(QWidget* const parent, const QString& header,
 
     connect(buttonBox, SIGNAL(rejected()),
             this, SLOT(reject()));
-    
+
     okButton->setDefault(true);
     setModal(false);
-    
+
     m_headerLabel     = new QLabel(this);
     m_headerLabel->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
     m_headerLabel->setText(header);
@@ -73,7 +73,7 @@ FlickrLogin::FlickrLogin(QWidget* const parent, const QString& header,
     hline->setFrameShadow(QFrame::Sunken);
     hline->setMinimumSize(0, 2);
     hline->updateGeometry();
-    
+
     QGridLayout* const centerLayout = new QGridLayout();
 
     m_nameEdit   = new QLineEdit(this);

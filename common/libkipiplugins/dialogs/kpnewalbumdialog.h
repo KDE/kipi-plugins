@@ -54,28 +54,28 @@ public:
 
     KPNewAlbumDialog(QWidget* const parent, const QString& pluginName);
     ~KPNewAlbumDialog();
-    
+
     void hideDateTime();
     void hideDesc();
     void hideLocation();
- 
+
     QWidget*          getMainWidget() const;
     QGroupBox*        getAlbumBox() const;
-    
+
     QLineEdit*        getTitleEdit() const;
     QTextEdit*        getDescEdit() const;
     QLineEdit*        getLocEdit() const;
     QDateTimeEdit*    getDateTimeEdit() const;
     QDialogButtonBox* getButtonBox() const;
-    
+
     void addToMainLayout(QWidget* const widget);
-    
+
 private Q_SLOTS:
 
-    void slotTextChanged(const QString& text);    
+    void slotTextChanged(const QString& text);
 
 private:
-    
+
     class Private;
     Private* const d;
 };

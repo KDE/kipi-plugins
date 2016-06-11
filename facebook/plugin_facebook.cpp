@@ -62,10 +62,10 @@ Plugin_Facebook::Plugin_Facebook(QObject* const parent, const QVariantList& /*ar
     : Plugin(parent, "Facebook")
 {
     qCDebug(KIPIPLUGINS_LOG) << "Plugin_Facebook plugin loaded";
-    
+
     setUiBaseName("kipiplugin_facebookui.rc");
     setupXML();
-    
+
     m_actionExport = 0;
     m_dlgExport    = 0;
 }

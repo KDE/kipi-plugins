@@ -129,7 +129,7 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
     logo->setAlignment(Qt::AlignLeft);
     QImage img = QImage(QStandardPaths::locate(QStandardPaths::GenericDataLocation,
                                                QLatin1String("kipiplugin_piwigo/pics/piwigo_logo.png")));
-    
+
     QByteArray byteArray;
     QBuffer    buffer(&byteArray);
     img.save(&buffer, "PNG");
@@ -137,7 +137,7 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
                   .arg(QLatin1String("http://piwigo.org"))
                   .arg(QString::fromLatin1("<img src=\"data:image/png;base64,%1\">")
                   .arg(QString::fromLatin1(byteArray.toBase64().data()))));
-    
+
     // ---------------------------------------------------------------------------
 
     albumView = new QTreeWidget;
@@ -311,7 +311,7 @@ void PiwigoWindow::connectSignals()
     connect(d->albumView, SIGNAL(itemSelectionChanged()),
             this , SLOT(slotAlbumSelected()) );
 
-    connect(d->confButton, SIGNAL(clicked()), 
+    connect(d->confButton, SIGNAL(clicked()),
              this, SLOT(slotSettings()) );
 
     connect(d->resizeCheckBox, SIGNAL(stateChanged(int)),

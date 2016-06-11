@@ -423,7 +423,7 @@ void PiwigoTalker::parseResponseLogin(const QByteArray& data)
         {
             foundResponse = true;
 
-            if (ts.name() == QString::fromLatin1("rsp") && 
+            if (ts.name() == QString::fromLatin1("rsp") &&
                 ts.attributes().value(QString::fromLatin1("stat")) == QString::fromLatin1("ok"))
             {
                 m_loggedIn = true;
@@ -483,7 +483,7 @@ void PiwigoTalker::parseResponseGetVersion(const QByteArray& data)
         {
             foundResponse = true;
 
-            if (ts.name() == QString::fromLatin1("rsp") && 
+            if (ts.name() == QString::fromLatin1("rsp") &&
                 ts.attributes().value(QString::fromLatin1("stat")) == QString::fromLatin1("ok"))
             {
                 QString v = ts.readElementText();
@@ -532,7 +532,7 @@ void PiwigoTalker::parseResponseListAlbums(const QByteArray& data)
 
         if (ts.isStartElement())
         {
-            if (ts.name() == QString::fromLatin1("rsp") && 
+            if (ts.name() == QString::fromLatin1("rsp") &&
                 ts.attributes().value(QString::fromLatin1("stat")) == QString::fromLatin1("ok"))
             {
                 foundResponse = true;
@@ -798,7 +798,7 @@ void PiwigoTalker::parseResponseSetInfo(const QByteArray& data)
             {
                 foundResponse = true;
 
-                if (ts.attributes().value(QString::fromLatin1("stat")) == QString::fromLatin1("ok")) 
+                if (ts.attributes().value(QString::fromLatin1("stat")) == QString::fromLatin1("ok"))
                     success = true;
 
                 break;

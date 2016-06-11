@@ -131,7 +131,7 @@ bool Task::imageResize(const EmailSettings& settings, const QUrl& orgUrl,
     QImage img;
 
     if (m_iface)
-    {        
+    {
         img = m_iface->preview(orgUrl);
     }
 

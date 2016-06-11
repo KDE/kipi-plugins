@@ -12,7 +12,7 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -62,7 +62,7 @@ QString XmpMM::pureID (const QString& id) const
 
 void XmpMM::loadHistory(const KExiv2::MetaDataMap& mmMap)
 {
-    // KPMetadata/KExiv2 can't tell how many elements an array has, 
+    // KPMetadata/KExiv2 can't tell how many elements an array has,
     // so we try to access the next element in a loop until we fail.
     int i = 0;
     while (mmMap.contains(QString("Xmp.xmpMM.History[%1]").arg(++i)))

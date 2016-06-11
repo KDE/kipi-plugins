@@ -214,7 +214,7 @@ KmlWindow::KmlWindow(QWidget* const parent,
 
     GPXColorLabel_ = new QLabel(i18n("Track Color:" ), GPXTracksGroupBox);
     GPXTrackColor_ = new KPColorSelector(GPXTracksGroupBox);
-    GPXTrackColor_->setColor(QColor("#ffffff")); 
+    GPXTrackColor_->setColor(QColor("#ffffff"));
 
     GPXTracksOpacityLabel_ = new QLabel(i18n("Opacity (%):"), GPXTracksGroupBox);
     GPXTracksOpacityInput_ = new QSpinBox(GPXTracksGroupBox);

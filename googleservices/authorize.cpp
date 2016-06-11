@@ -119,10 +119,10 @@ void Authorize::doOAuth()
     QPushButton* const okButton       = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
 
-    m_window->connect(buttonBox, SIGNAL(accepted()), 
+    m_window->connect(buttonBox, SIGNAL(accepted()),
                       this, SLOT(slotAccept()));
 
-    m_window->connect(buttonBox, SIGNAL(rejected()), 
+    m_window->connect(buttonBox, SIGNAL(rejected()),
                       this, SLOT(slotReject()));
 
     QLineEdit* const textbox      = new QLineEdit();
@@ -160,7 +160,7 @@ void Authorize::doOAuth()
 void Authorize::slotAccept()
 {
     m_window->close();
-    m_window->setResult(QDialog::Accepted); 
+    m_window->setResult(QDialog::Accepted);
 }
 
 void Authorize::slotReject()
@@ -331,7 +331,7 @@ QString Authorize::getValue(const QString& jsonStr, const QString& key)
     QStringList tokenValues(token.split(QString::fromLatin1(": ")));
     QString value;
 
-    if (tokenValues.count() == 2) 
+    if (tokenValues.count() == 2)
         value = tokenValues[1].trimmed();
 
     return value;

@@ -34,7 +34,7 @@ using namespace KIPIPlugins;
 namespace KIPIFlashExportPlugin
 {
 
-class FlashManager; 
+class FlashManager;
 
 class LookPage : public KPWizardPage
 {

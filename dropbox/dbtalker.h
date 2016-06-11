@@ -13,7 +13,7 @@
  * Public License as published by the Free Software Foundation;
  * either version 2,  or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -104,11 +104,11 @@ private:
 
     enum State
     {
-        DB_REQ_TOKEN = 0, 
-        DB_ACCESSTOKEN, 
-        DB_USERNAME, 
-        DB_LISTFOLDERS, 
-        DB_CREATEFOLDER, 
+        DB_REQ_TOKEN = 0,
+        DB_ACCESSTOKEN,
+        DB_USERNAME,
+        DB_LISTFOLDERS,
+        DB_CREATEFOLDER,
         DB_ADDPHOTO
     };
 

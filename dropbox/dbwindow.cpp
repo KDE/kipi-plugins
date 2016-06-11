@@ -240,7 +240,7 @@ void DBWindow::slotListAlbumsDone(const QList<QPair<QString,QString> >& list)
 {
     m_widget->getAlbumsCoB()->clear();
     qCDebug(KIPIPLUGINS_LOG) << "slotListAlbumsDone1:" << list.size();
-    
+
     for(int i=0;i<list.size();i++)
     {
         m_widget->getAlbumsCoB()->addItem(
@@ -275,7 +275,7 @@ void DBWindow::slotBusy(bool val)
 
 void DBWindow::slotTextBoxEmpty()
 {
-    QMessageBox::critical(this, QString(), 
+    QMessageBox::critical(this, QString(),
                           i18n("The textbox is empty, please enter the code from the browser in the textbox. "
                                "To complete the authentication click \"Change Account\", "
                                "or \"Start Upload\" to authenticate again."));

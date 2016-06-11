@@ -92,7 +92,7 @@ WelcomePage::WelcomePage(QWidget* const parent)
                         "<p>For more information, please take a look at "
                         "<a href='https://en.wikipedia.org/wiki/Digital_Living_Network_Alliance'>this page</a></p>"
                         "</qt>"));
-    
+
     mainLayout->addWidget(d->iconLbl,                        1, 0, 1, 2, Qt::AlignCenter);
     mainLayout->addWidget(d->titleLbl,                       2, 0, 1, 2, Qt::AlignCenter);
     mainLayout->addWidget(d->descLbl,                        3, 0, 5, 2);

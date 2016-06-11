@@ -220,7 +220,7 @@ bool GDTalker::addPhoto(const QString& imgPath, const GSPhoto& info,
         return false;
     }
 
-    path = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QString::fromLatin1("/") + 
+    path = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QString::fromLatin1("/") +
                                             QFileInfo(imgPath).baseName().trimmed() + QString::fromLatin1(".jpg");
 
     int imgQualityToApply = 100;
@@ -360,7 +360,7 @@ void GDTalker::parseResponseListFolders(const QByteArray& data)
     fps.title = m_rootfoldername;
     albumList.append(fps);
 
-    foreach (const QJsonValue& value, jsonArray) 
+    foreach (const QJsonValue& value, jsonArray)
     {
         QJsonObject obj = value.toObject();
         fps.id          = obj[QString::fromLatin1("id")].toString();

@@ -60,9 +60,9 @@ public:
     void    getRestServiceURL();
     void    listAlbums();
     void    createAlbum(const SwAlbum& album);
-    bool    addPhoto(const QString& imgPath, long long albumID, 
+    bool    addPhoto(const QString& imgPath, long long albumID,
                      const QString& caption);
- 
+
     void    cancel();
 
 Q_SIGNALS:
@@ -88,7 +88,7 @@ private Q_SLOTS:
 
 private:
 
-    void        setupRequest(KIO::TransferJob* const job, const QString& requestPath, const QString& method, 
+    void        setupRequest(KIO::TransferJob* const job, const QString& requestPath, const QString& method,
                              const QString& md5, const QString& type, const QString& length, bool needsPassword);
 
     QDomElement getResponseDoc(KIO::Job* const job, const QByteArray &data) const;

@@ -36,29 +36,29 @@ namespace KIPIPlugins
 using namespace KIPIPlugins;
 
 namespace KIPIYandexFotkiPlugin
-{   
+{
 
 class YandexFotkiWidget : public KPSettingsWidget
 {
     Q_OBJECT
-    
+
 public:
-    
+
     enum UpdatePolicy
     {
         POLICY_UPDATE_MERGE = 0,
         POLICY_UPDATE_KEEP, // is not used in GUI
         POLICY_SKIP,
         POLICY_ADDNEW
-    };     
+    };
 
 public:
 
     YandexFotkiWidget(QWidget* const parent, KIPI::Interface* const iface, const QString& pluginName);
     ~YandexFotkiWidget();
-    
+
     virtual void updateLabels(const QString& name = QString(), const QString& url = QString());
-    
+
 private:
 
     // upload settings
@@ -67,9 +67,9 @@ private:
     QCheckBox*    m_disableCommentsCheck;
     QCheckBox*    m_adultCheck;
     QButtonGroup* m_policyGroup;
-    
-    friend class YandexFotkiWindow;    
-    
+
+    friend class YandexFotkiWindow;
+
 }; // class YandexFotkiWidget
 
 }  // namespace KIPIYandexFotkiPlugin

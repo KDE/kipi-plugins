@@ -78,7 +78,7 @@ void MPForm::addPair(const QString& name, const QString& value)
     str += m_boundary;
     str += "\r\n";
 
-    if (!name.isEmpty()) 
+    if (!name.isEmpty())
     {
         str += "Content-Disposition: form-data; name=\"";
         str += name.toLatin1();
@@ -89,7 +89,7 @@ void MPForm::addPair(const QString& name, const QString& value)
     str += value.toUtf8();
     str += "\r\n";
 
-    m_buffer.append(str); 
+    m_buffer.append(str);
 }
 
 bool MPForm::addFile(const QString& name, const QString& path)

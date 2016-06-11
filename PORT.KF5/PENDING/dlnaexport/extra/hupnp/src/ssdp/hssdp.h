@@ -71,13 +71,13 @@ H_DECLARE_PRIVATE(HSsdp)
 public:
 
     /*!
-     * \brief This enumeration specifies the different discovery methods the 
+     * \brief This enumeration specifies the different discovery methods the
      * HSsdp class can run.
      */
     enum DiscoveryRequestMethod
     {
         /*!
-         * This is the default multicast discovery supported both UDA v1.0 and 
+         * This is the default multicast discovery supported both UDA v1.0 and
          * UDA v1.1.
          */
         MulticastDiscovery,

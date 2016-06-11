@@ -378,7 +378,7 @@ void VkontakteWindow::slotStartTransfer()
             files.append(url.toLocalFile());
 
         Vkontakte::UploadPhotosJob* const job = new Vkontakte::UploadPhotosJob(m_vkapi->accessToken(),
-                                                                               files, 
+                                                                               files,
                                                                                false /*m_checkKeepOriginal->isChecked()*/,
                                                                                aid);
 

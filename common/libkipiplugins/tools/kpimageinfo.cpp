@@ -183,7 +183,7 @@ bool KPImageInfo::hasDescription() const
     {
         qCDebug(KIPIPLUGINS_LOG) << "KIPI interface is null";
     }
-    
+
     return (!description().isNull());
 }
 

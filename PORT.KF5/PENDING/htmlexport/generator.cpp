@@ -534,4 +534,4 @@ void Generator::logWarning(const QString& text)
     d->logWarning(text);
 }
 
-} // namespace KIPIHTMLExport 
+} // namespace KIPIHTMLExport

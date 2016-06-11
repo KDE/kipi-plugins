@@ -137,9 +137,9 @@ private:
 
     FbTalker*    m_talker;
     FbNewAlbum*  m_albumDlg;
-    
+
 private:
-    
+
     class Private;
     Private* const d;
 };

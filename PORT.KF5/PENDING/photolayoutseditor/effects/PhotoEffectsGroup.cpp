@@ -151,7 +151,7 @@ AbstractPhotoEffectInterface * PhotoEffectsGroup::graphicsItem(const QModelIndex
 }
 
 bool PhotoEffectsGroup::moveRows(int sourcePosition, int sourceCount, int destPosition)
-{  
+{
     if (  (sourcePosition <= destPosition && sourcePosition+sourceCount >= destPosition) ||
             sourceCount <= 0 ||
             m_effects_list.count() <= sourcePosition+sourceCount-1 ||

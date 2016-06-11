@@ -48,7 +48,7 @@ class Plugin_HTMLExport : public Plugin
     Q_OBJECT
 
 public:
-    
+
     Plugin_HTMLExport(QObject* const parent, const QVariantList& args);
     virtual ~Plugin_HTMLExport();
 

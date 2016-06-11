@@ -71,4 +71,4 @@ private:
 
 } // namespace KIPISendimagesPlugin
 
-#endif // PLUGIN_SENDIMAGES_H 
+#endif // PLUGIN_SENDIMAGES_H

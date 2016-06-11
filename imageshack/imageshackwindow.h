@@ -114,7 +114,7 @@ private:
     Imageshack*       m_imageshack;
     ImageshackWidget* m_widget;
     ImageshackTalker* m_talker;
-    
+
     NewAlbumDlg*      m_albumDlg;
 };
 

@@ -75,7 +75,7 @@ QString makeCredentials(const QString& publicKey, const QString& login, const QS
     ba.append(encrypted);
     return QString::fromLatin1(ba.toBase64());
 
-/*    
+/*
     QCA::Initializer init;
     QCA::Base64 base64Encoder;
     return QString(base64Encoder.encode(encrypted).toByteArray());

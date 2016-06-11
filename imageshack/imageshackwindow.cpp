@@ -79,7 +79,7 @@ ImageshackWindow::ImageshackWindow(QWidget* const parent, Imageshack* const imgh
     setMainWidget(m_widget);
     setWindowTitle(i18n("Export to Imageshack"));
     setModal(true);
-    
+
     m_albumDlg =  new NewAlbumDlg(this, QString::fromLatin1("ImageShack"));
 
     connect(m_widget->m_chgRegCodeBtn, SIGNAL(clicked(bool)),
@@ -143,7 +143,7 @@ ImageshackWindow::ImageshackWindow(QWidget* const parent, Imageshack* const imgh
 
     connect(this, SIGNAL(cancelClicked()),
             this, SLOT(slotCancelClicked()));
-    
+
     connect(m_widget->getNewAlbmBtn(),SIGNAL(clicked()),
             this,SLOT(slotNewAlbumRequest()));
 
@@ -258,9 +258,9 @@ void ImageshackWindow::authenticate()
     m_widget->m_progressBar->setValue(0);
     m_widget->m_progressBar->setMaximum(4);
     m_widget->progressBar()->setFormat(i18n("Authenticating..."));
-    
+
     KIPIPlugins::KPLoginDialog* const dlg = new KIPIPlugins::KPLoginDialog(this, QString::fromLatin1("ImageShack"));
-    
+
     if (dlg->exec() == QDialog::Accepted)
     {
         m_imageshack->setEmail(dlg->login());
@@ -368,11 +368,11 @@ void ImageshackWindow::uploadNextItem()
     }
 
     opts[QString::fromLatin1("auth_token")] = m_imageshack->authToken();
-    
+
     int gidx = m_widget->m_galleriesCob->currentIndex();
-    
+
     qCDebug(KIPIPLUGINS_LOG) << "Album ID is "<< m_widget->m_galleriesCob->itemData(gidx).toString();
-    
+
     switch(gidx)
     {
         case 0:

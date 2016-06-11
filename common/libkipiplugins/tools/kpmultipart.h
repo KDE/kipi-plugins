@@ -46,7 +46,7 @@ public:
 
     KPMultiPart();
     ~KPMultiPart();
-    
+
     QHttpMultiPart* multiPart() const;
 
     bool appendFile(const QString &header, const QString& path);

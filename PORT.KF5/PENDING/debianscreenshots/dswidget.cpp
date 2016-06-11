@@ -125,16 +125,16 @@ DsWidget::DsWidget(QWidget* const parent)
     pkgCompleter->setPopup(listView);
     listView->setItemDelegateForColumn(0, new PackageDelegate);
 
-    connect(m_pkgLineEdit, SIGNAL(textEdited(QString)), 
+    connect(m_pkgLineEdit, SIGNAL(textEdited(QString)),
             this, SLOT(slotCompletePackageName(QString)));
 
-    connect(m_httpManager, SIGNAL(finished(QNetworkReply*)), 
+    connect(m_httpManager, SIGNAL(finished(QNetworkReply*)),
             this, SLOT(slotCompletePackageNameFinished(QNetworkReply*)));
 
     connect(pkgCompleter, SIGNAL(activated(QString)),
             this, SLOT(slotFindVersionsForPackage(QString)));
 
-    connect(m_jsonManager, SIGNAL(finished(QNetworkReply*)), 
+    connect(m_jsonManager, SIGNAL(finished(QNetworkReply*)),
             this, SLOT(slotFindVersionsForPackageFinished(QNetworkReply*)));
 
     QLabel* const versionLabel = new QLabel(i18n("Software version:"), pkgGroupBox);

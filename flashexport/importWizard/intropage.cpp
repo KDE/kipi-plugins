@@ -46,7 +46,7 @@ namespace KIPIFlashExportPlugin
 class IntroPage::Private
 {
 public:
-  
+
     Private()
     {
         plugin_select  = 0;
