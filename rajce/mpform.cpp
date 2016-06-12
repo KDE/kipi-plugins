@@ -23,11 +23,6 @@
 
 #include "mpform.h"
 
-// C++ includes
-
-#include <cstring>
-#include <cstdio>
-
 // Qt includes
 
 #include <QByteArray>
@@ -144,13 +139,10 @@ bool MPForm::addFile(const QString& name,const QString& path)
     str += QString::fromLatin1("\r\n\r\n");
 
     imageFile.close();
-    m_buffer.append(str.toUtf8());
 
-    int oldSize = m_buffer.size();
-    m_buffer.resize(oldSize + imageData.size() + 2);
-    memcpy(m_buffer.data() + oldSize, imageData.data(), imageData.size());
-    m_buffer[m_buffer.size()-2] = '\r';
-    m_buffer[m_buffer.size()-1] = '\n';
+    m_buffer.append(str.toUtf8());
+    m_buffer.append(imageData);
+    m_buffer.append(QString::fromLatin1("\r\n").toUtf8());
 
     qCDebug(KIPIPLUGINS_LOG) << "Added file " << path << " with detected mime type " << mime;
 
@@ -159,7 +151,7 @@ bool MPForm::addFile(const QString& name,const QString& path)
 
 QString MPForm::contentType() const
 {
-    return QString::fromLatin1("Content-Type: multipart/form-data; boundary=") + QString::fromLatin1(m_boundary);
+    return QString::fromLatin1("multipart/form-data; boundary=") + QString::fromLatin1(m_boundary);
 }
 
 QString MPForm::boundary() const

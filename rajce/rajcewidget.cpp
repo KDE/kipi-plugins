@@ -334,10 +334,16 @@ void RajceWidget::startUpload()
 
     m_uploadQueue.clear();
 
-    foreach(QUrl image, m_imgList->imageUrls(true))
+    foreach(const QUrl& image, m_imgList->imageUrls(true))
     {
         QString imagePath = image.toLocalFile();
         m_uploadQueue.append(imagePath);
+    }
+
+    if (m_uploadQueue.isEmpty())
+    {
+        _setEnabled(true);
+        return;
     }
 
     connect(m_session, SIGNAL(busyFinished(uint)),

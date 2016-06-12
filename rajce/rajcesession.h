@@ -28,23 +28,14 @@
 #include <QObject>
 #include <QMutex>
 #include <QQueue>
-
-// KDE includes
-
-#include <kio/global.h>
+#include <QNetworkReply>
+#include <QNetworkAccessManager>
 
 // Local includes
 
 #include "sessionstate.h"
 
 class QWidget;
-
-class KJob;
-
-namespace KIO
-{
-    class Job;
-}
 
 namespace KIPIRajcePlugin
 {
@@ -82,9 +73,8 @@ Q_SIGNALS:
 
 private Q_SLOTS:
 
-    void data(KIO::Job* job, const QByteArray& data);
-    void finished(KJob* job);
-    void slotPercent(KJob* job, ulong percent);
+    void slotFinished(QNetworkReply* reply);
+    void slotUploadProgress(qint64 bytesSent, qint64 bytesTotal);
 
 private:
 
@@ -93,14 +83,14 @@ private:
 
 private:
 
-    QQueue<RajceCommand*> m_commandQueue;
-    QMutex                m_queueAccess;
-    QByteArray            m_buffer;
-    QString               m_tmpDir;
+    QQueue<RajceCommand*>  m_commandQueue;
+    QMutex                 m_queueAccess;
+    QString                m_tmpDir;
 
-    KJob*                 m_currentJob;
+    QNetworkAccessManager* m_netMngr;
+    QNetworkReply*         m_reply;
 
-    SessionState          m_state;
+    SessionState           m_state;
 };
 
 } // namespace KIPIRajcePlugin

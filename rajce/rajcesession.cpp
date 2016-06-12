@@ -31,12 +31,6 @@
 #include <QFileInfo>
 #include <QUrl>
 
-// KDE includes
-
-#include <kio/job.h>
-#include <kio/jobuidelegate.h>
-#include <kjobwidgets.h>
-
 // Libkipi includes
 
 #include <KIPI/Interface>
@@ -719,8 +713,13 @@ RajceSession::RajceSession(QWidget* const parent, const QString& tmpDir)
     : QObject(parent),
       m_queueAccess(QMutex::Recursive),
       m_tmpDir(tmpDir),
-      m_currentJob(0)
+      m_netMngr(0),
+      m_reply(0)
 {
+    m_netMngr = new QNetworkAccessManager(this);
+
+    connect(m_netMngr, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(slotFinished(QNetworkReply*)));
 }
 
 const SessionState& RajceSession::state() const
@@ -732,22 +731,15 @@ void RajceSession::_startJob(RajceCommand* command)
 {
     qCDebug(KIPIPLUGINS_LOG) << "Sending command:\n" << command->getXml();
 
-    QByteArray data             = command->encode();
-    KIO::TransferJob* const job = KIO::http_post(RAJCE_URL, data, KIO::HideProgressInfo);
-    KJobWidgets::setWindow(job, static_cast<QWidget*>(parent()));
-    job->addMetaData(QString::fromLatin1("content-type"), command->contentType());
+    QByteArray data = command->encode();
 
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(data(KIO::Job*,QByteArray)));
+    QNetworkRequest netRequest(RAJCE_URL);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, command->contentType());
 
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(finished(KJob*)));
+    m_reply = m_netMngr->post(netRequest, data);
 
-    connect(job, SIGNAL(percent(KJob*,ulong)),
-            this, SLOT(slotPercent(KJob*,ulong)));
-
-    m_currentJob = job;
-    m_buffer.resize(0);
+    connect(m_reply, SIGNAL(uploadProgress(qint64,qint64)),
+            SLOT(slotUploadProgress(qint64,qint64)));
 
     emit busyStarted(command->commandType());
 }
@@ -770,26 +762,21 @@ void RajceSession::createAlbum(const QString& name, const QString& description, 
     _enqueue(command);
 }
 
-void RajceSession::data(KIO::Job*, const QByteArray& data)
+void RajceSession::slotFinished(QNetworkReply* reply)
 {
-    if (data.isEmpty())
+    if (reply != m_reply)
+    {
         return;
+    }
 
-    int oldSize = m_buffer.size();
-    m_buffer.resize(m_buffer.size() + data.size());
-    memcpy(m_buffer.data() + oldSize, data.data(), data.size());
-}
-
-void RajceSession::finished(KJob*)
-{
-    QString response      = QString::fromUtf8(m_buffer.data());
+    QString response      = QString::fromUtf8(reply->readAll());
 
     qCDebug(KIPIPLUGINS_LOG) << response;
 
     m_queueAccess.lock();
 
     RajceCommand* const c = m_commandQueue.head();
-    m_currentJob          = 0;
+    m_reply               = 0;
 
     c->processResponse(response, m_state);
 
@@ -805,6 +792,8 @@ void RajceSession::finished(KJob*)
     // reliable values from the state and/or
     // clear the error state once it's handled.
     emit busyFinished(type);
+
+    reply->deleteLater();
 
     // Only dequeue the command after the above signal has been
     // emitted so that the users can queue other commands
@@ -859,15 +848,18 @@ void RajceSession::clearLastError()
     m_state.lastErrorMessage() = QString::fromLatin1("");
 }
 
-void RajceSession::slotPercent(KJob* job, ulong percent)
+void RajceSession::slotUploadProgress(qint64 bytesSent, qint64 bytesTotal)
 {
+    if (bytesTotal <= 0)
+    {
+        return;
+    }
+
+    unsigned percent = (unsigned)(double)bytesSent / (double)bytesTotal * 100.0;
+
     qCDebug(KIPIPLUGINS_LOG) << "Percent signalled: " << percent;
 
-    if (job == m_currentJob)
-    {
-        qCDebug(KIPIPLUGINS_LOG) << "Re-emitting percent";
-        emit busyProgress(m_commandQueue.head()->commandType(), percent);
-    }
+    emit busyProgress(m_commandQueue.head()->commandType(), percent);
 }
 
 void RajceSession::_enqueue(RajceCommand* command)
@@ -890,11 +882,11 @@ void RajceSession::_enqueue(RajceCommand* command)
 
 void RajceSession::cancelCurrentCommand()
 {
-    if (m_currentJob != 0)
+    if (m_reply != 0)
     {
-        KJob* const job = m_currentJob;
-        finished(job);
-        job->kill();
+        slotFinished(m_reply);
+        m_reply->abort();
+        m_reply = 0;
     }
 }
 

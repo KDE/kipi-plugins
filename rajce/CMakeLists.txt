@@ -26,10 +26,9 @@ target_link_libraries(kipiplugin_rajce
                       Qt5::Core
                       Qt5::Xml
                       Qt5::XmlPatterns
-                      
+                      Qt5::Network
+
                       KF5::Kipi
-                      KF5::KIOCore
-                      KF5::KIOFileWidgets
                       KF5::WindowSystem
                       KF5::I18n
 
