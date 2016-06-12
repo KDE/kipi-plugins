@@ -970,8 +970,6 @@ void FlickrTalker::parseResponseMaxSize(const QByteArray& data)
 
         node = node.nextSibling();
     }
-
-    m_authProgressDlg->reset();
 }
 
 void FlickrTalker::parseResponseGetFrob(const QByteArray& data)

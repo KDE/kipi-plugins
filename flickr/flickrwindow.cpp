@@ -223,6 +223,8 @@ FlickrWindow::FlickrWindow(QWidget* const /*parent*/, const QString& serviceName
     m_authProgressDlg->setModal(true);
     m_authProgressDlg->setAutoReset(true);
     m_authProgressDlg->setAutoClose(true);
+    m_authProgressDlg->setMaximum(0);
+    m_authProgressDlg->reset();
 
     connect(m_authProgressDlg, SIGNAL(canceled()),
             this, SLOT(slotAuthCancel()));
