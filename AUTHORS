@@ -1,20 +1,16 @@
-KIPI-PLUGINS TEAM :
-
 MAIN DEVELOPERS:
 Gilles Caulier       <caulier dot gilles at gmail dot com>
+Maik Qualmann        <metzpinguin at gmail dot com>
 Marcel Wiesweg       <marcel dot wiesweg at gmx dot de>
-Andi Clemens         <andi dot clemens at googlemail dot com>
-Jens Muller          <tschenser at gmx dot de>
+Frederic Coiffier    <fcoiffie at gmail dot com>
 Pieter Edelman       <p dot edelman at gmx dot net>
 Michael G. Hansen    <mike at mghansen dot de>
 Johannes Wienke      <languitar at semipol dot de>
 Patrick Spendrin     <patrick_spendrin at gmx dot de>
-Luka Renko           <lure at kubuntu dot org>
 Laurent Montel       <montel at kde dot org>
 Aurelien Gateau      <aurelien dot gateau at free dot fr>
 Angelo Naselli       <anaselli at linux dot it>
 Kare Sars            <kare dot sars at iki dot fi>
-Valerio Fuoglio      <valerio dot fuoglio at gmail dot com>
 Pau Garcia i Quiles  <pgquiles at elpauer dot org>
 Timothee Groleau     <kde at timotheegroleau dot com>
 Roman Tsisyk         <roman at tsisyk dot com>
@@ -22,12 +18,13 @@ Alexandre Mendes     <alex dot mendes1988 at gmail dot com>
 Lukas Krejci         <krejci dot l at centrum dot cz>
 Alexander Potashev   <aspotashev at gmail dot com>
 Lukasz Spas          <lukasz dot spas at gmail dot com>
-Dodon Victor         <dodonvictor at gmail dot com>
 Marius Orcsik        <marius at habarnam dot ro>
 
 CONTRIBUTORS:
-Smit Mehta           <smit dot meh at gmail dot com>
-Frederic Coiffier    <fcoiffie at gmail dot com>
+Dodon Victor         <dodonvictor at gmail dot com>
+Luka Renko           <lure at kubuntu dot org>
+Andi Clemens         <andi dot clemens at googlemail dot com>
+Jens Muller          <tschenser at gmx dot de>
 Martin Engelmann     <murphi dot oss at googlemail dot com>
 Gerhard Kulzer       <gerhard at kulzer dot net>
 Orgad Shaneh         <orgads at gmail dot com>
@@ -38,11 +35,16 @@ Ruediger Bente       <ruediger dot bente at gmx dot de>
 Beth Marmorstein     <purplegamba at cox dot net>
 Robert Marmorstein   <rmmarm at sdf dot lonestar dot org>
 Markus Leuthold      <kusi at forum dot titlis dot org>
-Vardhman Jain        <vardhman at gmail.com>
-Colin Guthrie        <kde at colin dot guthr dot ie>
-Achim Bohnet         <ach at mpe dot mpg dot de>
 
 OLD CONTRIBUTORS:
+
+FORMER DEVELOPERS:
+Renchi Raju         <renchi dot raju at gmail dot com>
+Tom Albers          <tomalbers at kde dot nl>
+Valerio Fuoglio      <valerio dot fuoglio at gmail dot com>
+Ralf Hoelzer        <kde at ralfhoelzer dot com>
+Joern Ahrens        <joern dot ahrens at kdemail dot net>
+Jesper K. Pedersen  <blackie at kde dot org>
 Andrea Diamantini    <adjam7 at gmail dot com>
 Tudor Calin          <tudor at 1xtech dot com>
 Owen Hirst           <n8rider at sbcglobal dot net>
@@ -50,13 +52,8 @@ Todd Shoemaker       <todd at theshoemakers dot net>
 Gregory Kokanosky    <gregory dot kokanosky at free dot fr>
 Richard Groult       <Richard dot Groult at jalix dot org>
 Michael Hoechstetter <michael dot hoechstetter at gmx dot de>
+Achim Bohnet         <ach at mpe dot mpg dot de>
+Vardhman Jain        <vardhman at gmail.com>
+Colin Guthrie        <kde at colin dot guthr dot ie>
+Smit Mehta           <smit dot meh at gmail dot com>
 
-PROJECT COORDINATORS:
-Gilles Caulier and Angelo Naselli
-
-FORMER MAINTAINER:
-Renchi Raju         <renchi dot raju at gmail dot com>
-Tom Albers          <tomalbers at kde dot nl>
-Ralf Hoelzer        <kde at ralfhoelzer dot com>
-Joern Ahrens        <joern dot ahrens at kdemail dot net>
-Jesper K. Pedersen  <blackie at kde dot org>

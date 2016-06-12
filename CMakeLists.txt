@@ -255,7 +255,6 @@ if(KF5Kipi_FOUND)
             add_subdirectory(imageshack)           # imageshacktalker.cpp
             add_subdirectory(yandexfotki)          # yftalker.cpp
 
-
             # Tools which need KIO Widgets too.
 
             if(KF5KIOWidgets_FOUND)
@@ -268,7 +267,6 @@ if(KF5Kipi_FOUND)
            endif()
 
         endif()
-
 
         if(BUILD_TESTING)
             add_subdirectory(tests)
