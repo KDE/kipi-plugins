@@ -32,7 +32,7 @@
 #include <QFrame>
 #include <QGridLayout>
 #include <QPushButton>
-#include <QtWidgets/QDialogButtonBox>
+#include <QDialogButtonBox>
 
 // KDE includes
 
@@ -58,7 +58,7 @@ PiwigoEdit::PiwigoEdit(QWidget* const pParent, Piwigo* const pPiwigo, const QStr
 
     setWindowTitle(title);
 
-    QFrame* const  page              = new QFrame(this);
+    QFrame* const  page             = new QFrame(this);
     QGridLayout* const centerLayout = new QGridLayout();
     page->setMinimumSize(500, 128);
 
