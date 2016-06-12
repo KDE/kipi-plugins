@@ -278,6 +278,9 @@ PiwigoWindow::PiwigoWindow(QWidget* const parent, Piwigo* const pPiwigo)
     d->progressDlg->setModal(true);
     d->progressDlg->setAutoReset(true);
     d->progressDlg->setAutoClose(true);
+    d->progressDlg->setMaximum(0);
+    d->progressDlg->reset();
+
     d->pUploadList = new QStringList;
 
     // connect functions

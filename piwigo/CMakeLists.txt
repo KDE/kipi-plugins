@@ -20,10 +20,10 @@ add_library(kipiplugin_piwigo MODULE ${kipiplugin_piwigo_PART_SRCS})
 
 target_link_libraries(kipiplugin_piwigo
                       PRIVATE
-                      KF5::I18n                      
+                      Qt5::Network
+
+                      KF5::I18n
                       KF5::Kipi
-                      KF5::KIOCore
-                      KF5::KIOFileWidgets 
                       KF5kipiplugins
                      )
 

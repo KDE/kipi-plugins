@@ -104,8 +104,8 @@ PiwigoEdit::PiwigoEdit(QWidget* const pParent, Piwigo* const pPiwigo, const QStr
     dialogLayout->addWidget(page);
     dialogLayout->addWidget(buttonBox);
 
-    connect(this, SIGNAL(accepted()), this, SLOT(slotOk()));
-    connect(this, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(slotOk()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 }
 
 PiwigoEdit::~PiwigoEdit()

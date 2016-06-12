@@ -33,13 +33,13 @@
 #include <QRegExp>
 #include <QXmlStreamReader>
 #include <QFileInfo>
+#include <QMessageBox>
+#include <QApplication>
 #include <QCryptographicHash>
 #include <QUuid>
 
 // KDE includes
 
-#include <kjobwidgets.h>
-#include <kio/jobuidelegate.h>
 #include <klocalizedstring.h>
 
 // Libkipi includes
@@ -64,7 +64,8 @@ QString PiwigoTalker::s_authToken = QString::fromLatin1("");
 PiwigoTalker::PiwigoTalker(QWidget* const parent)
     : m_parent(parent),
       m_state(GE_LOGOUT),
-      m_job(0),
+      m_netMngr(0),
+      m_reply(0),
       m_loggedIn(false),
       m_chunkId(0),
       m_nbOfChunks(0),
@@ -73,6 +74,11 @@ PiwigoTalker::PiwigoTalker(QWidget* const parent)
       m_photoId(0),
       m_iface(0)
 {
+    m_netMngr = new QNetworkAccessManager(this);
+
+    connect(m_netMngr, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(slotFinished(QNetworkReply*)));
+
     PluginLoader* const pl = PluginLoader::instance();
 
     if (pl)
@@ -90,10 +96,10 @@ void PiwigoTalker::cancel()
 {
     deleteTemporaryFile();
 
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 }
 
@@ -115,7 +121,6 @@ bool PiwigoTalker::loggedIn() const
 
 void PiwigoTalker::login(const QUrl& url, const QString& name, const QString& passwd)
 {
-    m_job   = 0;
     m_url   = url;
     m_state = GE_LOGIN;
     m_talker_buffer.resize(0);
@@ -135,24 +140,18 @@ void PiwigoTalker::login(const QUrl& url, const QString& name, const QString& pa
     QString dataParameters = qsl.join(QLatin1String("&"));
     QByteArray buffer;
     buffer.append(dataParameters.toUtf8());
-    m_job = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
-    m_job->addMetaData(QString::fromLatin1("content-type"),
-                       QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
-    m_job->addMetaData(QString::fromLatin1("customHTTPHeader"),
-                       QString::fromLatin1("Authorization: ") + s_authToken);
 
-    connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
+    QNetworkRequest netRequest(m_url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
+    netRequest.setRawHeader("Authorization", s_authToken.toLatin1());
 
-    connect(m_job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
+    m_reply = m_netMngr->post(netRequest, buffer);
 
     emit signalBusy(true);
 }
 
 void PiwigoTalker::listAlbums()
 {
-    m_job   = 0;
     m_state = GE_LISTALBUMS;
     m_talker_buffer.resize(0);
 
@@ -163,17 +162,11 @@ void PiwigoTalker::listAlbums()
     QByteArray buffer;
     buffer.append(dataParameters.toUtf8());
 
-    m_job = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
-    m_job->addMetaData(QString::fromLatin1("content-type"),
-                       QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
-    m_job->addMetaData(QString::fromLatin1("customHTTPHeader"),
-                       QString::fromLatin1("Authorization: ") + s_authToken);
+    QNetworkRequest netRequest(m_url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
+    netRequest.setRawHeader("Authorization", s_authToken.toLatin1());
 
-    connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
-
-    connect(m_job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
+    m_reply = m_netMngr->post(netRequest, buffer);
 
     emit signalBusy(true);
 }
@@ -185,7 +178,6 @@ bool PiwigoTalker::addPhoto(int   albumId,
                             int   maxHeight,
                             int   quality)
 {
-    m_job         = 0;
     m_state       = GE_CHECKPHOTOEXIST;
     m_talker_buffer.resize(0);
 
@@ -298,48 +290,39 @@ bool PiwigoTalker::addPhoto(int   albumId,
     QByteArray buffer;
     buffer.append(dataParameters.toUtf8());
 
-    m_job = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
-    m_job->addMetaData(QString::fromLatin1("content-type"),
-                       QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
-    m_job->addMetaData(QString::fromLatin1("customHTTPHeader"),
-                       QString::fromLatin1("Authorization: ") + s_authToken);
+    QNetworkRequest netRequest(m_url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
+    netRequest.setRawHeader("Authorization", s_authToken.toLatin1());
+
+    m_reply = m_netMngr->post(netRequest, buffer);
 
     emit signalProgressInfo( i18n("Check if %1 already exists", QUrl(mediaPath).fileName()) );
-
-    connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
-
-    connect(m_job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
 
     emit signalBusy(true);
 
     return true;
 }
 
-void PiwigoTalker::slotTalkerData(KIO::Job*, const QByteArray& data)
+void PiwigoTalker::slotFinished(QNetworkReply* reply)
 {
-    if (data.isEmpty())
+    if (reply != m_reply)
+    {
         return;
+    }
 
-    m_talker_buffer.append(data);
-}
+    m_reply     = 0;
+    State state = m_state; // Can change in the treatment itself, so we cache it
 
-void PiwigoTalker::slotResult(KJob* job)
-{
-    KIO::Job* const tempjob = static_cast<KIO::Job*>(job);
-    State state             = m_state; // Can change in the treatment itself, so we cache it
-
-    if (tempjob->error())
+    if (reply->error() != QNetworkReply::NoError)
     {
         if (state == GE_LOGIN)
         {
-            emit signalLoginFailed(tempjob->errorString());
-            qCDebug(KIPIPLUGINS_LOG) << tempjob->errorString();
+            emit signalLoginFailed(reply->errorString());
+            qCDebug(KIPIPLUGINS_LOG) << reply->errorString();
         }
         else if (state == GE_GETVERSION)
         {
-            qCDebug(KIPIPLUGINS_LOG) << tempjob->errorString();
+            qCDebug(KIPIPLUGINS_LOG) << reply->errorString();
             // Version isn't mandatory and errors can be ignored
             // As login succeeded, albums can be listed
             listAlbums();
@@ -349,18 +332,20 @@ void PiwigoTalker::slotResult(KJob* job)
                  state == GE_ADDPHOTOSUMMARY)
         {
             deleteTemporaryFile();
-            emit signalAddPhotoFailed(tempjob->errorString());
+            emit signalAddPhotoFailed(reply->errorString());
         }
         else
         {
-            KJobWidgets::setWindow(tempjob, m_parent);
-            tempjob->ui()->showErrorMessage();
+            QMessageBox::critical(QApplication::activeWindow(),
+                                  i18n("Error"), reply->errorString());
         }
 
         emit signalBusy(false);
-        m_job = 0;
+        reply->deleteLater();
         return;
     }
+
+    m_talker_buffer.append(reply->readAll());
 
     switch (state)
     {
@@ -393,21 +378,17 @@ void PiwigoTalker::slotResult(KJob* job)
             break;
     }
 
-    tempjob->kill();
-    m_job = 0;
-
     if (state == GE_GETVERSION && m_loggedIn)
     {
         listAlbums();
     }
 
     emit signalBusy(false);
+    reply->deleteLater();
 }
 
 void PiwigoTalker::parseResponseLogin(const QByteArray& data)
 {
-    m_job              = 0;
-
     QXmlStreamReader ts(data);
     QString line;
     bool foundResponse = false;
@@ -434,17 +415,12 @@ void PiwigoTalker::parseResponseLogin(const QByteArray& data)
                 m_version         = -1;
 
                 QByteArray buffer = "method=pwg.getVersion";
-                m_job             = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
-                m_job->addMetaData(QString::fromLatin1("content-type"),
-                                   QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
-                m_job->addMetaData(QString::fromLatin1("customHTTPHeader"),
-                                   QString::fromLatin1("Authorization: ") + s_authToken);
 
-                connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
-                        this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
+                QNetworkRequest netRequest(m_url);
+                netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
+                netRequest.setRawHeader("Authorization", s_authToken.toLatin1());
 
-                connect(m_job, SIGNAL(result(KJob*)),
-                        this, SLOT(slotResult(KJob*)));
+                m_reply = m_netMngr->post(netRequest, buffer);
 
                 emit signalBusy(true);
 
@@ -594,7 +570,6 @@ void PiwigoTalker::parseResponseListAlbums(const QByteArray& data)
 
 void PiwigoTalker::parseResponseDoesPhotoExist(const QByteArray& data)
 {
-    m_job              = 0;
     QString str        = QString::fromUtf8(data);
     QXmlStreamReader ts(data);
     QString line;
@@ -641,17 +616,11 @@ void PiwigoTalker::parseResponseDoesPhotoExist(const QByteArray& data)
                     QByteArray buffer;
                     buffer.append(dataParameters.toUtf8());
 
-                    m_job     = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
-                    m_job->addMetaData(QString::fromLatin1("content-type"),
-                                       QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
-                    m_job->addMetaData(QString::fromLatin1("customHTTPHeader"),
-                                       QString::fromLatin1("Authorization: ") + s_authToken);
+                    QNetworkRequest netRequest(m_url);
+                    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
+                    netRequest.setRawHeader("Authorization", s_authToken.toLatin1());
 
-                    connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
-                        this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
-
-                    connect(m_job, SIGNAL(result(KJob*)),
-                        this, SLOT(slotResult(KJob*)));
+                    m_reply = m_netMngr->post(netRequest, buffer);
 
                     return;
                 }
@@ -692,7 +661,6 @@ void PiwigoTalker::parseResponseDoesPhotoExist(const QByteArray& data)
 
 void PiwigoTalker::parseResponseGetInfo(const QByteArray& data)
 {
-    m_job              = 0;
     QString str        = QString::fromUtf8(data);
     QXmlStreamReader ts(data);
     QString line;
@@ -763,17 +731,11 @@ void PiwigoTalker::parseResponseGetInfo(const QByteArray& data)
     QByteArray buffer;
     buffer.append(dataParameters.toUtf8());
 
-    m_job = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
-    m_job->addMetaData(QString::fromLatin1("content-type"),
-                       QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
-    m_job->addMetaData(QString::fromLatin1("customHTTPHeader"),
-                       QString::fromLatin1("Authorization: ") + s_authToken);
+    QNetworkRequest netRequest(m_url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
+    netRequest.setRawHeader("Authorization", s_authToken.toLatin1());
 
-    connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
-
-    connect(m_job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
+    m_reply = m_netMngr->post(netRequest, buffer);
 
     return;
 }
@@ -825,8 +787,6 @@ void PiwigoTalker::parseResponseSetInfo(const QByteArray& data)
 
 void PiwigoTalker::addNextChunk()
 {
-    m_job   = 0;
-
     QFile imagefile(m_path);
 
     imagefile.open(QIODevice::ReadOnly);
@@ -848,19 +808,13 @@ void PiwigoTalker::addNextChunk()
 
     imagefile.close();
 
-    m_job = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
-    m_job->addMetaData(QString::fromLatin1("content-type"),
-                       QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
-    m_job->addMetaData(QString::fromLatin1("customHTTPHeader"),
-                       QString::fromLatin1("Authorization: ") + s_authToken);
+    QNetworkRequest netRequest(m_url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
+    netRequest.setRawHeader("Authorization", s_authToken.toLatin1());
+
+    m_reply = m_netMngr->post(netRequest, buffer);
 
     emit signalProgressInfo( i18n("Upload the chunk %1/%2 of %3", m_chunkId, m_nbOfChunks, QUrl(m_path).fileName()) );
-
-    connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
-
-    connect(m_job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
 }
 
 void PiwigoTalker::parseResponseAddPhotoChunk(const QByteArray& data)
@@ -908,7 +862,6 @@ void PiwigoTalker::parseResponseAddPhotoChunk(const QByteArray& data)
 
 void PiwigoTalker::addPhotoSummary()
 {
-    m_job   = 0;
     m_state = GE_ADDPHOTOSUMMARY;
     m_talker_buffer.resize(0);
 
@@ -934,19 +887,13 @@ void PiwigoTalker::addPhotoSummary()
     QByteArray buffer;
     buffer.append(dataParameters.toUtf8());
 
-    m_job = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
-    m_job->addMetaData(QString::fromLatin1("content-type"),
-                       QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
-    m_job->addMetaData(QString::fromLatin1("customHTTPHeader"),
-                       QString::fromLatin1("Authorization: ") + s_authToken);
+    QNetworkRequest netRequest(m_url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
+    netRequest.setRawHeader("Authorization", s_authToken.toLatin1());
+
+    m_reply = m_netMngr->post(netRequest, buffer);
 
     emit signalProgressInfo( i18n("Upload the metadata of %1", QUrl(m_path).fileName()) );
-
-    connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
-
-    connect(m_job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
 }
 
 void PiwigoTalker::parseResponseAddPhotoSummary(const QByteArray& data)

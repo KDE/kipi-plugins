@@ -112,13 +112,17 @@ void Plugin_PiwigoExport::slotSync()
     if (!config.hasGroup("Piwigo Settings") )
     {
         configDlg = new PiwigoEdit(QApplication::activeWindow(), m_pPiwigo, i18n("Edit Piwigo Data") );
-        configDlg->exec();
+
+        if (configDlg->exec() != QDialog::Accepted)
+        {
+            delete configDlg;
+            return;
+        }
     }
 
     dlg = new PiwigoWindow(QApplication::activeWindow(), m_pPiwigo);
     dlg->exec();
 
-    delete configDlg;
     delete dlg;
 }
 

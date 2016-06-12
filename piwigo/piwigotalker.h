@@ -35,10 +35,8 @@
 #include <QTextStream>
 #include <QFile>
 #include <QUrl>
-
-// KDE includes
-
-#include <kio/job.h>
+#include <QNetworkReply>
+#include <QNetworkAccessManager>
 
 // Libkipi includes
 
@@ -136,34 +134,34 @@ private:
 
 private Q_SLOTS:
 
-    void slotTalkerData(KIO::Job* job, const QByteArray& data);
-    void slotResult(KJob* job);
+    void slotFinished(QNetworkReply* reply);
 
 private:
 
-    QWidget*          m_parent;
-    State             m_state;
-    QString           m_cookie;
-    QUrl              m_url;
-    KIO::TransferJob* m_job;
-    bool              m_loggedIn;
-    QByteArray        m_talker_buffer;
-    uint              m_chunkId;
-    uint              m_nbOfChunks;
-    int               m_version;
+    QWidget*               m_parent;
+    State                  m_state;
+    QString                m_cookie;
+    QUrl                   m_url;
+    QNetworkAccessManager* m_netMngr;
+    QNetworkReply*         m_reply;
+    bool                   m_loggedIn;
+    QByteArray             m_talker_buffer;
+    uint                   m_chunkId;
+    uint                   m_nbOfChunks;
+    int                    m_version;
 
-    QByteArray        m_md5sum;
-    QString           m_path;
-    QString           m_tmpPath;    // If set, contains a temporary file which must be deleted
-    int               m_albumId;
-    int               m_photoId;    // Filled when the photo already exist
-    QString           m_comment;    // Synchronized with Piwigo comment
-    QString           m_title;      // Synchronized with Piwigo name
-    QString           m_author;     // Synchronized with Piwigo author
-    QDateTime         m_date;       // Synchronized with Piwigo date
-    Interface*        m_iface;
+    QByteArray             m_md5sum;
+    QString                m_path;
+    QString                m_tmpPath;    // If set, contains a temporary file which must be deleted
+    int                    m_albumId;
+    int                    m_photoId;    // Filled when the photo already exist
+    QString                m_comment;    // Synchronized with Piwigo comment
+    QString                m_title;      // Synchronized with Piwigo name
+    QString                m_author;     // Synchronized with Piwigo author
+    QDateTime              m_date;       // Synchronized with Piwigo date
+    Interface*             m_iface;
 
-    static QString    s_authToken;
+    static QString         s_authToken;
 };
 
 } // namespace KIPIPiwigoExportPlugin
