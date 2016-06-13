@@ -279,7 +279,14 @@ else()
     message(STATUS "")
     message(STATUS "----------------------------------------------------------------------------------")
     message(STATUS " ${PROJECT_NAME} ${KIPIPLUGINS_VERSION_STRING} will not be compiled")
-    PRINT_OPTIONAL_LIBRARY_STATUS("libkipi"   "https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi"   "(version >= ${KIPI_MIN_VERSION}))" "Kipi-plugins needs this library to be compiled." KF5Kipi_FOUND)
+
+    PRINT_OPTIONAL_LIBRARY_STATUS("libkipi"
+                                  "https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi"
+                                  "(version >= ${KIPI_MIN_VERSION}))"
+                                  "Kipi-plugins needs this library to be compiled."
+                                  KF5Kipi_FOUND
+    )
+
     message(STATUS "")
 
 endif()
