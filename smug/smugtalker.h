@@ -29,10 +29,8 @@
 #include <QList>
 #include <QString>
 #include <QObject>
-
-// KDE includes
-
-#include <kio/job.h>
+#include <QNetworkReply>
+#include <QNetworkAccessManager>
 
 // local includes
 
@@ -112,8 +110,7 @@ private:
 
 private Q_SLOTS:
 
-    void data(KIO::Job* job, const QByteArray& data);
-    void slotResult(KJob* job);
+    void slotFinished(QNetworkReply* reply);
 
 private:
 
@@ -131,21 +128,23 @@ private:
         SMUG_GETPHOTO
     };
 
-    QWidget*   m_parent;
+    QWidget*               m_parent;
 
-    QByteArray m_buffer;
+    QByteArray             m_buffer;
 
-    QString    m_userAgent;
-    QString    m_apiURL;
-    QString    m_apiVersion;
-    QString    m_apiKey;
-    QString    m_sessionID;
+    QString                m_userAgent;
+    QString                m_apiURL;
+    QString                m_apiVersion;
+    QString                m_apiKey;
+    QString                m_sessionID;
 
-    SmugUser   m_user;
+    SmugUser               m_user;
 
-    KIO::Job*  m_job;
+    QNetworkAccessManager* m_netMngr;
 
-    State      m_state;
+    QNetworkReply*         m_reply;
+
+    State                  m_state;
 };
 
 } // namespace KIPISmugPlugin

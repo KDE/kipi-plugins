@@ -31,13 +31,10 @@
 #include <QTextDocument>
 #include <QFile>
 #include <QFileInfo>
-#include <QtCore/QCryptographicHash>
+#include <QMessageBox>
+#include <QApplication>
+#include <QCryptographicHash>
 #include <QUrlQuery>
-
-// KDE includes
-
-#include <kjobwidgets.h>
-#include <kio/jobuidelegate.h>
 
 // Local includes
 
@@ -52,21 +49,33 @@ namespace KIPISmugPlugin
 SmugTalker::SmugTalker(QWidget* const parent)
 {
     m_parent     = parent;
-    m_job        = 0;
+    m_reply      = 0;
     m_state      = SMUG_LOGOUT;
     m_userAgent  = QString::fromLatin1("KIPI-Plugin-Smug/%1 (lure@kubuntu.org)").arg(kipipluginsVersion());
     m_apiVersion = QString::fromLatin1("1.2.2");
     m_apiURL     = QString::fromLatin1("https://api.smugmug.com/services/api/rest/%1/").arg(m_apiVersion);
     m_apiKey     = QString::fromLatin1("R83lTcD4TvMsIiXqpdrA9OdIJ22uA4Wi");
+
+    m_netMngr    = new QNetworkAccessManager(this);
+
+    connect(m_netMngr, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(slotFinished(QNetworkReply*)));
 }
 
 SmugTalker::~SmugTalker()
 {
     if (loggedIn())
+    {
         logout();
 
-    if (m_job)
-        m_job->kill();
+        while (m_reply && m_reply->isRunning())
+        {
+            qApp->processEvents();
+        }
+    }
+
+    if (m_reply)
+        m_reply->abort();
 }
 
 bool SmugTalker::loggedIn() const
@@ -81,10 +90,10 @@ SmugUser SmugTalker::getUser() const
 
 void SmugTalker::cancel()
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     emit signalBusy(false);
@@ -92,10 +101,10 @@ void SmugTalker::cancel()
 
 void SmugTalker::login(const QString& email, const QString& password)
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     emit signalBusy(true);
@@ -119,19 +128,13 @@ void SmugTalker::login(const QString& email, const QString& password)
 
     url.setQuery(q);
 
-    KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
-    job->addMetaData(QString::fromLatin1("UserAgent"), m_userAgent);
-    job->addMetaData(QString::fromLatin1("content-type"),
-                     QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
+    netRequest.setHeader(QNetworkRequest::UserAgentHeader, m_userAgent);
 
-    connect(job, SIGNAL(data(KIO::Job*, QByteArray)),
-            this, SLOT(data(KIO::Job*, QByteArray)));
+    m_reply = m_netMngr->get(netRequest);
 
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
-
-    m_state      = SMUG_LOGIN;
-    m_job        = job;
+    m_state = SMUG_LOGIN;
     m_buffer.resize(0);
 
     m_user.email = email;
@@ -139,10 +142,10 @@ void SmugTalker::login(const QString& email, const QString& password)
 
 void SmugTalker::logout()
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     emit signalBusy(true);
@@ -153,29 +156,22 @@ void SmugTalker::logout()
     q.addQueryItem(QString::fromLatin1("SessionID"), m_sessionID);
     url.setQuery(q);
 
-    KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
-    job->addMetaData(QString::fromLatin1("UserAgent"), m_userAgent);
-    job->addMetaData(QString::fromLatin1("content-type"),
-                     QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
+    netRequest.setHeader(QNetworkRequest::UserAgentHeader, m_userAgent);
 
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(data(KIO::Job*,QByteArray)));
+    m_reply = m_netMngr->get(netRequest);
 
     m_state = SMUG_LOGOUT;
-    m_job   = job;
     m_buffer.resize(0);
-
-    // logout is synchronous call
-    job->exec();
-    slotResult(job);
 }
 
 void SmugTalker::listAlbums(const QString& nickName)
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     emit signalBusy(true);
@@ -191,19 +187,13 @@ void SmugTalker::listAlbums(const QString& nickName)
 
     url.setQuery(q);
 
-    KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
-    job->addMetaData(QString::fromLatin1("UserAgent"), m_userAgent);
-    job->addMetaData(QString::fromLatin1("content-type"),
-                     QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
+    netRequest.setHeader(QNetworkRequest::UserAgentHeader, m_userAgent);
 
-    connect(job, SIGNAL(data(KIO::Job*, QByteArray)),
-            this, SLOT(data(KIO::Job*, QByteArray)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
+    m_reply = m_netMngr->get(netRequest);
 
     m_state = SMUG_LISTALBUMS;
-    m_job   = job;
     m_buffer.resize(0);
 }
 
@@ -212,10 +202,10 @@ void SmugTalker::listPhotos(const qint64 albumID,
                             const QString& albumPassword,
                             const QString& sitePassword)
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     emit signalBusy(true);
@@ -236,28 +226,22 @@ void SmugTalker::listPhotos(const qint64 albumID,
 
     url.setQuery(q);
 
-    KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
-    job->addMetaData(QString::fromLatin1("UserAgent"), m_userAgent);
-    job->addMetaData(QString::fromLatin1("content-type"),
-                     QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
+    netRequest.setHeader(QNetworkRequest::UserAgentHeader, m_userAgent);
 
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(data(KIO::Job*,QByteArray)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
+    m_reply = m_netMngr->get(netRequest);
 
     m_state = SMUG_LISTPHOTOS;
-    m_job   = job;
     m_buffer.resize(0);
 }
 
 void SmugTalker::listAlbumTmpl()
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     emit signalBusy(true);
@@ -268,28 +252,22 @@ void SmugTalker::listAlbumTmpl()
     q.addQueryItem(QString::fromLatin1("SessionID"), m_sessionID);
     url.setQuery(q);
 
-    KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
-    job->addMetaData(QString::fromLatin1("UserAgent"), m_userAgent);
-    job->addMetaData(QString::fromLatin1("content-type"),
-                     QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
+    netRequest.setHeader(QNetworkRequest::UserAgentHeader, m_userAgent);
 
-    connect(job, SIGNAL(data(KIO::Job*, QByteArray)),
-            this, SLOT(data(KIO::Job*, QByteArray)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
+    m_reply = m_netMngr->get(netRequest);
 
     m_state = SMUG_LISTALBUMTEMPLATES;
-    m_job   = job;
     m_buffer.resize(0);
 }
 
 void SmugTalker::listCategories()
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     emit signalBusy(true);
@@ -300,28 +278,22 @@ void SmugTalker::listCategories()
     q.addQueryItem(QString::fromLatin1("SessionID"), m_sessionID);
     url.setQuery(q);
 
-    KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
-    job->addMetaData(QString::fromLatin1("UserAgent"), m_userAgent);
-    job->addMetaData(QString::fromLatin1("content-type"),
-                     QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
+    netRequest.setHeader(QNetworkRequest::UserAgentHeader, m_userAgent);
 
-    connect(job, SIGNAL(data(KIO::Job*, QByteArray)),
-            this, SLOT(data(KIO::Job*, QByteArray)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
+    m_reply = m_netMngr->get(netRequest);
 
     m_state = SMUG_LISTCATEGORIES;
-    m_job   = job;
     m_buffer.resize(0);
 }
 
 void SmugTalker::listSubCategories(qint64 categoryID)
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     emit signalBusy(true);
@@ -333,28 +305,22 @@ void SmugTalker::listSubCategories(qint64 categoryID)
     q.addQueryItem(QString::fromLatin1("CategoryID"), QString::number(categoryID));
     url.setQuery(q);
 
-    KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
-    job->addMetaData(QString::fromLatin1("UserAgent"), m_userAgent);
-    job->addMetaData(QString::fromLatin1("content-type"),
-                     QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
+    netRequest.setHeader(QNetworkRequest::UserAgentHeader, m_userAgent);
 
-    connect(job, SIGNAL(data(KIO::Job*, QByteArray)),
-            this, SLOT(data(KIO::Job*, QByteArray)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
+    m_reply = m_netMngr->get(netRequest);
 
     m_state = SMUG_LISTSUBCATEGORIES;
-    m_job   = job;
     m_buffer.resize(0);
 }
 
 void SmugTalker::createAlbum(const SmugAlbum& album)
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     emit signalBusy(true);
@@ -393,19 +359,13 @@ void SmugTalker::createAlbum(const SmugAlbum& album)
 
     url.setQuery(q);
 
-    KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
-    job->addMetaData(QString::fromLatin1("UserAgent"), m_userAgent);
-    job->addMetaData(QString::fromLatin1("content-type"),
-                     QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
+    netRequest.setHeader(QNetworkRequest::UserAgentHeader, m_userAgent);
 
-    connect(job, SIGNAL(data(KIO::Job*, QByteArray)),
-            this, SLOT(data(KIO::Job*, QByteArray)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
+    m_reply = m_netMngr->get(netRequest);
 
     m_state = SMUG_CREATEALBUM;
-    m_job   = job;
     m_buffer.resize(0);
 }
 
@@ -414,10 +374,10 @@ bool SmugTalker::addPhoto(const QString& imgPath,
                           const QString& albumKey,
                           const QString& caption)
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     emit signalBusy(true);
@@ -455,61 +415,39 @@ bool SmugTalker::addPhoto(const QString& imgPath,
 
     QString customHdr;
     QUrl url(QString::fromLatin1("http://upload.smugmug.com/photos/xmladd.mg"));
-    KIO::TransferJob* const job = KIO::http_post(url, form.formData(), KIO::HideProgressInfo);
-    job->addMetaData(QString::fromLatin1("content-type"), form.contentType());
-    job->addMetaData(QString::fromLatin1("UserAgent"), m_userAgent);
-    customHdr                  += QString::fromLatin1("X-Smug-SessionID: ") + m_sessionID  + QString::fromLatin1("\r\n");
-    customHdr                  += QString::fromLatin1("X-Smug-Version: ")   + m_apiVersion + QString::fromLatin1("\r\n");
-    job->addMetaData(QString::fromLatin1("customHTTPHeader"), customHdr);
 
-    connect(job, SIGNAL(data(KIO::Job*, QByteArray)),
-            this, SLOT(data(KIO::Job*, QByteArray)));
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, form.contentType());
+    netRequest.setHeader(QNetworkRequest::UserAgentHeader, m_userAgent);
+    netRequest.setRawHeader("X-Smug-SessionID", m_sessionID.toLatin1());
+    netRequest.setRawHeader("X-Smug-Version", m_apiVersion.toLatin1());
 
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
+    m_reply = m_netMngr->post(netRequest, form.formData());
 
     m_state = SMUG_ADDPHOTO;
-    m_job   = job;
     m_buffer.resize(0);
     return true;
 }
 
 void SmugTalker::getPhoto(const QString& imgPath)
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     emit signalBusy(true);
 
-    KIO::TransferJob* const job = KIO::get(QUrl::fromLocalFile(imgPath), KIO::Reload, KIO::HideProgressInfo);
-    QString customHdr;
-    customHdr                  += QString::fromLatin1("X-Smug-SessionID: ") + m_sessionID  + QString::fromLatin1("\r\n");
-    customHdr                  += QString::fromLatin1("X-Smug-Version: ")   + m_apiVersion + QString::fromLatin1("\r\n");
-    job->addMetaData(QString::fromLatin1("UserAgent"), m_userAgent);
-    job->addMetaData(QString::fromLatin1("customHTTPHeader"), customHdr);
+    QNetworkRequest netRequest(QUrl::fromLocalFile(imgPath));
+    netRequest.setHeader(QNetworkRequest::UserAgentHeader, m_userAgent);
+    netRequest.setRawHeader("X-Smug-SessionID", m_sessionID.toLatin1());
+    netRequest.setRawHeader("X-Smug-Version", m_apiVersion.toLatin1());
 
-    connect(job, SIGNAL(data(KIO::Job*, QByteArray)),
-            this, SLOT(data(KIO::Job*, QByteArray)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
+    m_reply = m_netMngr->get(netRequest);
 
     m_state = SMUG_GETPHOTO;
-    m_job   = job;
     m_buffer.resize(0);
-}
-
-void SmugTalker::data(KIO::Job*, const QByteArray& data)
-{
-    if (data.isEmpty())
-        return;
-
-    int oldSize = m_buffer.size();
-    m_buffer.resize(m_buffer.size() + data.size());
-    memcpy(m_buffer.data()+oldSize, data.data(), data.size());
 }
 
 QString SmugTalker::errorToText(int errCode, const QString &errMsg)
@@ -538,12 +476,16 @@ QString SmugTalker::errorToText(int errCode, const QString &errMsg)
     return transError;
 }
 
-void SmugTalker::slotResult(KJob* kjob)
+void SmugTalker::slotFinished(QNetworkReply* reply)
 {
-    m_job               = 0;
-    KIO::Job* const job = static_cast<KIO::Job*>(kjob);
+    if (reply != m_reply)
+    {
+        return;
+    }
 
-    if (job->error())
+    m_reply = 0;
+
+    if (reply->error() != QNetworkReply::NoError)
     {
         if (m_state == SMUG_LOGIN)
         {
@@ -551,27 +493,30 @@ void SmugTalker::slotResult(KJob* kjob)
             m_user.clear();
 
             emit signalBusy(false);
-            emit signalLoginDone(job->error(), job->errorText());
+            emit signalLoginDone(reply->error(), reply->errorString());
         }
         else if (m_state == SMUG_ADDPHOTO)
         {
             emit signalBusy(false);
-            emit signalAddPhotoDone(job->error(), job->errorText());
+            emit signalAddPhotoDone(reply->error(), reply->errorString());
         }
         else if (m_state == SMUG_GETPHOTO)
         {
             emit signalBusy(false);
-            emit signalGetPhotoDone(job->error(), job->errorText(), QByteArray());
+            emit signalGetPhotoDone(reply->error(), reply->errorString(), QByteArray());
         }
         else
         {
             emit signalBusy(false);
-            KJobWidgets::setWindow(job, m_parent);
-            job->ui()->showErrorMessage();
+            QMessageBox::critical(QApplication::activeWindow(),
+                                  i18n("Error"), reply->errorString());
         }
 
+        reply->deleteLater();
         return;
     }
+
+    m_buffer.append(reply->readAll());
 
     switch(m_state)
     {
@@ -608,6 +553,8 @@ void SmugTalker::slotResult(KJob* kjob)
             emit signalGetPhotoDone(0, QString(), m_buffer);
             break;
     }
+
+    reply->deleteLater();
 }
 
 void SmugTalker::parseResponseLogin(const QByteArray& data)

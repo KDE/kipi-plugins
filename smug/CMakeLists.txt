@@ -21,10 +21,10 @@ add_library(kipiplugin_smug MODULE ${kipiplugin_smug_PART_SRCS})
 
 target_link_libraries(kipiplugin_smug
                       PRIVATE
+                      Qt5::Network
+
                       KF5::I18n
                       KF5::Kipi
-                      KF5::KIOCore
-                      KF5::KIOWidgets
                       KF5::WindowSystem
 
                       KF5kipiplugins

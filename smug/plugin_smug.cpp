@@ -79,6 +79,8 @@ Plugin_Smug::Plugin_Smug(QObject* const parent, const QVariantList& /*args*/)
 
 Plugin_Smug::~Plugin_Smug()
 {
+    delete m_dlgImport;
+    delete m_dlgExport;
 }
 
 void Plugin_Smug::setup(QWidget* const widget)

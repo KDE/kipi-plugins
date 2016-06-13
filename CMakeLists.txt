@@ -236,6 +236,7 @@ if(KF5Kipi_FOUND)
         add_subdirectory(imgur)
         add_subdirectory(piwigo)
         add_subdirectory(rajce)
+        add_subdirectory(smug)
 
         if(KF5Archive_FOUND)
             add_subdirectory(flashexport)
@@ -260,7 +261,6 @@ if(KF5Kipi_FOUND)
 
             if(KF5KIOWidgets_FOUND)
 
-                add_subdirectory(smug)             # smugtalker.cpp
                 add_subdirectory(remotestorage)    # kioimportwindow.cpp, kioexportwindow.cpp
                 add_subdirectory(googleservices)   # autorize.cpp, gptalker.cpp, replacedialog.cpp, gdtalker.cpp, gswindow.cpp
 

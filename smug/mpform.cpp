@@ -23,16 +23,11 @@
 
 #include "mpform.h"
 
-// C++ includes
-
-#include <cstring>
-#include <cstdio>
-
 // Qt includes
 
 #include <QFile>
-#include <QtCore/QMimeDatabase>
-#include <QtCore/QMimeType>
+#include <QMimeDatabase>
+#include <QMimeType>
 #include <QUrl>
 #include <QApplication>
 
@@ -80,16 +75,16 @@ bool MPForm::addPair(const QString& name, const QString& value, const QString& c
 
     if (!name.isEmpty())
     {
-      	str += "Content-Disposition: form-data; name=\"";
-    	str += name.toLatin1();
-    	str += "\"\r\n";
+        str += "Content-Disposition: form-data; name=\"";
+        str += name.toLatin1();
+        str += "\"\r\n";
     }
     if (!contentType.isEmpty())
     {
         str += "Content-Type: " + QByteArray(contentType.toLatin1());
         str += "\r\n";
-    	str += "Mime-version: 1.0 ";
-    	str += "\r\n";
+        str += "Mime-version: 1.0 ";
+        str += "\r\n";
     }
     str += "Content-Length: ";
     str += content_length.toLatin1();
@@ -141,7 +136,6 @@ bool MPForm::addFile(const QString& name, const QString& path)
     str += "\r\n\r\n";
 
     m_buffer.append(str);
-    //int oldSize = m_buffer.size();
     m_buffer.append(imageData);
     m_buffer.append("\r\n");
 
@@ -150,7 +144,7 @@ bool MPForm::addFile(const QString& name, const QString& path)
 
 QString MPForm::contentType() const
 {
-    return QString::fromLatin1("Content-Type: multipart/form-data; boundary=") + QString::fromLatin1(m_boundary);
+    return QString::fromLatin1("multipart/form-data; boundary=") + QString::fromLatin1(m_boundary);
 }
 
 QString MPForm::boundary() const
