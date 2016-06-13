@@ -855,7 +855,7 @@ void RajceSession::slotUploadProgress(qint64 bytesSent, qint64 bytesTotal)
         return;
     }
 
-    unsigned percent = (unsigned)(double)bytesSent / (double)bytesTotal * 100.0;
+    unsigned percent = (unsigned)((float)bytesSent / bytesTotal * 100);
 
     qCDebug(KIPIPLUGINS_LOG) << "Percent signalled: " << percent;
 

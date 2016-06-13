@@ -75,6 +75,7 @@ Plugin_Rajce::Plugin_Rajce(QObject* const parent, const QVariantList& /*args*/)
 
 Plugin_Rajce::~Plugin_Rajce()
 {
+    delete m_dlgExport;
 }
 
 void Plugin_Rajce::setup(QWidget* const widget)

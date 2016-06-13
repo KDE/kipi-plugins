@@ -221,9 +221,9 @@ void RajceWidget::progressChange(unsigned /*commandType*/, unsigned int percent)
 {
     if (m_uploadingPhotos)
     {
-        unsigned idx  = m_currentUploadImage - m_uploadQueue.begin();
-        float perc    = (float) idx / m_uploadQueue.size();
-        perc         += percent / 100.0 / m_uploadQueue.size();
+        unsigned idx  = m_currentUploadImage - m_uploadQueue.begin() - 1;
+        float perc    = (float)idx / m_uploadQueue.size();
+        perc         += (float)percent / 100 / m_uploadQueue.size();
         percent       = perc * 100;
     }
 
@@ -235,7 +235,7 @@ void RajceWidget::progressFinished(unsigned)
     if (m_uploadingPhotos)
     {
         unsigned idx = m_currentUploadImage - m_uploadQueue.begin();
-        float perc   = (float) idx / m_uploadQueue.size();
+        float perc   = (float)idx / m_uploadQueue.size();
 
         m_progressBar->setValue(perc * 100);
     }
