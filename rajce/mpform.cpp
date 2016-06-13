@@ -58,12 +58,12 @@ void MPForm::reset()
 
 void MPForm::finish()
 {
-    QString str;
-    str += QString::fromLatin1("--");
-    str += QString::fromLatin1(m_boundary);
-    str += QString::fromLatin1("--");
+    QByteArray str;
+    str += "--";
+    str += m_boundary;
+    str += "--";
 
-    m_buffer.append(str.toUtf8());
+    m_buffer.append(str);
 }
 
 bool MPForm::addPair(const QString& name, const QString& value, const QString& contentType)
@@ -119,30 +119,30 @@ bool MPForm::addFile(const QString& name,const QString& path)
 
     QByteArray imageData = imageFile.readAll();
 
-    QString str;
+    QByteArray str;
     QString file_size = QString::number(imageFile.size());
 
-    str += QString::fromLatin1("--");
-    str += QString::fromLatin1(m_boundary);
-    str += QString::fromLatin1("\r\n");
-    str += QString::fromLatin1("Content-Disposition: form-data; name=\"");
-    str += name;
-    str += QString::fromLatin1("\"; ");
-    str += QString::fromLatin1("filename=\"");
-    str += QUrl(path).fileName();
-    str += QString::fromLatin1("\"\r\n");
-    str += QString::fromLatin1("Content-Length: ");
-    str += file_size;
-    str += QString::fromLatin1("\r\n");
-    str += QString::fromLatin1("Content-Type: ");
-    str += mime;
-    str += QString::fromLatin1("\r\n\r\n");
+    str += "--";
+    str += m_boundary;
+    str += "\r\n";
+    str += "Content-Disposition: form-data; name=\"";
+    str += name.toLatin1();
+    str += "\"; ";
+    str += "filename=\"";
+    str += QFile::encodeName(QUrl(path).fileName());
+    str += "\"\r\n";
+    str += "Content-Length: ";
+    str += file_size.toLatin1();
+    str += "\r\n";
+    str += "Content-Type: ";
+    str += mime.toLatin1();
+    str += "\r\n\r\n";
 
     imageFile.close();
 
-    m_buffer.append(str.toUtf8());
+    m_buffer.append(str);
     m_buffer.append(imageData);
-    m_buffer.append(QString::fromLatin1("\r\n").toUtf8());
+    m_buffer.append("\r\n");
 
     qCDebug(KIPIPLUGINS_LOG) << "Added file " << path << " with detected mime type " << mime;
 
