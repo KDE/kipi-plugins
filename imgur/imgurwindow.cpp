@@ -315,8 +315,8 @@ void ImgurWindow::readSettings()
     KConfig config(QString::fromLatin1("kipirc"));
     //KConfigGroup group = config.group(QString("Imgur Settings"));
 
-    KConfigGroup group2 = config.group("Imgur Dialog");
     winId();
+    KConfigGroup group2 = config.group("Imgur Dialog");
     KWindowConfig::restoreWindowSize(windowHandle(), group2);
     resize(windowHandle()->size());
 }

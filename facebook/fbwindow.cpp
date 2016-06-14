@@ -26,6 +26,7 @@
 
 // Qt includes
 
+#include <QWindow>
 #include <QComboBox>
 #include <QMenu>
 #include <QFileInfo>
@@ -271,8 +272,10 @@ void FbWindow::readSettings()
     d->m_dimensionSpB->setValue(grp.readEntry("Maximum Width", 604));
     d->m_imageQualitySpB->setValue(grp.readEntry("Image Quality", 85));
 
+    winId();
     KConfigGroup dialogGroup = config.group("Facebook Export Dialog");
     KWindowConfig::restoreWindowSize(windowHandle(), dialogGroup);
+    resize(windowHandle()->size());
 }
 
 void FbWindow::writeSettings()

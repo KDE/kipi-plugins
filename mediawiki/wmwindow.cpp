@@ -27,6 +27,7 @@
 
 // Qt includes
 
+#include <QWindow>
 #include <QPointer>
 #include <QLayout>
 #include <QCloseEvent>
@@ -201,8 +202,10 @@ void WMWindow::readSettings()
 
     d->widget->readSettings(group);
 
+    winId();
     KConfigGroup group2 = config.group(QLatin1String("MediaWiki export dialog"));
     KWindowConfig::restoreWindowSize(windowHandle(), group2);
+    resize(windowHandle()->size());
 }
 
 void WMWindow::saveSettings()

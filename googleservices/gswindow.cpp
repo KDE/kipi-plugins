@@ -26,6 +26,7 @@
 
 // Qt includes
 
+#include <QWindow>
 #include <QMessageBox>
 #include <QPushButton>
 #include <QButtonGroup>
@@ -361,7 +362,9 @@ void GSWindow::readSettings()
             break;
     }
 
+    winId();
     KWindowConfig::restoreWindowSize(windowHandle(), dialogGroup);
+    resize(windowHandle()->size());
 }
 
 void GSWindow::writeSettings()

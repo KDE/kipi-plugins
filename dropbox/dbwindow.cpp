@@ -24,6 +24,7 @@
 
 // Qt includes
 
+#include <QWindow>
 #include <QPushButton>
 #include <QProgressDialog>
 #include <QPixmap>
@@ -208,8 +209,10 @@ void DBWindow::readSettings()
     m_widget->getDimensionSpB()->setValue(grp.readEntry("Maximum Width",    1600));
     m_widget->getImgQualitySpB()->setValue(grp.readEntry("Image Quality", 90));
 
+    winId();
     KConfigGroup dialogGroup = config.group("Dropbox Export Dialog");
     KWindowConfig::restoreWindowSize(windowHandle(), dialogGroup);
+    resize(windowHandle()->size());
 }
 
 void DBWindow::writeSettings()

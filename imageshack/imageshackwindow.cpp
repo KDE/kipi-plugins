@@ -182,9 +182,9 @@ void ImageshackWindow::closeEvent(QCloseEvent* e)
 
 void ImageshackWindow::readSettings()
 {
+    winId();
     KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup group = config.group("Imageshack Settings");
-    winId();
     KWindowConfig::restoreWindowSize(windowHandle(), group);
     resize(windowHandle()->size());
 

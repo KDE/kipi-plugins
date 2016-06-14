@@ -27,6 +27,7 @@
 
 // Qt includes
 
+#include <QWindow>
 #include <QFileInfo>
 #include <QPointer>
 #include <QSpinBox>
@@ -325,13 +326,17 @@ void SmugWindow::readSettings()
 
     if (m_import)
     {
+        winId();
         KConfigGroup dialogGroup = config.group("Smug Import Dialog");
         KWindowConfig::restoreWindowSize(windowHandle(), dialogGroup);
+        resize(windowHandle()->size());
     }
     else
     {
+        winId();
         KConfigGroup dialogGroup = config.group("Smug Export Dialog");
         KWindowConfig::restoreWindowSize(windowHandle(), dialogGroup);
+        resize(windowHandle()->size());
     }
 }
 

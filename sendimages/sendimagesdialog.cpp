@@ -26,6 +26,7 @@
 
 // Qt includes
 
+#include <QWindow>
 #include <QCloseEvent>
 #include <QGridLayout>
 #include <QMenu>
@@ -185,8 +186,10 @@ void SendImagesDialog::readSettings()
     settings.attachmentLimitInMbytes = group.readEntry(QLatin1String("AttachmentLimit"), 17);
     d->settingsWidget->setEmailSettings(settings);
 
+    winId();
     KConfigGroup group2 = config.group(QLatin1String("SendImages Dialog"));
     KWindowConfig::restoreWindowSize(windowHandle(), group2);
+    resize(windowHandle()->size());
 }
 
 void SendImagesDialog::saveSettings()

@@ -26,6 +26,7 @@
 
 // Qt includes
 
+#include <QWindow>
 #include <QCloseEvent>
 #include <QMenu>
 #include <QMessageBox>
@@ -134,8 +135,10 @@ void KioExportWindow::restoreSettings()
     m_exportWidget->setHistory(group.readEntry(HISTORY_URL_PROPERTY, QList<QUrl>()));
     m_exportWidget->setTargetUrl(group.readEntry(TARGET_URL_PROPERTY, QUrl()));
 
+    winId();
     KConfigGroup group2 = config.group(QString::fromLatin1("Kio Export Dialog"));
     KWindowConfig::restoreWindowSize(windowHandle(), group2);
+    resize(windowHandle()->size());
 }
 
 void KioExportWindow::saveSettings()

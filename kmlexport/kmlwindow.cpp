@@ -25,6 +25,7 @@
 
 // Qt includes
 
+#include <QWindow>
 #include <QButtonGroup>
 #include <QCheckBox>
 #include <QGroupBox>
@@ -440,8 +441,10 @@ void KmlWindow::readSettings()
     GPXOpacity          = group.readEntry(QLatin1String("Track Opacity"), 64 );
     GPXAltitudeMode     = group.readEntry(QLatin1String("GPX Altitude Mode"), 0);
 
+    winId();
     KConfigGroup group2 = config.group(QLatin1String("KMLExport Dialog"));
     KWindowConfig::restoreWindowSize(windowHandle(), group2);
+    resize(windowHandle()->size());
 
     // -- Apply Settings to widgets ------------------------------
 
