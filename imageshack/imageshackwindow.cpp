@@ -24,6 +24,7 @@
 
 // Qt includes
 
+#include <QWindow>
 #include <QButtonGroup>
 #include <QCheckBox>
 #include <QCloseEvent>
@@ -183,7 +184,9 @@ void ImageshackWindow::readSettings()
 {
     KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup group = config.group("Imageshack Settings");
+    winId();
     KWindowConfig::restoreWindowSize(windowHandle(), group);
+    resize(windowHandle()->size());
 
     if (group.readEntry("Private", false))
     {

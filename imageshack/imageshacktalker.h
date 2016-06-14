@@ -28,10 +28,8 @@
 #include <QObject>
 #include <QString>
 #include <QMap>
-
-// KDE includes
-
-#include <kio/job.h>
+#include <QNetworkReply>
+#include <QNetworkAccessManager>
 
 class QDomElement;
 class QByteArray;
@@ -84,17 +82,9 @@ private:
         IMGHCK_ADDPHOTOGALLERY
     };
 
-    enum Step
-    {
-        STEP_UPLOADITEM,
-        STEP_CREATEGALLERY,
-        STEP_ADDITEMTOGALLERY
-    };
-
 private Q_SLOTS:
 
-    void data(KIO::Job* job, const QByteArray& data);
-    void slotResult(KJob* job);
+    void slotFinished(QNetworkReply* reply);
 
 private:
 
@@ -115,22 +105,24 @@ private:
 
 private:
 
-    Imageshack* m_imageshack;
+    Imageshack*            m_imageshack;
 
-    QByteArray  m_buffer;
+    QByteArray             m_buffer;
 
-    QString     m_userAgent;
-    QUrl        m_photoApiUrl;
-    QUrl        m_videoApiUrl;
-    QUrl        m_loginApiUrl;
-    QUrl        m_galleryUrl;
-    QString     m_appKey;
+    QString                m_userAgent;
+    QUrl                   m_photoApiUrl;
+    QUrl                   m_videoApiUrl;
+    QUrl                   m_loginApiUrl;
+    QUrl                   m_galleryUrl;
+    QString                m_appKey;
 
-    bool        m_loginInProgress;
+    bool                   m_loginInProgress;
 
-    KIO::Job*   m_job;
+    QNetworkAccessManager* m_netMngr;
 
-    State       m_state;
+    QNetworkReply*         m_reply;
+
+    State                  m_state;
 };
 
 } // namespace KIPIImageshackPlugin

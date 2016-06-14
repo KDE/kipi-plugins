@@ -53,7 +53,7 @@ namespace KIPIImageshackPlugin
 ImageshackTalker::ImageshackTalker(Imageshack* const imghack)
     : m_imageshack(imghack),
       m_loginInProgress(false),
-      m_job(0),
+      m_reply(0),
       m_state(IMGHCK_DONOTHING)
 {
     m_userAgent   = QString::fromLatin1("KIPI-Plugin-Imageshack/%1").arg(kipipluginsVersion());
@@ -62,20 +62,25 @@ ImageshackTalker::ImageshackTalker(Imageshack* const imghack)
     m_loginApiUrl = QUrl(QString::fromLatin1("http://my.imageshack.us/setlogin.php"));
     m_galleryUrl  = QUrl(QString::fromLatin1("http://www.imageshack.us/gallery_api.php"));
     m_appKey      = QString::fromLatin1("YPZ2L9WV2de2a1e08e8fbddfbcc1c5c39f94f92a");
+
+    m_netMngr     = new QNetworkAccessManager(this);
+
+    connect(m_netMngr, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(slotFinished(QNetworkReply*)));
 }
 
 ImageshackTalker::~ImageshackTalker()
 {
-    if (m_job)
-        m_job->kill();
+    if (m_reply)
+        m_reply->abort();
 }
 
 void ImageshackTalker::cancel()
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     emit signalBusy(false);
@@ -100,80 +105,68 @@ QString ImageshackTalker::getCallString(QMap< QString, QString >& args)
     return result;
 }
 
-void ImageshackTalker::data(KIO::Job* /*job*/, const QByteArray& data)
+void ImageshackTalker::slotFinished(QNetworkReply* reply)
 {
-    if (data.isEmpty())
+    if (reply != m_reply)
+    {
         return;
+    }
 
-    int oldSize = m_buffer.size();
-    m_buffer.resize(m_buffer.size() + data.size());
-    memcpy(m_buffer.data()+oldSize, data.data(), data.size());
-}
+    m_reply = 0;
 
-void ImageshackTalker::slotResult(KJob* kjob)
-{
-    KIO::Job* job = static_cast<KIO::Job*>(kjob);
-
-    if (job->error())
+    if (reply->error() != QNetworkReply::NoError)
     {
         if (m_state == IMGHCK_AUTHENTICATING)
         {
-            checkRegistrationCodeDone(job->error(), job->errorString());
+            checkRegistrationCodeDone(reply->error(), reply->errorString());
             emit signalBusy(false);
         }
         else if (m_state == IMGHCK_GETGALLERIES)
         {
             emit signalBusy(false);
-            emit signalGetGalleriesDone(job->error(), job->errorString());
+            emit signalGetGalleriesDone(reply->error(), reply->errorString());
         }
         else if (m_state == IMGHCK_ADDPHOTO || m_state == IMGHCK_ADDPHOTOGALLERY)
         {
             emit signalBusy(false);
-            emit signalAddPhotoDone(job->error(), job->errorString());
+            emit signalAddPhotoDone(reply->error(), reply->errorString());
         }
 
         m_state = IMGHCK_DONOTHING;
-        m_job = 0;
+        reply->deleteLater();
         return;
     }
 
-    int step;
+    m_buffer.append(reply->readAll());
 
     switch (m_state)
     {
         case IMGHCK_AUTHENTICATING:
-            m_job = 0;
             parseAccessToken(m_buffer);
             break;
         case IMGHCK_ADDPHOTOGALLERY:
-            step = job->property("k_step").toInt();
-
-            if (step == STEP_UPLOADITEM)
-                parseUploadPhotoDone(m_buffer);
-            else
-                parseAddPhotoToGalleryDone(m_buffer);
-
+            parseAddPhotoToGalleryDone(m_buffer);
             break;
         case IMGHCK_ADDVIDEO:
         case IMGHCK_ADDPHOTO:
-            m_job = 0;
             parseUploadPhotoDone(m_buffer);
             break;
         case IMGHCK_GETGALLERIES:
-            m_job = 0;
             parseGetGalleries(m_buffer);
             break;
         default:
             break;
     }
+
+    reply->deleteLater();
 }
 
 void ImageshackTalker::authenticate()
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     emit signalBusy(true);
@@ -185,27 +178,21 @@ void ImageshackTalker::authenticate()
     q.addQueryItem(QString::fromLatin1("password"), m_imageshack->password());
     url.setQuery(q);
 
-    KIO::TransferJob* const job = KIO::http_post(url,"",KIO::HideProgressInfo);
-    job->addMetaData(QString::fromLatin1("content-type"),
-                     QString::fromLatin1("Content-Type : application/x-www-form-urlencoded"));
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
 
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(data(KIO::Job*,QByteArray)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
+    m_reply = m_netMngr->post(netRequest, QByteArray());
 
     m_state = IMGHCK_AUTHENTICATING;
-    m_job = job;
     m_buffer.resize(0);
 }
 
 void ImageshackTalker::getGalleries()
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     emit signalBusy(true);
@@ -218,16 +205,9 @@ void ImageshackTalker::getGalleries()
     q.addQueryItem(QString::fromLatin1("user"), m_imageshack->username());
     gUrl.setQuery(q);
 
-    KIO::TransferJob* const job = KIO::get(gUrl, KIO::NoReload, KIO::HideProgressInfo);
-
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(data(KIO::Job*,QByteArray)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
+    m_reply = m_netMngr->get(QNetworkRequest(gUrl));
 
     m_state = IMGHCK_GETGALLERIES;
-    m_job = job;
     m_buffer.resize(0);
 }
 
@@ -342,10 +322,10 @@ QString ImageshackTalker::mimeType(const QString& path)
 
 void ImageshackTalker::uploadItem(const QString& path, const QMap<QString, QString>& opts)
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     emit signalBusy(true);
@@ -380,27 +360,23 @@ void ImageshackTalker::uploadItem(const QString& path, const QMap<QString, QStri
     QUrl uploadUrl = QUrl(m_photoApiUrl);
     m_state        = IMGHCK_ADDPHOTO;
 
-    KIO::Job* const job = KIO::http_post(uploadUrl, form.formData(), KIO::HideProgressInfo);
-    job->addMetaData(QString::fromLatin1("UserAgent"), m_userAgent);
-    job->addMetaData(QString::fromLatin1("content-type"), form.contentType());
+    QNetworkRequest netRequest(uploadUrl);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, form.contentType());
+    netRequest.setHeader(QNetworkRequest::UserAgentHeader, m_userAgent);
 
-    m_job = job;
+    m_reply = m_netMngr->post(netRequest, form.formData());
 
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(data(KIO::Job*,QByteArray)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
+    m_buffer.resize(0);
 
     //uploadItemToGallery(path, QString::fromLatin1(""), opts);
 }
 
 void ImageshackTalker::uploadItemToGallery(const QString& path, const QString& /*gallery*/, const QMap<QString, QString>& opts)
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     emit signalBusy(true);
@@ -440,19 +416,13 @@ void ImageshackTalker::uploadItemToGallery(const QString& path, const QString& /
     uploadUrl           = QUrl(m_photoApiUrl);
     m_state             = IMGHCK_ADDPHOTO;
 
-    KIO::Job* const job = KIO::http_post(uploadUrl, form.formData(), KIO::HideProgressInfo);
-    job->addMetaData(QString::fromLatin1("UserAgent"), m_userAgent);
-    job->addMetaData(QString::fromLatin1("content-type"), form.contentType());
+    QNetworkRequest netRequest(uploadUrl);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, form.contentType());
+    netRequest.setHeader(QNetworkRequest::UserAgentHeader, m_userAgent);
 
-    m_job               = job;
+    m_reply = m_netMngr->post(netRequest, form.formData());
 
     m_buffer.resize(0);
-
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(data(KIO::Job*,QByteArray)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
 }
 
 int ImageshackTalker::parseErrorResponse(QDomElement elem, QString& errMsg)
@@ -495,7 +465,7 @@ void ImageshackTalker::parseUploadPhotoDone(QByteArray data)
     QJsonParseError err;
     QJsonDocument doc = QJsonDocument::fromJson(data, &err);
 
-    if(err.error != QJsonParseError::NoError)
+    if (err.error != QJsonParseError::NoError)
     {
         emit signalBusy(false);
         return;
@@ -503,7 +473,7 @@ void ImageshackTalker::parseUploadPhotoDone(QByteArray data)
 
     QJsonObject jsonObject = doc.object();
 
-    if(m_state == IMGHCK_ADDPHOTO || m_state == IMGHCK_ADDVIDEO || (m_state == IMGHCK_ADDPHOTOGALLERY))
+    if (m_state == IMGHCK_ADDPHOTO || m_state == IMGHCK_ADDVIDEO || (m_state == IMGHCK_ADDPHOTOGALLERY))
     {
         if(jsonObject[QString::fromLatin1("success")].toBool())
         {

@@ -22,9 +22,10 @@ add_library(kipiplugin_imageshack MODULE ${kipiplugin_imageshack_PART_SRCS})
 
 target_link_libraries(kipiplugin_imageshack
                       PRIVATE
+                      Qt5::Network
+
                       KF5::Kipi
                       KF5::I18n
-                      KF5::KIOCore
                       KF5kipiplugins
                      )
 

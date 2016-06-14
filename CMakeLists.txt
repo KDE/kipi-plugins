@@ -237,6 +237,7 @@ if(KF5Kipi_FOUND)
         add_subdirectory(piwigo)
         add_subdirectory(rajce)
         add_subdirectory(smug)
+        add_subdirectory(imageshack)
 
         if(KF5Archive_FOUND)
             add_subdirectory(flashexport)
@@ -254,7 +255,6 @@ if(KF5Kipi_FOUND)
 
             # Tools that only depend of KIO core. Code relying to KIO is listed on the right side.
 
-            add_subdirectory(imageshack)           # imageshacktalker.cpp
             add_subdirectory(yandexfotki)          # yftalker.cpp
 
             # Tools which need KIO Widgets too.

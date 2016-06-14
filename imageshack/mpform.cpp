@@ -22,11 +22,6 @@
 
 #include "mpform.h"
 
-// C++ includes
-
-#include <cstring>
-#include <cstdio>
-
 // Qt includes
 
 #include <QFile>
@@ -96,12 +91,15 @@ bool MPForm::addFile(const QString& name, const QString& path)
     QMimeDatabase db;
     QMimeType ptr = db.mimeTypeForUrl(QUrl::fromLocalFile(path));
     QString mime = ptr.name();
+
     if (mime.isEmpty())
         return false;
 
     QFile imageFile(path);
+
     if (!imageFile.open(QIODevice::ReadOnly))
         return false;
+
     QByteArray imageData = imageFile.readAll();
 
     QString file_size = QString::number(imageFile.size());
@@ -130,7 +128,7 @@ bool MPForm::addFile(const QString& name, const QString& path)
 
 QString MPForm::contentType() const
 {
-    return QString::fromLatin1("Content-Type: multipart/form-data; boundary=") + QString::fromLatin1(m_boundary);
+    return QString::fromLatin1("multipart/form-data; boundary=") + QString::fromLatin1(m_boundary);
 }
 
 QString MPForm::boundary() const
