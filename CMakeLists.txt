@@ -238,6 +238,7 @@ if(KF5Kipi_FOUND)
         add_subdirectory(rajce)
         add_subdirectory(smug)
         add_subdirectory(imageshack)
+        add_subdirectory(yandexfotki)
 
         if(KF5Archive_FOUND)
             add_subdirectory(flashexport)
@@ -253,10 +254,6 @@ if(KF5Kipi_FOUND)
 
         if(KF5KIO_FOUND)
 
-            # Tools that only depend of KIO core. Code relying to KIO is listed on the right side.
-
-            add_subdirectory(yandexfotki)          # yftalker.cpp
-
             # Tools which need KIO Widgets too.
 
             if(KF5KIOWidgets_FOUND)
@@ -264,7 +261,7 @@ if(KF5Kipi_FOUND)
                 add_subdirectory(remotestorage)    # kioimportwindow.cpp, kioexportwindow.cpp
                 add_subdirectory(googleservices)   # autorize.cpp, gptalker.cpp, replacedialog.cpp, gdtalker.cpp, gswindow.cpp
 
-           endif()
+            endif()
 
         endif()
 

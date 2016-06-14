@@ -27,10 +27,8 @@
 
 #include <QObject>
 #include <QPointer>
-
-// KDE includes
-
-#include <kio/jobclasses.h>
+#include <QNetworkReply>
+#include <QNetworkAccessManager>
 
 // Local includes
 
@@ -38,11 +36,6 @@
 #include "yfalbum.h"
 
 class QDomElement;
-
-namespace KIO
-{
-class Job;
-}
 
 namespace KIPIYandexFotkiPlugin
 {
@@ -205,23 +198,21 @@ Q_SIGNALS:
 
 protected Q_SLOTS:
 
-    void handleJobData(KIO::Job* job, const QByteArray& data);
-    // special method for ugly KIO::put API
-    void handleJobReq(KIO::Job* job, QByteArray& data);
+    void slotFinished(QNetworkReply* reply);
 
-    void parseResponseGetSession(KJob* job);
-    //void parseResponseCheckToken(KJob *job);
-    void parseResponseGetToken(KJob* job);
-    void parseResponseGetService(KJob* job);
-    void parseResponseListAlbums(KJob* job);
+    void parseResponseGetSession();
+    //void parseResponseCheckToken();
+    void parseResponseGetToken();
+    void parseResponseGetService();
+    void parseResponseListAlbums();
 
-    void parseResponseListPhotos(KJob* job);
+    void parseResponseListPhotos();
     bool parsePhotoXml(const QDomElement& entryElem,
                        YandexFotkiPhoto& photo);
 
-    void parseResponseUpdatePhotoFile(KJob* job);
-    void parseResponseUpdatePhotoInfo(KJob* job);
-    void parseResponseUpdateAlbum(KJob* job);
+    void parseResponseUpdatePhotoFile();
+    void parseResponseUpdatePhotoInfo();
+    void parseResponseUpdateAlbum();
 
 protected:
 
@@ -251,9 +242,6 @@ protected:
     /*
      * Utils
      */
-    // for parseXXXX slots
-    bool prepareJobResult(KJob* job, State error);
-
     // for updatePhoto
     void updatePhotoFile(YandexFotkiPhoto& photo);
     void updatePhotoInfo(YandexFotkiPhoto& photo);
@@ -287,9 +275,11 @@ protected:
     QList<YandexFotkiPhoto> m_photos;
     QString                 m_photosNextUrl;
 
-    // KIO job
-    QPointer<KIO::Job>      m_job;
-    // KIO buffer
+    QNetworkAccessManager*  m_netMngr;
+
+    QNetworkReply*          m_reply;
+
+    // Data buffer
     QByteArray              m_buffer;
 };
 

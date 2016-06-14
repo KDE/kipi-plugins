@@ -61,6 +61,7 @@ Plugin_YandexFotki::Plugin_YandexFotki(QObject* const parent, const QVariantList
 
 Plugin_YandexFotki::~Plugin_YandexFotki()
 {
+    delete m_dlgExport;
 }
 
 void Plugin_YandexFotki::setup(QWidget* const widget)

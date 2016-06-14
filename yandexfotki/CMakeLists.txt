@@ -24,9 +24,10 @@ add_library(kipiplugin_yandexfotki MODULE ${kipiplugin_yandexfotki_PART_SRCS})
 
 target_link_libraries(kipiplugin_yandexfotki
                       PRIVATE
+                      Qt5::Network
+
                       KF5::Kipi
                       KF5::I18n
-                      KF5::KIOCore
                       KF5::WindowSystem
 
                       KF5kipiplugins

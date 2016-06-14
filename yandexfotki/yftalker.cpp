@@ -58,12 +58,17 @@ const QString YandexFotkiTalker::ACCESS_STRINGS[]     = {
     QString::fromLatin1("friends"),
     QString::fromLatin1("private") };
 
-YandexFotkiTalker::YandexFotkiTalker( QObject* const parent )
+YandexFotkiTalker::YandexFotkiTalker(QObject* const parent)
     : QObject(parent),
       m_state(STATE_UNAUTHENTICATED),
       m_lastPhoto(0),
-      m_job(0)
+      m_netMngr(0),
+      m_reply(0)
 {
+    m_netMngr = new QNetworkAccessManager(this);
+
+    connect(m_netMngr, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(slotFinished(QNetworkReply*)));
 }
 
 YandexFotkiTalker::~YandexFotkiTalker()
@@ -73,19 +78,13 @@ YandexFotkiTalker::~YandexFotkiTalker()
 
 void YandexFotkiTalker::getService()
 {
-    m_state                     = STATE_GETSERVICE;
-    KIO::TransferJob* const job = KIO::get(QUrl(SERVICE_URL.arg(m_login)),
-                                  KIO::NoReload, KIO::HideProgressInfo);
+    m_state = STATE_GETSERVICE;
 
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(handleJobData(KIO::Job*,QByteArray)));
+    QUrl url(SERVICE_URL.arg(m_login));
 
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(parseResponseGetService(KJob*)));
+    m_reply = m_netMngr->get(QNetworkRequest(url));
 
-    m_job = job;
     m_buffer.resize(0);
-    m_job->start();
 }
 
 /*
@@ -117,22 +116,13 @@ void YandexFotkiTalker::getSession()
     if (m_state != STATE_GETSERVICE_DONE)
         return;
 
-    KIO::TransferJob* const job = KIO::get(QUrl(SESSION_URL),
-                                  KIO::NoReload, KIO::HideProgressInfo);
-
-    //job->ui()->setWindow(m_parent);
-
     m_state = STATE_GETSESSION;
 
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(handleJobData(KIO::Job*,QByteArray)));
+    QUrl url(SESSION_URL);
 
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(parseResponseGetSession(KJob*)));
+    m_reply = m_netMngr->get(QNetworkRequest(url));
 
-    m_job = job;
     m_buffer.resize(0);
-    m_job->start();
 }
 
 void YandexFotkiTalker::getToken()
@@ -152,23 +142,15 @@ void YandexFotkiTalker::getToken()
 
     QString params = paramList.join(QString::fromLatin1("&"));
 
-    KIO::TransferJob* const job = KIO::http_post(QUrl(TOKEN_URL), params.toUtf8(),
-                                           KIO::HideProgressInfo);
-
-    job->addMetaData(QString::fromLatin1("content-type"),
-                     QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
-
     m_state = STATE_GETTOKEN;
 
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(handleJobData(KIO::Job*,QByteArray)));
+    QUrl url(TOKEN_URL);
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
 
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(parseResponseGetToken(KJob*)));
+    m_reply = m_netMngr->post(netRequest, params.toUtf8());
 
-    m_job = job;
     m_buffer.resize(0);
-    m_job->start();
 }
 
 void YandexFotkiTalker::listAlbums()
@@ -185,26 +167,17 @@ void YandexFotkiTalker::listAlbumsNext()
 {
     qCDebug(KIPIPLUGINS_LOG) << "listAlbumsNext";
 
-    KIO::TransferJob* const job = KIO::get(QUrl(m_albumsNextUrl),
-                                  KIO::NoReload, KIO::HideProgressInfo);
-
-    job->addMetaData(QString::fromLatin1("content-type"),
-                     QString::fromLatin1("Content-Type: application/atom+xml; charset=utf-8; type=feed"));
-    job->addMetaData(QString::fromLatin1("customHTTPHeader"),
-                     QString::fromLatin1("Authorization: FimpToken realm=\"%1\", token=\"%2\"")
-                     .arg(AUTH_REALM).arg(m_token));
-
     m_state = STATE_LISTALBUMS;
 
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(handleJobData(KIO::Job*,QByteArray)));
+    QUrl url(m_albumsNextUrl);
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/atom+xml; charset=utf-8; type=feed"));
+    netRequest.setRawHeader("Authorization", QString::fromLatin1("FimpToken realm=\"%1\", token=\"%2\"")
+                                             .arg(AUTH_REALM).arg(m_token).toLatin1());
 
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(parseResponseListAlbums(KJob*)));
+    m_reply = m_netMngr->get(netRequest);
 
-    m_job = job;
     m_buffer.resize(0);
-    m_job->start();
 }
 
 void YandexFotkiTalker::listPhotos(const YandexFotkiAlbum& album)
@@ -222,26 +195,17 @@ void YandexFotkiTalker::listPhotosNext()
 {
     qCDebug(KIPIPLUGINS_LOG) << "listPhotosNext";
 
-    KIO::TransferJob* const job = KIO::get(QUrl(m_photosNextUrl),
-                                  KIO::NoReload, KIO::HideProgressInfo);
-
-    job->addMetaData(QString::fromLatin1("content-type"),
-                     QString::fromLatin1("Content-Type: application/atom+xml; charset=utf-8; type=feed"));
-    job->addMetaData(QString::fromLatin1("customHTTPHeader"),
-                     QString::fromLatin1("Authorization: FimpToken realm=\"%1\", token=\"%2\"")
-                     .arg(AUTH_REALM).arg(m_token));
-
     m_state = STATE_LISTPHOTOS;
 
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(handleJobData(KIO::Job*,QByteArray)));
+    QUrl url(m_photosNextUrl);
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/atom+xml; charset=utf-8; type=feed"));
+    netRequest.setRawHeader("Authorization", QString::fromLatin1("FimpToken realm=\"%1\", token=\"%2\"")
+                                             .arg(AUTH_REALM).arg(m_token).toLatin1());
 
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(parseResponseListPhotos(KJob*)));
+    m_reply = m_netMngr->get(netRequest);
 
-    m_job = job;
     m_buffer.resize(0);
-    m_job->start();
 }
 
 void YandexFotkiTalker::updatePhoto(YandexFotkiPhoto& photo, const YandexFotkiAlbum& album)
@@ -285,28 +249,19 @@ void YandexFotkiTalker::updatePhotoFile(YandexFotkiPhoto& photo)
         return;
     }
 
-    KIO::TransferJob* const job = KIO::http_post(QUrl(m_lastPhotosUrl), imageFile.readAll());
-    //job->ui()->setWindow(m_parent);
-    job->addMetaData(QString::fromLatin1("content-type"),
-                     QString::fromLatin1("Content-Type: image/jpeg"));
-    job->addMetaData(QString::fromLatin1("customHTTPHeader"),
-                     QString::fromLatin1("Authorization: FimpToken realm=\"%1\", token=\"%2\"")
-                     .arg(AUTH_REALM).arg(m_token));
-    job->addMetaData(QLatin1String("slug"), QLatin1String("Slug: ") +
-                     QString::fromUtf8(QUrl::toPercentEncoding(photo.title())) + QLatin1String(".jpg"));
-
     m_state     = STATE_UPDATEPHOTO_FILE;
     m_lastPhoto = &photo;
 
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(handleJobData(KIO::Job*,QByteArray)));
+    QUrl url(m_lastPhotosUrl);
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("image/jpeg"));
+    netRequest.setRawHeader("Authorization", QString::fromLatin1("FimpToken realm=\"%1\", token=\"%2\"")
+                                             .arg(AUTH_REALM).arg(m_token).toLatin1());
+    netRequest.setRawHeader("Slug", QUrl::toPercentEncoding(photo.title()) + ".jpg");
 
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(parseResponseUpdatePhotoFile(KJob*)));
+    m_reply = m_netMngr->post(netRequest, imageFile.readAll());
 
-    m_job = job;
     m_buffer.resize(0);
-    m_job->start();
 }
 
 void YandexFotkiTalker::updatePhotoInfo(YandexFotkiPhoto& photo)
@@ -366,35 +321,22 @@ void YandexFotkiTalker::updatePhotoInfo(YandexFotkiPhoto& photo)
         entryElem.appendChild(tag);
     }
 
-    m_buffer = doc.toString(1).toUtf8(); // with idents
+    QByteArray buffer = doc.toString(1).toUtf8(); // with idents
 
-    qCDebug(KIPIPLUGINS_LOG) << "Prepared data: " << m_buffer;
+    qCDebug(KIPIPLUGINS_LOG) << "Prepared data: " << buffer;
     m_lastPhoto = &photo;
 
     m_state = STATE_UPDATEPHOTO_INFO;
 
-    /*
-     * KIO::put uses dataReq slot for getting data
-     * It's really unsuable, but anyway...
-     */
-    KIO::TransferJob* const job = KIO::put(QUrl(photo.m_apiEditUrl), -1/*, KIO::HideProgressInfo*/);
-    job->addMetaData(QString::fromLatin1("customHTTPHeader"),
-                     QString::fromLatin1("Authorization: FimpToken realm=\"%1\", token=\"%2\"")
-                     .arg(AUTH_REALM).arg(m_token));
-    job->addMetaData(QString::fromLatin1("content-type"),
-                     QString::fromLatin1("Content-Type: application/atom+xml; charset=utf-8; type=entry"));
-    job->addMetaData(QString::fromLatin1("content-length"),
-                     QString::fromLatin1("Content-Length: %1").arg(m_buffer.size()));
+    QUrl url(photo.m_apiEditUrl);
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/atom+xml; charset=utf-8; type=entry"));
+    netRequest.setRawHeader("Authorization", QString::fromLatin1("FimpToken realm=\"%1\", token=\"%2\"")
+                                             .arg(AUTH_REALM).arg(m_token).toLatin1());
 
-    // no result data in this method, but reading from m_buffer
-    connect(job, SIGNAL(dataReq(KIO::Job*,QByteArray&)),
-            this, SLOT(handleJobReq(KIO::Job*,QByteArray&)));
+    m_reply = m_netMngr->put(netRequest, buffer);
 
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(parseResponseUpdatePhotoInfo(KJob*)));
-
-    m_job = job;
-    m_job->start();
+    m_buffer.resize(0);
 }
 
 void YandexFotkiTalker::updateAlbum(YandexFotkiAlbum& album)
@@ -442,33 +384,25 @@ void YandexFotkiTalker::updateAlbumCreate(YandexFotkiAlbum& album)
     qCDebug(KIPIPLUGINS_LOG) << "Prepared data: " << postData;
     qCDebug(KIPIPLUGINS_LOG) << "Url" << m_apiAlbumsUrl;
 
-    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiAlbumsUrl), postData,
-                                  KIO::HideProgressInfo);
-    job->addMetaData(QString::fromLatin1("content-type"),
-                     QString::fromLatin1("Content-Type: application/atom+xml; charset=utf-8; type=entry"));
-    job->addMetaData(QString::fromLatin1("customHTTPHeader"),
-                     QString::fromLatin1("Authorization: FimpToken realm=\"%1\", token=\"%2\"")
-                     .arg(AUTH_REALM).arg(m_token));
-
     m_state = STATE_UPDATEALBUM;
 
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(handleJobData(KIO::Job*,QByteArray)));
+    QUrl url(m_apiAlbumsUrl);
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/atom+xml; charset=utf-8; type=entry"));
+    netRequest.setRawHeader("Authorization", QString::fromLatin1("FimpToken realm=\"%1\", token=\"%2\"")
+                                             .arg(AUTH_REALM).arg(m_token).toLatin1());
 
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(parseResponseUpdateAlbum(KJob*)));
+    m_reply = m_netMngr->post(netRequest, postData);
 
-    m_job = job;
     m_buffer.resize(0);
-    m_job->start();
 }
 
 void YandexFotkiTalker::reset()
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     m_token.clear();
@@ -477,10 +411,10 @@ void YandexFotkiTalker::reset()
 
 void YandexFotkiTalker::cancel()
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     if (isAuthenticated())
@@ -500,73 +434,103 @@ void YandexFotkiTalker::setErrorState(State state)
     emit signalError();
 }
 
-bool YandexFotkiTalker::prepareJobResult(KJob* job, State error)
+void YandexFotkiTalker::slotFinished(QNetworkReply* reply)
 {
-    m_job = 0;
-
-    KIO::TransferJob* const transferJob = static_cast<KIO::TransferJob*>(job);
-
-    if (transferJob->error() || transferJob->isErrorPage())
-    {
-        const QString code = transferJob->queryMetaData(QString::fromLatin1("responsecode"));
-        qCDebug(KIPIPLUGINS_LOG) << "Transfer Error" << code << transferJob->errorString();
-        qCDebug(KIPIPLUGINS_LOG) << "Buffer:" << m_buffer;
-
-        if (code == QString::fromLatin1("401") || code == QString::fromLatin1("403")) // auth required
-        {
-            setErrorState(STATE_INVALID_CREDENTIALS);
-        }
-        else
-        {
-            setErrorState(error);
-        }
-
-        return false;
-    }
-
-    return true;
-}
-
-void YandexFotkiTalker::handleJobData(KIO::Job*, const QByteArray& data)
-{
-    if (data.isEmpty())
+    if (reply != m_reply)
     {
         return;
     }
 
-    int oldSize = m_buffer.size();
-    m_buffer.resize(m_buffer.size() + data.size());
-    memcpy(m_buffer.data()+oldSize, data.data(), data.size());
-}
+    m_reply = 0;
 
-void YandexFotkiTalker::handleJobReq(KIO::Job*, QByteArray& data)
-{
-    // is anybody using such ugly KIO API?
-    data = m_buffer;
-    m_buffer.clear();
-}
-
-void YandexFotkiTalker::parseResponseGetService(KJob* job)
-{
-    m_job = 0;
-
-    KIO::TransferJob* const transferJob = static_cast<KIO::TransferJob*>(job);
-
-    if (transferJob->isErrorPage())
+    if (reply->error() != QNetworkReply::NoError)
     {
-        if (transferJob->queryMetaData(QString::fromLatin1("responsecode")) == QString::fromLatin1("404")) // user not found
+        const QString code = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toString();
+        qCDebug(KIPIPLUGINS_LOG) << "Transfer Error" << code << reply->errorString();
+
+        if (code == QString::fromLatin1("401") ||
+            code == QString::fromLatin1("403") || // auth required
+            code == QString::fromLatin1("404"))   // user not found
         {
-            return setErrorState(STATE_INVALID_CREDENTIALS);
+            setErrorState(STATE_INVALID_CREDENTIALS);
         }
-        else
+        else if (m_state == STATE_GETSERVICE)
         {
-            return setErrorState(STATE_GETSERVICE_ERROR);
+            setErrorState(STATE_GETSERVICE_ERROR);
         }
+        else if (m_state == STATE_GETSESSION)
+        {
+            setErrorState(STATE_GETSESSION_ERROR);
+        }
+        else if (m_state == STATE_GETTOKEN)
+        {
+            setErrorState(STATE_GETTOKEN_ERROR);
+        }
+        else if (m_state == STATE_LISTALBUMS)
+        {
+            setErrorState(STATE_LISTALBUMS_ERROR);
+        }
+        else if (m_state == STATE_LISTPHOTOS)
+        {
+            setErrorState(STATE_LISTPHOTOS_ERROR);
+        }
+        else if (m_state == STATE_UPDATEPHOTO_FILE)
+        {
+            setErrorState(STATE_UPDATEPHOTO_FILE_ERROR);
+        }
+        else if (m_state == STATE_UPDATEPHOTO_INFO)
+        {
+            setErrorState(STATE_UPDATEPHOTO_INFO_ERROR);
+        }
+        else if (m_state == STATE_UPDATEALBUM)
+        {
+            setErrorState(STATE_UPDATEALBUM_ERROR);
+        }
+
+        reply->deleteLater();
+        return;
     }
 
+    m_buffer.append(reply->readAll());
+
+    switch(m_state)
+    {
+        case(STATE_GETSERVICE):
+            parseResponseGetService();
+            break;
+        case(STATE_GETSESSION):
+            parseResponseGetSession();
+            break;
+        case(STATE_GETTOKEN):
+            parseResponseGetToken();
+            break;
+        case(STATE_LISTALBUMS):
+            parseResponseListAlbums();
+            break;
+        case(STATE_LISTPHOTOS):
+            parseResponseListPhotos();
+            break;
+        case(STATE_UPDATEPHOTO_FILE):
+            parseResponseUpdatePhotoFile();
+            break;
+        case(STATE_UPDATEPHOTO_INFO):
+            parseResponseUpdatePhotoInfo();
+            break;
+        case(STATE_UPDATEALBUM):
+            parseResponseUpdateAlbum();
+            break;
+        default:
+            break;
+    }
+
+    reply->deleteLater();
+}
+
+void YandexFotkiTalker::parseResponseGetService()
+{
     QDomDocument doc(QString::fromLatin1("service"));
 
-    if ( !doc.setContent( m_buffer ) )
+    if (!doc.setContent(m_buffer))
     {
         qCCritical(KIPIPLUGINS_LOG) << "Invalid XML: parse error" << m_buffer;
         return setErrorState(STATE_GETSERVICE_ERROR);
@@ -644,13 +608,11 @@ void YandexFotkiTalker::parseResponseGetService(KJob* job)
 }
 
 /*
-void YandexFotkiTalker::parseResponseCheckToken(KJob *job)
+void YandexFotkiTalker::parseResponseCheckToken()
 {
-    m_job = 0;
+    qCDebug(KIPIPLUGINS_LOG) << "checkToken" << reply->error() << reply->errorString();
 
-    qCDebug(KIPIPLUGINS_LOG) << "checkToken" << job->error() << job->errorString() << job->errorText();
-
-    if (job->error())
+    if (reply->error())
         return setErrorState(STATE_CHECKTOKEN_INVALID);
 
     // token still valid, skip getSession and getToken
@@ -659,14 +621,11 @@ void YandexFotkiTalker::parseResponseCheckToken(KJob *job)
 }
 */
 
-void YandexFotkiTalker::parseResponseGetSession(KJob* job)
+void YandexFotkiTalker::parseResponseGetSession()
 {
-    if (!prepareJobResult(job, STATE_GETSESSION_ERROR))
-        return;
-
     QDomDocument doc(QString::fromLatin1("session"));
 
-    if ( !doc.setContent( m_buffer ) )
+    if (!doc.setContent(m_buffer))
     {
         return setErrorState(STATE_GETSESSION_ERROR);
     }
@@ -680,7 +639,6 @@ void YandexFotkiTalker::parseResponseGetSession(KJob* job)
     if (keyElem.isNull() || keyElem.nodeType() != QDomNode::ElementNode ||
         requestIdElem.isNull() || requestIdElem.nodeType() != QDomNode::ElementNode)
     {
-
         qCDebug(KIPIPLUGINS_LOG) << "Invalid XML" << m_buffer;
         return setErrorState(STATE_GETSESSION_ERROR);
     }
@@ -694,14 +652,11 @@ void YandexFotkiTalker::parseResponseGetSession(KJob* job)
     emit signalGetSessionDone();
 }
 
-void YandexFotkiTalker::parseResponseGetToken(KJob* job)
+void YandexFotkiTalker::parseResponseGetToken()
 {
-    if (!prepareJobResult(job, STATE_GETTOKEN_ERROR))
-        return;
-
     QDomDocument doc(QString::fromLatin1("response"));
 
-    if ( !doc.setContent( m_buffer ) )
+    if (!doc.setContent(m_buffer))
     {
         qCDebug(KIPIPLUGINS_LOG) << "Invalid XML: parse error" << m_buffer;
         return setErrorState(STATE_GETTOKEN_ERROR);
@@ -741,14 +696,11 @@ void YandexFotkiTalker::parseResponseGetToken(KJob* job)
 }
 
 
-void YandexFotkiTalker::parseResponseListAlbums(KJob* job)
+void YandexFotkiTalker::parseResponseListAlbums()
 {
-    if (!prepareJobResult(job, STATE_LISTALBUMS_ERROR))
-        return;
-
     QDomDocument doc(QString::fromLatin1("feed"));
 
-    if ( !doc.setContent( m_buffer ) )
+    if (!doc.setContent(m_buffer))
     {
         qCDebug(KIPIPLUGINS_LOG) << "Invalid XML: parse error";
         return setErrorState(STATE_LISTALBUMS_ERROR);
@@ -796,7 +748,6 @@ void YandexFotkiTalker::parseResponseListAlbums(KJob* job)
         for ( ; !linkElem.isNull();
               linkElem = linkElem.nextSiblingElement(QString::fromLatin1("link")))
         {
-
             if (linkElem.attribute(QString::fromLatin1("rel")) == QString::fromLatin1("self"))
                 linkSelf = linkElem;
             else if (linkElem.attribute(QString::fromLatin1("rel")) == QString::fromLatin1("edit"))
@@ -976,14 +927,11 @@ bool YandexFotkiTalker::parsePhotoXml(const QDomElement& entryElem, YandexFotkiP
     return true;
 }
 
-void YandexFotkiTalker::parseResponseListPhotos(KJob* job)
+void YandexFotkiTalker::parseResponseListPhotos()
 {
-    if (!prepareJobResult(job, STATE_LISTPHOTOS_ERROR))
-        return;
-
     QDomDocument doc(QString::fromLatin1("feed"));
 
-    if ( !doc.setContent( m_buffer ) )
+    if (!doc.setContent(m_buffer))
     {
         qCCritical(KIPIPLUGINS_LOG) << "Invalid XML, parse error: " << m_buffer;
         return setErrorState(STATE_LISTPHOTOS_ERROR);
@@ -1013,7 +961,6 @@ void YandexFotkiTalker::parseResponseListPhotos(KJob* job)
     for ( ; !entryElem.isNull();
           entryElem = entryElem.nextSiblingElement(QString::fromLatin1("entry")))
     {
-
         YandexFotkiPhoto photo;
 
         if (parsePhotoXml(entryElem, photo))
@@ -1047,15 +994,12 @@ void YandexFotkiTalker::parseResponseListPhotos(KJob* job)
     }
 }
 
-void YandexFotkiTalker::parseResponseUpdatePhotoFile(KJob* job)
+void YandexFotkiTalker::parseResponseUpdatePhotoFile()
 {
-    if (!prepareJobResult(job, STATE_UPDATEPHOTO_FILE_ERROR))
-        return;
-
     qCDebug(KIPIPLUGINS_LOG) << "Uploaded photo document" << m_buffer;
     QDomDocument doc(QString::fromLatin1("entry"));
 
-    if ( !doc.setContent( m_buffer ) )
+    if (!doc.setContent(m_buffer))
     {
         qCDebug(KIPIPLUGINS_LOG) << "Invalid XML, parse error" << m_buffer;
         return setErrorState(STATE_UPDATEPHOTO_INFO_ERROR);
@@ -1084,11 +1028,8 @@ void YandexFotkiTalker::parseResponseUpdatePhotoFile(KJob* job)
     updatePhotoInfo(photo);
 }
 
-void YandexFotkiTalker::parseResponseUpdatePhotoInfo(KJob* job)
+void YandexFotkiTalker::parseResponseUpdatePhotoInfo()
 {
-    if (!prepareJobResult(job, STATE_UPDATEPHOTO_INFO_ERROR))
-        return;
-
     YandexFotkiPhoto& photo = *m_lastPhoto;
 
     /*
@@ -1112,13 +1053,8 @@ void YandexFotkiTalker::parseResponseUpdatePhotoInfo(KJob* job)
     emit signalUpdatePhotoDone(photo);
 }
 
-void YandexFotkiTalker::parseResponseUpdateAlbum(KJob* job)
+void YandexFotkiTalker::parseResponseUpdateAlbum()
 {
-    qCDebug(KIPIPLUGINS_LOG) << "!!!";
-
-    if (!prepareJobResult(job, STATE_UPDATEALBUM_ERROR))
-        return;
-
     qCDebug(KIPIPLUGINS_LOG) << "Updated album" << m_buffer;
 
     m_state     = STATE_UPDATEALBUM_DONE;
