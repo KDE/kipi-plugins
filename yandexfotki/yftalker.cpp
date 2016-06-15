@@ -91,23 +91,19 @@ void YandexFotkiTalker::getService()
 void YandexFotkiTalker::checkToken()
 {
     // try to get somthing with our token, if it is invalid catch 401
-    KIO::TransferJob* const job = KIO::get(m_apiAlbumsUrl,
-                                     KIO::NoReload, KIO::HideProgressInfo);
-    job->addMetaData("customHTTPHeader",
-                     QString("Authorization: FimpToken realm=\"%1\", token=\"%2\"")
-                     .arg(AUTH_REALM).arg(m_token));
-
     m_state = STATE_CHECKTOKEN;
 
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(handleJobData(KIO::Job*,QByteArray)));
+    QUrl url(m_apiAlbumsUrl);
+    QNetworkRequest netRequest(url);
+    netRequest.setRawHeader("Authorization", QString::fromLatin1("FimpToken realm=\"%1\", token=\"%2\"")
+                                             .arg(AUTH_REALM).arg(m_token).toLatin1());
 
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(parseResponseCheckToken(KJob*)));
+    m_reply = m_netMngr->get(netRequest);
 
-    m_job = job;
+    // Error:    STATE_CHECKTOKEN_INVALID
+    // Function: parseResponseCheckToken()
+
     m_buffer.resize(0);
-    m_job->start();
 }
 */
 
@@ -445,12 +441,10 @@ void YandexFotkiTalker::slotFinished(QNetworkReply* reply)
 
     if (reply->error() != QNetworkReply::NoError)
     {
-        const QString code = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toString();
+        int code = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
         qCDebug(KIPIPLUGINS_LOG) << "Transfer Error" << code << reply->errorString();
 
-        if (code == QString::fromLatin1("401") ||
-            code == QString::fromLatin1("403") || // auth required
-            code == QString::fromLatin1("404"))   // user not found
+        if (code == 401 || code == 403 || code == 404) // auth required, 404 user not found
         {
             setErrorState(STATE_INVALID_CREDENTIALS);
         }
@@ -610,11 +604,6 @@ void YandexFotkiTalker::parseResponseGetService()
 /*
 void YandexFotkiTalker::parseResponseCheckToken()
 {
-    qCDebug(KIPIPLUGINS_LOG) << "checkToken" << reply->error() << reply->errorString();
-
-    if (reply->error())
-        return setErrorState(STATE_CHECKTOKEN_INVALID);
-
     // token still valid, skip getSession and getToken
     m_state = STATE_GETTOKEN_DONE;
     emit signalGetTokenDone();
