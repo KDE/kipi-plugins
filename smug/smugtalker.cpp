@@ -520,34 +520,34 @@ void SmugTalker::slotFinished(QNetworkReply* reply)
 
     switch(m_state)
     {
-        case(SMUG_LOGIN):
+        case (SMUG_LOGIN):
             parseResponseLogin(m_buffer);
             break;
-        case(SMUG_LOGOUT):
+        case (SMUG_LOGOUT):
             parseResponseLogout(m_buffer);
             break;
-        case(SMUG_LISTALBUMS):
+        case (SMUG_LISTALBUMS):
             parseResponseListAlbums(m_buffer);
             break;
-        case(SMUG_LISTPHOTOS):
+        case (SMUG_LISTPHOTOS):
             parseResponseListPhotos(m_buffer);
             break;
-        case(SMUG_LISTALBUMTEMPLATES):
+        case (SMUG_LISTALBUMTEMPLATES):
             parseResponseListAlbumTmpl(m_buffer);
             break;
-        case(SMUG_LISTCATEGORIES):
+        case (SMUG_LISTCATEGORIES):
             parseResponseListCategories(m_buffer);
             break;
-        case(SMUG_LISTSUBCATEGORIES):
+        case (SMUG_LISTSUBCATEGORIES):
             parseResponseListSubCategories(m_buffer);
             break;
-        case(SMUG_CREATEALBUM):
+        case (SMUG_CREATEALBUM):
             parseResponseCreateAlbum(m_buffer);
             break;
-        case(SMUG_ADDPHOTO):
+        case (SMUG_ADDPHOTO):
             parseResponseAddPhoto(m_buffer);
             break;
-        case(SMUG_GETPHOTO):
+        case (SMUG_GETPHOTO):
             // all we get is data of the image
             emit signalBusy(false);
             emit signalGetPhotoDone(0, QString(), m_buffer);

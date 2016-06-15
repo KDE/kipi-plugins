@@ -349,29 +349,29 @@ void PiwigoTalker::slotFinished(QNetworkReply* reply)
 
     switch (state)
     {
-        case(GE_LOGIN):
+        case (GE_LOGIN):
             parseResponseLogin(m_talker_buffer);
             break;
-        case(GE_GETVERSION):
+        case (GE_GETVERSION):
             parseResponseGetVersion(m_talker_buffer);
             break;
-        case(GE_LISTALBUMS):
+        case (GE_LISTALBUMS):
             parseResponseListAlbums(m_talker_buffer);
             break;
-        case(GE_CHECKPHOTOEXIST):
+        case (GE_CHECKPHOTOEXIST):
             parseResponseDoesPhotoExist(m_talker_buffer);
             break;
-        case(GE_GETINFO):
+        case (GE_GETINFO):
             parseResponseGetInfo(m_talker_buffer);
             break;
-        case(GE_SETINFO):
+        case (GE_SETINFO):
             parseResponseSetInfo(m_talker_buffer);
             break;
-        case(GE_ADDPHOTOCHUNK):
+        case (GE_ADDPHOTOCHUNK):
             // Support for Web API >= 2.4
             parseResponseAddPhotoChunk(m_talker_buffer);
             break;
-        case(GE_ADDPHOTOSUMMARY):
+        case (GE_ADDPHOTOSUMMARY):
             parseResponseAddPhotoSummary(m_talker_buffer);
             break;
         default:   // GE_LOGOUT

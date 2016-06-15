@@ -610,19 +610,19 @@ void FbTalker::slotFinished(QNetworkReply* reply)
 
     switch(m_state)
     {
-        case(FB_EXCHANGESESSION):
+        case (FB_EXCHANGESESSION):
             parseExchangeSession(m_buffer);
             break;
-        case(FB_GETLOGGEDINUSER):
+        case (FB_GETLOGGEDINUSER):
             parseResponseGetLoggedInUser(m_buffer);
             break;
-        case(FB_LISTALBUMS):
+        case (FB_LISTALBUMS):
             parseResponseListAlbums(m_buffer);
             break;
-        case(FB_CREATEALBUM):
+        case (FB_CREATEALBUM):
             parseResponseCreateAlbum(m_buffer);
             break;
-        case(FB_ADDPHOTO):
+        case (FB_ADDPHOTO):
             parseResponseAddPhoto(m_buffer);
             break;
     }

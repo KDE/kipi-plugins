@@ -489,28 +489,28 @@ void YandexFotkiTalker::slotFinished(QNetworkReply* reply)
 
     switch(m_state)
     {
-        case(STATE_GETSERVICE):
+        case (STATE_GETSERVICE):
             parseResponseGetService();
             break;
-        case(STATE_GETSESSION):
+        case (STATE_GETSESSION):
             parseResponseGetSession();
             break;
-        case(STATE_GETTOKEN):
+        case (STATE_GETTOKEN):
             parseResponseGetToken();
             break;
-        case(STATE_LISTALBUMS):
+        case (STATE_LISTALBUMS):
             parseResponseListAlbums();
             break;
-        case(STATE_LISTPHOTOS):
+        case (STATE_LISTPHOTOS):
             parseResponseListPhotos();
             break;
-        case(STATE_UPDATEPHOTO_FILE):
+        case (STATE_UPDATEPHOTO_FILE):
             parseResponseUpdatePhotoFile();
             break;
-        case(STATE_UPDATEPHOTO_INFO):
+        case (STATE_UPDATEPHOTO_INFO):
             parseResponseUpdatePhotoInfo();
             break;
-        case(STATE_UPDATEALBUM):
+        case (STATE_UPDATEALBUM):
             parseResponseUpdateAlbum();
             break;
         default:
