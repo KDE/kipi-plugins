@@ -48,7 +48,6 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QStandardPaths>
-#include <QNetworkAccessManager>
 #include <QUrlQuery>
 
 // Libkipi includes
