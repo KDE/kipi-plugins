@@ -49,10 +49,10 @@ GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interfac
 {
     m_pluginName = pluginName;
 
-    QGroupBox* m_LeafBox = new QGroupBox(QString::fromLatin1(""), getSettingsBox());
+    QGroupBox* m_LeafBox    = new QGroupBox(QString::fromLatin1(""), getSettingsBox());
     QGridLayout* leafLayout = new QGridLayout(m_LeafBox);
 
-    m_tagsBGrp = new QButtonGroup(m_LeafBox);
+    m_tagsBGrp              = new QButtonGroup(m_LeafBox);
 
     if (m_pluginName == PluginName::GPhotoExport)
     {
@@ -70,11 +70,11 @@ GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interfac
         m_tagsBGrp->addButton(splitTagsBtn,    GPTagSplit);
         m_tagsBGrp->addButton(combinedTagsBtn, GPTagCombined);
 
-        leafLayout->addItem(spacer,             0, 1, 1, 1);
-        leafLayout->addWidget(tagsLbl,          1, 1, 1, 1);
-        leafLayout->addWidget(leafTagsBtn,      2, 1, 1, 1);
-        leafLayout->addWidget(splitTagsBtn,     3, 1, 1, 1);
-        leafLayout->addWidget(combinedTagsBtn,  4, 1, 1, 1);
+        leafLayout->addItem(spacer,            0, 1, 1, 1);
+        leafLayout->addWidget(tagsLbl,         1, 1, 1, 1);
+        leafLayout->addWidget(leafTagsBtn,     2, 1, 1, 1);
+        leafLayout->addWidget(splitTagsBtn,    3, 1, 1, 1);
+        leafLayout->addWidget(combinedTagsBtn, 4, 1, 1, 1);
 
         addWidgetToSettingsBox(m_LeafBox);
     }
@@ -82,10 +82,15 @@ GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interfac
     switch(m_pluginName)
     {
         case PluginName::GPhotoImport:
-            m_LeafBox->hide();
-            imagesList()->hide();
             getNewAlbmBtn()->hide();
             getOptionsBox()->hide();
+            imagesList()->hide();
+            m_LeafBox->hide();
+            break;
+        case PluginName::GDrive:
+            getUploadBox()->hide();
+            getSizeBox()->hide();
+            m_LeafBox->hide();
             break;
         default:
             getUploadBox()->hide();
