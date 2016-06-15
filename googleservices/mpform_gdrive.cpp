@@ -22,11 +22,6 @@
 
 #include "mpform_gdrive.h"
 
-// C++ includes
-
-#include <cstring>
-#include <cstdio>
-
 // Qt includes
 
 #include <QJsonDocument>
@@ -125,7 +120,7 @@ bool MPForm_GDrive::addFile(const QString& path)
 
     QFile imageFile(path);
 
-    if(!imageFile.open(QIODevice::ReadOnly))
+    if (!imageFile.open(QIODevice::ReadOnly))
     {
         return false;
     }
@@ -154,7 +149,7 @@ QString MPForm_GDrive::boundary() const
 
 QString MPForm_GDrive::contentType() const
 {
-    return QString::fromLatin1("Content-Type: multipart/related;boundary=") + QString::fromLatin1(m_boundary);
+    return QString::fromLatin1("multipart/related;boundary=") + QString::fromLatin1(m_boundary);
 }
 
 QString MPForm_GDrive::getFileSize() const

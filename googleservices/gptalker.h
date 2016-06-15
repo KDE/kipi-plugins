@@ -33,10 +33,6 @@
 #include <QUrl>
 #include <QPointer>
 
-// KDE includes
-
-#include <kio/jobclasses.h>
-
 // Libkipi includes
 
 #include <KIPI/Interface>
@@ -47,11 +43,6 @@
 #include "gsitem.h"
 
 using namespace KIPI;
-
-namespace KIO
-{
-    class Job;
-}
 
 namespace KIPIGoogleServicesPlugin
 {
@@ -123,24 +114,22 @@ private:
 private Q_SLOTS:
 
     void slotError( const QString& msg );
-    void dataReq(KIO::Job* job, QByteArray& data);
-    void info(KIO::Job* job, const QString& str);
-    void slotResult(KJob* job);
+    void slotFinished(QNetworkReply* reply);
 
 private:
 
-    QString                     m_loginName;
-    QString                     m_username;
-    QString                     m_password;
-    QString                     m_userEmailId;
+    QString                          m_loginName;
+    QString                          m_username;
+    QString                          m_password;
+    QString                          m_userEmailId;
 
-    QMap<KIO::Job*, QByteArray> m_jobData;
-    KIO::Job*                   m_job;
+    QNetworkAccessManager*           m_netMngr;
+    QNetworkReply*                   m_reply;
 
-    State                       m_state;
+    State                            m_state;
 
-    Interface*                  m_iface;
-    QPointer<MetadataProcessor> m_meta;
+    Interface*                       m_iface;
+    QPointer<MetadataProcessor>      m_meta;
 };
 
 } // namespace KIPIGoogleServicesPlugin

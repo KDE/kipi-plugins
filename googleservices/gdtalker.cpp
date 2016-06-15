@@ -28,6 +28,7 @@
 
 // Qt includes
 
+#include <QApplication>
 #include <QJsonDocument>
 #include <QJsonParseError>
 #include <QJsonObject>
@@ -45,13 +46,10 @@
 #include <QPair>
 #include <QFileInfo>
 #include <QDebug>
+#include <QMessageBox>
 #include <QStandardPaths>
+#include <QNetworkAccessManager>
 #include <QUrlQuery>
-
-// KDE includes
-
-#include <kio/jobuidelegate.h>
-#include <kjobwidgets.h>
 
 // Libkipi includes
 
@@ -80,6 +78,11 @@ GDTalker::GDTalker(QWidget* const parent)
     m_rootfoldername  = QString::fromLatin1("GoogleDrive Root");
     m_iface           = 0;
 
+    m_netMngr         = new QNetworkAccessManager(this);
+
+    connect(m_netMngr, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(slotFinished(QNetworkReply*)));
+
     PluginLoader* const pl = PluginLoader::instance();
 
     if (pl)
@@ -102,21 +105,14 @@ void GDTalker::getUserName()
     urlQuery.addQueryItem(QString::fromLatin1("scope"), m_scope);
     urlQuery.addQueryItem(QString::fromLatin1("access_token"), m_access_token);
     url.setQuery(urlQuery);
-    QString auth                = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
 
-    KIO::TransferJob* const job = KIO::get(url,KIO::NoReload,KIO::HideProgressInfo);
-    job->addMetaData(QString::fromLatin1("content-type"),
-                     QString::fromLatin1("Content-Type: application/json"));
-    job->addMetaData(QString::fromLatin1("customHTTPHeader"), auth);
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/json"));
+    netRequest.setRawHeader("Authorization", m_bearer_access_token.toLatin1());
 
-    connect(job, SIGNAL(data(KIO::Job*, QByteArray)),
-            this, SLOT(data(KIO::Job*, QByteArray)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
+    m_reply = m_netMngr->get(netRequest);
 
     m_state = GD_USERNAME;
-    m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
 }
@@ -127,21 +123,14 @@ void GDTalker::getUserName()
 void GDTalker::listFolders()
 {
     QUrl url(QString::fromLatin1("https://www.googleapis.com/drive/v2/files?q=mimeType = 'application/vnd.google-apps.folder'"));
-    QString auth                = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
-    qCDebug(KIPIPLUGINS_LOG) << auth;
-    KIO::TransferJob* const job = KIO::get(url,KIO::NoReload,KIO::HideProgressInfo);
-    job->addMetaData(QString::fromLatin1("content-type"),
-                     QString::fromLatin1("Content-Type: application/json"));
-    job->addMetaData(QString::fromLatin1("customHTTPHeader"), auth);
 
-    connect(job, SIGNAL(data(KIO::Job*, QByteArray)),
-            this, SLOT(data(KIO::Job*, QByteArray)));
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/json"));
+    netRequest.setRawHeader("Authorization", m_bearer_access_token.toLatin1());
 
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
+    m_reply = m_netMngr->get(netRequest);
 
     m_state = GD_LISTFOLDERS;
-    m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
 }
@@ -151,10 +140,10 @@ void GDTalker::listFolders()
  */
 void GDTalker::createFolder(const QString& title, const QString& id)
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     QUrl url(QString::fromLatin1("https://www.googleapis.com/drive/v2/files"));
@@ -172,20 +161,14 @@ void GDTalker::createFolder(const QString& title, const QString& id)
     data += "}\r\n";
 
     qCDebug(KIPIPLUGINS_LOG) << "data:" << data;
-    QString auth                = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
-    KIO::TransferJob* const job = KIO::http_post(url,data,KIO::HideProgressInfo);
-    job->addMetaData(QString::fromLatin1("content-type"),
-                     QString::fromLatin1("Content-Type: application/json"));
-    job->addMetaData(QString::fromLatin1("customHTTPHeader"), auth);
 
-    connect(job, SIGNAL(data(KIO::Job*, QByteArray)),
-            this, SLOT(data(KIO::Job*, QByteArray)));
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/json"));
+    netRequest.setRawHeader("Authorization", m_bearer_access_token.toLatin1());
 
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
+    m_reply = m_netMngr->post(netRequest, data);
 
     m_state = GD_CREATEFOLDER;
-    m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
 }
@@ -193,10 +176,10 @@ void GDTalker::createFolder(const QString& title, const QString& id)
 bool GDTalker::addPhoto(const QString& imgPath, const GSPhoto& info,
                         const QString& id, bool rescale, int maxDim, int imageQuality)
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     emit signalBusy(true);
@@ -255,42 +238,42 @@ bool GDTalker::addPhoto(const QString& imgPath, const GSPhoto& info,
 
     form.finish();
 
-    QString auth          = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
     QUrl url(QString::fromLatin1("https://www.googleapis.com/upload/drive/v2/files?uploadType=multipart"));
-    KIO::TransferJob* job = KIO::http_post(url, form.formData(), KIO::HideProgressInfo);
-    job->addMetaData(QString::fromLatin1("content-type"), form.contentType());
-    job->addMetaData(QString::fromLatin1("content-length"),
-                     QString::fromLatin1("Content-Length:") + form.getFileSize());
-    job->addMetaData(QString::fromLatin1("customHTTPHeader"), auth);
-    job->addMetaData(QString::fromLatin1("host"), QString::fromLatin1("Host:www.googleapis.com"));
 
-    connect(job, SIGNAL(data(KIO::Job*, QByteArray)),
-            this, SLOT(data(KIO::Job*, QByteArray)));
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, form.contentType());
+    netRequest.setRawHeader("Authorization", m_bearer_access_token.toLatin1());
+    netRequest.setRawHeader("Host", "www.googleapis.com");
 
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
+    m_reply = m_netMngr->post(netRequest, form.formData());
 
     qCDebug(KIPIPLUGINS_LOG) << "In add photo";
     m_state = GD_ADDPHOTO;
-    m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
     return true;
 }
 
-void GDTalker::slotResult(KJob* kjob)
+void GDTalker::slotFinished(QNetworkReply* reply)
 {
-    m_job               = 0;
-    KIO::Job* const job = static_cast<KIO::Job*>(kjob);
-
-    if (job->error())
+    if (reply != m_reply)
     {
-        emit signalBusy(false);
-        KIO::JobUiDelegate* const job_ui = static_cast<KIO::JobUiDelegate*>(job->ui());
-        KJobWidgets::setWindow(job, m_parent);
-        job_ui->showErrorMessage();
         return;
     }
+
+    m_reply = 0;
+
+    if (reply->error() != QNetworkReply::NoError)
+    {
+        emit signalBusy(false);
+        QMessageBox::critical(QApplication::activeWindow(),
+                              i18n("Error"), reply->errorString());
+
+        reply->deleteLater();
+        return;
+    }
+
+    m_buffer.append(reply->readAll());
 
     switch (m_state)
     {
@@ -315,6 +298,8 @@ void GDTalker::slotResult(KJob* kjob)
         default:
             break;
     }
+
+    reply->deleteLater();
 }
 
 void GDTalker::parseResponseUserName(const QByteArray& data)
@@ -436,10 +421,10 @@ void GDTalker::parseResponseAddPhoto(const QByteArray& data)
 
 void GDTalker::cancel()
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     emit signalBusy(false);

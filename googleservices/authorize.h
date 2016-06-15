@@ -30,10 +30,8 @@
 #include <QObject>
 #include <QStringList>
 #include <QDialog>
-
-//KDE includes
-
-#include <kio/job.h>
+#include <QNetworkReply>
+#include <QNetworkAccessManager>
 
 namespace KIPIGoogleServicesPlugin
 {
@@ -44,24 +42,20 @@ class Authorize : public QObject
 
 public:
 
-    Authorize(QWidget* const parent, const QString & scope);
+    Authorize(QWidget* const parent, const QString& scope);
     ~Authorize();
 
 Q_SIGNALS:
 
     void signalBusy(bool val);
-    void signalAccessTokenFailed(int errCode,const QString& errMsg);
+    void signalAccessTokenFailed(int errCode, const QString& errMsg);
     void signalAccessTokenObtained();
     void signalTextBoxEmpty();
     void signalRefreshTokenObtained(const QString& msg);
 
-protected Q_SLOTS:
-
-    void data(KIO::Job* job,const QByteArray& data);
-
 private Q_SLOTS:
 
-    void slotAuthResult(KJob* job);
+    void slotAuthFinished(QNetworkReply* reply);
     void slotAccept();
     void slotReject();
 
@@ -72,10 +66,10 @@ public:
     void getAccessTokenFromRefreshToken(const QString& msg);
     bool authenticated();
 
-    QString     getValue(const QString &,const QString &);
-    QStringList getParams(const QString &,const QStringList &,const QString &);
-    QString     getToken(const QString &,const QString &,const QString &);
-    int         getTokenEnd(const QString &,int);
+    QString     getValue(const QString&, const QString&);
+    QStringList getParams(const QString&, const QStringList&, const QString&);
+    QString     getToken(const QString&, const QString&, const QString&);
+    int         getTokenEnd(const QString&, int);
 
 private:
 
@@ -92,30 +86,32 @@ private:
 
 protected:
 
-    QWidget*     m_parent;
+    QWidget*               m_parent;
 
-    QString      m_scope;
-    QString      m_redirect_uri;
-    QString      m_response_type;
-    QString      m_client_id;
-    QString      m_client_secret;
-    QString      m_access_token;
-    QString      m_refresh_token;
-    QString      m_code;
+    QString                m_scope;
+    QString                m_redirect_uri;
+    QString                m_response_type;
+    QString                m_client_id;
+    QString                m_client_secret;
+    QString                m_access_token;
+    QString                m_refresh_token;
+    QString                m_code;
 
-    QString      m_token_uri;
+    QString                m_token_uri;
 
-    QString      m_bearer_access_token;
-    QByteArray   m_buffer;
+    QString                m_bearer_access_token;
+    QByteArray             m_buffer;
 
-    KIO::Job*    m_job;
+    QNetworkReply*         m_reply;
 
-    Auth_State   m_Authstate;
-    int          m_continuePos;
+    Auth_State             m_Authstate;
+    int                    m_continuePos;
 
 private:
 
-    QDialog*     m_window;
+    QDialog*               m_window;
+
+    QNetworkAccessManager* m_netMngr;
 };
 
 } // namespace KIPIGoogleServicesPlugin

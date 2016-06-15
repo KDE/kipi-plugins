@@ -23,11 +23,6 @@
 
 #include "mpform_gphoto.h"
 
-// C++ includes
-
-#include <cstring>
-#include <cstdio>
-
 // Qt includes
 
 #include <QByteArray>
@@ -140,11 +135,9 @@ bool MPForm_GPhoto::addFile(const QString& name, const QString& path)
     str += "\r\n\r\n";
 
     imageFile.close();
-    m_buffer.append(str);
 
-    int oldSize = m_buffer.size();
-    m_buffer.resize(oldSize + imageData.size());
-    memcpy(m_buffer.data() + oldSize, imageData.data(), imageData.size());
+    m_buffer.append(str);
+    m_buffer.append(imageData);
     m_buffer.append("\r\n");
 
     return true;
@@ -152,7 +145,7 @@ bool MPForm_GPhoto::addFile(const QString& name, const QString& path)
 
 QString MPForm_GPhoto::contentType() const
 {
-    return QString::fromLatin1("Content-Type: multipart/related; boundary=") + QString::fromLatin1(m_boundary);
+    return QString::fromLatin1("multipart/related; boundary=") + QString::fromLatin1(m_boundary);
 }
 
 QString MPForm_GPhoto::boundary() const

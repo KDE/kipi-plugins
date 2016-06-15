@@ -52,10 +52,6 @@
 #include <QMessageBox>
 #include <QUrlQuery>
 
-// KDE includes
-
-#include <kio/job.h>
-#include <kio/jobuidelegate.h>
 #include <klocalizedstring.h>
 
 // Libkipi includes
@@ -78,7 +74,8 @@ static bool gphotoLessThan(GSFolder& p1, GSFolder& p2)
 
 GPTalker::GPTalker(QWidget* const parent)
     : Authorize(parent, QString::fromLatin1("https://picasaweb.google.com/data/")),
-      m_job(0),
+      m_netMngr(0),
+      m_reply(0),
       m_state(FE_LOGOUT),
       m_iface(0)
 {
@@ -92,63 +89,59 @@ GPTalker::GPTalker(QWidget* const parent)
             m_meta = m_iface->createMetadataProcessor();
     }
 
+    m_netMngr = new QNetworkAccessManager(this);
+
+    connect(m_netMngr, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(slotFinished(QNetworkReply*)));
+
     connect(this, SIGNAL(signalError(QString)),
             this, SLOT(slotError(QString)));
 }
 
 GPTalker::~GPTalker()
 {
-    if (m_job)
-        m_job->kill();
+    if (m_reply)
+        m_reply->abort();
 }
 
 /**
  * Google Photo's Album listing request/response
  * First a request is sent to the url below and then we might(?) get a redirect URL
- * We then need to send the GET request to the Redirect url (this however gets taken care off by the KIO libraries.
+ * We then need to send the GET request to the Redirect url.
  * This uses the authenticated album list fetching to get all the albums included the unlisted-albums
  * which is not returned for an unauthorised request as done without the Authorization header.
  */
 void GPTalker::listAlbums()
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     QUrl url(QString::fromLatin1("https://picasaweb.google.com/data/feed/api/user/default"));
-    KIO::TransferJob* const job      = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
-    KIO::JobUiDelegate* const job_ui = static_cast<KIO::JobUiDelegate*>(job->ui());
-    job_ui->setWindow(m_parent);
-    job->addMetaData(QString::fromLatin1("content-type"),
-                     QString::fromLatin1("Content-Type: application/json"));
+
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/json"));
 
     if (!m_access_token.isEmpty())
     {
-        QString auth_string = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
-        job->addMetaData(QString::fromLatin1("customHTTPHeader"), auth_string);
+        netRequest.setRawHeader("Authorization", m_bearer_access_token.toLatin1());
     }
 
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(data(KIO::Job*,QByteArray)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
+    m_reply = m_netMngr->get(netRequest);
 
     m_state = FE_LISTALBUMS;
-    m_job   = job;
     m_buffer.resize(0);
-    emit signalBusy( true );
+    emit signalBusy(true);
 }
 
-void GPTalker::listPhotos(const QString& albumId,
-                                 const QString& imgmax)
+void GPTalker::listPhotos(const QString& albumId, const QString& imgmax)
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     QUrl url(QString::fromLatin1("https://picasaweb.google.com/data/feed/api/user/default/albumid/") + albumId);
@@ -163,36 +156,27 @@ void GPTalker::listPhotos(const QString& albumId,
 
     url.setQuery(q);
 
-    KIO::TransferJob* const job      = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
-    KIO::JobUiDelegate* const job_ui = static_cast<KIO::JobUiDelegate*>(job->ui());
-    job_ui->setWindow(m_parent);
-    job->addMetaData(QString::fromLatin1("content-type"),
-                     QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
 
     if (!m_access_token.isEmpty())
     {
-        QString auth_string = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
-        job->addMetaData(QString::fromLatin1("customHTTPHeader"), auth_string);
+        netRequest.setRawHeader("Authorization", m_bearer_access_token.toLatin1());
     }
 
-    connect(job, SIGNAL(data(KIO::Job*, QByteArray)),
-            this, SLOT(data(KIO::Job*, QByteArray)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
+    m_reply = m_netMngr->get(netRequest);
 
     m_state = FE_LISTPHOTOS;
-    m_job   = job;
     m_buffer.resize(0);
-    emit signalBusy( true );
+    emit signalBusy(true);
 }
 
 void GPTalker::createAlbum(const GSFolder& album)
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     //Create the Body in atom-xml
@@ -260,26 +244,14 @@ void GPTalker::createAlbum(const GSFolder& album)
     buffer.append(docMeta.toString().toUtf8());
 
     QUrl url(QString::fromLatin1("https://picasaweb.google.com/data/feed/api/user/default"));
-    QString auth_string              = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
-    KIO::TransferJob* const job      = KIO::http_post(url, buffer, KIO::HideProgressInfo);
-    KIO::JobUiDelegate* const job_ui = static_cast<KIO::JobUiDelegate*>(job->ui());
-    job_ui->setWindow(m_parent);
-    job->addMetaData(
-        QString::fromLatin1("content-type"),
-        QString::fromLatin1("Content-Type: application/atom+xml"));
-    job->addMetaData(
-        QString::fromLatin1("content-length"),
-        QString::fromLatin1("Content-Length: %1").arg(buffer.length()));
-    job->addMetaData(QString::fromLatin1("customHTTPHeader"), auth_string);
 
-    connect(job, SIGNAL(data(KIO::Job*, QByteArray)),
-            this, SLOT(data(KIO::Job*, QByteArray)));
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/atom+xml"));
+    netRequest.setRawHeader("Authorization", m_bearer_access_token.toLatin1());
 
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
+    m_reply = m_netMngr->post(netRequest, buffer);
 
     m_state = FE_CREATEALBUM;
-    m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
 }
@@ -287,14 +259,13 @@ void GPTalker::createAlbum(const GSFolder& album)
 bool GPTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QString& albumId,
                                bool rescale, int maxDim, int imageQuality)
 {
-    if (m_job)
+   if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     QUrl url(QString::fromLatin1("https://picasaweb.google.com/data/feed/api/user/default/albumid/") + albumId);
-    QString auth_string = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
     MPForm_GPhoto form;
 
     QString path        = photoPath;
@@ -396,23 +367,13 @@ bool GPTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QString& 
 
     form.finish();
 
-    KIO::TransferJob* const job      = KIO::http_post(url, form.formData(), KIO::HideProgressInfo);
-    KIO::JobUiDelegate* const job_ui = static_cast<KIO::JobUiDelegate*>(job->ui());
-    job_ui->setWindow(m_parent);
-    job->addMetaData(QString::fromLatin1("content-type"), form.contentType());
-    job->addMetaData(QString::fromLatin1("content-length"),
-                     QString::fromLatin1("Content-Length: %1").arg(form.formData().length()));
-    job->addMetaData(QString::fromLatin1("customHTTPHeader"),
-                     auth_string + QString::fromLatin1("\nMIME-version: 1.0"));
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, form.contentType());
+    netRequest.setRawHeader("Authorization", m_bearer_access_token.toLatin1() + "\nMIME-version: 1.0");
 
-    connect(job, SIGNAL(data(KIO::Job*, QByteArray)),
-            this, SLOT(data(KIO::Job*, QByteArray)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
+    m_reply = m_netMngr->post(netRequest, form.formData());
 
     m_state = FE_ADDPHOTO;
-    m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
     return true;
@@ -421,10 +382,10 @@ bool GPTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QString& 
 bool GPTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, const QString& albumId*/,
                                   bool rescale, int maxDim, int imageQuality)
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     MPForm_GPhoto form;
@@ -529,26 +490,13 @@ bool GPTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, const QStr
 
     form.finish();
 
-    QString auth_string              = QString::fromLatin1("Authorization: ") + m_bearer_access_token;
-    KIO::TransferJob* const job      = KIO::put(info.editUrl, -1, KIO::HideProgressInfo);
-    KIO::JobUiDelegate* const job_ui = static_cast<KIO::JobUiDelegate*>(job->ui());
-    job_ui->setWindow(m_parent);
-    job->addMetaData(QString::fromLatin1("content-type"), form.contentType());
-    job->addMetaData(QString::fromLatin1("content-length"),
-                     QString::fromLatin1("Content-Length: %1").arg(form.formData().length()));
-    job->addMetaData(QString::fromLatin1("customHTTPHeader"),
-                     auth_string + QString::fromLatin1("\nIf-Match: *"));
+    QNetworkRequest netRequest(info.editUrl);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, form.contentType());
+    netRequest.setRawHeader("Authorization", m_bearer_access_token.toLatin1() + "\nIf-Match: *");
 
-    m_jobData.insert(job, form.formData());
-
-    connect(job, SIGNAL(dataReq(KIO::Job*, QByteArray&)),
-            this, SLOT(dataReq(KIO::Job*, QByteArray&)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
+    m_reply = m_netMngr->put(netRequest, form.formData());
 
     m_state = FE_UPDATEPHOTO;
-    m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
     return true;
@@ -556,25 +504,18 @@ bool GPTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, const QStr
 
 void GPTalker::getPhoto(const QString& imgPath)
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     emit signalBusy(true);
 
-    KIO::TransferJob* const job = KIO::get(QUrl(imgPath), KIO::Reload, KIO::HideProgressInfo);
-    //job->addMetaData("customHTTPHeader", "Authorization: " + auth_string );
-
-    connect(job, SIGNAL(data(KIO::Job*, QByteArray)),
-            this, SLOT(data(KIO::Job*, QByteArray)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
+    QUrl url(imgPath);
+    m_reply = m_netMngr->get(QNetworkRequest(url));
 
     m_state = FE_GETPHOTO;
-    m_job   = job;
     m_buffer.resize(0);
 }
 
@@ -595,26 +536,13 @@ QString GPTalker::getLoginName() const
 
 void GPTalker::cancel()
 {
-    if (m_job)
+    if (m_reply)
     {
-        m_job->kill();
-        m_job = 0;
+        m_reply->abort();
+        m_reply = 0;
     }
 
     emit signalBusy(false);
-}
-
-void GPTalker::info(KIO::Job* /*job*/, const QString& /*str*/)
-{
-}
-
-void GPTalker::dataReq(KIO::Job* job, QByteArray& data)
-{
-    if (m_jobData.contains(job))
-    {
-        data = m_jobData.value(job);
-        m_jobData.remove(job);
-    }
 }
 
 void GPTalker::slotError(const QString & error)
@@ -683,24 +611,34 @@ void GPTalker::slotError(const QString & error)
                           i18n("Error occurred: %1\nUnable to proceed further.",transError + error));
 }
 
-void GPTalker::slotResult(KJob *job)
+void GPTalker::slotFinished(QNetworkReply* reply)
 {
-    m_job = 0;
     emit signalBusy(false);
 
-    if (job->error())
+    if (reply != m_reply)
+    {
+        return;
+    }
+
+    m_reply = 0;
+
+    if (reply->error() != QNetworkReply::NoError)
     {
         if (m_state == FE_ADDPHOTO)
         {
-            emit signalAddPhotoDone(job->error(), job->errorText(), QString::fromLatin1("-1"));
+            emit signalAddPhotoDone(reply->error(), reply->errorString(), QString::fromLatin1("-1"));
         }
         else
         {
-            static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+            QMessageBox::critical(QApplication::activeWindow(),
+                                  i18n("Error"), reply->errorString());
         }
 
+        reply->deleteLater();
         return;
     }
+
+    m_buffer.append(reply->readAll());
 
     switch (m_state)
     {
@@ -726,6 +664,8 @@ void GPTalker::slotResult(KJob *job)
             emit signalGetPhotoDone(1, QString(), m_buffer);
             break;
     }
+
+    reply->deleteLater();
 }
 
 void GPTalker::parseResponseListAlbums(const QByteArray& data)

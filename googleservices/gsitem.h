@@ -46,10 +46,10 @@ public:
 
     GSPhoto()
     {
-        id         = QStringLiteral("-1");
+        id         = QLatin1String("-1");
         canComment = true;
-        gpsLon     = QStringLiteral("");
-        gpsLat     = QStringLiteral("");
+        gpsLon     = QLatin1String("");
+        gpsLat     = QLatin1String("");
     }
 
 public:
@@ -78,7 +78,7 @@ public:
 
     GSFolder()
     {
-        id         = QStringLiteral("-1");
+        id         = QLatin1String("-1");
         canComment = true;
     }
 

@@ -43,6 +43,7 @@
 #include <QApplication>
 #include <QDialogButtonBox>
 #include <QPushButton>
+#include <QMessageBox>
 #include <QDesktopServices>
 #include <QUrlQuery>
 
@@ -50,8 +51,6 @@
 
 #include <klocalizedstring.h>
 #include <kconfiggroup.h>
-#include <kio/jobuidelegate.h>
-#include <kjobwidgets.h>
 
 // Local includes
 
@@ -71,21 +70,26 @@ Authorize::Authorize(QWidget* const parent, const QString & scope)
     m_token_uri       = QString::fromLatin1("https://accounts.google.com/o/oauth2/token");
     m_client_secret   = QString::fromLatin1("4MJOS0u1-_AUEKJ0ObA-j22U");
     m_code            = QString::fromLatin1("0");
-    m_job             = 0;
+    m_reply           = 0;
     m_continuePos     = 0;
     m_Authstate       = GD_ACCESSTOKEN;
     m_window          = 0;
+
+    m_netMngr         = new QNetworkAccessManager(this);
+
+    connect(m_netMngr, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(slotAuthFinished(QNetworkReply*)));
 }
 
 Authorize::~Authorize()
 {
-    if (m_job)
-        m_job->kill();
+    if (m_reply)
+        m_reply->abort();
 }
 
 bool Authorize::authenticated()
 {
-    if(m_access_token.isEmpty())
+    if (m_access_token.isEmpty())
     {
         return false;
     }
@@ -139,19 +143,19 @@ void Authorize::doOAuth()
 
     m_window->exec();
 
-    if(m_window->result() == QDialog::Accepted && !(textbox->text().isEmpty()))
+    if (m_window->result() == QDialog::Accepted && !(textbox->text().isEmpty()))
     {
         qCDebug(KIPIPLUGINS_LOG) << "1";
         m_code = textbox->text();
     }
 
-    if(textbox->text().isEmpty())
+    if (textbox->text().isEmpty())
     {
         qCDebug(KIPIPLUGINS_LOG) << "3";
         emit signalTextBoxEmpty();
     }
 
-    if(m_code != QString::fromLatin1("0"))
+    if (m_code != QString::fromLatin1("0"))
     {
         getAccessToken();
     }
@@ -191,18 +195,12 @@ void Authorize::getAccessToken()
     postData += m_redirect_uri.toLatin1();
     postData += "&grant_type=authorization_code";
 
-    KIO::TransferJob* const job = KIO::http_post(url,postData,KIO::HideProgressInfo);
-    job->addMetaData(QString::fromLatin1("content-type"),
-                     QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
 
-    connect(job,SIGNAL(data(KIO::Job*, QByteArray)),
-            this,SLOT(data(KIO::Job*, QByteArray)));
-
-    connect(job,SIGNAL(result(KJob*)),
-            this,SLOT(slotAuthResult(KJob*)));
+    m_reply = m_netMngr->post(netRequest, postData);
 
     m_Authstate = GD_ACCESSTOKEN;
-    m_job       = job;
     m_buffer.resize(0);
     emit signalBusy(true);
 }
@@ -222,56 +220,44 @@ void Authorize::getAccessTokenFromRefreshToken(const QString& msg)
     postData += msg.toLatin1();
     postData += "&grant_type=refresh_token";
 
-    KIO::TransferJob* const job = KIO::http_post(url,postData,KIO::HideProgressInfo);
-    job->addMetaData(QString::fromLatin1("content-type"),
-                     QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
+    QNetworkRequest netRequest(url);
+    netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
 
-    connect(job,SIGNAL(data(KIO::Job*, QByteArray)),
-            this,SLOT(data(KIO::Job*, QByteArray)));
-
-    connect(job,SIGNAL(result(KJob*)),
-            this,SLOT(slotAuthResult(KJob*)));
+    m_reply = m_netMngr->post(netRequest, postData);
 
     m_Authstate = GD_REFRESHTOKEN;
-    m_job       = job;
     m_buffer.resize(0);
     emit signalBusy(true);
 }
 
-void Authorize::data(KIO::Job*,const QByteArray& data)
+void Authorize::slotAuthFinished(QNetworkReply* reply)
 {
-    if(data.isEmpty())
+    if (reply != m_reply)
     {
         return;
     }
 
-    int oldsize = m_buffer.size();
-    m_buffer.resize(m_buffer.size() + data.size());
-    memcpy(m_buffer.data()+oldsize,data.data(),data.size());
-}
+    m_reply = 0;
 
-void Authorize::slotAuthResult(KJob* kjob)
-{
-    m_job = 0;
-    KIO::Job* const job = static_cast<KIO::Job*>(kjob);
-
-    if(job->error())
+    if (reply->error() != QNetworkReply::NoError)
     {
-        if(m_Authstate == GD_ACCESSTOKEN)
+        if (m_Authstate == GD_ACCESSTOKEN)
         {
             emit signalBusy(false);
-            emit signalAccessTokenFailed(job->error(),job->errorText());
+            emit signalAccessTokenFailed(m_reply->error(), reply->errorString());
         }
         else
         {
             emit signalBusy(false);
-            KIO::JobUiDelegate* const job_ui = static_cast<KIO::JobUiDelegate*>(job->ui());
-            KJobWidgets::setWindow(job, m_parent);
-            job_ui->showErrorMessage();
+            QMessageBox::critical(QApplication::activeWindow(),
+                                  i18n("Error"), reply->errorString());
         }
 
+        reply->deleteLater();
         return;
     }
+
+    m_buffer.append(reply->readAll());
 
     switch(m_Authstate)
     {
@@ -286,6 +272,8 @@ void Authorize::slotAuthResult(KJob* kjob)
         default:
             break;
     }
+
+    reply->deleteLater();
 }
 
 void Authorize::parseResponseAccessToken(const QByteArray& data)
@@ -339,12 +327,12 @@ QString Authorize::getValue(const QString& jsonStr, const QString& key)
 
 QStringList Authorize::getParams(const QString& jsonStr, const QStringList& pathValues, const QString& key)
 {
-    if(pathValues.count() == 0)
+    if (pathValues.count() == 0)
         return QStringList();
 
     QString token(getToken(jsonStr, pathValues[0], QString::fromLatin1("]")));
 
-    for(int i = 1; i < pathValues.count(); ++i)
+    for (int i = 1; i < pathValues.count(); ++i)
     {
         token = getToken(token, pathValues[i], QString::fromLatin1("]"));
     }
@@ -354,7 +342,7 @@ QStringList Authorize::getParams(const QString& jsonStr, const QStringList& path
 
     m_continuePos = 0;
 
-    while(!(nextToken = getValue(token, key)).isEmpty())
+    while (!(nextToken = getValue(token, key)).isEmpty())
     {
         token = token.mid(m_continuePos);
         tokens << nextToken;
@@ -382,7 +370,7 @@ QString Authorize::getToken(const QString& object, const QString& key, const QSt
     int strLength = endPos - beginPos;
     QString token(object.mid(beginPos, strLength));
 
-    if(endPos != -1)
+    if (endPos != -1)
         m_continuePos = endPos;
     else
         m_continuePos = beginPos + token.length();
@@ -395,7 +383,7 @@ int Authorize::getTokenEnd(const QString& object, int beginPos)
     int beginDividerPos(object.indexOf(QString::fromLatin1("["), beginPos));
     int endDividerPos(object.indexOf(QString::fromLatin1("]"),   beginPos + 1));
 
-    while((beginDividerPos < endDividerPos) && beginDividerPos != -1)
+    while ((beginDividerPos < endDividerPos) && beginDividerPos != -1)
     {
         beginDividerPos = object.indexOf(QString::fromLatin1("["), endDividerPos);
         endDividerPos   = object.indexOf(QString::fromLatin1("]"), endDividerPos + 1);
