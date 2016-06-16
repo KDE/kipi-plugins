@@ -72,10 +72,16 @@ Plugin_GoogleServices::Plugin_GoogleServices(QObject* const parent, const QVaria
     m_dlgGDriveExport    = 0;
     m_dlgGPhotoExport    = 0;
     m_dlgGPhotoImport    = 0;
+
+    m_temporaryDir       = 0;
 }
 
 Plugin_GoogleServices::~Plugin_GoogleServices()
 {
+    delete m_dlgGDriveExport;
+    delete m_dlgGPhotoExport;
+    delete m_dlgGPhotoImport;
+    delete m_temporaryDir;
 }
 
 void Plugin_GoogleServices::setup(QWidget* const widget)
@@ -86,7 +92,7 @@ void Plugin_GoogleServices::setup(QWidget* const widget)
 
     Plugin::setup(widget);
 
-    if(!interface())
+    if (!interface())
     {
         qCCritical(KIPIPLUGINS_LOG) << "kipi interface is null";
         return;
@@ -129,21 +135,29 @@ void Plugin_GoogleServices::setupActions()
     addAction(QString::fromLatin1("googlephotoimport"), m_actionGPhotoImport, ImportPlugin);
 }
 
+QString Plugin_GoogleServices::getTempDirPath()
+{
+    if (!m_temporaryDir)
+    {
+        QString prefix = QDir::tempPath() + QLatin1String("/kipi-") +
+                         QLatin1String("gs-XXXXXX");
+
+        m_temporaryDir = new QTemporaryDir(prefix);
+    }
+
+    return m_temporaryDir->path() + QLatin1Char('/');
+}
+
 void Plugin_GoogleServices::slotGDriveExport()
 {
-    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation) +
-                  QString::fromLatin1("/")  + QString::fromLatin1("kipi-gs-") +
-                  QString::number(getpid()) + QString::fromLatin1("/");
-    QDir().mkpath(tmp);
-
-    if(!m_dlgGDriveExport)
+    if (!m_dlgGDriveExport)
     {
-        m_dlgGDriveExport = new GSWindow(tmp, QApplication::activeWindow(),
+        m_dlgGDriveExport = new GSWindow(getTempDirPath(), QApplication::activeWindow(),
                                          QString::fromLatin1("googledriveexport"));
     }
     else
     {
-        if(m_dlgGDriveExport->isMinimized())
+        if (m_dlgGDriveExport->isMinimized())
         {
             KWindowSystem::unminimizeWindow(m_dlgGDriveExport->winId());
         }
@@ -156,19 +170,14 @@ void Plugin_GoogleServices::slotGDriveExport()
 
 void Plugin_GoogleServices::slotGPhotoExport()
 {
-    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation) +
-                  QString::fromLatin1("/")  + QString::fromLatin1("kipi-gs-") +
-                  QString::number(getpid()) + QString::fromLatin1("/");
-    QDir().mkpath(tmp);
-
-    if(!m_dlgGPhotoExport)
+    if (!m_dlgGPhotoExport)
     {
-        m_dlgGPhotoExport = new GSWindow(tmp, QApplication::activeWindow(),
+        m_dlgGPhotoExport = new GSWindow(getTempDirPath(), QApplication::activeWindow(),
                                          QString::fromLatin1("googlephotoexport"));
     }
     else
     {
-        if(m_dlgGPhotoExport->isMinimized())
+        if (m_dlgGPhotoExport->isMinimized())
         {
             KWindowSystem::unminimizeWindow(m_dlgGPhotoExport->winId());
         }
@@ -181,19 +190,14 @@ void Plugin_GoogleServices::slotGPhotoExport()
 
 void Plugin_GoogleServices::slotGPhotoImport()
 {
-    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation) +
-                  QString::fromLatin1("/")  + QString::fromLatin1("kipi-gs-") +
-                  QString::number(getpid()) + QString::fromLatin1("/");
-    QDir().mkpath(tmp);
-
-    if(!m_dlgGPhotoImport)
+    if (!m_dlgGPhotoImport)
     {
-        m_dlgGPhotoImport = new GSWindow(tmp, QApplication::activeWindow(),
+        m_dlgGPhotoImport = new GSWindow(getTempDirPath(), QApplication::activeWindow(),
                                          QString::fromLatin1("googlephotoimport"));
     }
     else
     {
-        if(m_dlgGPhotoImport->isMinimized())
+        if (m_dlgGPhotoImport->isMinimized())
         {
             KWindowSystem::unminimizeWindow(m_dlgGPhotoImport->winId());
         }

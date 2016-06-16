@@ -69,7 +69,12 @@ namespace KIPIGoogleServicesPlugin
 {
 
 GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QString& serviceName)
-    : KPToolDialog(0)
+    : KPToolDialog(0),
+      m_widget(0),
+      m_albumDlg(0),
+      m_gphoto_albumdlg(0),
+      m_talker(0),
+      m_gphoto_talker(0)
 {
     if (iface())
     {
@@ -132,7 +137,7 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
 
             m_widget->setMinimumSize(700,500);
 
-            m_albumDlg = new NewAlbumDlg(this,m_serviceName,m_pluginName);
+            m_albumDlg = new NewAlbumDlg(this, m_serviceName, m_pluginName);
             m_talker   = new GDTalker(this);
 
             connect(m_talker,SIGNAL(signalBusy(bool)),
@@ -229,8 +234,8 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
                 m_widget->setMinimumSize(300, 400);
             }
 
-            m_gphoto_albumdlg = new NewAlbumDlg(this,m_serviceName,m_pluginName);
-            m_gphoto_talker  = new GPTalker(this);
+            m_gphoto_albumdlg = new NewAlbumDlg(this, m_serviceName, m_pluginName);
+            m_gphoto_talker   = new GPTalker(this);
 
             connect(m_gphoto_talker, SIGNAL(signalBusy(bool)),
                     this, SLOT(slotBusy(bool)));
@@ -297,7 +302,9 @@ GSWindow::~GSWindow()
 {
     delete m_widget;
     delete m_albumDlg;
+    delete m_gphoto_albumdlg;
     delete m_talker;
+    delete m_gphoto_talker;
 }
 
 void GSWindow::reactivate()

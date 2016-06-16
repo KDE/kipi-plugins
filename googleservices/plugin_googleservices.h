@@ -27,6 +27,7 @@
 // Qt includes
 
 #include <QVariant>
+#include <QTemporaryDir>
 
 // Libkipi includes
 
@@ -64,16 +65,19 @@ public Q_SLOTS:
 private:
 
     void setupActions();
+    QString getTempDirPath();
 
 private:
 
-    QAction*  m_actionGDriveExport;
-    QAction*  m_actionGPhotoExport;
-    QAction*  m_actionGPhotoImport;
+    QAction*       m_actionGDriveExport;
+    QAction*       m_actionGPhotoExport;
+    QAction*       m_actionGPhotoImport;
 
-    GSWindow* m_dlgGDriveExport;
-    GSWindow* m_dlgGPhotoExport;
-    GSWindow* m_dlgGPhotoImport;
+    GSWindow*      m_dlgGDriveExport;
+    GSWindow*      m_dlgGPhotoExport;
+    GSWindow*      m_dlgGPhotoImport;
+
+    QTemporaryDir* m_temporaryDir;
 };
 
 } // namespace KIPIGoogleServicesPlugin
