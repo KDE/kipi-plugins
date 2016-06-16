@@ -29,7 +29,6 @@ target_link_libraries(kipiplugin_googleservices
 
                       KF5::Kipi
                       KF5::I18n
-                      KF5::KIOWidgets
                       KF5::WindowSystem
                       KF5kipiplugins
 )

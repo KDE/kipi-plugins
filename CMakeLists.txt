@@ -239,6 +239,7 @@ if(KF5Kipi_FOUND)
         add_subdirectory(smug)
         add_subdirectory(imageshack)
         add_subdirectory(yandexfotki)
+        add_subdirectory(googleservices)
 
         if(KF5Archive_FOUND)
             add_subdirectory(flashexport)
@@ -259,7 +260,6 @@ if(KF5Kipi_FOUND)
             if(KF5KIOWidgets_FOUND)
 
                 add_subdirectory(remotestorage)    # kioimportwindow.cpp, kioexportwindow.cpp
-                add_subdirectory(googleservices)   # gswindow.cpp
 
             endif()
 

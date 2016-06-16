@@ -45,7 +45,6 @@
 
 #include <klocalizedstring.h>
 #include <ksharedconfig.h>
-#include <kio/renamedialog.h>
 #include <kwindowconfig.h>
 
 // LibKIPI includes
@@ -1043,88 +1042,50 @@ void GSWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
     }
 
     QUrl newUrl = QUrl::fromLocalFile(QString(m_widget->getDestinationPath() + tmpUrl.fileName()));
-    bool bSkip  = false;
 
     QFileInfo targetInfo(newUrl.toLocalFile());
 
     if (targetInfo.exists())
     {
-        switch (m_renamingOpt)
+        int i          = 0;
+        bool fileFound = false;
+
+        do
         {
-            case KIO::R_AUTO_SKIP:
-                bSkip = true;
-                break;
+            QFileInfo newTargetInfo(newUrl.toLocalFile());
 
-            case KIO::R_OVERWRITE_ALL:
-                break;
-
-            default:
+            if (!newTargetInfo.exists())
             {
-                KIO::RenameDialog dlg(this, i18n("A file named \"%1\" already "
-                        "exists. Are you sure you want "
-                        "to overwrite it?",
-                        newUrl.fileName()),
-                        tmpUrl, newUrl,
-                        KIO::RenameDialog_Mode(KIO::M_MULTI | KIO::M_OVERWRITE | KIO::M_SKIP));
-
-                switch (dlg.exec())
-                {
-                    case KIO::R_CANCEL:
-                        m_transferQueue.clear();
-                        bSkip = true;
-                        break;
-
-                    case KIO::R_AUTO_SKIP:
-                        m_renamingOpt = KIO::R_AUTO_SKIP;
-
-                    case KIO::R_SKIP:
-                        bSkip = true;
-                        break;
-
-                    case KIO::R_RENAME:
-                        newUrl = dlg.newDestUrl();
-                        break;
-
-                    case KIO::R_OVERWRITE_ALL:
-                        m_renamingOpt = KIO::R_OVERWRITE_ALL;
-
-                    case KIO::R_OVERWRITE:
-                    default:    // Overwrite.
-                        break;
-                }
-                break;
+                fileFound = false;
+            }
+            else
+            {
+                newUrl = newUrl.adjusted(QUrl::RemoveFilename);
+                newUrl.setPath(newUrl.path() + targetInfo.completeBaseName() +
+                                               QString::fromUtf8("_%1.").arg(++i) +
+                                               targetInfo.completeSuffix());
+                fileFound = true;
             }
         }
+        while (fileFound);
     }
 
-    if (bSkip == true)
+    if (!QFile::rename(tmpUrl.toLocalFile(), newUrl.toLocalFile()))
     {
-        QFile::remove(tmpUrl.toLocalFile());
+        QMessageBox::critical(this, i18nc("@title:window", "Error"),
+                              i18n("Failed to save image to %1", newUrl.toLocalFile()));
     }
     else
     {
-        if (QFile::exists(newUrl.toLocalFile()))
-        {
-            QFile::remove(newUrl.toLocalFile());
-        }
+        KPImageInfo info(newUrl);
+        info.setName(item.title);
+        info.setDescription(item.description);
+        info.setTagsPath(item.tags);
 
-        if (!QFile::rename(tmpUrl.toLocalFile(), newUrl.toLocalFile()))
+        if (!item.gpsLat.isEmpty() && !item.gpsLon.isEmpty())
         {
-            QMessageBox::critical(this, i18nc("@title:window", "Error"),
-                                  i18n("Failed to save image to %1", newUrl.toLocalFile()));
-        }
-        else
-        {
-            KPImageInfo info(newUrl);
-            info.setName(item.title);
-            info.setDescription(item.description);
-            info.setTagsPath(item.tags);
-
-            if (!item.gpsLat.isEmpty() && !item.gpsLon.isEmpty())
-            {
-                info.setLatitude(item.gpsLat.toDouble());
-                info.setLongitude(item.gpsLon.toDouble());
-            }
+            info.setLatitude(item.gpsLat.toDouble());
+            info.setLongitude(item.gpsLon.toDouble());
         }
     }
 
