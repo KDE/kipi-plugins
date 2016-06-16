@@ -65,7 +65,7 @@ public:
 
 public:
 
-    GPTalker(QWidget* const parent);
+    GPTalker(QWidget* const parent, const QString& tmpFolder);
     ~GPTalker();
 
     void listAlbums();
@@ -117,6 +117,7 @@ private Q_SLOTS:
 
 private:
 
+    QString                     m_tmpDir;
     QString                     m_loginName;
     QString                     m_username;
     QString                     m_password;

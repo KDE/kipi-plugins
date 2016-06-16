@@ -66,9 +66,10 @@ static bool gdriveLessThan(GSFolder& p1, GSFolder& p2)
     return (p1.title.toLower() < p2.title.toLower());
 }
 
-GDTalker::GDTalker(QWidget* const parent)
+GDTalker::GDTalker(QWidget* const parent, const QString& tmpFolder)
     : Authorize(parent, QString::fromLatin1("https://www.googleapis.com/auth/drive")), m_state(GD_LOGOUT)
 {
+    m_tmpDir          = tmpFolder;
     m_rootid          = QString::fromLatin1("root");
     m_rootfoldername  = QString::fromLatin1("GoogleDrive Root");
     m_iface           = 0;
@@ -198,9 +199,7 @@ bool GDTalker::addPhoto(const QString& imgPath, const GSPhoto& info,
         return false;
     }
 
-    path = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QString::fromLatin1("/") +
-                                            QFileInfo(imgPath).baseName().trimmed() + QString::fromLatin1(".jpg");
-
+    path                  = m_tmpDir +  QFileInfo(imgPath).baseName().trimmed() + QString::fromLatin1(".jpg");
     int imgQualityToApply = 100;
 
     if (rescale)
