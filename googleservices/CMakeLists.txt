@@ -33,19 +33,10 @@ target_link_libraries(kipiplugin_googleservices
 
                       KF5::Kipi
                       KF5::I18n
-                      KF5::KIOCore
                       KF5::KIOWidgets
                       KF5::WindowSystem
-                      KF5::IconThemes
                       KF5kipiplugins
 )
-
-if (KF5IconThemes_FOUND)
-    target_link_libraries(kipiplugin_googleservices
-                          PRIVATE
-                          KF5::IconThemes
-    )
-endif()
 
 configure_file(kipiplugin_googleservices.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_googleservices.desktop)
 

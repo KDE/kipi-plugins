@@ -259,7 +259,7 @@ if(KF5Kipi_FOUND)
             if(KF5KIOWidgets_FOUND)
 
                 add_subdirectory(remotestorage)    # kioimportwindow.cpp, kioexportwindow.cpp
-                add_subdirectory(googleservices)   # replacedialog.cpp, gswindow.cpp
+                add_subdirectory(googleservices)   # gswindow.cpp
 
             endif()
 

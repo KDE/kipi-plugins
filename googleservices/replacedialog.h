@@ -28,11 +28,7 @@
 #include <QDialog>
 #include <QString>
 #include <QUrl>
-
-// KDE includes
-
-#include <kio/global.h>
-#include <kio/job.h>
+#include <QNetworkReply>
 
 // Libkipi includes
 
@@ -77,8 +73,7 @@ public Q_SLOTS:
 
 private Q_SLOTS:
 
-    void slotResult(KJob*);
-    void slotData(KIO::Job*, const QByteArray&);
+    void slotFinished(QNetworkReply* reply);
     void slotThumbnail(const QUrl&, const QPixmap&);
     void slotProgressTimerDone();
 

@@ -32,14 +32,12 @@
 #include <QPushButton>
 #include <QDialogButtonBox>
 #include <QFrame>
+#include <QMimeDatabase>
+#include <QNetworkAccessManager>
 
 // KDE includes
 
 #include <klocalizedstring.h>
-
-#ifdef HAVE_KICONTHEMES
-#   include <kio/pixmaploader.h>
-#endif
 
 // Local includes
 
@@ -64,26 +62,28 @@ public:
         iface         = 0;
         lbSrc         = 0;
         lbDest        = 0;
+        netMngr       = 0;
         progressCount = 0;
         progressTimer = 0;
         result        = -1;
     }
 
-    QPushButton*    bAdd;
-    QPushButton*    bAddAll;
-    QPushButton*    bReplace;
-    QPushButton*    bReplaceAll;
-    QUrl            src;
-    QUrl            dest;
-    Interface*      iface;
-    QLabel*         lbSrc;
-    QLabel*         lbDest;
-    QByteArray      buffer;
-    QPixmap         mimePix;
-    KPWorkingPixmap progressPix;
-    int             progressCount;
-    QTimer*         progressTimer;
-    int             result;
+    QPushButton*           bAdd;
+    QPushButton*           bAddAll;
+    QPushButton*           bReplace;
+    QPushButton*           bReplaceAll;
+    QUrl                   src;
+    QUrl                   dest;
+    Interface*             iface;
+    QLabel*                lbSrc;
+    QLabel*                lbDest;
+    QByteArray             buffer;
+    QNetworkAccessManager* netMngr;
+    QPixmap                mimePix;
+    KPWorkingPixmap        progressPix;
+    int                    progressCount;
+    QTimer*                progressTimer;
+    int                    result;
 };
 
 ReplaceDialog::ReplaceDialog(QWidget* const parent,
@@ -158,11 +158,9 @@ ReplaceDialog::ReplaceDialog(QWidget* const parent,
     lb1->setAlignment(Qt::AlignHCenter);
     gridLayout->addWidget(lb1, 0, 0, 1, 3);
 
-#ifdef HAVE_KICONTHEMES
-    d->mimePix = KIO::pixmapForUrl(d->dest);
-#else
-    d->mimePix = QIcon::fromTheme(QLatin1String("image-jpeg2000"));
-#endif
+    QMimeDatabase db;
+    QString icon = db.mimeTypeForUrl(d->dest).iconName();
+    d->mimePix = QIcon::fromTheme(icon).pixmap(48);
 
     d->lbDest  = new QLabel(this);
     d->lbDest->setPixmap(d->mimePix);
@@ -170,7 +168,8 @@ ReplaceDialog::ReplaceDialog(QWidget* const parent,
     gridLayout->addWidget(d->lbDest, 1, 0, 1, 1);
 
     d->lbSrc   = new QLabel(this);
-    d->lbSrc->setPixmap(KIO::pixmapForUrl(d->src));
+    icon = db.mimeTypeForUrl(d->src).iconName();
+    d->lbSrc->setPixmap(QIcon::fromTheme(icon).pixmap(48));
     d->lbSrc->setAlignment(Qt::AlignCenter);
     gridLayout->addWidget(d->lbSrc, 1, 2, 1, 1);
 
@@ -223,29 +222,32 @@ ReplaceDialog::ReplaceDialog(QWidget* const parent,
 
     if (d->dest.isValid())
     {
-        KIO::TransferJob* const job = KIO::get(d->dest, KIO::NoReload, KIO::HideProgressInfo);
+        d->netMngr = new QNetworkAccessManager(this);
 
-        job->addMetaData(QString::fromLatin1("content-type"),
-                         QString::fromLatin1("Content-Type: application/x-www-form-urlencoded"));
+        connect(d->netMngr, SIGNAL(finished(QNetworkReply*)),
+                this, SLOT(slotFinished(QNetworkReply*)));
 
-        connect(job, SIGNAL(data(KIO::Job*, QByteArray)),
-                this, SLOT(slotData(KIO::Job*, QByteArray)));
+        QNetworkRequest netRequest(d->dest);
+        netRequest.setHeader(QNetworkRequest::ContentTypeHeader,
+                             QLatin1String("application/x-www-form-urlencoded"));
 
-        connect(job, SIGNAL(result(KJob*)),
-                this, SLOT(slotResult(KJob*)));
+        d->netMngr->get(netRequest);
     }
 
     resize(sizeHint());
 }
 
-void ReplaceDialog::slotResult(KJob *job)
+void ReplaceDialog::slotFinished(QNetworkReply* reply)
 {
     d->progressTimer->stop();
 
-    if (job->error() || static_cast<KIO::TransferJob*>(job)->isErrorPage())
+    if (reply->error() != QNetworkReply::NoError)
     {
+        reply->deleteLater();
         return;
     }
+
+    d->buffer.append(reply->readAll());
 
     if (!d->buffer.isEmpty())
     {
@@ -253,16 +255,8 @@ void ReplaceDialog::slotResult(KJob *job)
         pxm.loadFromData(d->buffer);
         d->lbDest->setPixmap(pxm.scaled(200, 200, Qt::KeepAspectRatio, Qt::FastTransformation));
     }
-}
 
-void ReplaceDialog::slotData(KIO::Job* /*job*/, const QByteArray& data)
-{
-    if (data.isEmpty())
-        return;
-
-    int oldSize = d->buffer.size();
-    d->buffer.resize(d->buffer.size() + data.size());
-    memcpy(d->buffer.data()+oldSize, data.data(), data.size());
+    reply->deleteLater();
 }
 
 void ReplaceDialog::slotThumbnail(const QUrl& url, const QPixmap& pix)
