@@ -1,4 +1,4 @@
-Kipi-plugins 5.0.0-beta7 - Release date: 2016/05/29
+Kipi-plugins 5.0.0 - Release date: 2016/07/03
 ------------------------------------------------------------------------
 
 NEW FEATURES:
@@ -15,6 +15,7 @@ General : MetadataEdit moved to digiKam core.
 General : Geolocator moved to digiKam core.
 General : ExpoBlending moved to digiKam core.
 General : Calendar moved to digiKam core.
+General : KIO support replaced by native Qt5::Network.
 
 BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
