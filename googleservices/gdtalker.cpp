@@ -22,10 +22,6 @@
 
 #include <gdtalker.h>
 
-// C++ includes
-
-#include <ctime>
-
 // Qt includes
 
 #include <QApplication>

@@ -253,16 +253,8 @@ if(KF5Kipi_FOUND)
             add_subdirectory(mediawiki)
         endif()
 
-        if(KF5KIO_FOUND)
-
-            # Tools which need KIO Widgets too.
-
-            if(KF5KIOWidgets_FOUND)
-
-                add_subdirectory(remotestorage)    # kioimportwindow.cpp, kioexportwindow.cpp
-
-            endif()
-
+        if(KF5KIO_FOUND AND KF5KIOWidgets_FOUND)
+            add_subdirectory(remotestorage)    # kioimportwindow.cpp, kioexportwindow.cpp
         endif()
 
         if(BUILD_TESTING)

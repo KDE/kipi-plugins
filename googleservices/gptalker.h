@@ -26,7 +26,6 @@
 
 // Qt includes
 
-#include <QLinkedList>
 #include <QMap>
 #include <QHash>
 #include <QObject>
@@ -118,18 +117,18 @@ private Q_SLOTS:
 
 private:
 
-    QString                          m_loginName;
-    QString                          m_username;
-    QString                          m_password;
-    QString                          m_userEmailId;
+    QString                     m_loginName;
+    QString                     m_username;
+    QString                     m_password;
+    QString                     m_userEmailId;
 
-    QNetworkAccessManager*           m_netMngr;
-    QNetworkReply*                   m_reply;
+    QNetworkAccessManager*      m_netMngr;
+    QNetworkReply*              m_reply;
 
-    State                            m_state;
+    State                       m_state;
 
-    Interface*                       m_iface;
-    QPointer<MetadataProcessor>      m_meta;
+    Interface*                  m_iface;
+    QPointer<MetadataProcessor> m_meta;
 };
 
 } // namespace KIPIGoogleServicesPlugin

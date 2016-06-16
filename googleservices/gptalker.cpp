@@ -24,13 +24,6 @@
 
 #include "gptalker.h"
 
-// C++ includes
-
-#include <cstring>
-#include <cstdio>
-#include <cstdlib>
-#include <string>
-
 // Qt includes
 
 #include <QTextDocument>
@@ -41,12 +34,10 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QImage>
-#include <QLinkedList>
 #include <QStringList>
 #include <QUrl>
 #include <QPointer>
 #include <QtAlgorithms>
-#include <QDebug>
 #include <QApplication>
 #include <QDir>
 #include <QMessageBox>

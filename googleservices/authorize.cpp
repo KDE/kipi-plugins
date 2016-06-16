@@ -22,10 +22,6 @@
 
 #include <authorize.h>
 
-// C++ includes
-
-#include <ctime>
-
 // Qt includes
 
 #include <QByteArray>

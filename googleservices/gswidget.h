@@ -72,8 +72,8 @@ public:
 
 private:
 
-    PluginName                     m_pluginName;
-    QButtonGroup*                  m_tagsBGrp;
+    PluginName    m_pluginName;
+    QButtonGroup* m_tagsBGrp;
 
     friend class GSWindow;
 };

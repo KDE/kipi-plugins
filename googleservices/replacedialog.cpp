@@ -25,14 +25,14 @@
 // Qt includes
 
 #include <QIcon>
+#include <QTimer>
+#include <QFrame>
 #include <QLabel>
 #include <QLayout>
 #include <QPainter>
-#include <QTimer>
 #include <QPushButton>
-#include <QDialogButtonBox>
-#include <QFrame>
 #include <QMimeDatabase>
+#include <QDialogButtonBox>
 #include <QNetworkAccessManager>
 
 // KDE includes

@@ -37,7 +37,6 @@
 #include <QSpinBox>
 #include <QFileInfo>
 #include <QPointer>
-#include <QDebug>
 #include <QDesktopServices>
 #include <QUrl>
 
