@@ -8,10 +8,6 @@ subdirs(icons)
 
 add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_googleservices\")
 
-if (KF5IconThemes_FOUND)
-    add_definitions("-DHAVE_KICONTHEMES")
-endif()
-
 set(kipiplugin_googleservices_PART_SRCS
     authorize.cpp
     replacedialog.cpp
