@@ -192,6 +192,8 @@ FbWindow::FbWindow(const QString& tmpFolder, QWidget* const /*parent*/)
 
 FbWindow::~FbWindow()
 {
+    delete m_albumDlg;
+    delete m_talker;
     delete d;
 }
 

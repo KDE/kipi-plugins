@@ -46,6 +46,7 @@
 
 // Local includes
 
+#include "kputil.h"
 #include "kpversion.h"
 #include "mpform.h"
 #include "flickritem.h"
@@ -105,13 +106,6 @@ FlickrTalker::FlickrTalker(QWidget* const parent, const QString& serviceName)
         m_secret    = QString::fromLatin1("34b39925e6273ffd");
     }
 
-    QString prefix = QDir::tempPath() + QLatin1String("/kipi-") + serviceName +
-                     QLatin1String("exportplugin-XXXXXX");
-
-    m_tmpDir = new QTemporaryDir(prefix);
-
-    qCDebug(KIPIPLUGINS_LOG) << "Temp dir : " << m_tmpDir->path();
-
     m_netMngr = new QNetworkAccessManager(this);
 
     connect(m_netMngr, SIGNAL(finished(QNetworkReply*)),
@@ -134,7 +128,8 @@ FlickrTalker::~FlickrTalker()
     }
 
     delete m_photoSetsList;
-    delete m_tmpDir;
+
+    removeTemporaryDir(m_serviceName.toLatin1().constData());
 }
 
 /** Compute MD5 signature using url queries keys and values following Flickr notice:
@@ -148,7 +143,7 @@ QString FlickrTalker::getApiSig(const QString& secret, const QUrl& url)
 
     QPair<QString, QString> pair;
 
-    foreach(pair,temp_queries)
+    foreach(pair, temp_queries)
     {
         queries.insert(pair.first,pair.second);
     }
@@ -664,7 +659,8 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
             QFile::remove(m_lastTmpFile);
         }
 
-        path = m_tmpDir->path() + QString::fromLatin1("/") + QFileInfo(photoPath).baseName().trimmed() + QString::fromLatin1(".jpg");
+        path = makeTemporaryDir(m_serviceName.toLatin1().constData()).filePath(QFileInfo(photoPath)
+                                                                     .baseName().trimmed() + QLatin1String(".jpg"));
 
         if (rescale)
         {

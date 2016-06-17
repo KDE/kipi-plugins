@@ -31,7 +31,6 @@
 #include <QPair>
 #include <QString>
 #include <QObject>
-#include <QTemporaryDir>
 #include <QNetworkReply>
 #include <QCryptographicHash>
 #include <QNetworkAccessManager>
@@ -170,9 +169,6 @@ private:
     QString                m_lastTmpFile;
 
     QNetworkAccessManager* m_netMngr;
-
-    QTemporaryDir*         m_tmpDir;
-
     QNetworkReply*         m_reply;
 
     State                  m_state;

@@ -341,7 +341,7 @@ bool DBTalker::addPhoto(const QString& imgPath, const QString& uploadFolder, boo
     }
 
     QString path = makeTemporaryDir("dropbox").filePath(QFileInfo(imgPath)
-                                              .baseName().trimmed() + QString::fromLatin1(".jpg"));
+                                              .baseName().trimmed() + QLatin1String(".jpg"));
 
     if (rescale && (image.width() > maxDim || image.height() > maxDim))
     {
