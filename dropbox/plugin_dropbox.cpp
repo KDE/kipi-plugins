@@ -55,8 +55,9 @@ extern "C"
 
 // Local includes
 
-#include "kipiplugins_debug.h"
+#include "kputil.h"
 #include "dbwindow.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPIDropboxPlugin
 {
@@ -77,6 +78,9 @@ Plugin_Dropbox::Plugin_Dropbox(QObject* const parent,const QVariantList& /*args*
 
 Plugin_Dropbox::~Plugin_Dropbox()
 {
+    delete m_dlgExport;
+
+    removeTemporaryDir("dropbox");
 }
 
 void Plugin_Dropbox::setup(QWidget* const widget)
@@ -110,8 +114,7 @@ void Plugin_Dropbox::setupActions()
 
 void Plugin_Dropbox::slotExport()
 {
-    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation)+ QString::fromLatin1("/")+ QString::fromLatin1("kipi-dropboxplugin-") + QString::number(getpid()) + QString::fromLatin1("/");
-    QDir().mkpath(tmp);
+    QString tmp = makeTemporaryDir("dropbox").absolutePath() + QLatin1Char('/');
 
     if (!m_dlgExport)
     {

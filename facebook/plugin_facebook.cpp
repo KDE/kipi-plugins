@@ -72,6 +72,9 @@ Plugin_Facebook::Plugin_Facebook(QObject* const parent, const QVariantList& /*ar
 
 Plugin_Facebook::~Plugin_Facebook()
 {
+    delete m_dlgExport;
+
+    removeTemporaryDir("fb");
 }
 
 void Plugin_Facebook::setup(QWidget* const widget)
@@ -106,7 +109,7 @@ void Plugin_Facebook::setupActions()
 
 void Plugin_Facebook::slotExport()
 {
-    QString tmp = makeTemporaryDir("kipi-fb").absolutePath() + QString::fromLatin1("/");
+    QString tmp = makeTemporaryDir("fb").absolutePath() + QLatin1Char('/');
 
     if (!m_dlgExport)
     {

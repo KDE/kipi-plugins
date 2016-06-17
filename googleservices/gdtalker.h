@@ -50,7 +50,7 @@ class GDTalker : public Authorize
 
 public:
 
-    GDTalker(QWidget* const parent, const QString& tmpFolder);
+    GDTalker(QWidget* const parent);
     ~GDTalker();
 
 Q_SIGNALS:
@@ -92,7 +92,6 @@ private:
 
 private:
 
-    QString                m_tmpDir;
     QString                m_rootid;
     QString                m_rootfoldername;
     QString                m_username;

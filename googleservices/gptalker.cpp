@@ -51,7 +51,9 @@
 
 // Local includes
 
+#include "kputil.h"
 #include "kpversion.h"
+#include "gswindow.h"
 #include "mpform_gphoto.h"
 #include "kipiplugins_debug.h"
 
@@ -63,15 +65,13 @@ static bool gphotoLessThan(GSFolder& p1, GSFolder& p2)
     return (p1.title.toLower() < p2.title.toLower());
 }
 
-GPTalker::GPTalker(QWidget* const parent, const QString& tmpFolder)
+GPTalker::GPTalker(QWidget* const parent)
     : Authorize(parent, QString::fromLatin1("https://picasaweb.google.com/data/")),
       m_netMngr(0),
       m_reply(0),
       m_state(FE_LOGOUT),
       m_iface(0)
 {
-    m_tmpDir = tmpFolder;
-
     PluginLoader* const pl = PluginLoader::instance();
 
     if (pl)
@@ -279,7 +279,8 @@ bool GPTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QString& 
         return false;
     }
 
-    path                  = m_tmpDir + QFileInfo(photoPath).baseName().trimmed() + QString::fromLatin1(".jpg");
+    path                  = makeTemporaryDir("gs").filePath(QFileInfo(photoPath)
+                                                  .baseName().trimmed() + QLatin1String(".jpg"));
     int imgQualityToApply = 100;
 
     if (rescale)
@@ -399,7 +400,8 @@ bool GPTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, const QStr
         return false;
     }
 
-    path                  = m_tmpDir + QFileInfo(photoPath).baseName().trimmed() + QString::fromLatin1(".jpg");
+    path                  = makeTemporaryDir("gs").filePath(QFileInfo(photoPath)
+                                                  .baseName().trimmed() + QLatin1String(".jpg"));
     int imgQualityToApply = 100;
 
     if (rescale)

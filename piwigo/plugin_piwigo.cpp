@@ -45,10 +45,11 @@
 
 // Local includes
 
-#include "kipiplugins_debug.h"
+#include "kputil.h"
 #include "piwigos.h"
 #include "piwigoconfig.h"
 #include "piwigowindow.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPIPiwigoExportPlugin
 {
@@ -69,6 +70,8 @@ Plugin_PiwigoExport::Plugin_PiwigoExport(QObject* const parent, const QVariantLi
 Plugin_PiwigoExport::~Plugin_PiwigoExport()
 {
     delete m_pPiwigo;
+
+    removeTemporaryDir("piwigo");
 }
 
 void Plugin_PiwigoExport::setup(QWidget* const widget)

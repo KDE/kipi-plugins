@@ -53,9 +53,9 @@ extern "C"
 
 // Local includes
 
-#include "kipiplugins_debug.h"
 #include "kputil.h"
 #include "rajcewindow.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPIRajcePlugin
 {
@@ -76,6 +76,8 @@ Plugin_Rajce::Plugin_Rajce(QObject* const parent, const QVariantList& /*args*/)
 Plugin_Rajce::~Plugin_Rajce()
 {
     delete m_dlgExport;
+
+    removeTemporaryDir("rajce");
 }
 
 void Plugin_Rajce::setup(QWidget* const widget)
@@ -111,7 +113,7 @@ void Plugin_Rajce::setupActions()
 
 void Plugin_Rajce::slotExport()
 {
-    QString tmp = makeTemporaryDir("kipi-rajce").absolutePath() + QString::fromLatin1("/");
+    QString tmp = makeTemporaryDir("rajce").absolutePath() + QLatin1Char('/');
 
     if (!m_dlgExport)
     {

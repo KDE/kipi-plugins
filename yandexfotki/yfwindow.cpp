@@ -98,7 +98,7 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
     : KPToolDialog(parent)
 {
     m_import = import;
-    m_tmpDir = makeTemporaryDir("kipi-yandexfotki").absolutePath() + QString::fromLatin1("/");
+    m_tmpDir = makeTemporaryDir("yandexfotki").absolutePath() + QLatin1Char('/');
     m_widget = new YandexFotkiWidget(this, iface(), QString::fromLatin1("Yandex.Fotki"));
 
     m_loginLabel           = m_widget->getUserNameLabel();

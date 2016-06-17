@@ -27,7 +27,6 @@
 // Qt includes
 
 #include <QVariant>
-#include <QTemporaryDir>
 
 // Libkipi includes
 
@@ -76,8 +75,6 @@ private:
     GSWindow*      m_dlgGDriveExport;
     GSWindow*      m_dlgGPhotoExport;
     GSWindow*      m_dlgGPhotoImport;
-
-    QTemporaryDir* m_temporaryDir;
 };
 
 } // namespace KIPIGoogleServicesPlugin

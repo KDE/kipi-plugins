@@ -67,12 +67,26 @@ namespace KIPIPlugins
 
 QDir makeTemporaryDir(const char* prefix)
 {
-    QString subDir = QString::fromLatin1("%1-%2").arg(QString::fromUtf8(prefix)).arg(getpid());
+    QString subDir = QString::fromLatin1("kipi-%1-%2").arg(QString::fromUtf8(prefix)).arg(getpid());
     QString path   = QDir(QDir::tempPath()).filePath(subDir);
 
-    QDir().mkpath(path);
+    if (!QDir().exists(path))
+    {
+        QDir().mkpath(path);
+    }
 
     return QDir(path);
+}
+
+void removeTemporaryDir(const char* prefix)
+{
+    QString subDir = QString::fromLatin1("kipi-%1-%2").arg(QString::fromUtf8(prefix)).arg(getpid());
+    QString path   = QDir(QDir::tempPath()).filePath(subDir);
+
+    if (QDir().exists(path))
+    {
+        QDir(path).removeRecursively();
+    }
 }
 
 // ------------------------------------------------------------------------------------

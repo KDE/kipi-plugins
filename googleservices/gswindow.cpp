@@ -138,7 +138,7 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
             m_widget->setMinimumSize(700,500);
 
             m_albumDlg = new NewAlbumDlg(this, m_serviceName, m_pluginName);
-            m_talker   = new GDTalker(this, m_tmp);
+            m_talker   = new GDTalker(this);
 
             connect(m_talker,SIGNAL(signalBusy(bool)),
                     this,SLOT(slotBusy(bool)));
@@ -235,7 +235,7 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
             }
 
             m_gphoto_albumdlg = new NewAlbumDlg(this, m_serviceName, m_pluginName);
-            m_gphoto_talker   = new GPTalker(this, m_tmp);
+            m_gphoto_talker   = new GPTalker(this);
 
             connect(m_gphoto_talker, SIGNAL(signalBusy(bool)),
                     this, SLOT(slotBusy(bool)));

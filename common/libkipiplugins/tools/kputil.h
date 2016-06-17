@@ -45,6 +45,7 @@ namespace KIPIPlugins
 {
 
 QDir KIPIPLUGINS_EXPORT makeTemporaryDir(const char* prefix);
+void KIPIPLUGINS_EXPORT removeTemporaryDir(const char* prefix);
 
 // ------------------------------------------------------------------------------------
 

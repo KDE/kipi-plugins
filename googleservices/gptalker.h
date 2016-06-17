@@ -26,10 +26,10 @@
 
 // Qt includes
 
+#include <QUrl>
 #include <QMap>
 #include <QHash>
 #include <QObject>
-#include <QUrl>
 #include <QPointer>
 
 // Libkipi includes
@@ -38,8 +38,8 @@
 
 // Local includes
 
-#include "authorize.h"
 #include "gsitem.h"
+#include "authorize.h"
 
 using namespace KIPI;
 
@@ -65,7 +65,7 @@ public:
 
 public:
 
-    GPTalker(QWidget* const parent, const QString& tmpFolder);
+    GPTalker(QWidget* const parent);
     ~GPTalker();
 
     void listAlbums();
@@ -117,7 +117,6 @@ private Q_SLOTS:
 
 private:
 
-    QString                     m_tmpDir;
     QString                     m_loginName;
     QString                     m_username;
     QString                     m_password;

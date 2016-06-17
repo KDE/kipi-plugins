@@ -39,8 +39,9 @@
 
 // Local includes
 
-#include "kipiplugins_debug.h"
+#include "kputil.h"
 #include "yfwindow.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPIYandexFotkiPlugin
 {
@@ -62,6 +63,8 @@ Plugin_YandexFotki::Plugin_YandexFotki(QObject* const parent, const QVariantList
 Plugin_YandexFotki::~Plugin_YandexFotki()
 {
     delete m_dlgExport;
+
+    removeTemporaryDir("yandexfotki");
 }
 
 void Plugin_YandexFotki::setup(QWidget* const widget)

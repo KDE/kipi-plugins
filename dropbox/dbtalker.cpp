@@ -340,8 +340,8 @@ bool DBTalker::addPhoto(const QString& imgPath, const QString& uploadFolder, boo
         return false;
     }
 
-    QDir tempDir = makeTemporaryDir("kipi-dropbox");
-    QString path = tempDir.filePath(QFileInfo(imgPath).baseName().trimmed() + QString::fromLatin1(".jpg"));
+    QString path = makeTemporaryDir("dropbox").filePath(QFileInfo(imgPath)
+                                              .baseName().trimmed() + QString::fromLatin1(".jpg"));
 
     if (rescale && (image.width() > maxDim || image.height() > maxDim))
     {

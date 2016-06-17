@@ -49,6 +49,7 @@ extern "C"
 
 // Local includes
 
+#include "kputil.h"
 #include "gswindow.h"
 #include "kipiplugins_debug.h"
 
@@ -72,8 +73,6 @@ Plugin_GoogleServices::Plugin_GoogleServices(QObject* const parent, const QVaria
     m_dlgGDriveExport    = 0;
     m_dlgGPhotoExport    = 0;
     m_dlgGPhotoImport    = 0;
-
-    m_temporaryDir       = 0;
 }
 
 Plugin_GoogleServices::~Plugin_GoogleServices()
@@ -81,7 +80,8 @@ Plugin_GoogleServices::~Plugin_GoogleServices()
     delete m_dlgGDriveExport;
     delete m_dlgGPhotoExport;
     delete m_dlgGPhotoImport;
-    delete m_temporaryDir;
+
+    removeTemporaryDir("gs");
 }
 
 void Plugin_GoogleServices::setup(QWidget* const widget)
@@ -135,24 +135,13 @@ void Plugin_GoogleServices::setupActions()
     addAction(QString::fromLatin1("googlephotoimport"), m_actionGPhotoImport, ImportPlugin);
 }
 
-QString Plugin_GoogleServices::getTempDirPath()
-{
-    if (!m_temporaryDir)
-    {
-        QString prefix = QDir::tempPath() + QLatin1String("/kipi-") +
-                         QLatin1String("gs-XXXXXX");
-
-        m_temporaryDir = new QTemporaryDir(prefix);
-    }
-
-    return m_temporaryDir->path() + QLatin1Char('/');
-}
-
 void Plugin_GoogleServices::slotGDriveExport()
 {
+    QString tmp = makeTemporaryDir("gs").absolutePath() + QLatin1Char('/');
+
     if (!m_dlgGDriveExport)
     {
-        m_dlgGDriveExport = new GSWindow(getTempDirPath(), QApplication::activeWindow(),
+        m_dlgGDriveExport = new GSWindow(tmp, QApplication::activeWindow(),
                                          QString::fromLatin1("googledriveexport"));
     }
     else
@@ -170,9 +159,11 @@ void Plugin_GoogleServices::slotGDriveExport()
 
 void Plugin_GoogleServices::slotGPhotoExport()
 {
+    QString tmp = makeTemporaryDir("gs").absolutePath() + QLatin1Char('/');
+
     if (!m_dlgGPhotoExport)
     {
-        m_dlgGPhotoExport = new GSWindow(getTempDirPath(), QApplication::activeWindow(),
+        m_dlgGPhotoExport = new GSWindow(tmp, QApplication::activeWindow(),
                                          QString::fromLatin1("googlephotoexport"));
     }
     else
@@ -190,9 +181,11 @@ void Plugin_GoogleServices::slotGPhotoExport()
 
 void Plugin_GoogleServices::slotGPhotoImport()
 {
+    QString tmp = makeTemporaryDir("gs").absolutePath() + QLatin1Char('/');
+
     if (!m_dlgGPhotoImport)
     {
-        m_dlgGPhotoImport = new GSWindow(getTempDirPath(), QApplication::activeWindow(),
+        m_dlgGPhotoImport = new GSWindow(tmp, QApplication::activeWindow(),
                                          QString::fromLatin1("googlephotoimport"));
     }
     else

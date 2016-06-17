@@ -81,6 +81,8 @@ Plugin_Smug::~Plugin_Smug()
 {
     delete m_dlgImport;
     delete m_dlgExport;
+
+    removeTemporaryDir("smug");
 }
 
 void Plugin_Smug::setup(QWidget* const widget)
@@ -128,7 +130,7 @@ void Plugin_Smug::setupActions()
 
 void Plugin_Smug::slotExport()
 {
-    QString tmp = makeTemporaryDir("kipi-smug").absolutePath() + QString::fromLatin1("/");
+    QString tmp = makeTemporaryDir("smug").absolutePath() + QLatin1Char('/');
 
     if (!m_dlgExport)
     {
@@ -148,7 +150,7 @@ void Plugin_Smug::slotExport()
 
 void Plugin_Smug::slotImport()
 {
-    QString tmp = makeTemporaryDir("kipi-smug").absolutePath() + QString::fromLatin1("/");
+    QString tmp = makeTemporaryDir("smug").absolutePath() + QLatin1Char('/');
 
     if (!m_dlgImport)
     {

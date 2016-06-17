@@ -229,7 +229,7 @@ bool PiwigoTalker::addPhoto(int   albumId,
                 image = image.scaled(maxWidth, maxHeight, Qt::KeepAspectRatio, Qt::SmoothTransformation);
             }
 
-            m_path = m_tmpPath = makeTemporaryDir("kipi-piwigo").filePath(QUrl::fromLocalFile(mediaPath).fileName());
+            m_path = m_tmpPath = makeTemporaryDir("piwigo").filePath(QUrl::fromLocalFile(mediaPath).fileName());
             image.save(m_path, "JPEG", quality);
 
             qCDebug(KIPIPLUGINS_LOG) << "Upload a resized version: " << m_path ;

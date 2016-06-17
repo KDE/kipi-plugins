@@ -52,9 +52,9 @@
 
 // local includes
 
+#include "kputil.h"
 #include "kpversion.h"
 #include "gswindow.h"
-#include "gsitem.h"
 #include "mpform_gdrive.h"
 #include "kipiplugins_debug.h"
 
@@ -66,10 +66,9 @@ static bool gdriveLessThan(GSFolder& p1, GSFolder& p2)
     return (p1.title.toLower() < p2.title.toLower());
 }
 
-GDTalker::GDTalker(QWidget* const parent, const QString& tmpFolder)
+GDTalker::GDTalker(QWidget* const parent)
     : Authorize(parent, QString::fromLatin1("https://www.googleapis.com/auth/drive")), m_state(GD_LOGOUT)
 {
-    m_tmpDir          = tmpFolder;
     m_rootid          = QString::fromLatin1("root");
     m_rootfoldername  = QString::fromLatin1("GoogleDrive Root");
     m_iface           = 0;
@@ -199,7 +198,8 @@ bool GDTalker::addPhoto(const QString& imgPath, const GSPhoto& info,
         return false;
     }
 
-    path                  = m_tmpDir +  QFileInfo(imgPath).baseName().trimmed() + QString::fromLatin1(".jpg");
+    path                  = makeTemporaryDir("gs").filePath(QFileInfo(imgPath)
+                                                  .baseName().trimmed() + QLatin1String(".jpg"));
     int imgQualityToApply = 100;
 
     if (rescale)
