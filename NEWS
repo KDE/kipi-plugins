@@ -15,7 +15,7 @@ General : MetadataEdit moved to digiKam core.
 General : Geolocator moved to digiKam core.
 General : ExpoBlending moved to digiKam core.
 General : Calendar moved to digiKam core.
-General : KIO support replaced by native Qt5::Network.
+General : KIO support replaced by native Qt5::Network everywhere (excepted for RemoteStorage tool which is optional).
 
 BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
