@@ -14,21 +14,20 @@ Notes:
 kipi-plugins is based in part on the work of the Independent JPEG Group.
 
 Facebook           : A tool to import/export images to/from a remote Facebook web service (http://www.facebook.com).
-Flickr             : A tool to export images to a remote Flickr based web service (http://www.flickr.com). Also compatible with Zooomr and 23HQ 
+Flickr             : A tool to export images to a remote Flickr based web service (http://www.flickr.com). Also compatible with Zooomr and 23HQ.
 GoogleServices     : A tool to export images to Google web services.
-PrintImage         : A tool to print images in various format.
-SendImages         : A tool to send images by e-mail.
-FlashExport        : A tool to export images to Flash using SimpleViewer (http://www.airtightinteractive.com/simpleviewer).
 Smug               : A tool to import/export images to/from a remote SmugMug web service (http://www.smugmug.com).
-RemoteStorage      : A tool to export images to remote storage using network protocol (FTP, SSH, SAMBA, etc...).
+SendImages         : A tool to export images by e-mail.
+FlashExport        : A tool to export images to Flash using SimpleViewer (http://www.airtightinteractive.com/simpleviewer).
+RemoteStorage      : A tool to export images to remote storage using network protocols as FTP, SSH, SAMBA... (based on KIO).
 Piwigo             : A tool to export images to a remote Piwigo (PHPWebGallery) server (http://piwigo.org).
 YandexFotki        : A tool to export images to Yandex web service (http://fotki.yandex.ru).
 MediaWiki          : A tool to export images to Mediawiki based web service (http://www.mediawiki.org).
 RajceExport        : A tool to export images to Rajce web service (http://www.rajce.idnes.cz).
 Vkontakte          : A tool to export images to VKontakte web service (http://www.vkontakte.ru)
-PhotoLayoutEditor  : A tool to assemble images together.
 ImageShack         : A tool to export images to ImageShack web service (http://imageshack.us)
 ImgurExport        : A tool to export images to ImgUr web service (http://imgur.com)
+PrintImage         : A tool to print images in various format.
 
 -- DEPENDENCIES -------------------------------------------------------
 
@@ -40,6 +39,7 @@ libkipi         >= 5.0.0                        https://projects.kde.org/project
 
 Optional:
 
+libkio          >= 5.0.0                        https://projects.kde.org/projects/frameworks/kio
 libkarchive     >= 5.0.0                        https://projects.kde.org/projects/frameworks/karchive
 libmediawiki    >= 5.0.0                        https://projects.kde.org/projects/extragear/libs/libmediawiki
 libkvkontakte   >= 4.70.0                       https://projects.kde.org/projects/extragear/libs/libkvkontakte
