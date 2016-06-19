@@ -345,7 +345,7 @@ void DBWindow::uploadNextPhoto()
         return;
     }
 
-    QString imgPath = m_transferQueue.first().path();
+    QString imgPath = m_transferQueue.first().toLocalFile();
     QString temp = m_currentAlbumName + QString::fromLatin1("/");
 
     bool res = m_talker->addPhoto(imgPath,temp,m_widget->getResizeCheckBox()->isChecked(),m_widget->getDimensionSpB()->value(),

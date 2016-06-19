@@ -109,7 +109,7 @@ bool Task::imageResize(const EmailSettings& settings, const QUrl& orgUrl,
                        const QString& destName, QString& err)
 {
     EmailSettings emailSettings = settings;
-    QFileInfo fi(orgUrl.path());
+    QFileInfo fi(orgUrl.toLocalFile());
 
     if (!fi.exists() || !fi.isReadable())
     {
@@ -137,7 +137,7 @@ bool Task::imageResize(const EmailSettings& settings, const QUrl& orgUrl,
 
     if (img.isNull())
     {
-        img.load(orgUrl.path());
+        img.load(orgUrl.toLocalFile());
     }
 
     int sizeFactor = emailSettings.size();

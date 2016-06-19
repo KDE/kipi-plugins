@@ -179,7 +179,7 @@ void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum 
     KPImageInfo info(imageURL);
 
     // Load image
-    QString path = imageURL.path();
+    QString path = imageURL.toLocalFile();
     QFile imageFile(path);
 
     if (!imageFile.open(QIODevice::ReadOnly))

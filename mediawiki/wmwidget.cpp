@@ -802,7 +802,7 @@ void WmWidget::loadImageInfo(const QUrl& url)
     imageMetaData[QLatin1String("description")] = description;
     imageMetaData[QLatin1String("latitude")]    = latitude;
     imageMetaData[QLatin1String("longitude")]   = longitude;
-    d->imagesDescInfo.insert(url.path(), imageMetaData);
+    d->imagesDescInfo.insert(url.toLocalFile(), imageMetaData);
 }
 
 void WmWidget::clearEditFields()
@@ -825,12 +825,12 @@ void WmWidget::slotLoadImagesDesc(QTreeWidgetItem* item)
 
     QMap<QString, QString> imageMetaData;
 
-    if (!d->imagesDescInfo.contains(l_item->url().path()))
+    if (!d->imagesDescInfo.contains(l_item->url().toLocalFile()))
     {
         loadImageInfo(l_item->url());
     }
 
-    imageMetaData = d->imagesDescInfo[l_item->url().path()];
+    imageMetaData = d->imagesDescInfo[l_item->url().toLocalFile()];
 
     d->titleEdit->setText(imageMetaData[QLatin1String("title")]);
     d->dateEdit->setText(imageMetaData[QLatin1String("date")].replace(QLatin1String("T"), QLatin1String(" "), Qt::CaseSensitive));
@@ -848,7 +848,7 @@ void WmWidget::slotRemoveImagesDesc(const QList<QUrl> urls)
 {
     for (QList<QUrl>::const_iterator it = urls.begin(); it != urls.end(); ++it)
     {
-        QString path = (*it).path();
+        QString path = (*it).toLocalFile();
         d->imagesDescInfo.remove(path);
         qCDebug(KIPIPLUGINS_LOG) << "Remove" << path << "; new length:" << d->imagesDescInfo.size();
     }
@@ -876,12 +876,12 @@ void WmWidget::slotRestoreExtension()
 
     for (int i = 0; i < urls.size(); ++i)
     {
-        imageMetaData = d->imagesDescInfo[urls.at(i).path()];
+        imageMetaData = d->imagesDescInfo[urls.at(i).toLocalFile()];
         imageTitle    = imageMetaData[QLatin1String("title")];
 
         // Add original extension if removed
         currentExtension  = imageTitle.split(QLatin1Char('.')).last();
-        originalExtension = urls.at(i).path().split(QLatin1Char('.')).last();
+        originalExtension = urls.at(i).toLocalFile().split(QLatin1Char('.')).last();
 
         if (QString::compare(currentExtension, originalExtension, Qt::CaseInsensitive) != 0)
         {
@@ -889,9 +889,9 @@ void WmWidget::slotRestoreExtension()
             d->titleEdit->setText(imageTitle);
         }
 
-        qCDebug(KIPIPLUGINS_LOG) << urls.at(i).path() << "renamed to" << imageTitle;
+        qCDebug(KIPIPLUGINS_LOG) << urls.at(i).toLocalFile() << "renamed to" << imageTitle;
         imageMetaData[QLatin1String("title")] = imageTitle;
-        d->imagesDescInfo[urls.at(i).path()]  = imageMetaData;
+        d->imagesDescInfo[urls.at(i).toLocalFile()]  = imageMetaData;
     }
 }
 
@@ -920,7 +920,7 @@ void WmWidget::slotApplyTitle()
 
     for (int i = 0; i < urls.size(); ++i)
     {
-        imageMetaData = d->imagesDescInfo[urls.at(i).path()];
+        imageMetaData = d->imagesDescInfo[urls.at(i).toLocalFile()];
         imageTitle    = givenTitle;
 
         // If there is at least one #, replace it the correct number
@@ -938,9 +938,9 @@ void WmWidget::slotApplyTitle()
             imageTitle.replace(imageTitle.indexOf(QLatin1String("#")), 1, number);
         }
 
-        qCDebug(KIPIPLUGINS_LOG) << urls.at(i).path() << "renamed to" << imageTitle;
+        qCDebug(KIPIPLUGINS_LOG) << urls.at(i).toLocalFile() << "renamed to" << imageTitle;
         imageMetaData[QLatin1String("title")] = imageTitle;
-        d->imagesDescInfo[urls.at(i).path()]  = imageMetaData;
+        d->imagesDescInfo[urls.at(i).toLocalFile()]  = imageMetaData;
     }
 }
 
@@ -960,9 +960,9 @@ void WmWidget::slotApplyDate()
     for (int i = 0; i < urls.size(); ++i)
     {
         QMap<QString, QString> imageMetaData;
-        imageMetaData                        = d->imagesDescInfo[urls.at(i).path()];
-        imageMetaData[QLatin1String("date")] = date();
-        d->imagesDescInfo[urls.at(i).path()] = imageMetaData;
+        imageMetaData                               = d->imagesDescInfo[urls.at(i).toLocalFile()];
+        imageMetaData[QLatin1String("date")]        = date();
+        d->imagesDescInfo[urls.at(i).toLocalFile()] = imageMetaData;
     }
 }
 
@@ -982,9 +982,9 @@ void WmWidget::slotApplyCategories()
     for (int i = 0; i < urls.size(); ++i)
     {
         QMap<QString, QString> imageMetaData;
-        imageMetaData                              = d->imagesDescInfo[urls.at(i).path()];
-        imageMetaData[QLatin1String("categories")] = categories();
-        d->imagesDescInfo[urls.at(i).path()]       = imageMetaData;
+        imageMetaData                               = d->imagesDescInfo[urls.at(i).toLocalFile()];
+        imageMetaData[QLatin1String("categories")]  = categories();
+        d->imagesDescInfo[urls.at(i).toLocalFile()] = imageMetaData;
     }
 }
 
@@ -1004,9 +1004,9 @@ void WmWidget::slotApplyDescription()
     for (int i = 0; i < urls.size(); ++i)
     {
         QMap<QString, QString> imageMetaData;
-        imageMetaData                               = d->imagesDescInfo[urls.at(i).path()];
+        imageMetaData                               = d->imagesDescInfo[urls.at(i).toLocalFile()];
         imageMetaData[QLatin1String("description")] = description();
-        d->imagesDescInfo[urls.at(i).path()]        = imageMetaData;
+        d->imagesDescInfo[urls.at(i).toLocalFile()] = imageMetaData;
     }
 }
 
@@ -1027,9 +1027,9 @@ void WmWidget::slotApplyLatitude()
     for (int i = 0; i < urls.size(); ++i)
     {
         QMap<QString, QString> imageMetaData;
-        imageMetaData                            = d->imagesDescInfo[urls.at(i).path()];
-        imageMetaData[QLatin1String("latitude")] = latitude();
-        d->imagesDescInfo[urls.at(i).path()]     = imageMetaData;
+        imageMetaData                               = d->imagesDescInfo[urls.at(i).toLocalFile()];
+        imageMetaData[QLatin1String("latitude")]    = latitude();
+        d->imagesDescInfo[urls.at(i).toLocalFile()] = imageMetaData;
     }
 }
 
@@ -1049,9 +1049,9 @@ void WmWidget::slotApplyLongitude()
     for (int i = 0; i < urls.size(); ++i)
     {
         QMap<QString, QString> imageMetaData;
-        imageMetaData                             = d->imagesDescInfo[urls.at(i).path()];
-        imageMetaData[QLatin1String("longitude")] = longitude();
-        d->imagesDescInfo[urls.at(i).path()]      = imageMetaData;
+        imageMetaData                               = d->imagesDescInfo[urls.at(i).toLocalFile()];
+        imageMetaData[QLatin1String("longitude")]   = longitude();
+        d->imagesDescInfo[urls.at(i).toLocalFile()] = imageMetaData;
     }
 }
 
@@ -1061,14 +1061,14 @@ QMap <QString,QMap <QString,QString> > WmWidget::allImagesDesc()
 
     for (int i = 0; i < urls.size(); ++i)
     {
-        QMap<QString, QString> imageMetaData          = d->imagesDescInfo[urls.at(i).path()];
+        QMap<QString, QString> imageMetaData          = d->imagesDescInfo[urls.at(i).toLocalFile()];
         imageMetaData[QLatin1String("author")]        = author();
         imageMetaData[QLatin1String("source")]        = source();
         imageMetaData[QLatin1String("license")]       = license();
         imageMetaData[QLatin1String("genCategories")] = genCategories();
         imageMetaData[QLatin1String("genText")]       = genText();
         imageMetaData[QLatin1String("comments")]      = genComments();
-        d->imagesDescInfo[urls.at(i).path()]          = imageMetaData;
+        d->imagesDescInfo[urls.at(i).toLocalFile()]   = imageMetaData;
     }
 
     return d->imagesDescInfo;

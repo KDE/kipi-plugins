@@ -534,7 +534,7 @@ QString FlickrWindow::guessSensibleSetName(const QList<QUrl>& urlList)
     // Extract last component of directory
     foreach(const QUrl& url, urlList)
     {
-        QString dir      = url.adjusted(QUrl::RemoveFilename|QUrl::StripTrailingSlash).path();
+        QString dir      = url.adjusted(QUrl::RemoveFilename|QUrl::StripTrailingSlash).toLocalFile();
         QStringList list = dir.split(QLatin1Char('/'));
 
         if (list.isEmpty())

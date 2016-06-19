@@ -1128,17 +1128,17 @@ void GSWindow::slotAddPhotoDone(int err, const QString& msg, const QString& phot
     }
     else
     {
-        QString fileName = m_transferQueue.first().first.path();
+        QUrl fileUrl = m_transferQueue.first().first;
 
-        if (m_meta                                             &&
-            m_meta->supportXmp()                               &&
-            m_meta->canWriteXmp(QUrl::fromLocalFile(fileName)) &&
-            m_meta->load(QUrl::fromLocalFile(fileName))        &&
+        if (m_meta                       &&
+            m_meta->supportXmp()         &&
+            m_meta->canWriteXmp(fileUrl) &&
+            m_meta->load(fileUrl)        &&
             !photoId.isEmpty()
            )
         {
             m_meta->setXmpTagString(QLatin1String("Xmp.kipi.picasawebGPhotoId"), photoId);
-            m_meta->save(QUrl::fromLocalFile(fileName));
+            m_meta->save(fileUrl);
         }
 
         // Remove photo uploaded from the list

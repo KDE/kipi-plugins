@@ -57,7 +57,7 @@ protected:
 
         emit signalProgress(20);
 
-        if (!src.load(fileUrl.path()))
+        if (!src.load(fileUrl.toLocalFile()))
         {
             errString = QLatin1String("Loading image failed. Aborted...");
             return;
@@ -80,7 +80,7 @@ protected:
 
         emit signalProgress(80);
 
-        if (!dst.save(fileUrl.path()))
+        if (!dst.save(fileUrl.toLocalFile()))
         {
             errString = QLatin1String("Saving image failed. Aborted...");
             return;

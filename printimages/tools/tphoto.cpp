@@ -148,7 +148,7 @@ QImage TPhoto::loadPhoto()
 
     if (photo.isNull())
     {
-        photo.load(filename.path());
+        photo.load(filename.toLocalFile());
     }
 
     return photo;

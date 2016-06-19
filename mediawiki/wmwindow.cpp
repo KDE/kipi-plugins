@@ -331,8 +331,8 @@ void WMWindow::slotStartTransfer()
 
         if (d->widget->resize() || d->widget->removeMeta() || d->widget->removeGeo())
         {
-            prepareImageForUpload(urls.at(i).path());
-            imagesDesc.insert(d->tmpPath, imagesDesc.take(urls.at(i).path()));
+            prepareImageForUpload(urls.at(i).toLocalFile());
+            imagesDesc.insert(d->tmpPath, imagesDesc.take(urls.at(i).toLocalFile()));
         }
     }
 

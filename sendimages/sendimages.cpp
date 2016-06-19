@@ -374,7 +374,7 @@ QList<QUrl> SendImages::divideEmails() const
     for (QList<QUrl>::const_iterator it = d->attachementFiles.constBegin();
         it != d->attachementFiles.constEnd(); ++it)
     {
-        QFile file((*it).path());
+        QFile file((*it).toLocalFile());
         qCDebug(KIPIPLUGINS_LOG) << "File: " << file.fileName() << " Size: " << file.size();
 
         if ((myListSize + file.size()) <= d->settings.attachementLimitInBytes())
@@ -420,7 +420,7 @@ bool SendImages::invokeMailAgent()
 
             foreach(const QUrl& file, fileList)
             {
-                stringFileList << file.path();
+                stringFileList << file.toLocalFile();
             }
 
             switch ((int)d->settings.emailProgram)
@@ -460,7 +460,7 @@ bool SendImages::invokeMailAgent()
                     for (QList<QUrl>::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
                         args.append(QLatin1String("-a"));
-                        args.append((*it).path());
+                        args.append((*it).toLocalFile());
                     }
 
                     if (!QProcess::startDetached(prog, args))
@@ -495,7 +495,7 @@ bool SendImages::invokeMailAgent()
 
                     for (QList<QUrl>::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
-                        args.append((*it).path());
+                        args.append((*it).toLocalFile());
                     }
 
                     if (d->settings.emailProgram == EmailSettings::CLAWSMAIL)
@@ -541,7 +541,7 @@ bool SendImages::invokeMailAgent()
                     for (QList<QUrl>::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
                         tmp.append(QLatin1String("&attach="));
-                        tmp.append( (*it).path() );
+                        tmp.append( (*it).toLocalFile() );
                     }
 
                     args.append(tmp);
@@ -574,7 +574,7 @@ bool SendImages::invokeMailAgent()
                     for (QList<QUrl>::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
                         args.append(QLatin1String("--attach"));
-                        args.append((*it).path());
+                        args.append((*it).toLocalFile());
                     }
 
                     if (!QProcess::startDetached(prog, args))
@@ -621,7 +621,7 @@ bool SendImages::invokeMailAgent()
                     for (QList<QUrl>::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
                         tmp.append(QLatin1String("file://"));
-                        tmp.append((*it).path());
+                        tmp.append((*it).toLocalFile());
                         tmp.append(QLatin1String(","));
                     }
 

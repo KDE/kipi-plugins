@@ -197,7 +197,7 @@ QDateTime GPSDataParser::findPrevDate(const QDateTime& dateTime, int secs)
 
 bool GPSDataParser::loadGPXFile(const QUrl& url)
 {
-    QFile gpxfile(url.path());
+    QFile gpxfile(url.toLocalFile());
 
     if (!gpxfile.open(QIODevice::ReadOnly))
         return false;

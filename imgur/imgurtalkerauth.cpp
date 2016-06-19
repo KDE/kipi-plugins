@@ -128,9 +128,9 @@ void ImgurTalkerAuth::imageUpload (const QUrl& filePath)
     emit signalUploadStart(filePath);
     emit signalBusy(true);
 
-    QByteArray contentType = QImageReader::imageFormat(filePath.path());
+    QByteArray contentType = QImageReader::imageFormat(filePath.toLocalFile());
 
-    QFile imageFile(filePath.path());
+    QFile imageFile(filePath.toLocalFile());
 
     if (!imageFile.open(QIODevice::ReadOnly))
     {

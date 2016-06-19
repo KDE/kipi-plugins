@@ -541,7 +541,7 @@ void PiwigoWindow::slotAddPhoto()
 
     for (QList<QUrl>::const_iterator it = urls.constBegin(); it != urls.constEnd(); ++it)
     {
-        d->pUploadList->append( (*it).path() );
+        d->pUploadList->append( (*it).toLocalFile() );
     }
 
     d->uploadTotal = d->pUploadList->count();

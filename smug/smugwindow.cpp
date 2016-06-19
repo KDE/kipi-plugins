@@ -858,7 +858,7 @@ void SmugWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
                                   const QByteArray& photoData)
 {
     QString imgPath = m_widget->getDestinationPath() + QLatin1Char('/')
-                      + QFileInfo(m_transferQueue.first().path()).fileName();
+                      + m_transferQueue.first().fileName();
 
     if (errCode == 0)
     {
