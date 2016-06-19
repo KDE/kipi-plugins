@@ -342,7 +342,7 @@ KPImageDialog::KPImageDialog(QWidget* const parent, bool singleSelect, bool only
 
     QString alternatePath         = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
     QPointer<QFileDialog> dlg     = new QFileDialog(parent, QString(),
-                                                    d->iface ? d->iface->currentAlbum().url().path()
+                                                    d->iface ? d->iface->currentAlbum().url().toLocalFile()
                                                              : alternatePath,
                                                     d->fileFormats);
 /*
