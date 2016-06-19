@@ -278,7 +278,7 @@ KPSettingsWidget::~KPSettingsWidget()
 
 QString KPSettingsWidget::getDestinationPath() const
 {
-    return d->m_uploadWidget->selectedImageCollection().uploadUrl().path();
+    return d->m_uploadWidget->selectedImageCollection().uploadUrl().toLocalFile();
 }
 
 KPImagesList* KPSettingsWidget::imagesList() const

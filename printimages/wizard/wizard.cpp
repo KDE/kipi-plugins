@@ -892,7 +892,7 @@ QString Wizard::captionFormatter(TPhoto* const photo) const
             break;
     }
 
-    QFileInfo fi(photo->filename.path());
+    QFileInfo fi(photo->filename.toLocalFile());
     QString resolution;
     QSize imageSize = photo->metaIface()->getImageDimensions();
 
