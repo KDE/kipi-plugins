@@ -23,7 +23,7 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 002 ==> 225409 - Gallery tool should save multiples gallery settings.
 003 ==> 229341 - Add export support for Gallery3.
 004 ==> 257166 - Unable to create a new album or upload photos when gallery use https.
-005 ==> 195136 - Hard coded GALLERYSID cookie name breaks compatability with other G2 API compatible backends.
+005 ==> 195136 - Hard coded GALLERYSID cookie name breaks compatibility with other G2 API compatible backends.
 006 ==> 257184 - When browsing twice an album, images list contains duplicates.
 007 ==> 094496 - Support for gallery photo addition order override.
 008 ==> 206121 - digiKam export to gallery fails "Failed to login into remote gallery".
@@ -43,12 +43,12 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 022 ==> 125039 - Rename Images cancel button do not cancel but stop.
 023 ==> 126113 - schema of renaming images: resetting counter.
 024 ==> 302714 - Crash when selecting Tools->Image Effects.
-025 ==> 144528 - in a batch process the resize images in 2d produces black images
+025 ==> 144528 - in a batch process the resize images in 2d produces black images.
 026 ==> 152210 - Metadata lost when converting from png to jpeg (IPTC thumbnail too big).
 027 ==> 152905 - Batch processes does not work properly if target directory is outside Album Library Path.
 028 ==> 203379 - Error while converting RAW images to JPEG.
 029 ==> 161347 - kipi-plugins doesn't clean properly ~/tmp/kde-username.
-030 ==> 177175 - Kipi resize image prepare to print 9x13 results in wrong 
+030 ==> 177175 - Kipi resize image prepare to print 9x13 results in wrong.
 031 ==> 213172 - kipi convert images: png conversion not deterministic.
 032 ==> 289181 - Raw processor rotates images without Orientation EXIF tag.
 033 ==> 211524 - Raw batch converter kipi can't get rid of scroll bar.
@@ -59,7 +59,7 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 038 ==> 353626 - Processing of bracketed images fails after the first set is done.
 039 ==> 359257 - Image size spinbox doesn't allow values larger than 99.
 040 ==> 359478 - kipi flickr export plugin crashed on creating new set.
-041 ==> 321647 - Kenburns effect from AdvancedSlideshow forgets to auto-rotate photos
+041 ==> 321647 - Kenburns effect from AdvancedSlideshow forgets to auto-rotate photos.
 042 ==> 356939 - Advanced slide show: playing sound track does not work.
 043 ==> 361329 - Flickr uploader does not clean /tmp after upload.
 044 ==> 
