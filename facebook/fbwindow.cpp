@@ -418,7 +418,7 @@ void FbWindow::slotListAlbumsDone(int errCode, const QString& errMsg, const QLis
                 break;
 
             case FB_EVERYONE:
-                albumIcon = QString::fromLatin1("applications-internet");
+                albumIcon = QString::fromLatin1("internet-web-browser");
                 break;
 
             case FB_CUSTOM:

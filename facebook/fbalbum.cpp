@@ -58,7 +58,7 @@ FbNewAlbum::FbNewAlbum(QWidget* const parent, const QString& pluginName)
                           i18n("Friends of Friends"),      FB_FRIENDS_OF_FRIENDS);
     m_privacyCoB->addItem(QIcon::fromTheme(QString::fromLatin1("network-workgroup")),
                           i18n("My Networks and Friends"), FB_NETWORKS);
-    m_privacyCoB->addItem(QIcon::fromTheme(QString::fromLatin1("applications-internet")),
+    m_privacyCoB->addItem(QIcon::fromTheme(QString::fromLatin1("internet-web-browser")),
                           i18n("Everyone"),                FB_EVERYONE);
     m_privacyCoB->setCurrentIndex(1);
 
