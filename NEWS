@@ -62,4 +62,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 041 ==> 321647 - Kenburns effect from AdvancedSlideshow forgets to auto-rotate photos.
 042 ==> 356939 - Advanced slide show: playing sound track does not work.
 043 ==> 361329 - Flickr uploader does not clean /tmp after upload.
-044 ==> 
+044 ==> 353135 - Unable to sign in to Flickr or Facebook, Geolocation Search in GeoNames.
+045 ==> 
