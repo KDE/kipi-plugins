@@ -65,7 +65,7 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 044 ==> 353135 - Unable to sign in to Flickr or Facebook, Geolocation Search in GeoNames.
 045 ==> 358759 - Unable to import/export from google photos.
 046 ==> 363925 - Export Menu - Export to Smugmug not working.
-047 ==> 363913 - Improve export menu structure.
+047 ==> 361323 - Ksnapshot "Send To..." button crash.
 048 ==> 309613 - Crash on exit after unsucessful photo time adjustment.
 049 ==> 303878 - digiKam crashed after clicking "Photo -> Adjust Date and Time".
 050 ==> 150191 - Embedded thumbnail date is used for sorting.
@@ -85,4 +85,3 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 064 ==> 272168 - Crash when starting Flickr Uploadr.
 065 ==> 264390 - digiKam crashes when uploading to Flickr.
 066 ==> 327342 - Ksnapshot.
-067 ==> 361323 - Ksnapshot "Send To..." button crash.
