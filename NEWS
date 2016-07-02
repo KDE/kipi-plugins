@@ -84,4 +84,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 063 ==> 352391 - Crash when exporting to facebook.com.
 064 ==> 272168 - Crash when starting Flickr Uploadr.
 065 ==> 264390 - digiKam crashes when uploading to Flickr.
-066 ==> 327342 - Knsnapshot.
+066 ==> 327342 - Ksnapshot.
+067 ==> 361323 - Ksnapshot "Send To..." button crash.
