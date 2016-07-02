@@ -67,10 +67,21 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 046 ==> 363925 - Export Menu - Export to Smugmug not working.
 047 ==> 363913 - Improve export menu structure.
 048 ==> 309613 - Crash on exit after unsucessful photo time adjustment.
-049 ==> 303878 - digikam crashed after clicking "Photo -> Adjust Date and Time".
+049 ==> 303878 - digiKam crashed after clicking "Photo -> Adjust Date and Time".
 050 ==> 150191 - Embedded thumbnail date is used for sorting.
 051 ==> 296113 - Regression: Can't transfer EXIF creation date to file date.
 052 ==> 363162 - dngconverter crashes when converting any RAW file.
 053 ==> 302292 - Gwenview crashes when batch editing EXIF data.
-054 ==> 269106 - Digikam crashes if the currently uploading item is removed from the export list.
-055 ==> 
+054 ==> 269106 - digiKam crashes if the currently uploading item is removed from the export list.
+055 ==> 290509 - Gwenview plugin crashed exporting to PicasaWeb & Facebook.
+056 ==> 322056 - Imgur exporter can crash gwenview.
+057 ==> 233909 - Crash when creating new folder on 23HQ.
+058 ==> 307666 - Flick export plug in crash.
+059 ==> 232599 - digiKam crashed when selecting Export -> Export to Shwup.
+060 ==> 304560 - Ksnapshot crashes when trying to send picture to other computer.
+061 ==> 319077 - Gwenview se cierra al crear una carpeta para subir archivos a flickr.
+062 ==> 240763 - Export Shwup crash when trying to export with latest SVN version as of today.
+063 ==> 352391 - Crash when exporting to facebook.com.
+064 ==> 272168 - Crash when starting Flickr Uploadr.
+065 ==> 264390 - digiKam crashes when uploading to Flickr.
+066 ==> 327342 - Knsnapshot.
