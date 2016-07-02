@@ -70,3 +70,4 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 049 ==> 303878 - digikam crashed after clicking "Photo -> Adjust Date and Time".
 050 ==> 150191 - Embedded thumbnail date is used for sorting.
 051 ==> 296113 - Regression: Can't transfer EXIF creation date to file date.
+052 ==> 363162 - dngconverter crashes when converting any RAW file.
