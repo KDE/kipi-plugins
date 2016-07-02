@@ -65,3 +65,4 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 044 ==> 353135 - Unable to sign in to Flickr or Facebook, Geolocation Search in GeoNames.
 045 ==> 358759 - Unable to import/export from google photos.
 046 ==> 363925 - Export Menu - Export to Smugmug not working.
+047 ==> 363913 - Improve export menu structure.
