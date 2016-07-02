@@ -72,4 +72,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 051 ==> 296113 - Regression: Can't transfer EXIF creation date to file date.
 052 ==> 363162 - dngconverter crashes when converting any RAW file.
 053 ==> 302292 - Gwenview crashes when batch editing EXIF data.
-054 ==> 
+054 ==> 269106 - Digikam crashes if the currently uploading item is removed from the export list.
+055 ==> 
