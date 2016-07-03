@@ -1,0 +1,87 @@
+Kipi-plugins 5.0.0 - Release date: 2016/07/03
+------------------------------------------------------------------------
+
+NEW FEATURES:
+
+General : Plugins obsolete/unmaintained and removed : BatchProcessImages, JPEGLossLess, Kopete, IpodExport, GalleryExport, RawConverter
+General : KIOExportImport plugin renamed as RemoteStorage.
+General : FlickrExport plugin renamed as Flickr.
+General : ImageShackExport plugin renamed as ImageShack.
+General : PiwigoExport plugin renamed as Piwigo.
+General : GPSSync plugin renamed as Geolocator.
+General : DNGConverter moved to digiKam core.
+General : AcquireImages moved to digiKam core.
+General : MetadataEdit moved to digiKam core.
+General : Geolocator moved to digiKam core.
+General : ExpoBlending moved to digiKam core.
+General : Calendar moved to digiKam core.
+General : KIO support replaced by native Qt5::Network everywhere (excepted for RemoteStorage tool which is optional).
+
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
+
+001 ==> 348340 - Progress halts when finished resizing images.
+002 ==> 225409 - Gallery tool should save multiples gallery settings.
+003 ==> 229341 - Add export support for Gallery3.
+004 ==> 257166 - Unable to create a new album or upload photos when gallery use https.
+005 ==> 195136 - Hard coded GALLERYSID cookie name breaks compatibility with other G2 API compatible backends.
+006 ==> 257184 - When browsing twice an album, images list contains duplicates.
+007 ==> 094496 - Support for gallery photo addition order override.
+008 ==> 206121 - digiKam export to gallery fails "Failed to login into remote gallery".
+009 ==> 206114 - Connection to remote gallery hangs.
+010 ==> 148521 - Gallery export does not see deep directories.
+011 ==> 202284 - Export problem using port 990.
+012 ==> 332430 - Gwenview crashes when accidentally converting to black and white.
+013 ==> 120501 - Smart rotation (first keystroke 90°, second keystroke 180°).
+014 ==> 315489 - Gwenview crash.
+015 ==> 107723 - Allow to tune batch process priority.
+016 ==> 333734 - Improve image filters preview.
+017 ==> 107541 - Add a process console and scripting support.
+018 ==> 264075 - Usability issues in batch resizing dialog.
+019 ==> 345198 - Batch rename is *extremely* slow.
+020 ==> 252181 - Resizing images: "Start" button hidden after non-existent folder has been selected.
+021 ==> 308019 - Gwenview crash after using Plugins->Collections->Border images.
+022 ==> 125039 - Rename Images cancel button do not cancel but stop.
+023 ==> 126113 - schema of renaming images: resetting counter.
+024 ==> 302714 - Crash when selecting Tools->Image Effects.
+025 ==> 144528 - in a batch process the resize images in 2d produces black images.
+026 ==> 152210 - Metadata lost when converting from png to jpeg (IPTC thumbnail too big).
+027 ==> 152905 - Batch processes does not work properly if target directory is outside Album Library Path.
+028 ==> 203379 - Error while converting RAW images to JPEG.
+029 ==> 161347 - kipi-plugins doesn't clean properly ~/tmp/kde-username.
+030 ==> 177175 - Kipi resize image prepare to print 9x13 results in wrong.
+031 ==> 213172 - kipi convert images: png conversion not deterministic.
+032 ==> 289181 - Raw processor rotates images without Orientation EXIF tag.
+033 ==> 211524 - Raw batch converter kipi can't get rid of scroll bar.
+034 ==> 215037 - Batch RAW converter crashed after open with NEF file.
+035 ==> 246437 - digiKam crashes when loading a raw file.
+036 ==> 342687 - Panorama file time-stamps should be the same than the stitched pictures [patch].
+037 ==> 356673 - MediaWiki export doesn't work.
+038 ==> 353626 - Processing of bracketed images fails after the first set is done.
+039 ==> 359257 - Image size spinbox doesn't allow values larger than 99.
+040 ==> 359478 - kipi flickr export plugin crashed on creating new set.
+041 ==> 321647 - Kenburns effect from AdvancedSlideshow forgets to auto-rotate photos.
+042 ==> 356939 - Advanced slide show: playing sound track does not work.
+043 ==> 361329 - Flickr uploader does not clean /tmp after upload.
+044 ==> 353135 - Unable to sign in to Flickr or Facebook, Geolocation Search in GeoNames.
+045 ==> 358759 - Unable to import/export from google photos.
+046 ==> 363925 - Export Menu - Export to Smugmug not working.
+047 ==> 361323 - Ksnapshot "Send To..." button crash.
+048 ==> 309613 - Crash on exit after unsucessful photo time adjustment.
+049 ==> 303878 - digiKam crashed after clicking "Photo -> Adjust Date and Time".
+050 ==> 150191 - Embedded thumbnail date is used for sorting.
+051 ==> 296113 - Regression: Can't transfer EXIF creation date to file date.
+052 ==> 363162 - dngconverter crashes when converting any RAW file.
+053 ==> 302292 - Gwenview crashes when batch editing EXIF data.
+054 ==> 269106 - digiKam crashes if the currently uploading item is removed from the export list.
+055 ==> 290509 - Gwenview plugin crashed exporting to PicasaWeb & Facebook.
+056 ==> 322056 - Imgur exporter can crash gwenview.
+057 ==> 233909 - Crash when creating new folder on 23HQ.
+058 ==> 307666 - Flick export plug in crash.
+059 ==> 232599 - digiKam crashed when selecting Export -> Export to Shwup.
+060 ==> 304560 - Ksnapshot crashes when trying to send picture to other computer.
+061 ==> 319077 - Gwenview se cierra al crear una carpeta para subir archivos a flickr.
+062 ==> 240763 - Export Shwup crash when trying to export with latest SVN version as of today.
+063 ==> 352391 - Crash when exporting to facebook.com.
+064 ==> 272168 - Crash when starting Flickr Uploadr.
+065 ==> 264390 - digiKam crashes when uploading to Flickr.
+066 ==> 327342 - Ksnapshot.
