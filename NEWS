@@ -6,4 +6,5 @@ NEW FEATURES:
 
 BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
-001 ==> 
+001 ==> 305517 - digiKam segfaults after choosing Export - Export to Flash.
+002 ==> 
