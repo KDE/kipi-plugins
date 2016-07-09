@@ -7,4 +7,7 @@ NEW FEATURES:
 BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 305517 - digiKam segfaults after choosing Export - Export to Flash.
-002 ==> 
+002 ==> 231584 - digiKam crashes when asked to print image.
+003 ==> 311020 - kipi plugins print some pages in reverted colors.
+004 ==> 329899 - Print Assistant (Print Wizard) showing incorrect page sizes.
+005 ==> 
