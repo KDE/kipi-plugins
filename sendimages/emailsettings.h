@@ -168,7 +168,6 @@ public:
     qint64           attachmentLimitInMbytes;
 
     QString          tempPath;
-    QString          tempFolderName;
 
     EmailClient      emailProgram;
 

@@ -11,4 +11,6 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 003 ==> 311020 - kipi plugins print some pages in reverted colors.
 004 ==> 329899 - Print Assistant (Print Wizard) showing incorrect page sizes.
 005 ==> 365049 - Export to Piwigo not working - Dialog box not responding.
-006 ==> 
+006 ==> 365676 - improper handling of temporary directory.
+007 ==> 308783 - No photo attachments when items are shared by e-mail.
+008 ==> 

@@ -39,6 +39,7 @@
 
 // Local includes
 
+#include "kputil.h"
 #include "sendimages.h"
 #include "sendimagesdialog.h"
 #include "kipiplugins_debug.h"
@@ -78,7 +79,11 @@ Plugin_SendImages::Plugin_SendImages(QObject* const parent, const QVariantList&)
 
 Plugin_SendImages::~Plugin_SendImages()
 {
+    delete d->sendImagesOperation;
+    delete d->dialog;
     delete d;
+
+    removeTemporaryDir("sendimages");
 }
 
 void Plugin_SendImages::setup(QWidget* const widget)
@@ -128,7 +133,7 @@ void Plugin_SendImages::slotActivate()
 
     ImageCollection images = iface->currentSelection();
 
-    if ( !images.isValid() || images.images().isEmpty() )
+    if (!images.isValid() || images.images().isEmpty())
         return;
 
     delete d->dialog;
@@ -149,6 +154,8 @@ void Plugin_SendImages::slotPrepareEmail()
        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
        return;
     }
+
+    delete d->sendImagesOperation;
 
     EmailSettings settings = d->dialog->emailSettings();
     d->sendImagesOperation = new SendImages(settings, this);

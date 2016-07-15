@@ -87,7 +87,7 @@ void Task::run()
 
     if (imageResize(m_settings, m_orgUrl, m_destName, errString))
     {
-        QUrl emailUrl(m_destName);
+        QUrl emailUrl(QUrl::fromLocalFile(m_destName));
         emit finishedResize(m_orgUrl, emailUrl, percent);
     }
     else
@@ -246,16 +246,16 @@ void ImageResize::resize(const EmailSettings& settings)
     for (QList<EmailItem>::const_iterator it = settings.itemsList.constBegin();
          it != settings.itemsList.constEnd(); ++it)
     {
-        QString tmp;
-
         Task* const t = new Task(m_count);
         t->m_orgUrl   = (*it).orgUrl;
         t->m_settings = settings;
 
-        QTemporaryDir tmpDir(QDir::tempPath() + QLatin1Char('/') + t->m_settings.tempFolderName + t->m_settings.tempPath);
+        QTemporaryDir tmpDir(t->m_settings.tempPath);
         tmpDir.setAutoRemove(false);
+
         QFileInfo fi(t->m_orgUrl.fileName());
-        t->m_destName = tmpDir.path() + QString::fromUtf8("%1.%2").arg(fi.baseName()).arg(t->m_settings.format().toLower());
+        t->m_destName = tmpDir.path() + QLatin1Char('/') +
+                        QString::fromUtf8("%1.%2").arg(fi.baseName()).arg(t->m_settings.format().toLower());
 
         connect(t, SIGNAL(startingResize(QUrl)),
                 this, SIGNAL(startingResize(QUrl)));

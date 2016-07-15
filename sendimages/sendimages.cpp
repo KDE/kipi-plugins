@@ -34,7 +34,6 @@
 #include <QTextCodec>
 #include <QTextStream>
 #include <QApplication>
-#include <QTemporaryDir>
 #include <QMessageBox>
 
 // KDE includes
@@ -52,6 +51,7 @@
 #include "kpbatchprogressdialog.h"
 #include "kipiplugins_debug.h"
 #include "imageresize.h"
+#include "kputil.h"
 
 using namespace KIPI;
 using namespace KIPIPlugins;
@@ -126,17 +126,8 @@ void SendImages::firstStage()
         d->threadImgResize->wait();
     }
 
-    QTemporaryDir tmpDir(QDir::tempPath() + QLatin1Char('/') + QLatin1String("kipiplugin-sendimages"));
-    tmpDir.setAutoRemove(false);
-    d->settings.tempPath = tmpDir.path();
-
-    QDir tmp(d->settings.tempPath);
-    QStringList folders = tmp.absolutePath().split(QLatin1Char('/'), QString::SkipEmptyParts);
-
-    if (!folders.isEmpty())
-    {
-        d->settings.tempFolderName = folders.last();
-    }
+    QString tmp = makeTemporaryDir("sendimages").absolutePath() + QLatin1Char('/');
+    d->settings.tempPath = tmp;
 
     d->progressDlg = new KPBatchProgressDialog(QApplication::activeWindow(), i18n("Email images"));
 
@@ -447,7 +438,7 @@ bool SendImages::invokeMailAgent()
                     QString prog = QLatin1String("balsa");
                     QStringList args;
 
-#ifdef _WIN32
+#ifdef Q_OS_WIN
                     args.append(QLatin1String("/c"));
                     args.append(QLatin1String("start"));
                     args.append(prog);
@@ -483,7 +474,7 @@ bool SendImages::invokeMailAgent()
                     QStringList args;
                     QString     prog;
 
-#ifdef _WIN32
+#ifdef Q_OS_WIN
                     args.append(QLatin1String("/c"));
                     args.append(QLatin1String("start"));
                     args.append(prog);
@@ -529,7 +520,7 @@ bool SendImages::invokeMailAgent()
                     QString prog = QLatin1String("evolution");
                     QStringList args;
 
-#ifdef _WIN32
+#ifdef Q_OS_WIN
                     args.append(QLatin1String("/c"));
                     args.append(QLatin1String("start"));
                     args.append(prog);
@@ -564,7 +555,7 @@ bool SendImages::invokeMailAgent()
                     QString prog = QLatin1String("kmail");
                     QStringList args;
 
-#ifdef _WIN32
+#ifdef Q_OS_WIN
                     args.append(QLatin1String("/c"));
                     args.append(QLatin1String("start"));
                     args.append(prog);
@@ -609,7 +600,7 @@ bool SendImages::invokeMailAgent()
 
                     QStringList args;
 
-#ifdef _WIN32
+#ifdef Q_OS_WIN
                     args.append(QLatin1String("/c"));
                     args.append(QLatin1String("start"));
                     args.append(prog);
@@ -682,7 +673,7 @@ void SendImages::invokeMailAgentDone(const QString& prog, const QStringList& arg
 
 void SendImages::slotCleanUp()
 {
-    QDir((d->settings.tempPath)).removeRecursively();
+    removeTemporaryDir("sendimages");
 }
 
 }  // namespace KIPISendimagesPlugin
