@@ -13,4 +13,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 005 ==> 365049 - Export to Piwigo not working - Dialog box not responding.
 006 ==> 365676 - improper handling of temporary directory.
 007 ==> 308783 - No photo attachments when items are shared by e-mail.
-008 ==> 
+008 ==> 365571 - Flickr export plugin not freeing tmp space.
+009 ==> 
