@@ -30,7 +30,7 @@
 // Local includes
 
 #include "kpimageslist.h"
-#include "imgurtalker.h"
+#include "imgurapi3.h"
 
 using namespace KIPI;
 using namespace KIPIPlugins;
@@ -38,35 +38,30 @@ using namespace KIPIPlugins;
 namespace KIPIImgurPlugin
 {
 
+class ImgurImageListViewItem;
+
 class ImgurImagesList : public KPImagesList
 {
     Q_OBJECT
 
 public:
-
     /* The different columns in a list. */
     enum FieldType
     {
-        Title           = KPImagesListView::Filename,
-        Description     = KPImagesListView::User1,
-        URL             = KPImagesListView::User2,
-        DeleteURL       = KPImagesListView::User3
+        Title           = KPImagesListView::User1,
+        Description     = KPImagesListView::User2,
+        URL             = KPImagesListView::User3,
+        DeleteURL       = KPImagesListView::User4
     };
 
     ImgurImagesList(QWidget* const parent = 0);
-    ~ImgurImagesList();
-
-public:
-
-    // implement this, if you have special item widgets, e.g. an edit line
-    // they will be set automatically when adding items, changing order, etc.
-    virtual void updateItemWidgets();
+    ~ImgurImagesList() override {}
+    
+    QList<const ImgurImageListViewItem *> getPendingItems();
 
 public Q_SLOTS:
-
-    void slotAddImages(const QList<QUrl>& list);
-    void slotUploadSuccess(const QUrl& imageUrl, const ImgurSuccess& success);
-    void slotUploadError(const QUrl& imageUrl, const ImgurError& error);
+    void slotAddImages(const QList<QUrl>& list) override;
+    void slotSuccess(const ImgurAPI3Result &result);
     void slotDoubleClick(QTreeWidgetItem* element, int i);
 };
 
@@ -75,9 +70,8 @@ public Q_SLOTS:
 class ImgurImageListViewItem : public KPImagesListViewItem
 {
 public:
-
     ImgurImageListViewItem(KPImagesListView* const view, const QUrl& url);
-    virtual ~ImgurImageListViewItem();
+    ~ImgurImageListViewItem() override {}
 
     void setTitle(const QString& str);
     QString Title() const;
@@ -85,22 +79,13 @@ public:
     void setDescription(const QString& str);
     QString Description() const;
 
-    void setUrl(const QString& str);
-    QString Url() const;
+    void setImgurUrl(const QString& str);
+    QString ImgurUrl() const;
 
-    void setDeleteUrl(const QString& str);
-    QString deleteUrl() const;
-
-    //QString destPath() const;
-
-private:
-
-    QString m_Title;
-    QString m_Description;
-    QString m_Url;
-    QString m_deleteUrl;
+    void setImgurDeleteUrl(const QString& str);
+    QString ImgurDeleteUrl() const;
 };
 
-} // namespace KIPIImgurTalkerPlugin
+} // namespace KIPIImgurPlugin
 
 #endif // IMGURIMAGESLIST_H

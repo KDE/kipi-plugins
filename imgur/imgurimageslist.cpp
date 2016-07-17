@@ -22,6 +22,8 @@
 
 #include "imgurimageslist.h"
 
+#include <memory>
+
 // Qt includes
 
 #include <QLabel>
@@ -31,6 +33,10 @@
 // KDE includes
 
 #include <klocalizedstring.h>
+
+// Libkipi includes
+
+#include <KIPI/Interface>
 
 // Local includes
 
@@ -46,33 +52,38 @@ ImgurImagesList::ImgurImagesList(QWidget* const parent)
     setAllowDuplicate(false);
     setAllowRAW(false);
 
-    listView()->setColumnLabel(KPImagesListView::Thumbnail, i18n("Thumbnail"));
+    auto *list = listView();
 
-    //listView()->setColumnLabel(KPImagesListView::Filename, i18n("File name"));
+    list->setColumnLabel(KPImagesListView::Thumbnail, i18n("Thumbnail"));
 
-    listView()->setColumnLabel(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(ImgurImagesList::Title),
-                               i18n("Submission title"));
+    list->setColumnLabel(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(ImgurImagesList::Title),
+                         i18n("Submission title"));
 
-    listView()->setColumnLabel(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(ImgurImagesList::Description),
-                               i18n("Submission description"));
+    list->setColumnLabel(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(ImgurImagesList::Description),
+                         i18n("Submission description"));
 
-    listView()->setColumn(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(ImgurImagesList::URL),
-                          i18n("Imgur URL"), true);
+    list->setColumn(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(ImgurImagesList::URL),
+                    i18n("Imgur URL"), true);
 
-    listView()->setColumn(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(ImgurImagesList::DeleteURL),
-                          i18n("Imgur Delete URL"), true);
+    list->setColumn(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(ImgurImagesList::DeleteURL),
+                    i18n("Imgur Delete URL"), true);
 
-    connect(listView(), SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),
-            this, SLOT(slotDoubleClick(QTreeWidgetItem*,int)));
+    connect(list, &KPImagesListView::itemDoubleClicked,
+            this, &ImgurImagesList::slotDoubleClick);
 }
 
-ImgurImagesList::~ImgurImagesList()
+QList<const ImgurImageListViewItem *> ImgurImagesList::getPendingItems()
 {
-}
+    QList<const ImgurImageListViewItem *> ret;
 
-void ImgurImagesList::updateItemWidgets()
-{
-    qCDebug(KIPIPLUGINS_LOG) << "update";
+    for(unsigned int i = listView()->topLevelItemCount(); i--;)
+    {
+        const auto *item = dynamic_cast<const ImgurImageListViewItem*>(listView()->topLevelItem(i));
+        if(item && item->ImgurUrl().isEmpty())
+            ret << item;
+    }
+    
+    return ret;
 }
 
 void ImgurImagesList::slotAddImages(const QList<QUrl>& list)
@@ -80,92 +91,69 @@ void ImgurImagesList::slotAddImages(const QList<QUrl>& list)
     /* Replaces the KPImagesList::slotAddImages method, so that
      * ImgurImageListViewItems can be added instead of ImagesListViewItems */
 
-    // Figure out which of the supplied URL's should actually be added and which
-    // of them already exist.
-    bool found;
+    std::unique_ptr<MetadataProcessor> meta;
+    if(iface())
+        meta = std::unique_ptr<MetadataProcessor>(iface()->createMetadataProcessor());
 
     for (QList<QUrl>::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it)
     {
-        QUrl imageUrl = *it;
-        found         = false;
-
-        if (iface())
+        // Already in the list?
+        if (listView()->findItem(*it) == nullptr)
         {
-            for (int i = 0; i < listView()->topLevelItemCount(); ++i)
+            auto *item = new ImgurImageListViewItem(listView(), *it);
+
+            // Load URLs from meta data, if possible
+            if(meta && meta->load(*it))
             {
-                ImgurImageListViewItem* const currItem = dynamic_cast<ImgurImageListViewItem*>(listView()->topLevelItem(i));
-
-                if (currItem && currItem->url() == imageUrl)
-                {
-                    found = true;
-                    break;
-                }
-            }
-
-            QPointer<MetadataProcessor> meta = iface()->createMetadataProcessor();
-
-            if (!found && meta && meta->load(imageUrl))
-            {
-                ImgurImageListViewItem* const currItem = new ImgurImageListViewItem(listView(), imageUrl);
-
-                const QString sUrl       = meta->getXmpTagString(QLatin1String("Xmp.kipi.ImgurId"));
-                const QString sDeleteUrl = meta->getXmpTagString(QLatin1String("Xmp.kipi.ImgurDeleteHash"));
-
-                if (!sUrl.isEmpty())
-                {
-                    currItem->setUrl(QLatin1String(ImgurConnection::pageURL(sUrl).toEncoded()));
-                }
-
-                if (!sDeleteUrl.isEmpty())
-                {
-                    currItem->setDeleteUrl(QLatin1String(ImgurConnection::deleteURL(sDeleteUrl).toEncoded()));
-                }
+                item->setImgurUrl(meta->getXmpTagString(QLatin1String("Xmp.kipi.ImgurId")));
+                item->setImgurDeleteUrl(meta->getXmpTagString(QLatin1String("Xmp.kipi.ImgurDeleteHash")));
             }
         }
     }
 
-    // Duplicate the signalImageListChanged of the ImageWindow, to enable the
-    // upload button again.
     emit signalImageListChanged();
     emit signalAddItems(list);
 }
 
-void ImgurImagesList::slotUploadError(const QUrl& /*localFile*/, const ImgurError& /*error*/)
+void ImgurImagesList::slotSuccess(const ImgurAPI3Result &result)
 {
-    // TODO
-}
+    QUrl imgurl = QUrl::fromLocalFile(result.action->upload.imgpath);
 
-void ImgurImagesList::slotUploadSuccess(const QUrl& localFile, const ImgurSuccess& success)
-{
-    for (int i = 0; i < listView()->topLevelItemCount(); ++i)
+    processed(imgurl, true);
+    
+    Interface *intf = iface();
+    if(intf)
     {
-        ImgurImageListViewItem* const currItem = dynamic_cast<ImgurImageListViewItem*>(listView()->topLevelItem(i));
+        QPointer<MetadataProcessor> meta = intf->createMetadataProcessor();
 
-        if (currItem && currItem->url() == localFile)
+        // Save URLs to meta data, if possible
+        if (meta && meta->load(imgurl))
         {
-            if (!success.image.id.isEmpty())
-            {
-                const QString sUrl = QLatin1String(ImgurConnection::pageURL(success.image.id).toEncoded());
-                currItem->setUrl(sUrl);
-            }
-
-            if (!success.image.deletehash.isEmpty())
-            {
-                const QString sDeleteUrl = QLatin1String(ImgurConnection::deleteURL(success.image.deletehash).toEncoded());
-                currItem->setDeleteUrl(sDeleteUrl);
-            }
-
-            break;
+            meta->setXmpTagString(QLatin1String("Xmp.kipi.ImgurId"),         result.image.url);
+            meta->setXmpTagString(QLatin1String("Xmp.kipi.ImgurDeleteHash"), ImgurAPI3::urlForDeletehash(result.image.deletehash).toString());
+            bool saved = meta->applyChanges();
+            qCDebug(KIPIPLUGINS_LOG) << "Metadata" << (saved ? "Saved" : "Not Saved") << "to" << imgurl;
         }
     }
+
+    ImgurImageListViewItem* const currItem = dynamic_cast<ImgurImageListViewItem*>(listView()->findItem(imgurl));
+
+    if(!currItem)
+        return;
+
+    if (!result.image.url.isEmpty())
+        currItem->setImgurUrl(result.image.url);
+
+    if (!result.image.deletehash.isEmpty())
+        currItem->setImgurDeleteUrl(ImgurAPI3::urlForDeletehash(result.image.deletehash).toString());
 }
 
 void ImgurImagesList::slotDoubleClick(QTreeWidgetItem* element, int i)
 {
-    if (i == 3 || i == 4)
+    if (i == URL || i == DeleteURL)
     {
-        const QUrl url = QUrl (element->text(i));
-        // need to check for delete url click - and ask user if he wants to remove the tags also
+        const QUrl url = QUrl(element->text(i));
+        // The delete page asks for confirmation, so we don't need to do that here
         QDesktopServices::openUrl(url);
     }
 }
@@ -175,58 +163,50 @@ void ImgurImagesList::slotDoubleClick(QTreeWidgetItem* element, int i)
 ImgurImageListViewItem::ImgurImageListViewItem(KPImagesListView* const view, const QUrl& url)
     : KPImagesListViewItem(view, url)
 {
-    const QColor blue = QColor (50, 50, 255);
+    const QColor blue(50, 50, 255);
 
-    setTextColor(3, blue);
-    setTextColor(4, blue);
-}
-
-ImgurImageListViewItem::~ImgurImageListViewItem()
-{
+    setTextColor(ImgurImagesList::URL, blue);
+    setTextColor(ImgurImagesList::DeleteURL, blue);
 }
 
 void ImgurImageListViewItem::setTitle(const QString& str)
 {
     setText(ImgurImagesList::Title, str);
-    m_Title = str;
 }
 
 QString ImgurImageListViewItem::Title() const
 {
-    return m_Title;
+    return text(ImgurImagesList::Title);
 }
 
 void ImgurImageListViewItem::setDescription(const QString& str)
 {
     setText(ImgurImagesList::Description, str);
-    m_Description = str;
 }
 
 QString ImgurImageListViewItem::Description() const
 {
-    return m_Description;
+    return text(ImgurImagesList::Description);
 }
 
-void ImgurImageListViewItem::setUrl(const QString& str)
+void ImgurImageListViewItem::setImgurUrl(const QString& str)
 {
     setText(ImgurImagesList::URL, str);
-    m_Url = str;
 }
 
-QString ImgurImageListViewItem::Url() const
+QString ImgurImageListViewItem::ImgurUrl() const
 {
-    return m_Url;
+    return text(ImgurImagesList::URL);
 }
 
-void ImgurImageListViewItem::setDeleteUrl(const QString& str)
+void ImgurImageListViewItem::setImgurDeleteUrl(const QString& str)
 {
     setText(ImgurImagesList::DeleteURL, str);
-    m_deleteUrl = str;
 }
 
-QString ImgurImageListViewItem::deleteUrl() const
+QString ImgurImageListViewItem::ImgurDeleteUrl() const
 {
-    return m_deleteUrl;
+    return text(ImgurImagesList::DeleteURL);
 }
 
 } // namespace KIPIImgurPlugin

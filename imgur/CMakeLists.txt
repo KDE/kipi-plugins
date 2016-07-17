@@ -10,23 +10,10 @@ add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_imgur\")
 
 set(kipiplugin_imgur_PART_SRCS
     plugin_imgur.cpp
-    imgurtalker.cpp
-    imgurwidget.cpp
+    imgurapi3.cpp
     imgurwindow.cpp
     imgurimageslist.cpp
-    mpform.cpp
    )
-
-if(QTKOAUTH_FOUND)
-
-    # QTKOAUTH is not yet a pure Qt5 library
-    remove_definitions(-DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII)
-
-    include_directories(${QTKOAUTH_INCLUDE_DIR})
-    add_definitions(-DOAUTH_ENABLED ${QTKOAUTH_DEFINITIONS})
-    set(kipiplugin_imgur_PART_SRCS ${kipiplugin_imgur_PART_SRCS} imgurtalkerauth.cpp)
-
-endif()
 
 add_library(kipiplugin_imgur MODULE ${kipiplugin_imgur_PART_SRCS})
 
@@ -39,14 +26,6 @@ target_link_libraries(kipiplugin_imgur
 
                       KF5kipiplugins
 )
-
-if(QTKOAUTH_FOUND)
-
-    target_link_libraries(kipiplugin_imgur
-                          Qt5::Network
-                          ${QTKOAUTH_LIBRARIES})
-
-endif()
 
 configure_file(kipiplugin_imgur.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_imgur.desktop)
 

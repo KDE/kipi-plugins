@@ -3,10 +3,11 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2012-02-12
+ * Date        : 2016-06-06
  * Description : a kipi plugin to export images to the Imgur web service
  *
  * Copyright (C) 2010-2012 by Marius Orcsik <marius at habarnam dot ro>
+ * Copyright (C) 2016 by Fabian Vogt <fabian at ritter dash vogt dot de>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -24,8 +25,10 @@
 
 // Qt includes
 
-#include <QWindow>
+#include <QBoxLayout>
 #include <QCloseEvent>
+#include <QDesktopServices>
+#include <QInputDialog>
 #include <QMessageBox>
 
 // KDE includes
@@ -41,53 +44,82 @@
 #include "kpaboutdata.h"
 #include "kpversion.h"
 
+static const constexpr char *IMGUR_CLIENT_ID("575411e9c939b2b"),
+                            *IMGUR_CLIENT_SECRET("f39bbddf4052062735bdc7168b33aa795cab361f");
+
 namespace KIPIImgurPlugin
 {
 
-class ImgurWindow::Private
-
-{
-public:
-
-    Private()
-    {
-        webService = 0;
-        widget     = 0;
-    }
-
-#ifdef OAUTH_ENABLED
-    ImgurTalkerAuth* webService;
-#else
-    ImgurTalker*     webService;
-#endif //OAUTH_ENABLED
-
-    ImgurWidget*     widget;
-};
-
 ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
-    : KPToolDialog(0),
-      d(new Private)
+    : KPToolDialog(0)
 {
-    d->widget     = new ImgurWidget(this);
+    api = new ImgurAPI3(QString::fromLatin1(IMGUR_CLIENT_ID),
+                        QString::fromLatin1(IMGUR_CLIENT_SECRET), this);
+    
+    /* Connect API signals */
+    connect(api, &ImgurAPI3::authorized, this, &ImgurWindow::apiAuthorized);
+    connect(api, &ImgurAPI3::authError, this, &ImgurWindow::apiAuthError);
+    connect(api, &ImgurAPI3::progress, this, &ImgurWindow::apiProgress);
+    connect(api, &ImgurAPI3::requestPin, this, &ImgurWindow::apiRequestPin);
+    connect(api, &ImgurAPI3::success, this, &ImgurWindow::apiSuccess);
+    connect(api, &ImgurAPI3::error, this, &ImgurWindow::apiError);
+    connect(api, &ImgurAPI3::busy, this, &ImgurWindow::apiBusy);
+    
+    /* | List | Auth | */
+    auto *mainLayout = new QHBoxLayout;
+    auto *mainWidget = new QWidget(this);
+    mainWidget->setLayout(mainLayout);
+    this->setMainWidget(mainWidget);
+    
+    this->list = new ImgurImagesList;
+    mainLayout->addWidget(list);
+    
+    /* |  Logged in as:  |
+     * | <Not logged in> |
+     * |     Forget      | */
 
-#ifdef OAUTH_ENABLED
-    d->webService = new ImgurTalkerAuth(iface(), this);
-#else
-    d->webService = new ImgurTalker(iface(), this);
-#endif //OAUTH_ENABLED
+    auto *userLabelLabel = new QLabel(i18n("Logged in as:"));
+    userLabelLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    userLabelLabel->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
+    
+    this->userLabel = new QLabel; /* Label set in readSettings() */
+    userLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    userLabel->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
 
-    setMainWidget(d->widget);
+    forgetButton = new QPushButton(i18n("Forget"));
+
+    auto *authLayout = new QVBoxLayout;
+    mainLayout->addLayout(authLayout);
+    authLayout->addWidget(userLabelLabel);
+    authLayout->addWidget(userLabel);
+    authLayout->addWidget(forgetButton);
+    authLayout->insertStretch(-1, 1);
+
+    /* Add anonymous upload button */
+    uploadAnonButton = new QPushButton(i18n("Upload Anonymously"));
+    addButton(uploadAnonButton, QDialogButtonBox::ApplyRole);
+    
+    /* Connect UI signals */
+    connect(forgetButton, &QPushButton::clicked,
+            this, &ImgurWindow::forgetButtonClicked);
+    connect(startButton(), &QPushButton::clicked,
+            this, &ImgurWindow::slotUpload);
+    connect(uploadAnonButton, &QPushButton::clicked,
+            this, &ImgurWindow::slotAnonUpload);
+    connect(this, &ImgurWindow::finished,
+            this, &ImgurWindow::slotFinished);
+    connect(this, &ImgurWindow::cancelClicked,
+            this, &ImgurWindow::slotCancel);
+    
     setWindowIcon(QIcon::fromTheme(QString::fromLatin1("kipi-imgur")));
     setWindowTitle(i18n("Export to imgur.com"));
     setModal(false);
 
     startButton()->setText(i18n("Upload"));
     startButton()->setToolTip(i18n("Start upload to Imgur"));
+    startButton()->setEnabled(true);
 
-    startButton()->setEnabled(!d->webService->imageQueue()->isEmpty());
-
-    // ---------------------------------------------------------------
-    // About data and help button.
+    /* Add about data */
 
     KPAboutData* const about = new KPAboutData(ki18n("Imgur Export"),
                                    0,
@@ -103,231 +135,171 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
                      ki18n("Developer").toString(),
                      QString::fromLatin1("caulier dot gilles at gmail dot com"));
 
+    about->addAuthor(ki18n("Fabian Vogt").toString(),
+                     ki18n("Developer").toString(),
+                     QString::fromLatin1("fabian at ritter dash vogt dot de"));
+
     about->setHandbookEntry(QString::fromLatin1("imgur"));
     setAboutData(about);
 
-    // ------------------------------------------------------------
-
-    connect(startButton(), SIGNAL(clicked()),
-            this, SLOT(slotStartUpload()));
-
-    connect(this, SIGNAL(finished(int)),
-            this, SLOT(slotFinished()));
-
-    connect(this, SIGNAL(cancelClicked()),
-            this, SLOT(slotCancel()));
-
-    connect(d->webService, SIGNAL(signalQueueChanged()),
-            this, SLOT(slotImageQueueChanged()));
-
-    connect(d->webService, SIGNAL(signalBusy(bool)),
-            this, SLOT(slotBusy(bool)));
-
-    connect(d->webService, SIGNAL(signalUploadStart(QUrl)),
-            d->widget, SLOT(slotImageUploadStart(QUrl)));
-
-    connect(d->webService, SIGNAL(signalError(QUrl,ImgurError)),
-            d->widget, SLOT(slotImageUploadError(QUrl,ImgurError)));
-
-    connect(d->webService, SIGNAL(signalSuccess(QUrl,ImgurSuccess)),
-            d->widget, SLOT(slotImageUploadSuccess(QUrl,ImgurSuccess)));
-
-    // this signal/slot controls if the webservice should continue upload or not
-    connect(d->webService, SIGNAL(signalError(QUrl,ImgurError)),
-            this, SLOT(slotAddPhotoError(QUrl,ImgurError)));
-
-    connect(d->webService, SIGNAL(signalSuccess(QUrl,ImgurSuccess)),
-            this, SLOT(slotAddPhotoSuccess(QUrl,ImgurSuccess)));
-
-    connect(this, SIGNAL(signalContinueUpload(bool)),
-            d->webService, SLOT(slotContinueUpload(bool)));
-
-    // adding/removing items from the image list
-    connect(d->widget, SIGNAL(signalAddItems(QList<QUrl>)),
-            d->webService, SLOT(slotAddItems(QList<QUrl>)));
-
-    connect(d->widget, SIGNAL(signalRemoveItems(QList<QUrl>)),
-            d->webService, SLOT(slotRemoveItems(QList<QUrl>)));
-
-   // ---------------------------------------------------------------
-#ifdef OAUTH_ENABLED
-    connect(d->widget, SIGNAL(signalClickedChangeUser()),
-            d->webService, SLOT(slotOAuthLogin()));
-
-    //connect(d->webService, SIGNAL(signalAuthenticated(bool)),
-    //        d->widget, SLOT(slotAuthenticated(bool)));
-
-    connect(d->webService, SIGNAL(signalAuthenticated(bool,QString)),
-            d->widget, SLOT(slotAuthenticated(bool,QString)));
-
-    connect(d->webService, SIGNAL(signalAuthenticated(bool,QString)),
-            this, SLOT(slotAuthenticated(bool,QString)));
-#endif //OAUTH_ENABLED
+    /* Only used if not overwritten by readSettings() */
+    resize(650, 320);
     readSettings();
 }
 
 ImgurWindow::~ImgurWindow()
 {
     saveSettings();
-
-    delete d->webService;
-    delete d;
 }
 
-void ImgurWindow::setContinueUpload(bool state)
+void ImgurWindow::reactivate()
 {
-    setRejectButtonMode(state ? QDialogButtonBox::Cancel : QDialogButtonBox::Close);
-
-    emit signalContinueUpload(state);
+    list->loadImagesFromCurrentSelection();
+    show();
 }
 
-void ImgurWindow::slotCancel()
+void ImgurWindow::forgetButtonClicked()
 {
-    setContinueUpload(false);
-    // Must cancel the transfer
-    d->webService->cancel();
-    d->webService->imageQueue()->clear();
+    api->getAuth().unlink();
 
-    d->widget->imagesList()->cancelProcess();
-    d->widget->progressBar()->setVisible(false);
-    d->widget->progressBar()->progressCompleted();
+    apiAuthorized(false, {});
+}
+
+void ImgurWindow::slotUpload()
+{
+    QList<const ImgurImageListViewItem*> pending = this->list->getPendingItems();
+    for(auto item : pending)
+    {
+        ImgurAPI3Action action;
+        action.type = ImgurAPI3ActionType::IMG_UPLOAD;
+        action.upload.imgpath = item->url().toLocalFile();
+        action.upload.title = item->Title();
+        action.upload.description = item->Description();
+        
+        api->queueWork(action);
+    }
+}
+
+void ImgurWindow::slotAnonUpload()
+{
+    QList<const ImgurImageListViewItem*> pending = this->list->getPendingItems();
+    for(auto item : pending)
+    {
+        ImgurAPI3Action action;
+        action.type = ImgurAPI3ActionType::ANON_IMG_UPLOAD;
+        action.upload.imgpath = item->url().toLocalFile();
+        action.upload.title = item->Title();
+        action.upload.description = item->Description();
+        
+        api->queueWork(action);
+    }
 }
 
 void ImgurWindow::slotFinished()
 {
-    d->widget->progressBar()->progressCompleted();
-    d->widget->imagesList()->listView()->clear();
-    d->webService->imageQueue()->clear();
     saveSettings();
+}
+
+void ImgurWindow::slotCancel()
+{
+    api->cancelAllWork();
+}
+
+void ImgurWindow::apiAuthorized(bool success, const QString &username)
+{
+    if(success)
+    {
+        this->username = username;
+        this->userLabel->setText(this->username);
+        this->forgetButton->setEnabled(true);
+        return;
+    }
+    
+    this->username = QString();
+    this->userLabel->setText(i18n("<Not logged in>"));
+    this->forgetButton->setEnabled(false);
+}
+
+void ImgurWindow::apiAuthError(const QString &msg)
+{
+    QMessageBox::critical(this,
+                          i18n("Authorization Failed"),
+                          i18n("Failed to log into Imgur: %1\n", msg));
+}
+
+
+void ImgurWindow::apiProgress(unsigned int /*percent*/, const ImgurAPI3Action &action)
+{
+    list->processing(QUrl::fromLocalFile(action.upload.imgpath));
+}
+
+void ImgurWindow::apiRequestPin(const QUrl &url)
+{
+    QDesktopServices::openUrl(url);
+}
+
+void ImgurWindow::apiSuccess(const ImgurAPI3Result &result)
+{
+    list->slotSuccess(result);
+}
+
+void ImgurWindow::apiError(const QString &msg, const ImgurAPI3Action &action)
+{
+    list->processed(QUrl::fromLocalFile(action.upload.imgpath), false);
+    
+    /* 1 here because the current item is still in the queue. */
+    if(api->workQueueLength() <= 1)
+    {
+        QMessageBox::critical(this,
+                              i18n("Uploading Failed"),
+                              i18n("Failed to upload photo to Imgur: %1\n", msg));
+        return;
+    }
+
+    QMessageBox::StandardButton cont =
+            QMessageBox::question(this,
+                                  i18n("Uploading Failed"),
+                                  i18n("Failed to upload photo to Imgur: %1\n"
+                                       "Do you want to continue?", msg));
+
+    if(cont != QMessageBox::Yes)
+        api->cancelAllWork();
+}
+
+void ImgurWindow::apiBusy(bool busy)
+{
+    setCursor(busy ? Qt::WaitCursor : Qt::ArrowCursor);
+    startButton()->setEnabled(!busy);
 }
 
 void ImgurWindow::closeEvent(QCloseEvent* e)
 {
     if (!e)
-    {
         return;
-    }
 
     slotFinished();
     e->accept();
 }
 
-void ImgurWindow::slotStartUpload()
-{
-    d->widget->progressBar()->setValue(0);
-    d->widget->progressBar()->setFormat(i18n("%v / %m"));
-    d->widget->progressBar()->progressScheduled(i18n("Export to Imgur"), true, true);
-    d->widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme(QString::fromLatin1("kipi")).pixmap(22, 22));
-
-    setContinueUpload(true);
-}
-
-void ImgurWindow::reactivate()
-{
-    d->widget->imagesList()->loadImagesFromCurrentSelection();
-    show();
-}
-
-void ImgurWindow::slotImageQueueChanged()
-{
-    startButton()->setEnabled(!d->webService->imageQueue()->isEmpty());
-}
-
-void ImgurWindow::slotAddPhotoError(const QUrl& /*currentImage*/, const ImgurError& error)
-{
-    if (!d->webService->imageQueue()->isEmpty())
-    {
-        if (QMessageBox::question(this, i18n("Uploading Failed"),
-                                  i18n("Failed to upload photo to Imgur: %1\n"
-                                       "Do you want to continue?", error.message))
-                != QMessageBox::Yes)
-        {
-            setContinueUpload(false);
-        }
-        else
-        {
-            setContinueUpload(true);
-        }
-
-    }
-    else
-    {
-        QMessageBox::information(this, QString(), i18n("Failed to upload photo to Imgur: %1\n", error.message));
-    }
-
-    return;
-}
-
-void ImgurWindow::slotAddPhotoSuccess(const QUrl& /*currentImage*/, const ImgurSuccess& /*success*/)
-{
-   setContinueUpload(true);
-}
-
-void ImgurWindow::slotAuthenticated(bool yes, const QString& message)
-{
-    QString err;
-
-    if (!message.isEmpty())
-    {
-        err = i18nc("%1 is the error string",
-                    "Failed to authenticate to Imgur.\n%1\nDo you want to continue?",
-                    message);
-    }
-    else
-    {
-        err = i18n("Failed to authenticate to Imgur.\nDo you want to continue?");
-    }
-
-    if (yes)
-    {
-        startButton()->setEnabled(yes);
-    }
-    else if (QMessageBox::question(this, i18n("Processing Failed"), err)
-             == QMessageBox::Yes)
-    {
-        startButton()->setEnabled(true);
-    }
-}
-
-void ImgurWindow::slotBusy(bool val)
-{
-    if (val)
-    {
-        setCursor(Qt::WaitCursor);
-        startButton()->setEnabled(false);
-    }
-    else
-    {
-        setCursor(Qt::ArrowCursor);
-
-        if (d->webService->imageQueue()->isEmpty())
-        {
-            setContinueUpload(false);
-            startButton()->setEnabled(true);
-            d->widget->progressBar()->setVisible(false);
-            d->widget->progressBar()->progressCompleted();
-        }
-    }
-}
-
 void ImgurWindow::readSettings()
 {
     KConfig config(QString::fromLatin1("kipirc"));
-    //KConfigGroup group = config.group(QString("Imgur Settings"));
+    KConfigGroup groupAuth = config.group("Imgur Auth");
+    username = groupAuth.readEntry("username", QString());
+    apiAuthorized(!username.isEmpty(), username);
 
-    winId();
-    KConfigGroup group2 = config.group("Imgur Dialog");
-    KWindowConfig::restoreWindowSize(windowHandle(), group2);
-    resize(windowHandle()->size());
+    KConfigGroup groupDialog = config.group("Imgur Dialog");
+    KWindowConfig::restoreWindowSize(windowHandle(), groupDialog);
 }
 
 void ImgurWindow::saveSettings()
 {
     KConfig config(QString::fromLatin1("kipirc"));
-    //KConfigGroup group = config.group(QString("Imgur Settings"));
+    KConfigGroup groupAuth = config.group("Imgur Auth");
+    groupAuth.writeEntry("username", username);
 
-    KConfigGroup group2 = config.group("Imgur Dialog");
-    KWindowConfig::saveWindowSize(windowHandle(), group2);
+    KConfigGroup groupDialog = config.group("Imgur Dialog");
+    KWindowConfig::saveWindowSize(windowHandle(), groupDialog);
     config.sync();
 }
 

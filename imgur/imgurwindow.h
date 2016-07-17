@@ -26,6 +26,7 @@
 // Qt includes
 
 #include <QObject>
+#include <QLabel>
 
 // Libkipi includes
 
@@ -33,19 +34,9 @@
 
 // Local includes
 
-#include "kpimageslist.h"
-#include "imgurwidget.h"
+#include "imgurimageslist.h"
 #include "kptooldialog.h"
-#include "imgurtalker.h"
-
-#ifdef OAUTH_ENABLED
-#include "imgurtalkerauth.h"
-#endif //OAUTH_ENABLED
-
-namespace KIPIPlugins
-{
-    class KPImagesList;
-}
+#include "imgurapi3.h"
 
 namespace KIPI
 {
@@ -63,44 +54,43 @@ class ImgurWindow : public KPToolDialog
     Q_OBJECT
 
 public:
-
     ImgurWindow(QWidget* const parent = 0);
     ~ImgurWindow();
 
     void reactivate();
 
 public Q_SLOTS:
-
-    void slotImageQueueChanged();
-    void slotBusy(bool val);
-
-    void slotAddPhotoSuccess(const QUrl& currentImage, const ImgurSuccess& success);
-    void slotAddPhotoError(const QUrl& currentImage, const ImgurError& error);
-//    void slotAuthenticated(bool yes);
-    void slotAuthenticated(bool yes, const QString& message = QLatin1String(""));
-
-    void slotStartUpload();
+    /* UI callbacks */
+    void forgetButtonClicked();
+    void slotUpload();
+    void slotAnonUpload();
     void slotFinished();
     void slotCancel();
-
-Q_SIGNALS:
-
-    void signalImageUploadSuccess(const QUrl&, const ImgurSuccess&);
-    void signalImageUploadError(const QUrl&, const ImgurError&);
-    void signalImageUploadCompleted();
-    void signalContinueUpload(bool yes);
+    
+    /* ImgurAPI3 callbacks */
+    void apiAuthorized(bool success, const QString &username);
+    void apiAuthError(const QString &msg);
+    void apiProgress(unsigned int percent, const ImgurAPI3Action &action);
+    void apiRequestPin(const QUrl &url);
+    void apiSuccess(const ImgurAPI3Result &result);
+    void apiError(const QString &msg, const ImgurAPI3Action &action);
+    void apiBusy(bool busy);
 
 private:
-
     void closeEvent(QCloseEvent* e);
     void setContinueUpload(bool state);
     void readSettings();
     void saveSettings();
 
 private:
-
-    class Private;
-    Private* const d;
+    ImgurImagesList *list = nullptr;
+    ImgurAPI3       *api  = nullptr;
+    QPushButton     *forgetButton = nullptr,
+                    *uploadAnonButton = nullptr;
+    QLabel          *userLabel = nullptr;
+    /* Contains the imgur username if API authorized.
+     * If not, username is null. */
+    QString         username;
 };
 
 } // namespace KIPIImgurPlugin
