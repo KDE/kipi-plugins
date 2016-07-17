@@ -22,6 +22,8 @@
 
 #include "imgurimageslist.h"
 
+// C++ includes
+
 #include <memory>
 
 // Qt includes
@@ -79,10 +81,11 @@ QList<const ImgurImageListViewItem *> ImgurImagesList::getPendingItems()
     for(unsigned int i = listView()->topLevelItemCount(); i--;)
     {
         const auto *item = dynamic_cast<const ImgurImageListViewItem*>(listView()->topLevelItem(i));
-        if(item && item->ImgurUrl().isEmpty())
+
+        if (item && item->ImgurUrl().isEmpty())
             ret << item;
     }
-    
+
     return ret;
 }
 
@@ -92,7 +95,8 @@ void ImgurImagesList::slotAddImages(const QList<QUrl>& list)
      * ImgurImageListViewItems can be added instead of ImagesListViewItems */
 
     std::unique_ptr<MetadataProcessor> meta;
-    if(iface())
+
+    if (iface())
         meta = std::unique_ptr<MetadataProcessor>(iface()->createMetadataProcessor());
 
     for (QList<QUrl>::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it)
@@ -115,14 +119,15 @@ void ImgurImagesList::slotAddImages(const QList<QUrl>& list)
     emit signalAddItems(list);
 }
 
-void ImgurImagesList::slotSuccess(const ImgurAPI3Result &result)
+void ImgurImagesList::slotSuccess(const ImgurAPI3Result& result)
 {
     QUrl imgurl = QUrl::fromLocalFile(result.action->upload.imgpath);
 
     processed(imgurl, true);
-    
+
     Interface *intf = iface();
-    if(intf)
+
+    if (intf)
     {
         QPointer<MetadataProcessor> meta = intf->createMetadataProcessor();
 
@@ -138,7 +143,7 @@ void ImgurImagesList::slotSuccess(const ImgurAPI3Result &result)
 
     ImgurImageListViewItem* const currItem = dynamic_cast<ImgurImageListViewItem*>(listView()->findItem(imgurl));
 
-    if(!currItem)
+    if (!currItem)
         return;
 
     if (!result.image.url.isEmpty())

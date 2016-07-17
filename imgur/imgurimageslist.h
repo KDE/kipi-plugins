@@ -56,12 +56,12 @@ public:
 
     ImgurImagesList(QWidget* const parent = 0);
     ~ImgurImagesList() override {}
-    
+
     QList<const ImgurImageListViewItem *> getPendingItems();
 
 public Q_SLOTS:
     void slotAddImages(const QList<QUrl>& list) override;
-    void slotSuccess(const ImgurAPI3Result &result);
+    void slotSuccess(const ImgurAPI3Result& result);
     void slotDoubleClick(QTreeWidgetItem* element, int i);
 };
 
