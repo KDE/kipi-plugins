@@ -20,9 +20,10 @@
  *
  * ============================================================ */
 
-#include <klocalizedstring.h>
+#include "imgurapi3.h"
 
-#include <QDebug>
+// Qt includes
+
 #include <QFileInfo>
 #include <QHttpMultiPart>
 #include <QJsonDocument>
@@ -30,13 +31,19 @@
 #include <QTimerEvent>
 #include <QUrlQuery>
 
-#include "imgurapi3.h"
+// KDE includes
+
+#include <klocalizedstring.h>
+
+// Local includes
+
+#include "kipiplugins_debug.h"
 
 static const QString imgur_auth_url = QLatin1String("https://api.imgur.com/oauth2/authorize"),
 imgur_token_url = QLatin1String("https://api.imgur.com/oauth2/token");
 static const uint16_t imgur_redirect_port = 8000; // Redirect URI is http://127.0.0.1:8000
 
-ImgurAPI3::ImgurAPI3(const QString &client_id, const QString &client_secret, QObject *parent)
+ImgurAPI3::ImgurAPI3(const QString& client_id, const QString& client_secret, QObject* parent)
     : QObject(parent)
 {
     m_auth.setClientId(client_id);
@@ -47,7 +54,7 @@ ImgurAPI3::ImgurAPI3(const QString &client_id, const QString &client_secret, QOb
     m_auth.setLocalPort(imgur_redirect_port);
 
     connect(&m_auth, &O2::linkedChanged, this, &ImgurAPI3::oauthAuthorized);
-    connect(&m_auth, &O2::openBrowser, this, &ImgurAPI3::oauthRequestPin);
+    connect(&m_auth, &O2::openBrowser,   this, &ImgurAPI3::oauthRequestPin);
     connect(&m_auth, &O2::linkingFailed, this, &ImgurAPI3::oauthFailed);
 }
 
@@ -68,7 +75,7 @@ unsigned int ImgurAPI3::workQueueLength()
     return m_work_queue.size();
 }
 
-void ImgurAPI3::queueWork(const ImgurAPI3Action &action)
+void ImgurAPI3::queueWork(const ImgurAPI3Action& action)
 {
     m_work_queue.push(action);
     startWorkTimer();
@@ -77,16 +84,16 @@ void ImgurAPI3::queueWork(const ImgurAPI3Action &action)
 void ImgurAPI3::cancelAllWork()
 {
     stopWorkTimer();
-    
-    if(m_reply)
+
+    if (m_reply)
         m_reply->abort();
-    
+
     /* Should error be emitted for those actions? */
-    while(!m_work_queue.empty())
+    while (!m_work_queue.empty())
         m_work_queue.pop();
 }
 
-QUrl ImgurAPI3::urlForDeletehash(const QString &deletehash)
+QUrl ImgurAPI3::urlForDeletehash(const QString& deletehash)
 {
     return QUrl{QLatin1String("https://imgur.com/delete/") + deletehash};
 }
@@ -94,7 +101,8 @@ QUrl ImgurAPI3::urlForDeletehash(const QString &deletehash)
 void ImgurAPI3::oauthAuthorized()
 {
     bool success = m_auth.linked();
-    if(success)
+
+    if (success)
         startWorkTimer();
     else
         emit busy(false);
@@ -102,7 +110,7 @@ void ImgurAPI3::oauthAuthorized()
     emit authorized(success, m_auth.extraTokens()[QLatin1String("account_username")].toString());
 }
 
-void ImgurAPI3::oauthRequestPin(const QUrl &url)
+void ImgurAPI3::oauthRequestPin(const QUrl& url)
 {
     emit busy(false);
     emit requestPin(url);
@@ -115,73 +123,73 @@ void ImgurAPI3::oauthFailed()
 
 void ImgurAPI3::uploadProgress(qint64 sent, qint64 total)
 {
-    if(total > 0) /* Don't divide by 0 */
+    if (total > 0) /* Don't divide by 0 */
         emit progress((sent * 100) / total, m_work_queue.front());
 }
 
 void ImgurAPI3::replyFinished()
 {
-    auto *reply = m_reply;
+    auto* reply = m_reply;
     reply->deleteLater();
     m_reply = nullptr;
-    
-    if(this->m_image)
+
+    if (this->m_image)
     {
         delete this->m_image;
         this->m_image = nullptr;
     }
 
-    if(m_work_queue.empty())
+    if (m_work_queue.empty())
     {
-        qDebug() << "Received result without request";
+        qCDebug(KIPIPLUGINS_LOG) << "Received result without request";
         return;
     }
 
     /* toInt() returns 0 if conversion fails. That fits nicely already. */
     int code = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
     auto response = QJsonDocument::fromJson(reply->readAll());
-    
-    if(code == 200 && !response.isEmpty())
+
+    if (code == 200 && !response.isEmpty())
     {
         /* Success! */
         ImgurAPI3Result result;
         result.action = &m_work_queue.front();
         auto data = response.object()[QLatin1String("data")].toObject();
-        
-        switch(result.action->type)
+
+        switch (result.action->type)
         {
-        case ImgurAPI3ActionType::IMG_UPLOAD:
-        case ImgurAPI3ActionType::ANON_IMG_UPLOAD:
-            result.image.animated = data[QLatin1String("animated")].toBool();
-            result.image.bandwidth = data[QLatin1String("bandwidth")].toInt();
-            result.image.datetime = data[QLatin1String("datetime")].toInt();
-            result.image.deletehash = data[QLatin1String("deletehash")].toString();
-            result.image.description = data[QLatin1String("description")].toString();
-            result.image.height = data[QLatin1String("height")].toInt();
-            result.image.hash = data[QLatin1String("id")].toString();
-            result.image.name = data[QLatin1String("name")].toString();
-            result.image.size = data[QLatin1String("size")].toInt();
-            result.image.title = data[QLatin1String("title")].toString();
-            result.image.type = data[QLatin1String("type")].toString();
-            result.image.url = data[QLatin1String("link")].toString();
-            result.image.views = data[QLatin1String("views")].toInt();
-            result.image.width = data[QLatin1String("width")].toInt();
-            break;
-        case ImgurAPI3ActionType::ACCT_INFO:
-            result.account.username = data[QLatin1String("url")].toString();
-            /* TODO: Other fields */
-            break;
-        default:
-            qWarning() << "Unexpected action";
-            qDebug() << response.toJson();
-            break;
+            case ImgurAPI3ActionType::IMG_UPLOAD:
+            case ImgurAPI3ActionType::ANON_IMG_UPLOAD:
+                result.image.animated = data[QLatin1String("animated")].toBool();
+                result.image.bandwidth = data[QLatin1String("bandwidth")].toInt();
+                result.image.datetime = data[QLatin1String("datetime")].toInt();
+                result.image.deletehash = data[QLatin1String("deletehash")].toString();
+                result.image.description = data[QLatin1String("description")].toString();
+                result.image.height = data[QLatin1String("height")].toInt();
+                result.image.hash = data[QLatin1String("id")].toString();
+                result.image.name = data[QLatin1String("name")].toString();
+                result.image.size = data[QLatin1String("size")].toInt();
+                result.image.title = data[QLatin1String("title")].toString();
+                result.image.type = data[QLatin1String("type")].toString();
+                result.image.url = data[QLatin1String("link")].toString();
+                result.image.views = data[QLatin1String("views")].toInt();
+                result.image.width = data[QLatin1String("width")].toInt();
+                break;
+            case ImgurAPI3ActionType::ACCT_INFO:
+                result.account.username = data[QLatin1String("url")].toString();
+                /* TODO: Other fields */
+                break;
+            default:
+                qCWarning(KIPIPLUGINS_LOG) << "Unexpected action";
+                qCDebug(KIPIPLUGINS_LOG) << response.toJson();
+                break;
         }
-        
+
         emit success(result);
     }
     else
     {
-        if(code == 403)
+        if (code == 403)
         {
             /* HTTP 403 Forbidden -> Invalid token? 
              * That needs to be handled internally, so don't emit progress
@@ -194,21 +202,21 @@ void ImgurAPI3::replyFinished()
         {
             /* Failed. */
             auto msg = response.object()[QLatin1String("data")]
-                    .toObject()[QLatin1String("error")]
-                    .toString(QLatin1String("Could not read response."));
+                       .toObject()[QLatin1String("error")]
+                       .toString(QLatin1String("Could not read response."));
 
             emit error(msg, m_work_queue.front());
         }
     }
-    
+
     /* Next work item. */
     m_work_queue.pop();
     startWorkTimer();
 }
 
-void ImgurAPI3::timerEvent(QTimerEvent *event)
+void ImgurAPI3::timerEvent(QTimerEvent* event)
 {
-    if(event->timerId() != m_work_timer)
+    if (event->timerId() != m_work_timer)
         return QObject::timerEvent(event);
 
     event->accept();
@@ -222,7 +230,7 @@ void ImgurAPI3::timerEvent(QTimerEvent *event)
 
 void ImgurAPI3::startWorkTimer()
 {
-    if(!m_work_queue.empty() && m_work_timer == 0)
+    if (!m_work_queue.empty() && m_work_timer == 0)
     {
         m_work_timer = QObject::startTimer(0);
         emit busy(true);
@@ -233,20 +241,20 @@ void ImgurAPI3::startWorkTimer()
 
 void ImgurAPI3::stopWorkTimer()
 {
-    if(m_work_timer != 0)
+    if (m_work_timer != 0)
     {
         QObject::killTimer(m_work_timer);
         m_work_timer = 0;
     }
 }
 
-void ImgurAPI3::addAuthToken(QNetworkRequest *request)
+void ImgurAPI3::addAuthToken(QNetworkRequest* request)
 {
     request->setRawHeader(QByteArray("Authorization"),
                           QString::fromLatin1("Bearer %1").arg(m_auth.token()).toUtf8());
 }
 
-void ImgurAPI3::addAnonToken(QNetworkRequest *request)
+void ImgurAPI3::addAnonToken(QNetworkRequest* request)
 {
     request->setRawHeader(QByteArray("Authorization"),
                           QString::fromLatin1("Client-ID %1").arg(m_auth.clientId()).toUtf8());
@@ -254,12 +262,12 @@ void ImgurAPI3::addAnonToken(QNetworkRequest *request)
 
 void ImgurAPI3::doWork()
 {
-    if(m_work_queue.empty() || m_reply != nullptr)
+    if (m_work_queue.empty() || m_reply != nullptr)
         return;
-    
+
     auto &work = m_work_queue.front();
-    
-    if(work.type != ImgurAPI3ActionType::ANON_IMG_UPLOAD && !m_auth.linked())
+
+    if (work.type != ImgurAPI3ActionType::ANON_IMG_UPLOAD && !m_auth.linked())
     {
         m_auth.link();
         return; /* Wait for the authorized() signal. */
@@ -267,66 +275,68 @@ void ImgurAPI3::doWork()
 
     switch(work.type)
     {
-    case ImgurAPI3ActionType::ACCT_INFO:
-    {
-        QNetworkRequest request(QUrl(QString::fromLatin1("https://api.imgur.com/3/account/%1")
-                                     .arg(QLatin1String(work.account.username.toUtf8().toPercentEncoding()))));
-        addAuthToken(&request);
-        
-        this->m_reply = m_net.get(request);
-        break;
-    }
-    case ImgurAPI3ActionType::ANON_IMG_UPLOAD:
-    case ImgurAPI3ActionType::IMG_UPLOAD:
-    {
-        this->m_image = new QFile(work.upload.imgpath);
-        if(!m_image->open(QIODevice::ReadOnly))
+        case ImgurAPI3ActionType::ACCT_INFO:
         {
-            delete this->m_image;
-            this->m_image = nullptr;
-
-            /* Failed. */
-            emit error(i18n("Could not open file"), m_work_queue.front());
-
-            m_work_queue.pop();
-            return doWork();
-        }
-
-        /* Set ownership to m_image to delete that as well. */
-        auto *multipart = new QHttpMultiPart(QHttpMultiPart::FormDataType, m_image);
-        QHttpPart title;
-        title.setHeader(QNetworkRequest::ContentDispositionHeader,
-                        QLatin1String("form-data; name=\"title\""));
-        title.setBody(work.upload.title.toUtf8().toPercentEncoding());
-        multipart->append(title);
-        
-        QHttpPart description;
-        description.setHeader(QNetworkRequest::ContentDispositionHeader,
-                              QLatin1String("form-data; name=\"description\""));
-        description.setBody(work.upload.description.toUtf8().toPercentEncoding());
-        multipart->append(description);
-        
-        QHttpPart image;
-        image.setHeader(QNetworkRequest::ContentDispositionHeader,
-                        QVariant(QString::fromLatin1("form-data; name=\"image\"; filename=\"%1\"")
-                                 .arg(QLatin1String(QFileInfo(work.upload.imgpath).fileName().toUtf8().toPercentEncoding()))));
-        image.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/octet-stream"));
-        image.setBodyDevice(this->m_image);
-        multipart->append(image);
-        
-        QNetworkRequest request(QUrl(QLatin1String("https://api.imgur.com/3/image")));
-        if(work.type == ImgurAPI3ActionType::IMG_UPLOAD)
+            QNetworkRequest request(QUrl(QString::fromLatin1("https://api.imgur.com/3/account/%1")
+                                        .arg(QLatin1String(work.account.username.toUtf8().toPercentEncoding()))));
             addAuthToken(&request);
-        else
-            addAnonToken(&request);
 
-        this->m_reply = this->m_net.post(request, multipart);
+            this->m_reply = m_net.get(request);
+            break;
+        }
+        case ImgurAPI3ActionType::ANON_IMG_UPLOAD:
+        case ImgurAPI3ActionType::IMG_UPLOAD:
+        {
+            this->m_image = new QFile(work.upload.imgpath);
 
-        break;
+            if (!m_image->open(QIODevice::ReadOnly))
+            {
+                delete this->m_image;
+                this->m_image = nullptr;
+
+                /* Failed. */
+                emit error(i18n("Could not open file"), m_work_queue.front());
+
+                m_work_queue.pop();
+                return doWork();
+            }
+
+            /* Set ownership to m_image to delete that as well. */
+            auto* multipart = new QHttpMultiPart(QHttpMultiPart::FormDataType, m_image);
+            QHttpPart title;
+            title.setHeader(QNetworkRequest::ContentDispositionHeader,
+                            QLatin1String("form-data; name=\"title\""));
+            title.setBody(work.upload.title.toUtf8().toPercentEncoding());
+            multipart->append(title);
+
+            QHttpPart description;
+            description.setHeader(QNetworkRequest::ContentDispositionHeader,
+                                  QLatin1String("form-data; name=\"description\""));
+            description.setBody(work.upload.description.toUtf8().toPercentEncoding());
+            multipart->append(description);
+
+            QHttpPart image;
+            image.setHeader(QNetworkRequest::ContentDispositionHeader,
+                            QVariant(QString::fromLatin1("form-data; name=\"image\"; filename=\"%1\"")
+                            .arg(QLatin1String(QFileInfo(work.upload.imgpath).fileName().toUtf8().toPercentEncoding()))));
+            image.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/octet-stream"));
+            image.setBodyDevice(this->m_image);
+            multipart->append(image);
+
+            QNetworkRequest request(QUrl(QLatin1String("https://api.imgur.com/3/image")));
+
+            if (work.type == ImgurAPI3ActionType::IMG_UPLOAD)
+                addAuthToken(&request);
+            else
+                addAnonToken(&request);
+
+            this->m_reply = this->m_net.post(request, multipart);
+
+            break;
+        }
     }
-    }
-    
-    if(this->m_reply)
+
+    if (this->m_reply)
     {
         connect(m_reply, &QNetworkReply::uploadProgress, this, &ImgurAPI3::uploadProgress);
         connect(m_reply, &QNetworkReply::finished, this, &ImgurAPI3::replyFinished);

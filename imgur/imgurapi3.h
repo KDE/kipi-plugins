@@ -23,13 +23,19 @@
 #ifndef IMGURAPI3_H
 #define IMGURAPI3_H
 
+// C++ includes
+
 #include <atomic>
 #include <queue>
 
-#include <QFile>
+// Qt includes
+
 #include <QNetworkAccessManager>
 #include <QString>
+#include <QFile>
 #include <QUrl>
+
+// Local includes
 
 #include "o2.h"
 
@@ -58,8 +64,8 @@ struct ImgurAPI3Action
 
 struct ImgurAPI3Result
 {
-    const ImgurAPI3Action *action;
-    
+    const ImgurAPI3Action* action;
+
     struct ImgurImage
     {
         QString    name;
@@ -77,7 +83,7 @@ struct ImgurAPI3Result
         uint       views;
         qulonglong bandwidth;
     } image;
-    
+
     struct ImgurAccount
     {
         QString username;
@@ -90,40 +96,40 @@ class ImgurAPI3 : public QObject
 Q_OBJECT
 
 public:
-    ImgurAPI3(const QString &client_id, const QString &client_secret, QObject *parent=nullptr);
+    ImgurAPI3(const QString& client_id, const QString& client_secret, QObject* parent = nullptr);
     ~ImgurAPI3();
 
     /* Use this to read/write the access and refresh tokens. */
     O2 &getAuth();
 
     unsigned int workQueueLength();
-    void queueWork(const ImgurAPI3Action &action);
+    void queueWork(const ImgurAPI3Action& action);
     void cancelAllWork();
-    
-    static QUrl urlForDeletehash(const QString &deletehash);
+
+    static QUrl urlForDeletehash(const QString& deletehash);
 
 Q_SIGNALS:
     /* Called if authentication state changes. */
-    void authorized(bool success, const QString &username);
-    void authError(const QString &msg);
-    
+    void authorized(bool success, const QString& username);
+    void authError(const QString& msg);
+
     /* Open url in a browser and let the user copy the pin.
      * Call setPin(pin) to authorize. */
-    void requestPin(const QUrl &url);
-    
+    void requestPin(const QUrl& url);
+
     /* Emitted on progress changes. */
-    void progress(unsigned int percent, const ImgurAPI3Action &action);
-    void success(const ImgurAPI3Result &result);
-    void error(const QString &msg, const ImgurAPI3Action &action);
+    void progress(unsigned int percent, const ImgurAPI3Action& action);
+    void success(const ImgurAPI3Result& result);
+    void error(const QString& msg, const ImgurAPI3Action& action);
 
     /* Emitted when the status changes. */
     void busy(bool b);
-    
+
 public Q_SLOTS:
     /* Connected to m_auth.linkedChanged(). */
     void oauthAuthorized();
     /* Connected to m_auth.openBrowser(QUrl). */
-    void oauthRequestPin(const QUrl &url);
+    void oauthRequestPin(const QUrl& url);
     /* Connected to m_auth.linkingFailed(). */
     void oauthFailed();
 
@@ -132,7 +138,7 @@ public Q_SLOTS:
     void replyFinished();
 
 protected:
-    void timerEvent(QTimerEvent *event) override;
+    void timerEvent(QTimerEvent* event) override;
 
 private:
     /* Starts m_work_timer if m_work_queue not empty. */
@@ -140,28 +146,28 @@ private:
     /* Stops m_work_timer if running. */
     void stopWorkTimer();
     /* Adds the user authorization info to the request. */
-    void addAuthToken(QNetworkRequest *request);
+    void addAuthToken(QNetworkRequest* request);
     /* Adds the client authorization info to the request. */
-    void addAnonToken(QNetworkRequest *request);
-    
+    void addAnonToken(QNetworkRequest* request);
+
     /* Start working on the first item of m_work_queue
      * by sending a request. */
     void doWork();
-    
+
     /* Handler for OAuth 2 related requests. */
     O2 m_auth;
-    
+
     /* Work queue. */
     std::queue<ImgurAPI3Action> m_work_queue;
     /* ID of timer triggering on idle (0ms). */
     int m_work_timer = 0;
-    
+
     /* Current QNetworkReply */
-    QNetworkReply *m_reply = nullptr;
-    
+    QNetworkReply* m_reply = nullptr;
+
     /* Current image being uploaded */
-    QFile *m_image = nullptr;
-    
+    QFile* m_image = nullptr;
+
     /* The QNetworkAccessManager used for connections */
     QNetworkAccessManager m_net;
 };
