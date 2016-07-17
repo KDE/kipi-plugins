@@ -66,14 +66,14 @@ public Q_SLOTS:
     void slotAnonUpload();
     void slotFinished();
     void slotCancel();
-    
+
     /* ImgurAPI3 callbacks */
-    void apiAuthorized(bool success, const QString &username);
-    void apiAuthError(const QString &msg);
-    void apiProgress(unsigned int percent, const ImgurAPI3Action &action);
-    void apiRequestPin(const QUrl &url);
-    void apiSuccess(const ImgurAPI3Result &result);
-    void apiError(const QString &msg, const ImgurAPI3Action &action);
+    void apiAuthorized(bool success, const QString& username);
+    void apiAuthError(const QString& msg);
+    void apiProgress(unsigned int percent, const ImgurAPI3Action& action);
+    void apiRequestPin(const QUrl& url);
+    void apiSuccess(const ImgurAPI3Result& result);
+    void apiError(const QString &msg, const ImgurAPI3Action& action);
     void apiBusy(bool busy);
 
 private:
@@ -83,14 +83,14 @@ private:
     void saveSettings();
 
 private:
-    ImgurImagesList *list = nullptr;
-    ImgurAPI3       *api  = nullptr;
-    QPushButton     *forgetButton = nullptr,
-                    *uploadAnonButton = nullptr;
-    QLabel          *userLabel = nullptr;
+    ImgurImagesList* list = nullptr;
+    ImgurAPI3*       api  = nullptr;
+    QPushButton*     forgetButton = nullptr;
+    QPushButton*     uploadAnonButton = nullptr;
+    QLabel*          userLabel = nullptr;
     /* Contains the imgur username if API authorized.
      * If not, username is null. */
-    QString         username;
+    QString          username;
 };
 
 } // namespace KIPIImgurPlugin

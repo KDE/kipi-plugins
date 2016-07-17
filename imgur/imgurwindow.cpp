@@ -25,17 +25,18 @@
 
 // Qt includes
 
-#include <QBoxLayout>
-#include <QCloseEvent>
 #include <QDesktopServices>
 #include <QInputDialog>
+#include <QCloseEvent>
 #include <QMessageBox>
+#include <QBoxLayout>
+#include <QWindow>
 
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kconfig.h>
 #include <kwindowconfig.h>
+#include <kconfig.h>
 
 // Local includes
 
@@ -55,40 +56,40 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
 {
     api = new ImgurAPI3(QString::fromLatin1(IMGUR_CLIENT_ID),
                         QString::fromLatin1(IMGUR_CLIENT_SECRET), this);
-    
+
     /* Connect API signals */
     connect(api, &ImgurAPI3::authorized, this, &ImgurWindow::apiAuthorized);
-    connect(api, &ImgurAPI3::authError, this, &ImgurWindow::apiAuthError);
-    connect(api, &ImgurAPI3::progress, this, &ImgurWindow::apiProgress);
+    connect(api, &ImgurAPI3::authError,  this, &ImgurWindow::apiAuthError);
+    connect(api, &ImgurAPI3::progress,   this, &ImgurWindow::apiProgress);
     connect(api, &ImgurAPI3::requestPin, this, &ImgurWindow::apiRequestPin);
-    connect(api, &ImgurAPI3::success, this, &ImgurWindow::apiSuccess);
-    connect(api, &ImgurAPI3::error, this, &ImgurWindow::apiError);
-    connect(api, &ImgurAPI3::busy, this, &ImgurWindow::apiBusy);
-    
+    connect(api, &ImgurAPI3::success,    this, &ImgurWindow::apiSuccess);
+    connect(api, &ImgurAPI3::error,      this, &ImgurWindow::apiError);
+    connect(api, &ImgurAPI3::busy,       this, &ImgurWindow::apiBusy);
+
     /* | List | Auth | */
-    auto *mainLayout = new QHBoxLayout;
-    auto *mainWidget = new QWidget(this);
+    auto* mainLayout = new QHBoxLayout;
+    auto* mainWidget = new QWidget(this);
     mainWidget->setLayout(mainLayout);
     this->setMainWidget(mainWidget);
-    
+
     this->list = new ImgurImagesList;
     mainLayout->addWidget(list);
-    
+
     /* |  Logged in as:  |
      * | <Not logged in> |
      * |     Forget      | */
 
-    auto *userLabelLabel = new QLabel(i18n("Logged in as:"));
+    auto* userLabelLabel = new QLabel(i18n("Logged in as:"));
     userLabelLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     userLabelLabel->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
-    
+
     this->userLabel = new QLabel; /* Label set in readSettings() */
     userLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     userLabel->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
 
     forgetButton = new QPushButton(i18n("Forget"));
 
-    auto *authLayout = new QVBoxLayout;
+    auto* authLayout = new QVBoxLayout;
     mainLayout->addLayout(authLayout);
     authLayout->addWidget(userLabelLabel);
     authLayout->addWidget(userLabel);
@@ -98,7 +99,7 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
     /* Add anonymous upload button */
     uploadAnonButton = new QPushButton(i18n("Upload Anonymously"));
     addButton(uploadAnonButton, QDialogButtonBox::ApplyRole);
-    
+
     /* Connect UI signals */
     connect(forgetButton, &QPushButton::clicked,
             this, &ImgurWindow::forgetButtonClicked);
@@ -110,7 +111,7 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
             this, &ImgurWindow::slotFinished);
     connect(this, &ImgurWindow::cancelClicked,
             this, &ImgurWindow::slotCancel);
-    
+
     setWindowIcon(QIcon::fromTheme(QString::fromLatin1("kipi-imgur")));
     setWindowTitle(i18n("Export to imgur.com"));
     setModal(false);
@@ -168,14 +169,15 @@ void ImgurWindow::forgetButtonClicked()
 void ImgurWindow::slotUpload()
 {
     QList<const ImgurImageListViewItem*> pending = this->list->getPendingItems();
-    for(auto item : pending)
+
+    for (auto item : pending)
     {
         ImgurAPI3Action action;
         action.type = ImgurAPI3ActionType::IMG_UPLOAD;
         action.upload.imgpath = item->url().toLocalFile();
         action.upload.title = item->Title();
         action.upload.description = item->Description();
-        
+
         api->queueWork(action);
     }
 }
@@ -183,14 +185,15 @@ void ImgurWindow::slotUpload()
 void ImgurWindow::slotAnonUpload()
 {
     QList<const ImgurImageListViewItem*> pending = this->list->getPendingItems();
-    for(auto item : pending)
+
+    for (auto item : pending)
     {
         ImgurAPI3Action action;
         action.type = ImgurAPI3ActionType::ANON_IMG_UPLOAD;
         action.upload.imgpath = item->url().toLocalFile();
         action.upload.title = item->Title();
         action.upload.description = item->Description();
-        
+
         api->queueWork(action);
     }
 }
@@ -205,50 +208,49 @@ void ImgurWindow::slotCancel()
     api->cancelAllWork();
 }
 
-void ImgurWindow::apiAuthorized(bool success, const QString &username)
+void ImgurWindow::apiAuthorized(bool success, const QString& username)
 {
-    if(success)
+    if (success)
     {
         this->username = username;
         this->userLabel->setText(this->username);
         this->forgetButton->setEnabled(true);
         return;
     }
-    
+
     this->username = QString();
     this->userLabel->setText(i18n("<Not logged in>"));
     this->forgetButton->setEnabled(false);
 }
 
-void ImgurWindow::apiAuthError(const QString &msg)
+void ImgurWindow::apiAuthError(const QString& msg)
 {
     QMessageBox::critical(this,
                           i18n("Authorization Failed"),
                           i18n("Failed to log into Imgur: %1\n", msg));
 }
 
-
-void ImgurWindow::apiProgress(unsigned int /*percent*/, const ImgurAPI3Action &action)
+void ImgurWindow::apiProgress(unsigned int /*percent*/, const ImgurAPI3Action& action)
 {
     list->processing(QUrl::fromLocalFile(action.upload.imgpath));
 }
 
-void ImgurWindow::apiRequestPin(const QUrl &url)
+void ImgurWindow::apiRequestPin(const QUrl& url)
 {
     QDesktopServices::openUrl(url);
 }
 
-void ImgurWindow::apiSuccess(const ImgurAPI3Result &result)
+void ImgurWindow::apiSuccess(const ImgurAPI3Result& result)
 {
     list->slotSuccess(result);
 }
 
-void ImgurWindow::apiError(const QString &msg, const ImgurAPI3Action &action)
+void ImgurWindow::apiError(const QString& msg, const ImgurAPI3Action& action)
 {
     list->processed(QUrl::fromLocalFile(action.upload.imgpath), false);
-    
+
     /* 1 here because the current item is still in the queue. */
-    if(api->workQueueLength() <= 1)
+    if (api->workQueueLength() <= 1)
     {
         QMessageBox::critical(this,
                               i18n("Uploading Failed"),
@@ -262,7 +264,7 @@ void ImgurWindow::apiError(const QString &msg, const ImgurAPI3Action &action)
                                   i18n("Failed to upload photo to Imgur: %1\n"
                                        "Do you want to continue?", msg));
 
-    if(cont != QMessageBox::Yes)
+    if (cont != QMessageBox::Yes)
         api->cancelAllWork();
 }
 
@@ -288,8 +290,10 @@ void ImgurWindow::readSettings()
     username = groupAuth.readEntry("username", QString());
     apiAuthorized(!username.isEmpty(), username);
 
+    winId();
     KConfigGroup groupDialog = config.group("Imgur Dialog");
     KWindowConfig::restoreWindowSize(windowHandle(), groupDialog);
+    resize(windowHandle()->size());
 }
 
 void ImgurWindow::saveSettings()
