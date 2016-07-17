@@ -137,7 +137,6 @@ if(KF5Kipi_FOUND)
 
     DETECT_LIBMEDIAWIKI(5.0.0)                                                 # For Mediawiki.
     DETECT_LIBKVKONTAKTE(4.70.0)                                               # For VKontakte.
-    find_package(QtKOAuth)                                                     # For Imgur Auhtenticated API.
 
     # ==================================================================================================
     # Log messages
@@ -159,7 +158,6 @@ if(KF5Kipi_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libkarchive"     "https://projects.kde.org/projects/frameworks/karchive"           "(version >= ${KF5_MIN_VERSION})"      "Kipi-plugins will be compiled without libkarchive support."     KF5Archive_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libmediawiki"    "https://projects.kde.org/projects/extragear/libs/libmediawiki"   "(version >= ${KF5_MIN_VERSION})"      "Kipi-plugins will be compiled without libmediawiki support."    KF5MediaWiki_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte"   "https://projects.kde.org/projects/extragear/libs/libkvkontakte"  "(version >= 4.70.0)"                  "Kipi-plugins will be compiled without libkvkontakte support."   KF5Vkontakte_FOUND)
-    PRINT_OPTIONAL_LIBRARY_STATUS("libqtkoauth"     "https://github.com/kypeli/kQOAuth"                               "(version >= 0.97)"                    "Kipi-plugins will be compiled without libqtkoauth support."     QTKOAUTH_FOUND)
 
     # Optional plugins results ----------------------------------------------------------------------------
 
@@ -211,6 +209,7 @@ if(KF5Kipi_FOUND)
                             ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/widgets
                             ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/tools
                             ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/tools/imageio
+                            ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/o2/src
                             ${KF5Kipi_INCLUDE_DIRS}
                         )
 
