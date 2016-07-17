@@ -3,6 +3,8 @@ Kipi-plugins 5.1.0 - Release date: 2016/08/07
 
 NEW FEATURES:
 
+Imgur   : Remove libqtkoauth dependency
+General : integrate liboauth2 in libkipiplugins. First tool to use it is Imgur.
 
 BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
