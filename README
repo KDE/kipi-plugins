@@ -43,14 +43,11 @@ libkio          >= 5.0.0                        https://projects.kde.org/project
 libkarchive     >= 5.0.0                        https://projects.kde.org/projects/frameworks/karchive
 libmediawiki    >= 5.0.0                        https://projects.kde.org/projects/extragear/libs/libmediawiki
 libkvkontakte   >= 4.70.0                       https://projects.kde.org/projects/extragear/libs/libkvkontakte
-libqtkoauth     >= 0.97                         https://github.com/kypeli/kQOAuth
 
 Plugin Specific Dependencies (for compiling and for running) :
 
-FaceBook           : libqjson.
 Mediawiki          : libmediawiki.
 Vkontakte          : libkvkontakte.
-Imgur              : libqtkoauth for Imgur.com's authenticated API.
 
 -- CONTACT ------------------------------------------------------------
 
