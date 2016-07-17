@@ -54,7 +54,7 @@ ImgurImagesList::ImgurImagesList(QWidget* const parent)
     setAllowDuplicate(false);
     setAllowRAW(false);
 
-    auto *list = listView();
+    auto* list = listView();
 
     list->setColumnLabel(KPImagesListView::Thumbnail, i18n("Thumbnail"));
 
@@ -74,13 +74,13 @@ ImgurImagesList::ImgurImagesList(QWidget* const parent)
             this, &ImgurImagesList::slotDoubleClick);
 }
 
-QList<const ImgurImageListViewItem *> ImgurImagesList::getPendingItems()
+QList<const ImgurImageListViewItem*> ImgurImagesList::getPendingItems()
 {
-    QList<const ImgurImageListViewItem *> ret;
+    QList<const ImgurImageListViewItem*> ret;
 
-    for(unsigned int i = listView()->topLevelItemCount(); i--;)
+    for (unsigned int i = listView()->topLevelItemCount(); i--;)
     {
-        const auto *item = dynamic_cast<const ImgurImageListViewItem*>(listView()->topLevelItem(i));
+        const auto* item = dynamic_cast<const ImgurImageListViewItem*>(listView()->topLevelItem(i));
 
         if (item && item->ImgurUrl().isEmpty())
             ret << item;
@@ -104,10 +104,10 @@ void ImgurImagesList::slotAddImages(const QList<QUrl>& list)
         // Already in the list?
         if (listView()->findItem(*it) == nullptr)
         {
-            auto *item = new ImgurImageListViewItem(listView(), *it);
+            auto* item = new ImgurImageListViewItem(listView(), *it);
 
             // Load URLs from meta data, if possible
-            if(meta && meta->load(*it))
+            if (meta && meta->load(*it))
             {
                 item->setImgurUrl(meta->getXmpTagString(QLatin1String("Xmp.kipi.ImgurId")));
                 item->setImgurDeleteUrl(meta->getXmpTagString(QLatin1String("Xmp.kipi.ImgurDeleteHash")));
@@ -125,7 +125,7 @@ void ImgurImagesList::slotSuccess(const ImgurAPI3Result& result)
 
     processed(imgurl, true);
 
-    Interface *intf = iface();
+    Interface* intf = iface();
 
     if (intf)
     {

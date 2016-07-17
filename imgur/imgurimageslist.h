@@ -57,7 +57,7 @@ public:
     ImgurImagesList(QWidget* const parent = 0);
     ~ImgurImagesList() override {}
 
-    QList<const ImgurImageListViewItem *> getPendingItems();
+    QList<const ImgurImageListViewItem*> getPendingItems();
 
 public Q_SLOTS:
     void slotAddImages(const QList<QUrl>& list) override;
