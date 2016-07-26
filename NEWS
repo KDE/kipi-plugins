@@ -17,4 +17,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 007 ==> 308783 - No photo attachments when items are shared by e-mail.
 008 ==> 365571 - Flickr export plugin not freeing tmp space.
 009 ==> 360404 - Imgur autorization not work : Integrate Oauth2 library in libkipiplugins [patch].
-010 ==> 
+010 ==> 306207 - kipi-plugins does not pass .desktop validation.
+011 ==> 
