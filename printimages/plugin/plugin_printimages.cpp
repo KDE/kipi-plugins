@@ -36,13 +36,11 @@ extern "C"
 
 // Qt includes
 
-#include <QWidget>
-#include <QPrinter>
-#include <QStandardPaths>
-#include <QAction>
-#include <QDir>
 #include <QApplication>
 #include <QMessageBox>
+#include <QPrinter>
+#include <QWidget>
+#include <QAction>
 
 // KDE includes
 
@@ -58,8 +56,9 @@ extern "C"
 
 // Local includes
 
-#include "printhelper.h"
+#include "kputil.h"
 #include "wizard.h"
+#include "printhelper.h"
 #include "kipiplugins_debug.h"
 
 namespace KIPIPrintImagesPlugin
@@ -82,6 +81,7 @@ Plugin_PrintImages::Plugin_PrintImages (QObject* const parent, const QVariantLis
 
 Plugin_PrintImages::~Plugin_PrintImages()
 {
+    removeTemporaryDir("printassistant");
 }
 
 void Plugin_PrintImages::setup(QWidget* const widget)
@@ -172,10 +172,9 @@ void Plugin_PrintImages::slotPrintAssistantActivate()
     QWidget* const parent = QApplication::activeWindow();
     Wizard printAssistant(parent);
 
-    QString tempPath        = QStandardPaths::writableLocation(QStandardPaths::TempLocation) +
-                              QLatin1String("kipi-printassistantdplugin-") + QString::number(getpid()) + QLatin1String("/");
-    QDir().mkpath(tempPath);
-    printAssistant.print(fileList, tempPath);
+    QString tmp = makeTemporaryDir("printassistant").absolutePath() + QLatin1Char('/');
+
+    printAssistant.print(fileList, tmp);
 
     if (printAssistant.exec() == QDialog::Rejected)
         return;
