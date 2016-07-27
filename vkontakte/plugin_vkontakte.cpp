@@ -29,8 +29,8 @@
 
 // KDE includes
 
-#include <kpluginfactory.h>
 #include <klocalizedstring.h>
+#include <kpluginfactory.h>
 #include <kwindowsystem.h>
 
 // Local includes

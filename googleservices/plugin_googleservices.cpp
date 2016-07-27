@@ -23,26 +23,17 @@
 
 #include "plugin_googleservices.h"
 
-// C ANSI includes
-
-extern "C"
-{
-#include <unistd.h>
-}
-
 //Qt includes
 
-#include <QAction>
 #include <QApplication>
-#include <QStandardPaths>
-#include <QDir>
+#include <QAction>
 
 // KDE includes
 
+#include <kactioncollection.h>
+#include <klocalizedstring.h>
 #include <kpluginfactory.h>
 #include <kwindowsystem.h>
-#include <klocalizedstring.h>
-#include <kactioncollection.h>
 
 // LibKIPI includes
 

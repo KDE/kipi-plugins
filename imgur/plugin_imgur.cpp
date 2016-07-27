@@ -22,19 +22,15 @@
 
 #include "plugin_imgur.h"
 
-// C++ includes
-
-#include <unistd.h>
-
 // Qt includes
 
-#include <QAction>
 #include <QApplication>
+#include <QAction>
 
 // KDE includes
 
-#include <klocalizedstring.h>
 #include <kactioncollection.h>
+#include <klocalizedstring.h>
 #include <kpluginfactory.h>
 #include <kwindowsystem.h>
 

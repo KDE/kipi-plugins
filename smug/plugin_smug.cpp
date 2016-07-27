@@ -25,18 +25,6 @@
 
 #include "plugin_smug.h"
 
-// To disable warnings under MSVC2008 about POSIX methods().
-#ifdef _MSC_VER
-#pragma warning(disable : 4996)
-#endif
-
-// C ANSI includes
-
-extern "C"
-{
-#include <unistd.h>
-}
-
 // Qt includes
 
 #include <QApplication>
@@ -44,10 +32,10 @@ extern "C"
 
 // KDE includes
 
-#include <kwindowsystem.h>
-#include <kpluginfactory.h>
-#include <klocalizedstring.h>
 #include <kactioncollection.h>
+#include <klocalizedstring.h>
+#include <kpluginfactory.h>
+#include <kwindowsystem.h>
 
 // Libkipi includes
 
@@ -55,9 +43,9 @@ extern "C"
 
 // Local includes
 
-#include "kipiplugins_debug.h"
 #include "kputil.h"
 #include "smugwindow.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPISmugPlugin
 {

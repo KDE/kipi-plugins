@@ -25,16 +25,15 @@
 
 // Qt includes
 
-#include <QAction>
 #include <QApplication>
+#include <QAction>
 
 // KDE includes
 
 #include <kactioncollection.h>
-#include <kconfig.h>
 #include <klocalizedstring.h>
-#include <kwindowsystem.h>
 #include <kpluginfactory.h>
+#include <kwindowsystem.h>
 
 // LibKipi includes
 
@@ -43,9 +42,9 @@
 
 // Local includes
 
-#include "kipiplugins_debug.h"
 #include "KioExportWindow.h"
 #include "KioImportWindow.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPIRemoteStoragePlugin
 {

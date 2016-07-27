@@ -23,31 +23,17 @@
 
 #include "plugin_wikimedia.h"
 
-// To disable warnings under MSVC2008 about getpid().
-#ifdef _MSC_VER
-#pragma warning(disable : 4996)
-#endif
-
-// C ANSI includes
-
-extern "C"
-{
-#include <unistd.h>
-}
-
 // Qt includes
 
-#include <QDir>
-#include <QAction>
 #include <QApplication>
+#include <QAction>
 
 // KDE includes
 
-#include <kconfig.h>
 #include <kactioncollection.h>
+#include <klocalizedstring.h>
 #include <kpluginfactory.h>
 #include <kwindowsystem.h>
-#include <klocalizedstring.h>
 
 // Libkipi includes
 
@@ -55,8 +41,9 @@ extern "C"
 
 // Local includes
 
-#include "kipiplugins_debug.h"
+#include "kputil.h"
 #include "wmwindow.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPIWikiMediaPlugin
 {
@@ -90,6 +77,8 @@ Plugin_WikiMedia::Plugin_WikiMedia(QObject* const parent, const QVariantList& /*
 Plugin_WikiMedia::~Plugin_WikiMedia()
 {
     delete d;
+
+    removeTemporaryDir("mediawiki");
 }
 
 void Plugin_WikiMedia::setup(QWidget* const widget)
@@ -125,7 +114,7 @@ void Plugin_WikiMedia::setupActions()
 
 void Plugin_WikiMedia::slotExport()
 {
-    QString tmp = QDir::tempPath() + QLatin1Char('/') + QLatin1String("kipi-mediawiki") + QString::number(getpid()) + QLatin1String("/");
+    QString tmp = makeTemporaryDir("mediawiki").absolutePath() + QLatin1Char('/');
 
     if (!d->dlgExport)
     {

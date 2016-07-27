@@ -21,24 +21,19 @@
  *
  * ============================================================ */
 
-// To disable warnings under MSVC2008 about POSIX methods().
-#ifdef _MSC_VER
-#pragma warning(disable : 4996)
-#endif
-
 #include "plugin_kmlexport.h"
 
 // Qt includes
 
+#include <QApplication>
 #include <QPointer>
 #include <QAction>
-#include <QApplication>
 
 // KDE includes
 
 #include <kactioncollection.h>
-#include <kpluginfactory.h>
 #include <klocalizedstring.h>
+#include <kpluginfactory.h>
 
 // Libkipi includes
 

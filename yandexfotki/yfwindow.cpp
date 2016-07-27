@@ -25,20 +25,7 @@
  *
  * ============================================================ */
 
-// To disable warnings under MSVC2008 about POSIX methods().
-#ifdef _MSC_VER
-#pragma warning(disable : 4996)
-#endif
-
 #include "yfwindow.h"
-
-// C ANSI includes
-
-extern "C"
-{
-// TODO: remove this include
-#include <unistd.h> // getpid
-}
 
 // Qt includes
 

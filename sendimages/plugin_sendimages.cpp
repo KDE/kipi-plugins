@@ -24,8 +24,8 @@
 
 // Qt includes
 
-#include <QAction>
 #include <QApplication>
+#include <QAction>
 
 // KDE includes
 

@@ -22,25 +22,19 @@
  *
  * ============================================================ */
 
-// To disable warnings under MSVC2008 about POSIX methods().
-#ifdef _MSC_VER
-#pragma warning(disable : 4996)
-#endif
-
 #include "plugin_facebook.h"
 
 // Qt includes
 
 #include <QApplication>
 #include <QAction>
-#include <QDir>
 
 // KDE includes
 
 #include <kactioncollection.h>
-#include <kwindowsystem.h>
-#include <kpluginfactory.h>
 #include <klocalizedstring.h>
+#include <kpluginfactory.h>
+#include <kwindowsystem.h>
 
 // Libkipi includes
 
@@ -49,9 +43,9 @@
 
 // Local includes
 
-#include "kipiplugins_debug.h"
 #include "kputil.h"
 #include "fbwindow.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPIFacebookPlugin
 {

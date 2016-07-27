@@ -20,32 +20,19 @@
  *
  * ============================================================ */
 
-// To disable warnings under MSVC2008 about POSIX methods().
-#ifdef _MSC_VER
-#pragma warning(disable : 4996)
-#endif
-
 #include "plugin_rajce.h"
-
-// C ANSI includes
-
-extern "C"
-{
-#include <unistd.h>
-}
 
 // Qt includes
 
-#include <QAction>
 #include <QApplication>
-#include <QKeySequence>
+#include <QAction>
 
 // KDE includes
 
-#include <klocalizedstring.h>
 #include <kactioncollection.h>
-#include <kwindowsystem.h>
+#include <klocalizedstring.h>
 #include <kpluginfactory.h>
+#include <kwindowsystem.h>
 
 // Libkipi includes
 
