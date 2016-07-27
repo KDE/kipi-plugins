@@ -102,7 +102,7 @@ void Plugin_Rajce::setupActions()
     m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to &Rajce.net..."));
     m_actionExport->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-rajce")));
-    m_actionExport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::Key_J));
+    actionCollection()->setDefaultShortcut(m_actionExport, Qt::ALT + Qt::SHIFT + Qt::Key_J);
     m_actionExport->setEnabled(false);
 
     connect(m_actionExport, SIGNAL(triggered(bool)),

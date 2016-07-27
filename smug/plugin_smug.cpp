@@ -47,6 +47,7 @@ extern "C"
 #include <kwindowsystem.h>
 #include <kpluginfactory.h>
 #include <klocalizedstring.h>
+#include <kactioncollection.h>
 
 // Libkipi includes
 
@@ -108,7 +109,7 @@ void Plugin_Smug::setupActions()
     m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to &SmugMug..."));
     m_actionExport->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-smugmug")));
-    m_actionExport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::Key_S));
+    actionCollection()->setDefaultShortcut(m_actionExport, Qt::ALT + Qt::SHIFT + Qt::Key_S);
     m_actionExport->setEnabled(false);
 
     connect(m_actionExport, SIGNAL(triggered(bool)),
@@ -119,7 +120,7 @@ void Plugin_Smug::setupActions()
     m_actionImport = new QAction(this);
     m_actionImport->setText(i18n("Import from &SmugMug..."));
     m_actionImport->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-smugmug")));
-    m_actionImport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_S));
+    actionCollection()->setDefaultShortcut(m_actionImport, Qt::ALT + Qt::SHIFT + Qt::CTRL + Qt::Key_S);
     m_actionImport->setEnabled(false);
 
     connect(m_actionImport, SIGNAL(triggered(bool)),

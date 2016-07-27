@@ -44,6 +44,7 @@ extern "C"
 
 // KDE includes
 
+#include <kactioncollection.h>
 #include <kpluginfactory.h>
 #include <kwindowsystem.h>
 
@@ -118,7 +119,7 @@ void Plugin_Flickr::setupActions()
     m_actionFlickr = new QAction(this);
     m_actionFlickr->setText(i18n("Export to Flick&r..."));
     m_actionFlickr->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-flickr")));
-    m_actionFlickr->setShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_R));
+    actionCollection()->setDefaultShortcut(m_actionFlickr, Qt::ALT + Qt::SHIFT + Qt::Key_R);
 
     selectFlickr = new SelectUserDlg(0,QString::fromLatin1("Flickr"));
 
@@ -130,7 +131,7 @@ void Plugin_Flickr::setupActions()
     m_action23 = new QAction(this);
     m_action23->setText(i18n("Export to &23..."));
     m_action23->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-hq")));
-    m_action23->setShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_2));
+    actionCollection()->setDefaultShortcut(m_action23, Qt::ALT + Qt::SHIFT + Qt::Key_2);
 
     select23 = new SelectUserDlg(0,QString::fromLatin1("23"));
 
@@ -142,7 +143,7 @@ void Plugin_Flickr::setupActions()
     m_actionZooomr = new QAction(this);
     m_actionZooomr->setText(i18n("Export to &Zooomr..."));
     m_actionZooomr->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-zooomr")));
-    m_actionZooomr->setShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_Z));
+    actionCollection()->setDefaultShortcut(m_actionZooomr, Qt::ALT + Qt::SHIFT + Qt::Key_Z);
 
     selectZoomr = new SelectUserDlg(0,QString::fromLatin1("Zooomr"));
 

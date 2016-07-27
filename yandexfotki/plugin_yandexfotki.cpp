@@ -29,6 +29,7 @@
 
 // KDE includes
 
+#include <kactioncollection.h>
 #include <klocalizedstring.h>
 #include <kpluginfactory.h>
 #include <kwindowsystem.h>
@@ -91,7 +92,7 @@ void Plugin_YandexFotki::setupActions()
     // TODO: icon file
     //m_actionExport->setIcon(QIcon::fromTheme("yandexfotki"));
     m_actionExport->setIcon(QIcon::fromTheme(QString::fromLatin1("internet-web-browser")));
-    m_actionExport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::Key_Y));
+    actionCollection()->setDefaultShortcut(m_actionExport, Qt::ALT + Qt::SHIFT + Qt::Key_Y);
     m_actionExport->setEnabled(false);
 
     connect(m_actionExport, SIGNAL(triggered(bool)),

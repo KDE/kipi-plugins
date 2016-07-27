@@ -93,7 +93,7 @@ void Plugin_RemoteStorage::setupActions()
     m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to remote storage..."));
     m_actionExport->setIcon(QIcon::fromTheme(QString::fromLatin1("folder-remote")));
-    m_actionExport->setShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_K));
+    actionCollection()->setDefaultShortcut(m_actionExport, Qt::ALT + Qt::SHIFT + Qt::Key_K);
     m_actionExport->setEnabled(false);
 
     connect(m_actionExport, SIGNAL(triggered(bool)),
@@ -105,7 +105,7 @@ void Plugin_RemoteStorage::setupActions()
     m_actionImport = new QAction(this);
     m_actionImport->setText(i18n("Import from remote storage..."));
     m_actionImport->setIcon(QIcon::fromTheme(QString::fromLatin1("folder-remote")));
-    m_actionImport->setShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_I));
+    actionCollection()->setDefaultShortcut(m_actionImport, Qt::ALT + Qt::SHIFT + Qt::Key_I);
     m_actionImport->setEnabled(false);
 
     connect(m_actionImport, SIGNAL(triggered(bool)),

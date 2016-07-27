@@ -42,6 +42,7 @@ extern "C"
 #include <kpluginfactory.h>
 #include <kwindowsystem.h>
 #include <klocalizedstring.h>
+#include <kactioncollection.h>
 
 // LibKIPI includes
 
@@ -107,7 +108,7 @@ void Plugin_GoogleServices::setupActions()
     m_actionGDriveExport = new QAction(this);
     m_actionGDriveExport->setText(i18n("Export to &Google Drive..."));
     m_actionGDriveExport->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-googledrive")));
-    m_actionGDriveExport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_G));
+    actionCollection()->setDefaultShortcut(m_actionGDriveExport, Qt::ALT + Qt::SHIFT + Qt::CTRL + Qt::Key_G);
 
     connect(m_actionGDriveExport, SIGNAL(triggered(bool)),
             this,SLOT(slotGDriveExport()));
@@ -117,7 +118,7 @@ void Plugin_GoogleServices::setupActions()
     m_actionGPhotoExport = new QAction(this);
     m_actionGPhotoExport->setText(i18n("Export to &Google Photos/PicasaWeb..."));
     m_actionGPhotoExport->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-googlephoto")));
-    m_actionGPhotoExport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::Key_P));
+    actionCollection()->setDefaultShortcut(m_actionGPhotoExport, Qt::ALT + Qt::SHIFT + Qt::Key_P);
 
     connect(m_actionGPhotoExport, SIGNAL(triggered(bool)),
             this, SLOT(slotGPhotoExport()));
@@ -127,7 +128,7 @@ void Plugin_GoogleServices::setupActions()
     m_actionGPhotoImport = new QAction(this);
     m_actionGPhotoImport->setText(i18n("Import from &Google Photos/PicasaWeb..."));
     m_actionGPhotoImport->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-googlephoto")));
-    m_actionGPhotoImport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_P));
+    actionCollection()->setDefaultShortcut(m_actionGPhotoImport, Qt::ALT + Qt::SHIFT + Qt::CTRL + Qt::Key_P);
 
     connect(m_actionGPhotoImport, SIGNAL(triggered(bool)),
             this, SLOT(slotGPhotoImport()) );

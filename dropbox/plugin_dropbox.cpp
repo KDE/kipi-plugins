@@ -89,7 +89,7 @@ void Plugin_Dropbox::setup(QWidget* const widget)
 
     Plugin::setup(widget);
 
-    if(!interface())
+    if (!interface())
     {
         qCCritical(KIPIPLUGINS_LOG) << "kipi interface is null";
         return;
@@ -104,7 +104,7 @@ void Plugin_Dropbox::setupActions()
     m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to &Dropbox..."));
     m_actionExport->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-dropbox")));
-    m_actionExport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_D));
+    actionCollection()->setDefaultShortcut(m_actionExport, Qt::ALT + Qt::SHIFT + Qt::CTRL + Qt::Key_D);
 
     connect(m_actionExport,SIGNAL(triggered(bool)),
             this,SLOT(slotExport()));

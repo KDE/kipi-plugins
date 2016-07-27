@@ -99,7 +99,7 @@ void Plugin_Facebook::setupActions()
     m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to &Facebook..."));
     m_actionExport->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-facebook")));
-    m_actionExport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::Key_F));
+    actionCollection()->setDefaultShortcut(m_actionExport, Qt::ALT + Qt::SHIFT + Qt::Key_F);
 
     connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()) );

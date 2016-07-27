@@ -32,6 +32,7 @@
 
 // KDE includes
 
+#include <kactioncollection.h>
 #include <klocalizedstring.h>
 #include <kpluginfactory.h>
 
@@ -90,7 +91,7 @@ void Plugin_FlashExport::setupActions()
     m_action = new QAction(this);
     m_action->setText(i18n("Export to F&lash..."));
     m_action->setIcon(QIcon::fromTheme(QLatin1String("kipi-flash")));
-    m_action->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::Key_L));
+    actionCollection()->setDefaultShortcut(m_action, Qt::ALT + Qt::SHIFT + Qt::Key_L);
 
     connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
