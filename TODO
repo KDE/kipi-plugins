@@ -10,12 +10,3 @@ Common todo list :
  * ImageList widget improvements
    * Thumbnail and List view (user can switch)
    * Editable fields (use case Wikimedia upload)
- * Export actions on albums (and not selected images)
-   * Allow export of whole album/folder/collection
-   * Ask for "new album" options for export
- * Common GUI design for export plugins - current state:
-   * Flickr/23/Zoomr: two tabs, additional per image options in imagelist
-   * Facebook/SmugMug/Shwup: single dialog with imagelist (but very busy)
-   * KIO: single dialog with imagelist
-   * PicasaWeb: single dialog, NO imagelist
-   * Wikimedia: new plugin, need to work on new design
