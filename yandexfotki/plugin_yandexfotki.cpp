@@ -91,7 +91,7 @@ void Plugin_YandexFotki::setupActions()
     m_actionExport->setText(i18n("Export to &Yandex.Fotki..."));
     // TODO: icon file
     //m_actionExport->setIcon(QIcon::fromTheme("yandexfotki"));
-    m_actionExport->setIcon(QIcon::fromTheme(QString::fromLatin1("folder-html")));
+    m_actionExport->setIcon(QIcon::fromTheme(QString::fromLatin1("internet-web-browser")));
     actionCollection()->setDefaultShortcut(m_actionExport, Qt::ALT + Qt::SHIFT + Qt::Key_Y);
     m_actionExport->setEnabled(false);
 
