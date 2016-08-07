@@ -4,7 +4,7 @@ Kipi-plugins 5.1.0 - Release date: 2016/08/07
 NEW FEATURES:
 
 Imgur   : Remove libqtkoauth dependency
-General : integrate liboauth2 in libkipiplugins. First tool to use it is Imgur.
+General : Integrate liboauth2 in libkipiplugins. First tool to use it is Imgur.
 
 BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
@@ -18,4 +18,3 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 008 ==> 365571 - Flickr export plugin not freeing tmp space.
 009 ==> 360404 - Imgur autorization not work : Integrate Oauth2 library in libkipiplugins [patch].
 010 ==> 306207 - kipi-plugins does not pass .desktop validation.
-011 ==> 
