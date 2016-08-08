@@ -1,20 +1,9 @@
-Kipi-plugins 5.1.0 - Release date: 2016/08/07
+Kipi-plugins 5.2.0 - Release date: 2016/09/11
 ------------------------------------------------------------------------
 
 NEW FEATURES:
 
-Imgur   : Remove libqtkoauth dependency
-General : Integrate liboauth2 in libkipiplugins. First tool to use it is Imgur.
 
-BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
+BUGFIXES FROM BUGZILLA :
 
-001 ==> 305517 - digiKam segfaults after choosing Export - Export to Flash.
-002 ==> 231584 - digiKam crashes when asked to print image.
-003 ==> 311020 - kipi plugins print some pages in reverted colors.
-004 ==> 329899 - Print Assistant (Print Wizard) showing incorrect page sizes.
-005 ==> 365049 - Export to Piwigo not working - Dialog box not responding.
-006 ==> 365676 - improper handling of temporary directory.
-007 ==> 308783 - No photo attachments when items are shared by e-mail.
-008 ==> 365571 - Flickr export plugin not freeing tmp space.
-009 ==> 360404 - Imgur autorization not work : Integrate Oauth2 library in libkipiplugins [patch].
-010 ==> 306207 - kipi-plugins does not pass .desktop validation.
+001 ==> 
