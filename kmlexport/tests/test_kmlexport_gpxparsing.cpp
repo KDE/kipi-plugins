@@ -33,7 +33,7 @@
 
 using namespace KIPIKMLExportPlugin;
 
-QTEST_MAIN(TestGPXParsing)
+QTEST_GUILESS_MAIN(TestGPXParsing)
 
 /**
  * @brief Test how well QDateTime deals with various string representations
