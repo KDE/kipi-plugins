@@ -37,10 +37,6 @@
 #include <QApplication>
 #include <QStyle>
 
-// KDE includes
-
-#include <klocalizedstring.h>
-
 // Libkipi includes
 
 #include <KIPI/Interface>

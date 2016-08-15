@@ -38,10 +38,6 @@
 #include <QApplication>
 #include <QStyle>
 
-// KDE includes
-
-#include <klocalizedstring.h>
-
 // Libkipi includes
 
 #include <KIPI/Interface>
@@ -56,7 +52,8 @@
 namespace KIPIDropboxPlugin
 {
 
-DropboxWidget::DropboxWidget(QWidget* const parent, KIPI::Interface* const iface, const QString& pluginName):KPSettingsWidget(parent,iface,pluginName)
+DropboxWidget::DropboxWidget(QWidget* const parent, KIPI::Interface* const iface, const QString& pluginName)
+    : KPSettingsWidget(parent, iface, pluginName)
 {
     getUploadBox()->hide();
     getSizeBox()->hide();

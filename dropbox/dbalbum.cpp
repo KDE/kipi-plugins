@@ -28,10 +28,6 @@
 #include <QApplication>
 #include <QStyle>
 
-// KDE includes
-
-#include <klocalizedstring.h>
-
 // Local includes
 
 #include "kipiplugins_debug.h"
@@ -41,12 +37,12 @@ namespace KIPIDropboxPlugin
 {
 
 DBNewAlbum::DBNewAlbum(QWidget* const parent, const QString& pluginName)
-    : KPNewAlbumDialog(parent,pluginName)
+    : KPNewAlbumDialog(parent, pluginName)
 {
-        hideDateTime();
-        hideDesc();
-        hideLocation();
-        getMainWidget()->setMinimumSize(300,0);
+    hideDateTime();
+    hideDesc();
+    hideLocation();
+    getMainWidget()->setMinimumSize(300,0);
 }
 
 DBNewAlbum::~DBNewAlbum()

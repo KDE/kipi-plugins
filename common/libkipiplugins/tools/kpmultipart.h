@@ -28,10 +28,6 @@
 #include <QHttpMultiPart>
 #include <QString>
 
-// KDE includes
-
-#include <klocalizedstring.h>
-
 // Local includes
 
 #include "kipiplugins_export.h"

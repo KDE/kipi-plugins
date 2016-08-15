@@ -29,10 +29,6 @@
 #include <QPaintEvent>
 #include <QStyleOption>
 
-// KDE includes
-
-#include <klocalizedstring.h>
-
 // Local includes
 
 #include "kipiplugins_debug.h"
@@ -168,7 +164,7 @@ void ComboBoxDelegate::setModelData(QWidget* editor, QAbstractItemModel* model,
 {
     // Write the data to the model when finishing has completed.
     QComboBox* const cb = qobject_cast<QComboBox*>(editor);
-    int selected  = cb->itemData(cb->currentIndex()).toInt();
+    int selected        = cb->itemData(cb->currentIndex()).toInt();
     model->setData(index, selected);
 }
 

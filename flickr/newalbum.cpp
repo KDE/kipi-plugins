@@ -29,10 +29,6 @@
 #include <QApplication>
 #include <QStyle>
 
-// KDE includes
-
-#include <klocalizedstring.h>
-
 // Local includes
 
 #include "kipiplugins_debug.h"
@@ -42,11 +38,11 @@ namespace KIPIFlickrPlugin
 {
 
 NewAlbum::NewAlbum(QWidget* const parent, const QString& pluginName)
-    : KPNewAlbumDialog(parent,pluginName)
+    : KPNewAlbumDialog(parent, pluginName)
 {
-        hideDateTime();
-        hideLocation();
-        getMainWidget()->setMinimumSize(350,0);
+    hideDateTime();
+    hideLocation();
+    getMainWidget()->setMinimumSize(350,0);
 }
 
 NewAlbum::~NewAlbum()

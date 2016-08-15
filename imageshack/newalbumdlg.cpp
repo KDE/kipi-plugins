@@ -34,15 +34,11 @@
 #include <QApplication>
 #include <QPushButton>
 
-// KDE includes
-
-#include <klocalizedstring.h>
-
 namespace KIPIImageshackPlugin
 {
 
 NewAlbumDlg::NewAlbumDlg(QWidget* const parent, const QString& pluginName)
-    : KPNewAlbumDialog(parent,pluginName)
+    : KPNewAlbumDialog(parent, pluginName)
 {
     hideDateTime();
     hideDesc();
