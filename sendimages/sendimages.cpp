@@ -36,6 +36,7 @@
 #include <QApplication>
 #include <QMessageBox>
 #include <QDesktopServices>
+#include <QUrlQuery>
 
 // KDE includes
 
@@ -418,15 +419,15 @@ bool SendImages::invokeMailAgent()
             {
                 case EmailSettings::DEFAULT:
                 {
-                    QString email;
-                    email.append(QLatin1String("mailto:"));
+                    QUrl emailUrl(QLatin1String("mailto:"));
 
                     foreach(QString file, stringFileList)
                     {
-                         email.append(QString::fromUtf8("&attach=\"%1\"").arg(file));
+                        QUrlQuery q(emailUrl);
+                        q.addQueryItem(QLatin1String("attachment"), file);
+                        emailUrl.setQuery(q);
                     }
 
-                    QUrl emailUrl(email);
                     qCDebug(KIPIPLUGINS_LOG) << "Email Url: " << emailUrl;
 
                     if (QDesktopServices::openUrl(emailUrl))
