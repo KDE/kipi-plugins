@@ -104,7 +104,7 @@ SendImagesDialog::SendImagesDialog(QWidget* const /*parent*/, const QList<QUrl>&
                                    0,
                                    KAboutLicense::GPL,
                                    ki18n("A plugin to e-mail items"),
-                                   ki18n("(c) 2003-2014, Gilles Caulier"));
+                                   ki18n("(c) 2003-2016, Gilles Caulier"));
 
     about->addAuthor(ki18n("Gilles Caulier").toString(), ki18n("Author and Maintainer").toString(),
                      QLatin1String("caulier dot gilles at gmail dot com"));
@@ -177,7 +177,7 @@ void SendImagesDialog::readSettings()
     KConfigGroup group = config.group(QLatin1String("SendImages Settings"));
 
     EmailSettings settings;
-    settings.emailProgram            = (EmailSettings::EmailClient)group.readEntry(QLatin1String("EmailProgram"), (int)EmailSettings::KMAIL);
+    settings.emailProgram            = (EmailSettings::EmailClient)group.readEntry(QLatin1String("EmailProgram"), (int)EmailSettings::DEFAULT);
     settings.imageSize               = (EmailSettings::ImageSize)group.readEntry(QLatin1String("ImageResize"),    (int)EmailSettings::MEDIUM);
     settings.imageFormat             = (EmailSettings::ImageFormat)group.readEntry(QLatin1String("ImageFormat"),  (int)EmailSettings::JPEG);
     settings.imagesChangeProp        = group.readEntry(QLatin1String("ImagesChangeProp"), false);

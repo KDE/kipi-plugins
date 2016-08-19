@@ -59,7 +59,7 @@ public:
 
     enum EmailClient
     {
-        DEFAULT = 0,        // Default e-mail settings from KDE control panel.
+        DEFAULT = 0,            // Default e-mail settings from desktop contro; panel.
         BALSA,
         CLAWSMAIL,
         EVOLUTION,
@@ -94,7 +94,7 @@ public:
         imagesChangeProp        = false;
         attachmentLimitInMbytes = 17;
         imageCompression        = 75;
-        emailProgram            = KMAIL;
+        emailProgram            = DEFAULT;
         imageSize               = MEDIUM;
         imageFormat             = JPEG;
     };

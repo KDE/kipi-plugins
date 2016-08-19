@@ -91,7 +91,8 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     d->labelMailAgent = new QLabel(i18n("Mail program:"), this);
 
     d->mailAgentName = new QComboBox(this);
-    d->mailAgentName->insertItem(EmailSettings::DEFAULT,       i18nc("default mail agent", "Default"));
+    d->mailAgentName->insertItem(EmailSettings::DEFAULT,       i18nc("default desktop mail agent", "Delfault"));
+#ifdef Q_OS_LINUX
     d->mailAgentName->insertItem(EmailSettings::BALSA,         QLatin1String("Balsa"));
     d->mailAgentName->insertItem(EmailSettings::CLAWSMAIL,     QLatin1String("Claws Mail"));
     d->mailAgentName->insertItem(EmailSettings::EVOLUTION,     QLatin1String("Evolution"));
@@ -100,10 +101,11 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     d->mailAgentName->insertItem(EmailSettings::SYLPHEED,      QLatin1String("Sylpheed"));
     d->mailAgentName->insertItem(EmailSettings::SYLPHEEDCLAWS, QLatin1String("Sylpheed-Claws"));
     d->mailAgentName->insertItem(EmailSettings::THUNDERBIRD,   QLatin1String("Thunderbird"));
+#endif
     d->mailAgentName->setCurrentIndex(EmailSettings::DEFAULT);
     d->mailAgentName->setWhatsThis(i18n("Select your preferred external email program here. "
-                                        "<b>Default</b> is the current email program set in KDE "
-                                        "System Settings."));
+                                        "<b>Default</b> is the current email program set in desktop "
+                                        "system settings."));
 
     //---------------------------------------------
 
