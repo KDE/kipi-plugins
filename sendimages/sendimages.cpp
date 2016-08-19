@@ -418,17 +418,20 @@ bool SendImages::invokeMailAgent()
             {
                 case EmailSettings::DEFAULT:
                 {
-		    QString emailUrl;
-		    emailUrl.append(QLatin1String("mailto:"));
-		    
-		    foreach(QString file, stringFileList)
-		    {
-			emailUrl.append(QString::fromUtf8("&attach=\"%1\"").arg(file));
-		    }
-		    
-		    if (QDesktopServices::openUrl(QUrl(emailUrl)))
+                    QString email;
+                    email.append(QLatin1String("mailto:"));
+
+                    foreach(QString file, stringFileList)
                     {
-                	d->progressDlg->progressWidget()->addedAction(i18n("Starting default desktop email program..."), StartingMessage);
+                         email.append(QString::fromUtf8("&attach=\"%1\"").arg(file));
+                    }
+
+                    QUrl emailUrl(email);
+                    qCDebug(KIPIPLUGINS_LOG) << "Email Url: " << emailUrl;
+
+                    if (QDesktopServices::openUrl(emailUrl))
+                    {
+                        d->progressDlg->progressWidget()->addedAction(i18n("Starting default desktop email program..."), StartingMessage);
                         agentInvoked = true;
                     }
                     break;
