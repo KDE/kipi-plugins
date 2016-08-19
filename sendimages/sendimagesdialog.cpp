@@ -69,7 +69,7 @@ public:
     MyImageList*    imagesList;
     SettingsWidget* settingsWidget;
 
-    EmailSettings acceptedEmailSettings;
+    EmailSettings   acceptedEmailSettings;
 };
 
 SendImagesDialog::SendImagesDialog(QWidget* const /*parent*/, const QList<QUrl>& urls)

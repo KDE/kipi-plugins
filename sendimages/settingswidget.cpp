@@ -61,21 +61,21 @@ public:
         labelImageCompression = 0;
     }
 
-    QLabel*       labelMailAgent;
-    QLabel*       labelImagesResize;
-    QLabel*       labelImagesFormat;
-    QLabel*       labelAttachmentLimit;
-    QLabel*       labelImageCompression;
+    QLabel*    labelMailAgent;
+    QLabel*    labelImagesResize;
+    QLabel*    labelImagesFormat;
+    QLabel*    labelAttachmentLimit;
+    QLabel*    labelImageCompression;
 
-    QComboBox*    mailAgentName;
-    QComboBox*    imagesResize;
-    QComboBox*    imagesFormat;
+    QComboBox* mailAgentName;
+    QComboBox* imagesResize;
+    QComboBox* imagesFormat;
 
-    QCheckBox*    changeImagesProp;
-    QCheckBox*    addComments;
+    QCheckBox* changeImagesProp;
+    QCheckBox* addComments;
 
-    QSpinBox* imageCompression;
-    QSpinBox* attachmentlimit;
+    QSpinBox*  imageCompression;
+    QSpinBox*  attachmentlimit;
 };
 
 SettingsWidget::SettingsWidget(QWidget* const parent)

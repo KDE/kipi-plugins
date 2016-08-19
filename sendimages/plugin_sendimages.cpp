@@ -60,7 +60,7 @@ public:
         sendImagesOperation = 0;
     }
 
-    QAction *          action_sendimages;
+    QAction*          action_sendimages;
 
     SendImagesDialog* dialog;
 
@@ -109,7 +109,7 @@ void Plugin_SendImages::setup(QWidget* const widget)
 
 void Plugin_SendImages::setupActions()
 {
-    setDefaultCategory(ExportPlugin);
+    setDefaultCategory(ToolsPlugin);
 
     d->action_sendimages = new QAction(this);
     d->action_sendimages->setText(i18n("Email Images..."));

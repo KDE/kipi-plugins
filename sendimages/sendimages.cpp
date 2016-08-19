@@ -79,8 +79,8 @@ public:
 
     bool                   cancel;
 
-    QList<QUrl>             attachementFiles;
-    QList<QUrl>             failedResizedImages;
+    QList<QUrl>            attachementFiles;
+    QList<QUrl>            failedResizedImages;
 
     Interface*             iface;
 
@@ -398,7 +398,7 @@ bool SendImages::invokeMailAgent()
 {
     if (d->cancel) return false;
 
-    bool       agentInvoked = false;
+    bool        agentInvoked = false;
     QList<QUrl> fileList;
 
     do
