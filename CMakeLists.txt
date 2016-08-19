@@ -104,7 +104,6 @@ find_package(KF5 ${KF5_MIN_VERSION}
              WindowSystem
              XmlGui
              I18n
-             Service      # for SendImages (KToolInvocation)
 )
 
 find_package(KF5 ${KF5_MIN_VERSION}

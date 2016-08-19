@@ -35,11 +35,11 @@
 #include <QTextStream>
 #include <QApplication>
 #include <QMessageBox>
+#include <QDesktopServices>
 
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <ktoolinvocation.h>
 
 // Libkipi includes
 
@@ -418,18 +418,19 @@ bool SendImages::invokeMailAgent()
             {
                 case EmailSettings::DEFAULT:
                 {
-                    KToolInvocation::invokeMailer(
-                        QString(),                     // Destination address.
-                        QString(),                     // Carbon Copy address.
-                        QString(),                     // Blind Carbon Copy address
-                        QString(),                     // Message Subject.
-                        QString(),                     // Message Body.
-                        QString(),                     // Message Body File.
-                        stringFileList);               // Images attachments (+ image properties file).
-
-                    d->progressDlg->progressWidget()->addedAction(i18n("Starting default KDE email program..."), StartingMessage);
-
-                    agentInvoked = true;
+		    QString emailUrl;
+		    emailUrl.append(QLatin1String("mailto:"));
+		    
+		    foreach(QString file, stringFileList)
+		    {
+			emailUrl.append(QString::fromUtf8("&attach=\"%1\"").arg(file));
+		    }
+		    
+		    if (QDesktopServices::openUrl(QUrl(emailUrl)))
+                    {
+                	d->progressDlg->progressWidget()->addedAction(i18n("Starting default desktop email program..."), StartingMessage);
+                        agentInvoked = true;
+                    }
                     break;
                 }
 
