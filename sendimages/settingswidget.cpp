@@ -91,7 +91,7 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     d->labelMailAgent = new QLabel(i18n("Mail program:"), this);
 
     d->mailAgentName = new QComboBox(this);
-    d->mailAgentName->insertItem(EmailSettings::DEFAULT,       i18nc("default desktop mail agent", "Delfault"));
+    d->mailAgentName->insertItem(EmailSettings::DEFAULT,       i18nc("default desktop mail agent", "Default"));
 #ifdef Q_OS_LINUX
     d->mailAgentName->insertItem(EmailSettings::BALSA,         QLatin1String("Balsa"));
     d->mailAgentName->insertItem(EmailSettings::CLAWSMAIL,     QLatin1String("Claws Mail"));
