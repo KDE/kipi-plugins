@@ -545,9 +545,11 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
                             QString desktopFileName = QLatin1String("kipiplugin_printimages/templates/") +
                                                       ep.attribute(QLatin1String("name"), QLatin1String("XXX")) + QLatin1String(".desktop");
 
-                            qCDebug(KIPIPLUGINS_LOG) <<  "template desktop file name" << desktopFileName;
+                            qCDebug(KIPIPLUGINS_LOG) << "Template desktop file name: " << desktopFileName;
 
                             const QStringList list         = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, desktopFileName);
+                            qCDebug(KIPIPLUGINS_LOG) << "Template files list: " << list;
+
                             QStringList::ConstIterator it  = list.constBegin();
                             QStringList::ConstIterator end = list.constEnd();
 
@@ -652,13 +654,14 @@ void Wizard::initPhotoSizes(const QSizeF& pageSize)
     // get template-files and parse them
     const QStringList list = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QLatin1String("kipiplugin_printimages/templates/*.xml"));
 
+    qCDebug(KIPIPLUGINS_LOG) << "Template files list: " << list;
+
     foreach(const QString& fn, list)
     {
-        qCDebug(KIPIPLUGINS_LOG) << " LIST: " <<  fn;
         parseTemplateFile(fn, pageSize);
     }
 
-    qCDebug(KIPIPLUGINS_LOG) << "d->m_photoSizes.count()=" << d->m_photoSizes.count();
+    qCDebug(KIPIPLUGINS_LOG) << "d->m_photoSizes.count()="   << d->m_photoSizes.count();
     qCDebug(KIPIPLUGINS_LOG) << "d->m_photoSizes.isEmpty()=" << d->m_photoSizes.isEmpty();
 
     if (d->m_photoSizes.isEmpty())
