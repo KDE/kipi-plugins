@@ -144,6 +144,8 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     d->imagesResize->insertItem(EmailSettings::BIG,       i18n("Big (1024 pixels)"));
     d->imagesResize->insertItem(EmailSettings::VERYBIG,   i18n("Very Big (1280 pixels)"));
     d->imagesResize->insertItem(EmailSettings::LARGE,     i18n("Large - for printing (1600 pixels)"));
+    d->imagesResize->insertItem(EmailSettings::FULLHD,    i18n("Full HD (1920 pixels)"));
+    d->imagesResize->insertItem(EmailSettings::ULTRAHD,   i18n("Ultra HD (3840 pixels)"));
     d->imagesResize->setCurrentIndex(EmailSettings::MEDIUM);
     QString whatsThis = i18n("<p>Select the size of the images that are to be sent:</p>"
                              "<p><b>%1</b>: use this if you have a very slow Internet "
@@ -155,13 +157,21 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
                              "<p><b>%4</b>: use this if you have a high-speed Internet connection "
                              "and the target mailbox size is not limited.</p>"
                              "<p><b>%5</b>: use this if you have no size or speed restrictions.</p>"
-                             "<p><b>%6</b>: use this only for printing purposes.</p>",
+                             "<p><b>%6</b>: use this only for printing purposes.</p>"
+                             "<p><b>%7</b>: use this for optimal viewing on Full HD displays. "
+                             "Only if you have a high-speed Internet connection and the "
+                             "target mailbox size is not limited.</p>"
+                             "<p><b>%8</b>: use this for optimal viewing on Ultra HD displays. "
+                             "Only if you have a high-speed Internet connection and the "
+                             "target mailbox size is not limited.</p>",
                              i18n("Very Small (320 pixels)"),
                              i18n("Small (640 pixels)"),
                              i18n("Medium (800 pixels)"),
                              i18n("Big (1024 pixels)"),
                              i18n("Very Big (1280 pixels)"),
-                             i18n("Large - for printing (1600 pixels)"));
+                             i18n("Large - for printing (1600 pixels)"),
+                             i18n("Full HD (1920 pixels)"),
+                             i18n("Ultra HD (3840 pixels)"));
     d->imagesResize->setWhatsThis(whatsThis);
 
     d->labelImagesResize = new QLabel( i18n("Image size:"), groupBox);

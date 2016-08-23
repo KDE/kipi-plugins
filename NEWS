@@ -7,4 +7,5 @@ NEW FEATURES:
 BUGFIXES FROM BUGZILLA :
 
 001 ==> 217070 - Share by email fails under MacOSX 
-002 ==> 
+002 ==> 367711 - Picture size larger than 1600px.
+003 ==> 

@@ -77,7 +77,9 @@ public:
         MEDIUM,
         BIG,
         VERYBIG,
-        LARGE
+        LARGE,
+        FULLHD,
+        ULTRAHD
     };
 
     enum ImageFormat
@@ -115,6 +117,10 @@ public:
             return 1280;
         else if(imageSize == LARGE)
             return 1600;
+        else if(imageSize == FULLHD)
+            return 1920;
+        else if(imageSize == ULTRAHD)
+            return 3840;
         else
             return 320; // VERYSMALL
     };
