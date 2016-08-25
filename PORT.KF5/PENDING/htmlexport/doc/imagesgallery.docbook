@@ -1,0 +1,156 @@
+<chapter id="imagesgallery">
+<chapterinfo>
+
+<authorgroup>
+    <author>
+        <firstname>Gilles</firstname><surname>Caulier</surname>
+        <affiliation><address><email>caulier dot gilles at gmail dot com</email></address></affiliation>
+    </author>
+    
+    <author>
+        <firstname>Gerhard</firstname><surname>Kulzer</surname>
+        <affiliation><address><email>gerhard at kulzer.net</email></address></affiliation>
+    </author>
+</authorgroup>
+
+<abstract>
+<para>
+The Kipi images gallery plugin is a tool for exporting a set of Albums or images to a  &HTML; page.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>KDE</keyword>
+<keyword>Kipi</keyword>
+</keywordset>
+</chapterinfo>
+
+<title>Images Gallery</title>
+
+<para>
+This powerful plugin can export your Albums into a  &HTML; compliant web image gallery.
+You can easily select the Albums to export in an  &HTML; page and set many designs and parameters
+for the  &HTML; rendering. UTF-8 encoding is used for the best internationalization.
+</para>
+
+<para>
+<ulink url="http://digikamplugins.free.fr/ImagesGallerySamples/MultipleAlbums/index.htm">
+You can see some samples built with this plugin at this &URL;</ulink>
+</para>
+
+<sect1 id="using-plugin-imagesgallerycollectionselection">
+<title>Collections Selection Dialog</title>
+
+<para>
+Launching the plugin from within &digikam; displays three tabs to change the settings.
+The <guilabel>My Albums</guilabel> tab allows you to select all Albums you want
+to export to  &HTML;. Just check the respective Albums (they are displayed without
+hierarchical nesting). On the next two tabs <guilabel>My Tags</guilabel> and 
+<guilabel>My Searches</guilabel> you can refine your selection using tags or 
+previous search results in &digikam;.
+</para>
+
+<figure id="imagesgallery-collections-selection-dialog">
+    <title>The Collections Selection Dialog in &digikam;</title>
+    <mediaobject><imageobject>
+      <imagedata srccredit="The Collections Selection Dialog" fileref="digikam-html-collectionselection.png"/>
+    </imageobject></mediaobject>
+</figure>
+
+<para>Using this plugin &eg; in <application>Gwenview</application> shows another selection dialog
+with two choices for the content of the gallery, either all pictures in the folder or 
+the pictures you selected before starting this module:
+</para>
+
+<figure id="gwenview-html-collectionselection-dialog">
+    <title>The Collections Selection Dialog from other applications</title>
+    <mediaobject><imageobject>
+      <imagedata srccredit="The Collections Selection Dialog" fileref="gwenview-html-collectionselection.png"/>
+    </imageobject></mediaobject>
+</figure>
+
+<para>Next step is to select a theme for the gallery from this dialog:
+</para>
+
+<figure id="digikam-html-themeselection-dialog">
+    <title>The Theme Selection Dialog</title>
+    <mediaobject><imageobject>
+      <imagedata srccredit="The Theme Selection Dialog" fileref="digikam-html-themeselection.png"/>
+    </imageobject></mediaobject>
+</figure>
+
+<para>Depending on the chosen theme you may have additional options to fine-tune the appearance of the gallery.
+</para>
+<para>The next screenshot shows the theme parameter setting for the <guilabel>Classic</guilabel> theme:
+</para>
+<figure id="digikam-html-classic-themeparameters-dialog">
+    <title>Parameters for Classic Theme</title>
+    <mediaobject><imageobject>
+      <imagedata srccredit="Parameters for Classic Theme" fileref="digikam-html-classic-themeparameters.png"/>
+    </imageobject></mediaobject>
+</figure>
+
+<para>
+For all selected themes you can adjust the settings for the images and thumbnails in the gallery:
+</para>
+
+<figure id="digikam-html-imagesettings-dialog">
+    <title>The Image Settings and Thumbnails Dialog</title>
+    <mediaobject><imageobject>
+      <imagedata srccredit="The Image Settings and Thumbnails Dialog" fileref="digikam-html-imagesettings.png"/>
+    </imageobject></mediaobject>
+</figure>
+
+<para>
+In the <guilabel>Full Image</guilabel> section you can either save modified images or
+<guilabel>Use original image</guilabel>.
+</para>
+<para>For modified images you can select as output format JPEG (smallest filesize, but lossy) and PNG 
+(lossless and free license) and set specific image compression features.
+If disk space is of concern check the target image compression and lower the
+compression level from the host application default value.
+</para>
+<para>Checking the <guilabel>Max. size</guilabel> box you can fix the
+maximum target image size (in pixels) with the spinbox at the right. Images bigger than
+this value will be scaled down to it, but smaller images will not be modified.
+</para>
+<note><para>
+If JPEG file format is selected for target resizing images, all EXIF information
+will be preserved from the original JPEG files.
+</para></note>
+
+<para>
+The <guilabel>Thumbnails</guilabel> section allows to set the <guilabel>Format</guilabel>, 
+<guilabel>Quality</guilabel> and <guilabel>Size</guilabel> for the thumbnails in the gallery.
+</para>
+
+<figure id="digikam-html-output-dialog">
+    <title>The Output Dialog</title>
+    <mediaobject><imageobject>
+      <imagedata srccredit="The Output Dialog" fileref="digikam-html-output.png"/>
+    </imageobject></mediaobject>
+</figure>
+
+<para>
+This page defines the settings of where and how to store
+the gallery with all its associated images. Select a folder or add a new folder with write access
+where you want the gallery to be written to. Two sub-folders with the name of your album folder 
+and the theme name will be created containing everything.
+</para>
+
+<para>
+A progress dialog giving a feedback indicate to user. Press <guilabel>Cancel</guilabel>
+button during this stage if you want abort the process.
+</para>
+
+</sect1>
+
+</chapter>
+
+<!--
+Local Variables:
+mode: sgml
+sgml-omittag: nil
+sgml-shorttag: t
+End:
+-->
