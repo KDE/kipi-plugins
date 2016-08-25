@@ -135,7 +135,7 @@ SmugWindow::SmugWindow(const QString& tmpFolder, bool import, QWidget* const /*p
                      ki18n("Author and maintainer").toString(),
                      QString::fromLatin1("lure at kubuntu dot org"));
 
-    about->setHandbookEntry(QString::fromLatin1("smug"));
+    about->setHandbookEntry(QString::fromLatin1("tool-smugexport"));
     setAboutData(about);
 
     // ------------------------------------------------------------------------

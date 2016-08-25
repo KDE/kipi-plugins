@@ -179,7 +179,7 @@ Wizard::Wizard(QWidget* const parent)
                      ki18n("Contributor").toString(),
                      QLatin1String("atrink@nociaro.org"));
 
-    about->setHandbookEntry(QLatin1String("printwizard"));
+    about->setHandbookEntry(QLatin1String("tool-printwizard"));
     setAboutData(about);
 
     d->m_photoUi        = new PhotoUI(this);

@@ -103,7 +103,7 @@ ImageshackWindow::ImageshackWindow(QWidget* const parent, Imageshack* const imgh
                      ki18n("Author").toString(),
                      QString::fromLatin1("dodonvictor at gmail dot com"));
 
-    about->setHandbookEntry(QString::fromLatin1("imageshack"));
+    about->setHandbookEntry(QString::fromLatin1("tool-imageshackexport"));
     setAboutData(about);
 
     // -----------------------------------------------------------

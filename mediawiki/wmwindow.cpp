@@ -143,7 +143,7 @@ WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
                      ki18n("Developer").toString(),
                      QLatin1String("peter dot potrowl at gmail dot com"));
 
-    about->setHandbookEntry(QLatin1String("wikimedia"));
+    about->setHandbookEntry(QLatin1String("tool-wikimediaexport"));
     setAboutData(about);
 
     connect(startButton(), SIGNAL(clicked()),

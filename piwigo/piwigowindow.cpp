@@ -258,7 +258,7 @@ PiwigoWindow::PiwigoWindow(QWidget* const parent, Piwigo* const pPiwigo)
                      ki18n("Developer").toString(),
                      QString::fromLatin1("frederic dot coiffier at free dot com"));
 
-    about->setHandbookEntry(QString::fromLatin1("piwigo"));
+    about->setHandbookEntry(QString::fromLatin1("tool-piwigoexport"));
     setAboutData(about);
 
     // "Start Upload" button

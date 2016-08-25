@@ -125,7 +125,7 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
             about->addAuthor(i18n( "Shourya Singh Gupta" ), i18n("Developer"),
                              QString::fromLatin1("shouryasgupta at gmail dot com"));
 
-            about->setHandbookEntry(QString::fromLatin1("googledrive"));
+            about->setHandbookEntry(QString::fromLatin1("tool-googleexport"));
             setAboutData(about);
 
             setWindowIcon(QIcon::fromTheme(QString::fromLatin1("kipi-googledrive")));
@@ -207,7 +207,7 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
             about->addAuthor(i18n( "Shourya Singh Gupta" ), i18n("Developer"),
                              QString::fromLatin1("shouryasgupta at gmail dot com"));
 
-            about->setHandbookEntry(QString::fromLatin1("googlephotoexport"));
+            about->setHandbookEntry(QString::fromLatin1("tool-googleexport"));
             setAboutData(about);
 
             setWindowIcon(QIcon::fromTheme(QString::fromLatin1("kipi-googlephoto")));

@@ -188,7 +188,7 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
                                                      "(c) 2011-2015, Alexander Potashev"));
 
     about->addAuthor(i18n("Alexander Potashev"), i18n("Author"), QString::fromLatin1("aspotashev@gmail.com"));
-    about->setHandbookEntry(QString::fromLatin1("VKontakte"));
+    about->setHandbookEntry(QString::fromLatin1("tool-vkontakteexport"));
     setAboutData(about);
 
     /*

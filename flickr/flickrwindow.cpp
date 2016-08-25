@@ -153,7 +153,7 @@ FlickrWindow::FlickrWindow(QWidget* const /*parent*/, const QString& serviceName
     about->addAuthor(i18n("Shourya Singh Gupta"), i18n("Developer"),
                      QString::fromLatin1("shouryasgupta at gmail dot com"));
 
-    about->setHandbookEntry(QString::fromLatin1("flickrexport"));
+    about->setHandbookEntry(QString::fromLatin1("tool-flickrexport"));
     setAboutData(about);
 
     // --------------------------------------------------------------------------

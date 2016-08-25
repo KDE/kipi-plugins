@@ -89,7 +89,7 @@ KioExportWindow::KioExportWindow(QWidget* const /*parent*/)
                      ki18n("Developer and maintainer").toString(),
                      QString::fromLatin1("languitar at semipol dot de"));
 
-    about->setHandbookEntry(QString::fromLatin1("kioexport"));
+    about->setHandbookEntry(QString::fromLatin1("tool-remotestorage"));
     setAboutData(about);
 
     // -- initial sync ------------------------------------------------------

@@ -77,7 +77,7 @@ RajceWindow::RajceWindow(const QString& tmpFolder, QWidget* const /*parent*/)
                      ki18n("Author").toString(),
                      QString::fromLatin1("metlosh at gmail dot com"));
 
-    about->setHandbookEntry(QString::fromLatin1("rajceexport"));
+    about->setHandbookEntry(QString::fromLatin1("tool-rajceexport"));
     setAboutData(about);
 
     startButton()->setEnabled(false);

@@ -137,7 +137,7 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
                      ki18n("Author").toString(),
                      QString::fromLatin1("roman at tsisyk dot com"));
 
-    about->setHandbookEntry(QString::fromLatin1("YandexFotki"));
+    about->setHandbookEntry(QString::fromLatin1("tool-yandexfotkiexport"));
     setAboutData(about);
 
     // -- UI slots -----------------------------------------------------------------------

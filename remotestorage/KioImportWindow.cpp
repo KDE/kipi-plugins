@@ -86,7 +86,7 @@ KioImportWindow::KioImportWindow(QWidget* const /*parent*/)
                      ki18n("Developer and maintainer").toString(),
                      QString::fromLatin1("languitar at semipol dot de"));
 
-    about->setHandbookEntry(QString::fromLatin1("remotestorage"));
+    about->setHandbookEntry(QString::fromLatin1("tool-remotestorage"));
     setAboutData(about);
 
     slotSourceAndTargetUpdated();

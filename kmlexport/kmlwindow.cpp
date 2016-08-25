@@ -295,7 +295,7 @@ KmlWindow::KmlWindow(QWidget* const parent,
                      ki18n("Maintainer").toString(),
                            QLatin1String("mike at mghansen dot de"));
 
-    about->setHandbookEntry(QLatin1String("kmlexport"));
+    about->setHandbookEntry(QLatin1String("tool-kmlexport"));
     setAboutData(about);
 
     // --------------------------------------------------------------

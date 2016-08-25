@@ -138,7 +138,7 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
                      ki18n("Developer").toString(),
                      QString::fromLatin1("fabian at ritter dash vogt dot de"));
 
-    about->setHandbookEntry(QString::fromLatin1("imgur"));
+    about->setHandbookEntry(QString::fromLatin1("tool-imgurexport"));
     setAboutData(about);
 
     /* Only used if not overwritten by readSettings() */

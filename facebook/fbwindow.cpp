@@ -148,7 +148,7 @@ FbWindow::FbWindow(const QString& tmpFolder, QWidget* const /*parent*/)
                      ki18n("Author and maintainer").toString(),
                      QString::fromLatin1("lure at kubuntu dot org"));
 
-    about->setHandbookEntry(QString::fromLatin1("facebook"));
+    about->setHandbookEntry(QString::fromLatin1("tool-facebookexport"));
     setAboutData(about);
 
     // ------------------------------------------------------------------------

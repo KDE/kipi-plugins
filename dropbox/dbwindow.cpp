@@ -107,7 +107,7 @@ DBWindow::DBWindow(const QString& tmpFolder, QWidget* const /*parent*/)
                      ki18n("Author").toString(),
                      QString::fromLatin1("saurabhpatel7717 at gmail dot com"));
 
-    about->setHandbookEntry(QString::fromLatin1("dropbox"));
+    about->setHandbookEntry(QString::fromLatin1("tool-dropboxexport"));
     setAboutData(about);
 
     //-------------------------------------------------------------------------
