@@ -25,6 +25,9 @@
 
 // Qt includes
 
+#include <QUrl>
+#include <QUrlQuery>
+#include <QDesktopServices>
 #include <QIcon>
 #include <QAction>
 #include <QMenu>
@@ -35,7 +38,6 @@
 
 #include <khelpmenu.h>
 #include <klocalizedstring.h>
-#include <khelpclient.h>
 
 // Local includes
 
@@ -110,7 +112,16 @@ void KPAboutData::setHelpButton(QPushButton* const help)
 
 void KPAboutData::slotHelp()
 {
-    KHelpClient::invokeHelp(m_handbookEntry, QString::fromLatin1("kipi-plugins"));
+    QUrl url = QUrl(QString::fromUtf8("help:/%1/index.html").arg(QString::fromLatin1("kipi-plugins")));
+
+    if (!m_handbookEntry.isEmpty())
+    {
+        QUrlQuery query(url);
+        query.addQueryItem(QStringLiteral("anchor"), m_handbookEntry);
+        url.setQuery(query);
+    }
+
+    QDesktopServices::openUrl(url);
 }
 
 }   // namespace KIPIPlugins
