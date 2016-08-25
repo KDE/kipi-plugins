@@ -126,9 +126,7 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
     m_widget->setMinimumSize(800, 700);
 
     KPAboutData* const about = new KPAboutData(ki18n("Yandex.Fotki Plugin"),
-                                               0,
-                                               KAboutLicense::GPL,
-                                               ki18n("A Kipi plugin to export image collections to "
+                                               ki18n("A tool to export image collections to "
                                                      "Yandex.Fotki web service."),
                                                ki18n("(c) 2007-2009, Vardhman Jain\n"
                                                      "(c) 2008-2015, Gilles Caulier\n"

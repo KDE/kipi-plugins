@@ -113,9 +113,8 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
     {
         case PluginName::GDrive:
 
-            about = new KPAboutData(ki18n("Google Drive Export"),0,
-                                           KAboutLicense::GPL,
-                                           ki18n("A Kipi-plugin to export images "
+            about = new KPAboutData(ki18n("Google Drive Export"),
+                                           ki18n("A tool to export images "
                                                  "to Google Drive"),
                                            ki18n("(c) 2013, Saurabh Patel\n"
                                                  "(c) 2015, Shourya Singh Gupta"));
@@ -185,9 +184,7 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
         case PluginName::GPhotoExport:
 
             about = new KPAboutData(ki18n("Google Photos/PicasaWeb Export"),
-                                    0,
-                                    KAboutLicense::GPL,
-                                    ki18n("A Kipi plugin to export image collections to "
+                                    ki18n("A tool to export image collections to "
                                           "Google Photos/Picasa web service."),
                                     ki18n("(c) 2007-2009, Vardhman Jain\n"
                                           "(c) 2008-2016, Gilles Caulier\n"

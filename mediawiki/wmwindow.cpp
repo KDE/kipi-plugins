@@ -122,9 +122,7 @@ WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     d->widget->installEventFilter(this);
 
     KPAboutData* const about = new KPAboutData(ki18n("MediaWiki export"),
-                                               0,
-                                               KAboutLicense::GPL,
-                                               ki18n("A Kipi plugin to export image collection "
+                                               ki18n("A tool to export image collection "
                                                      "to a MediaWiki installation.\n"
                                                      "Using libmediawiki version %1").subs(QLatin1String(MEDIAWIKI_VERSION_STRING)),
                                                ki18n("(c) 2011, Alexandre Mendes"));

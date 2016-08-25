@@ -124,9 +124,8 @@ SmugWindow::SmugWindow(const QString& tmpFolder, bool import, QWidget* const /*p
 
     // ------------------------------------------------------------------------
 
-    KPAboutData* const about = new KPAboutData(ki18n("Smug Import/Export"), 0,
-                                   KAboutLicense::GPL,
-                                   ki18n("A Kipi plugin to import/export image collections "
+    KPAboutData* const about = new KPAboutData(ki18n("Smug Import/Export"),
+                                   ki18n("A tool to import/export image collections "
                                          "from/to the SmugMug web service."),
                                    ki18n("(c) 2005-2008, Vardhman Jain\n"
                                          "(c) 2008-2012, Gilles Caulier\n"

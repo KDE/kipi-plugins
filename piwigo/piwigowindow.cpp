@@ -231,9 +231,7 @@ PiwigoWindow::PiwigoWindow(QWidget* const parent, Piwigo* const pPiwigo)
 
     // About data.
     KPAboutData* about = new KPAboutData(ki18n("Piwigo Export"),
-                                         0,
-                                         KAboutLicense::GPL,
-                                         ki18n("A Kipi plugin to export image collections to a remote Piwigo server."),
+                                         ki18n("A tool to export image collections to a remote Piwigo server."),
                                          ki18n("(c) 2003-2005, Renchi Raju\n"
                                                "(c) 2006-2007, Colin Guthrie\n"
                                                "(c) 2006-2015, Gilles Caulier\n"

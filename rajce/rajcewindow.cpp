@@ -69,9 +69,7 @@ RajceWindow::RajceWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     //--------------------------------------------------------------------
 
     KPAboutData* const about = new KPAboutData(ki18n("Rajce.net Export"),
-                                   0,
-                                   KAboutLicense::GPL,
-                                   ki18n("A Kipi plugin to export image collections to "
+                                   ki18n("A tool to export image collections to "
                                    "Rajce.net."),
                                    ki18n( "(c) 2011-2013, Lukas Krejci" ));
 

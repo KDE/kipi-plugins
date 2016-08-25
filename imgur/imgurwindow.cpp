@@ -123,8 +123,6 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
     /* Add about data */
 
     KPAboutData* const about = new KPAboutData(ki18n("Imgur Export"),
-                                   0,
-                                   KAboutLicense::GPL,
                                    ki18n("A tool to export images to Imgur web service"),
                                    ki18n("(c) 2012-2013, Marius Orcsik"));
 

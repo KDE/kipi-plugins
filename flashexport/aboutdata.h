@@ -39,9 +39,8 @@ class FlashExportAboutData : public KPAboutData
 public:
 
     FlashExportAboutData()
-        : KPAboutData(ki18n("Flash Export"), 0,
-                      KAboutLicense::GPL,
-                      ki18n("A Kipi plugin to export images to Flash using the SimpleViewer's components."),
+        : KPAboutData(ki18n("Flash Export"),
+                      ki18n("A tool to export images to Flash using the SimpleViewer's components."),
                       ki18n("(c) 2005-2006, Joern Ahrens\n"
                             "(c) 2008-2016, Gilles Caulier\n"
                             "(c) 2011-2013, Veaceslav Munteanu"))
@@ -61,15 +60,9 @@ public:
                   i18n("Developer and maintainer"),
                   QLatin1String("slavuttici at gmail dot com"));
 
-        addCredit(i18n("Felix Turner"),
-                  i18n("Author of the Simple Viewer Flash component"),
-                  QString(),
-                  QLatin1String("http://www.simpleviewer.net"));
-
-        addCredit(i18n("Mikkel B. Stegmann"),
+        addAuthor(i18n("Mikkel B. Stegmann"),
                   i18n("Basis for the index.html template"),
-                  QString(),
-                  QLatin1String("http://www.stegmann.dk/mikkel/porta"));
+                  QString());
     }
 
     ~FlashExportAboutData()

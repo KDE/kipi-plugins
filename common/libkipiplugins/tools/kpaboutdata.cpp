@@ -33,11 +33,9 @@
 #include <QMenu>
 #include <QPushButton>
 #include <QStandardPaths>
-
-// KDE includes
-
-#include <khelpmenu.h>
-#include <klocalizedstring.h>
+#include <QMessageBox>
+#include <QMenu>
+#include <QApplication>
 
 // Local includes
 
@@ -47,44 +45,23 @@
 namespace KIPIPlugins
 {
 
-KPAboutData::KPAboutData(const KLocalizedString& pluginName,
-                         const QByteArray& /*pluginVersion*/,
-                         enum  KAboutLicense::LicenseKey licenseType,
-                         const KLocalizedString& pluginDescription,
-                         const KLocalizedString& copyrightStatement)
-    : QObject(),
-      KAboutData(QString::fromLatin1("kipiplugins"),  // Name without minus separator for KDE bug report.
-                 pluginName.toString(),
-                 kipipluginsVersion(),
-                 pluginDescription.toString(),
-                 licenseType,
-                 copyrightStatement.toString(),
-                 QString(),
-                 QString::fromLatin1("http://www.digikam.org"))
+KPAboutData::KPAboutData(const KLocalizedString& tool,
+                         const KLocalizedString& description,
+                         const KLocalizedString& copyright)
+    : QObject()
 {
-    QString directory = QStandardPaths::locate(QStandardPaths::GenericDataLocation,
-                                               QString::fromLatin1("kf5/kipi/pics/kipi-plugins_logo.png"));
-
-    // set the kipiplugins logo inside the about dialog
-    setProgramLogo(QImage(directory));
-
-    // set the plugin description into long text description
-    setOtherText(pluginDescription.toString());
-
-    // put the plugin name and version with kipi-plugins and kipi-plugins version
-    KLocalizedString shortDesc = additionalInformation();
-
-    qCDebug(KIPIPLUGINS_LOG) << shortDesc.toString().constData() ;
-
-    // and set the string into the short description
-    setShortDescription(shortDesc.toString());
+    m_tool        = tool.toString();
+    m_description = description.toString();
+    m_copyright   = copyright.toString();
 }
 
 KPAboutData::KPAboutData(const KPAboutData& other)
-    : QObject((QObject*)(&other)),
-      KAboutData(other)
+    : QObject((QObject*)(&other))
 {
-     setHandbookEntry(other.m_handbookEntry);
+    m_tool          = other.m_tool;
+    m_description   = other.m_description;
+    m_copyright     = other.m_copyright;
+    m_handbookEntry = other.m_handbookEntry;
 }
 
 KPAboutData::~KPAboutData()
@@ -98,21 +75,32 @@ void KPAboutData::setHandbookEntry(const QString& entry)
 
 void KPAboutData::setHelpButton(QPushButton* const help)
 {
-    KHelpMenu* const helpMenu = new KHelpMenu(help, *(this), false);
+    QMenu* const menu = new QMenu(help);
+    
+    QAction* const book = menu->addAction(QIcon::fromTheme(QString::fromLatin1("help-contents")), i18n("Handbook"));
 
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* const handbook   = new QAction(QIcon::fromTheme(QString::fromLatin1("help-contents")), i18n("Handbook"), helpMenu);
-
-    connect(handbook, &QAction::triggered,
+    connect(book, &QAction::triggered,
             this, &KPAboutData::slotHelp);
 
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    help->setMenu(helpMenu->menu());
+    QAction* const about = menu->addAction(QIcon::fromTheme(QString::fromLatin1("help-about")), i18n("About..."));
+
+    connect(about, &QAction::triggered,
+            this, &KPAboutData::slotAbout);    
+   
+    help->setMenu(menu);
+}
+
+void KPAboutData::addAuthor(const QString& name, const QString& role, const QString& email)
+{
+    QString mailUrl = email;
+    mailUrl.remove(QLatin1String(" "));
+    QString data = QString::fromUtf8("%1 <%2>\n%3").arg(name).arg(mailUrl).arg(role);
+    m_authors.append(data);
 }
 
 void KPAboutData::slotHelp()
 {
-    QUrl url = QUrl(QString::fromUtf8("help:/%1/index.html").arg(QString::fromLatin1("kipi-plugins")));
+    QUrl url = QUrl(QString::fromUtf8("help:/%1/index.html").arg(QString::fromLatin1("digikam")));
 
     if (!m_handbookEntry.isEmpty())
     {
@@ -124,4 +112,26 @@ void KPAboutData::slotHelp()
     QDesktopServices::openUrl(url);
 }
 
-}   // namespace KIPIPlugins
+void KPAboutData::slotAbout()
+{
+    QString text;
+    
+    text.append(m_description);
+    text.append(QLatin1String("\n\n"));
+    text.append(i18n("Version: %1", kipipluginsVersion()));
+    text.append(QLatin1String("\n\n"));
+    text.append(m_copyright);
+    text.append(QLatin1String("\n\n"));
+    
+    foreach(QString data, m_authors)
+    {
+        text.append(data);
+        text.append(QLatin1String("\n\n"));
+    }
+    
+    text.remove(text.size()-2, 2);
+
+    QMessageBox::about(qApp->activeWindow(), i18n("About %1", m_tool), text);
+}
+
+} // namespace KIPIPlugins

@@ -98,9 +98,8 @@ DBWindow::DBWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     connect(startButton(), SIGNAL(clicked()),
             this, SLOT(slotStartTransfer()));
 
-    KPAboutData* const about = new KPAboutData(ki18n("Dropbox Export"),0,
-                                               KAboutLicense::GPL,
-                                               ki18n("A Kipi-plugin to export images "
+    KPAboutData* const about = new KPAboutData(ki18n("Dropbox Export"),
+                                               ki18n("A tool to export images "
                                                      "to Dropbox"),
                                                ki18n("(c) 2013, Saurabh Patel"));
 

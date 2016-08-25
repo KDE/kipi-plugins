@@ -96,9 +96,7 @@ ImageshackWindow::ImageshackWindow(QWidget* const parent, Imageshack* const imgh
 
     // About data
     KPAboutData* const about = new KPAboutData(ki18n("Imageshack Export"),
-                                   0,
-                                   KAboutLicense::GPL,
-                                   ki18n("A kipi plugin to export images to Imageshack web service."),
+                                   ki18n("A tool to export images to Imageshack web service."),
                                    ki18n("(c) 2012, Dodon Victor\n"));
 
     about->addAuthor(ki18n("Dodon Victor").toString(),

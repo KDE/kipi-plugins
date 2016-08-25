@@ -280,9 +280,7 @@ KmlWindow::KmlWindow(QWidget* const parent,
     // About data and help button.
 
     KPAboutData* const about = new KPAboutData(ki18n("KML Export"),
-                                   0,
-                                   KAboutLicense::GPL,
-                                   ki18n("A Kipi plugin for KML exporting"),
+                                   ki18n("A tool to export to KML"),
                                    ki18n("(c) 2006-2007, Stéphane Pontier"));
 
     about->addAuthor(ki18n("Stéphane Pontier").toString(),

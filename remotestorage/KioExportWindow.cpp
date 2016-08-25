@@ -82,9 +82,7 @@ KioExportWindow::KioExportWindow(QWidget* const /*parent*/)
     // -- About data and help button ----------------------------------------
 
     KPAboutData* const about = new KPAboutData(ki18n("Export to remote storage"),
-                                               0,
-                                               KAboutLicense::GPL,
-                                               ki18n("A Kipi plugin to export images over network using KIO-Slave"),
+                                               ki18n("A tool to export images over network using KIO-Slave"),
                                                ki18n("(c) 2009, Johannes Wienke"));
 
     about->addAuthor(ki18n("Johannes Wienke").toString(),

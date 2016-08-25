@@ -101,9 +101,7 @@ SendImagesDialog::SendImagesDialog(QWidget* const /*parent*/, const QList<QUrl>&
     // About data and help button.
 
     KPAboutData* const about = new KPAboutData(ki18n("Send Images"),
-                                   0,
-                                   KAboutLicense::GPL,
-                                   ki18n("A plugin to e-mail items"),
+                                   ki18n("A tool to e-mail items"),
                                    ki18n("(c) 2003-2016, Gilles Caulier"));
 
     about->addAuthor(ki18n("Gilles Caulier").toString(), ki18n("Author and Maintainer").toString(),

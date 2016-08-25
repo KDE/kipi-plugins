@@ -24,7 +24,6 @@
 // Qt includes
 
 #include <QApplication>
-#include <QCommandLineParser>
 
 // Local includes
 
@@ -38,10 +37,9 @@ using namespace KIPIPlugins;
 */
 int main(int argc, char* argv[])
 {
-    KPAboutData* const about = new KPAboutData(ki18n("ImageSelector"), 0,
-                                               KAboutLicense::GPL,
+    KPAboutData* const about = new KPAboutData(ki18n("ImageSelector"),
                                                ki18n("A test application to rotate list of images."),
-                                               ki18n("(c) 2011-2014, Gilles Caulier\n"
+                                               ki18n("(c) 2011-2016, Gilles Caulier\n"
                                                      "(c) 2011-2012, A Janardhan Reddy"));
 
     about->addAuthor(ki18n("Gilles Caulier").toString(),
@@ -51,9 +49,6 @@ int main(int argc, char* argv[])
     about->addAuthor(ki18n("A Janardhan Reddy").toString(),
                      ki18n("Author").toString(),
                      QLatin1String("annapareddyjanardhanreddy at gmail dot com"));
-
-    QCommandLineParser parser;
-    about->setupCommandLine(&parser);
 
     QApplication app(argc, argv);
     ImageSelector* const selector = new ImageSelector(about);

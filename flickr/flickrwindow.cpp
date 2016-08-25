@@ -137,9 +137,7 @@ FlickrWindow::FlickrWindow(QWidget* const /*parent*/, const QString& serviceName
     // About data and help button.
 
     KPAboutData* const about = new KPAboutData(ki18n("Flickr/23/Zooomr Export"),
-                                               0,
-                                               KAboutLicense::GPL,
-                                               ki18n("A Kipi plugin to export an image collection to a "
+                                               ki18n("A tool to export an image collection to a "
                                                      "Flickr / 23 / Zooomr web service."),
                                                ki18n("(c) 2005-2008, Vardhman Jain\n"
                                                      "(c) 2008-2015, Gilles Caulier\n"

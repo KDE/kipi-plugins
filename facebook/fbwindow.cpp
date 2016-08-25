@@ -137,9 +137,8 @@ FbWindow::FbWindow(const QString& tmpFolder, QWidget* const /*parent*/)
 
     // ------------------------------------------------------------------------
 
-    KPAboutData* about = new KPAboutData(ki18n("Facebook Export"), 0,
-                                         KAboutLicense::GPL,
-                                         ki18n("A Kipi plugin to export image collection "
+    KPAboutData* about = new KPAboutData(ki18n("Facebook Export"),
+                                         ki18n("A tool to export image collection "
                                                "to/from Facebook web service."),
                                          ki18n("(c) 2005-2008, Vardhman Jain\n"
                                                "(c) 2008-2012, Gilles Caulier\n"

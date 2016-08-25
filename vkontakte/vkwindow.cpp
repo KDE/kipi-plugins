@@ -178,10 +178,8 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
 //         optionsBox->hide();
     }
 
-    KPAboutData* const about = new KPAboutData(ki18n("VKontakte Plugin"),
-                                               0,
-                                               KAboutLicense::GPL,
-                                               ki18n("A Kipi plugin to export image collections to "
+    KPAboutData* const about = new KPAboutData(ki18n("VKontakte"),
+                                               ki18n("A tool to export image collections to "
                                                      "VKontakte web service."),
                                                ki18n("(c) 2007-2009, Vardhman Jain\n"
                                                      "(c) 2008-2013, Gilles Caulier\n"

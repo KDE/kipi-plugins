@@ -24,13 +24,14 @@
 #ifndef KPABOUTDATA_H
 #define KPABOUTDATA_H
 
-// KDE includes
+// Qt includes
 
 #include <QObject>
+#include <QList>
+#include <QStringList>
 
 // KDE includes
 
-#include <kaboutdata.h>
 #include <klocalizedstring.h>
 
 // Local includes
@@ -42,33 +43,37 @@ class QPushButton;
 namespace KIPIPlugins
 {
 
-class KIPIPLUGINS_EXPORT KPAboutData : public QObject, public KAboutData
+class KIPIPLUGINS_EXPORT KPAboutData : public QObject
 {
     Q_OBJECT
 
 public:
 
-    explicit KPAboutData(const KLocalizedString& pluginName,
-                         const QByteArray& pluginVersion            = QByteArray(),
-                         enum  KAboutLicense::LicenseKey            = KAboutLicense::GPL,
-                         const KLocalizedString& pluginDescription  = KLocalizedString(),
-                         const KLocalizedString& copyrightStatement = ki18n("Copyright 2003-2015, digiKam developers team"));
+    explicit KPAboutData(const KLocalizedString& tool,
+                         const KLocalizedString& description = KLocalizedString(),
+                         const KLocalizedString& copyright = ki18n("Copyright 2003-2016, digiKam developers team"));
 
     KPAboutData(const KPAboutData& other);
     virtual ~KPAboutData();
 
     void setHandbookEntry(const QString& entry);
     void setHelpButton(QPushButton* const help);
+    void addAuthor(const QString& name, const QString& role, const QString& email);
 
 private Q_SLOTS:
 
     void slotHelp();
+    void slotAbout();
 
 private:
 
-    QString m_handbookEntry;
+    QString     m_tool;
+    QString     m_description;
+    QString     m_copyright;
+    QString     m_handbookEntry;
+    QStringList m_authors;
 };
 
 } // namespace KIPIPlugins
 
-#endif //KPABOUTDATA_H
+#endif // KPABOUTDATA_H

@@ -79,9 +79,7 @@ KioImportWindow::KioImportWindow(QWidget* const /*parent*/)
     // about data and help button
 
     KPAboutData* const about = new KPAboutData(ki18n("Import from remote storage"),
-                                               0,
-                                               KAboutLicense::GPL,
-                                               ki18n("A Kipi plugin to import images over network"),
+                                               ki18n("A tool to import images over network"),
                                                ki18n("(c) 2009, Johannes Wienke"));
 
     about->addAuthor(ki18n("Johannes Wienke").toString(),

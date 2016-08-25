@@ -163,9 +163,7 @@ Wizard::Wizard(QWidget* const parent)
 
     // About data
     KPAboutData* const about = new KPAboutData(ki18n("Print assistant"),
-                                               0,
-                                               KAboutLicense::GPL,
-                                               ki18n("A KIPI plugin to print images"),
+                                               ki18n("A tool to print images"),
                                                ki18n("(c) 2003-2004, Todd Shoemaker\n"
                                                "(c) 2007-2013, Angelo Naselli"));
 
