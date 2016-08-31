@@ -529,8 +529,8 @@ void GSWindow::slotListPhotosDoneForUpload(int errCode, const QString& errMsg, c
     m_widget->progressBar()->setValue(0);
     m_widget->progressBar()->show();
     m_widget->progressBar()->progressScheduled(i18n("Google Photo Export"), true, true);
-    m_widget->progressBar()->progressThumbnailChanged(
-        QIcon::fromTheme(QString::fromLatin1("kipi")).pixmap(22, 22));
+    m_widget->progressBar()->progressThumbnailChanged(QIcon(
+        (QLatin1String(":/icons/kipi-icon.svg"))).pixmap(22, 22));
 
     m_renamingOpt = 0;
 
@@ -760,7 +760,7 @@ void GSWindow::slotStartTransfer()
     m_widget->progressBar()->setValue(0);
     m_widget->progressBar()->show();
     m_widget->progressBar()->progressScheduled(i18n("Google Drive export"), true, true);
-    m_widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme(QString::fromLatin1("kipi")).pixmap(22, 22));
+    m_widget->progressBar()->progressThumbnailChanged(QIcon(QLatin1String(":/icons/kipi-icon.svg")).pixmap(22, 22));
 
     uploadNextPhoto();
 }

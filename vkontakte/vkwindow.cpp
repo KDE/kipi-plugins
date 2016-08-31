@@ -158,7 +158,7 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
 //     mainLayout->setMargin(0);
 
     setMainWidget(m_mainWidget);
-    setWindowIcon(QIcon::fromTheme(QString::fromLatin1("kipi")));
+    setWindowIcon(QIcon(QLatin1String(":/icons/kipi-icon.svg")));
     setModal(false);
 
     if (!m_import)
@@ -392,7 +392,7 @@ void VkontakteWindow::slotStartTransfer()
 
     m_progressBar->show();
     m_progressBar->progressScheduled(i18n("Vkontakte Export"), false, true);
-    m_progressBar->progressThumbnailChanged(QIcon::fromTheme(QString::fromLatin1("kipi")).pixmap(22, 22));
+    m_progressBar->progressThumbnailChanged(QIcon(QLatin1String(":/icons/kipi-icon.svg")).pixmap(22, 22));
 }
 
 void VkontakteWindow::slotPhotoUploadDone(KJob* kjob)

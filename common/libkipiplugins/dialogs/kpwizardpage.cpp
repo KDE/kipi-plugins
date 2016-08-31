@@ -85,7 +85,7 @@ KPWizardPage::KPWizardPage(KPWizardDialog* const dlg, const QString& title)
     d->logo                    = new QLabel(d->leftView);
     d->logo->setAlignment(Qt::AlignTop);
     d->logo->setPixmap(QPixmap(QStandardPaths::locate(QStandardPaths::GenericDataLocation,
-                                                      QString::fromLatin1("kf5/kipi/pics/kipi-logo.svg")))
+                                                      QString::fromLatin1(":/images/kipi-logo.svg")))
                                .scaled(128, 128, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     QWidget* const space = new QLabel(d->leftView);

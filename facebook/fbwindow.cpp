@@ -541,7 +541,7 @@ void FbWindow::slotStartTransfer()
     d->m_progressBar->setValue(0);
     d->m_progressBar->show();
     d->m_progressBar->progressScheduled(i18n("Facebook export"), true, true);
-    d->m_progressBar->progressThumbnailChanged(QIcon::fromTheme(QString::fromLatin1("kipi")).pixmap(22, 22));
+    d->m_progressBar->progressThumbnailChanged(QIcon(QLatin1String(":/icons/kipi-icon.svg")).pixmap(22, 22));
 
     uploadNextPhoto();
 }

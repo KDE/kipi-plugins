@@ -237,7 +237,7 @@ KPBatchProgressDialog::KPBatchProgressDialog(QWidget* const /*parent*/, const QS
     d->buttonBox->button(QDialogButtonBox::Cancel)->setDefault(true);
 
     d->progressWidget = new KPBatchProgressWidget(this);
-    d->progressWidget->progressScheduled(caption, QIcon::fromTheme(QString::fromLatin1("kipi")).pixmap(22, 22));
+    d->progressWidget->progressScheduled(caption, QIcon(QLatin1String(":/icons/kipi-icon.svg")).pixmap(22, 22));
 
     QVBoxLayout* const mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(d->progressWidget);

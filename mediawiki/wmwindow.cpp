@@ -347,7 +347,7 @@ void WMWindow::slotStartTransfer()
 
     d->widget->progressBar()->show();
     d->widget->progressBar()->progressScheduled(i18n("MediaWiki export"), true, true);
-    d->widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme(QLatin1String("kipi")).pixmap(22, 22));
+    d->widget->progressBar()->progressThumbnailChanged(QIcon(QLatin1String(":/icons/kipi-icon.svg")).pixmap(22, 22));
     d->uploadTalker->begin();
 }
 
