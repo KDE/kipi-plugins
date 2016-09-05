@@ -207,7 +207,6 @@ if(KF5Kipi_FOUND)
                             ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/dialogs
                             ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/widgets
                             ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/tools
-                            ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/tools/imageio
                             ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/o2/src
                             ${KF5Kipi_INCLUDE_DIRS}
                         )
@@ -219,6 +218,8 @@ if(KF5Kipi_FOUND)
             add_definitions(-D_ATL_SECURE_NO_WARNINGS)
             add_definitions(-D_AFX_SECURE_NO_WARNINGS)
         endif()
+
+        add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
 
         if(NOT WIN32)
             configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/kipi-plugins.lsm.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipi-plugins.lsm)
