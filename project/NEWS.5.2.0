@@ -1,0 +1,10 @@
+Kipi-plugins 5.2.0 - Release date: 2016/09/19
+------------------------------------------------------------------------
+
+NEW FEATURES:
+
+
+BUGFIXES FROM BUGZILLA :
+
+001 ==> 217070 - Share by email fails under MacOSX.
+002 ==> 367711 - Picture size larger than 1600px.
