@@ -19,7 +19,7 @@ set(KIPIPLUGINS_MINOR_VERSION "3")
 set(KIPIPLUGINS_PATCH_VERSION "0")
 
 # kipi-plugins release date
-set(KIPIPLUGINS_RELEASE_DATE "2016-10-16")
+set(KIPIPLUGINS_RELEASE_DATE "2016-10-30")
 
 # Suffix to add at end of version string. Usual values are:
 # "-git"   : alpha code unstable from git. Do not use in production
