@@ -26,6 +26,7 @@
 
 // Qt includes
 
+#include <QMimeDatabase>
 #include <QTextDocument>
 #include <QByteArray>
 #include <QDomDocument>
@@ -260,44 +261,49 @@ bool GPTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QString& 
 
     QUrl url(QString::fromLatin1("https://picasaweb.google.com/data/feed/api/user/default/albumid/") + albumId);
     MPForm_GPhoto form;
+    QString path = photoPath;
 
-    QString path        = photoPath;
-    QImage image;
+    QMimeDatabase mimeDB;
 
-    if (m_iface)
+    if (!mimeDB.mimeTypeForFile(path).name().startsWith(QLatin1String("video/")))
     {
-        image = m_iface->preview(QUrl::fromLocalFile(photoPath));
-    }
+        QImage image;
 
-    if (image.isNull())
-    {
-        image.load(photoPath);
-    }
+        if (m_iface)
+        {
+            image = m_iface->preview(QUrl::fromLocalFile(photoPath));
+        }
 
-    if (image.isNull())
-    {
-        return false;
-    }
+        if (image.isNull())
+        {
+            image.load(photoPath);
+        }
 
-    path                  = makeTemporaryDir("gs").filePath(QFileInfo(photoPath)
-                                                  .baseName().trimmed() + QLatin1String(".jpg"));
-    int imgQualityToApply = 100;
+        if (image.isNull())
+        {
+            return false;
+        }
 
-    if (rescale)
-    {
-        if(image.width() > maxDim || image.height() > maxDim)
-            image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        path                  = makeTemporaryDir("gs").filePath(QFileInfo(photoPath)
+                                                      .baseName().trimmed() + QLatin1String(".jpg"));
+        int imgQualityToApply = 100;
 
-        imgQualityToApply = imageQuality;
-    }
+        if (rescale)
+        {
+            if (image.width() > maxDim || image.height() > maxDim)
+                image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
-    image.save(path, "JPEG", imgQualityToApply);
+            imgQualityToApply = imageQuality;
+        }
 
-    if (m_meta && m_meta->load(QUrl::fromLocalFile(photoPath)))
-    {
-        m_meta->setImageDimensions(image.size());
-        m_meta->setImageProgramId(QString::fromLatin1("Kipi-plugins"), kipipluginsVersion());
-        m_meta->save(QUrl::fromLocalFile(path));
+        image.save(path, "JPEG", imgQualityToApply);
+
+        if (m_meta && m_meta->load(QUrl::fromLocalFile(photoPath)))
+        {
+            m_meta->setImageDimensions(image.size());
+            m_meta->setImageProgramId(QString::fromLatin1("Kipi-plugins"), kipipluginsVersion());
+            m_meta->save(QUrl::fromLocalFile(path));
+        }
     }
 
     //Create the Body in atom-xml

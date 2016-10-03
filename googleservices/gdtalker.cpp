@@ -24,6 +24,7 @@
 
 // Qt includes
 
+#include <QMimeDatabase>
 #include <QApplication>
 #include <QJsonDocument>
 #include <QJsonParseError>
@@ -181,46 +182,52 @@ bool GDTalker::addPhoto(const QString& imgPath, const GSPhoto& info,
     MPForm_GDrive form;
     form.addPair(QUrl::fromLocalFile(imgPath).fileName(),info.description,imgPath,id);
     QString path = imgPath;
-    QImage image;
 
-    if (m_iface)
+    QMimeDatabase mimeDB;
+
+    if (!mimeDB.mimeTypeForFile(path).name().startsWith(QLatin1String("video/")))
     {
-        image = m_iface->preview(QUrl::fromLocalFile(imgPath));
-    }
+        QImage image;
 
-    if (image.isNull())
-    {
-        image.load(imgPath);
-    }
-
-    if (image.isNull())
-    {
-        return false;
-    }
-
-    path                  = makeTemporaryDir("gs").filePath(QFileInfo(imgPath)
-                                                  .baseName().trimmed() + QLatin1String(".jpg"));
-    int imgQualityToApply = 100;
-
-    if (rescale)
-    {
-        if (image.width() > maxDim || image.height() > maxDim)
-            image = image.scaled(maxDim,maxDim,Qt::KeepAspectRatio,Qt::SmoothTransformation);
-
-        imgQualityToApply = imageQuality;
-    }
-
-    image.save(path,"JPEG",imgQualityToApply);
-
-    if (m_iface)
-    {
-        QPointer<MetadataProcessor> meta = m_iface->createMetadataProcessor();
-
-        if (meta && meta->load(QUrl::fromLocalFile(imgPath)))
+        if (m_iface)
         {
-            meta->setImageDimensions(image.size());
-            meta->setImageProgramId(QString::fromLatin1("Kipi-plugins"), kipipluginsVersion());
-            meta->save(QUrl::fromLocalFile(path));
+            image = m_iface->preview(QUrl::fromLocalFile(imgPath));
+        }
+
+        if (image.isNull())
+        {
+            image.load(imgPath);
+        }
+
+        if (image.isNull())
+        {
+            return false;
+        }
+
+        path                  = makeTemporaryDir("gs").filePath(QFileInfo(imgPath)
+                                                      .baseName().trimmed() + QLatin1String(".jpg"));
+        int imgQualityToApply = 100;
+
+        if (rescale)
+        {
+            if (image.width() > maxDim || image.height() > maxDim)
+                image = image.scaled(maxDim,maxDim,Qt::KeepAspectRatio,Qt::SmoothTransformation);
+
+            imgQualityToApply = imageQuality;
+        }
+
+        image.save(path,"JPEG",imgQualityToApply);
+
+        if (m_iface)
+        {
+            QPointer<MetadataProcessor> meta = m_iface->createMetadataProcessor();
+
+            if (meta && meta->load(QUrl::fromLocalFile(imgPath)))
+            {
+                meta->setImageDimensions(image.size());
+                meta->setImageProgramId(QString::fromLatin1("Kipi-plugins"), kipipluginsVersion());
+                meta->save(QUrl::fromLocalFile(path));
+            }
         }
     }
 
