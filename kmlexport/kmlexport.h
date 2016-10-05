@@ -106,6 +106,7 @@ private:
     void logInfo(const QString& msg) const;
     void logError(const QString& msg) const;
     void logWarning(const QString& msg) const;
+    bool copyDir(const QString& srcFilePath, const QString& dstFilePath);
 
     /*!
      *  \fn KIPIKMLExport::KmlExport::addKmlElement(QDomElement target, QString tag)

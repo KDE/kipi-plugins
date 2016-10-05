@@ -531,14 +531,44 @@ void KmlExport::generate()
     m_kmlDocument = 0;
 
     logInfo(i18n("Move to final directory"));
-    QDir dir;
 
-    if (!dir.rename(m_tempDestDir.absolutePath(), m_baseDestDir))
+    if (!copyDir(m_tempDestDir.absolutePath(), m_baseDestDir))
     {
         logWarning(i18n("Cannot move data to destination directory"));
     }
 
+    QDir(m_tempDestDir.absolutePath()).removeRecursively();
     m_progressDialog->close();
+}
+
+bool KmlExport::copyDir(const QString& srcFilePath, const QString& dstFilePath)
+{
+    if (QFileInfo(srcFilePath).isDir())
+    {
+        QDir srcDir(srcFilePath);
+        QDir dstDir(dstFilePath);
+
+        if (!QDir().mkpath(dstDir.absolutePath()))
+            return false;
+
+        QStringList files = srcDir.entryList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot);
+
+        foreach(const QString& file, files)
+        {
+            const QString newSrcFilePath = srcDir.absolutePath() + QLatin1Char('/') + file;
+            const QString newDstFilePath = dstDir.absolutePath() + QLatin1Char('/') + file;
+
+            if (!copyDir(newSrcFilePath, newDstFilePath))
+                return false;
+        }
+    }
+    else
+    {
+        if (!QFile::copy(srcFilePath, dstFilePath))
+            return false;
+    }
+
+    return true;
 }
 
 /*!

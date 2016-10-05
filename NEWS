@@ -7,4 +7,5 @@ NEW FEATURES:
 BUGFIXES FROM BUGZILLA :
 
 001 ==> 369630 - Unable to export movie to google photo.
-002 ==> 
+002 ==> 370025 - KMLExport cannot move data to destination directory.
+003 ==> 
