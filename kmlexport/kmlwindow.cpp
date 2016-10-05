@@ -25,6 +25,7 @@
 
 // Qt includes
 
+#include <QApplication>
 #include <QWindow>
 #include <QButtonGroup>
 #include <QCheckBox>
@@ -70,37 +71,39 @@ KmlWindow::KmlWindow(QWidget* const parent,
 
     startButton()->setText(i18nc("@action:button", "&Export"));
 
-    QWidget* const page = new QWidget( this );
-    setMainWidget( page );
+    QWidget* const page   = new QWidget(this);
+    setMainWidget(page);
     KMLExportConfigLayout = new QGridLayout(page);
+
+    const int spacing     = QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
 
     // --------------------------------------------------------------
     // Target preferences
 
-    TargetPreferenceGroupBox       = new QGroupBox(i18n("Target Preferences" ), page);
+    TargetPreferenceGroupBox       = new QGroupBox(i18n("Target Preferences"), page);
     TargetPreferenceGroupBoxLayout = new QGridLayout(TargetPreferenceGroupBox);
 
     // target type
-    TargetTypeGroupBox          = new QGroupBox(i18n("Target Type" ), page);
+    TargetTypeGroupBox          = new QGroupBox(i18n("Target Type"), page);
     buttonGroupTargetTypeLayout = new QGridLayout(TargetTypeGroupBox);
     buttonGroupTargetType       = new QButtonGroup(TargetTypeGroupBox);
-    LocalTargetRadioButton_     = new QRadioButton( i18n( "&Local or web target used by GoogleEarth" ), TargetTypeGroupBox);
-    LocalTargetRadioButton_->setChecked( true );
+    LocalTargetRadioButton_     = new QRadioButton(i18n("&Local or web target used by GoogleEarth"), TargetTypeGroupBox);
+    LocalTargetRadioButton_->setChecked(true);
 
-    GoogleMapTargetRadioButton_ = new QRadioButton( i18n( "Web target used by GoogleMaps" ), TargetTypeGroupBox);
+    GoogleMapTargetRadioButton_ = new QRadioButton(i18n("Web target used by GoogleMaps"), TargetTypeGroupBox);
     GoogleMapTargetRadioButton_->setToolTip(i18n("When using GoogleMaps, all images must have complete URLs, icons are "
-                                                 "squared, and when drawing a track, only line track is exported." ) );
+                                                 "squared, and when drawing a track, only line track is exported."));
 
-    buttonGroupTargetTypeLayout->addWidget( LocalTargetRadioButton_,     0, 0, 1, 1);
-    buttonGroupTargetTypeLayout->addWidget( GoogleMapTargetRadioButton_, 1, 0, 1, 1);
-    buttonGroupTargetTypeLayout->setContentsMargins(QMargins());
+    buttonGroupTargetTypeLayout->addWidget(LocalTargetRadioButton_,     0, 0, 1, 1);
+    buttonGroupTargetTypeLayout->addWidget(GoogleMapTargetRadioButton_, 1, 0, 1, 1);
+    buttonGroupTargetTypeLayout->setContentsMargins(spacing, spacing, spacing, spacing);
     buttonGroupTargetTypeLayout->setAlignment(Qt::AlignTop);
 
     // --------------------------------------------------------------
     // target preference, suite
 
-    QLabel* const AltitudeLabel_ = new QLabel(i18n("Picture Altitude:" ), TargetPreferenceGroupBox);
-    AltitudeCB_                  = new QComboBox( TargetPreferenceGroupBox );
+    QLabel* const AltitudeLabel_ = new QLabel(i18n("Picture Altitude:"), TargetPreferenceGroupBox);
+    AltitudeCB_                  = new QComboBox(TargetPreferenceGroupBox);
     AltitudeCB_->addItem(i18n("clamp to ground"));
     AltitudeCB_->addItem(i18n("relative to ground"));
     AltitudeCB_->addItem(i18n("absolute"));
@@ -122,27 +125,27 @@ KmlWindow::KmlWindow(QWidget* const parent,
 
     DestinationUrlLabel_ = new QLabel(i18n("Destination Path:"), TargetPreferenceGroupBox);
     DestinationUrl_      = new QLineEdit(TargetPreferenceGroupBox);
-    FileNameLabel_       = new QLabel(i18n( "Filename:" ), TargetPreferenceGroupBox);
+    FileNameLabel_       = new QLabel(i18n("Filename:"), TargetPreferenceGroupBox);
     FileName_            = new QLineEdit(TargetPreferenceGroupBox);
 
     TargetPreferenceGroupBoxLayout->addWidget(TargetTypeGroupBox,         0, 0, 2, 5);
-    TargetPreferenceGroupBoxLayout->addWidget(AltitudeLabel_,             2, 0, 1, 5);
-    TargetPreferenceGroupBoxLayout->addWidget(AltitudeCB_,                2, 2, 1, 3);
-    TargetPreferenceGroupBoxLayout->addWidget(destinationDirectoryLabel_, 3, 0, 1, 3);
-    TargetPreferenceGroupBoxLayout->addWidget(DestinationDirectory_,      3, 3, 1, 2);
-    TargetPreferenceGroupBoxLayout->addWidget(DestinationUrlLabel_,       4, 0, 1, 2);
-    TargetPreferenceGroupBoxLayout->addWidget(DestinationUrl_,            4, 2, 1, 3);
+    TargetPreferenceGroupBoxLayout->addWidget(AltitudeLabel_,             2, 0, 1, 1);
+    TargetPreferenceGroupBoxLayout->addWidget(AltitudeCB_,                2, 1, 1, 4);
+    TargetPreferenceGroupBoxLayout->addWidget(destinationDirectoryLabel_, 3, 0, 1, 1);
+    TargetPreferenceGroupBoxLayout->addWidget(DestinationDirectory_,      3, 1, 1, 4);
+    TargetPreferenceGroupBoxLayout->addWidget(DestinationUrlLabel_,       4, 0, 1, 1);
+    TargetPreferenceGroupBoxLayout->addWidget(DestinationUrl_,            4, 1, 1, 4);
     TargetPreferenceGroupBoxLayout->addWidget(FileNameLabel_,             5, 0, 1, 1);
     TargetPreferenceGroupBoxLayout->addWidget(FileName_,                  5, 1, 1, 4);
-    TargetPreferenceGroupBoxLayout->setContentsMargins(QMargins());
+    TargetPreferenceGroupBoxLayout->setContentsMargins(spacing, spacing, spacing, spacing);
     TargetPreferenceGroupBoxLayout->setAlignment(Qt::AlignTop);
 
     // --------------------------------------------------------------
     // Sizes
 
-    QGroupBox* const SizeGroupBox = new QGroupBox(i18n("Sizes" ), page);
+    QGroupBox* const SizeGroupBox = new QGroupBox(i18n("Sizes"), page);
     SizeGroupBoxLayout            = new QGridLayout(SizeGroupBox);
-    IconSizeLabel                 = new QLabel(i18n("Icon Size:" ), SizeGroupBox);
+    IconSizeLabel                 = new QLabel(i18n("Icon Size:"), SizeGroupBox);
     IconSizeInput_                = new QSpinBox(SizeGroupBox);
     IconSizeInput_->setRange(1, 100);
     IconSizeInput_->setValue(33);
@@ -156,7 +159,7 @@ KmlWindow::KmlWindow(QWidget* const parent,
     SizeGroupBoxLayout->addWidget(IconSizeInput_,  0, 1, 1, 1);
     SizeGroupBoxLayout->addWidget(ImageSizeLabel,  0, 2, 1, 1);
     SizeGroupBoxLayout->addWidget(ImageSizeInput_, 0, 3, 1, 1);
-    SizeGroupBoxLayout->setContentsMargins(QMargins());
+    SizeGroupBoxLayout->setContentsMargins(spacing, spacing, spacing, spacing);
     SizeGroupBoxLayout->setAlignment(Qt::AlignTop);
 
     // --------------------------------------------------------------
@@ -171,13 +174,13 @@ KmlWindow::KmlWindow(QWidget* const parent,
     // file selector
     GPXFileLabel_ = new QLabel(i18n("GPX file:"), GPXTracksGroupBox);
 
-    GPXFileUrlRequester_ = new KPFileSelector( GPXTracksGroupBox);
+    GPXFileUrlRequester_ = new KPFileSelector(GPXTracksGroupBox);
     GPXFileUrlRequester_->setFileDlgFilter(i18n("%1|GPS Exchange Format", QLatin1String("*.gpx")));
     GPXFileUrlRequester_->setFileDlgTitle(i18n("Select GPX File to Load"));
     GPXFileUrlRequester_->setFileDlgMode(QFileDialog::ExistingFile);
 
     timeZoneLabel_ = new QLabel(i18n("Time Zone:"), GPXTracksGroupBox);
-    timeZoneCB     = new QComboBox(GPXTracksGroupBox );
+    timeZoneCB     = new QComboBox(GPXTracksGroupBox);
     timeZoneCB->addItem(i18n("GMT-12:00"), 0);
     timeZoneCB->addItem(i18n("GMT-11:00"), 1);
     timeZoneCB->addItem(i18n("GMT-10:00"), 2);
@@ -209,11 +212,11 @@ KmlWindow::KmlWindow(QWidget* const parent,
                                   "picture shooting, so that the time stamps of the GPS "
                                   "can be converted to match the local time"));
 
-    GPXLineWidthLabel_ = new QLabel(i18n("Track Width:" ), GPXTracksGroupBox);
+    GPXLineWidthLabel_ = new QLabel(i18n("Track Width:"), GPXTracksGroupBox);
     GPXLineWidthInput_ = new QSpinBox(GPXTracksGroupBox);
     GPXLineWidthInput_->setValue(4);
 
-    GPXColorLabel_ = new QLabel(i18n("Track Color:" ), GPXTracksGroupBox);
+    GPXColorLabel_ = new QLabel(i18n("Track Color:"), GPXTracksGroupBox);
     GPXTrackColor_ = new KPColorSelector(GPXTracksGroupBox);
     GPXTrackColor_->setColor(QColor("#ffffff"));
 
@@ -239,28 +242,28 @@ KmlWindow::KmlWindow(QWidget* const parent,
                                       "regardless of the actual elevation of the terrain beneath "
                                       "the element.</dd></dl>"));
 
-    GPXTracksGroupBoxLayout->addWidget( GPXTracksCheckBox_,     0, 0, 1, 4);
-    GPXTracksGroupBoxLayout->addWidget( GPXFileLabel_,          1, 0, 1, 1);
-    GPXTracksGroupBoxLayout->addWidget( GPXFileUrlRequester_,   1, 1, 1, 3);
-    GPXTracksGroupBoxLayout->addWidget( timeZoneLabel_,         2, 0, 1, 1);
-    GPXTracksGroupBoxLayout->addWidget( timeZoneCB,             2, 1, 1, 3);
-    GPXTracksGroupBoxLayout->addWidget( GPXLineWidthLabel_,     3, 0, 1, 1);
-    GPXTracksGroupBoxLayout->addWidget( GPXLineWidthInput_,     3, 1, 1, 3);
-    GPXTracksGroupBoxLayout->addWidget( GPXColorLabel_,         4, 0, 1, 1);
-    GPXTracksGroupBoxLayout->addWidget( GPXTrackColor_,         4, 1, 1, 1);
-    GPXTracksGroupBoxLayout->addWidget( GPXTracksOpacityLabel_, 4, 2, 1, 1);
-    GPXTracksGroupBoxLayout->addWidget( GPXTracksOpacityInput_, 4, 2, 1, 3);
-    GPXTracksGroupBoxLayout->addWidget( GPXAltitudeLabel_,      5, 0, 1, 1);
-    GPXTracksGroupBoxLayout->addWidget( GPXAltitudeCB_,         5, 1, 1, 3);
-    GPXTracksGroupBoxLayout->setContentsMargins(QMargins());
+    GPXTracksGroupBoxLayout->addWidget(GPXTracksCheckBox_,     0, 0, 1, 4);
+    GPXTracksGroupBoxLayout->addWidget(GPXFileLabel_,          1, 0, 1, 1);
+    GPXTracksGroupBoxLayout->addWidget(GPXFileUrlRequester_,   1, 1, 1, 3);
+    GPXTracksGroupBoxLayout->addWidget(timeZoneLabel_,         2, 0, 1, 1);
+    GPXTracksGroupBoxLayout->addWidget(timeZoneCB,             2, 1, 1, 3);
+    GPXTracksGroupBoxLayout->addWidget(GPXLineWidthLabel_,     3, 0, 1, 1);
+    GPXTracksGroupBoxLayout->addWidget(GPXLineWidthInput_,     3, 1, 1, 3);
+    GPXTracksGroupBoxLayout->addWidget(GPXColorLabel_,         4, 0, 1, 1);
+    GPXTracksGroupBoxLayout->addWidget(GPXTrackColor_,         4, 1, 1, 1);
+    GPXTracksGroupBoxLayout->addWidget(GPXTracksOpacityLabel_, 4, 2, 1, 1);
+    GPXTracksGroupBoxLayout->addWidget(GPXTracksOpacityInput_, 4, 3, 1, 1);
+    GPXTracksGroupBoxLayout->addWidget(GPXAltitudeLabel_,      5, 0, 1, 1);
+    GPXTracksGroupBoxLayout->addWidget(GPXAltitudeCB_,         5, 1, 1, 3);
+    GPXTracksGroupBoxLayout->setContentsMargins(spacing, spacing, spacing, spacing);
     GPXTracksGroupBoxLayout->setAlignment(Qt::AlignTop);
 
     // --------------------------------------------------------------
 
-    KMLExportConfigLayout->addWidget( TargetPreferenceGroupBox, 0, 0);
-    KMLExportConfigLayout->addWidget( SizeGroupBox,             1, 0);
-    KMLExportConfigLayout->addWidget( GPXTracksGroupBox,        2, 0);
-    KMLExportConfigLayout->setContentsMargins(QMargins());
+    KMLExportConfigLayout->addWidget(TargetPreferenceGroupBox, 0, 0);
+    KMLExportConfigLayout->addWidget(SizeGroupBox,             1, 0);
+    KMLExportConfigLayout->addWidget(GPXTracksGroupBox,        2, 0);
+    KMLExportConfigLayout->setContentsMargins(spacing, spacing, spacing, spacing);
 
     // --------------------------------------------------------------
 
@@ -436,7 +439,7 @@ void KmlWindow::readSettings()
     TimeZone            = group.readEntry(QLatin1String("Time Zone"), 12);
     LineWidth           = group.readEntry(QLatin1String("Line Width"), 4);
     GPXColor            = group.readEntry(QLatin1String("Track Color"), QString::fromUtf8("#17eeee"));
-    GPXOpacity          = group.readEntry(QLatin1String("Track Opacity"), 64 );
+    GPXOpacity          = group.readEntry(QLatin1String("Track Opacity"), 64);
     GPXAltitudeMode     = group.readEntry(QLatin1String("GPX Altitude Mode"), 0);
 
     winId();
