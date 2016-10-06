@@ -564,6 +564,12 @@ bool KmlExport::copyDir(const QString& srcFilePath, const QString& dstFilePath)
     }
     else
     {
+        if (srcFilePath != dstFilePath && QFile::exists(srcFilePath) && QFile::exists(dstFilePath))
+        {
+            if (!QFile::remove(dstFilePath))
+                return false;
+        }
+
         if (!QFile::copy(srcFilePath, dstFilePath))
             return false;
     }
