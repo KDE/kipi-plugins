@@ -123,7 +123,7 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
             this, SLOT(slotReloadAlbumsRequest()) );
 
     setMainWidget(m_widget);
-    m_widget->setMinimumSize(800, 700);
+    m_widget->setMinimumSize(800, 600);
 
     KPAboutData* const about = new KPAboutData(ki18n("Yandex.Fotki Plugin"),
                                                ki18n("A tool to export image collections to "
