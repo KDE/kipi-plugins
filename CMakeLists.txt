@@ -79,6 +79,10 @@ include(KDECompilerSettings)
 include(MacroUtils)
 include(MacroLocalLibs)
 
+##########################################################################
+
+option(ENABLE_KIO "Build Kipi-plugins with KIO support (default=ON)" ON)
+
 ############## Find Packages ###################
 
 find_package(Qt5 ${QT_MIN_VERSION} REQUIRED NO_MODULE COMPONENTS
@@ -110,20 +114,30 @@ find_package(KF5 ${KF5_MIN_VERSION}
              OPTIONAL_COMPONENTS
              Archive      # for FlashExport
              IconThemes   # for GoogleServices (KIO/PixmapLoader)
-             KIO          # Some kipi-plugins depends of KIO indeep.
 )
 
-# Check if KIO have been compiled with KIOWidgets. Some tools rely only to KIO core, some other with KIOWidgets too..
-if(KF5KIO_FOUND)
-    get_target_property(KIOWidgets_INCLUDE_DIRS KF5::KIOWidgets INTERFACE_INCLUDE_DIRECTORIES)
-    message(STATUS "KF5::KIOWidgets include dirs: ${KIOWidgets_INCLUDE_DIRS}")
+if(ENABLE_KIO)
 
-    if(NOT KIOWidgets_INCLUDE_DIRS)
-        message(STATUS "KF5::KIOWidgets not available in shared KIO library. Some tools will not be compiled.")
-        set(KF5KIOWidgets_FOUND FALSE)
-    else()
-        set(KF5KIOWidgets_FOUND TRUE)
+    find_package(KF5 ${KF5_MIN_VERSION}
+                 OPTIONAL_COMPONENTS
+                 KIO          # Some kipi-plugins depends of KIO indeep.
+    )
+
+    # Check if KIO have been compiled with KIOWidgets. Some tools rely only to KIO core, some other with KIOWidgets too..
+    if(KF5KIO_FOUND)
+
+        get_target_property(KIOWidgets_INCLUDE_DIRS KF5::KIOWidgets INTERFACE_INCLUDE_DIRECTORIES)
+        message(STATUS "KF5::KIOWidgets include dirs: ${KIOWidgets_INCLUDE_DIRS}")
+
+        if(NOT KIOWidgets_INCLUDE_DIRS)
+            message(STATUS "KF5::KIOWidgets not available in shared KIO library. Some tools will not be compiled.")
+            set(KF5KIOWidgets_FOUND FALSE)
+        else()
+            set(KF5KIOWidgets_FOUND TRUE)
+        endif()
+
     endif()
+
 endif()
 
 # Dependencies detection required by all plugins
