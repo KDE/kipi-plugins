@@ -44,6 +44,8 @@
 #include <QMessageBox>
 #include <QUrlQuery>
 
+// KDE includes
+
 #include <klocalizedstring.h>
 
 // Libkipi includes
