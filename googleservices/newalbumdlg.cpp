@@ -38,7 +38,7 @@
 
 #include <klocalizedstring.h>
 
-// local includes
+// Local includes
 
 #include <gsitem.h>
 

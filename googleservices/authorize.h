@@ -23,7 +23,7 @@
 #ifndef AUTHORIZE_H
 #define AUTHORIZE_H
 
-//Qt includes
+// Qt includes
 
 #include <QList>
 #include <QString>
