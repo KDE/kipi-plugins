@@ -113,7 +113,6 @@ find_package(KF5 ${KF5_MIN_VERSION}
 find_package(KF5 ${KF5_MIN_VERSION}
              OPTIONAL_COMPONENTS
              Archive      # for FlashExport
-             IconThemes   # for GoogleServices (KIO/PixmapLoader)
 )
 
 if(ENABLE_KIO)
