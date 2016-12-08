@@ -756,7 +756,7 @@ bool SmugWindow::prepareImageForUpload(const QString& imgPath)
         {
             meta->setImageDimensions(image.size());
             meta->setImageProgramId(QString::fromLatin1("Kipi-plugins"), kipipluginsVersion());
-            meta->save(QUrl::fromLocalFile(m_tmpPath));
+            meta->save(QUrl::fromLocalFile(m_tmpPath), true);
         }
     }
 

@@ -6,4 +6,5 @@ NEW FEATURES:
 
 BUGFIXES FROM BUGZILLA :
 
-001 ==> 
+001 ==> 373434 - No exif data in pictures exported to Flickr.
+002 ==> 

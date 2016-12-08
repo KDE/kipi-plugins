@@ -686,7 +686,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
                 meta->removeIptcTags(QStringList() << QLatin1String("Iptc.Application2.Keywords"));
 
                 meta->setImageProgramId(QString::fromLatin1("Kipi-plugins"), kipipluginsVersion());
-                meta->save(QUrl::fromLocalFile(path));
+                meta->save(QUrl::fromLocalFile(path), true);
             }
             else
             {

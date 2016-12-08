@@ -199,7 +199,7 @@ bool Task::imageResize(const EmailSettings& settings, const QUrl& orgUrl,
                     }
                     else
                     {
-                        meta->save(QUrl::fromLocalFile(destPath));
+                        meta->save(QUrl::fromLocalFile(destPath), true);
                     }
                 }
                 else if (emailSettings.format() == QLatin1String("PNG"))
@@ -211,7 +211,7 @@ bool Task::imageResize(const EmailSettings& settings, const QUrl& orgUrl,
                     }
                     else
                     {
-                        meta->save(QUrl::fromLocalFile(destPath));
+                        meta->save(QUrl::fromLocalFile(destPath), true);
                     }
                 }
 

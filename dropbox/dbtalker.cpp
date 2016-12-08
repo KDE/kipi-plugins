@@ -354,7 +354,7 @@ bool DBTalker::addPhoto(const QString& imgPath, const QString& uploadFolder, boo
     {
         m_meta->setImageDimensions(image.size());
         m_meta->setImageProgramId(QString::fromLatin1("Kipi-plugins"), kipipluginsVersion());
-        m_meta->save(QUrl::fromLocalFile(path));
+        m_meta->save(QUrl::fromLocalFile(path), true);
     }
 
     if (!form.addFile(path))

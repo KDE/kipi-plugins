@@ -611,7 +611,7 @@ void SimpleViewer::processQUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
             if (rotated)
                 d->meta->setImageOrientation(MetadataProcessor::NORMAL);
 
-            d->meta->save(imagePath);
+            d->meta->save(imagePath, true);
         }
 
         d->width  = image.width();

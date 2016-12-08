@@ -577,7 +577,7 @@ void YandexFotkiWindow::updateNextPhoto()
                     {
                         m_meta->setImageDimensions(image.size());
                         m_meta->setImageProgramId(QString::fromLatin1("Kipi-plugins"), kipipluginsVersion());
-                        m_meta->save(QUrl::fromLocalFile(photo.localUrl()));
+                        m_meta->save(QUrl::fromLocalFile(photo.localUrl()), true);
                         prepared = true;
                     }
                 }

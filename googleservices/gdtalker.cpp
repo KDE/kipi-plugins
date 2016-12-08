@@ -226,7 +226,7 @@ bool GDTalker::addPhoto(const QString& imgPath, const GSPhoto& info,
             {
                 meta->setImageDimensions(image.size());
                 meta->setImageProgramId(QString::fromLatin1("Kipi-plugins"), kipipluginsVersion());
-                meta->save(QUrl::fromLocalFile(path));
+                meta->save(QUrl::fromLocalFile(path), true);
             }
         }
     }
