@@ -1,6 +1,5 @@
 [Desktop Entry]
 Name=Date Frames
-Name[ast]=Marcos de data
 Name[bg]=Рамки на датите
 Name[bs]=Okviri za datum
 Name[ca]=Marcs de data
@@ -42,7 +41,6 @@ Name[x-test]=xxDate Framesxx
 Name[zh_CN]=日期框
 Name[zh_TW]=日期框
 Comment=A frame theme based on Ruediger Bente's frame theme
-Comment[ast]=Un tema de marcu basáu nel tema de marcu de Ruediger Bente
 Comment[bg]=Изглед с рамки, основан на изгледа с рамки на Ruediger Bente
 Comment[bs]=Tema okvira bazirana na Ruediger Bente-ovoj temi okvira
 Comment[ca]=Un tema de marcs basat en el tema de marcs del Ruediger Bente
@@ -86,7 +84,6 @@ Comment[zh_TW]=基於 Ruediger Bente 外框主題的主題
 
 [X-HTMLExport Author]
 Name=Elizabeth Marmorstein
-Name[ast]=Elizabeth Marmorstein
 Name[bg]=Elizabeth Marmorstein
 Name[bs]=Elizabeth Marmorstein
 Name[ca]=Elizabeth Marmorstein
@@ -136,7 +133,6 @@ Url=mailto:purplegamba@cox.net
 
 [X-HTMLExport Preview]
 Name=Date Frames
-Name[ast]=Marcos de data
 Name[bg]=Рамки на датите
 Name[bs]=Okviri za datum
 Name[ca]=Marcs de data
@@ -181,7 +177,6 @@ Url=preview.png
 
 [X-HTMLExport Parameter color1]
 Name=Thumbnail Background
-Name[ast]=Miniatura de fondu
 Name[bg]=Фон на умалените копия
 Name[bs]=Sličice u pozadini
 Name[ca]=Fons de miniatures
@@ -227,7 +222,6 @@ Default=#FFFFFF
 
 [X-HTMLExport Parameter color2]
 Name=Image Background (contrasting)
-Name[ast]=Imaxe de fondu (contraste)
 Name[bg]=Фон на изображенията (контрастен)
 Name[bs]=Slika za pozadinu (kontrasti)
 Name[ca]=Fons d'imatges (amb contrast)
@@ -271,7 +265,6 @@ Default=#000055
 
 [X-HTMLExport Parameter color3]
 Name=Nav Bar Background (dark)
-Name[ast]=Color de fondu de la barra de navegación (escuru)
 Name[bg]=Фон на лентата за управление (тъмен)
 Name[bs]=Nav Bar Pozadina (tamna)
 Name[ca]=Fons de la barra de navegació (fosc)
@@ -315,7 +308,6 @@ Default=#000011
 
 [X-HTMLExport Parameter intro]
 Name=Gallery Introduction
-Name[ast]=Galería d'entamu
 Name[bg]=Въведение на галерията
 Name[bs]=Uvod u galeriju
 Name[ca]=Introducció a galeries
@@ -360,7 +352,6 @@ Default=Welcome to my web gallery!
 
 [X-HTMLExport Parameter longformat]
 Name=Caption Date Format (see http://xsltsl.sourceforge.net/date-time.html)
-Name[ast]=Formatu de data pa la etiqueta (mira http://xsltsl.sourceforge.net/date-time.html)
 Name[bg]=Формат на датата в заглавията (вижте http://xsltsl.sourceforge.net/date-time.html)
 Name[bs]=Format naslovnog datuma (see http://xsltsl.sourceforge.net/date-time.html)
 Name[ca]=Format de la data del títol (vegeu http://xsltsl.sourceforge.net/date-time.html)
@@ -402,7 +393,6 @@ Name[zh_TW]=標題日期格式 (詳見 http://xsltsl.sourceforge.net/date-time.h
 Type=string
 Default=%A, %b %e, %Y   %i:%M%P
 Comment=XSL Date Format String: Use the syntax given at http://xsltsl.sourceforge.net/date-time.html
-Comment[ast]=Cadena XSL de formatu de data: Usa la sintaxis indicada en http://xsltsl.sourceforge.net/date-time.html
 Comment[bg]=Формат на датата в XSL: използвайте синтаксиса, даден в http://xsltsl.sourceforge.net/date-time.html
 Comment[bs]=XSL format datuma: Koristite sintaksu datu na http://xsltsl.sourceforge.net/date-time.html
 Comment[ca]=Cadena de format de les dates en XSL: empreu la sintaxi indicada a http://xsltsl.sourceforge.net/date-time.html
@@ -444,7 +434,6 @@ Comment[zh_TW]=XSL 日期格式字串：使用於 http://xsltsl.sourceforge.net/
 
 [X-HTMLExport Parameter shortformat]
 Name=Image List Date Format
-Name[ast]=Formatu de data de la llista d'imáxenes
 Name[bg]=Формат на датата за списъка с изображения
 Name[bs]=Format datuma liste slika
 Name[ca]=Format de la data de la llista d'imatges
@@ -488,7 +477,6 @@ Name[zh_TW]=影像清單日期格式
 Type=string
 Default=%m-%d-%Y
 Comment=XSL Date Format String: Use the syntax given at http://xsltsl.sourceforge.net/date-time.html
-Comment[ast]=Cadena XSL de formatu de data: Usa la sintaxis indicada en http://xsltsl.sourceforge.net/date-time.html
 Comment[bg]=Формат на датата в XSL: използвайте синтаксиса, даден в http://xsltsl.sourceforge.net/date-time.html
 Comment[bs]=XSL format datuma: Koristite sintaksu datu na http://xsltsl.sourceforge.net/date-time.html
 Comment[ca]=Cadena de format de les dates en XSL: empreu la sintaxi indicada a http://xsltsl.sourceforge.net/date-time.html

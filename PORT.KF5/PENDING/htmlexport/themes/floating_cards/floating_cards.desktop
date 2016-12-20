@@ -77,7 +77,6 @@ Comment[zh_TW]=使用浮空縮圖/描述卡的暗色主題。快速瀏覽藝廊�
 
 [X-HTMLExport Author]
 Name=Jiří Boháč
-Name[ast]=Jiří Boháč
 Name[bg]=Jiří Boháč
 Name[bs]=Jiří Boháč
 Name[ca]=Jiří Boháč
@@ -166,7 +165,6 @@ Allow non-square thumbnails=true
 
 [X-HTMLExport Parameter keyboard_navigation]
 Name=Keyboard navigation
-Name[ast]=Navegación de tecláu
 Name[bs]=Navigacija tastaturom
 Name[ca]=Navegació amb el teclat
 Name[ca@valencia]=Navegació amb el teclat

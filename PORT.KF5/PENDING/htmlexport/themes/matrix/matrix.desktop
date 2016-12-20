@@ -1,6 +1,5 @@
 [Desktop Entry]
 Name=Matrix
-Name[ast]=Matrix
 Name[bg]=Матрицата
 Name[bs]=Matrica
 Name[ca]=Matrix
@@ -49,7 +48,6 @@ Name[x-test]=xxMatrixxx
 Name[zh_CN]=黑客帝国
 Name[zh_TW]=矩陣
 Comment=Show your photos with Matrix style
-Comment[ast]=Amuesa les fotos nun estilu Matrix
 Comment[bg]=Показване на снимките в стил "Матрицата"
 Comment[bs]=Prikaži slike sa matričnim stilom
 Comment[ca]=Visualitza les fotos a l'estil Matrix
@@ -95,7 +93,6 @@ Comment[zh_TW]=用矩陣風格顯示您的照片
 
 [X-HTMLExport Author]
 Name=Aurélien Gâteau
-Name[ast]=Aurélien Gâteau
 Name[bg]=Aurélien Gâteau
 Name[bs]=Aurélien Gâteau
 Name[ca]=Aurélien Gâteau
@@ -148,7 +145,6 @@ Url=mailto:aurelien.gateau@free.fr
 
 [X-HTMLExport Preview]
 Name=Matrix
-Name[ast]=Matrix
 Name[bg]=Матрицата
 Name[bs]=Matrica
 Name[ca]=Matrix

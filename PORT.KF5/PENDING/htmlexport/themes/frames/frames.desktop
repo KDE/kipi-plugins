@@ -1,6 +1,5 @@
 [Desktop Entry]
 Name=Frames
-Name[ast]=Marcos
 Name[bg]=Рамки
 Name[bs]=Okviri
 Name[ca]=Marcs
@@ -48,7 +47,6 @@ Name[x-test]=xxFramesxx
 Name[zh_CN]=相框
 Name[zh_TW]=外框
 Comment=A frame theme
-Comment[ast]=Un tema de marcu
 Comment[bg]=Изглед с рамки
 Comment[bs]=Okvir teme
 Comment[ca]=Un tema de marcs
@@ -96,7 +94,6 @@ Comment[zh_TW]=外框主題
 
 [X-HTMLExport Author]
 Name=Ruediger Bente
-Name[ast]=Ruediger Bente
 Name[bg]=Ruediger Bente
 Name[bs]=Ruediger Bente
 Name[ca]=Ruediger Bente
@@ -146,7 +143,6 @@ Url=mailto:ruediger.bente@gmx.de
 
 [X-HTMLExport Preview]
 Name=Frames
-Name[ast]=Marcos
 Name[bg]=Рамки
 Name[bs]=Okviri
 Name[ca]=Marcs

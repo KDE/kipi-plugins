@@ -1,6 +1,5 @@
 [Desktop Entry]
 Comment=Yet another nice theme. Very simple and clean look with "calligraphics" icons.
-Comment[ast]=Otru tema guapu. Aspeutu mui simple y llimpiu con iconos"caligráficos".
 Comment[bg]=Още един приятен изглед. Опристен и изчистен, с "калиграфски" икони.
 Comment[bs]=Još jedna lijepa tema. Jednostavan i čist izgled s "kaligrafskim" ikonama.
 Comment[ca]=Un altre tema agradable. Amb una aparença molt simple i neta amb icones «cal·ligràfiques».
@@ -43,7 +42,6 @@ Comment[zh_CN]=另一个漂亮的主题。十分简洁，带有“calligraphics�
 Comment[zh_TW]=還有一個不錯的主題。非常簡單、清爽看起來像「書法」圖示。
 Icon=
 Name=S0
-Name[ast]=S0
 Name[bg]=S0
 Name[bs]=S0
 Name[ca]=S0
@@ -144,7 +142,6 @@ Url=mailto:petr@scribus.info
 
 [X-HTMLExport Preview]
 Name=S0
-Name[ast]=S0
 Name[bg]=S0
 Name[bs]=S0
 Name[ca]=S0
