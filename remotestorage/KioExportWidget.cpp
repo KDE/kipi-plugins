@@ -136,6 +136,7 @@ void KioExportWidget::slotShowTargetDialogClicked(bool checked)
                                      m_targetUrl.toString(), i18n("All Files (*)"));
     m_targetDialog->setAcceptMode(QFileDialog::AcceptSave);
     m_targetDialog->setFileMode(QFileDialog::DirectoryOnly);
+    m_targetDialog->setOptions(QFileDialog::DontUseNativeDialog);
 
     if (m_targetDialog->exec() == QDialog::Accepted)
     {
