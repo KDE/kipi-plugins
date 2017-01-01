@@ -680,6 +680,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
             if (meta && meta->load(QUrl::fromLocalFile(photoPath)))
             {
                 meta->setImageDimensions(image.size());
+                meta->setImageOrientation(MetadataProcessor::NORMAL);
 
                 // NOTE: see bug #153207: Flickr use IPTC keywords to create Tags in web interface
                 //       As IPTC do not support UTF-8, we need to remove it.

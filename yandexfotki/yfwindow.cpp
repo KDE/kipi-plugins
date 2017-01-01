@@ -576,6 +576,7 @@ void YandexFotkiWindow::updateNextPhoto()
                     if (m_meta && m_meta->load(QUrl::fromLocalFile(photo.originalUrl())))
                     {
                         m_meta->setImageDimensions(image.size());
+                        m_meta->setImageOrientation(MetadataProcessor::NORMAL);
                         m_meta->setImageProgramId(QString::fromLatin1("Kipi-plugins"), kipipluginsVersion());
                         m_meta->save(QUrl::fromLocalFile(photo.localUrl()), true);
                         prepared = true;

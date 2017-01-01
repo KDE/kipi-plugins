@@ -609,6 +609,7 @@ bool FbWindow::prepareImageForUpload(const QString& imgPath, QString& caption)
         {
             caption = getImageCaption(imgPath);
             meta->setImageDimensions(image.size());
+            meta->setImageOrientation(MetadataProcessor::NORMAL);
             meta->setImageProgramId(QString::fromLatin1("Kipi-plugins"), kipipluginsVersion());
             meta->save(QUrl::fromLocalFile(m_tmpPath), true);
         }

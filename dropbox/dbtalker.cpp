@@ -353,6 +353,7 @@ bool DBTalker::addPhoto(const QString& imgPath, const QString& uploadFolder, boo
     if (m_meta->load(QUrl::fromLocalFile(imgPath)))
     {
         m_meta->setImageDimensions(image.size());
+        m_meta->setImageOrientation(MetadataProcessor::NORMAL);
         m_meta->setImageProgramId(QString::fromLatin1("Kipi-plugins"), kipipluginsVersion());
         m_meta->save(QUrl::fromLocalFile(path), true);
     }

@@ -242,8 +242,9 @@ bool PiwigoTalker::addPhoto(int   albumId,
 
                 if (meta && meta->load(QUrl::fromLocalFile(mediaPath)))
                 {
-                    meta->setImageProgramId(QString::fromLatin1("Kipi-plugins"), kipipluginsVersion());
                     meta->setImageDimensions(image.size());
+                    meta->setImageOrientation(MetadataProcessor::NORMAL);
+                    meta->setImageProgramId(QString::fromLatin1("Kipi-plugins"), kipipluginsVersion());
                     meta->save(QUrl::fromLocalFile(m_path), true);
                 }
                 else

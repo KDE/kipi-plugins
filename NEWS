@@ -7,4 +7,7 @@ NEW FEATURES:
 BUGFIXES FROM BUGZILLA :
 
 001 ==> 373434 - No exif data in pictures exported to Flickr.
-002 ==> 
+002 ==> 374242 - exported photos to Gphoto are rotated.
+003 ==> 374409 - Export to Flickr ignores EXIF Orientation.
+004 ==> 329309 - TIF files appear not in correct orientation in Piwigo.
+005 ==> 

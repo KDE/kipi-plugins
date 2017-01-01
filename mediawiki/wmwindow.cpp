@@ -309,6 +309,7 @@ bool WMWindow::prepareImageForUpload(const QString& imgPath)
                     meta->removeGPSInfo();
                 }
 
+                meta->setImageOrientation(MetadataProcessor::NORMAL);
                 meta->save(QUrl::fromLocalFile(d->tmpPath), true);
             }
         }

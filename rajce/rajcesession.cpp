@@ -100,6 +100,7 @@ PreparedImage _prepareImageForUpload(const QString& saveDir, const QImage& img, 
             if (meta->load(QUrl::fromLocalFile(imagePath)))
             {
                 meta->setImageDimensions(image.size());
+                meta->setImageOrientation(MetadataProcessor::NORMAL);
                 meta->setImageProgramId(QString::fromLatin1("Kipi-plugins"), kipipluginsVersion());
                 meta->save(QUrl::fromLocalFile(ret.scaledImagePath), true);
             }
