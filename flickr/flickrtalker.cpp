@@ -627,14 +627,22 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
 
     if (!info.title.isEmpty())
     {
-        form.addPair(QString::fromLatin1("title"), info.title, QString::fromLatin1("text/plain"));
-        urlQuery.addQueryItem(QString::fromLatin1("title"), info.title);
+        QString title = info.title;
+        title.replace(QLatin1String("\r\n"), QLatin1String(" "));
+        title.replace(QLatin1String("\n"), QLatin1String(" "));
+        title.replace(QLatin1String("\r"), QLatin1String(" "));
+        form.addPair(QString::fromLatin1("title"), title.trimmed(), QString::fromLatin1("text/plain"));
+        urlQuery.addQueryItem(QString::fromLatin1("title"), title.trimmed());
     }
 
     if (!info.description.isEmpty())
     {
-        form.addPair(QString::fromLatin1("description"), info.description, QString::fromLatin1("text/plain"));
-        urlQuery.addQueryItem(QString::fromLatin1("description"), info.description);
+        QString description = info.description;
+        description.replace(QLatin1String("\r\n"), QLatin1String(" "));
+        description.replace(QLatin1String("\n"), QLatin1String(" "));
+        description.replace(QLatin1String("\r"), QLatin1String(" "));
+        form.addPair(QString::fromLatin1("description"), description.trimmed(), QString::fromLatin1("text/plain"));
+        urlQuery.addQueryItem(QString::fromLatin1("description"), description.trimmed());
     }
 
     url2.setQuery(urlQuery);
