@@ -10,4 +10,5 @@ BUGFIXES FROM BUGZILLA :
 002 ==> 374242 - exported photos to Gphoto are rotated.
 003 ==> 374409 - Export to Flickr ignores EXIF Orientation.
 004 ==> 329309 - TIF files appear not in correct orientation in Piwigo.
-005 ==> 
+005 ==> 374510 - Creating albums on flickr with line breaks in their descriptions fails [patch].
+006 ==> 

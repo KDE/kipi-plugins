@@ -494,14 +494,25 @@ void FlickrTalker::createPhotoSet(const QString& /*albumName*/, const QString& a
         m_reply = 0;
     }
 
+    // Work-around for checksum errors when uploading to flickr with newline characters in strings
+    // is to remove them and replace with spaces before upload
+    QString title = albumTitle;
+    title.replace(QLatin1String("\r\n"), QLatin1String(" "));
+    title.replace(QLatin1String("\n"), QLatin1String(" "));
+    title.replace(QLatin1String("\r"), QLatin1String(" "));
+    QString description = albumDescription;
+    description.replace(QLatin1String("\r\n"), QLatin1String(" "));
+    description.replace(QLatin1String("\n"), QLatin1String(" "));
+    description.replace(QLatin1String("\r"), QLatin1String(" "));
+
     qCDebug(KIPIPLUGINS_LOG) << "create photoset invoked";
     QUrl url(m_apiUrl);
     QUrlQuery urlQuery;
     urlQuery.addQueryItem(QString::fromLatin1("auth_token"), m_token);
     urlQuery.addQueryItem(QString::fromLatin1("api_key"), m_apikey);
     urlQuery.addQueryItem(QString::fromLatin1("method"), QString::fromLatin1("flickr.photosets.create"));
-    urlQuery.addQueryItem(QString::fromLatin1("title"), albumTitle);
-    urlQuery.addQueryItem(QString::fromLatin1("description"), albumDescription);
+    urlQuery.addQueryItem(QString::fromLatin1("title"), title);
+    urlQuery.addQueryItem(QString::fromLatin1("description"), description);
     urlQuery.addQueryItem(QString::fromLatin1("primary_photo_id"), primaryPhotoId);
     url.setQuery(urlQuery);
 
@@ -637,6 +648,8 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
 
     if (!info.description.isEmpty())
     {
+        // Work-around for checksum errors when uploading to flickr with newline characters in strings
+        // is to remove them and replace with spaces before upload
         QString description = info.description;
         description.replace(QLatin1String("\r\n"), QLatin1String(" "));
         description.replace(QLatin1String("\n"), QLatin1String(" "));
