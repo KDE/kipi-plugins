@@ -132,11 +132,13 @@ void KioExportWidget::slotShowTargetDialogClicked(bool checked)
 {
     Q_UNUSED(checked);
 
+    bool isPlasma = QString::fromLatin1(qgetenv("XDG_CURRENT_DESKTOP")).toUpper().contains(QLatin1String("KDE"));
+
     m_targetDialog = new QFileDialog(this, i18n("Select target..."),
                                      m_targetUrl.toString(), i18n("All Files (*)"));
     m_targetDialog->setAcceptMode(QFileDialog::AcceptSave);
     m_targetDialog->setFileMode(QFileDialog::DirectoryOnly);
-    m_targetDialog->setOptions(QFileDialog::DontUseNativeDialog);
+    m_targetDialog->setOption(QFileDialog::DontUseNativeDialog, !isPlasma);
 
     if (m_targetDialog->exec() == QDialog::Accepted)
     {
