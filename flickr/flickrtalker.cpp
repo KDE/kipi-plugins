@@ -138,14 +138,14 @@ FlickrTalker::~FlickrTalker()
 QString FlickrTalker::getApiSig(const QString& secret, const QUrl& url)
 {
     QUrlQuery urlQuery(url.query());
-    QList<QPair<QString, QString> > temp_queries = urlQuery.queryItems();
+    QList<QPair<QString, QString> > temp_queries = urlQuery.queryItems(QUrl::FullyDecoded);
     QMap<QString, QString> queries;
 
     QPair<QString, QString> pair;
 
     foreach(pair, temp_queries)
     {
-        queries.insert(pair.first,pair.second);
+        queries.insert(pair.first, pair.second);
     }
 
     QString compressed(secret);
@@ -159,7 +159,7 @@ QString FlickrTalker::getApiSig(const QString& secret, const QUrl& url)
 
     QCryptographicHash context(QCryptographicHash::Md5);
     context.addData(compressed.toUtf8());
-    return QLatin1String(context.result().toHex().data());
+    return QLatin1String(context.result().toHex());
 }
 
 QString FlickrTalker::getMaxAllowedFileSize()
@@ -494,25 +494,14 @@ void FlickrTalker::createPhotoSet(const QString& /*albumName*/, const QString& a
         m_reply = 0;
     }
 
-    // Work-around for checksum errors when uploading to flickr with newline characters in strings
-    // is to remove them and replace with spaces before upload
-    QString title = albumTitle;
-    title.replace(QLatin1String("\r\n"), QLatin1String(" "));
-    title.replace(QLatin1String("\n"), QLatin1String(" "));
-    title.replace(QLatin1String("\r"), QLatin1String(" "));
-    QString description = albumDescription;
-    description.replace(QLatin1String("\r\n"), QLatin1String(" "));
-    description.replace(QLatin1String("\n"), QLatin1String(" "));
-    description.replace(QLatin1String("\r"), QLatin1String(" "));
-
     qCDebug(KIPIPLUGINS_LOG) << "create photoset invoked";
     QUrl url(m_apiUrl);
     QUrlQuery urlQuery;
     urlQuery.addQueryItem(QString::fromLatin1("auth_token"), m_token);
     urlQuery.addQueryItem(QString::fromLatin1("api_key"), m_apikey);
     urlQuery.addQueryItem(QString::fromLatin1("method"), QString::fromLatin1("flickr.photosets.create"));
-    urlQuery.addQueryItem(QString::fromLatin1("title"), title);
-    urlQuery.addQueryItem(QString::fromLatin1("description"), description);
+    urlQuery.addQueryItem(QString::fromLatin1("title"), albumTitle);
+    urlQuery.addQueryItem(QString::fromLatin1("description"), albumDescription);
     urlQuery.addQueryItem(QString::fromLatin1("primary_photo_id"), primaryPhotoId);
     url.setQuery(urlQuery);
 
@@ -638,24 +627,14 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
 
     if (!info.title.isEmpty())
     {
-        QString title = info.title;
-        title.replace(QLatin1String("\r\n"), QLatin1String(" "));
-        title.replace(QLatin1String("\n"), QLatin1String(" "));
-        title.replace(QLatin1String("\r"), QLatin1String(" "));
-        form.addPair(QString::fromLatin1("title"), title.trimmed(), QString::fromLatin1("text/plain"));
-        urlQuery.addQueryItem(QString::fromLatin1("title"), title.trimmed());
+        form.addPair(QString::fromLatin1("title"), info.title, QString::fromLatin1("text/plain"));
+        urlQuery.addQueryItem(QString::fromLatin1("title"), info.title);
     }
 
     if (!info.description.isEmpty())
     {
-        // Work-around for checksum errors when uploading to flickr with newline characters in strings
-        // is to remove them and replace with spaces before upload
-        QString description = info.description;
-        description.replace(QLatin1String("\r\n"), QLatin1String(" "));
-        description.replace(QLatin1String("\n"), QLatin1String(" "));
-        description.replace(QLatin1String("\r"), QLatin1String(" "));
-        form.addPair(QString::fromLatin1("description"), description.trimmed(), QString::fromLatin1("text/plain"));
-        urlQuery.addQueryItem(QString::fromLatin1("description"), description.trimmed());
+        form.addPair(QString::fromLatin1("description"), info.description, QString::fromLatin1("text/plain"));
+        urlQuery.addQueryItem(QString::fromLatin1("description"), info.description);
     }
 
     url2.setQuery(urlQuery);

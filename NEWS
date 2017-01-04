@@ -11,4 +11,5 @@ BUGFIXES FROM BUGZILLA :
 003 ==> 374409 - Export to Flickr ignores EXIF Orientation.
 004 ==> 329309 - TIF files appear not in correct orientation in Piwigo.
 005 ==> 374510 - Creating albums on flickr with line breaks in their descriptions fails [patch].
-006 ==> 
+006 ==> 374442 - Exporting images with line breaks in their captions to flickr fails.
+007 ==> 
