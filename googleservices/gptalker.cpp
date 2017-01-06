@@ -392,43 +392,49 @@ bool GPTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, const QStr
 
     MPForm_GPhoto form;
     QString path = photoPath;
-    QImage image;
 
-    if (m_iface)
+    QMimeDatabase mimeDB;
+
+    if (!mimeDB.mimeTypeForFile(path).name().startsWith(QLatin1String("video/")))
     {
-        image = m_iface->preview(QUrl::fromLocalFile(photoPath));
-    }
+        QImage image;
 
-    if (image.isNull())
-    {
-        image.load(photoPath);
-    }
+        if (m_iface)
+        {
+            image = m_iface->preview(QUrl::fromLocalFile(photoPath));
+        }
 
-    if (image.isNull())
-    {
-        return false;
-    }
+        if (image.isNull())
+        {
+            image.load(photoPath);
+        }
 
-    path                  = makeTemporaryDir("gs").filePath(QFileInfo(photoPath)
-                                                  .baseName().trimmed() + QLatin1String(".jpg"));
-    int imgQualityToApply = 100;
+        if (image.isNull())
+        {
+            return false;
+        }
 
-    if (rescale)
-    {
-        if (image.width() > maxDim || image.height() > maxDim)
-            image = image.scaled(maxDim,maxDim, Qt::KeepAspectRatio,Qt::SmoothTransformation);
+        path                  = makeTemporaryDir("gs").filePath(QFileInfo(photoPath)
+                                                      .baseName().trimmed() + QLatin1String(".jpg"));
+        int imgQualityToApply = 100;
 
-        imgQualityToApply = imageQuality;
-    }
+        if (rescale)
+        {
+            if (image.width() > maxDim || image.height() > maxDim)
+                image = image.scaled(maxDim,maxDim, Qt::KeepAspectRatio,Qt::SmoothTransformation);
 
-    image.save(path,"JPEG",imgQualityToApply);
+            imgQualityToApply = imageQuality;
+        }
 
-    if (m_meta && m_meta->load(QUrl::fromLocalFile(photoPath)))
-    {
-        m_meta->setImageDimensions(image.size());
-        m_meta->setImageOrientation(MetadataProcessor::NORMAL);
-        m_meta->setImageProgramId(QString::fromLatin1("Kipi-plugins"), kipipluginsVersion());
-        m_meta->save(QUrl::fromLocalFile(path), true);
+        image.save(path,"JPEG",imgQualityToApply);
+
+        if (m_meta && m_meta->load(QUrl::fromLocalFile(photoPath)))
+        {
+            m_meta->setImageDimensions(image.size());
+            m_meta->setImageOrientation(MetadataProcessor::NORMAL);
+            m_meta->setImageProgramId(QString::fromLatin1("Kipi-plugins"), kipipluginsVersion());
+            m_meta->save(QUrl::fromLocalFile(path), true);
+        }
     }
 
     //Create the Body in atom-xml
