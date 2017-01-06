@@ -1184,9 +1184,11 @@ void GSWindow::slotReloadAlbumsRequest()
     switch (m_name)
     {
         case PluginName::GDrive:
+            m_talker->listFolders();
             break;
         case PluginName::GPhotoImport:
         case PluginName::GPhotoExport:
+            m_gphoto_talker->listAlbums();
             break;
     }
 }
