@@ -13,4 +13,3 @@ BUGFIXES FROM BUGZILLA :
 005 ==> 374510 - Creating albums on flickr with line breaks in their descriptions fails [patch].
 006 ==> 374442 - Exporting images with line breaks in their captions to flickr fails.
 007 ==> 374293 - Google albums reload button still display albums which have been removed from google photos.
-008 ==> 
