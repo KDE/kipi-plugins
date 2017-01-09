@@ -274,10 +274,10 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
 
     //-------------------------------------------------------
 
-    connect(d->m_originalChB, SIGNAL(clicked()),
+    connect(d->m_originalChB, SIGNAL(toggled(bool)),
             this, SLOT(slotResizeChecked()));
 
-    connect(d->m_resizeChB, SIGNAL(clicked()),
+    connect(d->m_resizeChB, SIGNAL(toggled(bool)),
             this, SLOT(slotResizeChecked()));
 }
 

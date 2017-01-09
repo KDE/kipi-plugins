@@ -152,8 +152,8 @@ private:
     QCheckBox*                             m_exportHostTagsCheckBox;
     QCheckBox*                             m_stripSpaceTagsCheckBox;
     QCheckBox*                             m_addExtraTagsCheckBox;
+    QCheckBox*                             m_originalCheckBox;
     QCheckBox*                             m_resizeCheckBox;
-//  QCheckBox*                             m_sendOriginalCheckBox;
 
     QSpinBox*                              m_dimensionSpinBox;
     QSpinBox*                              m_imageQualitySpinBox;

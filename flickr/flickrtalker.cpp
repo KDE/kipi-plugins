@@ -575,7 +575,7 @@ void FlickrTalker::addPhotoToPhotoSet(const QString& photoId,
 }
 
 bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
-                            bool rescale, int maxDim, int imageQuality)
+                            bool original, bool rescale, int maxDim, int imageQuality)
 {
     if (m_reply)
     {
@@ -640,67 +640,71 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
     url2.setQuery(urlQuery);
     QString md5 = getApiSig(m_secret, url2);
     form.addPair(QString::fromLatin1("api_sig"), md5, QString::fromLatin1("text/plain"));
-    QImage image;
 
-    if (m_iface)
+    if (!original)
     {
-        image = m_iface->preview(QUrl::fromLocalFile(photoPath));
-    }
-
-    if (image.isNull())
-    {
-        image.load(photoPath);
-    }
-
-    if (!image.isNull())
-    {
-        if (!m_lastTmpFile.isEmpty())
-        {
-            QFile::remove(m_lastTmpFile);
-        }
-
-        path = makeTemporaryDir(m_serviceName.toLatin1().constData()).filePath(QFileInfo(photoPath)
-                                                                     .baseName().trimmed() + QLatin1String(".jpg"));
-
-        if (rescale)
-        {
-            if (image.width() > maxDim || image.height() > maxDim)
-                image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-        }
-
-        image.save(path, "JPEG", imageQuality);
-        m_lastTmpFile = path;
-
-        // Restore all metadata.
+        QImage image;
 
         if (m_iface)
         {
-            QPointer<MetadataProcessor> meta = m_iface->createMetadataProcessor();
-
-            if (meta && meta->load(QUrl::fromLocalFile(photoPath)))
-            {
-                meta->setImageDimensions(image.size());
-                meta->setImageOrientation(MetadataProcessor::NORMAL);
-
-                // NOTE: see bug #153207: Flickr use IPTC keywords to create Tags in web interface
-                //       As IPTC do not support UTF-8, we need to remove it.
-                meta->removeIptcTags(QStringList() << QLatin1String("Iptc.Application2.Keywords"));
-
-                meta->setImageProgramId(QString::fromLatin1("Kipi-plugins"), kipipluginsVersion());
-                meta->save(QUrl::fromLocalFile(path), true);
-            }
-            else
-            {
-                qCWarning(KIPIPLUGINS_LOG) << "flickrExport::Image doesn't have metadata";
-            }
+            image = m_iface->preview(QUrl::fromLocalFile(photoPath));
         }
 
-        qCDebug(KIPIPLUGINS_LOG) << "Resizing and saving to temp file: " << path;
+        if (image.isNull())
+        {
+            image.load(photoPath);
+        }
+
+        if (!image.isNull())
+        {
+            if (!m_lastTmpFile.isEmpty())
+            {
+                QFile::remove(m_lastTmpFile);
+            }
+
+            path = makeTemporaryDir(m_serviceName.toLatin1().constData()).filePath(QFileInfo(photoPath)
+                                                                         .baseName().trimmed() + QLatin1String(".jpg"));
+
+            if (rescale)
+            {
+                if (image.width() > maxDim || image.height() > maxDim)
+                    image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+            }
+
+            image.save(path, "JPEG", imageQuality);
+            m_lastTmpFile = path;
+
+            // Restore all metadata.
+
+            if (m_iface)
+            {
+                QPointer<MetadataProcessor> meta = m_iface->createMetadataProcessor();
+
+                if (meta && meta->load(QUrl::fromLocalFile(photoPath)))
+                {
+                    meta->setImageDimensions(image.size());
+                    meta->setImageOrientation(MetadataProcessor::NORMAL);
+
+                    // NOTE: see bug #153207: Flickr use IPTC keywords to create Tags in web interface
+                    //       As IPTC do not support UTF-8, we need to remove it.
+                    meta->removeIptcTags(QStringList() << QLatin1String("Iptc.Application2.Keywords"));
+
+                    meta->setImageProgramId(QString::fromLatin1("Kipi-plugins"), kipipluginsVersion());
+                    meta->save(QUrl::fromLocalFile(path), true);
+                }
+                else
+                {
+                    qCWarning(KIPIPLUGINS_LOG) << "flickrExport::Image doesn't have metadata";
+                }
+            }
+
+            qCDebug(KIPIPLUGINS_LOG) << "Resizing and saving to temp file: " << path;
+        }
     }
 
     QFileInfo tempFileInfo(path);
 
-    qCDebug(KIPIPLUGINS_LOG) << "QUrl path is " << QUrl::fromLocalFile(path) << "Image size after resizing (in bytes) is "<< tempFileInfo.size();
+    qCDebug(KIPIPLUGINS_LOG) << "QUrl path is " << QUrl::fromLocalFile(path) << "Image size (in bytes) is "<< tempFileInfo.size();
 
     if (tempFileInfo.size() > (getMaxAllowedFileSize().toLongLong()))
     {

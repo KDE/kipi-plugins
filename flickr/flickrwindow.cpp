@@ -102,7 +102,7 @@ FlickrWindow::FlickrWindow(QWidget* const /*parent*/, const QString& serviceName
     m_albumDlg                  = new NewAlbum(this,QString::fromLatin1("Flickr"));
     m_albumsListComboBox        = m_widget->getAlbumsCoB();
     m_newAlbumBtn               = m_widget->getNewAlbmBtn();
-    //m_sendOriginalCheckBox      = m_widget->m_sendOriginalCheckBox;
+    m_originalCheckBox          = m_widget->getOriginalCheckBox();
     m_resizeCheckBox            = m_widget->getResizeCheckBox();
     m_publicCheckBox            = m_widget->m_publicCheckBox;
     m_familyCheckBox            = m_widget->m_familyCheckBox;
@@ -362,23 +362,10 @@ void FlickrWindow::readSettings(QString uname)
 
     m_contentTypeComboBox->setCurrentIndex(contentType);
 
-    if (grp.readEntry("Resize", false))
-    {
-        m_resizeCheckBox->setChecked(true);
-        m_dimensionSpinBox->setEnabled(true);
-        m_imageQualitySpinBox->setEnabled(true);
-    }
-    else
-    {
-        m_resizeCheckBox->setChecked(false);
-        m_dimensionSpinBox->setEnabled(false);
-        m_imageQualitySpinBox->setEnabled(false);
-    }
-
-    //m_sendOriginalCheckBox->setChecked(grp.readEntry("Send original", false));
-
-    m_dimensionSpinBox->setValue(grp.readEntry("Maximum Width",       1600));
-    m_imageQualitySpinBox->setValue(grp.readEntry("Image Quality",    85));
+    m_originalCheckBox->setChecked(grp.readEntry("Upload Original", false));
+    m_resizeCheckBox->setChecked(grp.readEntry("Resize",            false));
+    m_dimensionSpinBox->setValue(grp.readEntry("Maximum Width",     1600));
+    m_imageQualitySpinBox->setValue(grp.readEntry("Image Quality",  85));
 
     winId();
     KConfigGroup dialogGroup = config.group(QString::fromLatin1("%1Export Dialog").arg(m_serviceName));
@@ -415,7 +402,7 @@ void FlickrWindow::writeSettings()
     int contentType = m_contentTypeComboBox->itemData(m_contentTypeComboBox->currentIndex()).toInt();
     grp.writeEntry("Content Type",                      contentType);
     grp.writeEntry("Resize",                            m_resizeCheckBox->isChecked());
-    //grp.writeEntry("Send original",                     m_sendOriginalCheckBox->isChecked());
+    grp.writeEntry("Upload Original",                   m_originalCheckBox->isChecked());
     grp.writeEntry("Maximum Width",                     m_dimensionSpinBox->value());
     grp.writeEntry("Image Quality",                     m_imageQualitySpinBox->value());
     KConfigGroup dialogGroup = config.group(QString::fromLatin1("%1Export Dialog").arg(m_serviceName));
@@ -819,6 +806,7 @@ void FlickrWindow::slotAddPhotoNext()
 
     bool res = m_talker->addPhoto(pathComments.first.toLocalFile(), //the file path
                                   info,
+                                  m_originalCheckBox->isChecked(),
                                   m_resizeCheckBox->isChecked(),
                                   m_dimensionSpinBox->value(),
                                   m_imageQualitySpinBox->value());

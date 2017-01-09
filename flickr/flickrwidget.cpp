@@ -126,6 +126,10 @@ FlickrWidget::FlickrWidget(QWidget* const parent, KIPI::Interface* const iface, 
     hdr->setSectionResizeMode(FlickrList::PUBLIC, QHeaderView::Interactive);
     hdr->resizeSection(FlickrList::PUBLIC, permColWidth);
 
+    // -- Show upload original image CheckBox----------------------------------
+
+    getOriginalCheckBox()->show();
+
     // -- Layout for the tags -------------------------------------------------
 
     QGroupBox* const tagsBox         = new QGroupBox(i18n("Tag options"), getSettingsBox());
