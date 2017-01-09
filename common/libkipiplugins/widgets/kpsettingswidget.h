@@ -95,11 +95,11 @@ public:
     QComboBox*        getDimensionCoB() const;
     QPushButton*      getNewAlbmBtn() const;
     QPushButton*      getReloadBtn() const;
+    QCheckBox*        getOriginalCheckBox() const;
     QCheckBox*        getResizeCheckBox() const;
     QSpinBox*         getDimensionSpB() const;
     QSpinBox*         getImgQualitySpB() const;
     QComboBox*        getAlbumsCoB() const;
-
 
 protected Q_SLOTS:
 

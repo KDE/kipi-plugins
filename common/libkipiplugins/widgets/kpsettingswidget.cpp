@@ -82,6 +82,7 @@ public:
         m_uploadBoxLayout    = new QVBoxLayout(m_uploadBox);
         m_optionsBox         = new QGroupBox(i18n("Options"),m_settingsBox);
         m_optionsBoxLayout   = new QGridLayout(m_optionsBox);
+        m_originalChB        = new QCheckBox(m_optionsBox);
         m_resizeChB          = new QCheckBox(m_optionsBox);
         m_dimensionSpB       = new QSpinBox(m_optionsBox);
         m_imageQualitySpB    = new QSpinBox(m_optionsBox);
@@ -103,6 +104,7 @@ public:
     QPushButton*                   m_newAlbumBtn;
     QPushButton*                   m_reloadAlbumsBtn;
 
+    QCheckBox*                     m_originalChB;
     QCheckBox*                     m_resizeChB;
     QSpinBox*                      m_dimensionSpB;
     QSpinBox*                      m_imageQualitySpB;
@@ -213,6 +215,10 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
 
     d->m_optionsBox->setWhatsThis(i18n("These are the options that would be applied to photos before upload."));
 
+    d->m_originalChB->setText(i18n("Upload original image file"));
+    d->m_originalChB->setChecked(false);
+    d->m_originalChB->hide();
+
     d->m_resizeChB->setText(i18n("Resize photos before uploading"));
     d->m_resizeChB->setChecked(false);
 
@@ -234,12 +240,13 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
 
     QLabel* const imageQualityLbl = new QLabel(i18n("JPEG Quality:"),d->m_optionsBox);
 
-    d->m_optionsBoxLayout->addWidget(d->m_resizeChB,       0, 0, 1, 5);
-    d->m_optionsBoxLayout->addWidget(imageQualityLbl,      1, 1, 1, 1);
-    d->m_optionsBoxLayout->addWidget(d->m_imageQualitySpB, 1, 2, 1, 1);
-    d->m_optionsBoxLayout->addWidget(dimensionLbl,         2, 1, 1, 1);
-    d->m_optionsBoxLayout->addWidget(d->m_dimensionSpB,    2, 2, 1, 1);
-    d->m_optionsBoxLayout->setRowStretch(3,10);
+    d->m_optionsBoxLayout->addWidget(d->m_originalChB,     0, 0, 1, 5);
+    d->m_optionsBoxLayout->addWidget(d->m_resizeChB,       1, 0, 1, 5);
+    d->m_optionsBoxLayout->addWidget(imageQualityLbl,      2, 1, 1, 1);
+    d->m_optionsBoxLayout->addWidget(d->m_imageQualitySpB, 2, 2, 1, 1);
+    d->m_optionsBoxLayout->addWidget(dimensionLbl,         3, 1, 1, 1);
+    d->m_optionsBoxLayout->addWidget(d->m_dimensionSpB,    3, 2, 1, 1);
+    d->m_optionsBoxLayout->setRowStretch(4, 10);
     d->m_optionsBoxLayout->setSpacing(spacing);
     d->m_optionsBoxLayout->setContentsMargins(spacing, spacing, spacing, spacing);
 
@@ -267,6 +274,9 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
 
     //-------------------------------------------------------
 
+    connect(d->m_originalChB, SIGNAL(clicked()),
+            this, SLOT(slotResizeChecked()));
+
     connect(d->m_resizeChB, SIGNAL(clicked()),
             this, SLOT(slotResizeChecked()));
 }
@@ -288,8 +298,9 @@ KPImagesList* KPSettingsWidget::imagesList() const
 
 void KPSettingsWidget::slotResizeChecked()
 {
-    d->m_dimensionSpB->setEnabled(d->m_resizeChB->isChecked());
-    d->m_imageQualitySpB->setEnabled(d->m_resizeChB->isChecked());
+    d->m_resizeChB->setEnabled(!d->m_originalChB->isChecked());
+    d->m_dimensionSpB->setEnabled(d->m_resizeChB->isChecked() && !d->m_originalChB->isChecked());
+    d->m_imageQualitySpB->setEnabled(d->m_resizeChB->isChecked() && !d->m_originalChB->isChecked());
 }
 
 KPProgressWidget* KPSettingsWidget::progressBar() const
@@ -399,6 +410,11 @@ QPushButton* KPSettingsWidget::getNewAlbmBtn() const
 QPushButton* KPSettingsWidget::getReloadBtn() const
 {
     return d->m_reloadAlbumsBtn;
+}
+
+QCheckBox* KPSettingsWidget::getOriginalCheckBox() const
+{
+    return d->m_originalChB;
 }
 
 QCheckBox* KPSettingsWidget::getResizeCheckBox() const
