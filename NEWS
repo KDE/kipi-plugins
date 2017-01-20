@@ -3,6 +3,7 @@ Kipi-plugins 5.5.0 - Release date: 2017/02/12
 
 NEW FEATURES:
 
+General : JAlbumExport plugin renamed as JAlbum and porting to Qt5.
 
 BUGFIXES FROM BUGZILLA :
 
