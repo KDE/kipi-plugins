@@ -107,7 +107,12 @@ QByteArray PiwigoTalker::computeMD5Sum(const QString& filepath)
 {
     QFile file(filepath);
 
-    file.open(QIODevice::ReadOnly);
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        qCDebug(KIPIPLUGINS_LOG) << "File open error:" << filepath;
+        return QByteArray();
+    }
+
     QByteArray md5sum = QCryptographicHash::hash(file.readAll(), QCryptographicHash::Md5);
     file.close();
 
@@ -790,7 +795,11 @@ void PiwigoTalker::addNextChunk()
 {
     QFile imagefile(m_path);
 
-    imagefile.open(QIODevice::ReadOnly);
+    if (!imagefile.open(QIODevice::ReadOnly))
+    {
+        emit signalProgressInfo(i18n("Error : Cannot open photo: %1", QUrl(m_path).fileName()));
+        return;
+    }
 
     m_chunkId++; // We start with chunk 1
 
@@ -815,7 +824,7 @@ void PiwigoTalker::addNextChunk()
 
     m_reply = m_netMngr->post(netRequest, buffer);
 
-    emit signalProgressInfo( i18n("Upload the chunk %1/%2 of %3", m_chunkId, m_nbOfChunks, QUrl(m_path).fileName()) );
+    emit signalProgressInfo(i18n("Upload the chunk %1/%2 of %3", m_chunkId, m_nbOfChunks, QUrl(m_path).fileName()));
 }
 
 void PiwigoTalker::parseResponseAddPhotoChunk(const QByteArray& data)
