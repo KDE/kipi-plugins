@@ -24,8 +24,8 @@
  *
  * ============================================================ */
 
-#ifndef PLUGIN_PIWIGOEXPORT_H
-#define PLUGIN_PIWIGOEXPORT_H
+#ifndef PLUGIN_PIWIGO_H
+#define PLUGIN_PIWIGO_H
 
 // Qt includes
 
@@ -71,4 +71,4 @@ private:
 
 } // namespace KIPIPiwigoExportPlugin
 
-#endif /* PLUGIN_PIWIGOEXPORT_H */
+#endif /* PLUGIN_PIWIGO_H */
