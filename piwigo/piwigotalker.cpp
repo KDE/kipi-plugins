@@ -302,7 +302,7 @@ bool PiwigoTalker::addPhoto(int   albumId,
 
     m_reply = m_netMngr->post(netRequest, buffer);
 
-    emit signalProgressInfo( i18n("Check if %1 already exists", QUrl(mediaPath).fileName()) );
+    emit signalProgressInfo(i18n("Check if %1 already exists", QUrl(mediaPath).fileName()));
 
     emit signalBusy(true);
 
@@ -903,7 +903,7 @@ void PiwigoTalker::addPhotoSummary()
 
     m_reply = m_netMngr->post(netRequest, buffer);
 
-    emit signalProgressInfo( i18n("Upload the metadata of %1", QUrl(m_path).fileName()) );
+    emit signalProgressInfo(i18n("Upload the metadata of %1", QUrl(m_path).fileName()));
 }
 
 void PiwigoTalker::parseResponseAddPhotoSummary(const QByteArray& data)

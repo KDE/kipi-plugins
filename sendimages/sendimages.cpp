@@ -288,7 +288,7 @@ void SendImages::buildPropertiesFile()
         }
 
         QFile propertiesFile(d->settings.tempPath + i18n("properties.txt"));
-        QTextStream stream( &propertiesFile );
+        QTextStream stream(&propertiesFile);
         stream.setCodec(QTextCodec::codecForName("UTF-8"));
         stream.setAutoDetectUnicode(true);
 
@@ -460,7 +460,7 @@ bool SendImages::invokeMailAgent()
                     args.append(QLatin1String("-m"));
                     args.append(QLatin1String("mailto:"));
 
-                    for (QList<QUrl>::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
+                    for (QList<QUrl>::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it)
                     {
                         args.append(QLatin1String("-a"));
                         args.append((*it).toLocalFile());
@@ -496,7 +496,7 @@ bool SendImages::invokeMailAgent()
                     args.append(QLatin1String("--compose"));
                     args.append(QLatin1String("--attach"));
 
-                    for (QList<QUrl>::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
+                    for (QList<QUrl>::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it)
                     {
                         args.append((*it).toLocalFile());
                     }
@@ -541,10 +541,10 @@ bool SendImages::invokeMailAgent()
 
                     QString tmp = QLatin1String("mailto:?subject=");
 
-                    for (QList<QUrl>::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
+                    for (QList<QUrl>::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it)
                     {
                         tmp.append(QLatin1String("&attach="));
-                        tmp.append( (*it).toLocalFile() );
+                        tmp.append((*it).toLocalFile());
                     }
 
                     args.append(tmp);
@@ -574,7 +574,7 @@ bool SendImages::invokeMailAgent()
                     prog = QLatin1String("cmd");
 #endif
 
-                    for (QList<QUrl>::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
+                    for (QList<QUrl>::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it)
                     {
                         args.append(QLatin1String("--attach"));
                         args.append((*it).toLocalFile());
@@ -621,7 +621,7 @@ bool SendImages::invokeMailAgent()
                     args.append(QLatin1String("-compose"));
                     QString tmp = QLatin1String("attachment='");
 
-                    for (QList<QUrl>::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
+                    for (QList<QUrl>::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it)
                     {
                         tmp.append(QLatin1String("file://"));
                         tmp.append((*it).toLocalFile());

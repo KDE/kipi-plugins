@@ -197,8 +197,8 @@ void SimpleViewer::startExport()
 
     if (d->settings->imgGetOption == 0)
     {
-        for( QList<ImageCollection>::ConstIterator it = d->settings->collections.constBegin() ;
-            !d->canceled && (it != d->settings->collections.constEnd()) ; ++it )
+        for (QList<ImageCollection>::ConstIterator it = d->settings->collections.constBegin() ;
+             !d->canceled && (it != d->settings->collections.constEnd()) ; ++it)
         {
             d->totalActions += (*it).images().count();
         }
@@ -388,6 +388,7 @@ bool SimpleViewer::exportImages()
     d->progressWdg->addedAction(i18n("Creating images and thumbnails..."), StartingMessage);
 
     QFile file(d->tempDir->path() + QLatin1String("/gallery.xml"));
+
     if (!file.open(QIODevice::WriteOnly))
     {
         d->progressWdg->addedAction(i18n("Cannot open gallery.xml file for writing"), ErrorMessage);
@@ -397,15 +398,15 @@ bool SimpleViewer::exportImages()
     QDomElement  galleryElem;
     QDomElement  photosElem;
     QDomDocument xmlDoc;
-    xmlDoc.appendChild(xmlDoc.createProcessingInstruction( QLatin1String("xml"),
-                       QLatin1String("version=\"1.0\" encoding=\"UTF-8\"") ) );
+    xmlDoc.appendChild(xmlDoc.createProcessingInstruction(QLatin1String("xml"),
+                       QLatin1String("version=\"1.0\" encoding=\"UTF-8\"")));
 
     switch (d->settings->plugType)
     {
         case 0:
         {
             galleryElem = xmlDoc.createElement(QLatin1String("simpleviewerGallery"));
-            xmlDoc.appendChild( galleryElem );
+            xmlDoc.appendChild(galleryElem);
             galleryElem.setAttribute(QLatin1String("enableRightClickOpen"),
                                      d->settings->enableRightClickToOpen());
             galleryElem.setAttribute(QLatin1String("maxImageWidth"),
@@ -436,7 +437,7 @@ bool SimpleViewer::exportImages()
         case 1:
         {
             galleryElem = xmlDoc.createElement(QLatin1String("gallery"));
-            xmlDoc.appendChild( galleryElem );
+            xmlDoc.appendChild(galleryElem);
             galleryElem.setAttribute(QLatin1String("enableRightClickOpen"),
                                      d->settings->enableRightClickToOpen());
             galleryElem.setAttribute(QLatin1String("imagePadding"),
@@ -454,15 +455,15 @@ bool SimpleViewer::exportImages()
         case 2:
         {
             galleryElem = xmlDoc.createElement(QLatin1String("tiltviewergallery"));
-            xmlDoc.appendChild( galleryElem );
+            xmlDoc.appendChild(galleryElem);
             photosElem  = xmlDoc.createElement(QLatin1String("photos"));
-            galleryElem.appendChild( photosElem);
+            galleryElem.appendChild(photosElem);
             break;
         }
         case 3:
         {
             galleryElem = xmlDoc.createElement(QLatin1String("gallery"));
-            xmlDoc.appendChild( galleryElem );
+            xmlDoc.appendChild(galleryElem);
             galleryElem.setAttribute(QLatin1String("enableRightClickOpen"),
                                      d->settings->enableRightClickToOpen());
             galleryElem.setAttribute(QLatin1String("cellDimension"),
@@ -490,8 +491,8 @@ bool SimpleViewer::exportImages()
 
     if (d->settings->imgGetOption == 0)
     {
-        for( QList<ImageCollection>::ConstIterator it = d->settings->collections.constBegin() ;
-            !d->canceled && (it != d->settings->collections.constEnd()) ; ++it )
+        for (QList<ImageCollection>::ConstIterator it = d->settings->collections.constBegin() ;
+             !d->canceled && (it != d->settings->collections.constEnd()) ; ++it)
         {
             QList<QUrl> images = (*it).images();
             processQUrlList(images, xmlDoc, galleryElem, photosElem);
@@ -504,7 +505,7 @@ bool SimpleViewer::exportImages()
     }
 
     QByteArray data(xmlDoc.toByteArray());
-    QDataStream stream( &file );
+    QDataStream stream(&file);
     stream.writeRawData(data.data(), data.size());
     file.close();
 
@@ -743,7 +744,7 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
             urlElem.appendChild(urlText);
 
             QDomElement caption2   = xmlDoc.createElement(QLatin1String("caption"));
-            img.appendChild( caption2 );
+            img.appendChild(caption2);
             QDomText captiontxt2   = xmlDoc.createTextNode(comment+keywords);
             caption2.appendChild(captiontxt2);
 
@@ -793,7 +794,7 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
             urlElem.appendChild(urlText);
 
             QDomElement caption2 = xmlDoc.createElement(QLatin1String("caption"));
-            img.appendChild( caption2 );
+            img.appendChild(caption2);
             QDomText captiontxt2 = xmlDoc.createTextNode(comment+keywords);
             caption2.appendChild(captiontxt2);
             break;
@@ -1152,7 +1153,7 @@ bool SimpleViewer::extractArchive(KZip& zip) const
 
     // extract the needed files from SimpleViewer archive
     for (QStringList::ConstIterator it = d->simpleViewerFiles.constBegin();
-         it != d->simpleViewerFiles.constEnd(); ++it )
+         it != d->simpleViewerFiles.constEnd(); ++it)
     {
         const KArchiveEntry* const entry = dir->entry(*it);
 
@@ -1179,9 +1180,9 @@ bool SimpleViewer::extractFile(const KArchiveEntry* entry) const
 
     QByteArray array = entryFile->data();
 
-    QFile file( d->dataLocal + entry->name() );
+    QFile file(d->dataLocal + entry->name());
 
-    if (file.open( QIODevice::WriteOnly ))
+    if (file.open(QIODevice::WriteOnly))
     {
         int ret = file.write(array);
         file.close();

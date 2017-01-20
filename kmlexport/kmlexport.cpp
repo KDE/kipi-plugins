@@ -165,16 +165,16 @@ QImage KmlExport::generateBorderedThumbnail(const QImage& fullImage, int size) c
     painter.fillRect(0,0,image.width() + (2*image_border),image.height() + (2*image_border),BrushColor);
     /*! @todo add a corner to the thumbnail and a hotspot to the kml element */
 
-    painter.drawImage(image_border, image_border, image );
+    painter.drawImage(image_border, image_border, image);
     painter.end();
 
     return croppedPix.toImage();
 }
 
 /*!
-\fn KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum )
+\fn KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum)
  */
-void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum )
+void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum)
 {
     KPImageInfo info(imageURL);
 
@@ -209,7 +209,7 @@ void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum 
     imageFile.close();
     QImage image;
 
-    if (!image.loadFromData(imageData) )
+    if (!image.loadFromData(imageData))
     {
         logError(i18n("Error loading image '%1'", path));
         return;
@@ -217,7 +217,7 @@ void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum 
 
     // Process images
 
-    if ( m_meta && info.orientation() != MetadataProcessor::UNSPECIFIED )
+    if (m_meta && info.orientation() != MetadataProcessor::UNSPECIFIED)
     {
          m_meta->rotateExifQImage(image, info.orientation());
     }
@@ -287,11 +287,11 @@ void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum 
                 .arg(lat, 0, 'f', 8));
         }
 
-        if (m_altitudeMode == 2 )
+        if (m_altitudeMode == 2)
         {
             addKmlTextElement(kmlGeometry, QLatin1String("altitudeMode"), QLatin1String("absolute"));
         }
-        else if (m_altitudeMode == 1 )
+        else if (m_altitudeMode == 1)
         {
             addKmlTextElement(kmlGeometry, QLatin1String("altitudeMode"), QLatin1String("relativeToGround"));
         }
@@ -392,7 +392,7 @@ void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum 
  */
 void KmlExport::addTrack(QDomElement& kmlAlbum)
 {
-    if( m_GPXFile.isEmpty() )
+    if (m_GPXFile.isEmpty())
     {
         logWarning(i18n("No GPX file chosen."));
         return;
@@ -443,7 +443,7 @@ void KmlExport::addTrack(QDomElement& kmlAlbum)
         .arg((&m_GPXColor)->green(), 2, 16)
         .arg((&m_GPXColor)->red(), 2, 16);
     addKmlTextElement(kmlLineStyle, QLatin1String("color"), KMLColorValue);
-    addKmlTextElement(kmlLineStyle, QLatin1String("width"), QString::fromUtf8("%1").arg(m_LineWidth) );
+    addKmlTextElement(kmlLineStyle, QLatin1String("width"), QString::fromUtf8("%1").arg(m_LineWidth));
 
     m_gpxParser.CreateTrackLine(kmlAlbum, *m_kmlDocument, m_GPXAltitudeMode);
 }
@@ -465,7 +465,7 @@ void KmlExport::generate()
     QDomProcessingInstruction instr = m_kmlDocument->createProcessingInstruction(QLatin1String("xml"), QLatin1String("version=\"1.0\" encoding=\"UTF-8\""));
     m_kmlDocument->appendChild(instr);
     QDomElement kmlRoot             = m_kmlDocument->createElementNS(QLatin1String("http://www.opengis.net/kml/2.2"), QLatin1String("kml"));
-    m_kmlDocument->appendChild( kmlRoot );
+    m_kmlDocument->appendChild(kmlRoot);
 
     QDomElement kmlAlbum            = addKmlElement(kmlRoot, QLatin1String("Document"));
     QDomElement kmlName             = addKmlTextElement(kmlAlbum, QLatin1String("name"), m_hostAlbumName);
@@ -536,7 +536,7 @@ void KmlExport::generate()
         return;
     }
 
-    QTextStream stream( &file ); // we will serialize the data into the file
+    QTextStream stream(&file); // we will serialize the data into the file
     stream << m_kmlDocument->toString();
     file.close();
 

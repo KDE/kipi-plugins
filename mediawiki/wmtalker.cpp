@@ -120,7 +120,7 @@ void WMTalker::uploadHandle(KJob* j)
         {
             const QString errorText = j->errorText();
 
-            if(errorText.isEmpty())
+            if (errorText.isEmpty())
             {
                 d->error.append(i18n("Error on file '%1'\n", d->currentFile));
             }
@@ -142,6 +142,7 @@ void WMTalker::uploadHandle(KJob* j)
         qCDebug(KIPIPLUGINS_LOG) << "Path:" << keys.first();
 
         QFile* const file = new QFile(keys.first(),this);
+
         if (!file->open(QIODevice::ReadOnly))
         {
             qCDebug(KIPIPLUGINS_LOG) << "File open error:" << keys.first();
@@ -182,7 +183,7 @@ void WMTalker::uploadHandle(KJob* j)
     {
         // Finish upload
 
-        if(d->error.size() > 0)
+        if (d->error.size() > 0)
         {
             QMessageBox::critical(QApplication::activeWindow(), i18n("Error"), d->error);
         }
@@ -245,7 +246,7 @@ QString WMTalker::buildWikiText(const QMap<QString, QString>& info) const
     {
         categories = info[QLatin1String("categories")].split(QLatin1String("\n"), QString::SkipEmptyParts);
 
-        for(int i = 0; i < categories.size(); i++)
+        for (int i = 0; i < categories.size(); i++)
         {
             text.append(QLatin1String("[[Category:")).append(categories[i]).append(QLatin1String("]]\n"));
         }
@@ -255,7 +256,7 @@ QString WMTalker::buildWikiText(const QMap<QString, QString>& info) const
     {
         categories = info[QLatin1String("genCategories")].split(QLatin1String("\n"), QString::SkipEmptyParts);
 
-        for(int i = 0; i < categories.size(); i++)
+        for (int i = 0; i < categories.size(); i++)
         {
             text.append(QLatin1String("[[Category:")).append(categories[i]).append(QLatin1String("]]\n"));
         }
