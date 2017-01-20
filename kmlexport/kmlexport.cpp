@@ -184,7 +184,7 @@ void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum 
 
     if (!imageFile.open(QIODevice::ReadOnly))
     {
-        logWarning(i18n("Could not read image '%1'",path));
+        logError(i18n("Could not read image '%1'", path));
         return;
     }
 
@@ -193,19 +193,25 @@ void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum 
 
     if (imageFormat.isEmpty())
     {
-        logWarning(i18n("Format of image '%1' is unknown",path));
+        logError(i18n("Format of image '%1' is unknown", path));
         return;
     }
 
     imageFile.close();
-    imageFile.open(QIODevice::ReadOnly);
+
+    if (!imageFile.open(QIODevice::ReadOnly))
+    {
+        logError(i18n("Could not read image '%1'", path));
+        return;
+    }
 
     QByteArray imageData = imageFile.readAll();
+    imageFile.close();
     QImage image;
 
     if (!image.loadFromData(imageData) )
     {
-        logWarning(i18n("Error loading image '%1'",path));
+        logError(i18n("Error loading image '%1'", path));
         return;
     }
 
@@ -243,7 +249,7 @@ void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum 
     if (!image.save(destPath, imageFormat.toLatin1().constData(), 85))
     {
         // if not able to save the image, it's pointless to create a placemark
-        logWarning(i18n("Could not save image '%1' to '%2'",path,destPath));
+        logError(i18n("Could not save image '%1' to '%2'", path, destPath));
     }
     else
     {
@@ -477,7 +483,7 @@ void KmlExport::generate()
     int count         = images.count();
     QList<QUrl>::ConstIterator imagesEnd (images.constEnd());
 
-    for( QList<QUrl>::ConstIterator selIt = images.constBegin(); selIt != imagesEnd; ++selIt, ++pos)
+    for (QList<QUrl>::ConstIterator selIt = images.constBegin(); selIt != imagesEnd; ++selIt, ++pos)
     {
         double alt, lat, lng;
         QUrl url        = *selIt;
@@ -495,7 +501,7 @@ void KmlExport::generate()
             hasGPSInfo = m_meta->getGPSInfo(alt, lat, lng);
         }
 
-        if ( hasGPSInfo )
+        if (hasGPSInfo)
         {
             // generation de l'image et de l'icone
             generateImagesthumb(url, kmlAlbum);
@@ -521,8 +527,15 @@ void KmlExport::generate()
 
     /** @todo change to kml or kmz if compressed */
     QFile file(m_tempDestDir.filePath(m_KMLFileName + QLatin1String(".kml")));
-    /** @todo handle file opening problems */
-    file.open( QIODevice::WriteOnly );
+
+    if (!file.open(QIODevice::WriteOnly))
+    {
+        logError(i18n("Cannot open file for writing"));
+        delete m_kmlDocument;
+        m_kmlDocument = 0;
+        return;
+    }
+
     QTextStream stream( &file ); // we will serialize the data into the file
     stream << m_kmlDocument->toString();
     file.close();
