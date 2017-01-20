@@ -268,17 +268,21 @@ bool WMWindow::prepareImageForUpload(const QString& imgPath)
 
         if (d->widget->resize() && (image.width() > maxDim || image.height() > maxDim))
         {
-            qCDebug(KIPIPLUGINS_LOG) << "Resizing to " << maxDim;
+            qCDebug(KIPIPLUGINS_LOG) << "Resizing to" << maxDim;
             image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         }
 
-        qCDebug(KIPIPLUGINS_LOG) << "Saving to temp file: " << d->tmpPath;
+        qCDebug(KIPIPLUGINS_LOG) << "Saving to temp file:" << d->tmpPath;
         image.save(d->tmpPath, "JPEG", d->widget->quality());
     }
     else
     {
         // file is copied with its embedded metadata
-        QFile::copy(imgPath, d->tmpPath);
+        if (!QFile::copy(imgPath, d->tmpPath))
+        {
+            qCDebug(KIPIPLUGINS_LOG) << "File copy error from:" << imgPath << "to" << d->tmpPath;
+            return false;
+        }
     }
 
     if (iface())
