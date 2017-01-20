@@ -287,11 +287,18 @@ void SendImages::buildPropertiesFile()
             propertiesText.append(QLatin1String("\n"));
         }
 
-        QFile propertiesFile( d->settings.tempPath + i18n("properties.txt") );
+        QFile propertiesFile(d->settings.tempPath + i18n("properties.txt"));
         QTextStream stream( &propertiesFile );
         stream.setCodec(QTextCodec::codecForName("UTF-8"));
         stream.setAutoDetectUnicode(true);
-        propertiesFile.open(QIODevice::WriteOnly);
+
+        if (!propertiesFile.open(QIODevice::WriteOnly))
+        {
+            d->progressDlg->progressWidget()->addedAction(i18n("Image properties file cannot be opened"), ErrorMessage);
+            qCDebug(KIPIPLUGINS_LOG) << "File open error:" << d->settings.tempPath + i18n("properties.txt");
+            return;
+        }
+
         stream << propertiesText << QLatin1String("\n");
         propertiesFile.close();
         d->attachementFiles << QUrl(propertiesFile.fileName());
