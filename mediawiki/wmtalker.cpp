@@ -142,7 +142,13 @@ void WMTalker::uploadHandle(KJob* j)
         qCDebug(KIPIPLUGINS_LOG) << "Path:" << keys.first();
 
         QFile* const file = new QFile(keys.first(),this);
-        file->open(QIODevice::ReadOnly);
+        if (!file->open(QIODevice::ReadOnly))
+        {
+            qCDebug(KIPIPLUGINS_LOG) << "File open error:" << keys.first();
+            delete file;
+            return;
+        }
+
         //emit fileUploadProgress(done = 0, total file.size());
 
         e1->setFile(file);
