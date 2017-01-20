@@ -24,16 +24,20 @@
 
 // Qt includes
 
-#include <QDir>
+#include <QApplication>
 #include <QString>
+#include <QDir>
+#include <QUrl>
 
 // KDE includes
 
-#include <QApplication>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-#include "kipiplugins_debug.h"
 #include <klocalizedstring.h>
+
+// Local includes
+
+#include "kipiplugins_debug.h"
 
 #define JALBUM_JAR_PATH "/usr/share/jalbum/JAlbum.jar"
 
@@ -48,8 +52,8 @@ public:
     {
     }
 
-    QUrl             mAlbumPath;
-    QUrl             mJarPath;
+    QUrl mAlbumPath;
+    QUrl mJarPath;
 };
 
 JAlbum::JAlbum()
@@ -75,25 +79,19 @@ QUrl JAlbum::jarPath() const
 
 void JAlbum::setPath(const QString& path)
 {
-    d->mAlbumPath.setUrl(path);
-#ifndef WIN32
-    d->mAlbumPath.cleanPath();
-#endif
+    d->mAlbumPath = QUrl::fromUserInput(path, QString(), QUrl::AssumeLocalFile);
 }
 
 void JAlbum::setJar(const QString& jar)
 {
-    d->mJarPath.setUrl(jar);
-#ifndef WIN32
-    d->mJarPath.cleanPath();
-#endif
+    d->mJarPath = QUrl::fromUserInput(jar, QString(), QUrl::AssumeLocalFile);
 }
 
 void JAlbum::load()
 {
     // FIXME: sure we need this?? (perhaps YES..)
     static bool bln_loaded = false;
-    QString dfltJarPath    = JALBUM_JAR_PATH;
+    QString dfltJarPath(QLatin1String(JALBUM_JAR_PATH));
     QString dfltAlbumPath, tmpString;
 
     if (bln_loaded)
@@ -102,46 +100,40 @@ void JAlbum::load()
     bln_loaded = true;
 
     // read config
-    KConfig config("kipirc");
+    KConfig config(QLatin1String("kipirc"));
     KConfigGroup group = config.group("jAlbum Settings");
 
-    qCDebug(KIPIPLUGINS_LOG) << "Reading data from kipirc file..";
+    qCDebug(KIPIPLUGINS_LOG) << "Reading jAlbum data from kipirc file..";
 
-#ifdef WIN32
-    dfltAlbumPath = QString(qgetenv("HOMEDRIVE").constData());
-    dfltAlbumPath.append(QString(qgetenv("HOMEPATH").constData()));
+#ifdef Q_OS_WIN
+    dfltAlbumPath = QLatin1String(qgetenv("HOMEDRIVE").constData());
+    dfltAlbumPath.append(QLatin1String(qgetenv("HOMEPATH").constData()));
     dfltAlbumPath.append("\\Documents\\My Albums");
 #else
-    dfltAlbumPath = QString(qgetenv("HOME").constData());
-    dfltAlbumPath.append("/Documents/My Albums");
+    dfltAlbumPath = QLatin1String(qgetenv("HOME").constData());
+    dfltAlbumPath.append(QLatin1String("/Documents/My Albums"));
 #endif
 
-#ifdef WIN32
-    dfltJarPath = QString(qgetenv("ProgramFiles").constData());
+#ifdef Q_OS_WIN
+    dfltJarPath = QLatin1String(qgetenv("ProgramFiles").constData());
     dfltJarPath.append("\\jAlbum\\JAlbum.jar");
 #endif
 
-    tmpString = group.readEntry("AlbumPath",   dfltAlbumPath);
-    d->mAlbumPath.setUrl("file:///" + QDir::toNativeSeparators(tmpString));
-#ifndef WIN32
-    d->mAlbumPath.cleanPath();
-#endif
-    tmpString = group.readEntry("JarPath",     dfltJarPath);
-    d->mJarPath.setUrl("file:///" + QDir::toNativeSeparators(tmpString));
-#ifndef WIN32
-    d->mJarPath.cleanPath();
-#endif
+    tmpString = group.readEntry("AlbumPath", dfltAlbumPath);
+    d->mAlbumPath = QUrl::fromUserInput(QDir::toNativeSeparators(tmpString), QString(), QUrl::AssumeLocalFile);
+    tmpString = group.readEntry("JarPath",   dfltJarPath);
+    d->mJarPath   = QUrl::fromUserInput(QDir::toNativeSeparators(tmpString), QString(), QUrl::AssumeLocalFile);
 }
 
 void JAlbum::save()
 {
-    KConfig config("kipirc");
+    KConfig config(QLatin1String("kipirc"));
     KConfigGroup group = config.group("jAlbum Settings");
 
-    qCDebug(KIPIPLUGINS_LOG) << "Saving data to kipirc file..";
+    qCDebug(KIPIPLUGINS_LOG) << "Saving jAlbum data to kipirc file..";
 
-    group.writeEntry(QString("AlbumPath"),   albumPath().path() );
-    group.writeEntry(QString("JarPath"),     jarPath().path() );
+    group.writeEntry("AlbumPath", albumPath().path());
+    group.writeEntry("JarPath",   jarPath().path());
 
     qCDebug(KIPIPLUGINS_LOG) << "syncing..";
     config.sync();

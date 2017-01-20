@@ -3,8 +3,8 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2012-05-28
- * Description : a KIPI plugin to export pics through jAlbum
+ * Date        : 2013-02-28
+ * Description : a plugin to launch jAlbum using selected images.
  *
  * Copyright (C) 2013 by Andrew Goodbody <ajg zero two at elfringham dot co dot uk>
  *
@@ -15,45 +15,64 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
 
-#ifndef PLUGIN_JALBUMEXPORT_H
-#define PLUGIN_JALBUMEXPORT_H
+#ifndef JALBUMWINDOW_H
+#define JALBUMWINDOW_H
 
 // Qt includes
 
-#include <QVariant>
+#include <QObject>
+#include <QLabel>
 
 // Libkipi includes
 
-#include <KIPI/Plugin>
+#include <KIPI/Interface>
+
+// Local includes
+
+#include "kptooldialog.h"
+
+namespace KIPI
+{
+    class Interface;
+}
 
 using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIJAlbumExportPlugin
 {
+class JAlbum;
 
-class Plugin_JAlbumExport : public Plugin
+class JAlbumWindow : public KPToolDialog
 {
     Q_OBJECT
 
 public:
 
-    Plugin_JAlbumExport(QObject* const parent, const QVariantList& args);
-    virtual ~Plugin_JAlbumExport();
+    JAlbumWindow(QWidget* const parent, JAlbum* const pJAlbum);
+    ~JAlbumWindow();
 
-    void setup(QWidget* const);
+public Q_SLOTS:
 
-private Q_SLOTS:
-
-    void slotExport();
+    void slotFinished();
 
 private:
 
-    void setupActions();
+    void closeEvent(QCloseEvent* e);
+    void connectSignals();
+    void readSettings();
+    void saveSettings();
+
+private Q_SLOTS:
+
+    void slotSettings(bool);
+    void slotError(const QString& msg);
+    void slotNewAlbum();
 
 private:
 
@@ -61,6 +80,6 @@ private:
     Private* const d;
 };
 
-}  // namespace KIPIJAlbumExportPlugin
+} // namespace KIPIJAlbumExportPlugin
 
-#endif // PLUGIN_JALBUMEXPORT_H
+#endif /* JALBUMWINDOW_H */

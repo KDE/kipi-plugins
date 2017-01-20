@@ -20,41 +20,33 @@
  *
  * ============================================================ */
 
-#include "jalbumwindow.moc"
+#include "jalbumwindow.h"
+
+#include <sys/stat.h>
 
 // Qt includes
 
-#include <QCheckBox>
+#include <QCloseEvent>
 #include <QDialog>
 #include <QDir>
 #include <QFileInfo>
 #include <QGroupBox>
+#include <QLineEdit>
 #include <QPushButton>
 #include <QSpinBox>
 #include <QProcess>
-#include <Qt>
 #include <QTreeWidgetItem>
 #include <QPointer>
 #include <QSpacerItem>
-#include <QtGui/QHBoxLayout>
+#include <QHBoxLayout>
+#include <QMessageBox>
+#include <QApplication>
 
 // KDE includes
 
-#include <kaboutdata.h>
-#include <QApplication>
-#include <kconfig.h>
-#include <kdebug.h>
-#include <kfiledialog.h>
-#include <khelpmenu.h>
-#include <QIcon>
 #include <klocalizedstring.h>
-#include <QMenu>
-#include <kmessagebox.h>
-#include <kpushbutton.h>
-#include <krun.h>
-#include <ktoolinvocation.h>
-#include <kurllabel.h>
-#include <kstandarddirs.h>
+#include <kwindowconfig.h>
+#include <kconfig.h>
 
 // Libkipi includes
 
@@ -68,6 +60,7 @@
 #include "kpimagedialog.h"
 #include "kpaboutdata.h"
 #include "kpimageinfo.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPIJAlbumExportPlugin
 {
@@ -78,10 +71,9 @@ public:
 
     Private(JAlbumWindow* const parent);
 
-    QWidget*        widget;
-    QPushButton*    newAlbumBtn;
-    JAlbum*         jalbum;
-    KLineEdit*      albumName;
+    QWidget*   widget;
+    JAlbum*    jalbum;
+    QLineEdit* albumName;
 };
 
 JAlbumWindow::Private::Private(JAlbumWindow* const parent)
@@ -93,61 +85,49 @@ JAlbumWindow::Private::Private(JAlbumWindow* const parent)
     parent->setModal(false);
 
 //    QFrame* const optionFrame = new QFrame;
-    QVBoxLayout* const vlay   = new QVBoxLayout();
+    QVBoxLayout* const vlay    = new QVBoxLayout();
 
     QLabel* const albumLabel   = new QLabel(i18n("jAlbum Album name to export to:"));
     vlay->addWidget(albumLabel);
 
-    albumName = new KLineEdit();
+    albumName                  = new QLineEdit();
     vlay->addWidget(albumName);
 
-    newAlbumBtn = new QPushButton;
-    newAlbumBtn->setText(i18n("&Export"));
-    newAlbumBtn->setIcon(QIcon::fromTheme("folder-new"));
-    newAlbumBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    newAlbumBtn->setEnabled(true);
-
-    // ---------------------------------------------------------------------------
-
-    vlay->addWidget(newAlbumBtn);
-//    optionFrame->setLayout(vlay);
     widget->setLayout(vlay);
 }
 
 // --------------------------------------------------------------------------------------------------------------
 
 JAlbumWindow::JAlbumWindow(QWidget* const parent, JAlbum* const pJAlbum)
-    : KP4ToolDialog(parent),
+    : KPToolDialog(parent),
       d(new Private(this))
 {
     d->jalbum = pJAlbum;
 
-    setWindowTitle( i18n("jAlbum Export") );
-    setButtons( KDialog::Close | KDialog::User1 | KDialog::Help);
-    setModal(false);
-
-    KPAboutData* const about = new KPAboutData(ki18n("jAlbum Export"),
-                                               0,
-                                               KAboutLicense::GPL,
-                                               ki18n("A Kipi plugin to launch jAlbum using selected images."),
-                                               ki18n("(c) 2013, Andrew Goodbody\n"));
-
-    about->addAuthor(ki18n("Andrew Goodbody"), ki18n("Author"),
-                     "ajg zero two at elfringham dot co dot uk");
-
-    about->setHandbookEntry("jalbumexport");
-    setAboutData(about);
-
     // User1 Button : to conf jalbum settings
-    KPushButton* const confButton = button( User1 );
-    confButton->setText( i18n("Settings") );
-    confButton->setIcon( QIcon::fromTheme("configure") );
+    QPushButton* const confButton = new QPushButton(i18n("Settings"));
+    confButton->setIcon( QIcon::fromTheme(QLatin1String("configure")));
+    addButton(confButton, QDialogButtonBox::ApplyRole);
 
-    connect(confButton, SIGNAL(clicked()),
-            this, SLOT(slotSettings()) );
+    connect(confButton, SIGNAL(clicked(bool)),
+            this, SLOT(slotSettings(bool)) );
 
     // connect functions
     connectSignals();
+
+    setWindowIcon(QIcon::fromTheme(QString::fromLatin1("kipi-jalbum")));
+    setWindowTitle(i18n("jAlbum Export"));
+    setModal(false);
+
+    KPAboutData* const about = new KPAboutData(ki18n("jAlbum Export"),
+                                               ki18n("A Kipi plugin to launch jAlbum using selected images."),
+                                               ki18n("(c) 2013, Andrew Goodbody\n"));
+
+    about->addAuthor(QString::fromLatin1("Andrew Goodbody"), QString::fromLatin1("Author"),
+                     QString::fromLatin1("ajg zero two at elfringham dot co dot uk"));
+
+    about->setHandbookEntry(QString::fromLatin1("jalbum"));
+    setAboutData(about);
 
     // read Settings
     readSettings();
@@ -155,36 +135,24 @@ JAlbumWindow::JAlbumWindow(QWidget* const parent, JAlbum* const pJAlbum)
 
 JAlbumWindow::~JAlbumWindow()
 {
-    // write config
-    KConfig config("kipirc");
-    KConfigGroup group = config.group("jAlbum Album");
-
-    group.writeEntry("Album Name",   d->albumName->text());
-
-//    delete d->uploadList;
+    saveSettings();
 
     delete d;
 }
 
 void JAlbumWindow::connectSignals()
 {
-    connect(d->newAlbumBtn, SIGNAL(clicked()),
-            this, SLOT(slotNewAlbum()));
-}
+    connect(this, &JAlbumWindow::finished,
+            this, &JAlbumWindow::slotFinished);
 
-void JAlbumWindow::readSettings()
-{
-    // read Config
-    KConfig config("kipirc");
-    KConfigGroup group = config.group("jAlbum Album");
-
-    d->albumName->setText(group.readEntry("Album Name", ""));
+    connect(startButton(), &QPushButton::clicked,
+            this, &JAlbumWindow::slotNewAlbum);
 }
 
 void JAlbumWindow::slotError(const QString& msg)
 {
 //    d->progressDlg->hide();
-    KMessageBox::error(this, msg);
+    QMessageBox::critical(this, i18n("Error"), msg);
 }
 
 void JAlbumWindow::slotNewAlbum()
@@ -193,7 +161,7 @@ void JAlbumWindow::slotNewAlbum()
     QString destFile;
 
     // photoPath
-    const QUrl::List urls(iface()->currentSelection().images());
+    const QList<QUrl> urls(iface()->currentSelection().images());
 
     if (urls.isEmpty())
         return; // NO photo selected: FIXME: do something
@@ -204,9 +172,11 @@ void JAlbumWindow::slotNewAlbum()
 
     if (::stat(newAlbumPath.toLocal8Bit().data(), &stbuf) == 0)
     {
-        if (KMessageBox::warningYesNo(this,
-                     i18n("Album %1 already exists, do you wish to overwrite it?", d->albumName->text()))
-                     == KMessageBox::No)
+        if (QMessageBox::warning(this,
+                    i18n("Overwrite?"),
+                    i18n("Album %1 already exists, do you wish to overwrite it?", d->albumName->text()),
+                    QMessageBox::Yes | QMessageBox::No)
+                    == QMessageBox::No)
         {
             return;
         }
@@ -214,36 +184,39 @@ void JAlbumWindow::slotNewAlbum()
 
     if (!JAlbum::createDir(newAlbumPath))
     {
-        KMessageBox::information(this,
-                 i18n("Failed to create album directory"));
+        QMessageBox::information(this,
+                i18n("Create dir Failed"),
+                i18n("Failed to create album directory"));
         qCDebug(KIPIPLUGINS_LOG) << "Failed to create album directory";
         return;
     }
 
-    destFile   = newAlbumPath + QDir::separator() + "albumfiles.txt";
+    destFile   = newAlbumPath + QDir::separator() + QString::fromLatin1("albumfiles.txt");
     FILE* file = fopen(destFile.toLocal8Bit().data(), "w");
 
     if (!file)
     {
-        KMessageBox::information(this,
+        QMessageBox::information(this,
+                i18n("Writing Failed"),
                 i18n("Could not open 'albumfiles.txt' for writing"));
         qCDebug(KIPIPLUGINS_LOG) << "Could not open 'albumfiles.txt' for writing";
         return;
     }
 
-    for (QUrl::List::ConstIterator it = urls.constBegin(); it != urls.constEnd(); ++it)
+    for (QList<QUrl>::ConstIterator it = urls.constBegin(); it != urls.constEnd(); ++it)
     {
         fprintf(file, "%s\t%s\n", (*it).fileName().toLocal8Bit().data(), (*it).path().toLocal8Bit().data() );
     }
 
     fclose(file);
 
-    destFile = newAlbumPath + QDir::separator() + "jalbum-settings.jap";
+    destFile = newAlbumPath + QDir::separator() + QString::fromLatin1("jalbum-settings.jap");
     file     = fopen(destFile.toLocal8Bit().data(), "w");
 
     if (!file)
     {
-        KMessageBox::information(this,
+        QMessageBox::information(this,
+                i18n("Writing Failed"),
                 i18n("Could not open 'jalbum-settings.jap' for writing"));
         qCDebug(KIPIPLUGINS_LOG) << "Could not open 'jalbum-settings.jap' for writing";
         return;
@@ -254,15 +227,17 @@ void JAlbumWindow::slotNewAlbum()
     fclose(file);
 
     QStringList args;
-    args.append("-Xmx400M");
-    args.append("-jar");
+    args.append(QString::fromLatin1("-Xmx400M"));
+    args.append(QString::fromLatin1("-jar"));
     args.append(d->jalbum->jarPath().path());
     args.append(destFile);
-    QProcess::startDetached("java", args);
+    QProcess::startDetached(QString::fromLatin1("java"), args);
+    accept();
 }
 
-void JAlbumWindow::slotSettings()
+void JAlbumWindow::slotSettings(bool clicked)
 {
+    Q_UNUSED(clicked);
     QPointer<JAlbumEdit> dlg = new JAlbumEdit(QApplication::activeWindow(), d->jalbum, i18n("Edit jAlbum Data") );
 
     if( dlg->exec() == QDialog::Accepted )
@@ -271,6 +246,41 @@ void JAlbumWindow::slotSettings()
     }
 
     delete dlg;
+}
+
+void JAlbumWindow::closeEvent(QCloseEvent* e)
+{
+    if (!e)
+    {
+        return;
+    }
+
+    slotFinished();
+    e->accept();
+}
+
+void JAlbumWindow::slotFinished()
+{
+    saveSettings();
+}
+
+void JAlbumWindow::readSettings()
+{
+    // read Config
+    KConfig config(QString::fromLatin1("kipirc"));
+    KConfigGroup group = config.group("jAlbum Album");
+
+    d->albumName->setText(group.readEntry("Album Name", QString()));
+}
+
+void JAlbumWindow::saveSettings()
+{
+    // write Config
+    KConfig config(QString::fromLatin1("kipirc"));
+    KConfigGroup group = config.group("jAlbum Album");
+
+    group.writeEntry("Album Name", d->albumName->text());
+    config.sync();
 }
 
 } // namespace KIPIJAlbumExportPlugin

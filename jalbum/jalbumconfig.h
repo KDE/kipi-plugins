@@ -26,19 +26,15 @@
 // Qt includes
 
 #include <QLabel>
-#include <QCheckBox>
-
-// KDE includes
-
-#include <kdialog.h>
-#include <klineedit.h>
+#include <QString>
+#include <QDialog>
 
 namespace KIPIJAlbumExportPlugin
 {
 
 class JAlbum;
 
-class JAlbumEdit : public KDialog
+class JAlbumEdit : public QDialog
 {
     Q_OBJECT
 

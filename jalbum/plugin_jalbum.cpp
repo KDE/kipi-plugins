@@ -20,24 +20,18 @@
  *
  * ============================================================ */
 
-#include "plugin_jalbumexport.moc"
+// Qt includes
 
-extern "C"
-{
-#include <unistd.h>
-}
+#include <QApplication>
+#include <QAction>
 
 // KDE includes
 
-#include <QAction>
-#include <klibloader.h>
-#include <kdebug.h>
-#include <klocalizedstring.h>
-#include <kshortcut.h>
 #include <kactioncollection.h>
-#include <kstandarddirs.h>
+#include <klocalizedstring.h>
+#include <kpluginfactory.h>
 #include <kwindowsystem.h>
-#include <QApplication>
+#include <kconfig.h>
 
 // Libkipi includes
 
@@ -48,12 +42,16 @@ extern "C"
 #include "jalbum.h"
 #include "jalbumconfig.h"
 #include "jalbumwindow.h"
+#include "plugin_jalbum.h"
+#include "kipiplugins_debug.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIJAlbumExportPlugin
 {
 
-K_PLUGIN_FACTORY(JAlbumExportFactory, registerPlugin<Plugin_JAlbumExport>();)
-K_EXPORT_PLUGIN(JAlbumExportFactory("kipiplugin_jalbumexport") )
+K_PLUGIN_FACTORY(JAlbumFactory, registerPlugin<Plugin_JAlbumExport>();)
+K_EXPORT_PLUGIN(JAlbumFactory("kipiplugin_jalbum") )
 
 class Plugin_JAlbumExport::Private
 {
@@ -70,13 +68,13 @@ public:
 };
 
 Plugin_JAlbumExport::Plugin_JAlbumExport(QObject* const parent, const QVariantList&)
-    : Plugin(JAlbumExportFactory::componentData(), parent, "JAlbumExport"),
+    : Plugin(parent, "JAlbum"),
       d(new Private)
 {
-    kDebug(AREA_CODE_LOADING) << "Plugin_JAlbumExport plugin loaded";
+    qCDebug(KIPIPLUGINS_LOG) << "Plugin_JAlbum plugin loaded";
 
     d->jalbum = new JAlbum();
-    setUiBaseName("kipiplugin_jalbumexportui.rc");
+    setUiBaseName("kipiplugin_jalbumui.rc");
     setupXML();
 }
 
@@ -92,11 +90,10 @@ void Plugin_JAlbumExport::setup(QWidget* const widget)
 
     if (!interface())
     {
-        qCCritical(KIPIPLUGINS_LOG) << "KIPI interface is null!";
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
         return;
     }
 
-    KIconLoader::global()->addAppDir("kipiplugin_jalbumexport");
     setupActions();
 }
 
@@ -105,13 +102,13 @@ void Plugin_JAlbumExport::setupActions()
     setDefaultCategory(ExportPlugin);
 
     d->actionExport = new QAction(this);
-    d->actionExport->setText(i18n("Export via &jAlbum"));
-    d->actionExport->setIcon(QIcon::fromTheme("kipi-jalbum"));
+    d->actionExport->setText(i18n("Export to &jAlbum"));
+    d->actionExport->setIcon(QIcon::fromTheme(QLatin1String("kipi-jalbum")));
 
     connect(d->actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()));
 
-    addAction("jalbumexport", d->actionExport);
+    addAction(QLatin1String("jalbum"), d->actionExport);
 }
 
 void Plugin_JAlbumExport::slotExport()
@@ -119,9 +116,9 @@ void Plugin_JAlbumExport::slotExport()
     QPointer<JAlbumEdit>   configDlg;
     QPointer<JAlbumWindow> dlg;
 
-    KConfig config("kipirc");
+    KConfig config(QLatin1String("kipirc"));
 
-    if(!config.hasGroup("jAlbum Settings") )
+    if (!config.hasGroup(QLatin1String("jAlbum Settings")))
     {
         configDlg = new JAlbumEdit(QApplication::activeWindow(), d->jalbum, i18n("Edit jAlbum Data") );
         configDlg->exec();
@@ -135,3 +132,5 @@ void Plugin_JAlbumExport::slotExport()
 }
 
 }  // namespace KIPIJAlbumExportPlugin
+
+#include "plugin_jalbum.moc"

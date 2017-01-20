@@ -252,6 +252,7 @@ if(KF5Kipi_FOUND)
         add_subdirectory(imageshack)
         add_subdirectory(yandexfotki)
         add_subdirectory(googleservices)
+        add_subdirectory(jalbum)
 
         if(KF5Archive_FOUND)
             add_subdirectory(flashexport)

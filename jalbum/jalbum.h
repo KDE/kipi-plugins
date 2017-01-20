@@ -15,59 +15,43 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
 
-#ifndef JALBUMWINDOW_H
-#define JALBUMWINDOW_H
+#ifndef JALBUM_H
+#define JALBUM_H
 
 // Qt includes
 
-#include <QList>
-#include <QProgressDialog>
-
-// Local includes
-
-#include "kp4tooldialog.h"
-
-namespace KIPI
-{
-    class Interface;
-}
-
-namespace KIPIPlugins
-{
-    class KPAboutData;
-}
-
-using namespace KIPI;
-using namespace KIPIPlugins;
+#include <QString>
+#include <QUrl>
 
 namespace KIPIJAlbumExportPlugin
 {
-class JAlbum;
 
-class JAlbumWindow : public KP4ToolDialog
+class JAlbum
 {
-    Q_OBJECT
 
 public:
 
-    JAlbumWindow(QWidget* const parent, JAlbum* const pJAlbum);
-    ~JAlbumWindow();
+    JAlbum();
+    ~JAlbum();
+
+    QUrl albumPath() const;
+    QUrl jarPath()   const;
+
+    void setPath(const QString& albumPath);
+    void setJar(const QString& jar);
+
+    void save();
+
+    static bool createDir(const QString& dirName);
 
 private:
 
-    void connectSignals();
-    void readSettings();
-
-private Q_SLOTS:
-
-    void slotSettings();
-    void slotError(const QString& msg);
-    void slotNewAlbum();
+    void load();
 
 private:
 
@@ -77,4 +61,4 @@ private:
 
 } // namespace KIPIJAlbumExportPlugin
 
-#endif /* JALBUMWINDOW_H */
+#endif /* JALBUM_H */

@@ -3,8 +3,8 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2013-02-28
- * Description : a plugin to launch jAlbum using selected images.
+ * Date        : 2012-05-28
+ * Description : a KIPI plugin to export pics through jAlbum
  *
  * Copyright (C) 2013 by Andrew Goodbody <ajg zero two at elfringham dot co dot uk>
  *
@@ -20,41 +20,40 @@
  *
  * ============================================================ */
 
-#ifndef JALBUM_H
-#define JALBUM_H
+#ifndef PLUGIN_JALBUM_H
+#define PLUGIN_JALBUM_H
 
 // Qt includes
 
-#include <QString>
+#include <QVariant>
 
-// KDE includes
+// Libkipi includes
 
-#include <QUrl>
+#include <KIPI/Plugin>
+
+using namespace KIPI;
 
 namespace KIPIJAlbumExportPlugin
 {
 
-class JAlbum
+class Plugin_JAlbumExport : public Plugin
 {
+    Q_OBJECT
 
 public:
 
-    JAlbum();
-    ~JAlbum();
+    Plugin_JAlbumExport(QObject* const parent, const QVariantList& args);
+    virtual ~Plugin_JAlbumExport();
 
-    QUrl albumPath() const;
-    QUrl jarPath()   const;
+    void setup(QWidget* const);
 
-    void setPath(const QString& albumPath);
-    void setJar(const QString& jar);
+private Q_SLOTS:
 
-    void save();
-
-    static bool createDir(const QString& dirName);
+    void slotExport();
 
 private:
 
-    void load();
+    void setupActions();
 
 private:
 
@@ -62,6 +61,6 @@ private:
     Private* const d;
 };
 
-} // namespace KIPIJAlbumExportPlugin
+}  // namespace KIPIJAlbumExportPlugin
 
-#endif /* JALBUM_H */
+#endif // PLUGIN_JALBUM_H
