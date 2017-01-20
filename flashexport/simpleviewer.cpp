@@ -388,8 +388,11 @@ bool SimpleViewer::exportImages()
     d->progressWdg->addedAction(i18n("Creating images and thumbnails..."), StartingMessage);
 
     QFile file(d->tempDir->path() + QLatin1String("/gallery.xml"));
-    file.open(QIODevice::WriteOnly);
-
+    if (!file.open(QIODevice::WriteOnly))
+    {
+        d->progressWdg->addedAction(i18n("Cannot open gallery.xml file for writing"), ErrorMessage);
+        return false;
+    }
     // header of gallery.xml
     QDomElement  galleryElem;
     QDomElement  photosElem;
@@ -822,7 +825,13 @@ bool SimpleViewer::createIndex() const
             }
 
             QFile infile(indexTemplateName);
-            infile.open(QIODevice::ReadOnly);
+
+            if (!infile.open(QIODevice::ReadOnly))
+            {
+                d->progressWdg->addedAction(i18n("Cannot open template file"), ErrorMessage);
+                return false;
+            }
+
             QTextStream in(&infile);
             QString indexTemplate = in.readAll();
             infile.close();
@@ -834,7 +843,13 @@ bool SimpleViewer::createIndex() const
             indexTemplate.replace(QLatin1String("{HOSTNAME}"), d->hostName);
 
             QFile outfile(d->tempDir->path() + QLatin1String("/index.html"));
-            outfile.open(QIODevice::WriteOnly);
+
+            if (!outfile.open(QIODevice::WriteOnly))
+            {
+                d->progressWdg->addedAction(i18n("Cannot open index.html file for writing"), ErrorMessage);
+                return false;
+            }
+
             QTextStream out(&outfile);
             out << indexTemplate;
             outfile.close();
@@ -853,7 +868,13 @@ bool SimpleViewer::createIndex() const
             }
 
             QFile infile(indexTemplateName);
-            infile.open(QIODevice::ReadOnly);
+
+            if (!infile.open(QIODevice::ReadOnly))
+            {
+                d->progressWdg->addedAction(i18n("Cannot open template file"), ErrorMessage);
+                return false;
+            }
+
             QTextStream in(&infile);
             QString indexTemplate = in.readAll();
             infile.close();
@@ -865,7 +886,13 @@ bool SimpleViewer::createIndex() const
             //indexTemplate.replace("{HOSTURL}",  d->hostUrl);
 
             QFile outfile(d->tempDir->path() + QLatin1String("/index.html"));
-            outfile.open(QIODevice::WriteOnly);
+
+            if (!outfile.open(QIODevice::WriteOnly))
+            {
+                d->progressWdg->addedAction(i18n("Cannot open index.html file for writing"), ErrorMessage);
+                return false;
+            }
+
             QTextStream out(&outfile);
             out << indexTemplate;
             outfile.close();
@@ -884,7 +911,13 @@ bool SimpleViewer::createIndex() const
             }
 
             QFile infile(indexTemplateName);
-            infile.open(QIODevice::ReadOnly);
+
+            if (!infile.open(QIODevice::ReadOnly))
+            {
+                d->progressWdg->addedAction(i18n("Cannot open template file"), ErrorMessage);
+                return false;
+            }
+
             QTextStream in(&infile);
             QString indexTemplate = in.readAll();
             infile.close();
@@ -922,7 +955,13 @@ bool SimpleViewer::createIndex() const
                                       QLatin1Char('#'), QLatin1String("0x")));
 
             QFile outfile(d->tempDir->path() + QLatin1String("/index.html"));
-            outfile.open(QIODevice::WriteOnly);
+
+            if (!outfile.open(QIODevice::WriteOnly))
+            {
+                d->progressWdg->addedAction(i18n("Cannot open index.html file for writing"), ErrorMessage);
+                return false;
+            }
+
             QTextStream out(&outfile);
             out << indexTemplate;
             outfile.close();
@@ -940,7 +979,13 @@ bool SimpleViewer::createIndex() const
             }
 
             QFile infile(indexTemplateName);
-            infile.open(QIODevice::ReadOnly);
+
+            if (!infile.open(QIODevice::ReadOnly))
+            {
+                d->progressWdg->addedAction(i18n("Cannot open template file"), ErrorMessage);
+                return false;
+            }
+
             QTextStream in(&infile);
             QString indexTemplate = in.readAll();
             infile.close();
@@ -950,7 +995,13 @@ bool SimpleViewer::createIndex() const
             indexTemplate.replace(QLatin1String("{BGCOLOR}"),  d->settings->backgroundColor.name());
 
             QFile outfile(d->tempDir->path() + QLatin1String("/index.html"));
-            outfile.open(QIODevice::WriteOnly);
+
+            if (!outfile.open(QIODevice::WriteOnly))
+            {
+                d->progressWdg->addedAction(i18n("Cannot open index.html file for writing"), ErrorMessage);
+                return false;
+            }
+
             QTextStream out(&outfile);
             out << indexTemplate;
             outfile.close();
