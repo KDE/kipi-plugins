@@ -108,7 +108,7 @@ void JAlbum::load()
 #ifdef Q_OS_WIN
     dfltAlbumPath = QLatin1String(qgetenv("HOMEDRIVE").constData());
     dfltAlbumPath.append(QLatin1String(qgetenv("HOMEPATH").constData()));
-    dfltAlbumPath.append("\\Documents\\My Albums");
+    dfltAlbumPath.append(QLatin1String("\\Documents\\My Albums"));
 #else
     dfltAlbumPath = QLatin1String(qgetenv("HOME").constData());
     dfltAlbumPath.append(QLatin1String("/Documents/My Albums"));
@@ -116,7 +116,7 @@ void JAlbum::load()
 
 #ifdef Q_OS_WIN
     dfltJarPath = QLatin1String(qgetenv("ProgramFiles").constData());
-    dfltJarPath.append("\\jAlbum\\JAlbum.jar");
+    dfltJarPath.append(QLatin1String("\\jAlbum\\JAlbum.jar"));
 #endif
 
     tmpString = group.readEntry("AlbumPath", dfltAlbumPath);
