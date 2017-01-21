@@ -6,7 +6,7 @@
  * Date        : 2012-05-28
  * Description : a KIPI plugin to export pics through jAlbum
  *
- * Copyright (C) 2013 by Andrew Goodbody <ajg zero two at elfringham dot co dot uk>
+ * Copyright (C) 2013-2017 by Andrew Goodbody <ajg zero two at elfringham dot co dot uk>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General

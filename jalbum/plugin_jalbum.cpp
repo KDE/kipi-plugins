@@ -6,7 +6,7 @@
  * Date        : 2013-02-28
  * Description : A KIPI plugin to launch jAlbum using selected images.
  *
- * Copyright (C) 2013 by Andrew Goodbody <ajg zero two at elfringham dot co dot uk>
+ * Copyright (C) 2013-2017 by Andrew Goodbody <ajg zero two at elfringham dot co dot uk>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -51,7 +51,6 @@ namespace KIPIJAlbumExportPlugin
 {
 
 K_PLUGIN_FACTORY(JAlbumFactory, registerPlugin<Plugin_JAlbumExport>();)
-K_EXPORT_PLUGIN(JAlbumFactory("kipiplugin_jalbum") )
 
 class Plugin_JAlbumExport::Private
 {
@@ -64,7 +63,7 @@ public:
     }
 
     JAlbum*  jalbum;
-    QAction * actionExport;
+    QAction* actionExport;
 };
 
 Plugin_JAlbumExport::Plugin_JAlbumExport(QObject* const parent, const QVariantList&)

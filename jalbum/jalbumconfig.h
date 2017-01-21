@@ -6,7 +6,7 @@
  * Date        : 2013-02-28
  * Description : a plugin to launch jAlbum using selected images.
  *
- * Copyright (C) 2013 by Andrew Goodbody <ajg zero two at elfringham dot co dot uk>
+ * Copyright (C) 2013-2017 by Andrew Goodbody <ajg zero two at elfringham dot co dot uk>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General

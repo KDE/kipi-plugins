@@ -6,7 +6,7 @@
  * Date        : 2013-02-28
  * Description : a plugin to launch jAlbum using selected images.
  *
- * Copyright (C) 2013 by Andrew Goodbody <ajg zero two at elfringham dot co dot uk>
+ * Copyright (C) 2013-2017 by Andrew Goodbody <ajg zero two at elfringham dot co dot uk>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -121,7 +121,7 @@ JAlbumWindow::JAlbumWindow(QWidget* const parent, JAlbum* const pJAlbum)
 
     KPAboutData* const about = new KPAboutData(ki18n("jAlbum Export"),
                                                ki18n("A Kipi plugin to launch jAlbum using selected images."),
-                                               ki18n("(c) 2013, Andrew Goodbody\n"));
+                                               ki18n("(c) 2013-2017, Andrew Goodbody\n"));
 
     about->addAuthor(QString::fromLatin1("Andrew Goodbody"), QString::fromLatin1("Author"),
                      QString::fromLatin1("ajg zero two at elfringham dot co dot uk"));
@@ -191,8 +191,8 @@ void JAlbumWindow::slotNewAlbum()
         return;
     }
 
-    destFile   = newAlbumPath + QDir::separator() + QString::fromLatin1("albumfiles.txt");
-    FILE* file = fopen(destFile.toLocal8Bit().data(), "w");
+    destFile         = newAlbumPath + QDir::separator() + QString::fromLatin1("albumfiles.txt");
+    FILE* const file = fopen(destFile.toLocal8Bit().data(), "w");
 
     if (!file)
     {
