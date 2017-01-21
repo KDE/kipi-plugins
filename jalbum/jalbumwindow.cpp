@@ -191,8 +191,8 @@ void JAlbumWindow::slotNewAlbum()
         return;
     }
 
-    destFile         = newAlbumPath + QDir::separator() + QString::fromLatin1("albumfiles.txt");
-    FILE* const file = fopen(destFile.toLocal8Bit().data(), "w");
+    destFile   = newAlbumPath + QDir::separator() + QString::fromLatin1("albumfiles.txt");
+    FILE* file = fopen(destFile.toLocal8Bit().data(), "w");
 
     if (!file)
     {
