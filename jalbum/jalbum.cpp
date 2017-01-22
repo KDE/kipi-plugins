@@ -139,26 +139,4 @@ void JAlbum::save()
     config.sync();
 }
 
-bool JAlbum::createDir(const QString& dirName)
-{
-    QStringList parts = dirName.split(QDir::separator(), QString::SkipEmptyParts);
-    QDir dir          = QDir::root();
-
-    Q_FOREACH(const QString& part, parts)
-    {
-        if (!dir.exists(part))
-        {
-            if (!dir.mkdir(part))
-            {
-                qCDebug(KIPIPLUGINS_LOG) << "Could not create directory";
-                return false;
-            }
-        }
-
-        dir.cd(part);
-    }
-
-    return true;
-}
-
 } // namespace KIPIJAlbumExportPlugin

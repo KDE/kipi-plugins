@@ -29,11 +29,13 @@
 #include <QCloseEvent>
 #include <QDialog>
 #include <QDir>
+#include <QFile>
 #include <QFileInfo>
 #include <QGroupBox>
 #include <QLineEdit>
 #include <QPushButton>
 #include <QSpinBox>
+#include <QTextStream>
 #include <QProcess>
 #include <QTreeWidgetItem>
 #include <QPointer>
@@ -157,20 +159,14 @@ void JAlbumWindow::slotError(const QString& msg)
 
 void JAlbumWindow::slotNewAlbum()
 {
-    QString newAlbumPath;
-    QString destFile;
-
     // photoPath
     const QList<QUrl> urls(iface()->currentSelection().images());
 
     if (urls.isEmpty())
         return; // NO photo selected: FIXME: do something
 
-    newAlbumPath = d->jalbum->albumPath().path() + QDir::separator() + d->albumName->text();
-
-    struct stat stbuf;
-
-    if (::stat(newAlbumPath.toLocal8Bit().data(), &stbuf) == 0)
+    QDir newAlbumDir = QDir(d->jalbum->albumPath().path());
+    if (newAlbumDir.cd(d->albumName->text()))
     {
         if (QMessageBox::warning(this,
                     i18n("Overwrite?"),
@@ -181,8 +177,7 @@ void JAlbumWindow::slotNewAlbum()
             return;
         }
     }
-
-    if (!JAlbum::createDir(newAlbumPath))
+    else if (!newAlbumDir.mkpath(newAlbumDir.path() + QString::fromLatin1("/") + d->albumName->text()))
     {
         QMessageBox::information(this,
                 i18n("Create dir Failed"),
@@ -190,11 +185,13 @@ void JAlbumWindow::slotNewAlbum()
         qCDebug(KIPIPLUGINS_LOG) << "Failed to create album directory";
         return;
     }
+    else
+    {
+        newAlbumDir.cd(d->albumName->text());
+    }
 
-    destFile   = newAlbumPath + QDir::separator() + QString::fromLatin1("albumfiles.txt");
-    FILE* file = fopen(destFile.toLocal8Bit().data(), "w");
-
-    if (!file)
+    QFile createFile(newAlbumDir.filePath(QString::fromLatin1("albumfiles.txt")));
+    if (!createFile.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         QMessageBox::information(this,
                 i18n("Writing Failed"),
@@ -203,17 +200,16 @@ void JAlbumWindow::slotNewAlbum()
         return;
     }
 
+    QTextStream out(&createFile);
     for (QList<QUrl>::ConstIterator it = urls.constBegin(); it != urls.constEnd(); ++it)
     {
-        fprintf(file, "%s\t%s\n", (*it).fileName().toLocal8Bit().data(), (*it).path().toLocal8Bit().data() );
+        out << (*it).fileName().toLocal8Bit().data() << "\t" << (*it).path().toLocal8Bit().data() << "\n";
     }
 
-    fclose(file);
+    createFile.close();
 
-    destFile = newAlbumPath + QDir::separator() + QString::fromLatin1("jalbum-settings.jap");
-    file     = fopen(destFile.toLocal8Bit().data(), "w");
-
-    if (!file)
+    QFile settingsFile(newAlbumDir.filePath(QString::fromLatin1("jalbum-settings.jap")));
+    if (!settingsFile.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         QMessageBox::information(this,
                 i18n("Writing Failed"),
@@ -222,15 +218,16 @@ void JAlbumWindow::slotNewAlbum()
         return;
     }
 
-    fprintf(file, "#jAlbum Project\n");
+    QTextStream out2(&settingsFile);
+    out2 << "#jAlbum Project\n";
 
-    fclose(file);
+    settingsFile.close();
 
     QStringList args;
     args.append(QString::fromLatin1("-Xmx400M"));
     args.append(QString::fromLatin1("-jar"));
     args.append(d->jalbum->jarPath().path());
-    args.append(destFile);
+    args.append(QDir::toNativeSeparators(newAlbumDir.filePath(QString::fromLatin1("jalbum-settings.jap"))));
     QProcess::startDetached(QString::fromLatin1("java"), args);
     accept();
 }

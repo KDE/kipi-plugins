@@ -226,11 +226,16 @@ void JAlbumEdit::slotJarPathChanged(const QString& path)
 
 void JAlbumEdit::slotOk()
 {
-    struct stat stbuf;
+    QDir albumsDir = QDir(d->albumsPath.path());
 
-    if (::stat(QFile::encodeName(d->albumsPath.path()).data(), &stbuf) != 0)
+    if (!albumsDir.exists())
     {
-        if (QMessageBox::warning(this,
+        if (QFile::exists(d->albumsPath.path()))
+        {
+            QMessageBox::information(this, i18n("Not a directory"), i18n("Chosen path is not a directory"));
+            return;
+        }
+        else if (QMessageBox::warning(this,
                     i18n("Missing directory"),
                     i18n("Directory %1 does not exist, do you wish to create it?",
                         QDir::toNativeSeparators(d->albumsPath.path())),
@@ -240,19 +245,11 @@ void JAlbumEdit::slotOk()
             return;
         }
 
-        if (!JAlbum::createDir(d->albumsPath.path()))
+        if (!albumsDir.mkpath(d->albumsPath.path()))
         {
             QMessageBox::information(this,
                     i18n("Failed to create directory"),
                     i18n("Failed to create directory"));
-            return;
-        }
-    }
-    else
-    {
-        if (!S_ISDIR(stbuf.st_mode))
-        {
-            QMessageBox::information(this, i18n("Not a directory"), i18n("Chosen path is not a directory"));
             return;
         }
     }

@@ -47,8 +47,6 @@ public:
 
     void save();
 
-    static bool createDir(const QString& dirName);
-
 private:
 
     void load();
