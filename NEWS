@@ -9,4 +9,5 @@ BUGFIXES FROM BUGZILLA :
 
 001 ==> 374441 - Export original file to Flickr [patch].
 002 ==> 375729 - Broken google photos upload.
-003 ==> 
+003 ==> 375833 - Flickr export converts all images to JPEG.
+004 ==> 
