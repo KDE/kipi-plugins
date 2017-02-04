@@ -18,9 +18,6 @@ set(KIPIPLUGINS_MAJOR_VERSION "5")
 set(KIPIPLUGINS_MINOR_VERSION "5")
 set(KIPIPLUGINS_PATCH_VERSION "0")
 
-# kipi-plugins release date
-set(KIPIPLUGINS_RELEASE_DATE "2017-03-12")
-
 # Suffix to add at end of version string. Usual values are:
 # "-git"   : alpha code unstable from git. Do not use in production
 # "-beta1" : beta1 release.
@@ -233,10 +230,6 @@ if(KF5Kipi_FOUND)
         endif()
 
         add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
-
-        if(NOT WIN32)
-            configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/kipi-plugins.lsm.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipi-plugins.lsm)
-        endif()
 
         add_subdirectory(common)
         add_subdirectory(printimages)
