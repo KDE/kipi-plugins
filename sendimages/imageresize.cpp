@@ -181,6 +181,24 @@ bool Task::imageResize(const EmailSettings& settings, const QUrl& orgUrl,
 
         QString destPath = destName;
 
+        if (emailSettings.format() == QLatin1String("JPEG"))
+        {
+            if (!img.save(destPath, emailSettings.format().toLatin1().constData(), emailSettings.imageCompression))
+            {
+                err = i18n("Cannot save resized image (JPEG). Aborting.");
+                return false;
+            }
+        }
+        else if (emailSettings.format() == QLatin1String("PNG"))
+        {
+            if (!img.save(destPath, emailSettings.format().toLatin1().constData()))
+            {
+                err = i18n("Cannot save resized image (PNG). Aborting.");
+                return false;
+            }
+        }
+
+
         if (m_iface)
         {
             QPointer<MetadataProcessor> meta = m_iface->createMetadataProcessor();
@@ -190,34 +208,11 @@ bool Task::imageResize(const EmailSettings& settings, const QUrl& orgUrl,
                 meta->setImageProgramId(QLatin1String("Kipi-plugins"), QLatin1String(kipiplugins_version));
                 meta->setImageDimensions(img.size());
 
-                if (emailSettings.format() == QLatin1String("JPEG"))
-                {
-                    if ( !img.save(destPath, emailSettings.format().toLatin1().constData(), emailSettings.imageCompression) )
-                    {
-                        err = i18n("Cannot save resized image (JPEG). Aborting.");
-                        return false;
-                    }
-                    else
-                    {
-                        meta->save(QUrl::fromLocalFile(destPath), true);
-                    }
-                }
-                else if (emailSettings.format() == QLatin1String("PNG"))
-                {
-                    if ( !img.save(destPath, emailSettings.format().toLatin1().constData()) )
-                    {
-                        err = i18n("Cannot save resized image (PNG). Aborting.");
-                        return false;
-                    }
-                    else
-                    {
-                        meta->save(QUrl::fromLocalFile(destPath), true);
-                    }
-                }
-
-                return true;
+                meta->save(QUrl::fromLocalFile(destPath), true);
             }
         }
+
+        return true;
     }
 
     return false;
