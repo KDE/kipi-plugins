@@ -142,35 +142,35 @@ bool Task::imageResize(const EmailSettings& settings, const QUrl& orgUrl,
 
     int sizeFactor = emailSettings.size();
 
-    if ( !img.isNull() )
+    if (!img.isNull())
     {
         int w = img.width();
         int h = img.height();
 
-        if ( w > sizeFactor || h > sizeFactor )
+        if (w > sizeFactor || h > sizeFactor)
         {
-            if ( w > h )
+            if (w > h)
             {
-                h = (int)( (double)( h * sizeFactor ) / w );
+                h = (int)((double)(h * sizeFactor) / w);
 
-                if ( h == 0 ) h = 1;
+                if (h == 0) h = 1;
 
                 w = sizeFactor;
-                Q_ASSERT( h <= sizeFactor );
+                Q_ASSERT(h <= sizeFactor);
             }
             else
             {
-                w = (int)( (double)( w * sizeFactor ) / h );
+                w = (int)((double)(w * sizeFactor) / h);
 
-                if ( w == 0 ) w = 1;
+                if (w == 0) w = 1;
 
                 h = sizeFactor;
-                Q_ASSERT( w <= sizeFactor );
+                Q_ASSERT(w <= sizeFactor);
             }
 
             const QImage scaledImg(img.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 
-            if ( scaledImg.width() != w || scaledImg.height() != h )
+            if (scaledImg.width() != w || scaledImg.height() != h)
             {
                 err = i18n("Cannot resize image. Aborting.");
                 return false;
@@ -179,11 +179,9 @@ bool Task::imageResize(const EmailSettings& settings, const QUrl& orgUrl,
             img = scaledImg;
         }
 
-        QString destPath = destName;
-
         if (emailSettings.format() == QLatin1String("JPEG"))
         {
-            if (!img.save(destPath, emailSettings.format().toLatin1().constData(), emailSettings.imageCompression))
+            if (!img.save(destName, emailSettings.format().toLatin1().constData(), emailSettings.imageCompression))
             {
                 err = i18n("Cannot save resized image (JPEG). Aborting.");
                 return false;
@@ -191,13 +189,12 @@ bool Task::imageResize(const EmailSettings& settings, const QUrl& orgUrl,
         }
         else if (emailSettings.format() == QLatin1String("PNG"))
         {
-            if (!img.save(destPath, emailSettings.format().toLatin1().constData()))
+            if (!img.save(destName, emailSettings.format().toLatin1().constData()))
             {
                 err = i18n("Cannot save resized image (PNG). Aborting.");
                 return false;
             }
         }
-
 
         if (m_iface)
         {
@@ -208,7 +205,7 @@ bool Task::imageResize(const EmailSettings& settings, const QUrl& orgUrl,
                 meta->setImageProgramId(QLatin1String("Kipi-plugins"), QLatin1String(kipiplugins_version));
                 meta->setImageDimensions(img.size());
 
-                meta->save(QUrl::fromLocalFile(destPath), true);
+                meta->save(QUrl::fromLocalFile(destName), true);
             }
         }
 
