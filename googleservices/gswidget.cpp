@@ -93,8 +93,10 @@ GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interfac
             m_LeafBox->hide();
             break;
         default:
+            getNewAlbmBtn()->hide();    // Google has removed this function in the current API V3.
             getUploadBox()->hide();
             getSizeBox()->hide();
+            m_LeafBox->hide();    // Google has removed this function in the current API V3.
             break;
     }
 }
