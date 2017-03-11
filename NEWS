@@ -11,4 +11,5 @@ BUGFIXES FROM BUGZILLA :
 002 ==> 375729 - Broken google photos upload.
 003 ==> 375833 - Flickr export converts all images to JPEG.
 004 ==> 376184 - Gwenview not able to resize pictures to send them per e-mail.
-005 ==> 
+005 ==> 374730 - Cannot upload to imgurl.
+006 ==> 
