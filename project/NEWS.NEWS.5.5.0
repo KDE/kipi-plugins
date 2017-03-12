@@ -1,0 +1,14 @@
+Kipi-plugins 5.5.0 - Release date: 2017/03/12
+------------------------------------------------------------------------
+
+NEW FEATURES:
+
+General : JAlbumExport plugin renamed as JAlbum and porting to Qt5.
+
+BUGFIXES FROM BUGZILLA :
+
+001 ==> 374441 - Export original file to Flickr [patch].
+002 ==> 375729 - Broken google photos upload.
+003 ==> 375833 - Flickr export converts all images to JPEG.
+004 ==> 376184 - Gwenview not able to resize pictures to send them per e-mail.
+005 ==> 374730 - Cannot upload to imgurl.
