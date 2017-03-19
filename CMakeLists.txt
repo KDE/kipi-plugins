@@ -229,6 +229,16 @@ if(KF5Kipi_FOUND)
             add_definitions(-D_AFX_SECURE_NO_WARNINGS)
         endif()
 
+        # Remove pedantic GCC flag which generate a lots of warnings on the console with qCDebug()
+        while(CMAKE_CXX_FLAGS MATCHES "-pedantic")
+            string(REPLACE "-pedantic" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+        endwhile()
+
+        # Remove Wsuggest-override GCC flag which generate a lots of compile warnings
+        while(CMAKE_CXX_FLAGS MATCHES "-Wsuggest-override")
+            string(REPLACE "-Wsuggest-override" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+        endwhile()
+
         add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
 
         add_subdirectory(common)
