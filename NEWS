@@ -7,4 +7,5 @@ NEW FEATURES:
 BUGFIXES FROM BUGZILLA :
 
 001 ==> 349270 - Missing direct .png image URL.
-002 ==> 
+002 ==> 377837 - Gwenview crashed while using print assistant plugin.
+003 ==> 

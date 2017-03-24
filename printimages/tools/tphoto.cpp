@@ -175,7 +175,7 @@ MetadataProcessor* TPhoto::metaIface()
     {
         m_meta = m_iface->createMetadataProcessor();
 
-        if (m_meta->load(filename))
+        if (!m_meta || !m_meta->load(filename))
         {
             qCDebug(KIPIPLUGINS_LOG) << "Cannot load metadata from file " << filename;
         }

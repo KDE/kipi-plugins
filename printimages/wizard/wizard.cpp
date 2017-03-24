@@ -901,7 +901,12 @@ QString Wizard::captionFormatter(TPhoto* const photo) const
 
     QFileInfo fi(photo->filename.toLocalFile());
     QString resolution;
-    QSize imageSize = photo->metaIface()->getImageDimensions();
+    QSize imageSize;
+
+    if (photo->metaIface())
+    {
+        imageSize = photo->metaIface()->getImageDimensions();
+    }
 
     if (imageSize.isValid())
     {
@@ -920,14 +925,25 @@ QString Wizard::captionFormatter(TPhoto* const photo) const
     // %l focal length
 
     KPImageInfo info(photo->filename);
+    format.replace(QString::fromUtf8("%r"), resolution);
     format.replace(QString::fromUtf8("%f"), fi.fileName());
     format.replace(QString::fromUtf8("%c"), info.description());
     format.replace(QString::fromUtf8("%d"), QLocale().toString(info.date(), QLocale::ShortFormat));
-    format.replace(QString::fromUtf8("%t"), photo->metaIface()->getExifTagString(QLatin1String("Exif.Photo.ExposureTime")));
-    format.replace(QString::fromUtf8("%i"), photo->metaIface()->getExifTagString(QLatin1String("Exif.Photo.ISOSpeedRatings")));
-    format.replace(QString::fromUtf8("%r"), resolution);
-    format.replace(QString::fromUtf8("%a"), photo->metaIface()->getExifTagString(QLatin1String("Exif.Photo.FNumber")));
-    format.replace(QString::fromUtf8("%l"), photo->metaIface()->getExifTagString(QLatin1String("Exif.Photo.FocalLength")));
+
+    if (photo->metaIface())
+    {
+        format.replace(QString::fromUtf8("%t"), photo->metaIface()->getExifTagString(QLatin1String("Exif.Photo.ExposureTime")));
+        format.replace(QString::fromUtf8("%i"), photo->metaIface()->getExifTagString(QLatin1String("Exif.Photo.ISOSpeedRatings")));
+        format.replace(QString::fromUtf8("%a"), photo->metaIface()->getExifTagString(QLatin1String("Exif.Photo.FNumber")));
+        format.replace(QString::fromUtf8("%l"), photo->metaIface()->getExifTagString(QLatin1String("Exif.Photo.FocalLength")));
+    }
+    else
+    {
+        format.replace(QString::fromUtf8("%t"), QLatin1String(""));
+        format.replace(QString::fromUtf8("%i"), QLatin1String(""));
+        format.replace(QString::fromUtf8("%a"), QLatin1String(""));
+        format.replace(QString::fromUtf8("%l"), QLatin1String(""));
+    }
 
     return format;
 }
@@ -1074,8 +1090,13 @@ bool Wizard::paintOnePage(QPainter& p, const QList<TPhoto*>& photos, const QList
             int captionW        = w - 2;
             double ratio        = photo->pCaptionInfo->m_caption_size * 0.01;
             int captionH        = (int)(qMin(w, h) * ratio);
-            int exifOrientation = photo->metaIface()->getImageOrientation();
+            int exifOrientation = MetadataProcessor::NORMAL;
             int orientatation   = photo->rotation;
+
+            if (photo->metaIface())
+            {
+                exifOrientation = photo->metaIface()->getImageOrientation();
+            }
 
             // ROT_90_HFLIP .. ROT_270
 
