@@ -22,6 +22,8 @@
 
 #include "jalbumwindow.h"
 
+// C ANSI includes
+
 #include <sys/stat.h>
 
 // Qt includes
@@ -59,6 +61,7 @@
 
 #include "jalbum.h"
 #include "jalbumconfig.h"
+#include "kputil.h"
 #include "kpimagedialog.h"
 #include "kpaboutdata.h"
 #include "kpimageinfo.h"
@@ -228,7 +231,10 @@ void JAlbumWindow::slotNewAlbum()
     args.append(QString::fromLatin1("-jar"));
     args.append(d->jalbum->jarPath().path());
     args.append(QDir::toNativeSeparators(newAlbumDir.filePath(QString::fromLatin1("jalbum-settings.jap"))));
-    QProcess::startDetached(QString::fromLatin1("java"), args);
+
+    QProcess process;
+    process.setProcessEnvironment(adjustedEnvironmentForAppImage());
+    process.startDetached(QString::fromLatin1("java"), args);
     accept();
 }
 

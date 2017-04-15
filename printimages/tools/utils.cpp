@@ -44,6 +44,10 @@ extern "C"
 
 #include <klocalizedstring.h>
 
+// Local includes
+
+#include "kputil.h"
+
 namespace KIPIPrintImagesPlugin
 {
 
@@ -57,6 +61,7 @@ int NINT(double n)
 bool launchExternalApp(const QString& program, const QStringList& args)
 {
     QProcess process;
+    process.setProcessEnvironment(KIPIPlugins::adjustedEnvironmentForAppImage());
     return process.startDetached(program, args);
 }
 

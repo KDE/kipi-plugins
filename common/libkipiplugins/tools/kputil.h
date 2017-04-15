@@ -36,6 +36,7 @@
 #include <QFileDialog>
 #include <QColor>
 #include <QPushButton>
+#include <QProcessEnvironment>
 
 // Local includes
 
@@ -191,11 +192,20 @@ class KIPIPLUGINS_EXPORT KPRandomGenerator
 {
 public:
 
-    KPRandomGenerator();
+    explicit KPRandomGenerator();
     ~KPRandomGenerator();
 
     static QString randomString(const int& length);
 };
+
+// ---------------------------------------------------------------------------------------
+
+/** If plugins run into AppImage, return a cleaned environnement for QProcess to execute a
+ *  program outside the bundle without broken run-time dependencies.
+ *  If plugins do not run as AppImage bundle, this method return a QProcessEnvironment instance
+ *  based on system environment.
+ */
+KIPIPLUGINS_EXPORT QProcessEnvironment adjustedEnvironmentForAppImage();
 
 } // namespace KIPIPlugins
 

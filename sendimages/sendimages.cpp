@@ -466,7 +466,10 @@ bool SendImages::invokeMailAgent()
                         args.append((*it).toLocalFile());
                     }
 
-                    if (!QProcess::startDetached(prog, args))
+                    QProcess process;
+                    process.setProcessEnvironment(adjustedEnvironmentForAppImage());
+
+                    if (!process.startDetached(prog, args))
                     {
                         invokeMailAgentError(prog, args);
                     }
@@ -514,7 +517,10 @@ bool SendImages::invokeMailAgent()
                         prog = QLatin1String("sylpheed-claws");
                     }
 
-                    if (!QProcess::startDetached(prog, args))
+                    QProcess process;
+                    process.setProcessEnvironment(adjustedEnvironmentForAppImage());
+
+                    if (!process.startDetached(prog, args))
                     {
                         invokeMailAgentError(prog, args);
                     }
@@ -549,7 +555,10 @@ bool SendImages::invokeMailAgent()
 
                     args.append(tmp);
 
-                    if (!QProcess::startDetached(prog, args))
+                    QProcess process;
+                    process.setProcessEnvironment(adjustedEnvironmentForAppImage());
+
+                    if (!process.startDetached(prog, args))
                     {
                         invokeMailAgentError(prog, args);
                     }
@@ -580,7 +589,10 @@ bool SendImages::invokeMailAgent()
                         args.append((*it).toLocalFile());
                     }
 
-                    if (!QProcess::startDetached(prog, args))
+                    QProcess process;
+                    process.setProcessEnvironment(adjustedEnvironmentForAppImage());
+
+                    if (!process.startDetached(prog, args))
                     {
                         invokeMailAgentError(prog, args);
                     }
@@ -633,7 +645,10 @@ bool SendImages::invokeMailAgent()
 
                     args.append(tmp);
 
-                    if (!QProcess::startDetached(prog, args))
+                    QProcess process;
+                    process.setProcessEnvironment(adjustedEnvironmentForAppImage());
+
+                    if (!process.startDetached(prog, args))
                     {
                         invokeMailAgentError(prog, args);
                     }
