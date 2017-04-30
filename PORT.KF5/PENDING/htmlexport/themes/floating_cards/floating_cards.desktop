@@ -117,7 +117,7 @@ Name[uk]=Jiří Boháč
 Name[x-test]=xxJiří Boháčxx
 Name[zh_CN]=Jiří Boháč
 Name[zh_TW]=Jiří Boháč
-Url=mailto:jbohac@jikos.cz
+Url=mailto:jiri@boha.cz
 
 [X-HTMLExport Preview]
 Name=Floating Cards
@@ -164,15 +164,15 @@ Url=preview.png
 Allow non-square thumbnails=true
 
 [X-HTMLExport Parameter keyboard_navigation]
-Name=Keyboard navigation
+Name=Keyboard & swipe navigation
 Name[bs]=Navigacija tastaturom
 Name[ca]=Navegació amb el teclat
 Name[ca@valencia]=Navegació amb el teclat
-Name[cs]=Ovládání pomocí klávesnice
+Name[cs]=Ovládání pomocí klávesnice a swipe gest
 Name[da]=Tastaturnavigation
 Name[de]=Tastatur-Navigation
 Name[el]=Πλοήγηση με πληκτρολόγιο
-Name[en_GB]=Keyboard navigation
+Name[en_GB]=Keyboard & swipe navigation
 Name[es]=Navegación mediante teclado
 Name[fr]=Navigation au clavier
 Name[gl]=Navegación co teclado

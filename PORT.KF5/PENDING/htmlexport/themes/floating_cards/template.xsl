@@ -17,6 +17,7 @@
 	<html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title><xsl:value-of select="title"/></title>
 		<link rel="stylesheet" type="text/css" href="../floating_cards/style.css"/>
 		<link rel="stylesheet" type="text/css" href="../thumb_size.css"/>
@@ -25,30 +26,8 @@
 	<xsl:if test="$keyboard_navigation = 1">
 	<script type="text/javascript" src="../floating_cards/image_nav.js"/>
 	</xsl:if>
-	<h1>
-		<xsl:value-of select="title"/>
-		(<xsl:value-of select="position()"/>/<xsl:value-of select="last()"/>):
-	</h1>
-	<h2>
-		<xsl:value-of select="description"/>
-	</h2>
-	
-	<!-- the image itself -->
-	<div class="image">
-	<xsl:choose>
-		<xsl:when test="original/@fileName != ''">
-			<a href="{original/@fileName}">
-			<img src="{full/@fileName}" width="{full/@width}" height="{full/@height}" alt=""/>
-			</a>
-		</xsl:when>
-		<xsl:otherwise>
-			<img src="{full/@fileName}" width="{full/@width}" height="{full/@height}" alt=""/>
-		</xsl:otherwise>
-	</xsl:choose>
-		<xsl:if test="$preload = 1">
-			<img class="preload" src="{following-sibling::image[position()=1]/full/@fileName}" alt=""/>
-		</xsl:if>
-	</div>
+    	
+	<div class="fix" id="fix">
 
 	<!-- navigation buttons at the top -->
 	<div class="nav right">
@@ -76,7 +55,30 @@
 			</xsl:otherwise>
 		</xsl:choose>
 	</div>
-			
+	
+	<!-- the image itself -->
+	<div class="image"><div>
+	<xsl:choose>
+		<xsl:when test="original/@fileName != ''">
+			<a href="{original/@fileName}">
+			<img src="{full/@fileName}" alt=""/>
+			</a>
+		</xsl:when>
+		<xsl:otherwise>
+			<img src="{full/@fileName}" alt=""/>
+		</xsl:otherwise>
+	</xsl:choose>
+	</div></div>
+
+	<h1>
+		(<xsl:value-of select="position()"/>/<xsl:value-of select="last()"/>)
+		<xsl:value-of select="title"/>
+	</h1>
+	<h2>
+		<xsl:value-of select="description"/>
+	</h2>
+	</div>
+	
 	<!-- back/forward selection controls -->
 	
 	<!-- the maximum expected window width to calculate the maximum number of thumbnails to display -->
@@ -123,6 +125,10 @@
 		</ul>
 		</div>
 	</xsl:if>
+		
+		<xsl:if test="$preload = 1">
+			<img class="preload" src="{following-sibling::image[position()=1]/full/@fileName}" alt=""/>
+		</xsl:if>
 
 	</body>
 	</html>
@@ -135,6 +141,7 @@
 	<html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title><xsl:value-of select="name"/></title>
 		<link rel="stylesheet" type="text/css" href="floating_cards/style.css"/>
 		<link rel="stylesheet" type="text/css" href="thumb_size.css"/>
@@ -150,11 +157,12 @@
 	</xsl:variable>
 	
 	<!-- header and navigation buttons -->
-	<h1><xsl:value-of select="name"/></h1>
 	<div class="nav left">
 		<a href="{$up}">
 		<img src="floating_cards/up.png" alt="&lt;&lt;&lt;"/></a>
 	</div>
+	
+	<h1><xsl:value-of select="name"/></h1>
 
 	<!-- list of image thumbnails -->
 	<ul>
@@ -195,6 +203,7 @@
 	<html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title><xsl:value-of select="$i18nCollectionList"/></title>
 		<link rel="stylesheet" type="text/css" href="floating_cards/style.css"/>
 		<link rel="stylesheet" type="text/css" href="thumb_size.css"/>
@@ -202,13 +211,13 @@
 	<body class="collectionlist">
 	
 	<!-- header and navigation buttons -->
-	<h1>
-		<xsl:value-of select="$i18nCollectionList"/>
-	</h1>
 	<div class="nav left">
 		<a href="../">
 		<img src="floating_cards/up.png" alt="&lt;&lt;&lt;"/></a>
 	</div>
+	<h1>
+		<xsl:value-of select="$i18nCollectionList"/>
+	</h1>
 	
 	<!-- list of collection thumbnails -->
 	<ul>
@@ -328,6 +337,10 @@ li {
 
 li a {
 	min-height: <xsl:value-of select="$max_thumb_height + 21"/>px;
+}
+
+div.select {
+	min-height: <xsl:value-of select="$max_thumb_height + 72"/>px;
 }
 	</exsl:document>
 
