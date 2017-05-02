@@ -165,6 +165,14 @@ Allow non-square thumbnails=true
 
 [X-HTMLExport Parameter keyboard_navigation]
 Name=Keyboard & swipe navigation
+Name[ca]=Navegació amb el teclat i lliscament
+Name[ca@valencia]=Navegació amb el teclat i lliscament
+Name[es]=Navegación mediante teclado y deslizamiento
+Name[nl]=Navigatie met het toetsenbord en met vegen
+Name[pt]=Navegação com o teclado & gestos
+Name[sv]=Tangentbords- och svepnavigering
+Name[uk]=Навігація за допомогою клавіатури і дотику
+Name[x-test]=xxKeyboard & swipe navigationxx
 Type=list
 Default=1
 Value_0=1
