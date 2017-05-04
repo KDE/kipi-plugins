@@ -1,5 +1,0 @@
-File=htmlexportconfig.kcfg
-ClassName=Config
-NameSpace=KIPIHTMLExport
-Singleton=false
-Mutators=true
