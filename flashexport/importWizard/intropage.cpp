@@ -112,6 +112,7 @@ IntroPage::IntroPage(KPWizardDialog* const dlg)
 
 IntroPage::~IntroPage()
 {
+    delete d;
 }
 
 void IntroPage::settings(SimpleViewerSettingsContainer* const settings)
