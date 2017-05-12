@@ -145,7 +145,6 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
 
     d->m_imgList->setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
     d->m_imgList->setAllowRAW(true);
-    d->m_imgList->loadImagesFromCurrentSelection();
     d->m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your %1 account.",d->m_pluginName));
 
     d->settingsScrollArea->setMinimumSize(400,500);

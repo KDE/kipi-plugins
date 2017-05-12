@@ -73,7 +73,6 @@ FlickrWidget::FlickrWidget(QWidget* const parent, KIPI::Interface* const iface, 
     int permColWidth       = hdrFont.width(i18nc("photo permissions", "Public"));
 
     m_imglst->setAllowRAW(true);
-    m_imglst->loadImagesFromCurrentSelection();
     m_imglst->listView()->setWhatsThis(i18n("This is the list of images to upload to your Flickr account."));
     m_imglst->listView()->setColumn(static_cast<KPImagesListView::ColumnType>(FlickrList::PUBLIC), i18nc("photo permissions", "Public"), true);
 

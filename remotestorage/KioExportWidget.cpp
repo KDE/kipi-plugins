@@ -71,7 +71,6 @@ KioExportWidget::KioExportWidget(QWidget* const parent)
     m_imageList->setAllowRAW(true);
     m_imageList->listView()->setWhatsThis(i18n("This is the list of images to upload "
                                                "to the specified target."));
-    m_imageList->loadImagesFromCurrentSelection();
 
     // layout dialog
     QVBoxLayout* const layout = new QVBoxLayout(this);

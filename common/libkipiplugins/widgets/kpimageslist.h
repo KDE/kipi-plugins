@@ -230,10 +230,6 @@ public:
      */
     void                loadImagesFromCurrentAlbum();
 
-    /** a function to check whether an image has been selected or not.
-     */
-    bool                checkSelection();
-
     int                 iconSize()  const;
 
     KPImagesListView*   listView()  const;
