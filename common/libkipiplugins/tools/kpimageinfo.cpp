@@ -124,6 +124,14 @@ QUrl KPImageInfo::url() const
     return d->url;
 }
 
+void KPImageInfo::setUrl(const QUrl& url)
+{
+    if( d->url != url ) {
+        d->url = url;
+        emit urlChanged(url);
+    }
+}
+
 void KPImageInfo::cloneData(const QUrl& destination)
 {
     if (d->hasValidData())
@@ -501,6 +509,11 @@ QString KPImageInfo::source() const
 bool KPImageInfo::hasSource() const
 {
     return d->hasAttribute(QLatin1String("source"));
+}
+
+Interface* KPImageInfo::interface() const
+{
+    return d->iface;
 }
 
 }  // namespace KIPIPlugins
