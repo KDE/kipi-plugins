@@ -32,6 +32,9 @@
 #include <QDateTime>
 #include <QUrl>
 
+// KIPI includes
+#include <KIPI/Interface>
+
 // Local includes
 
 #include "kipiplugins_export.h"
@@ -71,84 +74,84 @@ public:
      */
     void    setDescription(const QString& desc);
     QString description() const;
-    Q_INVOKABLE bool    hasDescription() const;
+    bool    hasDescription() const;
 
     /** Manage complete tags path of item.
      */
     void        setTagsPath(const QStringList& tp);
     QStringList tagsPath() const;
-    Q_INVOKABLE bool        hasTagsPath() const;
+    bool        hasTagsPath() const;
 
     /** Get keywords list (tag names) of item with KIPI host application.
      *  NOTE: if interface is null, keywords are managed through image metadata directly.
      */
     QStringList keywords() const;
-    Q_INVOKABLE bool        hasKeywords() const;
+    bool        hasKeywords() const;
 
     /** Manage rating (0-5 stars) of item.
      */
     void setRating(int r);
     int  rating() const;
-    Q_INVOKABLE bool hasRating() const;
+    bool hasRating() const;
 
     /** Manage color label of item (0-10 : none, red, orange, yellow, green, blue, magenta, gray, black, white)
      */
     void setColorLabel(int cl);
     int  colorLabel() const;
-    Q_INVOKABLE bool hasColorLabel() const;
+    bool hasColorLabel() const;
 
     /** Manage pick label of item (0-4 : none, rejected, pending, accepted)
      */
     void setPickLabel(int pl);
     int  pickLabel() const;
-    Q_INVOKABLE bool hasPickLabel() const;
+    bool hasPickLabel() const;
 
     /** Manage date of item.
      */
     void      setDate(const QDateTime& date);
     QDateTime date() const;
-    Q_INVOKABLE bool      hasDate() const;
+    bool      hasDate() const;
 
     /** In the case the application supports time ranges (like this image is from 1998-2000),
         this attribute will be true if the date is an exact specification, and thus not a range.
         If KIPI host do not support date range, thi smethod return always true.
     */
-    Q_INVOKABLE bool      isExactDate() const;
+    bool      isExactDate() const;
 
     /** Manage title of item.
      */
     void    setTitle(const QString& title);
     QString title() const;
-    Q_INVOKABLE bool    hasTitle() const;
+    bool    hasTitle() const;
 
     /** Manage item name.
      */
     void    setName(const QString& name);
     QString name() const;
-    Q_INVOKABLE bool    hasName() const;
+    bool    hasName() const;
 
     /** Manage item latitude geolocation information : double value in degrees (-90.0 >= lat <=90.0).
      */
     void   setLatitude(double lat);
     double latitude() const;
-    Q_INVOKABLE bool   hasLatitude() const;
+    bool   hasLatitude() const;
 
     /** Manage item longitude geolocation information : double value in degrees (-180.0 >= long <=180.0).
      */
     void   setLongitude(double lng);
     double longitude() const;
-    Q_INVOKABLE bool   hasLongitude() const;
-    Q_INVOKABLE bool   isValidLongtitude() const; // TODO: Implement?
+    bool   hasLongitude() const;
+    bool   isValidLongtitude() const; // TODO: Implement?
 
     /** Manage item altitude geolocation information : double value in meters.
      */
     void   setAltitude(double alt);
     double altitude() const;
-    Q_INVOKABLE bool   hasAltitude() const;
+    bool   hasAltitude() const;
 
     /** Return true if all geolocation attributes are available (latitude, longitude, and altitude).
      */
-    Q_INVOKABLE bool hasGeolocationInfo() const;
+    bool hasGeolocationInfo() const;
 
     /** Remove all geolocation attributes of item.
      */
@@ -158,47 +161,36 @@ public:
      */
     void setOrientation(int);
     int  orientation() const;
-    Q_INVOKABLE bool hasOrientation() const;
+    bool hasOrientation() const;
 
     /** Manage creators information of item.
      */
     void        setCreators(const QStringList& list);
     QStringList creators() const;
-    Q_INVOKABLE bool        hasCreators() const;
+    bool        hasCreators() const;
 
     /** Manage credit information of item.
      */
     void    setCredit(const QString& val);
     QString credit() const;
-    Q_INVOKABLE bool    hasCredit() const;
+    bool    hasCredit() const;
 
     /** Manage rights information of item.
      */
     void    setRights(const QString& val);
     QString rights() const;
-    Q_INVOKABLE bool    hasRights() const;
+    bool    hasRights() const;
 
     /** Manage source information of item.
      */
     void    setSource(const QString& val);
     QString source() const;
-    Q_INVOKABLE bool    hasSource() const;
-
-/** Qt Meta Type system declarations
-*/
-
-signals:
-    void urlChanged(const QUrl&);
-
-public:
-
-    Q_PROPERTY(QUrl url READ url WRITE setUrl NOTIFY urlChanged);
-    Q_PROPERTY(qlonglong fileSize READ fileSize CONSTANT)
+    bool    hasSource() const;
 
 protected:
     /** For descendants. For some purposes (usually optimization) descendant may require access to interface
      */
-    Interface* interface() const;
+    KIPI::Interface* interface() const;
 
 
 private:

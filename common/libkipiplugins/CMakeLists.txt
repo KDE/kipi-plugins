@@ -17,6 +17,10 @@ set(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kipiplugins_debug.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpversion.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpaboutdata.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpthreadmanager.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpquickimageinfo.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpquickimagecollection.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpquickinterface.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpquickinit.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpprogresswidget.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpsavesettingswidget.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpimageslist.cpp
@@ -77,6 +81,7 @@ target_link_libraries(KF5kipiplugins
                       PUBLIC
                       Qt5::Gui
                       Qt5::Network
+                      Qt5::Quick
 
                       PRIVATE
 

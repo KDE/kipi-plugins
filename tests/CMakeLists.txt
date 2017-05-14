@@ -9,3 +9,4 @@ if (POLICY CMP0063)
 endif (POLICY CMP0063)
 
 add_subdirectory(imageselector)
+add_subdirectory(qmlimageviewer)

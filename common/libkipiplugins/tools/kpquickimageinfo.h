@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef KPIMAGEINFO_H
-#define KPIMAGEINFO_H
+#ifndef KPQUICKIMAGEINFO_H
+#define KPQUICKIMAGEINFO_H
 
 // Qt includes
 
@@ -31,6 +31,7 @@
 #include <QStringList>
 #include <QDateTime>
 #include <QUrl>
+#include <QObject>
 
 // Local includes
 
@@ -43,8 +44,10 @@ namespace KIPIPlugins
 /** Extension for KPImageInfo. Provides signals and slots 
  * for using class in QML applications
  */
-class KIPIPLUGINS_EXPORT KPQuickImageInfo : public KPImageInfo
+// TODO: Finish wrapping other hasXXX methods in Q_INVOKABLE
+class KIPIPLUGINS_EXPORT KPQuickImageInfo : public QObject, public KPImageInfo
 {
+    Q_OBJECT
 
 public:
 
@@ -52,145 +55,95 @@ public:
      *  to fill item info from kipi host. If no interface is available, for ex when plugin is loaded as
      *  stand-alone application, some info are filled with image file metadata.
      */
-    KPQuickImageInfo(const QUrl& url);
+    KPQuickImageInfo(QObject* parent = 0);
+    KPQuickImageInfo(const QUrl& url, QObject* parent = 0);
     ~KPQuickImageInfo();
+    
+    void setUrl(const QUrl& url);
 
+    void setDescription(const QString& desc);
+    Q_INVOKABLE bool hasDescription() const { return KPImageInfo::hasDescription(); }
 
-    /** Manage description (lead comment) of item with KIPI host application.
-     *  NOTE: if interface is null, description is managed through image metadata directly.
-     */
-    void    setDescription(const QString& desc);
-    QString description() const;
-    bool    hasDescription() const;
+    void setTagsPath(const QStringList& tp);
 
-    /** Manage complete tags path of item.
-     */
-    void        setTagsPath(const QStringList& tp);
-    QStringList tagsPath() const;
-    bool        hasTagsPath() const;
-
-    /** Get keywords list (tag names) of item with KIPI host application.
-     *  NOTE: if interface is null, keywords are managed through image metadata directly.
-     */
-    QStringList keywords() const;
-    bool        hasKeywords() const;
-
-    /** Manage rating (0-5 stars) of item.
-     */
     void setRating(int r);
-    int  rating() const;
-    bool hasRating() const;
 
-    /** Manage color label of item (0-10 : none, red, orange, yellow, green, blue, magenta, gray, black, white)
-     */
     void setColorLabel(int cl);
-    int  colorLabel() const;
-    bool hasColorLabel() const;
 
-    /** Manage pick label of item (0-4 : none, rejected, pending, accepted)
-     */
     void setPickLabel(int pl);
-    int  pickLabel() const;
-    bool hasPickLabel() const;
 
-    /** Manage date of item.
-     */
-    void      setDate(const QDateTime& date);
-    QDateTime date() const;
-    bool      hasDate() const;
+    void setDate(const QDateTime& date);
 
-    /** In the case the application supports time ranges (like this image is from 1998-2000),
-        this attribute will be true if the date is an exact specification, and thus not a range.
-        If KIPI host do not support date range, thi smethod return always true.
-    */
-    bool      isExactDate() const;
+    bool isExactDate() const;
 
-    /** Manage title of item.
-     */
-    void    setTitle(const QString& title);
-    QString title() const;
-    bool    hasTitle() const;
+    void setTitle(const QString& title);
 
-    /** Manage item name.
-     */
-    void    setName(const QString& name);
-    QString name() const;
-    bool    hasName() const;
+    void setName(const QString& name);
 
-    /** Manage item latitude geolocation information : double value in degrees (-90.0 >= lat <=90.0).
-     */
-    void   setLatitude(double lat);
-    double latitude() const;
-    bool   hasLatitude() const;
+    void setLatitude(double lat);
 
-    /** Manage item longitude geolocation information : double value in degrees (-180.0 >= long <=180.0).
-     */
-    void   setLongitude(double lng);
-    double longitude() const;
-    bool   hasLongitude() const;
+    void setLongitude(double lng);
 
-    /** Manage item altitude geolocation information : double value in meters.
-     */
-    void   setAltitude(double alt);
-    double altitude() const;
-    bool   hasAltitude() const;
+    void setAltitude(double alt);
 
-    /** Return true if all geolocation attributes are available (latitude, longitude, and altitude).
-     */
-    bool hasGeolocationInfo() const;
-
-    /** Remove all geolocation attributes of item.
-     */
-    void removeGeolocationInfo();
-
-    /** Manage orientation of item. See libkipi library for details.
-     */
     void setOrientation(int);
-    int  orientation() const;
-    bool hasOrientation() const;
 
-    /** Manage creators information of item.
-     */
-    void        setCreators(const QStringList& list);
-    QStringList creators() const;
-    bool        hasCreators() const;
+    void setCreators(const QStringList& list);
 
-    /** Manage credit information of item.
-     */
-    void    setCredit(const QString& val);
-    QString credit() const;
-    bool    hasCredit() const;
+    void setCredit(const QString& val);
 
-    /** Manage rights information of item.
-     */
-    void    setRights(const QString& val);
-    QString rights() const;
-    bool    hasRights() const;
+    void setRights(const QString& val);
 
-    /** Manage source information of item.
-     */
-    void    setSource(const QString& val);
-    QString source() const;
-    bool    hasSource() const;
+    void setSource(const QString& val);
 
     /** Qt Meta Type system declarations
      */
 
-signals:
+Q_SIGNALS:
     void urlChanged(const QUrl&);
+    void fileSizeChanged(qlonglong);
     void descriptionChanged(const QString&);
+    void tagsPathChanged(const QStringList&);
+    void keywordsChanged(const QStringList&);
+    void ratingChanged(int);
+    void colorLabelChanged(int);
+    void pickLabelChanged(int);
+    void dateChanged(const QDateTime&);
+    void nameChanged(const QString&);
+    void titleChanged(const QString&);
+    void latitudeChanged(double);
+    void longitudeChanged(double);
+    void altitudeChanged(double);
+    void orientationChanged(int);
+    void creatorsChanged(const QStringList&);
+    void creditChanged(const QString&);
     void rightsChanged(const QString&);
     void sourceChanged(const QString&);
 
 public:
-
     Q_PROPERTY(QUrl url READ url WRITE setUrl NOTIFY urlChanged);
-    Q_PROPERTY(qlonglong fileSize READ fileSize CONSTANT)    
+    Q_PROPERTY(qlonglong fileSize READ fileSize CONSTANT);
+    Q_PROPERTY(QString description READ description WRITE setDescription NOTIFY descriptionChanged);
+    Q_PROPERTY(QStringList tagsPath READ tagsPath WRITE setTagsPath NOTIFY tagsPathChanged);
+    Q_PROPERTY(QStringList keywords READ keywords CONSTANT);
+    Q_PROPERTY(int rating READ rating WRITE setRating NOTIFY ratingChanged);
+    Q_PROPERTY(int colorLabel READ colorLabel WRITE setColorLabel NOTIFY colorLabelChanged);
+    Q_PROPERTY(int pickLabel READ pickLabel WRITE setPickLabel NOTIFY pickLabelChanged);
+    Q_PROPERTY(QDateTime date READ date WRITE setDate NOTIFY dateChanged);
+    Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged);
+    Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged);
+    Q_PROPERTY(double latitude READ latitude WRITE setLatitude NOTIFY latitudeChanged);
+    Q_PROPERTY(double longitude READ longitude WRITE setLongitude NOTIFY longitudeChanged);
+    Q_PROPERTY(double altitude READ altitude WRITE setAltitude NOTIFY altitudeChanged);
+    Q_PROPERTY(int orientation READ orientation WRITE setOrientation NOTIFY orientationChanged);
+    Q_PROPERTY(QStringList creators READ creators WRITE setCreators NOTIFY creatorsChanged);
+    Q_PROPERTY(QString credit READ credit WRITE setCredit NOTIFY creditChanged);
+    Q_PROPERTY(QString rights READ rights WRITE setRights NOTIFY rightsChanged);
+    Q_PROPERTY(QString source READ source WRITE setSource NOTIFY sourceChanged);
 
-private:
 
-    class Private;
-    Private* const d;
+private Q_SLOTS:
+    void onUrlChanged(const QUrl& newUrl);
 };
 
 } // namespace KIPIPlugins

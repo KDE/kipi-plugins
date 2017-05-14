@@ -126,10 +126,7 @@ QUrl KPImageInfo::url() const
 
 void KPImageInfo::setUrl(const QUrl& url)
 {
-    if( d->url != url ) {
-        d->url = url;
-        emit urlChanged(url);
-    }
+    d->url = url;
 }
 
 void KPImageInfo::cloneData(const QUrl& destination)
