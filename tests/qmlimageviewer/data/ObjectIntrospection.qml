@@ -5,7 +5,6 @@ Rectangle {
 	property var target : null
     border.width: 2
     border.color: "black"
-	height: childrenRect.height
 
 	GridLayout {
 		id: grid
