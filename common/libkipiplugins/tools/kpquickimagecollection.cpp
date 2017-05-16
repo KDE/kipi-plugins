@@ -45,7 +45,7 @@ namespace KIPIPlugins
 {
 
 KPQuickImageCollection::KPQuickImageCollection(const ImageCollection& collection, QObject* parent) :
-    QObject(parent), m_collection(collection)
+    QObject(parent), ImageCollection(collection)
 {
 }
 

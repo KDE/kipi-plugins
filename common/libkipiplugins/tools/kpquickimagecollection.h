@@ -47,7 +47,7 @@ namespace KIPIPlugins
  * for using class in QML applications
  */
 
-class KIPIPLUGINS_EXPORT KPQuickImageCollection : public QObject 
+class KIPIPLUGINS_EXPORT KPQuickImageCollection : public QObject, public KIPI::ImageCollection
 {
     Q_OBJECT
 
@@ -55,12 +55,17 @@ public:
     KPQuickImageCollection( const KIPI::ImageCollection& collection, QObject* parent = 0 );
     virtual ~KPQuickImageCollection() {}
 
-    QList<QUrl> images() const { return m_collection.images(); }
-
     Q_PROPERTY( QList<QUrl> images READ images CONSTANT );
+    Q_PROPERTY( QString comment READ comment CONSTANT);
+    Q_PROPERTY( QString category READ category CONSTANT);
+    Q_PROPERTY( QDate date READ date CONSTANT);
+    Q_PROPERTY( QUrl url READ url CONSTANT);
+    Q_PROPERTY( QUrl uploadUrl READ uploadUrl CONSTANT);
+    Q_PROPERTY( QUrl uploadRootUrl READ uploadRootUrl CONSTANT);
+    Q_PROPERTY( bool isDirectory READ isDirectory CONSTANT);
+    Q_PROPERTY( QString uploadRootName READ uploadRootName CONSTANT);
+    Q_PROPERTY( bool isValid READ isValid CONSTANT);
 
-private:
-    KIPI::ImageCollection m_collection;
 };
 
 }
