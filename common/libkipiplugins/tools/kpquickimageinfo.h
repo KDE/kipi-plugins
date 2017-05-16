@@ -96,10 +96,13 @@ public:
 
     void setSource(const QString& val);
 
-    /** Qt Meta Type system declarations
-     */
+public:
+	QUrl thumbnailUrl() const { return m_thumbnailUrl; }
+	QUrl previewUrl() const { return m_previewUrl; }
 
 Q_SIGNALS:
+    /** Qt Meta Type system declarations
+     */
     void urlChanged(const QUrl&);
     void fileSizeChanged(qlonglong);
     void descriptionChanged(const QString&);
@@ -122,6 +125,8 @@ Q_SIGNALS:
 
 public:
     Q_PROPERTY(QUrl url READ url WRITE setUrl NOTIFY urlChanged);
+    Q_PROPERTY(QUrl thumbnailUrl READ thumbnailUrl NOTIFY urlChanged);
+    Q_PROPERTY(QUrl previewUrl READ previewUrl NOTIFY urlChanged);
     Q_PROPERTY(qlonglong fileSize READ fileSize CONSTANT);
     Q_PROPERTY(QString description READ description WRITE setDescription NOTIFY descriptionChanged);
     Q_PROPERTY(QStringList tagsPath READ tagsPath WRITE setTagsPath NOTIFY tagsPathChanged);
@@ -144,6 +149,12 @@ public:
 
 private Q_SLOTS:
     void onUrlChanged(const QUrl& newUrl);
+
+private:
+	QUrl m_thumbnailUrl;
+	QUrl m_previewUrl;
+
+	void updateDependentData();
 };
 
 } // namespace KIPIPlugins

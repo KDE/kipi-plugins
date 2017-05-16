@@ -68,10 +68,27 @@ KPQuickImageInfo::KPQuickImageInfo(const QUrl& url, QObject* parent):
     QObject(parent), KPImageInfo(url)
 {
     connect( this, &KPQuickImageInfo::urlChanged, this, &KPQuickImageInfo::onUrlChanged );
+	updateDependentData();
 }
 
 KPQuickImageInfo::~KPQuickImageInfo()
 {
+}
+
+void KPQuickImageInfo::updateDependentData()
+{
+	m_thumbnailUrl = createThumbnailUrl(m_url);
+	m_previewUrl = createPreviewUrl(m_url);
+}
+
+void KPQuickImageInfo::setUrl( QUrl newValue )
+{
+    QUrl oldValue = KPImageInfo::url();
+	KPImageInfo::setUrl(newValue);
+    if( oldValue != newValue ) {
+		updateDependentData();
+        emit urlChanged(newValue);
+    }
 }
 
 KP_QUICK_SETTER_WRAPPER(const QUrl&, setUrl, url, urlChanged)

@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2012-02-06
- * Description : help wrapper around libkipi ImageInfo to manage easily
+ * Description : help wrapper around libkipi ImageCollection to manage easily
  *               item properties with KIPI host application.
  *
  * Copyright (C) 2017 by Artem Serebriyskiy <v.for.vandal@gmail.com>
