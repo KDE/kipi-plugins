@@ -49,4 +49,11 @@ KPQuickImageCollection::KPQuickImageCollection(const ImageCollection& collection
 {
 }
 
+KPQuickImageCollection::operator QString() const
+{
+    QString result;
+    QTextStream(&result) << "KIPI::ImageCollection at " << static_cast<const void*>(this);
+    return result;
+}
+
 }

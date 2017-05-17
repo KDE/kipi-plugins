@@ -21,6 +21,7 @@ set(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kipiplugins_debug.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpquickimagecollection.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpquickinterface.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpquickinit.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpquickglobal.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpprogresswidget.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpsavesettingswidget.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpimageslist.cpp

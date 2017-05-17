@@ -38,6 +38,7 @@
 // Local includes
 
 #include "kipiplugins_debug.h"
+#include "kpquickglobal.h"
 
 #define KP_QUICK_FQN( ns_or_class, member ) ns_or_class::member
 
@@ -77,11 +78,11 @@ KPQuickImageInfo::~KPQuickImageInfo()
 
 void KPQuickImageInfo::updateDependentData()
 {
-	m_thumbnailUrl = createThumbnailUrl(m_url);
-	m_previewUrl = createPreviewUrl(m_url);
+	m_thumbnailUrl = createThumbnailUrl(url());
+	m_previewUrl = createPreviewUrl(url());
 }
 
-void KPQuickImageInfo::setUrl( QUrl newValue )
+void KPQuickImageInfo::setUrl( const QUrl& newValue )
 {
     QUrl oldValue = KPImageInfo::url();
 	KPImageInfo::setUrl(newValue);
@@ -91,7 +92,6 @@ void KPQuickImageInfo::setUrl( QUrl newValue )
     }
 }
 
-KP_QUICK_SETTER_WRAPPER(const QUrl&, setUrl, url, urlChanged)
 KP_QUICK_SETTER_WRAPPER(const QString&, setDescription, description, descriptionChanged)
 KP_QUICK_SETTER_WRAPPER(const QStringList&, setTagsPath, tagsPath, tagsPathChanged)
 KP_QUICK_SETTER_WRAPPER(int, setRating, rating, ratingChanged)

@@ -36,47 +36,51 @@
 #include "kipiplugins_export.h"
 #include "kpimageinfo.h"
 
-using namespace KIPIPlugins
-using namespace KIPI
+using namespace KIPI;
 
+namespace KIPIPlugins {
+
+QString ThumbnailsImageProvider( QStringLiteral("KIPIThumbnail"));
+QString PreviewImageProvider( QStringLiteral("KIPIPreview"));
 
 // Encodes KIPI-provided url into Base64. To use with image custom image provider
 QString encodeUrl( const QUrl& url)
 {
-	QByteArray plainUrl = url.toEncoded();
-	QByteArray encodedUrl = plainUrl.toBase64();
-	return QString(encodedUrl);
+    QByteArray plainUrl = url.toEncoded();
+    QByteArray encodedUrl = plainUrl.toBase64();
+    return QString(encodedUrl);
 }
 
 QUrl decodeUrl(const QString& encodedUrl)
 {
-	// id is base64-encoded KIPI-provided url
-	QByteArray urlEncodedArray = encodedUrl.toUtf8();
-	QByteArray urlDecoded = QByteArray::fromBase64(urlEncoded);
-	QString urlString = QString(urlDecoded);
-	QUrl url = QUrl(urlString);
+    // id is base64-encoded KIPI-provided url
+    QByteArray urlEncodedArray = encodedUrl.toUtf8();
+    QByteArray urlDecoded = QByteArray::fromBase64(urlEncodedArray);
+    QString urlString = QString(urlDecoded);
+    QUrl url = QUrl(urlString);
+    return url;
 }
 
-static QUrl createProviderUrl( const QUrl& url, const QStringLiteral& provider )
+static QUrl createProviderUrl( const QUrl& url, const QString& provider )
 {
-	QString data = encodeUrl(url);
-	QUrl result;
-	result.setScheme("image");
+    QString data = encodeUrl(url);
+    QUrl result;
+    result.setScheme("image");
 
-	QString path = ThumbnailsImageProvider + '/' + data;
-	result.setPath(path);
+    QString path = provider + '/' + data;
+    result.setPath(path);
 
-	return result;
+    return result;
 }
 
 QUrl createThumbnailUrl(const QUrl& url)
 {
-	return createProviderUrl(url, ThumbnailsImageProvider);
+    return createProviderUrl(url, ThumbnailsImageProvider);
 }
 
 QUrl createPreviewUrl(const QUrl& url)
 {
-	return createProviderUrl(url, PreviewImageProvider);
+    return createProviderUrl(url, PreviewImageProvider);
 }
 
 }

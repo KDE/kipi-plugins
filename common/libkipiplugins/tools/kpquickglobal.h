@@ -40,18 +40,21 @@
 namespace KIPIPlugins
 {
 
-	// Type of request for special image provider
-	enum RequestType {
-		RequestThumbnail = 0,
-		RequestPreview = 0
-	}
+    // Type of request for special image provider
+    enum RequestType {
+            RequestThumbnail = 0,
+            RequestPreview = 0
+    };
 
-	QStringLiteral ThumbnailsImageProvider("KIPIThumbnail");
-	QStringLiteral PreviewImageProvider("KIPIPreview");
+    extern QString ThumbnailsImageProvider;
+    extern QString PreviewImageProvider;
 
-	// Encodes KIPI-provided url into Base64. To use with image custom image provider
-	QString encodeUrl( const QUrl& url);
-	QUrl decodeUrl(const QString& encodedUrl);
+    // Encodes KIPI-provided url into Base64. To use with image custom image provider
+    QString encodeUrl( const QUrl& url);
+    QUrl decodeUrl(const QString& encodedUrl);
 
-	QUrl createThumbnailUrl(const QUrl& url);
+    QUrl createThumbnailUrl(const QUrl& url);
+    QUrl createPreviewUrl(const QUrl& url);
 }
+
+#endif

@@ -84,4 +84,10 @@ void KPQuickInterface::onCurrentSelectionChanged(bool)
     emit currentSelectionChanged(m_currentSelection);
 }
 
+KPQuickInterface::operator QString() const
+{
+    QString result;
+    QTextStream(&result) << "KIPI::Interface at " << static_cast<const void*>(this);
+    return result;
+}
 }

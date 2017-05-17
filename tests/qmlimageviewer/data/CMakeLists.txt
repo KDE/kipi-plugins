@@ -6,4 +6,5 @@
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
 install(FILES main.qml       DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_qmlimageviewer)
+install(FILES ObjectIntrospection.qml       DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_qmlimageviewer)
 

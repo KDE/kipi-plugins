@@ -55,7 +55,10 @@ public:
     KPQuickImageCollection( const KIPI::ImageCollection& collection, QObject* parent = 0 );
     virtual ~KPQuickImageCollection() {}
 
+    operator QString() const;
+
     Q_PROPERTY( QList<QUrl> images READ images CONSTANT );
+    Q_PROPERTY( QString name READ name CONSTANT );
     Q_PROPERTY( QString comment READ comment CONSTANT);
     Q_PROPERTY( QString category READ category CONSTANT);
     Q_PROPERTY( QDate date READ date CONSTANT);
@@ -65,7 +68,6 @@ public:
     Q_PROPERTY( bool isDirectory READ isDirectory CONSTANT);
     Q_PROPERTY( QString uploadRootName READ uploadRootName CONSTANT);
     Q_PROPERTY( bool isValid READ isValid CONSTANT);
-
 };
 
 }

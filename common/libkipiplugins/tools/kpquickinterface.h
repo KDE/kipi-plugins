@@ -63,6 +63,8 @@ public:
     const KPQuickImageCollection* currentSelection() const { return m_currentSelection; }
     KPQuickImageCollection* currentSelection() { return m_currentSelection; }
 
+    operator QString() const;
+
 Q_SIGNALS:
     void currentAlbumChanged(KPQuickImageCollection*);
     void currentSelectionChanged(KPQuickImageCollection*);
