@@ -39,16 +39,14 @@
 #include "kipiplugins_debug.h"
 
 using namespace KIPI;
-
-namespace KIPIPlugins
-{
+using namespace KIPIPlugins;
 
 KPQuickAsyncImageProvider::KPQuickAsyncImageProvider( KIPI::Interface* interface,
 	RequestType requestType) :
     QQuickAsyncImageProvider(), m_interface(interface), m_requestType(requestType)
 {
 	if( interface == 0 ) {
-		qCCritical(KIPI_LOGS) << "Interface can't be null"
+		qCCritical(KIPIPLUGINS_LOG) << "Interface can't be null";
 		return;
 	}
 }
@@ -57,8 +55,9 @@ QQuickImageResponse* KPQuickAsyncImageProvider::requestImageResponse(const QStri
 {
 	QUrl url = decodeUrl(id);
 
-	return new KPQuickImageRequestResponse(m_interface, url, m_requestType, qMax(requestedSize.width(), requestedSize.height()));
-}
+	return new KPQuickImageRequestResponse(m_interface, url,
+                qMax(requestedSize.width(), requestedSize.height()),
+                m_requestType);
 }
 
 

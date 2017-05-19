@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "kpquickimagecollection.h"
+#include "kpquickimagerequestresponse.h"
 
 // Qt includes
 
@@ -39,57 +39,57 @@
 #include "kipiplugins_debug.h"
 
 using namespace KIPI;
-
-namespace KIPIPlugins
-{
+using namespace KIPIPlugins;
 
 KPQuickImageRequestResponse::KPQuickImageRequestResponse( KIPI::Interface* interface,
 	const QUrl& url,
-	RequestType requestType,
 	int size,
-	QObject* parent );
-    QQuickImageResponse(parent), m_url(url)
+	RequestType requestType ):
+    QQuickImageResponse(), m_url(url)
 {
-	if( interface == 0 ) {
-		return;
-	}
-	
-	switch( requestType ) {
-		case RequestThumbnail:
-			connect( interface, &Interface::gotThumbnail, this, &onGotThumbnail);
-			interface->thumbnail(url, size);
-			break;
-		case RequestPreview:
-			connect( interface, &Interface::gotPreview, this, &onGotPreview);
-			interface->preview(url, size);
-			break;
-	}
+    if( interface == 0 ) {
+            return;
+    }
+    
+    qCDebug(KIPIPLUGINS_LOG) << "Request for image: " << url << " size: " << size;
+    switch( requestType ) {
+        case RequestThumbnail:
+            connect( interface, &Interface::gotThumbnail, this, &KPQuickImageRequestResponse::onGotThumbnail);
+            interface->thumbnail(url, size);
+            break;
+        case RequestPreview:
+            connect( interface, &Interface::gotPreview, this, &KPQuickImageRequestResponse::onGotPreview);
+            interface->preview(url, size);
+            break;
+    }
 }
 
 void KPQuickImageRequestResponse::onGotThumbnail(const QUrl& url, const QPixmap& pixmap)
 {
-	if( url != m_url ) {
-		return;
-	}
+    qCDebug(KIPIPLUGINS_LOG) << "Got thumbnail for " << url << " size: " << pixmap.size();
+    if( url != m_url ) {
+            return;
+    }
 
-	m_resultImage = pixmap.toImage();
-	emit finished();
+    m_resultImage = pixmap.toImage();
+    emit finished();
 }
 
 void KPQuickImageRequestResponse::onGotPreview(const QUrl& url, const QImage& image)
 {
-	if( url != m_url ) {
-		return;
-	}
+    qCDebug(KIPIPLUGINS_LOG) << "Got preview for " << url << " size: " << image.size();
+    if( url != m_url ) {
+            return;
+    }
 
-	m_resultImage = image;
-	emit finished();
+    m_resultImage = image;
+    emit finished();
 }
 
 void KPQuickImageRequestResponse::cancel()
 {
-	m_url = QUrl();
-	emit finished();
+    m_url = QUrl();
+    emit finished();
 }
 
 QQuickTextureFactory* KPQuickImageRequestResponse::textureFactory() const

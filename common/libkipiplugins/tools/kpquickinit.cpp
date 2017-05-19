@@ -39,6 +39,8 @@
 #include "kpquickimageinfo.h"
 #include "kpquickimagecollection.h"
 #include "kpquickinterface.h"
+#include "kpquickglobal.h"
+#include "kpquickasyncimageprovider.h"
 
 using namespace KIPI;
 
@@ -58,6 +60,12 @@ void InitKIPIQuick()
     qmlRegisterUncreatableType<KPQuickInterface>(kipi_qml_namespace, kipi_qml_version_major,
         kipi_qml_version_minor, "Interface", QLatin1String("Plugin can't create Interface. It is provided by host") );
 
+}
+
+void InitKIPIQmlEngine(QQmlEngine& engine, KIPI::Interface* interface)
+{
+    engine.addImageProvider( ThumbnailsImageProvider, new KPQuickAsyncImageProvider( interface, RequestThumbnail) );
+    engine.addImageProvider( PreviewsImageProvider, new KPQuickAsyncImageProvider( interface, RequestThumbnail) );
 }
 
 }

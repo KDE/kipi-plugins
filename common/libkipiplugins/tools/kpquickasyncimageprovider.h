@@ -35,7 +35,8 @@
 // Local includes
 
 #include "kipiplugins_export.h"
-#include "kipiquickimagerequestresponse.h"
+#include "kpquickimagerequestresponse.h"
+#include "kpquickglobal.h"
 
 namespace KIPIPlugins
 {
@@ -45,19 +46,17 @@ namespace KIPIPlugins
 
 class KIPIPLUGINS_EXPORT KPQuickAsyncImageProvider : public QQuickAsyncImageProvider
 {
-    Q_OBJECT
-
 public:
 
     KPQuickAsyncImageProvider( KIPI::Interface* interface,
-		KPQuickImageRequestResponse::RequestType request );
+		RequestType request );
     virtual ~KPQuickAsyncImageProvider() {}
 
-	virtual QQuickImageResponse* requestImageResponse(const QString& id, const QSize& requestedSize);
+    virtual QQuickImageResponse* requestImageResponse(const QString& id, const QSize& requestedSize);
 
 private:
 	KIPI::Interface* m_interface;
-	KPQuickImageRequestResponse::RequestType m_requestType;
+	RequestType m_requestType;
 
 };
 

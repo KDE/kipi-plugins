@@ -26,21 +26,22 @@
 
 // Qt includes
 
-#include <QList>
-#include <QString>
-#include <QStringList>
-#include <QDateTime>
-#include <QUrl>
+#include <QQmlEngine>
+
+// Libkipi includes
+#include <KIPI/Interface>
 
 // Local includes
 
 #include "kipiplugins_export.h"
+
 
 namespace KIPIPlugins
 {
     /** Registers all QtQuick wrappers form kipiplugins
      */
     void KIPIPLUGINS_EXPORT InitKIPIQuick();
+    void KIPIPLUGINS_EXPORT InitKIPIQmlEngine(QQmlEngine& engine, KIPI::Interface* interface);
 
 }
 

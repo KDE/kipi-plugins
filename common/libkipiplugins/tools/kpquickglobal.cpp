@@ -34,6 +34,7 @@
 // Local includes
 
 #include "kipiplugins_export.h"
+#include "kipiplugins_debug.h"
 #include "kpimageinfo.h"
 
 using namespace KIPI;
@@ -41,7 +42,7 @@ using namespace KIPI;
 namespace KIPIPlugins {
 
 QString ThumbnailsImageProvider( QStringLiteral("KIPIThumbnail"));
-QString PreviewImageProvider( QStringLiteral("KIPIPreview"));
+QString PreviewsImageProvider( QStringLiteral("KIPIPreview"));
 
 // Encodes KIPI-provided url into Base64. To use with image custom image provider
 QString encodeUrl( const QUrl& url)
@@ -67,8 +68,8 @@ static QUrl createProviderUrl( const QUrl& url, const QString& provider )
     QUrl result;
     result.setScheme("image");
 
-    QString path = provider + '/' + data;
-    result.setPath(path);
+    result.setHost(provider);
+    result.setPath('/' + data);
 
     return result;
 }
@@ -80,7 +81,7 @@ QUrl createThumbnailUrl(const QUrl& url)
 
 QUrl createPreviewUrl(const QUrl& url)
 {
-    return createProviderUrl(url, PreviewImageProvider);
+    return createProviderUrl(url, PreviewsImageProvider);
 }
 
 }

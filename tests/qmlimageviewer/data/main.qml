@@ -80,17 +80,11 @@ Window {
             }
         }
         Tab {
-            title: "Image list"
-            Rectangle {
-                width: 200
-                height: 100
-                color: "red"
-
-                Text {
-                    anchors.centerIn: parent
-                    text: "Hello, World!"
-                }
-            }
+            title: "Current Album"
+            ImageCollectionView {
+                imageCollection : KIPIInterface.currentAlbum
+                anchors.fill: parent
+            }            
         }
     }
 }

@@ -47,6 +47,7 @@
 // Local includes
 
 #include "kpquickinterface.h"
+#include "kpquickinit.h"
 #include "kipiplugins_debug.h"
 
 using namespace KIPIPlugins;
@@ -87,6 +88,7 @@ KPQmlImageViewer::KPQmlImageViewer(KPAboutData* const about, KIPI::Interface* if
     if (m_iface != 0 && !qmlUi.isEmpty()) {
         m_qmlAppEngine = new QQmlApplicationEngine(this);
         QPointer<KPQuickInterface> qmlKPInterface( new KPQuickInterface(m_iface));
+        InitKIPIQmlEngine(*m_qmlAppEngine, m_iface);
         m_qmlAppEngine->rootContext()->setContextProperty(QStringLiteral("KIPIInterface"), qmlKPInterface);
 
         // Searching for qml file

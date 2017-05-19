@@ -43,11 +43,11 @@ namespace KIPIPlugins
     // Type of request for special image provider
     enum RequestType {
             RequestThumbnail = 0,
-            RequestPreview = 0
+            RequestPreview
     };
 
     extern QString ThumbnailsImageProvider;
-    extern QString PreviewImageProvider;
+    extern QString PreviewsImageProvider;
 
     // Encodes KIPI-provided url into Base64. To use with image custom image provider
     QString encodeUrl( const QUrl& url);

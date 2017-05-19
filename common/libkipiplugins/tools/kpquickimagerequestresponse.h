@@ -25,7 +25,7 @@
 
 // Qt includes
 
-#include <QQuickImageRequestResponse>
+#include <QQuickImageResponse>
 #include <QUrl>
 #include <QObject>
 
@@ -35,6 +35,7 @@
 // Local includes
 
 #include "kipiplugins_export.h"
+#include "kpquickglobal.h"
 
 namespace KIPIPlugins
 {
@@ -42,25 +43,28 @@ namespace KIPIPlugins
 /** Request/response class for thumbnails/previes via KIPI interface
  */
 
-class KIPIPLUGINS_EXPORT KPQuickImageRequestResponse : public QQuickImageRequestResponse
+class KIPIPLUGINS_EXPORT KPQuickImageRequestResponse : public QQuickImageResponse
 {
     Q_OBJECT
 
 public:
 
     KPQuickImageRequestResponse( KIPI::Interface* interface, const QUrl& url, int size,
-		RequestType request = RequestThumbnail, QObject* parent = 0 );
+		RequestType request = RequestThumbnail );
     virtual ~KPQuickImageRequestResponse() {}
 
-	virtual QQuickTextureFactory* textureFactory() const;
+    virtual QQuickTextureFactory* textureFactory() const;
+
+public Q_SLOTS:
+    void cancel();
 
 private Q_SLOTS:
-	void onGotThumbnail(const QUrl& url, const QPixmap& pixmap);
-	void onGotPreview(const QUrl& url, const QImage& image);
+    void onGotThumbnail(const QUrl& url, const QPixmap& pixmap);
+    void onGotPreview(const QUrl& url, const QImage& image);
 
 private:
-	QUrl m_url;
-	QImage m_resultImage;
+    QUrl m_url;
+    QImage m_resultImage;
 
 };
 
