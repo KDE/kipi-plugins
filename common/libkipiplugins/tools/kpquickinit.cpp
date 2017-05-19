@@ -38,6 +38,7 @@
 #include "kipiplugins_debug.h"
 #include "kpquickimageinfo.h"
 #include "kpquickimagecollection.h"
+#include "kpimagecollectionmodel.h"
 #include "kpquickinterface.h"
 #include "kpquickglobal.h"
 #include "kpquickasyncimageprovider.h"
@@ -55,6 +56,8 @@ void InitKIPIQuick()
 {
     qmlRegisterType<KPQuickImageInfo>(kipi_qml_namespace, kipi_qml_version_major,
         kipi_qml_version_minor, "ImageInfo" );
+    qmlRegisterType<KPImageCollectionModel>(kipi_qml_namespace, kipi_qml_version_major,
+        kipi_qml_version_minor, "ImageCollectionModel" );
     qmlRegisterUncreatableType<KPQuickImageCollection>(kipi_qml_namespace, kipi_qml_version_major,
         kipi_qml_version_minor, "ImageCollection", QLatin1String("Plugin should never create ImageCollection. Only host can do that") );
     qmlRegisterUncreatableType<KPQuickInterface>(kipi_qml_namespace, kipi_qml_version_major,
