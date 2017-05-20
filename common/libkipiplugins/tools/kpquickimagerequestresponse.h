@@ -49,7 +49,7 @@ class KIPIPLUGINS_EXPORT KPQuickImageRequestResponse : public QQuickImageRespons
 
 public:
 
-    KPQuickImageRequestResponse( KIPI::Interface* interface, const QUrl& url, int size,
+    KPQuickImageRequestResponse( KIPI::Interface* interface, const QUrl& url, const QSize& size,
 		RequestType request = RequestThumbnail );
     virtual ~KPQuickImageRequestResponse() {}
 
@@ -63,9 +63,11 @@ private Q_SLOTS:
     void onGotPreview(const QUrl& url, const QImage& image);
 
 private:
+    QSize m_size;
     QUrl m_url;
     QImage m_resultImage;
 
+    QImage scaleImage(const QImage& image);
 };
 
 }

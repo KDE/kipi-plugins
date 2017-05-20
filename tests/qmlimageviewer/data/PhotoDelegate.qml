@@ -20,6 +20,7 @@ Rectangle {
         y: 0
         height: parent.height
         width: implicitWidth
+        asynchronous : true
         fillMode: Image.PreserveAspectFit
         sourceSize.height : parent.height
         source: {

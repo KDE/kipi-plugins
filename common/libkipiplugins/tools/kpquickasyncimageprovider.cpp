@@ -56,7 +56,7 @@ QQuickImageResponse* KPQuickAsyncImageProvider::requestImageResponse(const QStri
 	QUrl url = decodeUrl(id);
 
 	return new KPQuickImageRequestResponse(m_interface, url,
-                qMax(requestedSize.width(), requestedSize.height()),
+                requestedSize,
                 m_requestType);
 }
 

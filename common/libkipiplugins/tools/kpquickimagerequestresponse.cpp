@@ -43,47 +43,71 @@ using namespace KIPIPlugins;
 
 KPQuickImageRequestResponse::KPQuickImageRequestResponse( KIPI::Interface* interface,
 	const QUrl& url,
-	int size,
+	const QSize& size,
 	RequestType requestType ):
-    QQuickImageResponse(), m_url(url)
+    QQuickImageResponse(), m_size(size), m_url(url)
 {
     if( interface == 0 ) {
             return;
+    }
+
+    int boundSize = 0;
+
+    // if any m_size width or height is 0, then make it equal to other parameters
+    if(m_size.width() == 0 ) {
+        boundSize = m_size.height();
+    } else if(m_size.height() == 0) {
+        boundSize = m_size.width();
+    } else {
+        boundSize = qMax(m_size.width(), m_size.height());
     }
     
     qCDebug(KIPIPLUGINS_LOG) << "Request for image: " << url << " size: " << size;
     switch( requestType ) {
         case RequestThumbnail:
             connect( interface, &Interface::gotThumbnail, this, &KPQuickImageRequestResponse::onGotThumbnail);
-            interface->thumbnail(url, size);
+            interface->thumbnail(url, boundSize);
             break;
         case RequestPreview:
             connect( interface, &Interface::gotPreview, this, &KPQuickImageRequestResponse::onGotPreview);
-            interface->preview(url, size);
+            interface->preview(url, boundSize);
             break;
     }
 }
 
 void KPQuickImageRequestResponse::onGotThumbnail(const QUrl& url, const QPixmap& pixmap)
 {
-    qCDebug(KIPIPLUGINS_LOG) << "Got thumbnail for " << url << " size: " << pixmap.size();
+    qCDebug(KIPIPLUGINS_LOG) << "Got thumbnail for " <<
+        url << " size: " << pixmap.size() << " downscale to: " << m_size;
     if( url != m_url ) {
             return;
     }
 
-    m_resultImage = pixmap.toImage();
+    m_resultImage = scaleImage(pixmap.toImage());
     emit finished();
 }
 
 void KPQuickImageRequestResponse::onGotPreview(const QUrl& url, const QImage& image)
 {
-    qCDebug(KIPIPLUGINS_LOG) << "Got preview for " << url << " size: " << image.size();
+    qCDebug(KIPIPLUGINS_LOG) << "Got preview for " <<
+        url << " size: " << image.size() << " downscale to: " << m_size;
     if( url != m_url ) {
             return;
     }
 
-    m_resultImage = image;
+    m_resultImage = scaleImage(image);
     emit finished();
+}
+
+QImage KPQuickImageRequestResponse::scaleImage(const QImage& image)
+{
+    if(m_size.width() == 0 ) {
+        return image.scaledToHeight(m_size.height());
+    } else if(m_size.height() == 0) {
+        return image.scaledToWidth(m_size.width());
+    } else {
+        return image.scaled(m_size);
+    }
 }
 
 void KPQuickImageRequestResponse::cancel()
