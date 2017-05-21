@@ -27,20 +27,6 @@ Window {
         Tab {
             title: "Interface"
             id: introspectionTab
-/*
-            Grid {
-                anchors.fill : parent
-                columns : 2
-                spacing: 5
-
-                Text {
-                    text: "currentAlbum"
-                }
-                Text {
-                    text: KIPIInterface.currentAlbum.name
-                } 
-            }
-*/
             Flickable {
                 anchors.fill: parent
                 contentWidth: mainColumn.width
@@ -54,27 +40,18 @@ Window {
                         target: KIPIInterface
                         title: "KIPI Interface"
                         width: parent.width
-                        //anchors.top : parent.top
-                        //anchors.left: parent.left
-                        //anchors.right: parent.right
                     }
                     ObjectIntrospection {
                         id: currentAlbumIntrospection
                         target: KIPIInterface.currentAlbum
                         title: "Current Album Collection"
                         width: parent.width
-                        //anchors.top : parent.
-                        //anchors.left: parent.left
-                        //anchors.right: parent.right
                     }
                     ObjectIntrospection {
                         id: currentSelectionIntrospection
                         target: KIPIInterface.currentSelection
                         title: "Current Selection Collection"
                         width: parent.width
-                        //anchors.top : parent.
-                        //anchors.left: parent.left
-                        //anchors.right: parent.right
                     }
                 }
             }
@@ -83,6 +60,13 @@ Window {
             title: "Current Album"
             ImageCollectionView {
                 imageCollection : KIPIInterface.currentAlbum
+                anchors.fill: parent
+            }            
+        }
+        Tab {
+            title: "Current Selection"
+            ImageCollectionView {
+                imageCollection : KIPIInterface.currentSelection
                 anchors.fill: parent
             }            
         }

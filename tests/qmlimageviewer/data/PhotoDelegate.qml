@@ -19,27 +19,55 @@ Rectangle {
         x: 0
         y: 0
         height: parent.height
-        width: implicitWidth
+        width: 40 // We need to have non-zero width at all times, otherwise views overloads
         asynchronous : true
         fillMode: Image.PreserveAspectFit
         sourceSize.height : parent.height
+        sourceSize.width : 0
         source: {
-                if( root.ListView.view.modeThumbnail) {
-                    return imageInfo.thumbnailUrl;
-                } else if( root.ListView.view.modePreview) {
-                    return imageInfo.previewUrl;
-                } else if( root.ListView.view.modePhoto) {
-                    return imageInfo.url
+                if( root.ListView.view.mode === 0) {
+                    return model.thumbnailUrl;
+                } else if( root.ListView.view.mode === 1) {
+                    console.log("requesting preview", model.previewUrl);
+                    return model.previewUrl;
+                } else if( root.ListView.view.mode === 2) {
+                    return model.url
                 } else {
                     console.error("Please select photo display mode");
                 }
         }
+        states : [
+            State {
+                name: "unloaded"
+                when: image.status !== Image.Ready || image.implicitWidth === 0
+                PropertyChanges {
+                    target: image
+                    width: image.height
+                }
+            },
+            State {
+                name: "loaded"
+                when: image.status === Image.Ready && image.implicitWidth !== 0
+                PropertyChanges {
+                    target: image
+                    width: implicitWidth
+                }
+                /* TODO: REMOVE
+                StateChangeScript {
+                    name: "dbgScript"
+                    script : { console.log("Implicit width: ", image.implicitWidth);}
+                }*/
+            }
+        ]
     }
 
     MouseArea {
         anchors.fill: parent
-        onClicked: { console.log("source size: ", image.sourceSize, " width,height: ",
-                image.width, ",", image.height, " implicit: ", image.implicitWidth, ",",
-                image.implicitHeight ); mouse.accepted = false; }
+        onClicked: { console.log(
+                        "state: ", image.state,
+                        "source size: ", image.sourceSize, " width,height: ",
+                        image.width, ",", image.height, " implicit: ", image.implicitWidth, ",",
+                        image.implicitHeight );
+                        mouse.accepted = false; }
     }
 }

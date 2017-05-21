@@ -80,7 +80,7 @@ void KPQuickImageInfo::updateDependentData()
 {
     m_thumbnailUrl = createThumbnailUrl(url());
     m_previewUrl = createPreviewUrl(url());
-    qCDebug(KIPIPLUGINS_LOG) << "Thumbnail url: " << m_thumbnailUrl;
+    //qCDebug(KIPIPLUGINS_LOG) << "Thumbnail url: " << m_thumbnailUrl; // TODO: REMOVE
 }
 
 void KPQuickImageInfo::setUrl( const QUrl& newValue )

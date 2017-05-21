@@ -49,6 +49,23 @@ KPQuickImageCollection::KPQuickImageCollection(const ImageCollection& collection
 {
 }
 
+/*
+KPQuickImageCollection::KPQuickImageCollection(const KPQuickImageCollection& other) :
+    QObject(0), KIPI::ImageCollection(other)
+{
+}
+
+KPQuickImageCollection::KPQuickImageCollection( QObject* parent ) :
+    QObject(parent)
+{
+}
+
+KPQuickImageCollection& KPQuickImageCollection::operator=(const KPQuickImageCollection& other)
+{
+    static_cast<KPQuickImageCollection&>(*this) = other;
+    return *this;
+}*/ // TODO: REMOVE
+
 KPQuickImageCollection::operator QString() const
 {
     QString result;

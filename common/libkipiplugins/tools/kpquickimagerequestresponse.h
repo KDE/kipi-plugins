@@ -61,6 +61,7 @@ public Q_SLOTS:
 private Q_SLOTS:
     void onGotThumbnail(const QUrl& url, const QPixmap& pixmap);
     void onGotPreview(const QUrl& url, const QImage& image);
+    void handleNullRequest();
 
 private:
     QSize m_size;

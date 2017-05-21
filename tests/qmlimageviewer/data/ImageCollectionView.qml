@@ -8,20 +8,23 @@ Rectangle {
     border.width: 2
     border.color: "black"
 
-    ListModel {
+    ImageCollectionModel {
         id: imagesModel
+        imageCollection : imageCollectionView.imageCollection
     }
 
+/*
     onImageCollectionChanged : {
         imagesModel.clear();
         if( imageCollection !== null && imageCollection !== undefined ) {
-            for( var i = 0; i < 10/*imageCollection.images.length*/; i++ ) {
+            for( var i = 0; i < Math.min(10, imageCollection.images.length); i++ ) {
                 console.log(i)
                 var u = imageCollection.images[i];
                 imagesModel.append( { "url" : u } );
             }
         }
     }
+*/
 
 
 /*
@@ -34,7 +37,7 @@ Rectangle {
     ColumnLayout {
         anchors.fill : parent
         ListView {
-            property bool modeThumbnail : true
+            property int mode : 0
             id: thumbnailsView
             orientation : ListView.Horizontal
             delegate: PhotoDelegate {}
@@ -44,7 +47,7 @@ Rectangle {
         }
         ListView {
             id: previewView
-            property bool modePreview : true
+            property int mode : 1
             orientation : ListView.Horizontal
             Layout.preferredWidth : imageCollectionView.width
             Layout.preferredHeight : imageCollectionView.height / 3
@@ -52,7 +55,7 @@ Rectangle {
             model : imagesModel
         }
         ListView {
-            property bool modePhoto : true
+            property int mode : 2
             orientation : ListView.Horizontal
             Layout.preferredWidth : imageCollectionView.width
             Layout.preferredHeight : imageCollectionView.height / 3

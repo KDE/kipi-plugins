@@ -26,6 +26,7 @@
 
 #include <QMap>
 #include <QVariant>
+#include <QTimer>
 
 // Libkipi includes
 
@@ -51,6 +52,12 @@ KPQuickImageRequestResponse::KPQuickImageRequestResponse( KIPI::Interface* inter
             return;
     }
 
+    if(m_size.isNull()) {
+        // No point in calling interface for empty thumbnail
+        QTimer::singleShot(0, this, &KPQuickImageRequestResponse::handleNullRequest);
+        return;
+    }
+
     int boundSize = 0;
 
     // if any m_size width or height is 0, then make it equal to other parameters
@@ -61,24 +68,31 @@ KPQuickImageRequestResponse::KPQuickImageRequestResponse( KIPI::Interface* inter
     } else {
         boundSize = qMax(m_size.width(), m_size.height());
     }
-    
-    qCDebug(KIPIPLUGINS_LOG) << "Request for image: " << url << " size: " << size;
+
+    qCDebug(KIPIPLUGINS_LOG) << "Request for " <<
+        (requestType == RequestThumbnail?"thumbnail":"preview")  << url << " size: " << size << " boundSize:" << boundSize;
+
     switch( requestType ) {
+        case RequestPreview:
         case RequestThumbnail:
             connect( interface, &Interface::gotThumbnail, this, &KPQuickImageRequestResponse::onGotThumbnail);
             interface->thumbnail(url, boundSize);
             break;
-        case RequestPreview:
+        //case RequestPreview:
+            // TODO: Crushes digikam. Blocking for now
+            /*
             connect( interface, &Interface::gotPreview, this, &KPQuickImageRequestResponse::onGotPreview);
             interface->preview(url, boundSize);
+            */
             break;
     }
 }
 
 void KPQuickImageRequestResponse::onGotThumbnail(const QUrl& url, const QPixmap& pixmap)
 {
+    /*
     qCDebug(KIPIPLUGINS_LOG) << "Got thumbnail for " <<
-        url << " size: " << pixmap.size() << " downscale to: " << m_size;
+        url << " size: " << pixmap.size() << " downscale to: " << m_size;*/ // TODO: REMOVE
     if( url != m_url ) {
             return;
     }
@@ -116,7 +130,13 @@ void KPQuickImageRequestResponse::cancel()
     emit finished();
 }
 
+// When no call to interface was made, but we need to emit 'finished' signal
+void KPQuickImageRequestResponse::handleNullRequest()
+{
+    emit finished();
+}
+
 QQuickTextureFactory* KPQuickImageRequestResponse::textureFactory() const
 {
-	return QQuickTextureFactory::textureFactoryForImage(m_resultImage);
+    return QQuickTextureFactory::textureFactoryForImage(m_resultImage);
 }

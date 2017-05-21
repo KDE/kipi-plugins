@@ -49,14 +49,14 @@ class KIPIPLUGINS_EXPORT KPQuickAsyncImageProvider : public QQuickAsyncImageProv
 public:
 
     KPQuickAsyncImageProvider( KIPI::Interface* interface,
-		RequestType request );
+        RequestType request );
     virtual ~KPQuickAsyncImageProvider() {}
 
     virtual QQuickImageResponse* requestImageResponse(const QString& id, const QSize& requestedSize);
 
 private:
-	KIPI::Interface* m_interface;
-	RequestType m_requestType;
+    KIPI::Interface* m_interface;
+    RequestType m_requestType;
 
 };
 

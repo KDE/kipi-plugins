@@ -68,7 +68,7 @@ void InitKIPIQuick()
 void InitKIPIQmlEngine(QQmlEngine& engine, KIPI::Interface* interface)
 {
     engine.addImageProvider( ThumbnailsImageProvider, new KPQuickAsyncImageProvider( interface, RequestThumbnail) );
-    engine.addImageProvider( PreviewsImageProvider, new KPQuickAsyncImageProvider( interface, RequestThumbnail) );
+    engine.addImageProvider( PreviewsImageProvider, new KPQuickAsyncImageProvider( interface, RequestPreview) );
 }
 
 }

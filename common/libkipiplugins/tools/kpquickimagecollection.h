@@ -53,6 +53,11 @@ class KIPIPLUGINS_EXPORT KPQuickImageCollection : public QObject, public KIPI::I
 
 public:
     KPQuickImageCollection( const KIPI::ImageCollection& collection, QObject* parent = 0 );
+    /*
+    KPQuickImageCollection(const KPQuickImageCollection& other);
+    KPQuickImageCollection( QObject* parent = 0 );
+    KPQuickImageCollection& operator=(const KPQuickImageCollection& other);
+    */ // TODO: REMOVE
     virtual ~KPQuickImageCollection() {}
 
     operator QString() const;

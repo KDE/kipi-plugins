@@ -31,74 +31,92 @@
 #include <QDateTime>
 #include <QUrl>
 #include <QObject>
-
 // Local includes
 
 #include "kipiplugins_export.h"
-#include "kpimageinfo.h"
+#include "kpimagecollectionmodel.h"
+#include "kpquickglobal.h"
+#include "kipiplugins_debug.h"
 
-using namespace KIPIPlugins
-using namespace KIPI
+using namespace KIPIPlugins;
+using namespace KIPI;
 
 KPImageCollectionModel::KPImageCollectionModel(QObject* parent) :
-	QAbstractListModel(parent)
+    QAbstractListModel(parent)
 {
 }
 
-KPImageCollectionModel( const KIPI::ImageCollection& collection, QObject* parent) :
-	QAbstractListModel(parent), m_collection(collection)
+KPImageCollectionModel::KPImageCollectionModel( KPQuickImageCollection* collection, QObject* parent) :
+    QAbstractListModel(parent), m_collection(collection)
 {
 }
 
-void KPImageCollectionModel::setImageCollection( const KIPI::ImageCollection& collection )
+void KPImageCollectionModel::setImageCollection( KPQuickImageCollection* collection )
 {
-	beginResetModel();
-	m_collection = collection;
-	endResetModel();
+    beginResetModel();
+    m_collection = collection;
+    if(m_collection != 0) {
+        m_images = m_collection->images();
+    }
+    endResetModel();
+    emit imageCollectionChanged(m_collection);
 }
 
 int KPImageCollectionModel::rowCount(const QModelIndex &parent) const
 {
-	if(parent.isValid()) {
-		return 0;
-	}
+    if(m_collection == 0 || !m_collection->isValid()) {
+        return 0;
+    }
+    if(parent.isValid()) {
+        return 0;
+    }
 
-	return m_collection.urls().size();
+    return m_images.size();
 }
 
 QVariant KPImageCollectionModel::data(const QModelIndex &index, int role) const
 {
-	if(!index.isValid()) {
-		return QVariant();
-	}
-	if(index.column() > 0) {
-		return QVariant();
-	}
-	if(index.row() < 0 || index.row() >= m_collection.urls().size()) {
-		return QVariant();
-	}
+    int pos = index.row();
 
-	const QUrl& url = m_collection.urls()[index.row()];
-	switch(role) {
-		case Qt::DisplayRole:
-		case UrlRole:
-			return url;
-		case ThumbnailUrlRole:
-			return createThumbnailUrl(url);
-		case PreviewUrlRole:
-			return createPreviewUrl(url);
-		default:
-			return QVariant();
-	}
+    if(!index.isValid()) {
+        return QVariant();
+    }
+    if(index.column() > 0) {
+        return QVariant();
+    }
+    if(m_collection == 0 || !m_collection->isValid()) {
+        return QVariant();
+    }
+    if(pos < 0 || pos >= m_images.size()) {
+        return QVariant();
+    }
 
-	return QVariant();
+
+    // qCDebug(KIPIPLUGINS_LOG) << "Requesting at: " << pos << " total count: " << m_collection->images().size(); // TODO: REMOVE
+    QUrl url = m_images.at(pos);
+    // qCDebug(KIPIPLUGINS_LOG) << "Model::data url: " << url; // TODO: REMOVE
+    switch(role) {
+        case Qt::DisplayRole:
+        case UrlRole:
+            return url;
+        case ThumbnailUrlRole:
+            return createThumbnailUrl(url);
+        case PreviewUrlRole:
+            return createPreviewUrl(url);
+        default:
+            return QVariant();
+    }
+
+    return QVariant();
 }
 
 QHash<int,QByteArray> KPImageCollectionModel::roleNames() const
 {
-	QHash<int, QByteArray> result = QAbstractItemModel::roleNames();
-	result[UrlRole] = "url";
-	result[ThumbnailUrlRole] = "thumbnailUrl";
-	result[PreviewUrlRole] = "previewUrl";
+    QHash<int, QByteArray> result = QAbstractItemModel::roleNames();
+    result[UrlRole] = "url";
+    result[ThumbnailUrlRole] = "thumbnailUrl";
+    result[PreviewUrlRole] = "previewUrl";
+
+    return result;
 }
 

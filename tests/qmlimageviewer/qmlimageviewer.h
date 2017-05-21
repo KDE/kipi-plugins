@@ -39,7 +39,6 @@
 
 using namespace KIPIPlugins;
 
-class QHBoxLayout; // TODO: Not needed
 class QQmlApplicationEngine;
 
 class KPQmlImageViewer : public QObject

@@ -26,18 +26,16 @@
 
 // Qt includes
 
-#include <QList>
-#include <QString>
-#include <QStringList>
-#include <QDateTime>
 #include <QUrl>
 #include <QObject>
+#include <QPointer>
+#include <QAbstractListModel>
 
 // KIPI includes
 #include <KIPI/ImageCollection>
 
 // Local includes
-
+#include "kpquickimagecollection.h"
 #include "kipiplugins_export.h"
 
 namespace KIPIPlugins
@@ -47,36 +45,37 @@ namespace KIPIPlugins
  * for using class in QML applications
  */
 
-class KIPIPLUGINS_EXPORT KPImageCollectionMOdel : public QAbstractListModel
+class KIPIPLUGINS_EXPORT KPImageCollectionModel : public QAbstractListModel
 {
     Q_OBJECT
 
 public:
-	enum ImageRoles {
-		UrlRole = Qt::UserRole + 1,
-		ThumbnailUrlRole,
-		PreviewUrlRole
-	}
+    enum ImageRoles {
+        UrlRole = Qt::UserRole + 1,
+        ThumbnailUrlRole,
+        PreviewUrlRole
+    };
 
     KPImageCollectionModel( QObject* parent = 0 );
-    KPImageCollectionModel( const KIPI::ImageCollection& collection, QObject* parent = 0 );
+    KPImageCollectionModel( KPQuickImageCollection* collection, QObject* parent = 0 );
     virtual ~KPImageCollectionModel() {}
 
-	void setImageCollection( const KIPI::ImageCollection& collection );
-	const KIPI::ImageCOllection& imageCollection() const { return m_collection; }
+    void setImageCollection(KPQuickImageCollection* collection);
+    KPQuickImageCollection* imageCollection() const { return m_collection; }
 
-	int rowCount(const QModelIndex &parent = QModelIndex()) const;
-	QVariant data(const QModelIndex &index, int role) const;
-	QHash<int,QByteArray> roleNames() const;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    QVariant data(const QModelIndex &index, int role) const;
+    QHash<int,QByteArray> roleNames() const;
 
 Q_SIGNALS:
-	void imageCollectionChanged(const KIPI::ImageCollection& )
+    void imageCollectionChanged(KPQuickImageCollection*);
+
 public:
-	Q_PROPERTY(KIPI::ImageCollection imageCollection READ imageCollection NOTIFY imageCollectionChanged);
+    Q_PROPERTY(KPQuickImageCollection* imageCollection READ imageCollection WRITE setImageCollection NOTIFY imageCollectionChanged);
 
 private:
-	KIPI::ImageCollection m_collection;
-
+    QPointer<KPQuickImageCollection> m_collection;
+    QList<QUrl> m_images;
 };
 
 }
