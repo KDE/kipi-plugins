@@ -32,6 +32,9 @@
 #include <QDateTime>
 #include <QUrl>
 
+// KIPI includes
+#include <KIPI/Interface>
+
 // Local includes
 
 #include "kipiplugins_export.h"
@@ -54,6 +57,7 @@ public:
     /** return item url.
      */
     QUrl url() const;
+    void setUrl(const QUrl& url);
 
     /** Clone all attributes from current KPImageInfo instance to item pointed by destination url.
      *  In other words, url of KPImageInfo instance is the source of attributes to clone on destination.
@@ -137,6 +141,7 @@ public:
     void   setLongitude(double lng);
     double longitude() const;
     bool   hasLongitude() const;
+    bool   isValidLongtitude() const; // TODO: Implement?
 
     /** Manage item altitude geolocation information : double value in meters.
      */
@@ -181,6 +186,12 @@ public:
     void    setSource(const QString& val);
     QString source() const;
     bool    hasSource() const;
+
+protected:
+    /** For descendants. For some purposes (usually optimization) descendant may require access to interface
+     */
+    KIPI::Interface* interface() const;
+
 
 private:
 

@@ -1,0 +1,17 @@
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<!-- NOTE: don't forget to increase version ID when this file is modified -->
+<gui version="2" name="kipiplugin_qmlimageviewerui" >
+
+    <MenuBar>
+
+        <Menu name="Tools"><text>&amp;Export</text>
+            <Action name="qmlimageviewer" group="kipi_tools_group" />
+        </Menu>
+
+    </MenuBar>
+
+    <ToolBar name="mainToolBar"><text>Main Toolbar</text>
+    </ToolBar>
+
+</gui>
+

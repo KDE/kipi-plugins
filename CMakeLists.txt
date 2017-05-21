@@ -92,6 +92,7 @@ find_package(Qt5 ${QT_MIN_VERSION} REQUIRED NO_MODULE COMPONENTS
              Svg
              Concurrent
              Network
+             Quick
 )
 
 if(BUILD_TESTING)
@@ -105,6 +106,7 @@ find_package(KF5 ${KF5_MIN_VERSION}
              WindowSystem
              XmlGui
              I18n
+             Service
 )
 
 find_package(KF5 ${KF5_MIN_VERSION}
@@ -242,20 +244,20 @@ if(KF5Kipi_FOUND)
         add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
 
         add_subdirectory(common)
-        add_subdirectory(printimages)
-        add_subdirectory(kmlexport)
-        add_subdirectory(sendimages)
-        add_subdirectory(flickr)
-        add_subdirectory(dropbox)
-        add_subdirectory(facebook)
-        add_subdirectory(imgur)
-        add_subdirectory(piwigo)
-        add_subdirectory(rajce)
-        add_subdirectory(smug)
-        add_subdirectory(imageshack)
-        add_subdirectory(yandexfotki)
-        add_subdirectory(googleservices)
-        add_subdirectory(jalbum)
+        #add_subdirectory(printimages)
+        #add_subdirectory(kmlexport)
+        #add_subdirectory(sendimages)
+        #add_subdirectory(flickr)
+        #add_subdirectory(dropbox)
+        #add_subdirectory(facebook)
+        #add_subdirectory(imgur)
+        #add_subdirectory(piwigo)
+        #add_subdirectory(rajce)
+        #add_subdirectory(smug)
+        #add_subdirectory(imageshack)
+        #add_subdirectory(yandexfotki)
+        #add_subdirectory(googleservices)
+        #add_subdirectory(jalbum)
 
         if(KF5Archive_FOUND)
             add_subdirectory(flashexport)
