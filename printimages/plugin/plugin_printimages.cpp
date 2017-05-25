@@ -86,9 +86,9 @@ void Plugin_PrintImages::setup(QWidget* const widget)
         return;
     }
 
-    ImageCollection selection = m_interface->currentSelection();
-    m_printImagesAction->setEnabled (selection.isValid() && !selection.images().isEmpty());
-    m_printAssistantAction->setEnabled(selection.isValid() && !selection.images().isEmpty());
+    //ImageCollection selection = m_interface->currentSelection();
+    //m_printImagesAction->setEnabled (selection.isValid() && !selection.images().isEmpty());
+    //m_printAssistantAction->setEnabled(selection.isValid() && !selection.images().isEmpty());
 
     connect(m_interface, SIGNAL(selectionChanged(bool)),
             m_printImagesAction, SLOT(setEnabled(bool)));

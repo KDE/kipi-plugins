@@ -100,8 +100,8 @@ void Plugin_SendImages::setup(QWidget* const widget)
         return;
     }
 
-    ImageCollection selection = iface->currentSelection();
-    d->action_sendimages->setEnabled(selection.isValid() && !selection.images().isEmpty() );
+    //ImageCollection selection = iface->currentSelection();
+    //d->action_sendimages->setEnabled(selection.isValid() && !selection.images().isEmpty() );
 
     connect(iface, SIGNAL(selectionChanged(bool)),
             d->action_sendimages, SLOT(setEnabled(bool)));
