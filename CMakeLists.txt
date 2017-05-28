@@ -44,7 +44,7 @@ set(KIPIPLUGINS_LIB_SO_VERSION_STRING
 set(CMAKE_MIN_VERSION    "3.0.0")
 set(ECM_MIN_VERSION      "1.5.0")
 set(KF5_MIN_VERSION      "5.1.0")
-set(QT_MIN_VERSION       "5.2.0")
+set(QT_MIN_VERSION       "5.6.0")
 set(KIPI_MIN_VERSION     "5.0.0")
 cmake_minimum_required(VERSION ${CMAKE_MIN_VERSION})
 
