@@ -144,6 +144,8 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
     QStringList labels;
     labels << i18n("Albums");
     albumView->setHeaderLabels(labels);
+    albumView->setSortingEnabled(true);
+    albumView->sortByColumn(0, Qt::AscendingOrder);
 
     // ---------------------------------------------------------------------------
 

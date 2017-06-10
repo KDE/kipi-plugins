@@ -8,4 +8,5 @@ BUGFIXES FROM BUGZILLA :
 
 001 ==> 349270 - Missing direct .png image URL.
 002 ==> 377837 - Gwenview crashed while using print assistant plugin.
-003 ==> 
+003 ==> 381026 - Plugin piwigo not sort albums.
+004 ==> 
