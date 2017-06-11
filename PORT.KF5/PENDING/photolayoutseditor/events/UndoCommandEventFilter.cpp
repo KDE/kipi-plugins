@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "UndoCommandEventFilter.moc"
+#include "UndoCommandEventFilter.h"
 #include "UndoCommandEvent.h"
 #include "ProgressEvent.h"
 #include "global.h"
@@ -31,7 +31,7 @@
 #include <QtGlobal>
 #include <QDebug>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 bool UndoCommandEventFilter::eventFilter(QObject * watched, QEvent * event)
 {

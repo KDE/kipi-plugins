@@ -31,7 +31,7 @@
 #include "SepiaPhotoEffect.h"
 #include "NegativePhotoEffect.h"
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 StandardEffectsFactory::StandardEffectsFactory(QObject* parent) :
     AbstractPhotoEffectFactory(parent)

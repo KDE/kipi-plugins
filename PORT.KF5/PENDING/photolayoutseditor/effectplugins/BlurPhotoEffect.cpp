@@ -23,12 +23,12 @@
  *
  * ============================================================ */
 
-#include "BlurPhotoEffect.moc"
+#include "BlurPhotoEffect.h"
 #include "StandardEffectsFactory.h"
 
 #include <klocalizedstring.h>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 BlurPhotoEffect::BlurPhotoEffect(StandardEffectsFactory * factory, QObject * parent) :
     AbstractPhotoEffectInterface(factory, parent),

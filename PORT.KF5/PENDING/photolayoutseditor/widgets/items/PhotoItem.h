@@ -26,11 +26,11 @@
 #ifndef PHOTOITEM_H
 #define PHOTOITEM_H
 
-#include <kurl.h>
+#include <QUrl>
 
 #include "AbstractPhoto.h"
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class PhotoItemPixmapChangeCommand;
     class PhotoItemUrlChangeCommand;
@@ -64,7 +64,7 @@ namespace KIPIPhotoLayoutsEditor
             void setImage(const QImage & image);
 
             /// Pixmap and pixmap's url
-            void setImageUrl(const KUrl & url);
+            void setImageUrl(const QUrl & url);
 
             /// Scales image to fit scenes rect
             void fitToRect(const QRect & rect);
@@ -129,9 +129,9 @@ namespace KIPIPhotoLayoutsEditor
             /// Reimplemented from AbstractPhoto
             void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0);
 
-        private slots:
+        private Q_SLOTS:
 
-            void imageLoaded(const KUrl & url, const QImage & image);
+            void imageLoaded(const QUrl & url, const QImage & image);
 
         private:
 
@@ -168,9 +168,9 @@ namespace KIPIPhotoLayoutsEditor
                 QImage m_image;
 
                 // Pixmap's url
-                void setFileUrl(const KUrl & url);
-                inline KUrl & fileUrl();
-                KUrl m_file_path;
+                void setFileUrl(const QUrl & url);
+                inline QUrl & fileUrl();
+                QUrl m_file_path;
 
                 QTransform m_brush_transform;
                 QTransform m_complete_path_transform;

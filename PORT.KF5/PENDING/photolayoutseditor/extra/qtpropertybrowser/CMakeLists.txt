@@ -1,11 +1,8 @@
 #
-# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+# Copyright (c) 2010-2017, Gilles Caulier, <caulier dot gilles at gmail dot com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
-
-include(${QT_USE_FILE})
-set(CMAKE_PACKAGE_QTGUI TRUE)
 
 set(qtpropertyeditor_SRCS
     src/qtpropertybrowser.cpp
@@ -18,10 +15,7 @@ set(qtpropertyeditor_SRCS
     src/qtpropertybrowserutils.cpp
    )
 
-include_directories(${CMAKE_CURRENT_BINARY_DIR}
-                    src
-                    ${QT_INCLUDE_DIR}
-                   )
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 qt5_generate_moc(src/qtpropertybrowser.h
                  ${CMAKE_CURRENT_BINARY_DIR}/moc_qtpropertybrowser.cpp
@@ -123,6 +117,3 @@ target_link_libraries(PropertyBrowser ${QT_LIBRARIES})
 add_definitions(${QT_DEFINITIONS})
 add_definitions(-DQT_DLL)
 add_definitions(-DQT_PLUGIN)
-
-# Do not install (yet), see https://bugs.kde.org/show_bug.cgi?id=319664
-# install(TARGETS PropertyBrowser ARCHIVE DESTINATION lib ${INSTALL_TARGETS_DEFAULT_ARGS})

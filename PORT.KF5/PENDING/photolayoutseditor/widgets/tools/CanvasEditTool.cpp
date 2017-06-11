@@ -33,7 +33,7 @@
   *
   */
 
-#include "CanvasEditTool.moc"
+#include "CanvasEditTool.h"
 
 #include <QFormLayout>
 #include <QGroupBox>
@@ -56,9 +56,9 @@
 #include "PatternsComboBox.h"
 #include "SceneBorder.h"
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
-class KIPIPhotoLayoutsEditor::CanvasEditToolPrivate
+class PhotoLayoutsEditor::CanvasEditToolPrivate
 {
     enum BackgroundType
     {
@@ -152,7 +152,7 @@ class KIPIPhotoLayoutsEditor::CanvasEditToolPrivate
 
     QWidget * background_image_widget;
     QFormLayout * backgroundImageFormLayout;
-//    KUrlRequester * background_image_file;
+//    QUrlRequester * background_image_file;
     QPixmap background_image_empty_pixmap;
     QPushButton * background_image_label;
     QComboBox * background_image_scalling;

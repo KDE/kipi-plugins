@@ -3,7 +3,7 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2011-09-01
+ * Date        : 2011-11-29
  * Description : a plugin to create photo layouts by fusion of several images.
  * Acknowledge : based on the expoblending plugin
  *
@@ -23,40 +23,38 @@
  *
  * ============================================================ */
 
-#include "SepiaPhotoEffect.moc"
+#include "NegativePhotoEffect.h"
 #include "StandardEffectsFactory.h"
 
-#include <klocalizedstring.h>
+using namespace PhotoLayoutsEditor;
 
-using namespace KIPIPhotoLayoutsEditor;
-
-SepiaPhotoEffect::SepiaPhotoEffect(StandardEffectsFactory * factory, QObject * parent) :
+NegativePhotoEffect::NegativePhotoEffect(StandardEffectsFactory * factory, QObject * parent) :
     AbstractPhotoEffectInterface(factory, parent)
 {
 }
 
-QImage SepiaPhotoEffect::apply(const QImage & image) const
+QImage NegativePhotoEffect::apply(const QImage & image) const
 {
-    if (!strength())
+    if (!this->strength())
         return image;
     QImage result = image;
     QPainter p(&result);
     p.setCompositionMode(QPainter::CompositionMode_SourceOver);
-    p.drawImage(0,0,AbstractPhotoEffectInterface::apply(sepia_converted(image)));
+    p.drawImage(0,0,AbstractPhotoEffectInterface::apply(negative(image)));
     return result;
 }
 
-QString SepiaPhotoEffect::name() const
+QString NegativePhotoEffect::name() const
 {
-    return i18n("Sepia effect");
+    return i18n("Negative effect");
 }
 
-QString SepiaPhotoEffect::toString() const
+QString NegativePhotoEffect::toString() const
 {
     return this->name();
 }
 
-SepiaPhotoEffect::operator QString() const
+NegativePhotoEffect::operator QString() const
 {
     return toString();
 }

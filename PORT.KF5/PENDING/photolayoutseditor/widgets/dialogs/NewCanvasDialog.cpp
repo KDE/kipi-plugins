@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "NewCanvasDialog.moc"
+#include "NewCanvasDialog.h"
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -38,7 +38,7 @@
 
 #include <klocalizedstring.h>
 #include <kstandarddirs.h>
-#include <kpushbutton.h>
+#include <QPushButton>
 #include <QIcon>
 
 #include "CanvasSizeWidget.h"
@@ -48,7 +48,7 @@
 
 #define PAPER_SIZE_ROLE 128
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 class NewCanvasDialog::Private
 {
@@ -127,8 +127,8 @@ class NewCanvasDialog::Private
     TemplatesView * templatesList;
     CanvasSizeWidget * canvasSize;
 
-    KPushButton * horizontalButton;
-    KPushButton * verticalButton;
+    QPushButton * horizontalButton;
+    QPushButton * verticalButton;
     QButtonGroup * orientationGroup;
 
     QList<QListWidgetItem *> paperSizes;
@@ -355,10 +355,10 @@ void NewCanvasDialog::setupUI()
     leftLayout->addWidget(d->paperSize);
 
     // Orientation buttons
-    d->horizontalButton = new KPushButton(QIcon::fromTheme(":horizontal_orientation.png"),"", main);
+    d->horizontalButton = new QPushButton(QIcon::fromTheme(":horizontal_orientation.png"),"", main);
     d->horizontalButton->setCheckable(true);
     d->horizontalButton->setIconSize(QSize(24,24));
-    d->verticalButton = new KPushButton(QIcon::fromTheme(":vertical_orientation.png"),"", main);
+    d->verticalButton = new QPushButton(QIcon::fromTheme(":vertical_orientation.png"),"", main);
     d->verticalButton->setCheckable(true);
     d->verticalButton->setIconSize(QSize(24,24));
     QHBoxLayout * hLayout = new QHBoxLayout();

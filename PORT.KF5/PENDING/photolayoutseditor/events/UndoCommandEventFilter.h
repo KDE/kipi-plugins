@@ -28,7 +28,7 @@
 
 #include <QObject>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class UndoCommandEventFilter : public QObject
     {

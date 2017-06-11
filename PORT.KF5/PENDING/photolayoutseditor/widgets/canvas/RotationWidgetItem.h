@@ -36,7 +36,7 @@
 
 #include "AbstractPhoto.h"
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class RotationWidgetItemPrivate;
     class RotateItemCommand;

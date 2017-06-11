@@ -29,9 +29,6 @@
 // Qt
 #include <QUndoStack>
 #include <QDebug>
-
-// KDE
-#include <kxmlguiwindow.h>
 #include <QUrl>
 
 // LibKIPI
@@ -40,7 +37,7 @@
 // Local
 #include "CanvasSize.h"
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class Canvas;
     class CanvasSizeChangeCommand;
@@ -60,7 +57,7 @@ namespace KIPIPhotoLayoutsEditor
             void endUndoCommandGroup();
             void setInterface(KIPI::Interface * interface);
             bool hasInterface() const;
-            void setItemsList(const QUrl::List & images);
+            void setItemsList(const QList<QUrl> & images);
             KIPI::Interface * interface() const;
 
         public Q_SLOTS:

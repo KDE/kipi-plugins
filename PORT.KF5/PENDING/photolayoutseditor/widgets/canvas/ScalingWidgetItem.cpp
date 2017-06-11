@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "ScalingWidgetItem.moc"
+#include "ScalingWidgetItem.h"
 #include "AbstractPhoto.h"
 #include "photolayoutseditor.h"
 #include "global.h"
@@ -39,9 +39,9 @@
 
 #include <klocalizedstring.h>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
-class KIPIPhotoLayoutsEditor::MoveItemCommand : public QUndoCommand
+class PhotoLayoutsEditor::MoveItemCommand : public QUndoCommand
 {
     AbstractPhoto * m_item;
     QPointF m_translation;
@@ -82,7 +82,7 @@ public:
     }
 };
 
-class KIPIPhotoLayoutsEditor::ScaleItemCommand : public MoveItemCommand
+class PhotoLayoutsEditor::ScaleItemCommand : public MoveItemCommand
 {
     AbstractPhoto * m_item;
     QTransform scale;
@@ -123,7 +123,7 @@ public:
     }
 };
 
-class KIPIPhotoLayoutsEditor::ScalingWidgetItemPrivate
+class PhotoLayoutsEditor::ScalingWidgetItemPrivate
 {
     enum
     {

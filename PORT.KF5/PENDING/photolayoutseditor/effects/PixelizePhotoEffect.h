@@ -30,7 +30,7 @@
 
 #include "PhotoEffectsLoader.h"
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 namespace KIPIPhotoFramesEditor
 {

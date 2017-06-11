@@ -31,9 +31,9 @@
 #include <QUndoCommand>
 #include <QStackedLayout>
 
-#include <kpushbutton.h>
+#include <QPushButton>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class Scene;
     class AbstractTool;
@@ -45,17 +45,17 @@ namespace KIPIPhotoLayoutsEditor
     {
             Q_OBJECT
 
-            KPushButton * m_tool_pointer;
-            KPushButton * m_tool_hand;
-            KPushButton * m_tool_zoom;
-            KPushButton * m_canvas_button;
-            KPushButton * m_effects_button;
-            KPushButton * m_text_button;
-            KPushButton * m_rotate_button;
-            KPushButton * m_scale_button;
-            KPushButton * m_crop_button;
-            KPushButton * m_tool_border;
-//            KPushButton * m_tool_colorize_button;
+            QPushButton * m_tool_pointer;
+            QPushButton * m_tool_hand;
+            QPushButton * m_tool_zoom;
+            QPushButton * m_canvas_button;
+            QPushButton * m_effects_button;
+            QPushButton * m_text_button;
+            QPushButton * m_rotate_button;
+            QPushButton * m_scale_button;
+            QPushButton * m_crop_button;
+            QPushButton * m_tool_border;
+//            QPushButton * m_tool_colorize_button;
 
 //            bool m_has_selection;
 
@@ -78,7 +78,7 @@ namespace KIPIPhotoLayoutsEditor
             ~ToolsDockWidget();
             void setDefaultTool();
 
-        signals:
+        Q_SIGNALS:
 
             void undoCommandCreated(QUndoCommand * command);
             void newItemCreated(AbstractPhoto * item);
@@ -113,7 +113,7 @@ namespace KIPIPhotoLayoutsEditor
             void borderToolSelectionChanged(bool);
             void borderToolSelected();
 
-        public slots:
+        public Q_SLOTS:
 
             void setScene(Scene * scene = 0);
             void itemSelected(AbstractPhoto * photo);

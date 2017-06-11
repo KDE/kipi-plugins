@@ -32,7 +32,7 @@
 
 #include "ProgressObserver.h"
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class Canvas;
     class CanvasSavingThread : public QThread, public ProgressObserver

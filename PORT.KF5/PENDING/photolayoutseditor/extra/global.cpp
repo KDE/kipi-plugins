@@ -32,27 +32,27 @@
 
 #include <QApplication>
 
-QString KIPIPhotoLayoutsEditor::name()
+QString PhotoLayoutsEditor::name()
 {
     return QString("ple");
 }
 
-QString KIPIPhotoLayoutsEditor::uri()
+QString PhotoLayoutsEditor::uri()
 {
     return QString("http://coder89.pl/ple");
 }
 
-QString KIPIPhotoLayoutsEditor::templateUri()
+QString PhotoLayoutsEditor::templateUri()
 {
     return QString("http://coder89.pl/ple/template");
 }
 
-void KIPIPhotoLayoutsEditor::PLE_PostUndoCommand(QUndoCommand * command)
+void PhotoLayoutsEditor::PLE_PostUndoCommand(QUndoCommand * command)
 {
     PhotoLayoutsEditor::instance()->addUndoCommand(command);
 }
 
-QDomDocument KIPIPhotoLayoutsEditor::pathToSvg(const QPainterPath & path)
+QDomDocument PhotoLayoutsEditor::pathToSvg(const QPainterPath & path)
 {
     QDomDocument document;
 
@@ -100,7 +100,7 @@ QDomDocument KIPIPhotoLayoutsEditor::pathToSvg(const QPainterPath & path)
     return document;
 }
 
-QPainterPath KIPIPhotoLayoutsEditor::pathFromSvg(const QDomElement & element)
+QPainterPath PhotoLayoutsEditor::pathFromSvg(const QDomElement & element)
 {
     QPainterPath result;
     if (element.tagName() != "path")

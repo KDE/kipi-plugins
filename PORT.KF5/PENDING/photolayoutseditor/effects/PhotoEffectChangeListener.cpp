@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "PhotoEffectChangeListener.moc"
+#include "PhotoEffectChangeListener.h"
 #include "PhotoEffectsGroup.h"
 #include "AbstractPhoto.h"
 #include "global.h"
@@ -33,9 +33,9 @@
 #include <QtDoublePropertyManager>
 #include <QtVariantPropertyManager>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
-class KIPIPhotoLayoutsEditor::PhotoEffectChangeCommand : public QUndoCommand
+class PhotoLayoutsEditor::PhotoEffectChangeCommand : public QUndoCommand
 {
         AbstractPhotoEffectInterface * effect;
         QString propertyName;

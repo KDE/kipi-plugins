@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "RotationWidgetItem.moc"
+#include "RotationWidgetItem.h"
 
 #include <limits>
 
@@ -34,9 +34,9 @@
 #include "photolayoutseditor.h"
 #include "global.h"
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
-class KIPIPhotoLayoutsEditor::RotateItemCommand : public QUndoCommand
+class PhotoLayoutsEditor::RotateItemCommand : public QUndoCommand
 {
     AbstractPhoto* item;
     QPointF        rotationPoint;
@@ -103,7 +103,7 @@ public:
     }
 };
 
-class KIPIPhotoLayoutsEditor::RotationWidgetItemPrivate
+class PhotoLayoutsEditor::RotationWidgetItemPrivate
 {
     RotationWidgetItemPrivate(RotationWidgetItem * item) :
         item(item),

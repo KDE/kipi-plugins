@@ -30,7 +30,7 @@
 
 #include <kstatusbar.h>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class PLEStatusBar : public KStatusBar
     {

@@ -29,9 +29,9 @@
 #include <QWidget>
 #include <QListView>
 
-#include <kpushbutton.h>
+#include <QPushButton>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class AbstractItemsListViewTool;
     class AbstractMovableModel;
@@ -42,7 +42,7 @@ namespace KIPIPhotoLayoutsEditor
 
         public:
 
-            KPushButton*               m_acceptButton;
+            QPushButton*               m_acceptButton;
             AbstractItemsListViewTool* m_parent;
             AbstractMovableModel*      m_model;
             QModelIndex                m_index;

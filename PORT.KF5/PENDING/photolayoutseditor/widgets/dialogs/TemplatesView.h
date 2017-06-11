@@ -27,7 +27,7 @@
 
 #include <QTableView>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class TemplatesView : public QAbstractItemView
     {

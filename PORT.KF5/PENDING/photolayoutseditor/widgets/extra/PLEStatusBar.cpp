@@ -27,7 +27,7 @@
 
 #include <QDebug>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 PLEStatusBar::PLEStatusBar(QWidget * parent) :
     KStatusBar(parent)

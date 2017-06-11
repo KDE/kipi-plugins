@@ -28,7 +28,7 @@
 
 #include <QDebug>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 SceneBackgroundLoader::SceneBackgroundLoader(SceneBackground * background, QDomElement & element, QObject * parent) :
     QThread(parent),

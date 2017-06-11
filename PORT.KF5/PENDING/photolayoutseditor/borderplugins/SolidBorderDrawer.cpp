@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "SolidBorderDrawer.moc"
+#include "SolidBorderDrawer.h"
 #include "StandardBordersFactory.h"
 
 #include <klocalizedstring.h>
@@ -33,7 +33,7 @@
 #include <QMetaProperty>
 #include <QDebug>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 QMap<const char *,QString> SolidBorderDrawer::m_properties;
 QMap<Qt::PenJoinStyle, QString> SolidBorderDrawer::m_corners_style_names;

@@ -32,7 +32,7 @@
 
 #include "AbstractPhotoItemLoader.h"
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class PhotoItem;
     class PhotoItemLoader : public AbstractPhotoItemLoader
@@ -47,7 +47,7 @@ namespace KIPIPhotoLayoutsEditor
 
             virtual void run();
 
-        protected slots:
+        protected Q_SLOTS:
 
             void imageLoaded(const QUrl & url, const QImage & image);
 

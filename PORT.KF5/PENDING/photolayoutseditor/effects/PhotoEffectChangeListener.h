@@ -31,7 +31,7 @@
 
 #include "AbstractPhotoEffectInterface.h"
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class PhotoEffectChangeCommand;
     class PhotoEffectChangeListener : public QObject
@@ -46,7 +46,7 @@ namespace KIPIPhotoLayoutsEditor
 
             explicit PhotoEffectChangeListener(AbstractPhotoEffectInterface * effect, QObject * parent, bool createCommands);
 
-        public slots:
+        public Q_SLOTS:
 
             void propertyChanged(QtProperty * property);
             void editingFinished();

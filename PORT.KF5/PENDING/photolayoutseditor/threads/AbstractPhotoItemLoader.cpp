@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "AbstractPhotoItemLoader.moc"
+#include "AbstractPhotoItemLoader.h"
 #include "AbstractPhoto.h"
 #include "AbstractPhoto_p.h"
 #include "ProgressObserver.h"
@@ -32,7 +32,7 @@
 #include <klocalizedstring.h>
 #include <QDebug>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 AbstractPhotoItemLoader::AbstractPhotoItemLoader(AbstractPhoto * item, QDomElement & element, QObject * parent) :
     QThread(parent),
@@ -177,7 +177,7 @@ void AbstractPhotoItemLoader::run()
 
     // Other application specific data
     QDomElement appNS = defs.firstChildElement("data");
-    if (appNS.isNull() || appNS.prefix() != KIPIPhotoLayoutsEditor::name())
+    if (appNS.isNull() || appNS.prefix() != PhotoLayoutsEditor::name())
         this->exit(1);
 
     if (observer)
@@ -205,7 +205,7 @@ void AbstractPhotoItemLoader::run()
     // Crop path
     QDomElement cropPath = appNS.firstChildElement("crop_path");
     if (!cropPath.isNull())
-        m_item->d->m_crop_shape = KIPIPhotoLayoutsEditor::pathFromSvg( cropPath.firstChildElement("path") );
+        m_item->d->m_crop_shape = PhotoLayoutsEditor::pathFromSvg( cropPath.firstChildElement("path") );
     else
         this->exit(1);
 }

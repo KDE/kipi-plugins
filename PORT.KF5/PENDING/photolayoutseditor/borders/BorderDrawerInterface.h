@@ -33,7 +33,7 @@
 #include <QDebug>
 #include <QCoreApplication>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class BordersGroup;
     class BorderDrawerFactoryInterface;

@@ -37,7 +37,7 @@
 #include "PhotoItem.h"
 #include "TextItem.h"
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
 
 class ScenePrivate;
@@ -166,7 +166,7 @@ protected:
 
 private Q_SLOTS:
 
-    void imageLoaded(const KUrl & url, const QImage & image);
+    void imageLoaded(const QUrl & url, const QImage & image);
     void calcSelectionBoundingRect();
 
 private:

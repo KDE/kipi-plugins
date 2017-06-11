@@ -33,7 +33,7 @@ namespace KIPI
     class Interface;
 }
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class ImageFileDialog : public KFileDialog
     {
@@ -44,7 +44,7 @@ namespace KIPIPhotoLayoutsEditor
 
         public:
 
-            explicit ImageFileDialog(const KUrl & startDir, QWidget * parent = 0, QWidget * widget = 0);
+            explicit ImageFileDialog(const QUrl & startDir, QWidget * parent = 0, QWidget * widget = 0);
             virtual int exec();
             const char * format();
 

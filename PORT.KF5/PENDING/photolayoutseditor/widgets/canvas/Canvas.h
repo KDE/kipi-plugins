@@ -42,12 +42,12 @@
 
 // KDE
 #include <klocalizedstring.h>
-#include <kurl.h>
+#include <QUrl>
 
 #include "global.h"
 #include "CanvasSize.h"
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class CanvasPrivate;
     class CanvasSavingThread;
@@ -88,15 +88,15 @@ namespace KIPIPhotoLayoutsEditor
             void scale(const QRect& rect);
 
             /// Hold URL to the file connected with this canvas.
-            Q_PROPERTY(KUrl m_file READ file WRITE setFile)
-            KUrl file() const;
-            void setFile(const KUrl& file);
+            Q_PROPERTY(QUrl m_file READ file WRITE setFile)
+            QUrl file() const;
+            void setFile(const QUrl& file);
 
             /// Saves canvas state to SVG format file
-            void save(const KUrl& file, bool setAsDefault = true);
+            void save(const QUrl& file, bool setAsDefault = true);
 
             /// Saves canvas state to SVG format file as a template file
-            void saveTemplate(const KUrl& file);
+            void saveTemplate(const QUrl& file);
 
             /// Check if canvas is saved
             bool isSaved();
@@ -157,8 +157,8 @@ namespace KIPIPhotoLayoutsEditor
             void progressEvent(ProgressEvent* event);
 
             void addImage(const QImage& image);
-            void addImage(const KUrl& imageUrl);
-            void addImages(const KUrl::List& images);
+            void addImage(const QUrl& imageUrl);
+            void addImages(const QList<QUrl>& images);
             void addText(const QString& text);
 
             /// Creates move rows command and pushes it onto the stack
@@ -249,7 +249,7 @@ namespace KIPIPhotoLayoutsEditor
             /// Used when new item has been created and needs to be added to the scene and to the model
             void addNewItem(AbstractPhoto* item);
             void setAntialiasing(bool antialiasing);
-            void imageLoaded(const KUrl & url, const QImage & image);
+            void imageLoaded(const QUrl & url, const QImage & image);
 
         private Q_SLOTS:
 
@@ -265,7 +265,7 @@ namespace KIPIPhotoLayoutsEditor
 
         private:
 
-            KUrl          m_file;
+            QUrl          m_file;
             bool          m_is_saved;
             int           m_saved_on_index;
 

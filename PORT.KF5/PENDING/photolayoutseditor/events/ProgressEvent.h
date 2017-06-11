@@ -29,7 +29,7 @@
 #include <QEvent>
 #include <QVariant>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class ProgressEvent : public QEvent
     {

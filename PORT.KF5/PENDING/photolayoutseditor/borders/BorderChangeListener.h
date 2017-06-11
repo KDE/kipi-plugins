@@ -31,7 +31,7 @@
 
 class QtProperty;
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class BorderChangeCommand;
     class BorderChangeListener : public QObject
@@ -46,7 +46,7 @@ namespace KIPIPhotoLayoutsEditor
 
             explicit BorderChangeListener(BorderDrawerInterface * drawer, QObject * parent, bool createCommands);
 
-        public slots:
+        public Q_SLOTS:
 
             void propertyChanged(QtProperty * property);
             void editingFinished();

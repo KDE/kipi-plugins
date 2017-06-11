@@ -29,7 +29,7 @@
 #include <QThread>
 #include <QDomDocument>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class SceneBackground;
     class SceneBackgroundLoader : public QThread

@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "CropWidgetItem.moc"
+#include "CropWidgetItem.h"
 #include "AbstractPhoto.h"
 #include "photolayoutseditor.h"
 #include <limits>
@@ -36,9 +36,9 @@
 #include <kmessagebox.h>
 #include <klocalizedstring.h>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
-class KIPIPhotoLayoutsEditor::CropWidgetItemPrivate
+class PhotoLayoutsEditor::CropWidgetItemPrivate
 {
     CropWidgetItemPrivate (CropWidgetItem * item) :
         m_item(item),

@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "PhotoEffectsGroup.moc"
+#include "PhotoEffectsGroup.h"
 #include "PhotoEffectsLoader.h"
 #include "AbstractPhoto.h"
 #include "AbstractPhotoEffectFactory.h"
@@ -36,7 +36,7 @@
 #include <klocalizedstring.h>
 #include <QApplication>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 PhotoEffectsGroup::PhotoEffectsGroup(AbstractPhoto * photo, QObject * parent) :
     AbstractMovableModel(parent),

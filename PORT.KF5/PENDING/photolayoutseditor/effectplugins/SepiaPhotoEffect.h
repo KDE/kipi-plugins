@@ -28,7 +28,7 @@
 
 #include "AbstractPhotoEffectInterface.h"
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class StandardEffectsFactory;
     class SepiaPhotoEffect : public AbstractPhotoEffectInterface

@@ -38,7 +38,7 @@ namespace KIPI
 
 using namespace KIPI;
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
 
 class PhotoLayoutsEditor;
@@ -73,6 +73,6 @@ private:
     Interface*          m_interface;
 };
 
-} // namespace KIPIPhotoLayoutsEditor
+} // namespace PhotoLayoutsEditor
 
 #endif // PLUGIN_PHOTOLAYOUTSEDITOR_H

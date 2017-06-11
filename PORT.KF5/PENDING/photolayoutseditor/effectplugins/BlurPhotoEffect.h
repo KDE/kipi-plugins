@@ -33,7 +33,7 @@
 
 #define RADIUS_PROPERTY "Radius"
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class StandardEffectsFactory;
     class BlurPhotoEffect : public AbstractPhotoEffectInterface

@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "CanvasSavingThread.moc"
+#include "CanvasSavingThread.h"
 
 #include "Canvas.h"
 #include "Canvas_p.h"
@@ -35,7 +35,7 @@
 #include <QDomDocument>
 #include <QCoreApplication>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 CanvasSavingThread::CanvasSavingThread(QObject* parent) :
     QThread(parent),
@@ -124,7 +124,7 @@ void CanvasSavingThread::run()
     }
     svg.setAttribute("width", QString::number(m_canvas->d->m_size.size().width()) + j);
     svg.setAttribute("height", QString::number(m_canvas->d->m_size.size().height()) + j);
-    QDomElement resolution = document.createElementNS(m_template ? KIPIPhotoLayoutsEditor::templateUri() : KIPIPhotoLayoutsEditor::uri(), "page");
+    QDomElement resolution = document.createElementNS(m_template ? PhotoLayoutsEditor::templateUri() : PhotoLayoutsEditor::uri(), "page");
     resolution.setAttribute("width", QString::number(m_canvas->d->m_size.resolution().width()));
     resolution.setAttribute("height", QString::number(m_canvas->d->m_size.resolution().height()));
     resolution.setAttribute("unit", CanvasSize::resolutionUnitName(m_canvas->d->m_size.resolutionUnit()));

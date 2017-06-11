@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "SceneBackground.moc"
+#include "SceneBackground.h"
 #include "global.h"
 
 // C++ std includes
@@ -42,9 +42,9 @@
 
 #include <klocalizedstring.h>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
-class KIPIPhotoLayoutsEditor::SceneBackground::BackgroundImageChangedCommand : public QUndoCommand
+class PhotoLayoutsEditor::SceneBackground::BackgroundImageChangedCommand : public QUndoCommand
 {
     QImage m_image;
     Qt::Alignment m_alignment;
@@ -110,7 +110,7 @@ public:
         m_backgropund_item->update();
     }
 };
-class KIPIPhotoLayoutsEditor::SceneBackground::BackgroundFirstBrushChangeCommand : public QUndoCommand
+class PhotoLayoutsEditor::SceneBackground::BackgroundFirstBrushChangeCommand : public QUndoCommand
 {
     QBrush m_brush;
     SceneBackground * m_background;
@@ -138,7 +138,7 @@ public:
         m_background->update();
     }
 };
-class KIPIPhotoLayoutsEditor::SceneBackground::BackgroundSecondBrushChangeCommand : public QUndoCommand
+class PhotoLayoutsEditor::SceneBackground::BackgroundSecondBrushChangeCommand : public QUndoCommand
 {
     QBrush m_brush;
     SceneBackground * m_background;

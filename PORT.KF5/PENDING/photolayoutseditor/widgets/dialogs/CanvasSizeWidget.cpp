@@ -22,10 +22,10 @@
  *
  * ============================================================ */
 
-#include "CanvasSizeWidget.moc"
+#include "CanvasSizeWidget.h"
 
 #include <QComboBox>
-#include <kpushbutton.h>
+#include <QPushButton>
 #include <klocalizedstring.h>
 
 #include <QDoubleSpinBox>
@@ -37,7 +37,7 @@
 
 #include "CanvasSize.h"
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 class CanvasSizeWidget::Private
 {

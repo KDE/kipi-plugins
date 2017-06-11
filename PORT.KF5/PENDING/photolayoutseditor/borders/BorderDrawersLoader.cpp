@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "BorderDrawersLoader.moc"
+#include "BorderDrawersLoader.h"
 #include "BorderDrawerInterface.h"
 #include "BorderDrawerFactoryInterface.h"
 #include "BorderChangeListener.h"
@@ -35,9 +35,9 @@
 #include <KEditFactory.h>
 #include <QUndoCommand>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
-class KIPIPhotoLayoutsEditor::BorderDrawersLoaderPrivate
+class PhotoLayoutsEditor::BorderDrawersLoaderPrivate
 {
     QMap<QString,BorderDrawerFactoryInterface*> factories;
 

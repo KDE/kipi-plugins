@@ -22,9 +22,9 @@
  *
  * ============================================================ */
 
-#include "TemplatesModel.moc"
+#include "TemplatesModel.h"
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 TemplatesModel::TemplatesModel(QObject *parent) :
     QAbstractItemModel(parent)

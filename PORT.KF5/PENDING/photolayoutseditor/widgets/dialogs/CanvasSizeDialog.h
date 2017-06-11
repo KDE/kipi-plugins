@@ -34,7 +34,7 @@
 // Qt
 #include <QSize>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class CanvasSizeDialogPrivate;
 

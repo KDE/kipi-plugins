@@ -30,7 +30,7 @@
 #include <QItemSelectionModel>
 
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class LayersModel;
 

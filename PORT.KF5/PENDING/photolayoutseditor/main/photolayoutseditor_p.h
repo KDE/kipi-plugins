@@ -50,7 +50,7 @@
 #include "global.h"
 #include "photolayoutseditor.h"
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class PLEStatusBar;
     class PhotoLayoutsEditor::PhotoLayoutsEditorPriv

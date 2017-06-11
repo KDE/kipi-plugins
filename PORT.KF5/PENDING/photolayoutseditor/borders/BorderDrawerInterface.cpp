@@ -23,4 +23,4 @@
  *
  * ============================================================ */
 
-#include "BorderDrawerInterface.moc"
+#include "BorderDrawerInterface.h"

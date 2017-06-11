@@ -42,7 +42,7 @@
 
 class QtAbstractPropertyBrowser;
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class Scene;
     class LayersModelItem;
@@ -149,12 +149,12 @@ namespace KIPIPhotoLayoutsEditor
             /// Returns item's property browser
             virtual QtAbstractPropertyBrowser * propertyBrowser() = 0;
 
-        public slots:
+        public Q_SLOTS:
 
             /// Refreshes item
             void refresh();
 
-        signals:
+        Q_SIGNALS:
 
           /** This signal is emitted when item was changed and has been updated.
             * It is used by listeners to update their views and be up to date.

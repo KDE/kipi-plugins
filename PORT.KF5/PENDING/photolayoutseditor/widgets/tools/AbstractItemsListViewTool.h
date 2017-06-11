@@ -29,7 +29,7 @@
 #include "AbstractItemsTool.h"
 #include "AbstractMovableModel.h"
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class AbstractItemsListViewToolPrivate;
     class AbstractListToolView;

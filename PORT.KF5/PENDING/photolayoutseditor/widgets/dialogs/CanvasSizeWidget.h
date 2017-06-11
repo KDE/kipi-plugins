@@ -27,7 +27,7 @@
 
 #include <QWidget>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class CanvasSize;
     class CanvasSizeWidget : public QWidget

@@ -1557,7 +1557,7 @@ protected:
     void keyReleaseEvent(QKeyEvent *e);
     void paintEvent(QPaintEvent *);
     bool event(QEvent *e);
-private slots:
+private Q_SLOTS:
     void slotClearChar();
 private:
     void handleKeyEvent(QKeyEvent *e);
@@ -2602,4 +2602,4 @@ QT_END_NAMESPACE
 #endif
 
 #include "moc_qteditorfactory.cpp"
-#include "qteditorfactory.moc"
+#include "qteditorfactory.h"

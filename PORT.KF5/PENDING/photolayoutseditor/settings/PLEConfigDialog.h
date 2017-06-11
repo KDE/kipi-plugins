@@ -30,7 +30,7 @@
 
 #include <kconfigdialog.h>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class PLEConfigDialogPrivate;
 

@@ -23,14 +23,14 @@
  *
  * ============================================================ */
 
-#include "GridSetupDialog.moc"
+#include "GridSetupDialog.h"
 #include "PLEConfigSkeleton.h"
 
 #include <QFormLayout>
 
 #include <klocalizedstring.h>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 GridSetupDialog::GridSetupDialog(QWidget * parent) :
     KDialog(parent)

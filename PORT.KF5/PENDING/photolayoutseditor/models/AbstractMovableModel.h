@@ -31,7 +31,7 @@
 #include <QModelIndex>
 #include <QtGlobal>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class MoveRowsCommand;
 

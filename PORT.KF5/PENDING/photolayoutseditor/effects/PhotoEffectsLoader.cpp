@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "PhotoEffectsLoader.moc"
+#include "PhotoEffectsLoader.h"
 #include "PhotoEffectsGroup.h"
 #include "AbstractPhoto.h"
 #include "UndoCommandEvent.h"
@@ -41,7 +41,7 @@
 #include <QApplication>
 #include <klocalizedstring.h>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 PhotoEffectsLoader * PhotoEffectsLoader::m_instance = 0;
 QMap<QString, AbstractPhotoEffectFactory*> PhotoEffectsLoader::registeredEffects;

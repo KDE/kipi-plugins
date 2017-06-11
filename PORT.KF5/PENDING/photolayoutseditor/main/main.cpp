@@ -36,7 +36,7 @@
 #include <kaboutdata.h>
 #include <QIcon>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 int main(int argc, char* argv[])
 {

@@ -31,7 +31,7 @@
 #include <QModelIndex>
 #include <QAbstractItemModel>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class LayersModelItem;
     class AbstractPhoto;

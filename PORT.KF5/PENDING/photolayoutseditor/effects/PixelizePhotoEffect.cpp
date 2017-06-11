@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "PixelizePhotoEffect.moc"
+#include "PixelizePhotoEffect.h"
 
 // Qt includes
 

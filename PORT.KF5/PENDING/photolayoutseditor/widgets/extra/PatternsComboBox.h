@@ -28,7 +28,7 @@
 
 #include <QComboBox>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class PatternsComboBox : public QComboBox
     {
@@ -40,7 +40,7 @@ namespace KIPIPhotoLayoutsEditor
             Qt::BrushStyle pattern() const;
             void setPattern(Qt::BrushStyle pattern);
 
-        signals:
+        Q_SIGNALS:
 
             void currentPatternChanged(Qt::BrushStyle pattern);
 
@@ -48,7 +48,7 @@ namespace KIPIPhotoLayoutsEditor
 
             virtual void paintEvent(QPaintEvent *e);
 
-        protected slots:
+        protected Q_SLOTS:
 
             void emitPatternChanged(int index);
 

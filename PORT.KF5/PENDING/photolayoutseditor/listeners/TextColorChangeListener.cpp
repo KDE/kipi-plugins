@@ -23,12 +23,12 @@
  *
  * ============================================================ */
 
-#include "TextColorChangeListener.moc"
+#include "TextColorChangeListener.h"
 #include "TextItem.h"
 
 #include <QtColorPropertyManager>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 TextColorChangeListener::TextColorChangeListener(TextItem * item, QObject * parent) :
     QObject(parent),

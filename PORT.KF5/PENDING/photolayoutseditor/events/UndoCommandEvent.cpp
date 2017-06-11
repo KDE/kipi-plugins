@@ -25,7 +25,7 @@
 
 #include "UndoCommandEvent.h"
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 UndoCommandEvent::UndoCommandEvent() :
     QEvent(registeredEventType()),

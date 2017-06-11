@@ -23,13 +23,13 @@
  *
  * ============================================================ */
 
-#include "LayersTreeDelegate.moc"
+#include "LayersTreeDelegate.h"
 #include "LayersModelItem.h"
 #include "AbstractPhoto.h"
 
 #include <QPainter>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 LayersTreeDelegate::LayersTreeDelegate(QWidget * parent) :
     QStyledItemDelegate(parent),

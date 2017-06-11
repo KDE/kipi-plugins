@@ -27,7 +27,7 @@
 #include "LayersSelectionModel.h"
 #include "LayersModel.h"
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 LayersSelectionModel::LayersSelectionModel(LayersModel * model, QObject *parent) :
     QItemSelectionModel(model, parent)

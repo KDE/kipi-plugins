@@ -38,12 +38,12 @@
 
 #define IS_NULL(node) if (node.isNull()) goto _delete;
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 QColor TextItem::DEFAULT_COLOR = Qt::black;
 QFont TextItem::DEFAULT_FONT = QFont();
 
-class KIPIPhotoLayoutsEditor::TextChangeUndoCommand : public QUndoCommand
+class PhotoLayoutsEditor::TextChangeUndoCommand : public QUndoCommand
 {
     QStringList m_text;
     TextItem * m_item;
@@ -66,7 +66,7 @@ public:
         m_text = temp;
     }
 };
-class KIPIPhotoLayoutsEditor::TextColorUndoCommand : public QUndoCommand
+class PhotoLayoutsEditor::TextColorUndoCommand : public QUndoCommand
 {
         TextItem * m_item;
         QColor m_color;
@@ -92,7 +92,7 @@ class KIPIPhotoLayoutsEditor::TextColorUndoCommand : public QUndoCommand
             m_item->refresh();
         }
 };
-class KIPIPhotoLayoutsEditor::TextFontUndoCommand : public QUndoCommand
+class PhotoLayoutsEditor::TextFontUndoCommand : public QUndoCommand
 {
         TextItem * m_item;
         QFont m_font;
@@ -118,7 +118,7 @@ class KIPIPhotoLayoutsEditor::TextFontUndoCommand : public QUndoCommand
             m_item->refresh();
         }
 };
-class KIPIPhotoLayoutsEditor::AddTextUndoCommand : public QUndoCommand
+class PhotoLayoutsEditor::AddTextUndoCommand : public QUndoCommand
 {
     TextItem::TextItemPrivate * m_item_p;
     QString text;
@@ -146,7 +146,7 @@ public:
         this->text.append(text);
     }
 };
-class KIPIPhotoLayoutsEditor::RemoveTextUndoCommand : public QUndoCommand
+class PhotoLayoutsEditor::RemoveTextUndoCommand : public QUndoCommand
 {
     TextItem::TextItemPrivate * m_item_p;
     QString text;
@@ -182,7 +182,7 @@ public:
         m_item_p->m_item->refreshItem();
     }
 };
-class KIPIPhotoLayoutsEditor::AddLineUndoCommand : public QUndoCommand
+class PhotoLayoutsEditor::AddLineUndoCommand : public QUndoCommand
 {
     TextItem::TextItemPrivate * m_item_p;
     int row;
@@ -216,7 +216,7 @@ public:
         m_item_p->command = 0;
     }
 };
-class KIPIPhotoLayoutsEditor::MergeLineUndoCommand : public QUndoCommand
+class PhotoLayoutsEditor::MergeLineUndoCommand : public QUndoCommand
 {
     TextItem::TextItemPrivate * m_item_p;
     int row;
@@ -636,25 +636,25 @@ QDomDocument TextItem::toSvg() const
     result.appendChild(defs);
 
     // 'defs'-> ple:'data'
-    QDomElement appNS = document.createElementNS(KIPIPhotoLayoutsEditor::uri(), "data");
-    appNS.setPrefix(KIPIPhotoLayoutsEditor::name());
+    QDomElement appNS = document.createElementNS(PhotoLayoutsEditor::uri(), "data");
+    appNS.setPrefix(PhotoLayoutsEditor::name());
     defs.appendChild(appNS);
 
     // 'defs'-> ple:'data' -> 'text'
     QDomElement text = document.createElement("text");
     text.appendChild(document.createTextNode(d->m_string_list.join("\n").toUtf8()));
-    text.setPrefix(KIPIPhotoLayoutsEditor::name());
+    text.setPrefix(PhotoLayoutsEditor::name());
     appNS.appendChild(text);
 
     // 'defs'-> ple:'data' -> 'color'
     QDomElement color = document.createElement("color");
-    color.setPrefix(KIPIPhotoLayoutsEditor::name());
+    color.setPrefix(PhotoLayoutsEditor::name());
     color.setAttribute("name", m_color.name());
     appNS.appendChild(color);
 
     // 'defs'-> ple:'data' -> 'font'
     QDomElement font = document.createElement("font");
-    font.setPrefix(KIPIPhotoLayoutsEditor::name());
+    font.setPrefix(PhotoLayoutsEditor::name());
     font.setAttribute("data", m_font.toString());
     appNS.appendChild(font);
 
@@ -673,25 +673,25 @@ QDomDocument TextItem::toTemplateSvg() const
     result.appendChild(defs);
 
     // 'defs'-> ple:'data'
-    QDomElement appNS = document.createElementNS(KIPIPhotoLayoutsEditor::uri(), "data");
-    appNS.setPrefix(KIPIPhotoLayoutsEditor::name());
+    QDomElement appNS = document.createElementNS(PhotoLayoutsEditor::uri(), "data");
+    appNS.setPrefix(PhotoLayoutsEditor::name());
     defs.appendChild(appNS);
 
     // 'defs'-> ple:'data' -> 'text'
     QDomElement text = document.createElement("text");
     text.appendChild(document.createTextNode(d->m_string_list.join("\n").toUtf8()));
-    text.setPrefix(KIPIPhotoLayoutsEditor::name());
+    text.setPrefix(PhotoLayoutsEditor::name());
     appNS.appendChild(text);
 
     // 'defs'-> ple:'data' -> 'color'
     QDomElement color = document.createElement("color");
-    color.setPrefix(KIPIPhotoLayoutsEditor::name());
+    color.setPrefix(PhotoLayoutsEditor::name());
     color.setAttribute("name", m_color.name());
     appNS.appendChild(color);
 
     // 'defs'-> ple:'data' -> 'font'
     QDomElement font = document.createElement("font");
-    font.setPrefix(KIPIPhotoLayoutsEditor::name());
+    font.setPrefix(PhotoLayoutsEditor::name());
     font.setAttribute("data", m_font.toString());
     appNS.appendChild(font);
 
@@ -700,14 +700,14 @@ QDomDocument TextItem::toTemplateSvg() const
 
 QDomDocument TextItem::svgVisibleArea() const
 {
-    QDomDocument document = KIPIPhotoLayoutsEditor::pathToSvg(m_text_path);
+    QDomDocument document = PhotoLayoutsEditor::pathToSvg(m_text_path);
     document.firstChildElement("path").setAttribute("fill", m_color.name());
     return document;
 }
 
 QDomDocument TextItem::svgTemplateArea() const
 {
-    QDomDocument document = KIPIPhotoLayoutsEditor::pathToSvg(m_text_path);
+    QDomDocument document = PhotoLayoutsEditor::pathToSvg(m_text_path);
     document.firstChildElement("path").setAttribute("fill", m_color.name());
     return document;
 }

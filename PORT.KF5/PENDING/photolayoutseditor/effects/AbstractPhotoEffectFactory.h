@@ -32,7 +32,7 @@
 
 #include "AbstractPhotoEffectInterface.h"
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class AbstractPhotoEffectFactory : public QObject
     {
@@ -58,6 +58,6 @@ namespace KIPIPhotoLayoutsEditor
     };
 }
 
-Q_DECLARE_INTERFACE(KIPIPhotoLayoutsEditor::AbstractPhotoEffectFactory,"pl.coder89.ple.AbstractPhotoEffectFactory/1.0")
+Q_DECLARE_INTERFACE(PhotoLayoutsEditor::AbstractPhotoEffectFactory,"pl.coder89.ple.AbstractPhotoEffectFactory/1.0")
 
 #endif // ABSTRACTPHOTOEFFECTFACTORY_H

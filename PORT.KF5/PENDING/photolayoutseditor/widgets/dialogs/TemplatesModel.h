@@ -35,7 +35,7 @@
 #include <QDomDocument>
 #include <QDebug>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class TemplateItem : public QObject
     {

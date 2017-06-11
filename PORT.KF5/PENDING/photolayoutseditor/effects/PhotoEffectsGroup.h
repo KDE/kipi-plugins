@@ -31,7 +31,7 @@
 
 #include "AbstractMovableModel.h"
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class AbstractPhoto;
     class PhotoEffectsLoader;

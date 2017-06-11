@@ -41,9 +41,9 @@
 #ifndef QTPROPERTYBROWSER_H
 #define QTPROPERTYBROWSER_H
 
-#include <QtGui/QWidget>
-#include <QtCore/QSet>
-#include <QtGui/QLineEdit>
+#include <QWidget>
+#include <QSet>
+#include <QLineEdit>
 
 #if QT_VERSION >= 0x040400
 QT_BEGIN_NAMESPACE
@@ -151,7 +151,7 @@ class QT_QTPROPERTYBROWSER_EXPORT QtAbstractEditorFactoryBase : public QObject
     Q_OBJECT
 public:
     virtual QWidget * createPropertyEditor(QtProperty *property, QWidget *parent) = 0;
-signals:
+Q_SIGNALS:
     void editingFinished();
 protected:
     explicit QtAbstractEditorFactoryBase(QObject *parent = 0)

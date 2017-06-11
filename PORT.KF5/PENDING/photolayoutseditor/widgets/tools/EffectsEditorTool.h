@@ -28,7 +28,7 @@
 
 #include "AbstractItemsListViewTool.h"
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class AbstractPhotoEffectInterface;
 

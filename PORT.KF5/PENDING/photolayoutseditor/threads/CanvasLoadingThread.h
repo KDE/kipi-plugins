@@ -31,7 +31,7 @@
 
 #include "ProgressObserver.h"
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class AbstractPhoto;
     class SceneBackground;

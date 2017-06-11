@@ -28,7 +28,7 @@
 
 #include <QString>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class ProgressObserver
     {

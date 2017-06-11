@@ -38,7 +38,7 @@
 
 class QGraphicsItem;
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class LayersTree;
     class LayersTreeMenu;
@@ -58,7 +58,7 @@ namespace KIPIPhotoLayoutsEditor
             void setSingleSelection();
             void setMultiSelection();
 
-        signals:
+        Q_SIGNALS:
 
             void selectedRowsAboutToBeRemoved();
             void selectedRowsAboutToBeMovedUp();

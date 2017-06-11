@@ -33,9 +33,9 @@
 
 #include <QComboBox>
 #include <kcolorbutton.h>
-#include <kpushbutton.h>
+#include <QPushButton>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class BorderEditTool : public AbstractItemsListViewTool
     {

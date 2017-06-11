@@ -28,7 +28,7 @@
 
 #include <QStyledItemDelegate>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class LayersTreeDelegate : public QStyledItemDelegate
     {

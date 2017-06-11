@@ -34,7 +34,7 @@
 
 class QtProperty;
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class BorderDrawerFactoryInterface;
 

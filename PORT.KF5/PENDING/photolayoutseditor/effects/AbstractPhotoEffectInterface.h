@@ -40,7 +40,7 @@
 
 #define STRENGTH_PROPERTY QString("Strength")
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class PhotoEffectsGroup;
     class AbstractPhotoEffectFactory;

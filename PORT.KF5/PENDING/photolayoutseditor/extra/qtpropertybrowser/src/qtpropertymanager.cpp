@@ -6466,4 +6466,4 @@ QT_END_NAMESPACE
 #endif
 
 #include "moc_qtpropertymanager.cpp"
-#include "qtpropertymanager.moc"
+#include "qtpropertymanager.h"

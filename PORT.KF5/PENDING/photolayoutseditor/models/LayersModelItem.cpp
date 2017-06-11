@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "LayersModelItem.moc"
+#include "LayersModelItem.h"
 #include "LayersModel.h"
 #include "AbstractPhoto.h"
 
@@ -36,7 +36,7 @@
 // KDE
 #include <klocalizedstring.h>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 LayersModelItem::LayersModelItem(AbstractPhoto * photo, LayersModelItem * parent, LayersModel * model) :
     parentItem(0),

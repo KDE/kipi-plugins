@@ -28,7 +28,7 @@
 
 #include <QUndoCommand>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 AbstractMovableModel::AbstractMovableModel(QObject * parent) :
     QAbstractItemModel(parent)

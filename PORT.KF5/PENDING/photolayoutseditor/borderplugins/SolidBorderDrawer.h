@@ -23,37 +23,37 @@
  *
  * ============================================================ */
 
-#ifndef POLAROIDBORDERDRAWER_H
-#define POLAROIDBORDERDRAWER_H
+#ifndef SOLIDBORDERDRAWER_H
+#define SOLIDBORDERDRAWER_H
 
 #include "BorderDrawerInterface.h"
 
 #include <QColor>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class StandardBordersFactory;
 
-    class PolaroidBorderDrawer : public BorderDrawerInterface
+    class SolidBorderDrawer : public BorderDrawerInterface
     {
             Q_OBJECT
 
             int m_width;
-            QString m_text;
             QColor m_color;
-            QFont m_font;
+            int m_spacing;
+            Qt::PenJoinStyle m_corners_style;
             QPainterPath m_path;
-            QRectF m_text_rect;
 
             static QMap<const char *,QString> m_properties;
+            static QMap<Qt::PenJoinStyle, QString> m_corners_style_names;
             static int m_default_width;
-            static QString m_default_text;
             static QColor m_default_color;
-            static QFont m_default_font;
+            static int m_default_spacing;
+            static Qt::PenJoinStyle m_default_corners_style;
 
         public:
 
-            explicit PolaroidBorderDrawer(StandardBordersFactory * factory, QObject * parent = 0);
+            explicit SolidBorderDrawer(StandardBordersFactory * factory, QObject * parent = 0);
 
             virtual QPainterPath path(const QPainterPath & path);
 
@@ -87,14 +87,14 @@ namespace KIPIPhotoLayoutsEditor
                 }
             }
 
-            Q_PROPERTY(QString text READ text WRITE setText)
-            QString text() const
+            Q_PROPERTY(QString corners_style READ cornersStyle WRITE setCornersStyle)
+            QString cornersStyle() const
             {
-                return m_text;
+                return m_corners_style_names.value(m_corners_style);
             }
-            void setText(const QString & text)
+            void setCornersStyle(const QString & cornersStyle)
             {
-                m_text = text;
+                m_default_corners_style = m_corners_style = m_corners_style_names.key(cornersStyle);
                 this->propertiesChanged();
             }
 
@@ -112,25 +112,22 @@ namespace KIPIPhotoLayoutsEditor
                 }
             }
 
-            Q_PROPERTY(QFont font READ font WRITE setFont)
-            QFont font() const
+            Q_PROPERTY(int spacing READ spacing WRITE setSpacing)
+            int spacing() const
             {
-                return m_font;
+                return m_spacing;
             }
-            void setFont(const QFont & font)
+            void setSpacing(int spacing)
             {
-                m_default_font = m_font = font;
+                m_default_spacing = m_spacing = spacing;
                 this->propertiesChanged();
             }
 
+            virtual QVariant stringNames(const QMetaProperty & property);
             virtual QVariant minimumValue(const QMetaProperty & property);
             virtual QVariant maximumValue(const QMetaProperty & property);
             virtual QVariant stepValue(const QMetaProperty & property);
-
-        private:
-
-            QString pathToSvg(const QPainterPath & path) const;
     };
 }
 
-#endif // POLAROIDBORDERDRAWER_H
+#endif // SOLIDBORDERDRAWER_H

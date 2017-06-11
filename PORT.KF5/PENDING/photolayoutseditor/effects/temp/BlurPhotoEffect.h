@@ -72,7 +72,7 @@ namespace KIPIPhotoFramesEditor
 
             static const QString RADIUS_STRING;
 
-        protected slots:
+        protected Q_SLOTS:
 
             virtual void propertyChanged(QtProperty * property);
 

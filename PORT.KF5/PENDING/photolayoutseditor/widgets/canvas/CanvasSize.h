@@ -30,7 +30,7 @@
 #include <QMap>
 #include <QSizeF>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class CanvasSizeDialog;
 

@@ -29,7 +29,7 @@
 
 #include <klocalizedstring.h>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 StandardBordersFactory::StandardBordersFactory(QObject * parent) :
     BorderDrawerFactoryInterface(parent)

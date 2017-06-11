@@ -28,7 +28,7 @@
 
 #include <QDebug>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 SceneBorderLoader::SceneBorderLoader(SceneBorder * border, QDomElement & element, QObject * parent) :
     QThread(parent),

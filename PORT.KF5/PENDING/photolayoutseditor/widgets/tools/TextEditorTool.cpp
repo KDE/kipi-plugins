@@ -23,18 +23,18 @@
  *
  * ============================================================ */
 
-#include "TextEditorTool.moc"
+#include "TextEditorTool.h"
 #include "TextItem.h"
 #include "ToolsDockWidget.h"
 
 #include <QVBoxLayout>
 #include <QtAbstractPropertyBrowser>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
-class KIPIPhotoLayoutsEditor::TextEditorToolPrivate
+class PhotoLayoutsEditor::TextEditorToolPrivate
 {
-    KPushButton * m_create_button;
+    QPushButton * m_create_button;
     QVBoxLayout * m_layout;
 
     friend class TextEditorTool;
@@ -49,7 +49,7 @@ TextEditorTool::TextEditorTool(Scene * scene, QWidget * parent) :
     m_create_new_item(false)
 {
     d->m_layout = new QVBoxLayout();
-    d->m_create_button = new KPushButton(i18n("Create text item"), this);
+    d->m_create_button = new QPushButton(i18n("Create text item"), this);
     connect(d->m_create_button, SIGNAL(clicked()), this, SLOT(createNewItem()));
     d->m_layout->insertWidget(0, d->m_create_button);
     d->m_layout->insertStretch(1, 1);

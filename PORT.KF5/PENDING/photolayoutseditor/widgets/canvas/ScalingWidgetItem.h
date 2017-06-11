@@ -28,7 +28,7 @@
 
 #include "AbstractItemInterface.h"
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class AbstractPhoto;
     class ScalingWidgetItemPrivate;
@@ -61,7 +61,7 @@ namespace KIPIPhotoLayoutsEditor
 
             void setScaleItems(const QList<AbstractPhoto*> & items);
 
-        private slots:
+        private Q_SLOTS:
 
             void updateShapes();
 

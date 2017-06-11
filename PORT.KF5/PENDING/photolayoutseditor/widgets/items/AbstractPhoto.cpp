@@ -24,7 +24,7 @@
  * ============================================================ */
 
 #include "AbstractPhoto_p.h"
-#include "AbstractPhoto.moc"
+#include "AbstractPhoto.h"
 
 #include "Scene.h"
 #include "PhotoEffectsGroup.h"
@@ -43,9 +43,9 @@
 
 #include <klocalizedstring.h>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
-class KIPIPhotoLayoutsEditor::CropShapeChangeCommand : public QUndoCommand
+class PhotoLayoutsEditor::CropShapeChangeCommand : public QUndoCommand
 {
     QPainterPath m_crop_shape;
     AbstractPhoto * m_item;
@@ -70,7 +70,7 @@ public:
         m_crop_shape = temp;
     }
 };
-class KIPIPhotoLayoutsEditor::ItemNameChangeCommand : public QUndoCommand
+class PhotoLayoutsEditor::ItemNameChangeCommand : public QUndoCommand
 {
     QString m_name;
     AbstractPhoto * m_item;
@@ -225,14 +225,14 @@ QDomDocument AbstractPhoto::toSvg() const
     defs.appendChild(clipPath);
 
     // 'defs'->'ple:data'
-    QDomElement appNSData = document.createElementNS(KIPIPhotoLayoutsEditor::uri(), "data");
-    appNSData.setPrefix(KIPIPhotoLayoutsEditor::name());
+    QDomElement appNSData = document.createElementNS(PhotoLayoutsEditor::uri(), "data");
+    appNSData.setPrefix(PhotoLayoutsEditor::name());
     defs.appendChild(appNSData);
     appNSData.appendChild(d->m_effects_group->toSvg(document));
 
     // 'defs'->'ple:data'->'crop_path'
     QDomElement cropPath = document.createElement("crop_path");
-    cropPath.appendChild( KIPIPhotoLayoutsEditor::pathToSvg(this->cropShape()).documentElement() );
+    cropPath.appendChild( PhotoLayoutsEditor::pathToSvg(this->cropShape()).documentElement() );
     appNSData.appendChild(cropPath);
 
     // Convert visible area to SVG path's 'd' attribute
@@ -240,7 +240,7 @@ QDomDocument AbstractPhoto::toSvg() const
     if (!visibleArea.isEmpty())
     {
         // 'defs'->'clipPath'->'path'
-        clipPath.appendChild( KIPIPhotoLayoutsEditor::pathToSvg(visibleArea).documentElement() );
+        clipPath.appendChild( PhotoLayoutsEditor::pathToSvg(visibleArea).documentElement() );
     }
 
     QDomElement visibleData = document.createElement("g");
@@ -331,14 +331,14 @@ QDomDocument AbstractPhoto::toTemplateSvg() const
     defs.appendChild(clipPath);
 
     // 'defs'->'ple:data'
-    QDomElement appNSData = document.createElementNS(KIPIPhotoLayoutsEditor::uri(), "data");
-    appNSData.setPrefix(KIPIPhotoLayoutsEditor::name());
+    QDomElement appNSData = document.createElementNS(PhotoLayoutsEditor::uri(), "data");
+    appNSData.setPrefix(PhotoLayoutsEditor::name());
     defs.appendChild(appNSData);
     appNSData.appendChild(d->m_effects_group->toSvg(document));
 
     // 'defs'->'ple:data'->'crop_path'
     QDomElement cropPath = document.createElement("crop_path");
-    cropPath.appendChild( KIPIPhotoLayoutsEditor::pathToSvg(this->cropShape()).documentElement() );
+    cropPath.appendChild( PhotoLayoutsEditor::pathToSvg(this->cropShape()).documentElement() );
     appNSData.appendChild(cropPath);
 
     // Convert visible area to SVG path's 'd' attribute
@@ -346,7 +346,7 @@ QDomDocument AbstractPhoto::toTemplateSvg() const
     if (!visibleArea.isEmpty())
     {
         // 'defs'->'clipPath'->'path'
-        clipPath.appendChild( KIPIPhotoLayoutsEditor::pathToSvg(visibleArea).documentElement() );
+        clipPath.appendChild( PhotoLayoutsEditor::pathToSvg(visibleArea).documentElement() );
     }
 
     QDomElement visibleData = document.createElement("g");
@@ -526,7 +526,7 @@ bool AbstractPhoto::fromSvg(QDomElement & element)
 
     // Other application specific data
     QDomElement appNS = defs.firstChildElement("data");
-    if (appNS.isNull() || appNS.prefix() != KIPIPhotoLayoutsEditor::name())
+    if (appNS.isNull() || appNS.prefix() != PhotoLayoutsEditor::name())
         return false;
 
 
@@ -545,7 +545,7 @@ bool AbstractPhoto::fromSvg(QDomElement & element)
     // Crop path
     QDomElement cropPath = appNS.firstChildElement("crop_path");
     if (!cropPath.isNull())
-        this->d->setCropShape( KIPIPhotoLayoutsEditor::pathFromSvg( cropPath.firstChildElement("path") ) );
+        this->d->setCropShape( PhotoLayoutsEditor::pathFromSvg( cropPath.firstChildElement("path") ) );
     else
         return false;
 

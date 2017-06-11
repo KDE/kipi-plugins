@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "plugin_photolayoutseditor.moc"
+#include "plugin_photolayoutseditor.h"
 
 // KDE includes
 
@@ -44,7 +44,7 @@
 #include "photolayoutseditor.h"
 #include "PLEAboutData.h"
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
 
 K_PLUGIN_FACTORY ( PhotoFrmesEditorFactory, registerPlugin<Plugin_PhotoLayoutsEditor>(); )
@@ -118,4 +118,4 @@ void Plugin_PhotoLayoutsEditor::slotActivate()
     m_manager->show();
 }
 
-} // namespace KIPIPhotoLayoutsEditor
+} // namespace PhotoLayoutsEditor

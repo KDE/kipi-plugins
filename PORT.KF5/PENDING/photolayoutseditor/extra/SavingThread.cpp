@@ -23,12 +23,12 @@
  *
  * ============================================================ */
 
-#include "SavingThread.moc"
+#include "SavingThread.h"
 #include "Canvas.h"
 
 #include <QFile>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 SavingThread::SavingThread(Canvas * canvas, const QUrl & url, QObject * parent) :
     QThread(parent),

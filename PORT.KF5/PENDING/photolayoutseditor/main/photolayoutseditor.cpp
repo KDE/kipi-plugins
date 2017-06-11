@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "photolayoutseditor.moc"
+#include "photolayoutseditor.h"
 #include "photolayoutseditor_p.h"
 
 // Qt includes
@@ -91,9 +91,9 @@
 inline void initIconsResource() { Q_INIT_RESOURCE(icons); }
 inline void cleanupIconsResource() { Q_CLEANUP_RESOURCE(icons); }
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
-class KIPIPhotoLayoutsEditor::CanvasSizeChangeCommand : public QUndoCommand
+class PhotoLayoutsEditor::CanvasSizeChangeCommand : public QUndoCommand
 {
     CanvasSize m_size;
     Canvas*    m_canvas;
@@ -222,7 +222,7 @@ KIPI::Interface * PhotoLayoutsEditor::interface() const
     return this->m_interface;
 }
 
-void PhotoLayoutsEditor::setItemsList(const QUrl::List & images)
+void PhotoLayoutsEditor::setItemsList(const QList<QUrl> & images)
 {
     if (!m_canvas)
         return;
@@ -241,7 +241,7 @@ void PhotoLayoutsEditor::setupActions()
     actionCollection()->addAction("open", d->openFileAction);
     //------------------------------------------------------------------------
     d->openRecentFilesMenu = KStandardAction::openRecent(this, SLOT(open(QUrl)), actionCollection());
-    QUrl::List urls = PLEConfigSkeleton::recentFiles();
+    QList<QUrl> urls = PLEConfigSkeleton::recentFiles();
     foreach(QUrl url, urls)
         d->openRecentFilesMenu->addUrl(url);
     connect(d->openRecentFilesMenu, SIGNAL(recentListCleared()), this, SLOT(clearRecentList()));
@@ -340,7 +340,7 @@ void PhotoLayoutsEditor::addRecentFile(const QUrl & url)
 {
     if (url.isValid())
     {
-        QUrl::List tempList = PLEConfigSkeleton::recentFiles();
+        QList<QUrl> tempList = PLEConfigSkeleton::recentFiles();
         tempList.removeAll(url);
         tempList.push_back(url);
         unsigned maxCount = PLEConfigSkeleton::recentFilesCount();
@@ -355,7 +355,7 @@ void PhotoLayoutsEditor::addRecentFile(const QUrl & url)
 
 void PhotoLayoutsEditor::clearRecentList()
 {
-    PLEConfigSkeleton::setRecentFiles(QUrl::List());
+    PLEConfigSkeleton::setRecentFiles(QList<QUrl>());
 }
 
 void PhotoLayoutsEditor::createWidgets()
@@ -694,7 +694,7 @@ void PhotoLayoutsEditor::loadNewImage()
     if (!m_canvas)
         return;
 
-    QUrl::List urls = KIPIPlugins::KPImageDialog::getImageUrls(this);
+    QList<QUrl> urls = KIPIPlugins::KPImageDialog::getImageUrls(this);
     if (!urls.isEmpty())
         m_canvas->addImages(urls);
 }

@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "PhotoItem.moc"
+#include "PhotoItem.h"
 
 #include <QBuffer>
 #include <QStyleOptionGraphicsItem>
@@ -49,9 +49,9 @@
 
 #define EMPTY_FILL_COLOR QColor(255, 0, 0, 120)
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
-class KIPIPhotoLayoutsEditor::PhotoItemPixmapChangeCommand : public QUndoCommand
+class PhotoLayoutsEditor::PhotoItemPixmapChangeCommand : public QUndoCommand
 {
     QImage     m_image;
     PhotoItem* m_item;
@@ -86,7 +86,7 @@ public:
     }
 };
 
-class KIPIPhotoLayoutsEditor::PhotoItemUrlChangeCommand : public QUndoCommand
+class PhotoLayoutsEditor::PhotoItemUrlChangeCommand : public QUndoCommand
 {
     QUrl       m_url;
     PhotoItem* m_item;
@@ -117,7 +117,7 @@ public:
     }
 };
 
-class KIPIPhotoLayoutsEditor::PhotoItemImagePathChangeCommand : public QUndoCommand
+class PhotoLayoutsEditor::PhotoItemImagePathChangeCommand : public QUndoCommand
 {
     PhotoItem*              m_item;
     QPainterPath            m_image_path;
@@ -146,7 +146,7 @@ public:
     }
 };
 
-class KIPIPhotoLayoutsEditor::PhotoItemImageMovedCommand : public QUndoCommand
+class PhotoLayoutsEditor::PhotoItemImageMovedCommand : public QUndoCommand
 {
     PhotoItem* m_item;
     QPointF    translation;
@@ -303,23 +303,23 @@ QDomDocument PhotoItem::toSvg() const
     itemElement.appendChild(defs);
 
     // 'defs'-> ple:'data'
-    QDomElement appNS = document.createElementNS(KIPIPhotoLayoutsEditor::uri(), "data");
-    appNS.setPrefix(KIPIPhotoLayoutsEditor::name());
+    QDomElement appNS = document.createElementNS(PhotoLayoutsEditor::uri(), "data");
+    appNS.setPrefix(PhotoLayoutsEditor::name());
     defs.appendChild(appNS);
 
     if (!m_image_path.isEmpty())
     {
         // 'defs'-> ple:'data' ->'path'
-        QDomDocument document = KIPIPhotoLayoutsEditor::pathToSvg(m_image_path);
+        QDomDocument document = PhotoLayoutsEditor::pathToSvg(m_image_path);
         QDomElement path = document.firstChildElement("path");
         path.setAttribute("class", "m_image_path");
-        path.setPrefix(KIPIPhotoLayoutsEditor::name());
+        path.setPrefix(PhotoLayoutsEditor::name());
         appNS.appendChild(document.documentElement());
     }
 
     // 'defs'-> ple:'data' ->'transform'
     QDomElement transform = document.createElement("transform");
-    transform.setPrefix(KIPIPhotoLayoutsEditor::name());
+    transform.setPrefix(PhotoLayoutsEditor::name());
     QString matrix = "matrix("+
                      QString::number(this->transform().m11())+
                      ','+
@@ -338,7 +338,7 @@ QDomDocument PhotoItem::toSvg() const
 
     if (!this->isEmpty())
     {
-        QDomElement image = document.createElementNS(KIPIPhotoLayoutsEditor::uri(), "image");
+        QDomElement image = document.createElementNS(PhotoLayoutsEditor::uri(), "image");
         appNS.appendChild(image);
         // Saving image data
         if (!PLEConfigSkeleton::embedImagesData())
@@ -389,23 +389,23 @@ QDomDocument PhotoItem::toTemplateSvg() const
     itemElement.appendChild(defs);
 
     // 'defs'-> ple:'data'
-    QDomElement appNS = document.createElementNS(KIPIPhotoLayoutsEditor::uri(), "data");
-    appNS.setPrefix(KIPIPhotoLayoutsEditor::name());
+    QDomElement appNS = document.createElementNS(PhotoLayoutsEditor::uri(), "data");
+    appNS.setPrefix(PhotoLayoutsEditor::name());
     defs.appendChild(appNS);
 
     if (!m_image_path.isEmpty())
     {
         // 'defs'-> ple:'data' ->'path'
-        QDomDocument document = KIPIPhotoLayoutsEditor::pathToSvg(m_image_path);
+        QDomDocument document = PhotoLayoutsEditor::pathToSvg(m_image_path);
         QDomElement path = document.firstChildElement("path");
         path.setAttribute("class", "m_image_path");
-        path.setPrefix(KIPIPhotoLayoutsEditor::name());
+        path.setPrefix(PhotoLayoutsEditor::name());
         appNS.appendChild(document.documentElement());
     }
 
     // 'defs'-> ple:'data' ->'transform'
     QDomElement transform = document.createElement("transform");
-    transform.setPrefix(KIPIPhotoLayoutsEditor::name());
+    transform.setPrefix(PhotoLayoutsEditor::name());
     QString matrix = "matrix("+
                      QString::number(this->transform().m11())+
                      ','+
@@ -444,7 +444,7 @@ PhotoItem * PhotoItem::fromSvg(QDomElement & element)
         QDomElement path = data.firstChildElement("path");
         if (path.isNull())
             goto _delete;
-        item->m_image_path = KIPIPhotoLayoutsEditor::pathFromSvg(path);
+        item->m_image_path = PhotoLayoutsEditor::pathFromSvg(path);
         if (item->m_image_path.isEmpty())
             goto _delete;
 
@@ -555,7 +555,7 @@ QDomDocument PhotoItem::svgTemplateArea() const
         g.setAttribute("transform", translate + ' ' + matrix);
 
         // 'defs' -> 'g' -> 'path'
-        QDomDocument document = KIPIPhotoLayoutsEditor::pathToSvg(m_image_path);
+        QDomDocument document = PhotoLayoutsEditor::pathToSvg(m_image_path);
         QDomElement path = document.firstChildElement("path");
         path.setAttribute("opacity", 100);
         path.setAttribute("fill", "#ff0000");
@@ -570,7 +570,7 @@ void PhotoItem::dragEnterEvent(QGraphicsSceneDragDropEvent * event)
     if ( PhotoLayoutsEditor::instance()->hasInterface() &&
             mimeData->hasFormat("digikam/item-ids"))
     {
-        QUrl::List urls;
+        QList<QUrl> urls;
         QByteArray ba = mimeData->data("digikam/item-ids");
         QDataStream ds(&ba, QIODevice::ReadOnly);
         ds >> urls;
@@ -603,7 +603,7 @@ void PhotoItem::dragMoveEvent(QGraphicsSceneDragDropEvent * event)
     if ( PhotoLayoutsEditor::instance()->hasInterface() &&
             mimeData->hasFormat("digikam/item-ids"))
     {
-        QUrl::List urls;
+        QList<QUrl> urls;
         QByteArray ba = mimeData->data("digikam/item-ids");
         QDataStream ds(&ba, QIODevice::ReadOnly);
         ds >> urls;
@@ -632,7 +632,7 @@ void PhotoItem::dropEvent(QGraphicsSceneDragDropEvent * event)
     if ( PhotoLayoutsEditor::instance()->hasInterface() &&
             mimeData->hasFormat("digikam/item-ids"))
     {
-        QUrl::List urls;
+        QList<QUrl> urls;
         QByteArray ba = mimeData->data("digikam/item-ids");
         QDataStream ds(&ba, QIODevice::ReadOnly);
         ds >> urls;

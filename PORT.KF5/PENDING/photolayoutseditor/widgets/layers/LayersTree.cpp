@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "LayersTree.moc"
+#include "LayersTree.h"
 #include "AbstractPhoto.h"
 #include "LayersTreeDelegate.h"
 #include "LayersTreeMenu.h"
@@ -37,7 +37,7 @@
 #include <QGraphicsItem>
 #include <QContextMenuEvent>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 LayersTree::LayersTree(QWidget * parent) :
     QTreeView(parent),

@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "TemplatesView.moc"
+#include "TemplatesView.h"
 
 #include <QScrollBar>
 #include <QPainter>
@@ -37,7 +37,7 @@ QHash<int, QRectF> rectForRow;
 #define WIDTH 120
 #define HEIGHT 120
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 class TemplateItemDelegate : public QAbstractItemDelegate
 {

@@ -30,7 +30,7 @@
 
 class QtAbstractPropertyBrowser;
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class TextItem;
     class TextEditorToolPrivate;
@@ -51,16 +51,16 @@ namespace KIPIPhotoLayoutsEditor
             explicit TextEditorTool(Scene * scene, QWidget * parent = 0);
             ~TextEditorTool();
 
-        signals:
+        Q_SIGNALS:
 
-        public slots:
+        public Q_SLOTS:
 
             virtual void currentItemAboutToBeChanged();
             virtual void currentItemChanged();
             virtual void positionAboutToBeChanged();
             virtual void positionChanged();
 
-        protected slots:
+        protected Q_SLOTS:
 
             void createNewItem();
 

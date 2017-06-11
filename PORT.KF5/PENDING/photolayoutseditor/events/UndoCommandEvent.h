@@ -29,7 +29,7 @@
 #include <QEvent>
 #include <QUndoCommand>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class UndoCommandEvent : public QEvent
     {

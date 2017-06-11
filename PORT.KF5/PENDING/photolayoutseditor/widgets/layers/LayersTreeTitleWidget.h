@@ -30,18 +30,18 @@
 #include <QLabel>
 #include <QHBoxLayout>
 
-#include <kpushbutton.h>
+#include <QPushButton>
 #include <QIcon>
 #include <klocalizedstring.h>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class LayersTreeTitleWidget : public QWidget
     {
             QHBoxLayout * m_layout;
             QLabel * m_label;
-            KPushButton * m_up_btn;
-            KPushButton * m_dwn_btn;
+            QPushButton * m_up_btn;
+            QPushButton * m_dwn_btn;
 
         public:
 
@@ -49,8 +49,8 @@ namespace KIPIPhotoLayoutsEditor
                 QWidget(parent),
                 m_layout(new QHBoxLayout(this)),
                 m_label(new QLabel(i18n("Layers"),this)),
-                m_up_btn(new KPushButton(QIcon::fromTheme(":/arrow_top.png"), "", this)),
-                m_dwn_btn(new KPushButton(QIcon::fromTheme(":/arrow_down.png"), "", this))
+                m_up_btn(new QPushButton(QIcon::fromTheme(":/arrow_top.png"), "", this)),
+                m_dwn_btn(new QPushButton(QIcon::fromTheme(":/arrow_down.png"), "", this))
             {
                 m_layout->addWidget(m_label,1);
                 m_layout->addWidget(m_up_btn);

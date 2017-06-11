@@ -35,7 +35,7 @@
 #include <QDomDocument>
 #include <QPainterPath>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     extern QString name();
     extern QString uri();

@@ -26,7 +26,7 @@
 #include "AbstractPhoto_p.h"
 #include "AbstractPhoto.h"
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 AbstractPhotoPrivate::AbstractPhotoPrivate(AbstractPhoto* item) :
     m_item(item),

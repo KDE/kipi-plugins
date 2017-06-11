@@ -29,7 +29,7 @@
 #include <kdialog.h>
 #include <QDoubleSpinBox>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class GridSetupDialog : public KDialog
     {

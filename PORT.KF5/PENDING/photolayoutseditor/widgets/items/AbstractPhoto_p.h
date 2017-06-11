@@ -29,7 +29,7 @@
 #include <QIcon>
 #include <QPainterPath>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class BordersGroup;
     class PhotoEffectsGroup;

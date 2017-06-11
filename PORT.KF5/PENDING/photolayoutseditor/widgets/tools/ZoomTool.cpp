@@ -23,13 +23,13 @@
  *
  * ============================================================ */
 
-#include "ZoomTool.moc"
+#include "ZoomTool.h"
 #include "MousePressListener.h"
 
 #include <QButtonGroup>
 #include <QRadioButton>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 class ZoomTool::ZoomToolPrivate
 {

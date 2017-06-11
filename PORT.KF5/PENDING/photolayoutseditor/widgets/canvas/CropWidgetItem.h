@@ -28,7 +28,7 @@
 
 #include "AbstractItemInterface.h"
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class AbstractPhoto;
     class CropWidgetItemPrivate;
@@ -57,12 +57,12 @@ namespace KIPIPhotoLayoutsEditor
 
             void setItems(const QList<AbstractPhoto*> & items);
 
-        signals:
+        Q_SIGNALS:
 
             void cropShapeSelected(const QPainterPath & shape);
             void cancelCrop();
 
-        private slots:
+        private Q_SLOTS:
 
             void updateShapes();
 

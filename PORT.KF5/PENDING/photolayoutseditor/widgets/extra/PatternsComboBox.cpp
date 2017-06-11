@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "PatternsComboBox.moc"
+#include "PatternsComboBox.h"
 
 #include <QStyledItemDelegate>
 #include <QStylePainter>
@@ -32,7 +32,7 @@
 #include <QPaintEngine>
 #include <QPaintEvent>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 class PatternDelegate : public QStyledItemDelegate
 {

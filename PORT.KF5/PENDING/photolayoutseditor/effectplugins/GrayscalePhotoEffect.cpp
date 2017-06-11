@@ -23,12 +23,12 @@
  *
  * ============================================================ */
 
-#include "GrayscalePhotoEffect.moc"
+#include "GrayscalePhotoEffect.h"
 #include "StandardEffectsFactory.h"
 
 #include <klocalizedstring.h>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 GrayscalePhotoEffect::GrayscalePhotoEffect(StandardEffectsFactory * factory, QObject * parent) :
     AbstractPhotoEffectInterface(factory, parent)

@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "LayersModel.moc"
+#include "LayersModel.h"
 
 // KDE
 #include <QIcon>
@@ -39,7 +39,7 @@
 #include "LayersModelItem.h"
 #include "AbstractPhoto.h"
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 LayersModel::LayersModel(QObject *parent) :
     QAbstractItemModel(parent)

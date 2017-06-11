@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "Canvas.moc"
+#include "Canvas.h"
 #include "Canvas_p.h"
 
 #include <QPrinter>
@@ -53,7 +53,7 @@
 #define MAX_SCALE_LIMIT 4
 #define MIN_SCALE_LIMIT 0.5
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 Canvas::Canvas(const CanvasSize & size, QWidget * parent) :
     QGraphicsView(parent),
@@ -284,7 +284,7 @@ void Canvas::addImage(const QUrl & imageUrl)
 /** ###########################################################################################################################
  * Add images from the specified url's list
  #############################################################################################################################*/
-void Canvas::addImages(const QUrl::List & images)
+void Canvas::addImages(const QList<QUrl> & images)
 {
     ImageLoadingThread * ilt = new ImageLoadingThread(this);
     ilt->setImagesUrls(images);
@@ -820,7 +820,7 @@ QDomDocument Canvas::toSvg() const
             svg.setAttribute("height", svg.attribute("height") + "px");
             qCDebug(KIPIPLUGINS_LOG) << "Unhandled size unit at:" << __FILE__ << ":" << __LINE__;
     }
-    QDomElement resolution = result.createElementNS(KIPIPhotoLayoutsEditor::uri(), "page");
+    QDomElement resolution = result.createElementNS(PhotoLayoutsEditor::uri(), "page");
     resolution.setAttribute("width", QString::number(d->m_size.resolution().width()));
     resolution.setAttribute("height", QString::number(d->m_size.resolution().height()));
     resolution.setAttribute("unit", CanvasSize::resolutionUnitName(d->m_size.resolutionUnit()));
@@ -846,7 +846,7 @@ Canvas * Canvas::fromSvg(QDomDocument & document)
             QString xResolution = pageElement.attribute("width");
             QString yResolution = pageElement.attribute("height");
             QString resUnit = pageElement.attribute("unit");
-            qCDebug(KIPIPLUGINS_LOG) << pageElement.namespaceURI() << KIPIPhotoLayoutsEditor::templateUri();
+            qCDebug(KIPIPLUGINS_LOG) << pageElement.namespaceURI() << PhotoLayoutsEditor::templateUri();
 
             // Canvas size validation
             QRegExp sizeRegExp("[0-9.]+((cm)|(mm)|(in)|(pc)|(pt)|(px))");
@@ -878,7 +878,7 @@ Canvas * Canvas::fromSvg(QDomDocument & document)
                         result = new Canvas(scene);
                         result->setEnabled(false);
                         result->d->m_size = size;
-                        result->d->m_template = (pageElement.namespaceURI() == KIPIPhotoLayoutsEditor::templateUri());
+                        result->d->m_template = (pageElement.namespaceURI() == PhotoLayoutsEditor::templateUri());
                     }
                 }
             }

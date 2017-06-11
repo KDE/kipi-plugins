@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "BorderChangeListener.moc"
+#include "BorderChangeListener.h"
 #include "BordersGroup.h"
 #include "global.h"
 #include "KEditFactory.h"
@@ -36,9 +36,9 @@
 
 #include <klocalizedstring.h>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
-class KIPIPhotoLayoutsEditor::BorderChangeCommand : public QUndoCommand
+class PhotoLayoutsEditor::BorderChangeCommand : public QUndoCommand
 {
         BorderDrawerInterface * drawer;
         QString propertyName;

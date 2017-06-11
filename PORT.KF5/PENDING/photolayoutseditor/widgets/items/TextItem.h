@@ -31,7 +31,7 @@
 #include <QObject>
 #include <QUndoCommand>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class TextItemLoader;
 

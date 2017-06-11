@@ -30,7 +30,7 @@
 #include <QGraphicsItem>
 #include <QDomDocument>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class SceneBorderLoader;
 
@@ -64,7 +64,7 @@ namespace KIPIPhotoLayoutsEditor
             QImage image() const;
             QSize imageSize() const;
 
-        signals:
+        Q_SIGNALS:
 
             void changed();
 
@@ -74,7 +74,7 @@ namespace KIPIPhotoLayoutsEditor
             void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget);
             void render(QPainter * painter, const QRect & rect);
 
-        protected slots:
+        protected Q_SLOTS:
 
             void render();
 
@@ -82,7 +82,7 @@ namespace KIPIPhotoLayoutsEditor
 
             void sceneChanged();
 
-        private slots:
+        private Q_SLOTS:
 
             void sceneRectChanged(const QRectF & sceneRect);
 

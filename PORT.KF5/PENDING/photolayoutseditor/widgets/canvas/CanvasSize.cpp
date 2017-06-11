@@ -25,7 +25,7 @@
 
 #include "CanvasSize.h"
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 QMap<CanvasSize::ResolutionUnits,qreal> CanvasSize::resolution_factors;
 QMap<CanvasSize::ResolutionUnits,QString> CanvasSize::resolution_names;

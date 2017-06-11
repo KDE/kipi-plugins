@@ -29,7 +29,7 @@
 #include <QObject>
 #include <QPointF>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class MousePressListener : public QObject
     {
@@ -57,7 +57,7 @@ namespace KIPIPhotoLayoutsEditor
                 return release;
             }
 
-        public slots:
+        public Q_SLOTS:
 
             void mousePress(const QPointF & scenePos)
             {
@@ -68,7 +68,7 @@ namespace KIPIPhotoLayoutsEditor
                 emit mouseReleased((release = scenePos));
             }
 
-        signals:
+        Q_SIGNALS:
 
             void mousePressed(const QPointF & scenePos);
             void mouseReleased(const QPointF & scenePos);

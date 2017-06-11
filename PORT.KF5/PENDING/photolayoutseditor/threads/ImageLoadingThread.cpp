@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "ImageLoadingThread.moc"
+#include "ImageLoadingThread.h"
 
 // Qt includes
 
@@ -54,7 +54,7 @@
 using namespace KIPIPlugins;
 
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
 
 class ImageLoadingThread::ImageLoadingThreadPrivate
@@ -67,7 +67,7 @@ class ImageLoadingThread::ImageLoadingThreadPrivate
     {
     }
 
-    QUrl::List m_urls;
+    QList<QUrl> m_urls;
     QSemaphore m_sem;
     qint64     m_size;
     qint64     m_loaded_bytes;
@@ -118,7 +118,7 @@ ImageLoadingThread::~ImageLoadingThread()
 
 void ImageLoadingThread::run()
 {
-    QUrl::List urls = d->m_urls;
+    QList<QUrl> urls = d->m_urls;
 
     // Calculating reading progress
     d->m_loaded_bytes = d->m_size = 0;
@@ -178,7 +178,7 @@ void ImageLoadingThread::setImageUrl(const QUrl& url)
     d->m_sem.release();
 }
 
-void ImageLoadingThread::setImagesUrls(const QUrl::List& urls)
+void ImageLoadingThread::setImagesUrls(const QList<QUrl>& urls)
 {
     d->m_sem.acquire();
     d->m_urls = urls;
@@ -315,4 +315,4 @@ void ImageLoadingThread::loadImage(const QUrl& url)
     emit imageLoaded(url, img);
 }
 
-} // namespace KIPIPhotoLayoutsEditor
+} // namespace PhotoLayoutsEditor

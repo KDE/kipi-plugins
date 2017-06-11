@@ -32,7 +32,7 @@
 
 #include "AbstractTool.h"
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class CanvasEditToolPrivate;
     class CanvasEditTool : public AbstractTool
@@ -47,9 +47,9 @@ namespace KIPIPhotoLayoutsEditor
             explicit CanvasEditTool(Scene * scene, QWidget * parent = 0);
             virtual ~CanvasEditTool();
 
-        signals:
+        Q_SIGNALS:
 
-        public slots:
+        public Q_SLOTS:
 
             void backgroundTypeChanged(const QString & typeName);
 
@@ -58,7 +58,7 @@ namespace KIPIPhotoLayoutsEditor
             virtual void sceneChange();
             virtual void sceneChanged();
 
-        protected slots:
+        protected Q_SLOTS:
 
             // Type of background selection
             void colorBackgroundSelected();
@@ -95,7 +95,7 @@ namespace KIPIPhotoLayoutsEditor
             void setImageBorder();
             void setupGUI();
 
-        private slots:
+        private Q_SLOTS:
 
             void updateWidgets();
     };

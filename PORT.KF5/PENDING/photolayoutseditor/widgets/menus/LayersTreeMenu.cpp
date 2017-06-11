@@ -27,7 +27,7 @@
 #include "LayersTree.h"
 #include <klocalizedstring.h>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 LayersTreeMenu::LayersTreeMenu(LayersTree * parent) :
     QMenu(parent)

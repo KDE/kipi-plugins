@@ -23,11 +23,11 @@
  *
  * ============================================================ */
 
-#include "AbstractItemsTool.moc"
+#include "AbstractItemsTool.h"
 #include "AbstractPhoto.h"
 #include "ToolsDockWidget.h"
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 AbstractItemsTool::AbstractItemsTool(Scene * scene, Canvas::SelectionMode selectionMode, QWidget * parent) :
     AbstractTool(scene, selectionMode, parent),

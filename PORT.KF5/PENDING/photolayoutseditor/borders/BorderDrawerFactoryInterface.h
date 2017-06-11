@@ -28,7 +28,7 @@
 
 #include <QObject>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class BorderDrawerInterface;
     class BorderDrawerFactoryInterface : public QObject
@@ -47,6 +47,6 @@ namespace KIPIPhotoLayoutsEditor
     };
 }
 
-Q_DECLARE_INTERFACE(KIPIPhotoLayoutsEditor::BorderDrawerFactoryInterface, "pl.coder89.ple.BorderDrawerFactoryInterface/1.0")
+Q_DECLARE_INTERFACE(PhotoLayoutsEditor::BorderDrawerFactoryInterface, "pl.coder89.ple.BorderDrawerFactoryInterface/1.0")
 
 #endif // BORDERDRAWERFACTORYINTERFACE_H

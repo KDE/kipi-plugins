@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "CanvasLoadingThread.moc"
+#include "CanvasLoadingThread.h"
 #include "ProgressEvent.h"
 #include "AbstractPhotoItemLoader.h"
 #include "PhotoItemLoader.h"
@@ -41,7 +41,7 @@
 
 #include <klocalizedstring.h>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 class CanvasLoadingThread::CanvasLoadingThreadPrivate
 {

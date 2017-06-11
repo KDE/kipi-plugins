@@ -30,7 +30,7 @@
 
 #include "AbstractTool.h"
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class AbstractPhoto;
     class EffectsListView;
@@ -60,11 +60,11 @@ namespace KIPIPhotoLayoutsEditor
             QPointF mousePosition();
             void setMousePosition(const QPointF & position);
 
-        signals:
+        Q_SIGNALS:
 
             void itemCreated(AbstractPhoto * item);
 
-        public slots:
+        public Q_SLOTS:
 
           /** This slot is called before current item change
             * It gives a chanse to save changes of currently edited item.

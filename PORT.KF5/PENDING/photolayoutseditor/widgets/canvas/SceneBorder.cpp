@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "SceneBorder.moc"
+#include "SceneBorder.h"
 
 // C++ std includes
 
@@ -43,9 +43,9 @@
 
 #include "global.h"
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
-class KIPIPhotoLayoutsEditor::SceneBorder::BorderImageChangedCommand : public QUndoCommand
+class PhotoLayoutsEditor::SceneBorder::BorderImageChangedCommand : public QUndoCommand
 {
     QImage       m_image;
     SceneBorder* m_backgropund_item;

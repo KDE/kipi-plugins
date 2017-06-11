@@ -28,7 +28,7 @@
 
 #include "kpaboutdata.h"
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
 
 class PLEAboutData : public KIPIPlugins::KPAboutData
@@ -49,6 +49,6 @@ class PLEAboutData : public KIPIPlugins::KPAboutData
         }
 };
 
-} // namespace KIPIPhotoLayoutsEditor
+} // namespace PhotoLayoutsEditor
 
 #endif // PLEABOUTDATA_H

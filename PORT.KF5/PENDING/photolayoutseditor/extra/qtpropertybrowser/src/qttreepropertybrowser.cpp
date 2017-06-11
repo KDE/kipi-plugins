@@ -254,7 +254,7 @@ protected:
     void drawDisplay(QPainter *painter, const QStyleOptionViewItem &option,
             const QRect &rect, const QString &text) const;
 
-private slots:
+private Q_SLOTS:
     void slotEditorDestroyed(QObject *object);
 
 private:
@@ -1074,4 +1074,4 @@ QT_END_NAMESPACE
 #endif
 
 #include "moc_qttreepropertybrowser.cpp"
-#include "qttreepropertybrowser.moc"
+#include "qttreepropertybrowser.h"

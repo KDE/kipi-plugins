@@ -3,7 +3,7 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2011-09-01
+ * Date        : 2011-11-29
  * Description : a plugin to create photo layouts by fusion of several images.
  * Acknowledge : based on the expoblending plugin
  *
@@ -23,21 +23,24 @@
  *
  * ============================================================ */
 
-#ifndef GRAYSCALEPHOTOEFFECT_P_H
-#define GRAYSCALEPHOTOEFFECT_P_H
+#ifndef NEGATIVEPHOTOEFFECT_H
+#define NEGATIVEPHOTOEFFECT_H
 
 #include "AbstractPhotoEffectInterface.h"
 
-namespace KIPIPhotoLayoutsEditor
+#include <QImage>
+#include <QRect>
+
+namespace PhotoLayoutsEditor
 {
     class StandardEffectsFactory;
-    class GrayscalePhotoEffect : public AbstractPhotoEffectInterface
+    class NegativePhotoEffect : public AbstractPhotoEffectInterface
     {
             Q_OBJECT
 
         public:
 
-            explicit GrayscalePhotoEffect(StandardEffectsFactory * factory, QObject * parent = 0);
+            explicit NegativePhotoEffect(StandardEffectsFactory * factory, QObject * parent = 0);
             virtual QImage apply(const QImage & image) const;
             virtual QString name() const;
             virtual QString toString() const;
@@ -45,21 +48,17 @@ namespace KIPIPhotoLayoutsEditor
 
         private:
 
-            static inline QImage greyscaled(const QImage & image)
+            static QImage negative(const QImage & image)
             {
-                QImage result = image;
+                QImage result = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
                 unsigned int pixels = result.width() * result.height();
                 unsigned int * data = reinterpret_cast<unsigned int *>(result.bits());
                 for (unsigned int i = 0; i < pixels; ++i)
-                {
-                    int val = qGray(data[i]);
-                    data[i] = qRgb(val,val,val);
-                }
+                    data[i] = qRgb(255-qRed(data[i]),255-qGreen(data[i]),255-qBlue(data[i]));
+
                 return result;
             }
-
-        friend class StandardEffectsFactory;
     };
 }
 
-#endif // GRAYSCALEPHOTOEFFECT_P_H
+#endif // NEGATIVEPHOTOEFFECT_H

@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "BorderEditTool.moc"
+#include "BorderEditTool.h"
 #include "ToolsDockWidget.h"
 #include "AbstractPhoto.h"
 
@@ -40,10 +40,10 @@
 #include <QtTreePropertyBrowser>
 #include "KEditFactory.h"
 
-#include <kpushbutton.h>
+#include <QPushButton>
 #include <klocalizedstring.h>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 BorderEditTool::BorderEditTool(Scene * scene, QWidget * parent) :
     AbstractItemsListViewTool(i18n("Borders editor"), scene, Canvas::SingleSelcting, parent)

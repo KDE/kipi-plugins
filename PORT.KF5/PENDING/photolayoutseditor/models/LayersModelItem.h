@@ -30,7 +30,7 @@
 #include <QDebug>
 #include <QGraphicsItem>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class AbstractPhoto;
     class LayersModel;
@@ -70,7 +70,7 @@ namespace KIPIPhotoLayoutsEditor
 
             void setData(const QList<QVariant> & data);
 
-        protected slots:
+        protected Q_SLOTS:
 
             void updateData();
 

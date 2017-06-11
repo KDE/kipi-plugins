@@ -23,4 +23,4 @@
  *
  * ============================================================ */
 
-#include "AbstractPhotoEffectInterface.moc"
+#include "AbstractPhotoEffectInterface.h"

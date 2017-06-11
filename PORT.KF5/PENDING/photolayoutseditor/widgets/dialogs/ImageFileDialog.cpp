@@ -23,12 +23,12 @@
  *
  * ============================================================ */
 
-#include "ImageFileDialog.moc"
+#include "ImageFileDialog.h"
 
 #include <kmessagebox.h>
 #include <klocalizedstring.h>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 QString ImageFileDialog::FILTER =   "*.bpm|(*.bmp) Windows Bitmap\n"
                                     "*.jpg|(*.jpg) JPG\n"

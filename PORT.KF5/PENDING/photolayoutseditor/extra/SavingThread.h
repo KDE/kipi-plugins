@@ -30,7 +30,7 @@
 
 #include <QUrl>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class Canvas;
 

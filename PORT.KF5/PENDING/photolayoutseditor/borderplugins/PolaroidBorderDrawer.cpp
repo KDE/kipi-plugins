@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "PolaroidBorderDrawer.moc"
+#include "PolaroidBorderDrawer.h"
 #include "StandardBordersFactory.h"
 
 #include <klocalizedstring.h>
@@ -33,7 +33,7 @@
 #include <QMetaProperty>
 #include <QDebug>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 QMap<const char *,QString> PolaroidBorderDrawer::m_properties;
 int PolaroidBorderDrawer::m_default_width = 20;

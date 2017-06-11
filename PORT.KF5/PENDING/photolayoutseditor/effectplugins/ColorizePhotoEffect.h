@@ -30,7 +30,7 @@
 
 #define COLOR_PROPERTY "Color"
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class StandardEffectsFactory;
     class ColorizePhotoEffect : public AbstractPhotoEffectInterface

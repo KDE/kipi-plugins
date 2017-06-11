@@ -23,4 +23,4 @@
  *
  * ============================================================ */
 
-#include "MousePressListener.moc"
+#include "MousePressListener.h"

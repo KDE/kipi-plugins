@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "EffectsEditorTool.moc"
+#include "EffectsEditorTool.h"
 #include "AbstractPhoto.h"
 #include "PhotoEffectsLoader.h"
 #include "PhotoEffectsGroup.h"
@@ -36,10 +36,10 @@
 #include <QtAbstractPropertyBrowser>
 
 #include <klocalizedstring.h>
-#include <kpushbutton.h>
+#include <QPushButton>
 #include <QComboBox>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 EffectsEditorTool::EffectsEditorTool(Scene * scene, QWidget * parent) :
     AbstractItemsListViewTool(i18n("Effects"), scene, Canvas::SingleSelcting, parent)

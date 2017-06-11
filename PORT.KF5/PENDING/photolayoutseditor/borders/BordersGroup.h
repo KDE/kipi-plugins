@@ -34,7 +34,7 @@
 #include <QStyleOptionGraphicsItem>
 #include "BorderDrawerInterface.h"
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class BordersGroupPrivate;
     class AbstractPhoto;
@@ -85,7 +85,7 @@ namespace KIPIPhotoLayoutsEditor
             virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
             virtual bool moveRows(int sourcePosition, int sourceCount, int destPosition);
 
-        protected slots:
+        protected Q_SLOTS:
 
             void emitBordersChanged()
             {

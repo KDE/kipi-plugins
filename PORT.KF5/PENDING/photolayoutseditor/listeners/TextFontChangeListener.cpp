@@ -23,12 +23,12 @@
  *
  * ============================================================ */
 
-#include "TextFontChangeListener.moc"
+#include "TextFontChangeListener.h"
 #include "TextItem.h"
 
 #include <QtFontPropertyManager>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 TextFontChangeListener::TextFontChangeListener(TextItem * item, QObject * parent) :
     QObject(parent),

@@ -31,7 +31,7 @@
 
 #include "CanvasSize.h"
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
 
 class Canvas;
@@ -55,6 +55,6 @@ public:
     friend class CanvasSavingThread;
 };
 
-} // namespace KIPIPhotoLayoutsEditor
+} // namespace PhotoLayoutsEditor
 
 #endif // CANVAS_P_H

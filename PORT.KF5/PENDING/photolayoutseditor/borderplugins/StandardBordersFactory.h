@@ -28,7 +28,7 @@
 
 #include "BorderDrawerFactoryInterface.h"
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class StandardBordersFactory : public BorderDrawerFactoryInterface
     {

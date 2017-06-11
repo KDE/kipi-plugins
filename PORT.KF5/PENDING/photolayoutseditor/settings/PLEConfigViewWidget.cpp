@@ -35,9 +35,9 @@
 #include <kconfigdialog.h>
 #include <klocalizedstring.h>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
-class KIPIPhotoLayoutsEditor::PLEConfigViewWidget::PLEConfigViewWidgetPrivate
+class PhotoLayoutsEditor::PLEConfigViewWidget::PLEConfigViewWidgetPrivate
 {
     QCheckBox      * antialiasing;
     QDoubleSpinBox * xGrid;

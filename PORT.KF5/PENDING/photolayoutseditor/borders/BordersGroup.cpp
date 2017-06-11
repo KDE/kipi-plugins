@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "BordersGroup.moc"
+#include "BordersGroup.h"
 #include "BorderDrawerInterface.h"
 #include "AbstractPhoto.h"
 #include "AbstractPhoto_p.h"
@@ -32,9 +32,9 @@
 #include <QGraphicsScene>
 #include <QUndoCommand>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
-class KIPIPhotoLayoutsEditor::BordersGroupPrivate
+class PhotoLayoutsEditor::BordersGroupPrivate
 {
     BordersGroupPrivate(BordersGroup * group) :
         group(group),

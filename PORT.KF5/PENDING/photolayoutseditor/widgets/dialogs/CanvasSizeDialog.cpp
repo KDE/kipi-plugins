@@ -23,12 +23,12 @@
  *
  * ============================================================ */
 
-#include "CanvasSizeDialog.moc"
+#include "CanvasSizeDialog.h"
 
 // KDE
 #include <QComboBox>
 #include <klocalizedstring.h>
-#include <kpushbutton.h>
+#include <QPushButton>
 
 // Qt
 #include <QFormLayout>
@@ -41,9 +41,9 @@
 #include "CanvasSize.h"
 #include "global.h"
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
-class KIPIPhotoLayoutsEditor::CanvasSizeDialogPrivate
+class PhotoLayoutsEditor::CanvasSizeDialogPrivate
 {
     public:
         CanvasSizeDialogPrivate() :
@@ -107,9 +107,9 @@ class KIPIPhotoLayoutsEditor::CanvasSizeDialogPrivate
         QDoubleSpinBox *  xSize;
         QDoubleSpinBox *  ySize;
         QButtonGroup *  orientationGroup;
-        KPushButton *   verticalButton;
+        QPushButton *   verticalButton;
         QLabel *    sizeLabel;
-        KPushButton *   horizontalButton;
+        QPushButton *   horizontalButton;
         QComboBox * sizeUnitsWidget;
         QDoubleSpinBox *  xResolution;
         QDoubleSpinBox *  yResolution;
@@ -384,11 +384,11 @@ void CanvasSizeDialog::setupDialog(const QSizeF & size, const QString & sizeUnit
     gridLayout->addWidget(d->sizeUnitsWidget,1,2);
 
     // Orientation buttons
-    d->horizontalButton = new KPushButton(QIcon::fromTheme(":horizontal_orientation.png"),"",d->sizeWidget);
+    d->horizontalButton = new QPushButton(QIcon::fromTheme(":horizontal_orientation.png"),"",d->sizeWidget);
     d->horizontalButton->setCheckable(true);
     d->horizontalButton->setFlat(true);
     d->horizontalButton->setIconSize(QSize(24,24));
-    d->verticalButton = new KPushButton(QIcon::fromTheme(":vertical_orientation.png"),"",d->sizeWidget);
+    d->verticalButton = new QPushButton(QIcon::fromTheme(":vertical_orientation.png"),"",d->sizeWidget);
     d->verticalButton->setCheckable(true);
     d->verticalButton->setFlat(true);
     d->verticalButton->setIconSize(QSize(24,24));

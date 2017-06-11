@@ -1,33 +1,68 @@
 #
-# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+# Copyright (c) 2010-2017, Gilles Caulier, <caulier dot gilles at gmail dot com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-add_subdirectory(extra/qtpropertybrowser)
+if (POLICY CMP0063)
+    cmake_policy(SET CMP0063 NEW)
+endif (POLICY CMP0063)
+
+#add_subdirectory(extra/qtpropertybrowser)
 add_subdirectory(resources/app)
 add_subdirectory(data)
-add_subdirectory(effectplugins)
-add_subdirectory(borderplugins)
 
-set(CMAKE_PACKAGE_QTGUI TRUE)
-set(QT_USE_QTXML        TRUE)
+include_directories($<TARGET_PROPERTY:Qt5::Xml,INTERFACE_INCLUDE_DIRECTORIES>
+                    $<TARGET_PROPERTY:Qt5::Gui,INTERFACE_INCLUDE_DIRECTORIES>
+                    $<TARGET_PROPERTY:Qt5::Core,INTERFACE_INCLUDE_DIRECTORIES>
+                    $<TARGET_PROPERTY:Qt5::Widgets,INTERFACE_INCLUDE_DIRECTORIES>
+                    $<TARGET_PROPERTY:Qt5::PrintSupport,INTERFACE_INCLUDE_DIRECTORIES>
 
-set(PLE_Common_SRCS
-    plugin/photolayoutseditor.cpp
-    settings/PLEConfigDialog.cpp
-    settings/PLEConfigViewWidget.cpp
-    extra/global.cpp
-    extra/KEditFactory.cpp
+                    $<TARGET_PROPERTY:KF5::I18n,INTERFACE_INCLUDE_DIRECTORIES>
+                    $<TARGET_PROPERTY:KF5::ConfigCore,INTERFACE_INCLUDE_DIRECTORIES>
+)
+
+set(photolayoutseditor_SRCS
+
     events/ProgressEvent.cpp
     events/UndoCommandEvent.cpp
     events/UndoCommandEventFilter.cpp
-    listeners/TextColorChangeListener.cpp
-    listeners/TextFontChangeListener.cpp
-    undo/UndoMoveRowsCommand.cpp
-   )
 
-set(PLE_Widgets_SRCS
+    models/AbstractMovableModel.cpp
+    models/LayersModel.cpp
+    models/LayersModelItem.cpp
+    models/LayersSelectionModel.cpp
+
+    borderplugins/StandardBordersFactory.cpp
+    borderplugins/PolaroidBorderDrawer.cpp
+    borderplugins/SolidBorderDrawer.cpp
+
+    borders/BorderChangeListener.cpp
+    borders/BorderDrawerInterface.cpp
+    borders/BorderDrawersLoader.cpp
+    borders/BordersGroup.cpp
+
+    effectplugins/StandardEffectsFactory.cpp
+    effectplugins/BlurPhotoEffect.cpp
+    effectplugins/ColorizePhotoEffect.cpp
+    effectplugins/GrayscalePhotoEffect.cpp
+    effectplugins/SepiaPhotoEffect.cpp
+    effectplugins/NegativePhotoEffect.cpp
+
+    effects/AbstractPhotoEffectInterface.cpp
+    effects/PhotoEffectChangeListener.cpp
+    effects/PhotoEffectsGroup.cpp
+    effects/PhotoEffectsLoader.cpp
+
+    threads/AbstractPhotoItemLoader.cpp
+    threads/CanvasLoadingThread.cpp
+    threads/CanvasSavingThread.cpp
+    threads/ImageLoadingThread.cpp
+    threads/PhotoItemLoader.cpp
+    threads/SceneBackgroundLoader.cpp
+    threads/SceneBorderLoader.cpp
+    threads/TextItemLoader.cpp
+
     widgets/canvas/Canvas.cpp
     widgets/canvas/CanvasSize.cpp
     widgets/canvas/CropWidgetItem.cpp
@@ -52,8 +87,8 @@ set(PLE_Widgets_SRCS
     widgets/items/AbstractPhoto_p.cpp
     widgets/items/PhotoItem.cpp
     widgets/items/TextItem.cpp
-    widgets/menus/LayersTreeMenu.cpp
     widgets/items/AbstractItemInterface.cpp
+    widgets/menus/LayersTreeMenu.cpp
     widgets/tools/AbstractItemsListViewTool.cpp
     widgets/tools/AbstractItemsTool.cpp
     widgets/tools/AbstractTool.cpp
@@ -63,159 +98,45 @@ set(PLE_Widgets_SRCS
     widgets/tools/TextEditorTool.cpp
     widgets/tools/ToolsDockWidget.cpp
     widgets/tools/ZoomTool.cpp
+
+    listeners/TextColorChangeListener.cpp
+    listeners/TextFontChangeListener.cpp
+
+    undo/UndoMoveRowsCommand.cpp
+
+    settings/PLEConfigDialog.cpp
+    settings/PLEConfigViewWidget.cpp
+
+    extra/global.cpp
+    extra/KEditFactory.cpp
+
+    main/photolayoutseditor.cpp
    )
 
-set(PLE_Models_SRCS
-    models/AbstractMovableModel.cpp
-    models/LayersModel.cpp
-    models/LayersModelItem.cpp
-    models/LayersSelectionModel.cpp
-   )
-
-set(PLE_Borders_SRCS
-    borderplugins/StandardBordersFactory.cpp
-    borderplugins/polaroid/PolaroidBorderDrawer.cpp
-    borderplugins/solid/SolidBorderDrawer.cpp
-    borders/BorderChangeListener.cpp
-    borders/BorderDrawerInterface.cpp
-    borders/BorderDrawersLoader.cpp
-    borders/BordersGroup.cpp
-   )
-
-set(PLE_Effects_SRCS
-    effectplugins/StandardEffectsFactory.cpp
-    effectplugins/blur/BlurPhotoEffect.cpp
-    effectplugins/colorize/ColorizePhotoEffect.cpp
-    effectplugins/grayscale/GrayscalePhotoEffect.cpp
-    effectplugins/sepia/SepiaPhotoEffect.cpp
-    effectplugins/negative/NegativePhotoEffect.cpp
-    effects/AbstractPhotoEffectInterface.cpp
-    effects/PhotoEffectChangeListener.cpp
-    effects/PhotoEffectsGroup.cpp
-    effects/PhotoEffectsLoader.cpp
-   )
-
-set(PLE_Threads_SRCS
-    threads/AbstractPhotoItemLoader.cpp
-    threads/CanvasLoadingThread.cpp
-    threads/CanvasSavingThread.cpp
-    threads/ImageLoadingThread.cpp
-    threads/PhotoItemLoader.cpp
-    threads/SceneBackgroundLoader.cpp
-    threads/SceneBorderLoader.cpp
-    threads/TextItemLoader.cpp
-   )
-
-set(PhotoLayoutsEditor_SRCS
-    ${PLE_Common_SRCS}
-    ${PLE_Widgets_SRCS}
-    ${PLE_Models_SRCS}
-    ${PLE_Borders_SRCS}
-    ${PLE_Effects_SRCS}
-    ${PLE_Threads_SRCS}
-   )
-
-set(PhotoLayoutsEditor_RCS
+set(photolayoutseditor_RCS
     resources/icons.qrc
    )
 
-qt5_add_resources(PhotoLayoutsEditor_SRCS ${PhotoLayoutsEditor_RCS})
+qt5_add_resources(photolayoutseditor_SRCS ${photolayoutseditor_RCS})
 
-set(INCLUDE_DIRS
-    borders
-    borderplugins
-    borderplugins/polaroid
-    borderplugins/solid
-    effects
-    effectplugins
-    effectplugins/blur
-    effectplugins/colorize
-    effectplugins/grayscale
-    effectplugins/sepia
-    effectplugins/negative
-    events
-    listeners
-    models
-    plugin
-    settings
-    threads
-    undo
-    extra
-    extra/qtpropertybrowser/src
-    widgets
-    widgets/canvas
-    widgets/dialogs
-    widgets/extra
-    widgets/items
-    widgets/layers
-    widgets/menus
-    widgets/tools
-   )
+kconfig_add_kcfg_files(photolayoutseditor_SRCS GENERATE_MOC ./settings/PLEConfigSkeleton.kcfgc)
 
-include_directories(${QT_INCLUDE}
-                    
-                    ${INCLUDE_DIRS}
-                    ${KIPI_INCLUDE_DIR}
-                   )
-
-kconfig_add_kcfg_files( PhotoLayoutsEditor_SRCS GENERATE_MOC ./settings/PLEConfigSkeleton.kcfgc )
-
-# Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (bug: #269903)
-foreach(_currentfile ${PhotoLayoutsEditor_SRCS})
-    if(NOT MSVC)
-        set_source_files_properties(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")
-    endif()
-endforeach()
-
-if(NOT MSVC)
-    # Causes cmake error on openSUSE 12 (cmake 2.8.6)
-    #    set_target_properties( libphotolayoutseditor PROPERTIES COMPILE_FLAGS "-fPIC -fdata-sections -ffunction-sections" )
-    #    set_target_properties( libphotolayoutseditor PROPERTIES LINK_FLAGS "--gc-sections" )
-endif()
-
-add_library( libphotolayoutseditor STATIC ${PhotoLayoutsEditor_SRCS} )
-
-target_link_libraries(libphotolayoutseditor 
-                      PropertyBrowser
-                      ${QT_LIBRARIES}
-                      
-                      KF5::Parts
-                      KF5::Kipi
-                      KF5::KDcraw
-                      KF5kipiplugins
-                     )
+add_library(photolayoutseditor_src OBJECT ${photolayoutseditor_SRCS})
 
 install(FILES ./settings/photolayoutseditor.kcfg DESTINATION ${KCFG_INSTALL_DIR})
-
-# =======================================================
-# PhotoLayoutsEditor plugin
-
-set(kipiplugin_PhotoLayoutsEditor_PART_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/plugin_photolayoutseditor.cpp)
-
-add_library(kipiplugin_photolayoutseditor MODULE ${kipiplugin_PhotoLayoutsEditor_PART_SRCS})
-
-target_link_libraries(kipiplugin_photolayoutseditor libphotolayoutseditor)
-
-configure_file(plugin/kipiplugin_photolayoutseditor.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_photolayoutseditor.desktop)
-
-install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_photolayoutseditor.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-install(TARGETS kipiplugin_photolayoutseditor                                            DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES   plugin/kipiplugin_photolayoutseditorui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)
+install(PROGRAMS main/photolayoutseditor.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+install(FILES main/photolayoutseditorui.rc DESTINATION ${DATA_INSTALL_DIR}/photolayoutseditor)
+install(FILES effects/photolayoutseditoreffectplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
+install(FILES borders/photolayoutseditorborderplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
 
 # =======================================================
 # Stand-alone version of PhotoLayoutsEditor
 
-set(PhotoLayoutsEditor_SRCS plugin/main.cpp)
+#set(photolayoutseditor_SRCS main/main.cpp)
 
-file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/./resources/app/*photolayoutseditor.png")
-ecm_add_app_icon(PhotoLayoutsEditor_SRCS ICONS ${ICONS_SRCS})
+#file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/./resources/app/*photolayoutseditor.png")
+#ecm_add_app_icon(photolayoutseditor_SRCS ICONS ${ICONS_SRCS})
 
-add_executable(photolayoutseditor ${PhotoLayoutsEditor_SRCS})
+#add_executable(photolayoutseditor ${photolayoutseditor_SRCS})
 
-target_link_libraries(photolayoutseditor libphotolayoutseditor)
-
-install(TARGETS photolayoutseditor ${INSTALL_TARGETS_DEFAULT_ARGS})
-install(PROGRAMS plugin/photolayoutseditor.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
-install(FILES plugin/photolayoutseditorui.rc DESTINATION ${DATA_INSTALL_DIR}/photolayoutseditor)
-install(FILES effects/photolayoutseditoreffectplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
-install(FILES borders/photolayoutseditorborderplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
+#target_link_libraries(photolayoutseditor libphotolayoutseditor)

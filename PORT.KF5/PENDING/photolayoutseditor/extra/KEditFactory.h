@@ -191,7 +191,7 @@ class KSliderEditFactory : public QtAbstractEditorFactory<QtIntPropertyManager>
         virtual QWidget * createEditor(QtIntPropertyManager * manager, QtProperty * property, QWidget * parent);
         virtual void disconnectPropertyManager(QtIntPropertyManager *manager);
 
-    private slots:
+    private Q_SLOTS:
 
         void slotEditorDestroyed(QObject *object);
 

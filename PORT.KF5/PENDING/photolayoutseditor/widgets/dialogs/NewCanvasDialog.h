@@ -29,7 +29,7 @@
 
 #include <QListWidgetItem>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class CanvasSize;
     class TemplatesModel;
@@ -47,7 +47,7 @@ namespace KIPIPhotoLayoutsEditor
             QString templateSelected() const;
             CanvasSize canvasSize() const;
 
-        private slots:
+        private Q_SLOTS:
 
             void paperSizeSelected(QListWidgetItem* current, QListWidgetItem* previous);
             void orientationChanged();

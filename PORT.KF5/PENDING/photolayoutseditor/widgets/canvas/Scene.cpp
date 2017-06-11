@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "Scene.moc"
+#include "Scene.h"
 
 #include "global.h"
 #include "RotationWidgetItem.h"
@@ -76,11 +76,11 @@
 #include <klocalizedstring.h>
 #include <QUrl>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 QColor Scene::OUTSIDE_SCENE_COLOR;
 
-class KIPIPhotoLayoutsEditor::ScenePrivate
+class PhotoLayoutsEditor::ScenePrivate
 {
     ScenePrivate(Scene * scene) :
         m_scene(scene),
@@ -291,7 +291,7 @@ class KIPIPhotoLayoutsEditor::ScenePrivate
     friend class Scene;
 };
 
-class KIPIPhotoLayoutsEditor::AddItemsCommand : public QUndoCommand
+class PhotoLayoutsEditor::AddItemsCommand : public QUndoCommand
 {
         QList<AbstractPhoto*> items;
         int position;
@@ -343,7 +343,7 @@ class KIPIPhotoLayoutsEditor::AddItemsCommand : public QUndoCommand
             done = false;
         }
 };
-class KIPIPhotoLayoutsEditor::MoveItemsCommand : public QUndoCommand
+class PhotoLayoutsEditor::MoveItemsCommand : public QUndoCommand
 {
         QMap<AbstractPhoto*,QPointF> m_items;
         Scene * m_scene;
@@ -388,7 +388,7 @@ class KIPIPhotoLayoutsEditor::MoveItemsCommand : public QUndoCommand
             }
         }
 };
-class KIPIPhotoLayoutsEditor::RemoveItemsCommand : public QUndoCommand
+class PhotoLayoutsEditor::RemoveItemsCommand : public QUndoCommand
 {
         AbstractPhoto* item;
         int            item_row;
@@ -475,7 +475,7 @@ class KIPIPhotoLayoutsEditor::RemoveItemsCommand : public QUndoCommand
             if (items.count())
             {
                 // Sort using z-Values (z-Value == models row)
-                qSort(items.begin(), items.end(), KIPIPhotoLayoutsEditor::RemoveItemsCommand::compareGraphicsItems);
+                qSort(items.begin(), items.end(), PhotoLayoutsEditor::RemoveItemsCommand::compareGraphicsItems);
                 int i = 0;
                 foreach(QGraphicsItem* childItem, items)
                 {
@@ -493,7 +493,7 @@ class KIPIPhotoLayoutsEditor::RemoveItemsCommand : public QUndoCommand
             }
         }
 };
-class KIPIPhotoLayoutsEditor::CropItemsCommand : public QUndoCommand
+class PhotoLayoutsEditor::CropItemsCommand : public QUndoCommand
 {
     QMap<AbstractPhoto*,QPainterPath> data;
 public:
@@ -696,7 +696,7 @@ void Scene::changeSelectedImage()
     if (!item)
         return;
 
-    QUrl::List urls = KIPIPlugins::KPImageDialog::getImageUrl(PhotoLayoutsEditor::instance());
+    QList<QUrl> urls = KIPIPlugins::KPImageDialog::getImageUrl(PhotoLayoutsEditor::instance());
     if (urls.count() != 1)
         return;
 
@@ -1083,7 +1083,7 @@ void Scene::dropEvent(QGraphicsSceneDragDropEvent * event)
     if ( PhotoLayoutsEditor::instance()->hasInterface() &&
             mimeData->hasFormat("digikam/item-ids"))
     {
-        QUrl::List urls;
+        QList<QUrl> urls;
         QByteArray ba = mimeData->data("digikam/item-ids");
         QDataStream ds(&ba, QIODevice::ReadOnly);
         ds >> urls;
@@ -1097,7 +1097,7 @@ void Scene::dropEvent(QGraphicsSceneDragDropEvent * event)
     else if (mimeData->hasFormat("text/uri-list"))
     {
         QList<QUrl> urls = mimeData->urls();
-        QUrl::List list;
+        QList<QUrl> list;
         foreach(QUrl url, urls)
             list << QUrl(url);
 

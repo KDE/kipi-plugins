@@ -27,7 +27,7 @@
 
 #include <QGraphicsScene>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 AbstractItemInterface::AbstractItemInterface(QGraphicsItem * parent, QGraphicsScene * scene) :
     QObject(scene),

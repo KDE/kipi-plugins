@@ -23,8 +23,8 @@
  *
  * ============================================================ */
 
-#include "AbstractItemsListViewTool.moc"
-#include "AbstractItemsListViewTool_p.moc"
+#include "AbstractItemsListViewTool.h"
+#include "AbstractItemsListViewTool_p.h"
 
 #include <QGridLayout>
 #include <QLabel>
@@ -32,7 +32,7 @@
 #include <QtAbstractPropertyBrowser>
 
 #include <klocalizedstring.h>
-#include <kpushbutton.h>
+#include <QPushButton>
 #include <QComboBox>
 
 #include "AbstractPhoto.h"
@@ -40,7 +40,7 @@
 #include "BorderDrawersLoader.h"
 #include "global.h"
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 class ItemCreatedCommand : public QUndoCommand
 {
@@ -165,7 +165,7 @@ public:
     }
 };
 
-class KIPIPhotoLayoutsEditor::AbstractItemsListViewToolPrivate
+class PhotoLayoutsEditor::AbstractItemsListViewToolPrivate
 {
     AbstractItemsListViewToolPrivate() :
         m_list_widget(0),
@@ -177,10 +177,10 @@ class KIPIPhotoLayoutsEditor::AbstractItemsListViewToolPrivate
 //        , m_editors_object(0)
     {}
     AbstractListToolView * m_list_widget;
-    KPushButton * m_add_button;
-    KPushButton * m_remove_button;
-    KPushButton * m_down_button;
-    KPushButton * m_up_button;
+    QPushButton * m_add_button;
+    QPushButton * m_remove_button;
+    QPushButton * m_down_button;
+    QPushButton * m_up_button;
     AbstractListToolViewDelegate * m_delegate;
 //    QObject * m_editors_object;
 
@@ -218,10 +218,10 @@ AbstractItemsListViewTool::AbstractItemsListViewTool(const QString & toolName, S
 
     // Move add/remove buttons
     QHBoxLayout * addLayout = new QHBoxLayout();
-    d->m_add_button = new KPushButton(KGuiItem("",":action_add.png"));
+    d->m_add_button = new QPushButton(KGuiItem("",":action_add.png"));
     d->m_add_button->setIconSize(QSize(16,16));
     d->m_add_button->setFixedSize(24,24);
-    d->m_remove_button = new KPushButton(KGuiItem("",":action_remove.png"));
+    d->m_remove_button = new QPushButton(KGuiItem("",":action_remove.png"));
     d->m_remove_button->setIconSize(QSize(16,16));
     d->m_remove_button->setFixedSize(24,24);
     addLayout->addWidget(d->m_add_button);
@@ -233,10 +233,10 @@ AbstractItemsListViewTool::AbstractItemsListViewTool(const QString & toolName, S
 
     // Move up/down buttons
     QHBoxLayout * moveLayout = new QHBoxLayout();
-    d->m_down_button = new KPushButton(KGuiItem("",":arrow_down.png"));
+    d->m_down_button = new QPushButton(KGuiItem("",":arrow_down.png"));
     d->m_down_button->setIconSize(QSize(16,16));
     d->m_down_button->setFixedSize(24,24);
-    d->m_up_button = new KPushButton(KGuiItem("",":arrow_top.png"));
+    d->m_up_button = new QPushButton(KGuiItem("",":arrow_top.png"));
 
     d->m_up_button->setIconSize(QSize(16,16));
     d->m_up_button->setFixedSize(24,24);
@@ -419,12 +419,12 @@ AbstractListToolViewDelegate::AbstractListToolViewDelegate(AbstractMovableModel 
     comboBox->setCurrentIndex(-1);
     connect(comboBox,SIGNAL(currentIndexChanged(QString)),this,SLOT(itemSelected(QString)));
     layout->addWidget(comboBox,1);
-    m_acceptButton = new KPushButton(QIcon::fromTheme(":action_check.png"), "", this);
+    m_acceptButton = new QPushButton(QIcon::fromTheme(":action_check.png"), "", this);
     m_acceptButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum);
     m_acceptButton->setEnabled(false);
     connect(m_acceptButton,SIGNAL(clicked()),this,SLOT(editorAccepted()));
     layout->addWidget(m_acceptButton);
-    KPushButton * cancelButton = new KPushButton(QIcon::fromTheme(":action_delete.png"), "", this);
+    QPushButton * cancelButton = new QPushButton(QIcon::fromTheme(":action_delete.png"), "", this);
     cancelButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum);
     connect(cancelButton,SIGNAL(clicked()),this,SLOT(editorCancelled()));
     layout->addWidget(cancelButton);

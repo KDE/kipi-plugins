@@ -35,7 +35,7 @@
 
 #include <QUrl>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
 
 class ImageLoadingThread : public QThread
@@ -57,7 +57,7 @@ public Q_SLOTS:
 
     void setMaximumProgress(double limit);
     void setImageUrl(const QUrl& url);
-    void setImagesUrls(const QUrl::List& urls);
+    void setImagesUrls(const QList<QUrl>& urls);
 
 private:
 
@@ -72,6 +72,6 @@ private:
     friend class ImageLoadingThreadPrivate;
 };
 
-} // namespace KIPIPhotoLayoutsEditor
+} // namespace PhotoLayoutsEditor
 
 #endif // IMAGELOADINGTHREAD_H

@@ -30,7 +30,7 @@
 
 class QtProperty;
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class TextItem;
 
@@ -44,7 +44,7 @@ namespace KIPIPhotoLayoutsEditor
 
             explicit TextColorChangeListener(TextItem * item, QObject * parent = 0);
 
-        public slots:
+        public Q_SLOTS:
 
             void propertyChanged(QtProperty * property);
     };

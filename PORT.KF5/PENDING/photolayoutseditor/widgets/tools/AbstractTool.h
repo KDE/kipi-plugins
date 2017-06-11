@@ -32,7 +32,7 @@
 #include "Canvas.h"
 #include "ToolsDockWidget.h"
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class ToolsDockWidget;
 
@@ -81,7 +81,7 @@ namespace KIPIPhotoLayoutsEditor
             virtual void sceneChanged()
             {}
 
-        protected slots:
+        protected Q_SLOTS:
 
             void sceneDestroyed()
             {

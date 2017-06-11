@@ -30,9 +30,9 @@
 
 #include <klocalizedstring.h>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
-class KIPIPhotoLayoutsEditor::PLEConfigDialogPrivate
+class PhotoLayoutsEditor::PLEConfigDialogPrivate
 {
     PLEConfigViewWidget * confVWdg;
 

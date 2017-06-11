@@ -28,7 +28,7 @@
 
 #include "AbstractTool.h"
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class ZoomTool : public AbstractTool
     {
@@ -39,7 +39,7 @@ namespace KIPIPhotoLayoutsEditor
             explicit ZoomTool(Scene * scene, QWidget * parent = 0);
             ~ZoomTool();
 
-        public slots:
+        public Q_SLOTS:
 
             void zoom(const QPointF & point);
 

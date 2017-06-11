@@ -28,7 +28,7 @@
 
 #include "AbstractPhotoItemLoader.h"
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class TextItem;
     class TextItemLoader : public AbstractPhotoItemLoader

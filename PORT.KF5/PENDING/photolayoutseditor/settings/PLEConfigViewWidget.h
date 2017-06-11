@@ -28,7 +28,7 @@
 
 #include <QWidget>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class PLEConfigViewWidget : public QWidget
     {

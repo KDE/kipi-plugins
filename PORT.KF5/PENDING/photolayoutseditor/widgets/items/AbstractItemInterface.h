@@ -29,7 +29,7 @@
 #include <QObject>
 #include <QGraphicsItem>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class Scene;
     class ScenePrivate;

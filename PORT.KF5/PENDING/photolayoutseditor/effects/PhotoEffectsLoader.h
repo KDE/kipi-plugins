@@ -38,7 +38,7 @@
 class QtProperty;
 class QtAbstractPropertyBrowser;
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class AbstractPhoto;
     class PhotoEffectsGroup;

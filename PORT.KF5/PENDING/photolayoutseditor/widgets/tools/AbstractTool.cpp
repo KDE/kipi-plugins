@@ -23,4 +23,4 @@
  *
  * ============================================================ */
 
-#include "AbstractTool.moc"
+#include "AbstractTool.h"

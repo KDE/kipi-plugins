@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "PhotoItemLoader.moc"
+#include "PhotoItemLoader.h"
 #include "PhotoItem.h"
 #include "ImageLoadingThread.h"
 #include "ProgressObserver.h"
@@ -33,7 +33,7 @@
 
 #include <klocalizedstring.h>
 
-using namespace KIPIPhotoLayoutsEditor;
+using namespace PhotoLayoutsEditor;
 
 PhotoItemLoader::PhotoItemLoader(PhotoItem * item, QDomElement & element, QObject * parent) :
     AbstractPhotoItemLoader(item, element, parent)
@@ -67,7 +67,7 @@ void PhotoItemLoader::run()
     QDomElement path = data.firstChildElement("path");
     if (path.isNull())
         this->exit(1);
-    item->m_image_path = KIPIPhotoLayoutsEditor::pathFromSvg(path);
+    item->m_image_path = PhotoLayoutsEditor::pathFromSvg(path);
     if (item->m_image_path.isEmpty())
         this->exit(1);
 

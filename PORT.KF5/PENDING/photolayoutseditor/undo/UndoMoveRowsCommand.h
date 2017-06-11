@@ -29,7 +29,7 @@
 #include <QModelIndex>
 #include <QUndoCommand>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class LayersModel;
     class LayersModelItem;

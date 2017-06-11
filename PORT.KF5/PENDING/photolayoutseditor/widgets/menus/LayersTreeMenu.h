@@ -28,7 +28,7 @@
 
 #include <QMenu>
 
-namespace KIPIPhotoLayoutsEditor
+namespace PhotoLayoutsEditor
 {
     class LayersTree;
 
