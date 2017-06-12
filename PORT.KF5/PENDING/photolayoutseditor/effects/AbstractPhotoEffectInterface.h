@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -35,7 +35,6 @@
 #include <QMetaProperty>
 #include <QDebug>
 
-#include <kdemacros.h>
 #include <klocalizedstring.h>
 
 #define STRENGTH_PROPERTY QString("Strength")

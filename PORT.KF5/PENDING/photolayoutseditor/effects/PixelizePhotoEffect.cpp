@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -40,7 +40,7 @@
 
 #include "KEditFactory.h"
 
-using namespace KIPIPhotoFramesEditor;
+using namespace PhotoLayoutsEditor;
 
 class PixelizePhotoEffect::PixelizeUndoCommand : public QUndoCommand
 {

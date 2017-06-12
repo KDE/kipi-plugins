@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -30,7 +30,7 @@
 using namespace PhotoLayoutsEditor;
 
 PLEStatusBar::PLEStatusBar(QWidget * parent) :
-    KStatusBar(parent)
+    QStatusBar(parent)
 {
     this->insertItem("",0,1);
     m_pb = new QProgressBar(this);

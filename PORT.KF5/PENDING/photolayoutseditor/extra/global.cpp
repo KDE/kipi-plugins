@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -25,7 +25,7 @@
 
 #include "global.h"
 #include "UndoCommandEvent.h"
-#include "photolayoutseditor.h"
+#include "photolayoutswindow.h"
 
 #include <QPrinter>
 #include <QQueue>
@@ -49,7 +49,7 @@ QString PhotoLayoutsEditor::templateUri()
 
 void PhotoLayoutsEditor::PLE_PostUndoCommand(QUndoCommand * command)
 {
-    PhotoLayoutsEditor::instance()->addUndoCommand(command);
+    PhotoLayoutsWindow::instance()->addUndoCommand(command);
 }
 
 QDomDocument PhotoLayoutsEditor::pathToSvg(const QPainterPath & path)

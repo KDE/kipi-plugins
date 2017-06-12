@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -23,8 +23,13 @@
  *
  * ============================================================ */
 
-#include "photoframeseditor_p.h"
+#include "photolayoutseditor_p.h"
+
+namespace PhotoLayoutsEditor
+{
 
 PhotoFramesEditorPriv::PhotoFramesEditorPriv()
 {
 }
+
+} // namespace PhotoLayoutsEditor

@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -62,12 +62,12 @@ UndoMoveRowsCommand::UndoMoveRowsCommand(int startingRow, int rowsCount, const Q
         m_rows_count = 0;
         m_destination_row = 0;
 #ifdef QT_DEBUG
-        qCDebug(KIPIPLUGINS_LOG) << "Can't create UndoMoveRowsCommand [NO MODEL!]:";
-        qCDebug(KIPIPLUGINS_LOG) << "\tStarting Row =" << startingRow;
-        qCDebug(KIPIPLUGINS_LOG) << "\tRows count =" << rowsCount;
-        qCDebug(KIPIPLUGINS_LOG) << "\tDestination Row =" << destinationRow;
-        qCDebug(KIPIPLUGINS_LOG) << "\tSource Parent =" << sourceParent;
-        qCDebug(KIPIPLUGINS_LOG) << "\tDestination Parent =" << destinationParent;
+        qCDebug(DIGIKAM_GENERAL_LOG) << "Can't create UndoMoveRowsCommand [NO MODEL!]:";
+        qCDebug(DIGIKAM_GENERAL_LOG) << "\tStarting Row =" << startingRow;
+        qCDebug(DIGIKAM_GENERAL_LOG) << "\tRows count =" << rowsCount;
+        qCDebug(DIGIKAM_GENERAL_LOG) << "\tDestination Row =" << destinationRow;
+        qCDebug(DIGIKAM_GENERAL_LOG) << "\tSource Parent =" << sourceParent;
+        qCDebug(DIGIKAM_GENERAL_LOG) << "\tDestination Parent =" << destinationParent;
 #endif
     }
 }
@@ -82,14 +82,14 @@ void UndoMoveRowsCommand::redo()
 #ifdef QT_DEBUG
     else
     {
-        qCDebug(KIPIPLUGINS_LOG) << "Can't redo from UndoMoveRowsCommand:";
-        qCDebug(KIPIPLUGINS_LOG) << "\tStarting Row =" << m_starting_row;
-        qCDebug(KIPIPLUGINS_LOG) << "\tRows count =" << m_rows_count;
-        qCDebug(KIPIPLUGINS_LOG) << "\tDestination Row =" << m_destination_row;
+        qCDebug(DIGIKAM_GENERAL_LOG) << "Can't redo from UndoMoveRowsCommand:";
+        qCDebug(DIGIKAM_GENERAL_LOG) << "\tStarting Row =" << m_starting_row;
+        qCDebug(DIGIKAM_GENERAL_LOG) << "\tRows count =" << m_rows_count;
+        qCDebug(DIGIKAM_GENERAL_LOG) << "\tDestination Row =" << m_destination_row;
         if (m_model)
         {
-            qCDebug(KIPIPLUGINS_LOG) << "\tSource Parent =" << m_model->findIndex(m_src_parent_row);
-            qCDebug(KIPIPLUGINS_LOG) << "\tDestination Parent =" << m_model->findIndex(m_dest_parent_row);
+            qCDebug(DIGIKAM_GENERAL_LOG) << "\tSource Parent =" << m_model->findIndex(m_src_parent_row);
+            qCDebug(DIGIKAM_GENERAL_LOG) << "\tDestination Parent =" << m_model->findIndex(m_dest_parent_row);
         }
     }
 #endif
@@ -105,14 +105,14 @@ void UndoMoveRowsCommand::undo()
 #ifdef QT_DEBUG
     else
     {
-        qCDebug(KIPIPLUGINS_LOG) << "Can't undo from UndoMoveRowsCommand:";
-        qCDebug(KIPIPLUGINS_LOG) << "\tStarting Row =" << m_starting_row;
-        qCDebug(KIPIPLUGINS_LOG) << "\tRows count =" << m_rows_count;
-        qCDebug(KIPIPLUGINS_LOG) << "\tDestination Row =" << m_destination_row;
+        qCDebug(DIGIKAM_GENERAL_LOG) << "Can't undo from UndoMoveRowsCommand:";
+        qCDebug(DIGIKAM_GENERAL_LOG) << "\tStarting Row =" << m_starting_row;
+        qCDebug(DIGIKAM_GENERAL_LOG) << "\tRows count =" << m_rows_count;
+        qCDebug(DIGIKAM_GENERAL_LOG) << "\tDestination Row =" << m_destination_row;
         if (m_model)
         {
-            qCDebug(KIPIPLUGINS_LOG) << "\tSource Parent =" << m_model->findIndex(m_src_parent_row);
-            qCDebug(KIPIPLUGINS_LOG) << "\tDestination Parent =" << m_model->findIndex(m_dest_parent_row);
+            qCDebug(DIGIKAM_GENERAL_LOG) << "\tSource Parent =" << m_model->findIndex(m_src_parent_row);
+            qCDebug(DIGIKAM_GENERAL_LOG) << "\tDestination Parent =" << m_model->findIndex(m_dest_parent_row);
         }
     }
 #endif

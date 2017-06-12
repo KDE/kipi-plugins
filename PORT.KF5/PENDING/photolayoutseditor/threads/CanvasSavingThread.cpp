@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -29,11 +29,13 @@
 #include "Canvas_p.h"
 #include "Scene.h"
 #include "ProgressEvent.h"
-#include "photolayoutseditor.h"
+#include "photolayoutswindow.h"
 
 #include <QFile>
 #include <QDomDocument>
 #include <QCoreApplication>
+
+#include "digikam_debug.h"
 
 using namespace PhotoLayoutsEditor;
 
@@ -78,7 +80,7 @@ void CanvasSavingThread::run()
 
     ProgressEvent * startEvent = new ProgressEvent(this);
     startEvent->setData(ProgressEvent::Init, 0);
-    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), startEvent);
+    QCoreApplication::postEvent(PhotoLayoutsWindow::instance(), startEvent);
     QCoreApplication::processEvents();
 
     this->sendActionUpdate( i18n("Creating canvas...") );
@@ -119,7 +121,7 @@ void CanvasSavingThread::run()
             break;
         default:
             j = "px";
-            qCDebug(KIPIPLUGINS_LOG) << "Unhandled size unit at:" << __FILE__ << ":" << __LINE__;
+            qCDebug(DIGIKAM_GENERAL_LOG) << "Unhandled size unit at:" << __FILE__ << ":" << __LINE__;
             break;
     }
     svg.setAttribute("width", QString::number(m_canvas->d->m_size.size().width()) + j);
@@ -175,7 +177,7 @@ void CanvasSavingThread::run()
 
     ProgressEvent* finishEvent = new ProgressEvent(this);
     finishEvent->setData(ProgressEvent::Finish, 0);
-    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), finishEvent);
+    QCoreApplication::postEvent(PhotoLayoutsWindow::instance(), finishEvent);
     QCoreApplication::processEvents();
 
     this->exit(0);
@@ -183,14 +185,14 @@ void CanvasSavingThread::run()
 
 void CanvasSavingThread::bytesWritten(qint64 b)
 {
-    qCDebug(KIPIPLUGINS_LOG) << "writen" << b;
+    qCDebug(DIGIKAM_GENERAL_LOG) << "writen" << b;
 }
 
 void CanvasSavingThread::sendProgressUpdate(double v)
 {
     ProgressEvent* event = new ProgressEvent(this);
     event->setData(ProgressEvent::ProgressUpdate, v);
-    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), event);
+    QCoreApplication::postEvent(PhotoLayoutsWindow::instance(), event);
     QCoreApplication::processEvents();
 }
 
@@ -198,6 +200,6 @@ void CanvasSavingThread::sendActionUpdate(const QString& str)
 {
     ProgressEvent* event = new ProgressEvent(this);
     event->setData(ProgressEvent::ActionUpdate, str);
-    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), event);
+    QCoreApplication::postEvent(PhotoLayoutsWindow::instance(), event);
     QCoreApplication::processEvents();
 }

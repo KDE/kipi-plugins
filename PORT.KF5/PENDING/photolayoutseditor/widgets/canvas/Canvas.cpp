@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -41,19 +41,21 @@
 #include "LayersSelectionModel.h"
 #include "UndoMoveRowsCommand.h"
 #include "UndoBorderChangeCommand.h"
-#include "PLEConfigSkeleton.h"
 #include "ImageLoadingThread.h"
 #include "global.h"
 #include "ProgressEvent.h"
-#include "photolayoutseditor.h"
+#include "photolayoutswindow.h"
 #include "CanvasLoadingThread.h"
 #include "CanvasSavingThread.h"
 #include "PLEStatusBar.h"
+#include "PLEConfigSkeleton.h"
+#include "digikam_debug.h"
 
 #define MAX_SCALE_LIMIT 4
 #define MIN_SCALE_LIMIT 0.5
 
-using namespace PhotoLayoutsEditor;
+namespace PhotoLayoutsEditor
+{
 
 Canvas::Canvas(const CanvasSize & size, QWidget * parent) :
     QGraphicsView(parent),
@@ -81,9 +83,6 @@ Canvas::~Canvas()
     delete d;
 }
 
-/** ###########################################################################################################################
-* Initialize Canvas object
-#############################################################################################################################*/
 void Canvas::init()
 {
     m_is_saved = true;
@@ -96,9 +95,6 @@ void Canvas::init()
     this->prepareSignalsConnection();
 }
 
-/** ###########################################################################################################################
-* Setup GUI of canvas widget
-#############################################################################################################################*/
 void Canvas::setupGUI()
 {
     this->setAcceptDrops(true);
@@ -127,9 +123,6 @@ void Canvas::setupGUI()
     this->setScene(m_scene);
 }
 
-/** ###########################################################################################################################
-* Connect signals to slots
-#############################################################################################################################*/
 void Canvas::prepareSignalsConnection()
 {
     connect(m_scene, SIGNAL(selectionChanged()), this, SLOT(selectionChanged()));
@@ -140,9 +133,6 @@ void Canvas::prepareSignalsConnection()
     connect(m_undo_stack, SIGNAL(cleanChanged(bool)), this, SLOT(isSavedChanged(bool)));
 }
 
-/** ###########################################################################################################################
- * Change selection mode
- #############################################################################################################################*/
 void Canvas::setSelectionMode(SelectionMode mode)
 {
     if (mode & Viewing)
@@ -245,7 +235,7 @@ void Canvas::preparePrinter(QPrinter * printer)
     default:
         printer->setPaperSize(cs, QPrinter::DevicePixel);
         setResolution = false;
-        qCDebug(KIPIPLUGINS_LOG) << "Unhandled size unit at:" << __FILE__ << ":" << __LINE__;
+        qCDebug(DIGIKAM_GENERAL_LOG) << "Unhandled size unit at:" << __FILE__ << ":" << __LINE__;
     }
     if (setResolution)
     {
@@ -371,7 +361,7 @@ void Canvas::moveSelectedRowsUp()
     if (!selectedIndexes.count())
     {
         #ifdef  QT_DEBUG
-        qCDebug(KIPIPLUGINS_LOG) << "No items selected to move!" << selectedIndexes;
+        qCDebug(DIGIKAM_GENERAL_LOG) << "No items selected to move!" << selectedIndexes;
         #endif
         return;
     }
@@ -390,14 +380,14 @@ void Canvas::moveSelectedRowsUp()
             if (startIndex.parent() != it->parent())
             {
                 #ifdef  QT_DEBUG
-                qCDebug(KIPIPLUGINS_LOG) << "Different parents of items!\n" << selectedIndexes;
+                qCDebug(DIGIKAM_GENERAL_LOG) << "Different parents of items!\n" << selectedIndexes;
                 #endif
                 return;
             }
             else if (!it->isValid())
             {
                 #ifdef  QT_DEBUG
-                qCDebug(KIPIPLUGINS_LOG) << "Invalid items!\n" << selectedIndexes;
+                qCDebug(DIGIKAM_GENERAL_LOG) << "Invalid items!\n" << selectedIndexes;
                 #endif
                 return;
             }
@@ -413,7 +403,7 @@ void Canvas::moveSelectedRowsUp()
         if ((((minRow+maxRow)*(maxRow-minRow+1))/2.0) != sumRows)
         {
             #ifdef  QT_DEBUG
-            qCDebug(KIPIPLUGINS_LOG) << "Unordered items!\n" << selectedIndexes;
+            qCDebug(DIGIKAM_GENERAL_LOG) << "Unordered items!\n" << selectedIndexes;
             #endif
             return;
         }
@@ -432,7 +422,7 @@ void Canvas::moveSelectedRowsDown()
     if (!selectedIndexes.count())
     {
         #ifdef  QT_DEBUG
-        qCDebug(KIPIPLUGINS_LOG) << "No items selected to move!" << selectedIndexes;
+        qCDebug(DIGIKAM_GENERAL_LOG) << "No items selected to move!" << selectedIndexes;
         #endif
         return;
     }
@@ -451,14 +441,14 @@ void Canvas::moveSelectedRowsDown()
             if (startIndex.parent() != it->parent())
             {
                 #ifdef  QT_DEBUG
-                qCDebug(KIPIPLUGINS_LOG) << "Different parents of items!\n" << selectedIndexes;
+                qCDebug(DIGIKAM_GENERAL_LOG) << "Different parents of items!\n" << selectedIndexes;
                 #endif
                 return;
             }
             else if (!it->isValid())
             {
                 #ifdef  QT_DEBUG
-                qCDebug(KIPIPLUGINS_LOG) << "Invalid items!\n" << selectedIndexes;
+                qCDebug(DIGIKAM_GENERAL_LOG) << "Invalid items!\n" << selectedIndexes;
                 #endif
                 return;
             }
@@ -474,7 +464,7 @@ void Canvas::moveSelectedRowsDown()
         if ((((minRow+maxRow)*(maxRow-minRow+1))/2.0) != sumRows)
         {
             #ifdef  QT_DEBUG
-            qCDebug(KIPIPLUGINS_LOG) << "Unordered items!\n" << selectedIndexes;
+            qCDebug(DIGIKAM_GENERAL_LOG) << "Unordered items!\n" << selectedIndexes;
             #endif
             return;
         }
@@ -735,7 +725,7 @@ void Canvas::progressEvent(ProgressEvent * event)
             temp->setValue(0);
             this->setEnabled(false);
             {
-                PLEStatusBar * sb = dynamic_cast<PLEStatusBar*>(PhotoLayoutsEditor::instance()->statusBar());
+                PLEStatusBar * sb = dynamic_cast<PLEStatusBar*>(PhotoLayoutsWindow::instance()->statusBar());
                 if (sb)
                     sb->runBusyIndicator();
             }
@@ -756,7 +746,7 @@ void Canvas::progressEvent(ProgressEvent * event)
             }
             this->setEnabled(true);
             {
-                PLEStatusBar * sb = dynamic_cast<PLEStatusBar*>(PhotoLayoutsEditor::instance()->statusBar());
+                PLEStatusBar * sb = dynamic_cast<PLEStatusBar*>(PhotoLayoutsWindow::instance()->statusBar());
                 if (sb)
                     sb->stopBusyIndicator();
             }
@@ -818,7 +808,7 @@ QDomDocument Canvas::toSvg() const
         default:
             svg.setAttribute("width", svg.attribute("width") + "px");
             svg.setAttribute("height", svg.attribute("height") + "px");
-            qCDebug(KIPIPLUGINS_LOG) << "Unhandled size unit at:" << __FILE__ << ":" << __LINE__;
+            qCDebug(DIGIKAM_GENERAL_LOG) << "Unhandled size unit at:" << __FILE__ << ":" << __LINE__;
     }
     QDomElement resolution = result.createElementNS(PhotoLayoutsEditor::uri(), "page");
     resolution.setAttribute("width", QString::number(d->m_size.resolution().width()));
@@ -828,9 +818,6 @@ QDomDocument Canvas::toSvg() const
     return result;
 }
 
-/** ###########################################################################################################################
- * Loads canvas state from SVG file
- #############################################################################################################################*/
 Canvas * Canvas::fromSvg(QDomDocument & document)
 {
     Canvas * result = 0;
@@ -846,7 +833,7 @@ Canvas * Canvas::fromSvg(QDomDocument & document)
             QString xResolution = pageElement.attribute("width");
             QString yResolution = pageElement.attribute("height");
             QString resUnit = pageElement.attribute("unit");
-            qCDebug(KIPIPLUGINS_LOG) << pageElement.namespaceURI() << PhotoLayoutsEditor::templateUri();
+            qCDebug(DIGIKAM_GENERAL_LOG) << pageElement.namespaceURI() << PhotoLayoutsEditor::templateUri();
 
             // Canvas size validation
             QRegExp sizeRegExp("[0-9.]+((cm)|(mm)|(in)|(pc)|(pt)|(px))");
@@ -889,9 +876,6 @@ Canvas * Canvas::fromSvg(QDomDocument & document)
     return result;
 }
 
-/** ###########################################################################################################################
- * Scales canvas view by the selected factor
- #############################################################################################################################*/
 void Canvas::scale(qreal factor, const QPoint & center)
 {
     // Scaling limitation
@@ -908,9 +892,6 @@ void Canvas::scale(qreal factor, const QPoint & center)
     m_scale_factor *= factor;
 }
 
-/** ###########################################################################################################################
- * Scales canvas view to fit in rect
- #############################################################################################################################*/
 void Canvas::scale(const QRect & rect)
 {
     QRectF r(this->mapToScene(rect.topLeft()),
@@ -932,26 +913,17 @@ void Canvas::scale(const QRect & rect)
     this->scale(newFactor, rect.center());
 }
 
-/** ###########################################################################################################################
- * Returns file object connected with canvas
- #############################################################################################################################*/
 QUrl Canvas::file() const
 {
     return m_file;
 }
 
-/** ###########################################################################################################################
- * Sets the file connected with canvas
- #############################################################################################################################*/
 void Canvas::setFile(const QUrl & file)
 {
     if (file.isValid() && !file.isEmpty())
         m_file = file;
 }
 
-/** ###########################################################################################################################
- * Sets the file connected with canvas
- #############################################################################################################################*/
 void Canvas::save(const QUrl & fileUrl, bool setAsDefault)
 {
     QUrl tempFile = fileUrl;
@@ -975,9 +947,6 @@ void Canvas::save(const QUrl & fileUrl, bool setAsDefault)
     thread->save(this, m_file);
 }
 
-/** ###########################################################################################################################
- * Save canvas as a template
- #############################################################################################################################*/
 void Canvas::saveTemplate(const QUrl & fileUrl)
 {
     if (fileUrl.isEmpty() || !fileUrl.isValid())
@@ -993,26 +962,17 @@ void Canvas::saveTemplate(const QUrl & fileUrl)
     thread->saveAsTemplate(this, fileUrl);
 }
 
-/** ###########################################################################################################################
- * Check if canvas is saved
- #############################################################################################################################*/
 bool Canvas::isSaved()
 {
     return m_is_saved;
 }
 
-/** ###########################################################################################################################
- * Controls changes on cavnas (based on QUndoStack state)
- #############################################################################################################################*/
 void Canvas::isSavedChanged(int /*currentCommandIndex*/)
 {
     m_is_saved = (m_saved_on_index == m_undo_stack->index());
     emit savedStateChanged();
 }
 
-/** ###########################################################################################################################
- * Controls changes on cavnas (based on QUndoStack state)
- #############################################################################################################################*/
 void Canvas::isSavedChanged(bool /*isStackClean*/)
 {
     if (m_undo_stack->isClean())
@@ -1022,17 +982,13 @@ void Canvas::isSavedChanged(bool /*isStackClean*/)
     emit savedStateChanged();
 }
 
-/** ###########################################################################################################################
- * Controls changes on cavnas (based on QUndoStack state)
- #############################################################################################################################*/
+
 bool Canvas::isTemplate() const
 {
     return d->m_template;
 }
 
-/** ###########################################################################################################################
- * Saving finished slot
- #############################################################################################################################*/
+
 void Canvas::savingFinished()
 {
     m_is_saved = true;
@@ -1040,9 +996,6 @@ void Canvas::savingFinished()
     emit savedStateChanged();
 }
 
-/** ###########################################################################################################################
- * Draws canvas content onto the QPaintDevice
- #############################################################################################################################*/
 void Canvas::renderCanvas(QPaintDevice * device)
 {
     if (scene())
@@ -1068,30 +1021,22 @@ void Canvas::renderCanvas(QPaintDevice * device)
     }
 }
 
-/** ###########################################################################################################################
- * Draws canvas content onto the printer
- #############################################################################################################################*/
 void Canvas::renderCanvas(QPrinter * device)
 {
     renderCanvas(static_cast<QPaintDevice*>(device));
 }
 
-/** ###########################################################################################################################
- * Groups operations into one undo operation
- #############################################################################################################################*/
 void Canvas::beginRowsRemoving()
 {
     m_undo_stack->beginMacro(i18n("Remove items"));
 }
 
-/** ###########################################################################################################################
- * Finish group of undo operations
- #############################################################################################################################*/
 void Canvas::endRowsRemoving()
 {
     m_undo_stack->endMacro();
 }
 
+} // namespace PhotoLayoutsEditor
 
 #undef MAX_SCALE_LIMIT
 #undef MIN_SCALE_LIMIT

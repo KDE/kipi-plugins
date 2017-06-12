@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -31,7 +31,7 @@
 
 #include <klocalizedstring.h>
 
-#include "photolayoutseditor.h"
+#include "photolayoutswindow.h"
 #include "global.h"
 
 using namespace PhotoLayoutsEditor;
@@ -288,7 +288,7 @@ void RotationWidgetItem::mouseReleaseEvent(QGraphicsSceneMouseEvent * /*event*/)
     this->setCursor(QCursor(Qt::OpenHandCursor));
 
     if (d->rotate_commands.count() > 1)
-        PhotoLayoutsEditor::instance()->beginUndoCommandGroup( i18np("Rotate item", "Rotate items", d->rotate_commands.count()) );
+        PhotoLayoutsWindow::instance()->beginUndoCommandGroup( i18np("Rotate item", "Rotate items", d->rotate_commands.count()) );
     for (QMap<AbstractPhoto*,RotateItemCommand*>::iterator it = d->rotate_commands.begin(); it != d->rotate_commands.end(); ++it)
     {
         if (it.value())
@@ -299,7 +299,7 @@ void RotationWidgetItem::mouseReleaseEvent(QGraphicsSceneMouseEvent * /*event*/)
         }
     }
     if (d->rotate_commands.count() > 1)
-        PhotoLayoutsEditor::instance()->endUndoCommandGroup();
+        PhotoLayoutsWindow::instance()->endUndoCommandGroup();
     d->rotate_commands.clear();
 
     d->rotation_angle = 0;

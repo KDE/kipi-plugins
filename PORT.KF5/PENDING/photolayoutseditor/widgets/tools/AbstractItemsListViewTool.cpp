@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -442,10 +442,10 @@ void AbstractListToolViewDelegate::editorCancelled()
 
 void AbstractListToolViewDelegate::editorAccepted()
 {
-    qCDebug(KIPIPLUGINS_LOG) << "isAccepted sent" << m_object << m_model;
+    qCDebug(DIGIKAM_GENERAL_LOG) << "isAccepted sent" << m_object << m_model;
     if (!m_object || !m_model)
         return;
-    qCDebug(KIPIPLUGINS_LOG) << "isAccepted sent";
+    qCDebug(DIGIKAM_GENERAL_LOG) << "isAccepted sent";
     ItemCreatedCommand * command = new ItemCreatedCommand(m_object, m_index.row(), m_model);
     PLE_PostUndoCommand(command);
     emit editorClosed();

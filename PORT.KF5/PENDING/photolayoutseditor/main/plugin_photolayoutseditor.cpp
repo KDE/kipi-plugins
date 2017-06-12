@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -27,7 +27,7 @@
 
 // KDE includes
 
-#include <kdebug.h>
+#include "digikam_debug.h"
 #include <kgenericfactory.h>
 #include <QIcon>
 #include <QAction>
@@ -41,7 +41,7 @@
 
 // Local includes
 
-#include "photolayoutseditor.h"
+#include "photolayoutswindow.h"
 #include "PLEAboutData.h"
 
 namespace PhotoLayoutsEditor
@@ -58,7 +58,7 @@ Plugin_PhotoLayoutsEditor::Plugin_PhotoLayoutsEditor(QObject* const parent, cons
     m_parentWidget = 0;
     m_manager      = 0;
 
-    qCDebug(KIPIPLUGINS_LOG) << "Plugin_PhotoLayoutsEditor plugin loaded";
+    qCDebug(DIGIKAM_GENERAL_LOG) << "Plugin_PhotoLayoutsEditor plugin loaded";
 
     setUiBaseName("kipiplugin_photolayoutseditorui.rc");
     setupXML();
@@ -78,7 +78,7 @@ void Plugin_PhotoLayoutsEditor::setup(QWidget* const widget)
     m_interface = interface();
     if (!m_interface)
     {
-       qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
+       qCCritical(DIGIKAM_GENERAL_LOG) << "Kipi interface is null!";
        return;
     }
 
@@ -104,7 +104,7 @@ void Plugin_PhotoLayoutsEditor::slotActivate()
 {
     if (!m_interface)
     {
-        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
+        qCCritical(DIGIKAM_GENERAL_LOG) << "Kipi interface is null!";
         return;
     }
 

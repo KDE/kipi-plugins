@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -27,12 +27,11 @@
 #define PLESTATUSBAR_H
 
 #include <QProgressBar>
-
-#include <kstatusbar.h>
+#include <QStatusBar>
 
 namespace PhotoLayoutsEditor
 {
-    class PLEStatusBar : public KStatusBar
+    class PLEStatusBar : public QStatusBar
     {
             QProgressBar * m_pb;
         public:

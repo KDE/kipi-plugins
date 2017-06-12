@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -32,7 +32,7 @@
 
 #include <klocalizedstring.h>
 
-using namespace KIPIPhotoFramesEditor;
+using namespace PhotoLayoutsEditor;
 
 const QString BlurPhotoEffect::RADIUS_STRING = i18n("Radius");
 

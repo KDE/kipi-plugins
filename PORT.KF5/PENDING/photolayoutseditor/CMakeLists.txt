@@ -18,6 +18,7 @@ include_directories($<TARGET_PROPERTY:Qt5::Xml,INTERFACE_INCLUDE_DIRECTORIES>
                     $<TARGET_PROPERTY:Qt5::Widgets,INTERFACE_INCLUDE_DIRECTORIES>
                     $<TARGET_PROPERTY:Qt5::PrintSupport,INTERFACE_INCLUDE_DIRECTORIES>
 
+                    $<TARGET_PROPERTY:KF5::XmlGui,INTERFACE_INCLUDE_DIRECTORIES>
                     $<TARGET_PROPERTY:KF5::I18n,INTERFACE_INCLUDE_DIRECTORIES>
                     $<TARGET_PROPERTY:KF5::ConfigCore,INTERFACE_INCLUDE_DIRECTORIES>
 )
@@ -63,7 +64,6 @@ set(photolayoutseditor_SRCS
     threads/SceneBorderLoader.cpp
     threads/TextItemLoader.cpp
 
-    widgets/canvas/Canvas.cpp
     widgets/canvas/CanvasSize.cpp
     widgets/canvas/CropWidgetItem.cpp
     widgets/canvas/MousePressListener.cpp
@@ -98,6 +98,7 @@ set(photolayoutseditor_SRCS
     widgets/tools/TextEditorTool.cpp
     widgets/tools/ToolsDockWidget.cpp
     widgets/tools/ZoomTool.cpp
+    widgets/canvas/Canvas.cpp
 
     listeners/TextColorChangeListener.cpp
     listeners/TextFontChangeListener.cpp
@@ -110,7 +111,7 @@ set(photolayoutseditor_SRCS
     extra/global.cpp
     extra/KEditFactory.cpp
 
-    main/photolayoutseditor.cpp
+    main/photolayoutswindow.cpp
    )
 
 set(photolayoutseditor_RCS
@@ -119,7 +120,7 @@ set(photolayoutseditor_RCS
 
 qt5_add_resources(photolayoutseditor_SRCS ${photolayoutseditor_RCS})
 
-kconfig_add_kcfg_files(photolayoutseditor_SRCS GENERATE_MOC ./settings/PLEConfigSkeleton.kcfgc)
+#kconfig_add_kcfg_files(photolayoutseditor_SRCS GENERATE_MOC ./settings/PLEConfigSkeleton.kcfgc)
 
 add_library(photolayoutseditor_src OBJECT ${photolayoutseditor_SRCS})
 

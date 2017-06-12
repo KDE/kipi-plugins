@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -27,7 +27,7 @@
 #include "UndoCommandEvent.h"
 #include "ProgressEvent.h"
 #include "global.h"
-#include "photolayoutseditor.h"
+#include "photolayoutswindow.h"
 #include <QtGlobal>
 #include <QDebug>
 
@@ -37,7 +37,7 @@ bool UndoCommandEventFilter::eventFilter(QObject * watched, QEvent * event)
 {
     if (event->type() == UndoCommandEvent::registeredEventType())
     {
-        PhotoLayoutsEditor * editor = qobject_cast<PhotoLayoutsEditor*>(watched);
+        PhotoLayoutsWindow* editor = qobject_cast<PhotoLayoutsWindow*>(watched);
         if (!editor)
             return false;
         //editor->undoCommandEvent(dynamic_cast<UndoCommandEvent*>(event));
@@ -45,7 +45,7 @@ bool UndoCommandEventFilter::eventFilter(QObject * watched, QEvent * event)
     }
     if (event->type() == ProgressEvent::registeredEventType())
     {
-        PhotoLayoutsEditor * editor = qobject_cast<PhotoLayoutsEditor*>(watched);
+        PhotoLayoutsWindow* editor = qobject_cast<PhotoLayoutsWindow*>(watched);
         if (!editor)
             return false;
         editor->progressEvent(dynamic_cast<ProgressEvent*>(event));

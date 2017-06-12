@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -275,7 +275,7 @@ void ToolsDockWidget::setScene(Scene * scene)
 
 void ToolsDockWidget::itemSelected(AbstractPhoto * photo)
 {
-    qCDebug(KIPIPLUGINS_LOG) << "itemSelected" << (QGraphicsItem*)photo;
+    qCDebug(DIGIKAM_GENERAL_LOG) << "itemSelected" << (QGraphicsItem*)photo;
     m_current_item = photo;
     QWidget * w = d->toolArea->widget();
     if (!w)
@@ -283,7 +283,7 @@ void ToolsDockWidget::itemSelected(AbstractPhoto * photo)
     AbstractItemsTool * tool =qobject_cast<AbstractItemsTool*>(w);
     if (tool)
         tool->setCurrentItem(photo);
-    qCDebug(KIPIPLUGINS_LOG) << tool;
+    qCDebug(DIGIKAM_GENERAL_LOG) << tool;
 }
 
 void ToolsDockWidget::mousePositionChoosen(const QPointF & position)

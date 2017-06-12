@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -35,7 +35,7 @@
 #include "TextItem.h"
 #include "SceneBackground.h"
 #include "SceneBorder.h"
-#include "photolayoutseditor.h"
+#include "photolayoutswindow.h"
 
 #include <QCoreApplication>
 
@@ -75,7 +75,7 @@ void CanvasLoadingThread::progresChanged(double progress)
 {
     ProgressEvent * progressUpdateEvent = new ProgressEvent(this);
     progressUpdateEvent->setData(ProgressEvent::ProgressUpdate, ((double)d->i+1)/((double)d->data.count()+1) + (progress / (double)d->data.count()+1) );
-    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), progressUpdateEvent);
+    QCoreApplication::postEvent(PhotoLayoutsWindow::instance(), progressUpdateEvent);
     QCoreApplication::processEvents();
 }
 
@@ -83,7 +83,7 @@ void CanvasLoadingThread::progresName(const QString & name)
 {
     ProgressEvent * actionUpdateEvent = new ProgressEvent(this);
     actionUpdateEvent->setData(ProgressEvent::ActionUpdate, name);
-    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), actionUpdateEvent);
+    QCoreApplication::postEvent(PhotoLayoutsWindow::instance(), actionUpdateEvent);
     QCoreApplication::processEvents();
 }
 
@@ -114,14 +114,14 @@ void CanvasLoadingThread::run()
 {
     ProgressEvent * startEvent = new ProgressEvent(this);
     startEvent->setData(ProgressEvent::Init, 0);
-    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), startEvent);
+    QCoreApplication::postEvent(PhotoLayoutsWindow::instance(), startEvent);
     QCoreApplication::processEvents();
 
     // Background
     {
         ProgressEvent * actionUpdateEvent = new ProgressEvent(this);
         actionUpdateEvent->setData(ProgressEvent::ActionUpdate, i18n("Loading background...") );
-        QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), actionUpdateEvent);
+        QCoreApplication::postEvent(PhotoLayoutsWindow::instance(), actionUpdateEvent);
         QCoreApplication::processEvents();
         if (d->background.first)
         {
@@ -131,7 +131,7 @@ void CanvasLoadingThread::run()
         }
         ProgressEvent * progressUpdateEvent = new ProgressEvent(this);
         progressUpdateEvent->setData(ProgressEvent::ProgressUpdate, 1/((double)d->data.count()+2) );
-        QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), progressUpdateEvent);
+        QCoreApplication::postEvent(PhotoLayoutsWindow::instance(), progressUpdateEvent);
         QCoreApplication::processEvents();
     }
 
@@ -142,7 +142,7 @@ void CanvasLoadingThread::run()
     {
         ProgressEvent * actionUpdateEvent = new ProgressEvent(this);
         actionUpdateEvent->setData(ProgressEvent::ActionUpdate, i18n("Loading item no. %1...", QString::number(d->i)) );
-        QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), actionUpdateEvent);
+        QCoreApplication::postEvent(PhotoLayoutsWindow::instance(), actionUpdateEvent);
         QCoreApplication::processEvents();
 
         QDomElement e = it.value();
@@ -163,7 +163,7 @@ void CanvasLoadingThread::run()
 
         ProgressEvent * progressUpdateEvent = new ProgressEvent(this);
         progressUpdateEvent->setData(ProgressEvent::ProgressUpdate, ((double)d->i+1)/((double)count+2) );
-        QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), progressUpdateEvent);
+        QCoreApplication::postEvent(PhotoLayoutsWindow::instance(), progressUpdateEvent);
         QCoreApplication::processEvents();
     }
 
@@ -171,7 +171,7 @@ void CanvasLoadingThread::run()
     {
         ProgressEvent * actionUpdateEvent = new ProgressEvent(this);
         actionUpdateEvent->setData(ProgressEvent::ActionUpdate, i18n("Loading border...") );
-        QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), actionUpdateEvent);
+        QCoreApplication::postEvent(PhotoLayoutsWindow::instance(), actionUpdateEvent);
         QCoreApplication::processEvents();
         if (d->border.first)
         {
@@ -181,12 +181,12 @@ void CanvasLoadingThread::run()
         }
         ProgressEvent * progressUpdateEvent = new ProgressEvent(this);
         progressUpdateEvent->setData(ProgressEvent::ProgressUpdate, 1/((double)d->data.count()+2) );
-        QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), progressUpdateEvent);
+        QCoreApplication::postEvent(PhotoLayoutsWindow::instance(), progressUpdateEvent);
         QCoreApplication::processEvents();
     }
 
     ProgressEvent * finishEvent = new ProgressEvent(this);
     finishEvent->setData(ProgressEvent::Finish, 0);
-    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), finishEvent);
+    QCoreApplication::postEvent(PhotoLayoutsWindow::instance(), finishEvent);
     QCoreApplication::processEvents();
 }

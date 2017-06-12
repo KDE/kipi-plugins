@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -36,6 +36,8 @@
 
 #include <klocalizedstring.h>
 
+#include "digikam_debug.h"
+
 using namespace PhotoLayoutsEditor;
 
 class PhotoLayoutsEditor::BorderChangeCommand : public QUndoCommand
@@ -51,14 +53,14 @@ class PhotoLayoutsEditor::BorderChangeCommand : public QUndoCommand
         }
         virtual void redo()
         {
-            qCDebug(KIPIPLUGINS_LOG) << "BorderChangeCommand redo";
+            qCDebug(DIGIKAM_GENERAL_LOG) << "BorderChangeCommand redo";
             QVariant temp = drawer->propertyValue(propertyName);
             drawer->setPropertyValue(propertyName, value);
             value = temp;
         }
         virtual void undo()
         {
-            qCDebug(KIPIPLUGINS_LOG) << "BorderChangeCommand undo";
+            qCDebug(DIGIKAM_GENERAL_LOG) << "BorderChangeCommand undo";
             QVariant temp = drawer->propertyValue(propertyName);
             drawer->setPropertyValue(propertyName, value);
             value = temp;

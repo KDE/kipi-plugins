@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -68,7 +68,7 @@ private:
 
     QAction *            m_action;
 
-    PhotoLayoutsEditor* m_manager;
+    PhotoLayoutsWindow* m_manager;
 
     Interface*          m_interface;
 };

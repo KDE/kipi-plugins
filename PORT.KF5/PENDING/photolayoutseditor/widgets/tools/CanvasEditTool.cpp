@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -198,7 +198,7 @@ CanvasEditTool::~CanvasEditTool()
 
 void CanvasEditTool::backgroundTypeChanged(const QString & typeName)
 {
-    qCDebug(KIPIPLUGINS_LOG) << typeName;
+    qCDebug(DIGIKAM_GENERAL_LOG) << typeName;
     CanvasEditToolPrivate::BackgroundType bt = d->background_types.value(typeName);
     switch (bt)
     {
@@ -655,7 +655,7 @@ void CanvasEditTool::setupGUI()
 
 void CanvasEditTool::readMousePosition(const QPointF & scenePos)
 {
-    qCDebug(KIPIPLUGINS_LOG) << scenePos;
+    qCDebug(DIGIKAM_GENERAL_LOG) << scenePos;
 }
 
 void CanvasEditTool::updateWidgets()

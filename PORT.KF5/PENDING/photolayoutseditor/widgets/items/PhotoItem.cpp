@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -43,7 +43,7 @@
 #include "BordersGroup.h"
 #include "global.h"
 #include "PLEConfigSkeleton.h"
-#include "photolayoutseditor.h"
+#include "photolayoutswindow.h"
 #include "ImageLoadingThread.h"
 #include "ProgressEvent.h"
 
@@ -567,7 +567,7 @@ QDomDocument PhotoItem::svgTemplateArea() const
 void PhotoItem::dragEnterEvent(QGraphicsSceneDragDropEvent * event)
 {
     const QMimeData * mimeData = event->mimeData();
-    if ( PhotoLayoutsEditor::instance()->hasInterface() &&
+    if ( PhotoLayoutsWindow::instance()->hasInterface() &&
             mimeData->hasFormat("digikam/item-ids"))
     {
         QList<QUrl> urls;
@@ -600,7 +600,7 @@ void PhotoItem::dragLeaveEvent(QGraphicsSceneDragDropEvent * /*event*/)
 void PhotoItem::dragMoveEvent(QGraphicsSceneDragDropEvent * event)
 {
     const QMimeData * mimeData = event->mimeData();
-    if ( PhotoLayoutsEditor::instance()->hasInterface() &&
+    if ( PhotoLayoutsWindow::instance()->hasInterface() &&
             mimeData->hasFormat("digikam/item-ids"))
     {
         QList<QUrl> urls;
@@ -629,7 +629,7 @@ void PhotoItem::dropEvent(QGraphicsSceneDragDropEvent * event)
 {
     QImage img;
     const QMimeData * mimeData = event->mimeData();
-    if ( PhotoLayoutsEditor::instance()->hasInterface() &&
+    if ( PhotoLayoutsWindow::instance()->hasInterface() &&
             mimeData->hasFormat("digikam/item-ids"))
     {
         QList<QUrl> urls;
@@ -705,15 +705,15 @@ const QImage & PhotoItem::image() const
 
 void PhotoItem::setImage(const QImage & image)
 {
-    qCDebug(KIPIPLUGINS_LOG) << "setImage();";
+    qCDebug(DIGIKAM_GENERAL_LOG) << "setImage();";
     if (image.isNull())
         return;
-    PhotoLayoutsEditor::instance()->beginUndoCommandGroup(i18n("Image Change"));
+    PhotoLayoutsWindow::instance()->beginUndoCommandGroup(i18n("Image Change"));
     PLE_PostUndoCommand(new PhotoItemPixmapChangeCommand(image, this));
     if (this->cropShape().isEmpty())
         this->setCropShape( m_image_path );
     PLE_PostUndoCommand(new PhotoItemImagePathChangeCommand(this));
-    PhotoLayoutsEditor::instance()->endUndoCommandGroup();
+    PhotoLayoutsWindow::instance()->endUndoCommandGroup();
 }
 
 void PhotoItem::imageLoaded(const QUrl & url, const QImage & image)
@@ -721,13 +721,13 @@ void PhotoItem::imageLoaded(const QUrl & url, const QImage & image)
     if (image.isNull())
         return;
 
-    PhotoLayoutsEditor::instance()->beginUndoCommandGroup(i18n("Image Change"));
+    PhotoLayoutsWindow::instance()->beginUndoCommandGroup(i18n("Image Change"));
     PLE_PostUndoCommand(new PhotoItemPixmapChangeCommand(image, this));
     if (this->cropShape().isEmpty())
         this->setCropShape( m_image_path );
     PLE_PostUndoCommand(new PhotoItemImagePathChangeCommand(this));
     PLE_PostUndoCommand(new PhotoItemUrlChangeCommand(url, this));
-    PhotoLayoutsEditor::instance()->endUndoCommandGroup();
+    PhotoLayoutsWindow::instance()->endUndoCommandGroup();
 }
 
 void PhotoItem::setImageUrl(const QUrl & url)

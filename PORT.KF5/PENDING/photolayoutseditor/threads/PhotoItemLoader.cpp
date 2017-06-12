@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -32,6 +32,8 @@
 #include <QBuffer>
 
 #include <klocalizedstring.h>
+
+#include "digikam_debug.h"
 
 using namespace PhotoLayoutsEditor;
 
@@ -93,9 +95,9 @@ void PhotoItemLoader::run()
                                                      m21.toDouble(), m22.toDouble(), 0,
                                                      m31.toDouble(), m32.toDouble(), 1);
         }
-        qCDebug(KIPIPLUGINS_LOG) << item->d->m_brush_transform;
+        qCDebug(DIGIKAM_GENERAL_LOG) << item->d->m_brush_transform;
     }
-    qCDebug(KIPIPLUGINS_LOG) << item->d->m_brush_transform;
+    qCDebug(DIGIKAM_GENERAL_LOG) << item->d->m_brush_transform;
 
     // m_pixmap_original
     if (observer)

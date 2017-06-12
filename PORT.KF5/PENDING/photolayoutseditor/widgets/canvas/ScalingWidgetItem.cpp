@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -25,7 +25,7 @@
 
 #include "ScalingWidgetItem.h"
 #include "AbstractPhoto.h"
-#include "photolayoutseditor.h"
+#include "photolayoutswindow.h"
 #include "global.h"
 #include <limits>
 
@@ -38,6 +38,8 @@
 #include <QMap>
 
 #include <klocalizedstring.h>
+
+#include "digikam_debug.h"
 
 using namespace PhotoLayoutsEditor;
 
@@ -56,7 +58,7 @@ public:
     {
         if (done)
             return;
-        qCDebug(KIPIPLUGINS_LOG) << done << "redo MoveItemCommand";
+        qCDebug(DIGIKAM_GENERAL_LOG) << done << "redo MoveItemCommand";
         m_item->moveBy(m_translation.x(), m_translation.y());
         done = true;
     }
@@ -64,7 +66,7 @@ public:
     {
         if (!done)
             return;
-        qCDebug(KIPIPLUGINS_LOG) << done << "undo MoveItemCommand";
+        qCDebug(DIGIKAM_GENERAL_LOG) << done << "undo MoveItemCommand";
         m_item->moveBy(-m_translation.x(), -m_translation.y());
         done = false;
     }
@@ -479,7 +481,7 @@ void ScalingWidgetItem::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
 void ScalingWidgetItem::mouseReleaseEvent(QGraphicsSceneMouseEvent * /*event*/)
 {
     if (d->scale_commands.count() > 1)
-        PhotoLayoutsEditor::instance()->beginUndoCommandGroup( i18np("Scale item", "Scale items", d->scale_commands.count()) );
+        PhotoLayoutsWindow::instance()->beginUndoCommandGroup( i18np("Scale item", "Scale items", d->scale_commands.count()) );
     for (QMap<AbstractPhoto*,ScaleItemCommand*>::iterator it = d->scale_commands.begin(); it != d->scale_commands.end(); ++it)
     {
         if (it.value())
@@ -490,11 +492,11 @@ void ScalingWidgetItem::mouseReleaseEvent(QGraphicsSceneMouseEvent * /*event*/)
         }
     }
     if (d->scale_commands.count() > 1)
-        PhotoLayoutsEditor::instance()->endUndoCommandGroup();
+        PhotoLayoutsWindow::instance()->endUndoCommandGroup();
     d->scale_commands.clear();
 
     if (d->move_commands.count() > 1)
-        PhotoLayoutsEditor::instance()->beginUndoCommandGroup( i18np("Move item", "Move items", d->move_commands.count()) );
+        PhotoLayoutsWindow::instance()->beginUndoCommandGroup( i18np("Move item", "Move items", d->move_commands.count()) );
     for (QMap<AbstractPhoto*,MoveItemCommand*>::iterator it = d->move_commands.begin(); it != d->move_commands.end(); ++it)
     {
         if (it.value())
@@ -505,7 +507,7 @@ void ScalingWidgetItem::mouseReleaseEvent(QGraphicsSceneMouseEvent * /*event*/)
         }
     }
     if (d->move_commands.count() > 1)
-        PhotoLayoutsEditor::instance()->endUndoCommandGroup();
+        PhotoLayoutsWindow::instance()->endUndoCommandGroup();
     d->move_commands.clear();
 }
 

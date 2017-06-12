@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -32,7 +32,7 @@
 #include "SceneBackground.h"
 #include "MousePressListener.h"
 #include "ToolsDockWidget.h"
-#include "photolayoutseditor.h"
+#include "photolayoutswindow.h"
 #include "PLEConfigSkeleton.h"
 #include "ImageLoadingThread.h"
 #include "ProgressEvent.h"
@@ -40,7 +40,7 @@
 #include "PhotoItem.h"
 #include "SceneBorder.h"
 
-#include "kpimagedialog.h"
+#include "imagedialog.h"
 
 #include "LayersModel.h"
 #include "LayersModelItem.h"
@@ -500,7 +500,7 @@ public:
     CropItemsCommand(const QPainterPath & path, const QList<AbstractPhoto*> & items, QUndoCommand * parent = 0) :
         QUndoCommand(i18np("Crop item", "Crop items", items.count()), parent)
     {
-        qCDebug(KIPIPLUGINS_LOG) << "scene crop shape" << path.boundingRect();
+        qCDebug(DIGIKAM_GENERAL_LOG) << "scene crop shape" << path.boundingRect();
         foreach(AbstractPhoto* item, items)
             data.insert(item, item->mapFromScene(path));
     }
@@ -696,7 +696,7 @@ void Scene::changeSelectedImage()
     if (!item)
         return;
 
-    QList<QUrl> urls = KIPIPlugins::KPImageDialog::getImageUrl(PhotoLayoutsEditor::instance());
+    QList<QUrl> urls = Digikam::ImageDialog::getImageURL(PhotoLayoutsWindow::instance());
     if (urls.count() != 1)
         return;
 
@@ -936,7 +936,7 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
             // Post move command to QUndoStack
             if ((m_interaction_mode & Moving) && d->wasMoved())
             {
-                qCDebug(KIPIPLUGINS_LOG) << "move command from scene";
+                qCDebug(DIGIKAM_GENERAL_LOG) << "move command from scene";
                 QUndoCommand * command = new MoveItemsCommand(d->m_selected_items, this);
                 PLE_PostUndoCommand(command);
             }
@@ -1080,7 +1080,7 @@ void Scene::dropEvent(QGraphicsSceneDragDropEvent * event)
     d->paste_scene_pos = event->scenePos();
 
     const QMimeData * mimeData = event->mimeData();
-    if ( PhotoLayoutsEditor::instance()->hasInterface() &&
+    if ( PhotoLayoutsWindow::instance()->hasInterface() &&
             mimeData->hasFormat("digikam/item-ids"))
     {
         QList<QUrl> urls;
@@ -1627,7 +1627,7 @@ bool Scene::askAboutRemoving(int count)
 {
     if (count)
     {
-        int result = KMessageBox::questionYesNo(KApplication::activeWindow(), i18np("Are you sure you want to delete selected item?", "Are you sure you want to delete %1 selected items?", count), i18n("Items deleting"));
+        int result = KMessageBox::questionYesNo(qApp->activeWindow(), i18np("Are you sure you want to delete selected item?", "Are you sure you want to delete %1 selected items?", count), i18n("Items deleting"));
         if (result == KMessageBox::Yes)
             return true;
     }
@@ -1637,7 +1637,7 @@ bool Scene::askAboutRemoving(int count)
 //#####################################################################################################
 bool Scene::canDecode(const QMimeData * mimeData)
 {
-    if (PhotoLayoutsEditor::instance()->hasInterface() &&
+    if (PhotoLayoutsWindow::instance()->hasInterface() &&
             mimeData->hasFormat("digikam/item-ids"))
         return true;
 

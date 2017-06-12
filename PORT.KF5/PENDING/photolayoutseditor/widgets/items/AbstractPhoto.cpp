@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -117,7 +117,7 @@ AbstractPhoto::AbstractPhoto(const QString & name, Scene * scene) :
 
 AbstractPhoto::~AbstractPhoto()
 {
-    qCDebug(KIPIPLUGINS_LOG) << "Abstractphoto delete";
+    qCDebug(DIGIKAM_GENERAL_LOG) << "Abstractphoto delete";
     d->m_effects_group->deleteLater();
     d->m_borders_group->deleteLater();
     delete d;
@@ -398,17 +398,17 @@ QDomDocument AbstractPhoto::toTemplateSvg() const
 
 bool AbstractPhoto::fromSvg(QDomElement & element)
 {
-    qCDebug(KIPIPLUGINS_LOG) << "1";
+    qCDebug(DIGIKAM_GENERAL_LOG) << "1";
 
     if (element.tagName() != "g")
         return false;
 
-    qCDebug(KIPIPLUGINS_LOG) << "2";
+    qCDebug(DIGIKAM_GENERAL_LOG) << "2";
 
     if (element.attribute("visibility") == "hide")
         this->setVisible(false);
 
-    qCDebug(KIPIPLUGINS_LOG) << "3";
+    qCDebug(DIGIKAM_GENERAL_LOG) << "3";
 
     // Position & transformation
     this->setPos(0,0);
@@ -447,7 +447,7 @@ bool AbstractPhoto::fromSvg(QDomElement & element)
     }
 
 
-    qCDebug(KIPIPLUGINS_LOG) << "4";
+    qCDebug(DIGIKAM_GENERAL_LOG) << "4";
 
     if (element.firstChildElement().tagName() == "g")
     {
@@ -476,14 +476,14 @@ bool AbstractPhoto::fromSvg(QDomElement & element)
     }
 
 
-    qCDebug(KIPIPLUGINS_LOG) << "5";
+    qCDebug(DIGIKAM_GENERAL_LOG) << "5";
 
     // ID & name
     d->m_id = element.attribute("id");
     d->setName(element.attribute("name"));
 
 
-    qCDebug(KIPIPLUGINS_LOG) << "6";
+    qCDebug(DIGIKAM_GENERAL_LOG) << "6";
 
     // Validation purpose
     QDomElement defs = element.firstChildElement("defs");
@@ -493,7 +493,7 @@ bool AbstractPhoto::fromSvg(QDomElement & element)
         return false;
 
 
-    qCDebug(KIPIPLUGINS_LOG) << "7";
+    qCDebug(DIGIKAM_GENERAL_LOG) << "7";
 
     QDomElement itemDataElement = defs.firstChildElement("g");
     while (!itemDataElement.isNull() && itemDataElement.attribute("id") != "vis_data_"+this->id())
@@ -502,7 +502,7 @@ bool AbstractPhoto::fromSvg(QDomElement & element)
         return false;
 
 
-    qCDebug(KIPIPLUGINS_LOG) << "8";
+    qCDebug(DIGIKAM_GENERAL_LOG) << "8";
 
     // Borders
     if (d->m_borders_group)
@@ -515,14 +515,14 @@ bool AbstractPhoto::fromSvg(QDomElement & element)
         return false;
 
 
-    qCDebug(KIPIPLUGINS_LOG) << "9";
+    qCDebug(DIGIKAM_GENERAL_LOG) << "9";
 
     QDomElement clipPath = defs.firstChildElement("clipPath");
     if (clipPath.isNull() || clipPath.attribute("id") != "clipPath_"+this->id())
         return false;
 
 
-    qCDebug(KIPIPLUGINS_LOG) << "10";
+    qCDebug(DIGIKAM_GENERAL_LOG) << "10";
 
     // Other application specific data
     QDomElement appNS = defs.firstChildElement("data");
@@ -530,7 +530,7 @@ bool AbstractPhoto::fromSvg(QDomElement & element)
         return false;
 
 
-    qCDebug(KIPIPLUGINS_LOG) << "11";
+    qCDebug(DIGIKAM_GENERAL_LOG) << "11";
 
     // Effects
     if (d->m_effects_group)
@@ -540,7 +540,7 @@ bool AbstractPhoto::fromSvg(QDomElement & element)
         return false;
 
 
-    qCDebug(KIPIPLUGINS_LOG) << "12";
+    qCDebug(DIGIKAM_GENERAL_LOG) << "12";
 
     // Crop path
     QDomElement cropPath = appNS.firstChildElement("crop_path");
@@ -550,7 +550,7 @@ bool AbstractPhoto::fromSvg(QDomElement & element)
         return false;
 
 
-    qCDebug(KIPIPLUGINS_LOG) << "13";
+    qCDebug(DIGIKAM_GENERAL_LOG) << "13";
 
     return true;
 }
@@ -609,13 +609,13 @@ void AbstractPhoto::dragLeaveEvent(QGraphicsSceneDragDropEvent * event)
 
 void AbstractPhoto::dragMoveEvent(QGraphicsSceneDragDropEvent * event)
 {
-    qCDebug(KIPIPLUGINS_LOG) << "dragMoveEvent";
+    qCDebug(DIGIKAM_GENERAL_LOG) << "dragMoveEvent";
     event->accept();
 }
 
 void AbstractPhoto::dropEvent(QGraphicsSceneDragDropEvent * event)
 {
-    qCDebug(KIPIPLUGINS_LOG) << "dropEvent";
+    qCDebug(DIGIKAM_GENERAL_LOG) << "dropEvent";
     event->accept();
 }
 

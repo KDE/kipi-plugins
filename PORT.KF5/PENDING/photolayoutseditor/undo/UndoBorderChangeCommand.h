@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -29,7 +29,7 @@
 #include <QUndoCommand>
 #include <QColor>
 
-namespace KIPIPhotoFramesEditor
+namespace PhotoLayoutsEditor
 {
     class AbstractPhoto;
 

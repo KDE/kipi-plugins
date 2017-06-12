@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -23,8 +23,8 @@
  *
  * ============================================================ */
 
-#include "photolayoutseditor.h"
-#include "photolayoutseditor_p.h"
+#include "photolayoutswindow.h"
+#include "photolayoutswindow_p.h"
 
 // Qt includes
 
@@ -62,7 +62,7 @@
 #include <kconfigdialog.h>
 #include <kservice.h>
 #include <kservicetypetrader.h>
-#include <kdebug.h>
+#include "digikam_debug.h"
 
 // Local includes
 
@@ -91,9 +91,10 @@
 inline void initIconsResource() { Q_INIT_RESOURCE(icons); }
 inline void cleanupIconsResource() { Q_CLEANUP_RESOURCE(icons); }
 
-using namespace PhotoLayoutsEditor;
+namespace PhotoLayoutsEditor
+{
 
-class PhotoLayoutsEditor::CanvasSizeChangeCommand : public QUndoCommand
+class PhotoLayoutsWindow::CanvasSizeChangeCommand : public QUndoCommand
 {
     CanvasSize m_size;
     Canvas*    m_canvas;
@@ -123,13 +124,13 @@ public:
     }
 };
 
-PhotoLayoutsEditor* PhotoLayoutsEditor::m_instance = 0;
+PhotoLayoutsWindow* PhotoLayoutsWindow::m_instance = 0;
 
-PhotoLayoutsEditor::PhotoLayoutsEditor(QWidget * parent) :
+PhotoLayoutsWindow::PhotoLayoutsWindow(QWidget * parent) :
     KXmlGuiWindow(parent),
     m_canvas(0),
     m_interface(0),
-    d(new PhotoLayoutsEditorPriv)
+    d(new Private)
 {
     m_instance = this;
     componentData().setAboutData( PLEAboutData() );
@@ -151,7 +152,7 @@ PhotoLayoutsEditor::PhotoLayoutsEditor(QWidget * parent) :
     move(d->rect().center() - this->frameGeometry().center());
 }
 
-PhotoLayoutsEditor::~PhotoLayoutsEditor()
+PhotoLayoutsWindow::~PhotoLayoutsWindow()
 {
     PLEConfigSkeleton::self()->save();
 
@@ -165,7 +166,7 @@ PhotoLayoutsEditor::~PhotoLayoutsEditor()
     cleanupIconsResource();
 }
 
-PhotoLayoutsEditor * PhotoLayoutsEditor::instance(QWidget * parent)
+PhotoLayoutsWindow * PhotoLayoutsWindow::instance(QWidget * parent)
 {
     if (m_instance)
         return m_instance;
@@ -173,16 +174,16 @@ PhotoLayoutsEditor * PhotoLayoutsEditor::instance(QWidget * parent)
     {
         KApplication * app = KApplication::kApplication();
         app->installEventFilter(new UndoCommandEventFilter(app));
-        return (m_instance = new PhotoLayoutsEditor(parent));
+        return (m_instance = new PhotoLayoutsWindow(parent));
     }
 }
 
-void PhotoLayoutsEditor::addUndoCommand(QUndoCommand * command)
+void PhotoLayoutsWindow::addUndoCommand(QUndoCommand * command)
 {
     if (command)
     {
 #ifdef QT_DEBUG
-        qCDebug(KIPIPLUGINS_LOG) << command->text();
+        qCDebug(DIGIKAM_GENERAL_LOG) << command->text();
 #endif
         if (m_canvas)
             m_canvas->undoStack()->push(command);
@@ -194,35 +195,35 @@ void PhotoLayoutsEditor::addUndoCommand(QUndoCommand * command)
     }
 }
 
-void PhotoLayoutsEditor::beginUndoCommandGroup(const QString & name)
+void PhotoLayoutsWindow::beginUndoCommandGroup(const QString & name)
 {
     if (m_canvas)
         m_canvas->undoStack()->beginMacro(name);
 }
 
-void PhotoLayoutsEditor::endUndoCommandGroup()
+void PhotoLayoutsWindow::endUndoCommandGroup()
 {
     if (m_canvas)
         m_canvas->undoStack()->endMacro();
 }
 
-void PhotoLayoutsEditor::setInterface(KIPI::Interface * interface)
+void PhotoLayoutsWindow::setInterface(KIPI::Interface * interface)
 {
     if (interface)
         m_interface = interface;
 }
 
-bool PhotoLayoutsEditor::hasInterface() const
+bool PhotoLayoutsWindow::hasInterface() const
 {
     return (bool) m_interface;
 }
 
-KIPI::Interface * PhotoLayoutsEditor::interface() const
+KIPI::Interface * PhotoLayoutsWindow::interface() const
 {
     return this->m_interface;
 }
 
-void PhotoLayoutsEditor::setItemsList(const QList<QUrl> & images)
+void PhotoLayoutsWindow::setItemsList(const QList<QUrl> & images)
 {
     if (!m_canvas)
         return;
@@ -230,7 +231,7 @@ void PhotoLayoutsEditor::setItemsList(const QList<QUrl> & images)
     m_canvas->addImages(images);
 }
 
-void PhotoLayoutsEditor::setupActions()
+void PhotoLayoutsWindow::setupActions()
 {
     d->openNewFileAction = KStandardAction::openNew(this, SLOT(open()), actionCollection());
 //    d->openNewFileAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_N));
@@ -312,7 +313,7 @@ void PhotoLayoutsEditor::setupActions()
     createGUI(xmlFile());
 }
 
-void PhotoLayoutsEditor::refreshActions()
+void PhotoLayoutsWindow::refreshActions()
 {
     bool isEnabledForCanvas = false;
     if (m_canvas)
@@ -336,7 +337,7 @@ void PhotoLayoutsEditor::refreshActions()
     d->toolsWidget->setEnabled(isEnabledForCanvas);
 }
 
-void PhotoLayoutsEditor::addRecentFile(const QUrl & url)
+void PhotoLayoutsWindow::addRecentFile(const QUrl & url)
 {
     if (url.isValid())
     {
@@ -353,12 +354,12 @@ void PhotoLayoutsEditor::addRecentFile(const QUrl & url)
     }
 }
 
-void PhotoLayoutsEditor::clearRecentList()
+void PhotoLayoutsWindow::clearRecentList()
 {
     PLEConfigSkeleton::setRecentFiles(QList<QUrl>());
 }
 
-void PhotoLayoutsEditor::createWidgets()
+void PhotoLayoutsWindow::createWidgets()
 {
     // Tools
     d->toolsWidget = ToolsDockWidget::instance(this);
@@ -392,7 +393,7 @@ void PhotoLayoutsEditor::createWidgets()
     //this->open(QUrl("/home/coder89/Desktop/second.ple"));   /// TODO : Uncomment and set correct path when delevoping
 }
 
-void PhotoLayoutsEditor::createCanvas(const CanvasSize & size)
+void PhotoLayoutsWindow::createCanvas(const CanvasSize & size)
 {
     if (m_canvas)
     {
@@ -403,7 +404,7 @@ void PhotoLayoutsEditor::createCanvas(const CanvasSize & size)
     this->prepareSignalsConnections();
 }
 
-void PhotoLayoutsEditor::createCanvas(const QUrl & fileUrl)
+void PhotoLayoutsWindow::createCanvas(const QUrl & fileUrl)
 {
     if (m_canvas)
     {
@@ -434,7 +435,7 @@ void PhotoLayoutsEditor::createCanvas(const QUrl & fileUrl)
     file.close();
 }
 
-void PhotoLayoutsEditor::prepareSignalsConnections()
+void PhotoLayoutsWindow::prepareSignalsConnections()
 {
     d->centralWidget->layout()->addWidget(m_canvas);
     d->tree->setModel(m_canvas->model());
@@ -473,7 +474,7 @@ void PhotoLayoutsEditor::prepareSignalsConnections()
     d->toolsWidget->setDefaultTool();
 }
 
-void PhotoLayoutsEditor::open()
+void PhotoLayoutsWindow::open()
 {
     NewCanvasDialog * dialog = new NewCanvasDialog(this);
     dialog->setModal(true);
@@ -500,7 +501,7 @@ void PhotoLayoutsEditor::open()
     delete dialog;
 }
 
-void PhotoLayoutsEditor::openDialog()
+void PhotoLayoutsWindow::openDialog()
 {
     if (!d->fileDialog)
         d->fileDialog = new KFileDialog(QUrl(), i18n("*.ple|Photo Layouts Editor files"), this);
@@ -512,7 +513,7 @@ void PhotoLayoutsEditor::openDialog()
         open(d->fileDialog->selectedUrl());
 }
 
-void PhotoLayoutsEditor::open(const QUrl & fileUrl)
+void PhotoLayoutsWindow::open(const QUrl & fileUrl)
 {
     if (m_canvas && m_canvas->file() == fileUrl)
         return;
@@ -525,9 +526,9 @@ void PhotoLayoutsEditor::open(const QUrl & fileUrl)
     }
 }
 
-void PhotoLayoutsEditor::save()
+void PhotoLayoutsWindow::save()
 {
-    qCDebug(KIPIPLUGINS_LOG) << !m_canvas->file().isValid() <<  m_canvas->file().fileName().isEmpty() << m_canvas->isTemplate();
+    qCDebug(DIGIKAM_GENERAL_LOG) << !m_canvas->file().isValid() <<  m_canvas->file().fileName().isEmpty() << m_canvas->isTemplate();
     if (!m_canvas)
         return;
     if (!m_canvas->file().isValid() || m_canvas->file().fileName().isEmpty() || m_canvas->isTemplate())
@@ -536,7 +537,7 @@ void PhotoLayoutsEditor::save()
         saveFile();
 }
 
-void PhotoLayoutsEditor::saveAs()
+void PhotoLayoutsWindow::saveAs()
 {
     if (!d->fileDialog)
         d->fileDialog = new KFileDialog(QUrl(), i18n("*.ple|Photo Layouts Editor files"), this);
@@ -551,7 +552,7 @@ void PhotoLayoutsEditor::saveAs()
     }
 }
 
-void PhotoLayoutsEditor::saveAsTemplate()
+void PhotoLayoutsWindow::saveAsTemplate()
 {
     if (!d->fileDialog)
         d->fileDialog = new KFileDialog(QUrl(), i18n("*.ple|Photo Layouts Editor files"), this);
@@ -570,7 +571,7 @@ void PhotoLayoutsEditor::saveAsTemplate()
     }
 }
 
-void PhotoLayoutsEditor::saveFile(const QUrl & fileUrl, bool setFileAsDefault)
+void PhotoLayoutsWindow::saveFile(const QUrl & fileUrl, bool setFileAsDefault)
 {
     if (m_canvas)
         m_canvas->save(fileUrl, setFileAsDefault);
@@ -579,7 +580,7 @@ void PhotoLayoutsEditor::saveFile(const QUrl & fileUrl, bool setFileAsDefault)
                            i18n("There is nothing to save."));
 }
 
-void PhotoLayoutsEditor::exportFile()
+void PhotoLayoutsWindow::exportFile()
 {
     if (!m_canvas)
         return;
@@ -612,7 +613,7 @@ void PhotoLayoutsEditor::exportFile()
     delete imageDialog;
 }
 
-void PhotoLayoutsEditor::printPreview()
+void PhotoLayoutsWindow::printPreview()
 {
     if (m_canvas && m_canvas->scene())
     {
@@ -626,7 +627,7 @@ void PhotoLayoutsEditor::printPreview()
     }
 }
 
-void PhotoLayoutsEditor::print()
+void PhotoLayoutsWindow::print()
 {
     QPrinter * printer = new QPrinter();
     m_canvas->preparePrinter(printer);
@@ -637,7 +638,7 @@ void PhotoLayoutsEditor::print()
     delete printer;
 }
 
-bool PhotoLayoutsEditor::closeDocument()
+bool PhotoLayoutsWindow::closeDocument()
 {
     if (m_canvas)
     {
@@ -666,13 +667,13 @@ bool PhotoLayoutsEditor::closeDocument()
     return true;
 }
 
-void PhotoLayoutsEditor::progressEvent(ProgressEvent * event)
+void PhotoLayoutsWindow::progressEvent(ProgressEvent * event)
 {
     if (m_canvas)
         m_canvas->progressEvent(event);
 }
 
-bool PhotoLayoutsEditor::queryClose()
+bool PhotoLayoutsWindow::queryClose()
 {
     if (closeDocument())
         return true;
@@ -680,7 +681,7 @@ bool PhotoLayoutsEditor::queryClose()
         return false;
 }
 
-void PhotoLayoutsEditor::settings()
+void PhotoLayoutsWindow::settings()
 {
     if ( KConfigDialog::showDialog( "settings" ) )
         return;
@@ -689,17 +690,17 @@ void PhotoLayoutsEditor::settings()
     dialog->show();
 }
 
-void PhotoLayoutsEditor::loadNewImage()
+void PhotoLayoutsWindow::loadNewImage()
 {
     if (!m_canvas)
         return;
 
-    QList<QUrl> urls = KIPIPlugins::KPImageDialog::getImageUrls(this);
+    QList<QUrl> urls = Digikam::ImageDialog::getImageUrls(this, QUrl());
     if (!urls.isEmpty())
         m_canvas->addImages(urls);
 }
 
-void PhotoLayoutsEditor::setGridVisible(bool isVisible)
+void PhotoLayoutsWindow::setGridVisible(bool isVisible)
 {
     d->showGridToggleAction->setChecked(isVisible);
     PLEConfigSkeleton::setShowGrid(isVisible);
@@ -708,7 +709,7 @@ void PhotoLayoutsEditor::setGridVisible(bool isVisible)
         m_canvas->scene()->setGridVisible(isVisible);
 }
 
-void PhotoLayoutsEditor::setupGrid()
+void PhotoLayoutsWindow::setupGrid()
 {
     if (m_canvas && m_canvas->scene())
     {
@@ -722,7 +723,7 @@ void PhotoLayoutsEditor::setupGrid()
     }
 }
 
-void PhotoLayoutsEditor::changeCanvasSize()
+void PhotoLayoutsWindow::changeCanvasSize()
 {
     if (!m_canvas)
         return;
@@ -748,7 +749,7 @@ void PhotoLayoutsEditor::changeCanvasSize()
     delete ccd;
 }
 
-void PhotoLayoutsEditor::setTemplateEditMode(bool isEnabled)
+void PhotoLayoutsWindow::setTemplateEditMode(bool isEnabled)
 {
     Q_UNUSED(isEnabled);
 
@@ -757,12 +758,12 @@ void PhotoLayoutsEditor::setTemplateEditMode(bool isEnabled)
     //m_canvas->setTemplateEditMode(isEnabled);
 }
 
-void PhotoLayoutsEditor::loadEffects()
+void PhotoLayoutsWindow::loadEffects()
 {
     StandardEffectsFactory * stdEffects = new StandardEffectsFactory( PhotoEffectsLoader::instance() );
     PhotoEffectsLoader::registerEffect( stdEffects );
 
-    const KService::List offers = KServiceTypeTrader::self()->query("PhotoLayoutsEditor/EffectPlugin");
+    const KService::List offers = KServiceTypeTrader::self()->query("PhotoLayoutsWindow/EffectPlugin");
     foreach(const KService::Ptr& service, offers)
     {
         if (service)
@@ -784,11 +785,11 @@ void PhotoLayoutsEditor::loadEffects()
             {
                 d->effectsMap[name] = plugin;
                 PhotoEffectsLoader::registerEffect(plugin);
-                qCDebug(KIPIPLUGINS_LOG) << "PhotoLayoutsEditor: Loaded effect " << service->name();
+                qCDebug(DIGIKAM_GENERAL_LOG) << "PhotoLayoutsWindow: Loaded effect " << service->name();
             }
             else
             {
-                qCWarning(KIPIPLUGINS_LOG) << "PhotoLayoutsEditor: createInstance returned 0 for "
+                qCWarning(DIGIKAM_GENERAL_LOG) << "PhotoLayoutsWindow: createInstance returned 0 for "
                            << service->name()
                            << " (" << service->library() << ")"
                            << " with error: "
@@ -798,12 +799,12 @@ void PhotoLayoutsEditor::loadEffects()
     }
 }
 
-void PhotoLayoutsEditor::loadBorders()
+void PhotoLayoutsWindow::loadBorders()
 {
     StandardBordersFactory * stdBorders = new StandardBordersFactory( BorderDrawersLoader::instance() );
     BorderDrawersLoader::registerDrawer( stdBorders );
 
-    const KService::List offers = KServiceTypeTrader::self()->query("PhotoLayoutsEditor/BorderPlugin");
+    const KService::List offers = KServiceTypeTrader::self()->query("PhotoLayoutsWindow/BorderPlugin");
     foreach(const KService::Ptr& service, offers)
     {
         if (service)
@@ -825,11 +826,11 @@ void PhotoLayoutsEditor::loadBorders()
             {
                 d->bordersMap[name] = plugin;
                 BorderDrawersLoader::registerDrawer(plugin);
-                qCDebug(KIPIPLUGINS_LOG) << "PhotoLayoutsEditor: Loaded border:" << service->name();
+                qCDebug(DIGIKAM_GENERAL_LOG) << "PhotoLayoutsWindow: Loaded border:" << service->name();
             }
             else
             {
-                qCWarning(KIPIPLUGINS_LOG) << "PhotoLayoutsEditor: createInstance returned 0 for "
+                qCWarning(DIGIKAM_GENERAL_LOG) << "PhotoLayoutsWindow: createInstance returned 0 for "
                            << service->name()
                            << " (" << service->library() << ")"
                            << " with error: "
@@ -838,3 +839,5 @@ void PhotoLayoutsEditor::loadBorders()
         }
     }
 }
+
+} // namespace PhotoLayoutsEditor

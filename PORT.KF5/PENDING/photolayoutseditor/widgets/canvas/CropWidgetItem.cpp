@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -25,7 +25,7 @@
 
 #include "CropWidgetItem.h"
 #include "AbstractPhoto.h"
-#include "photolayoutseditor.h"
+#include "photolayoutswindow.h"
 #include <limits>
 
 #include <QGraphicsSceneMouseEvent>
@@ -250,14 +250,14 @@ void CropWidgetItem::keyPressEvent(QKeyEvent * event)
             if (d->m_items.count() > 1)
             {
                 commandGroupOpened = true;
-                PhotoLayoutsEditor::instance()->beginUndoCommandGroup(i18n("Crop items"));
+                PhotoLayoutsWindow::instance()->beginUndoCommandGroup(i18n("Crop items"));
             }
 
             foreach(AbstractPhoto* item, d->m_items)
                 item->setCropShape( this->mapToItem(item, p) );
 
             if (commandGroupOpened)
-                PhotoLayoutsEditor::instance()->endUndoCommandGroup();
+                PhotoLayoutsWindow::instance()->endUndoCommandGroup();
         }
         else
         {

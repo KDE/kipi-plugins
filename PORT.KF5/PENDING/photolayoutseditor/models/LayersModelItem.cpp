@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -35,6 +35,8 @@
 
 // KDE
 #include <klocalizedstring.h>
+
+#include "digikam_debug.h"
 
 using namespace PhotoLayoutsEditor;
 
@@ -139,10 +141,12 @@ void LayersModelItem::setPhoto(AbstractPhoto * photo)
     if (photo)
     {
         int newZValue = this->parent()->childCount()-this->parent()->childItems.indexOf(this);
-        #ifdef QT_DEBUG
-                if (photo->zValue() != newZValue)
-                    qCDebug(KIPIPLUGINS_LOG) << "ZValue changed!" << (QGraphicsItem*)photo << "Current:" << photo->zValue() << "New:" << newZValue;
-        #endif
+
+        if (photo->zValue() != newZValue)
+            qCDebug(DIGIKAM_GENERAL_LOG) << "ZValue changed!"
+                                         << (QGraphicsItem*)photo
+                                         << "Current:" << photo->zValue()
+                                         << "New:" << newZValue;
         photo->setZValue(newZValue);
         connect(photo, SIGNAL(changed()), this, SLOT(updateData()));
     }

@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -30,7 +30,7 @@
 
 #include <klocalizedstring.h>
 
-using namespace KIPIPhotoFramesEditor;
+using namespace PhotoLayoutsEditor;
 
 UndoBorderChangeCommand::UndoBorderChangeCommand(AbstractPhoto * photo, qreal newWidth, Qt::PenJoinStyle newCornerStyle, const QColor & newColor, QUndoCommand * parent) :
     QUndoCommand(i18n("Border changed"), parent),

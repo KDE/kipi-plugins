@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -122,7 +122,7 @@ void PLEConfigViewWidget::setupGUI()
     gridLayout->addRow(i18n("Vertical distance"), d->yGrid);
 
 //    KConfigDialog * dialog = KConfigDialog::exists( "settings" );
-//    qCDebug(KIPIPLUGINS_LOG) << dialog;
+//    qCDebug(DIGIKAM_GENERAL_LOG) << dialog;
 //    if (dialog)
 //    {
 //        connect(d->antialiasing, SIGNAL(stateChanged(int)), dialog, SLOT(updateButtons()));

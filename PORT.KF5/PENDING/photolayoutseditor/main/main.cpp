@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
+ * This file is a part of digiKam project
  * http://www.digikam.org
  *
  * Date        : 2011-09-01
@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "photolayoutseditor.h"
+#include "photolayoutswindow.h"
 #include "PLEAboutData.h"
 
 #include <QDesktopWidget>
@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
     KApplication app;
     aboutData.setProgramLogo(QIcon::fromTheme("photolayoutseditor"));
 
-    PhotoLayoutsEditor* w = PhotoLayoutsEditor::instance(0);
+    PhotoLayoutsWindow* w = PhotoLayoutsEditor::instance(0);
     w->setAttribute(Qt::WA_DeleteOnClose, true);
 
     KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
