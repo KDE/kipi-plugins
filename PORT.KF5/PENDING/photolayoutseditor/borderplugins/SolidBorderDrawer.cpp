@@ -59,17 +59,18 @@ SolidBorderDrawer::SolidBorderDrawer(StandardBordersFactory * factory, QObject *
     if (m_properties.isEmpty())
     {
         const QMetaObject * meta = this->metaObject();
-        int count = meta->propertyCount();
+        int count                = meta->propertyCount();
+
         while (count--)
         {
             QMetaProperty property = meta->property(count);
-            if (!QString("color").compare(property.name()))
+            if (!QString::fromLatin1("color").compare(QLatin1String(property.name())))
                 m_properties.insert(property.name(), i18n("Color"));
-            else if (!QString("corners_style").compare(property.name()))
+            else if (!QString::fromLatin1("corners_style").compare(QLatin1String(property.name())))
                 m_properties.insert(property.name(), i18n("Corners style"));
-            else if (!QString("width").compare(property.name()))
+            else if (!QString::fromLatin1("width").compare(QLatin1String(property.name())))
                 m_properties.insert(property.name(), i18n("Width"));
-            else if (!QString("spacing").compare(property.name()))
+            else if (!QString::fromLatin1("spacing").compare(QLatin1String(property.name())))
                 m_properties.insert(property.name(), i18n("Spacing"));
         }
     }
@@ -133,7 +134,7 @@ void SolidBorderDrawer::setPropertyValue(const QString & propertyName, const QVa
 
 QDomElement SolidBorderDrawer::toSvg(QDomDocument & document) const
 {
-    QDomElement result = document.createElement("path");
+    QDomElement result = document.createElement(QLatin1String("path"));
     int count = m_path.elementCount();
     QString str_path_d;
     for (int i = 0; i < count; ++i)
@@ -142,21 +143,21 @@ QDomElement SolidBorderDrawer::toSvg(QDomDocument & document) const
         switch (e.type)
         {
         case QPainterPath::LineToElement:
-            str_path_d.append("L " + QString::number(e.x) + ' ' + QString::number(e.y) + ' ');
+            str_path_d.append(QLatin1String("L ") + QString::number(e.x) + QLatin1Char(' ') + QString::number(e.y) + QLatin1Char(' '));
             break;
         case QPainterPath::MoveToElement:
-            str_path_d.append("M " + QString::number(e.x) + ' ' + QString::number(e.y) + ' ');
+            str_path_d.append(QLatin1String("M ") + QString::number(e.x) + QLatin1Char(' ') + QString::number(e.y) + QLatin1Char(' '));
             break;
         case QPainterPath::CurveToElement:
-            str_path_d.append("C " + QString::number(e.x) + ' ' + QString::number(e.y) + ' ');
+            str_path_d.append(QLatin1String("C ") + QString::number(e.x) + QLatin1Char(' ') + QString::number(e.y) + QLatin1Char(' '));
             break;
         case QPainterPath::CurveToDataElement:
-            str_path_d.append(QString::number(e.x) + ' ' + QString::number(e.y) + ' ');
+            str_path_d.append(QString::number(e.x) + QLatin1Char(' ') + QString::number(e.y) + QLatin1Char(' '));
             break;
         }
     }
-    result.setAttribute("d", str_path_d);
-    result.setAttribute("fill", m_color.name());
+    result.setAttribute(QLatin1String("d"), str_path_d);
+    result.setAttribute(QLatin1String("fill"), m_color.name());
     return result;
 }
 
@@ -167,7 +168,7 @@ QString SolidBorderDrawer::name() const
 
 QString SolidBorderDrawer::toString() const
 {
-    return name().append(" [") + QString::number(m_width).append(" ") + m_color.name().append("]");
+    return name().append(QLatin1String(" [")) + QString::number(m_width).append(QLatin1String(" ")) + m_color.name().append(QLatin1String("]"));
 }
 
 SolidBorderDrawer::operator QString() const
@@ -178,7 +179,7 @@ SolidBorderDrawer::operator QString() const
 QVariant SolidBorderDrawer::stringNames(const QMetaProperty & property)
 {
     const char * name = property.name();
-    if (!QString("corners_style").compare(name))
+    if (!QString::fromLatin1("corners_style").compare(QLatin1String(name)))
         return QVariant(m_corners_style_names.values());
     return QVariant();
 }
@@ -186,9 +187,9 @@ QVariant SolidBorderDrawer::stringNames(const QMetaProperty & property)
 QVariant SolidBorderDrawer::minimumValue(const QMetaProperty & property)
 {
     const char * name = property.name();
-    if (!QString("width").compare(name))
+    if (!QString::fromLatin1("width").compare(QLatin1String(name)))
         return 0;
-    if (!QString("spacing").compare(name))
+    if (!QString::fromLatin1("spacing").compare(QLatin1String(name)))
         return -100;
     return QVariant();
 }
@@ -196,9 +197,9 @@ QVariant SolidBorderDrawer::minimumValue(const QMetaProperty & property)
 QVariant SolidBorderDrawer::maximumValue(const QMetaProperty & property)
 {
     const char * name = property.name();
-    if (!QString("width").compare(name))
+    if (!QString::fromLatin1("width").compare(QLatin1String(name)))
         return 100;
-    if (!QString("spacing").compare(name))
+    if (!QString::fromLatin1("spacing").compare(QLatin1String(name)))
         return 100;
     return QVariant();
 }
@@ -206,9 +207,9 @@ QVariant SolidBorderDrawer::maximumValue(const QMetaProperty & property)
 QVariant SolidBorderDrawer::stepValue(const QMetaProperty & property)
 {
     const char * name = property.name();
-    if (!QString("width").compare(name))
+    if (!QString::fromLatin1("width").compare(QLatin1String(name)))
         return 1;
-    if (!QString("spacing").compare(name))
+    if (!QString::fromLatin1("spacing").compare(QLatin1String(name)))
         return 1;
     return QVariant();
 }

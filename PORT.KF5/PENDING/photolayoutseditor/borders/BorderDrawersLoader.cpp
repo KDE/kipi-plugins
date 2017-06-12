@@ -70,7 +70,7 @@ BorderDrawersLoader * BorderDrawersLoader::instance(QObject * parent)
 void BorderDrawersLoader::registerDrawer(BorderDrawerFactoryInterface * factory)
 {
     factory->setParent(instance());
-    QStringList names = factory->drawersNames().split(';', QString::SkipEmptyParts);
+    QStringList names = factory->drawersNames().split(QLatin1Char(';'), QString::SkipEmptyParts);
     foreach(QString name, names)
         instance()->d->factories.insert(name, factory);
 }
@@ -109,7 +109,7 @@ BorderDrawerInterface * BorderDrawersLoader::getDrawerFromSvg(QDomElement & draw
             continue;
         properties.insert(attr.name(), attr.value());
     }
-    QString drawerName = properties.take("name");
+    QString drawerName = properties.take(QLatin1String("name"));
     if (!instance()->registeredDrawers().contains(drawerName))
         return 0;
     BorderDrawerInterface * drawer = getDrawerByName(drawerName);
@@ -118,10 +118,10 @@ BorderDrawerInterface * BorderDrawersLoader::getDrawerFromSvg(QDomElement & draw
     for (int i = 0; i < count; ++i)
     {
         QMetaProperty p = meta->property(i);
-        QString value = properties.take(p.name());
+        QString value = properties.take(QLatin1String(p.name()));
         if (value.isEmpty())
             continue;
-        p.write(drawer, QVariant(QByteArray::fromBase64(value.toAscii())));
+        p.write(drawer, QVariant(QByteArray::fromBase64(value.toLatin1())));
     }
     return drawer;
 }
@@ -130,8 +130,8 @@ QDomElement BorderDrawersLoader::drawerToSvg(BorderDrawerInterface * drawer, QDo
 {
     if (!drawer)
         return QDomElement();
-    QDomElement result = document.createElement("g");
-    result.setAttribute("name", drawer->name());
+    QDomElement result = document.createElement(QLatin1String("g"));
+    result.setAttribute(QLatin1String("name"), drawer->name());
 
     result.appendChild( drawer->toSvg(document) );
 
@@ -140,7 +140,7 @@ QDomElement BorderDrawersLoader::drawerToSvg(BorderDrawerInterface * drawer, QDo
     for (int i = 0; i < count; ++i)
     {
         QMetaProperty p = meta->property(i);
-        result.setAttribute( p.name(), QString(p.read(drawer).toByteArray().toBase64()) );
+        result.setAttribute(QLatin1String(p.name()), QLatin1String(p.read(drawer).toByteArray().toBase64()));
     }
 
     return result;

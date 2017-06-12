@@ -64,14 +64,6 @@ set(photolayoutseditor_SRCS
     threads/SceneBorderLoader.cpp
     threads/TextItemLoader.cpp
 
-    widgets/canvas/CanvasSize.cpp
-    widgets/canvas/CropWidgetItem.cpp
-    widgets/canvas/MousePressListener.cpp
-    widgets/canvas/RotationWidgetItem.cpp
-    widgets/canvas/ScalingWidgetItem.cpp
-    widgets/canvas/Scene.cpp
-    widgets/canvas/SceneBackground.cpp
-    widgets/canvas/SceneBorder.cpp
     widgets/dialogs/CanvasSizeDialog.cpp
     widgets/dialogs/GridSetupDialog.cpp
     widgets/dialogs/ImageFileDialog.cpp
@@ -99,6 +91,14 @@ set(photolayoutseditor_SRCS
     widgets/tools/ToolsDockWidget.cpp
     widgets/tools/ZoomTool.cpp
     widgets/canvas/Canvas.cpp
+    widgets/canvas/CanvasSize.cpp
+    widgets/canvas/CropWidgetItem.cpp
+    widgets/canvas/MousePressListener.cpp
+    widgets/canvas/RotationWidgetItem.cpp
+    widgets/canvas/ScalingWidgetItem.cpp
+    widgets/canvas/Scene.cpp
+    widgets/canvas/SceneBackground.cpp
+    widgets/canvas/SceneBorder.cpp
 
     listeners/TextColorChangeListener.cpp
     listeners/TextFontChangeListener.cpp

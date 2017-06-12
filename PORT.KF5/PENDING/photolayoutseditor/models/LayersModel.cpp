@@ -25,32 +25,37 @@
 
 #include "LayersModel.h"
 
-// KDE
-#include <QIcon>
+// Qt includes
 
-// Qt
 #include <QDebug>
+#include <QIcon>
 #include <QCommonStyle>
 #include <QLabel>
 #include <QVariant>
 #include <QList>
 
-// Local
+// Local includes
+
 #include "LayersModelItem.h"
 #include "AbstractPhoto.h"
 
-using namespace PhotoLayoutsEditor;
+namespace PhotoLayoutsEditor
+{
 
 LayersModel::LayersModel(QObject *parent) :
     QAbstractItemModel(parent)
 {
     root = new LayersModelItem(0, 0, this);
-    this->setSupportedDragActions(Qt::MoveAction);
 }
 
 LayersModel::~LayersModel()
 {
     delete root;
+}
+
+Qt::DropActions LayersModel::supportedDragActions()
+{
+    return Qt::MoveAction;
 }
 
 QModelIndex LayersModel::index(int row, int column, const QModelIndex & parent) const
@@ -301,17 +306,27 @@ bool LayersModel::removeRows(int row, int count, const QModelIndex & parent)
     return result;
 }
 
-bool LayersModel::moveRows(int sourcePosition, const QModelIndex & sourceParent, int destPosition, const QModelIndex & destinationParent)
+bool LayersModel::moveRows(int sourcePosition,
+                           const QModelIndex & sourceParent,
+                           int destPosition,
+                           const QModelIndex & destinationParent)
 {
     return moveRows(sourcePosition, 1, sourceParent, destPosition, destinationParent);
 }
 
-bool LayersModel::moveRows(const QModelIndex & sourceIndex, const QModelIndex & sourdeParent, const QModelIndex & destinationIndex, const QModelIndex & destinationParent)
+bool LayersModel::moveRows(const QModelIndex & sourceIndex,
+                           const QModelIndex & sourdeParent,
+                           const QModelIndex & destinationIndex,
+                           const QModelIndex & destinationParent)
 {
     return moveRows(sourceIndex.row(), 1, sourdeParent, destinationIndex.row()+1, destinationParent);
 }
 
-bool LayersModel::moveRows(int sourcePosition, int sourceCount, const QModelIndex & sourceParent, int destPosition, const QModelIndex & destinationParent)
+bool LayersModel::moveRows(int sourcePosition,
+                           int sourceCount,
+                           const QModelIndex & sourceParent,
+                           int destPosition,
+                           const QModelIndex & destinationParent)
 {
     LayersModelItem * srcItem = getItem(sourceParent);
     LayersModelItem * destItem = getItem(destinationParent);
@@ -332,7 +347,11 @@ bool LayersModel::moveRows(int sourcePosition, int sourceCount, const QModelInde
     return false;
 }
 
-bool LayersModel::moveRows(const QModelIndex & start1, const QModelIndex & end1, const QModelIndex & parent1, const QModelIndex & start2, const QModelIndex & parent2)
+bool LayersModel::moveRows(const QModelIndex & start1,
+                           const QModelIndex & end1,
+                           const QModelIndex & parent1,
+                           const QModelIndex & start2,
+                           const QModelIndex & parent2)
 {
     return moveRows(start1.row(), end1.row(), parent1, start2.row(), parent2);
 }
@@ -341,3 +360,5 @@ void LayersModel::updateModel(const QModelIndex & topLeft, const QModelIndex & b
 {
     emit dataChanged(topLeft, bottomRight);
 }
+
+} // namespace PhotoLayoutsEditor

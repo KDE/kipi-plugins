@@ -37,7 +37,7 @@
 
 #include <klocalizedstring.h>
 
-#define STRENGTH_PROPERTY QString("Strength")
+#define STRENGTH_PROPERTY QLatin1String("Strength")
 
 namespace PhotoLayoutsEditor
 {
@@ -109,7 +109,7 @@ namespace PhotoLayoutsEditor
 
             virtual QString propertyName(const QMetaProperty& property) const
             {
-                if (!QString("strength").compare(property.name()))
+                if (!QString::fromLatin1("strength").compare(QLatin1String(property.name())))
                     return STRENGTH_PROPERTY;
 
                 return QString();
@@ -136,7 +136,7 @@ namespace PhotoLayoutsEditor
 
             virtual QVariant minimumValue(const QMetaProperty& property)
             {
-                if (!QString("strength").compare(property.name()))
+                if (!QString::fromLatin1("strength").compare(QLatin1String(property.name())))
                     return QVariant(0);
 
                 return QVariant();
@@ -144,7 +144,7 @@ namespace PhotoLayoutsEditor
 
             virtual QVariant maximumValue(const QMetaProperty& property)
             {
-                if (!QString("strength").compare(property.name()))
+                if (!QString::fromLatin1("strength").compare(QLatin1String(property.name())))
                     return QVariant(100);
 
                 return QVariant();
@@ -152,7 +152,7 @@ namespace PhotoLayoutsEditor
 
             virtual QVariant stepValue(const QMetaProperty& property)
             {
-                if (!QString("strength").compare(property.name()))
+                if (!QString::fromLatin1("strength").compare(QLatin1String(property.name())))
                     return 1;
 
                 return QVariant();

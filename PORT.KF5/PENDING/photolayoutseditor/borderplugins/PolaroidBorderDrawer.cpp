@@ -52,16 +52,18 @@ PolaroidBorderDrawer::PolaroidBorderDrawer(StandardBordersFactory * factory, QOb
     {
         const QMetaObject * meta = this->metaObject();
         int count = meta->propertyCount();
+
         while (count--)
         {
             QMetaProperty property = meta->property(count);
-            if (!QString("width").compare(property.name()))
+
+            if (!QString::fromLatin1("width").compare(QLatin1String(property.name())))
                 m_properties.insert(property.name(), i18n("Width"));
-            else if (!QString("text").compare(property.name()))
+            else if (!QString::fromLatin1("text").compare(QLatin1String(property.name())))
                 m_properties.insert(property.name(), i18n("Text"));
-            else if (!QString("color").compare(property.name()))
+            else if (!QString::fromLatin1("color").compare(QLatin1String(property.name())))
                 m_properties.insert(property.name(), i18n("Color"));
-            else if (!QString("font").compare(property.name()))
+            else if (!QString::fromLatin1("font").compare(QLatin1String(property.name())))
                 m_properties.insert(property.name(), i18n("Font"));
         }
     }
@@ -134,21 +136,21 @@ void PolaroidBorderDrawer::setPropertyValue(const QString & propertyName, const 
 
 QDomElement PolaroidBorderDrawer::toSvg(QDomDocument & document) const
 {
-    QDomElement result = document.createElement("g");
-    QDomElement path = document.createElement("path");
+    QDomElement result = document.createElement(QLatin1String("g"));
+    QDomElement path  = document.createElement(QLatin1String("path"));
     result.appendChild(path);
-    path.setAttribute("d", pathToSvg(m_path));
-    path.setAttribute("fill", "#ffffff");
-    path.setAttribute("fill-rule", "evenodd");
+    path.setAttribute(QLatin1String("d"),         pathToSvg(m_path));
+    path.setAttribute(QLatin1String("fill"),      QLatin1String("#ffffff"));
+    path.setAttribute(QLatin1String("fill-rule"), QLatin1String("evenodd"));
 
     QPainterPath p;
     p.addText(0, 0, m_font, m_text);
     p.translate(m_text_rect.center() - p.boundingRect().center());
 
-    QDomElement text = document.createElement("path");
+    QDomElement text = document.createElement(QLatin1String("path"));
     result.appendChild(text);
-    text.setAttribute("d", pathToSvg(p));
-    text.setAttribute("fill", m_color.name());
+    text.setAttribute(QLatin1String("d"), pathToSvg(p));
+    text.setAttribute(QLatin1String("fill"), m_color.name());
 
     return result;
 }
@@ -160,7 +162,7 @@ QString PolaroidBorderDrawer::name() const
 
 QString PolaroidBorderDrawer::toString() const
 {
-    return name().append(" [") + m_text + QString("]");
+    return name().append(QLatin1String(" [")) + m_text + QLatin1String("]");
 }
 
 PolaroidBorderDrawer::operator QString() const
@@ -171,24 +173,30 @@ PolaroidBorderDrawer::operator QString() const
 QVariant PolaroidBorderDrawer::minimumValue(const QMetaProperty & property)
 {
     const char * name = property.name();
-    if (!QString("width").compare(name))
+
+    if (!QString::fromLatin1("width").compare(QLatin1String(name)))
         return 0;
+
     return QVariant();
 }
 
 QVariant PolaroidBorderDrawer::maximumValue(const QMetaProperty & property)
 {
     const char * name = property.name();
-    if (!QString("width").compare(name))
+
+    if (!QString::fromLatin1("width").compare(QLatin1String(name)))
         return 100;
+
     return QVariant();
 }
 
 QVariant PolaroidBorderDrawer::stepValue(const QMetaProperty & property)
 {
     const char * name = property.name();
-    if (!QString("width").compare(name))
+
+    if (!QString::fromLatin1("width").compare(QLatin1String(name)))
         return 1;
+
     return QVariant();
 }
 
@@ -196,25 +204,27 @@ QString PolaroidBorderDrawer::pathToSvg(const QPainterPath & path) const
 {
     int count = path.elementCount();
     QString str_path_d;
+
     for (int i = 0; i < count; ++i)
     {
         QPainterPath::Element e = path.elementAt(i);
         switch (e.type)
         {
-        case QPainterPath::LineToElement:
-            str_path_d.append("L " + QString::number(e.x) + ' ' + QString::number(e.y) + ' ');
-            break;
-        case QPainterPath::MoveToElement:
-            str_path_d.append("M " + QString::number(e.x) + ' ' + QString::number(e.y) + ' ');
-            break;
-        case QPainterPath::CurveToElement:
-            str_path_d.append("C " + QString::number(e.x) + ' ' + QString::number(e.y) + ' ');
-            break;
-        case QPainterPath::CurveToDataElement:
-            str_path_d.append(QString::number(e.x) + ' ' + QString::number(e.y) + ' ');
-            break;
+            case QPainterPath::LineToElement:
+                str_path_d.append(QLatin1String("L ") + QString::number(e.x) + QLatin1Char(' ') + QString::number(e.y) + QLatin1Char(' '));
+                break;
+            case QPainterPath::MoveToElement:
+                str_path_d.append(QLatin1String("M ") + QString::number(e.x) + QLatin1Char(' ') + QString::number(e.y) + QLatin1Char(' '));
+                break;
+            case QPainterPath::CurveToElement:
+                str_path_d.append(QLatin1String("C ") + QString::number(e.x) + QLatin1Char(' ') + QString::number(e.y) + QLatin1Char(' '));
+                break;
+            case QPainterPath::CurveToDataElement:
+                str_path_d.append(QString::number(e.x) + QLatin1Char(' ') + QString::number(e.y) + QLatin1Char(' '));
+                break;
         }
     }
-    str_path_d.append("z");
+
+    str_path_d.append(QLatin1String("z"));
     return str_path_d;
 }

@@ -160,8 +160,8 @@ bool BordersGroup::moveDrawer(int sourcePosition, int destinationPosition)
 
 QDomElement BordersGroup::toSvg(QDomDocument & document)
 {
-    QDomElement result = document.createElement("g");
-    result.setAttribute("class", "borders");
+    QDomElement result = document.createElement(QLatin1String("g"));
+    result.setAttribute(QLatin1String("class"), QLatin1String("borders"));
     for (int i = d->borders.count()-1; i >= 0; --i)
     {
         BorderDrawerInterface * drawer = d->borders[i];
@@ -183,7 +183,7 @@ BordersGroup * BordersGroup::fromSvg(QDomElement & element, AbstractPhoto * grap
         if (!children.at(i).isElement())
             continue;
         bordersElement = children.at(i).toElement();
-        if (bordersElement.tagName() != "g" || bordersElement.attribute("class") != "borders")
+        if (bordersElement.tagName() != QLatin1String("g") || bordersElement.attribute(QLatin1String("class")) != QLatin1String("borders"))
         {
             bordersElement = QDomElement();
             continue;

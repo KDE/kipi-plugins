@@ -31,7 +31,7 @@
 #include <QImage>
 #include <QRect>
 
-#define RADIUS_PROPERTY "Radius"
+#define RADIUS_PROPERTY QLatin1String("Radius")
 
 namespace PhotoLayoutsEditor
 {
@@ -52,7 +52,7 @@ namespace PhotoLayoutsEditor
 
             virtual QString propertyName(const QMetaProperty & property) const
             {
-                if (!QString("radius").compare(property.name()))
+                if (!QString::fromLatin1("radius").compare(QLatin1String(property.name())))
                     return RADIUS_PROPERTY;
                 return AbstractPhotoEffectInterface::propertyName(property);
             }
@@ -60,7 +60,7 @@ namespace PhotoLayoutsEditor
             {
                 if (propertyName == RADIUS_PROPERTY)
                     return m_radius;
-                return AbstractPhotoEffectInterface::propertyValue(propertyName);
+                return AbstractPhotoEffectInterface::propertyValue(QLatin1String(propertyName));
             }
             virtual void setPropertyValue(const QString & propertyName, const QVariant & value)
             {
@@ -75,19 +75,19 @@ namespace PhotoLayoutsEditor
             }
             virtual QVariant minimumValue(const QMetaProperty & property)
             {
-                if (!QString("radius").compare(property.name()))
+                if (!QString::fromLatin1("radius").compare(QLatin1String(property.name())))
                     return 0;
                 return AbstractPhotoEffectInterface::minimumValue(property);
             }
             virtual QVariant maximumValue(const QMetaProperty & property)
             {
-                if (!QString("radius").compare(property.name()))
+                if (!QString::fromLatin1("radius").compare(QLatin1String(property.name())))
                     return 100;
                 return AbstractPhotoEffectInterface::maximumValue(property);
             }
             virtual QVariant stepValue(const QMetaProperty & property)
             {
-                if (!QString("radius").compare(property.name()))
+                if (!QString::fromLatin1("radius").compare(QLatin1String(property.name())))
                     return 1;
                 return AbstractPhotoEffectInterface::stepValue(property);
             }

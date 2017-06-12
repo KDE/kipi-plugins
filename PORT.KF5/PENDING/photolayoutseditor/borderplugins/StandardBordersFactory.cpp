@@ -38,7 +38,7 @@ StandardBordersFactory::StandardBordersFactory(QObject * parent) :
 
 QString StandardBordersFactory::drawersNames() const
 {
-    return i18n("Polaroid border") + QString(";") +
+    return i18n("Polaroid border") + QLatin1String(";") +
            i18n("Solid border");
 }
 
