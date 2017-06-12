@@ -96,7 +96,7 @@ void CanvasLoadingThread::addItem(AbstractPhoto * item, QDomElement & element)
 
 void CanvasLoadingThread::addBackground(SceneBackground * background, QDomElement & element)
 {
-    if (element.attribute("class") != "background" || !background)
+    if (element.attribute(QLatin1String("class")) != QLatin1String("background") || !background)
         return;
     d->background.first = background;
     d->background.second = element;
@@ -104,7 +104,7 @@ void CanvasLoadingThread::addBackground(SceneBackground * background, QDomElemen
 
 void CanvasLoadingThread::addBorder(SceneBorder * border, QDomElement & element)
 {
-    if (element.attribute("class") != "border" || !border)
+    if (element.attribute(QLatin1String("class")) != QLatin1String("border") || !border)
         return;
     d->border.first = border;
     d->border.second = element;
@@ -146,14 +146,14 @@ void CanvasLoadingThread::run()
         QCoreApplication::processEvents();
 
         QDomElement e = it.value();
-        if (e.attribute("class") == "PhotoItem")
+        if (e.attribute(QLatin1String("class")) == QLatin1String("PhotoItem"))
         {
             PhotoItemLoader * loader = new PhotoItemLoader(dynamic_cast<PhotoItem*>(it.key()), it.value());
             loader->setObserver(this);
             loader->start();
             loader->wait();
         }
-        else if (e.attribute("class") == "TextItem")
+        else if (e.attribute(QLatin1String("class")) == QLatin1String("TextItem"))
         {
             TextItemLoader * loader = new TextItemLoader(dynamic_cast<TextItem*>(it.key()), it.value());
             loader->setObserver(this);

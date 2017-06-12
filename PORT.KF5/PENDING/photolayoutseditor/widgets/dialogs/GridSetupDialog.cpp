@@ -33,21 +33,22 @@
 using namespace PhotoLayoutsEditor;
 
 GridSetupDialog::GridSetupDialog(QWidget * parent) :
-    KDialog(parent)
+    QDialog(parent)
 {
     PLEConfigSkeleton * skeleton = PLEConfigSkeleton::self();
 
-    this->setCaption(i18n("Setup grid lines"));
-    this->setModal(true);
+    setWindowTitle(i18n("Setup grid lines"));
+    setModal(true);
 
     centralWidget = new QWidget(this);
-    setMainWidget(centralWidget);
 
-    QFormLayout * layout = new QFormLayout();
+    QFormLayout * layout = new QFormLayout(centralWidget);
     layout->setSizeConstraint( QLayout::SetFixedSize );
 
+    setLayout(layout);
+
     x = new QDoubleSpinBox(centralWidget);
-    KConfigSkeletonItem * hgi = skeleton->findItem("horizontalGrid");
+    KConfigSkeletonItem * hgi = skeleton->findItem(QLatin1String("horizontalGrid"));
 
     if (hgi)
     {
@@ -61,7 +62,7 @@ GridSetupDialog::GridSetupDialog(QWidget * parent) :
     layout->addRow(i18n("Horizontal distance"), x);
 
     y = new QDoubleSpinBox(centralWidget);
-    KConfigSkeletonItem * vgi = skeleton->findItem("verticalGrid");
+    KConfigSkeletonItem * vgi = skeleton->findItem(QLatin1String("verticalGrid"));
 
     if (vgi && hgi)
     {
@@ -101,7 +102,7 @@ qreal GridSetupDialog::verticalDistance() const
 
 int GridSetupDialog::exec()
 {
-    int result = KDialog::exec();
+    int result = QDialog::exec();
     if (result == Accepted)
     {
         PLEConfigSkeleton::setHorizontalGrid( this->horizontalDistance() );

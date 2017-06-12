@@ -66,7 +66,7 @@ ProgressObserver * AbstractPhotoItemLoader::observer() const
 
 void AbstractPhotoItemLoader::run()
 {
-    if (m_element.tagName() != "g")
+    if (m_element.tagName() != QLatin1String("g"))
         this->exit(1);
 
     ProgressObserver * observer = this->observer();
@@ -76,36 +76,36 @@ void AbstractPhotoItemLoader::run()
         observer->progresName(i18n("Reading properties..."));
     }
     // Items visibility
-    m_item->d->m_visible = (m_element.attribute("visibility") != "hide");
+    m_item->d->m_visible = (m_element.attribute(QLatin1String("visibility")) != QLatin1String("hide"));
 
     // ID & name
-    m_item->d->m_id = m_element.attribute("id");
-    m_item->d->m_name = m_element.attribute("name");
+    m_item->d->m_id = m_element.attribute(QLatin1String("id"));
+    m_item->d->m_name = m_element.attribute(QLatin1String("name"));
 
     // Position & transformation
     m_item->d->m_pos = QPointF(0,0);
-    QString transform = m_element.attribute("transform");
+    QString transform = m_element.attribute(QLatin1String("transform"));
     if (!transform.isEmpty())
     {
-        QRegExp tr("translate\\([-0-9.]+,[-0-9.]+\\)");
+        QRegExp tr(QLatin1String("translate\\([-0-9.]+,[-0-9.]+\\)"));
         if (tr.indexIn(transform) >= 0)
         {
             QStringList list = tr.capturedTexts();
             QString translate = list.at(0);
-            list = translate.split(',');
+            list = translate.split(QLatin1Char(','));
             QString x = list.at(0);
             QString y = list.at(1);
             m_item->d->m_pos = QPointF( x.right(x.length()-10).toDouble(),
                                         y.left(y.length()-1).toDouble());
         }
 
-        QRegExp rot("matrix\\([-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+\\)");
+        QRegExp rot(QLatin1String("matrix\\([-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+\\)"));
         if (rot.indexIn(transform) >= 0)
         {
             QStringList list = rot.capturedTexts();
             QString matrix = list.at(0);
             matrix.remove(matrix.length()-1,1).remove(0,7);
-            list = matrix.split(',');
+            list = matrix.split(QLatin1Char(','));
             QString m11 = list.at(0);
             QString m12 = list.at(1);
             QString m21 = list.at(2);
@@ -118,17 +118,17 @@ void AbstractPhotoItemLoader::run()
         }
     }
 
-    if (m_element.firstChildElement().tagName() == "g")
+    if (m_element.firstChildElement().tagName() == QLatin1String("g"))
     {
         m_element = m_element.firstChildElement();
-        QString transform = m_element.attribute("transform");
-        QRegExp rot("matrix\\([-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+\\)");
+        QString transform = m_element.attribute(QLatin1String("transform"));
+        QRegExp rot(QLatin1String("matrix\\([-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+\\)"));
         if (rot.indexIn(transform) >= 0)
         {
             QStringList list = rot.capturedTexts();
             QString matrix = list.at(0);
             matrix.remove(matrix.length()-1,1).remove(0,7);
-            list = matrix.split(',');
+            list = matrix.split(QLatin1Char(','));
             QString m11 = list.at(0);
             QString m12 = list.at(1);
             QString m21 = list.at(2);
@@ -142,15 +142,15 @@ void AbstractPhotoItemLoader::run()
     }
 
     // Validation purpose
-    QDomElement defs = m_element.firstChildElement("defs");
-    while (!defs.isNull() && defs.attribute("id") != "data_"+m_item->id())
-        defs = defs.nextSiblingElement("defs");
+    QDomElement defs = m_element.firstChildElement(QLatin1String("defs"));
+    while (!defs.isNull() && defs.attribute(QLatin1String("id")) != QLatin1String("data_") + m_item->id())
+        defs = defs.nextSiblingElement(QLatin1String("defs"));
     if (defs.isNull())
         this->exit(1);
 
-    QDomElement itemDataElement = defs.firstChildElement("g");
-    while (!itemDataElement.isNull() && itemDataElement.attribute("id") != "vis_data_"+m_item->id())
-        itemDataElement = itemDataElement.nextSiblingElement("g");
+    QDomElement itemDataElement = defs.firstChildElement(QLatin1String("g"));
+    while (!itemDataElement.isNull() && itemDataElement.attribute(QLatin1String("id")) != QLatin1String("vis_data_") + m_item->id())
+        itemDataElement = itemDataElement.nextSiblingElement(QLatin1String("g"));
     if (itemDataElement.isNull())
         this->exit(1);
 
@@ -171,12 +171,12 @@ void AbstractPhotoItemLoader::run()
     else
         connect(m_item->d->m_borders_group, SIGNAL(drawersChanged()), m_item, SLOT(refresh()));
 
-    QDomElement clipPath = defs.firstChildElement("clipPath");
-    if (clipPath.isNull() || clipPath.attribute("id") != "clipPath_"+m_item->id())
+    QDomElement clipPath = defs.firstChildElement(QLatin1String("clipPath"));
+    if (clipPath.isNull() || clipPath.attribute(QLatin1String("id")) != QLatin1String("clipPath_") + m_item->id())
         this->exit(1);
 
     // Other application specific data
-    QDomElement appNS = defs.firstChildElement("data");
+    QDomElement appNS = defs.firstChildElement(QLatin1String("data"));
     if (appNS.isNull() || appNS.prefix() != PhotoLayoutsEditor::name())
         this->exit(1);
 
@@ -203,9 +203,9 @@ void AbstractPhotoItemLoader::run()
         observer->progresName(i18n("Reading cropping shape..."));
     }
     // Crop path
-    QDomElement cropPath = appNS.firstChildElement("crop_path");
+    QDomElement cropPath = appNS.firstChildElement(QLatin1String("crop_path"));
     if (!cropPath.isNull())
-        m_item->d->m_crop_shape = PhotoLayoutsEditor::pathFromSvg( cropPath.firstChildElement("path") );
+        m_item->d->m_crop_shape = PhotoLayoutsEditor::pathFromSvg( cropPath.firstChildElement(QLatin1String("path")) );
     else
         this->exit(1);
 }

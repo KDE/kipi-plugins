@@ -51,7 +51,7 @@ PhotoEffectsGroup::~PhotoEffectsGroup()
 
 QDomElement PhotoEffectsGroup::toSvg(QDomDocument & document) const
 {
-    QDomElement effectsGroup = document.createElement("effects");
+    QDomElement effectsGroup = document.createElement(QLatin1String("effects"));
     for (int i = m_effects_list.count()-1; i >= 0; --i)
     {
         QDomElement e = PhotoEffectsLoader::effectToSvg(m_effects_list[i], document);
@@ -65,8 +65,8 @@ QDomElement PhotoEffectsGroup::toSvg(QDomDocument & document) const
 PhotoEffectsGroup * PhotoEffectsGroup::fromSvg(const QDomElement & element, AbstractPhoto * graphicsItem)
 {
     QDomElement temp = element;
-    if (temp.tagName() != "effects")
-        temp = temp.firstChildElement("effects");
+    if (temp.tagName() != QLatin1String("effects"))
+        temp = temp.firstChildElement(QLatin1String("effects"));
     if (temp.isNull())
         return 0;
     PhotoEffectsGroup * group = new PhotoEffectsGroup(0);

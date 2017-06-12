@@ -28,7 +28,7 @@
 
 #include "AbstractPhotoEffectInterface.h"
 
-#define COLOR_PROPERTY "Color"
+#define COLOR_PROPERTY QLatin1String("Color")
 
 namespace PhotoLayoutsEditor
 {
@@ -50,7 +50,7 @@ namespace PhotoLayoutsEditor
 
             virtual QString propertyName(const QMetaProperty & property) const
             {
-                if (!QString("color").compare(property.name()))
+                if (!QString::fromLatin1("color").compare(QLatin1String(property.name())))
                     return COLOR_PROPERTY;
                 return AbstractPhotoEffectInterface::propertyName(property);
             }

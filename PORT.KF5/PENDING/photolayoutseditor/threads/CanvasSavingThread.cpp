@@ -86,50 +86,50 @@ void CanvasSavingThread::run()
     this->sendActionUpdate( i18n("Creating canvas...") );
 
     QRect sceneRect = m_canvas->sceneRect().toRect();
-    QDomDocument document(" svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\"");
-    QDomElement svg = document.createElement("svg");
+    QDomDocument document(QLatin1String(" svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\""));
+    QDomElement svg = document.createElement(QLatin1String("svg"));
     document.appendChild(svg);
 
-    svg.setAttribute("xmlns","http://www.w3.org/2000/svg");
-    svg.setAttribute("viewBox", QString::number(sceneRect.x()) + ' ' +
-                                QString::number(sceneRect.y()) + ' ' +
-                                QString::number(sceneRect.width()) + ' ' +
+    svg.setAttribute(QLatin1String("xmlns"), QLatin1String("http://www.w3.org/2000/svg"));
+    svg.setAttribute(QLatin1String("viewBox"), QString::number(sceneRect.x()) + QLatin1Char(' ') +
+                                QString::number(sceneRect.y()) + QLatin1Char(' ') +
+                                QString::number(sceneRect.width()) + QLatin1Char(' ') +
                                 QString::number(sceneRect.height()));
-    svg.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
-    svg.setAttribute("version", "1.2");
-    svg.setAttribute("baseProfile", "tiny");
+    svg.setAttribute(QLatin1String("xmlns:xlink"), QLatin1String("http://www.w3.org/1999/xlink"));
+    svg.setAttribute(QLatin1String("version"), QLatin1String("1.2"));
+    svg.setAttribute(QLatin1String("baseProfile"), QLatin1String("tiny"));
     QString j;
     switch (m_canvas->d->m_size.sizeUnit())
     {
         case CanvasSize::Centimeters:
-            j = "cm";
+            j = QLatin1String("cm");
             break;
         case CanvasSize::Milimeters:
-            j = "mm";
+            j = QLatin1String("mm");
             break;
         case CanvasSize::Inches:
-            j = "in";
+            j = QLatin1String("in");
             break;
         case CanvasSize::Picas:
-            j = "pc";
+            j = QLatin1String("pc");
             break;
         case CanvasSize::Points:
-            j = "pt";
+            j = QLatin1String("pt");
             break;
         case CanvasSize::Pixels:
-            j = "px";
+            j = QLatin1String("px");
             break;
         default:
-            j = "px";
+            j = QLatin1String("px");
             qCDebug(DIGIKAM_GENERAL_LOG) << "Unhandled size unit at:" << __FILE__ << ":" << __LINE__;
             break;
     }
-    svg.setAttribute("width", QString::number(m_canvas->d->m_size.size().width()) + j);
-    svg.setAttribute("height", QString::number(m_canvas->d->m_size.size().height()) + j);
-    QDomElement resolution = document.createElementNS(m_template ? PhotoLayoutsEditor::templateUri() : PhotoLayoutsEditor::uri(), "page");
-    resolution.setAttribute("width", QString::number(m_canvas->d->m_size.resolution().width()));
-    resolution.setAttribute("height", QString::number(m_canvas->d->m_size.resolution().height()));
-    resolution.setAttribute("unit", CanvasSize::resolutionUnitName(m_canvas->d->m_size.resolutionUnit()));
+    svg.setAttribute(QLatin1String("width"), QString::number(m_canvas->d->m_size.size().width()) + j);
+    svg.setAttribute(QLatin1String("height"), QString::number(m_canvas->d->m_size.size().height()) + j);
+    QDomElement resolution = document.createElementNS(m_template ? PhotoLayoutsEditor::templateUri() : PhotoLayoutsEditor::uri(), QLatin1String("page"));
+    resolution.setAttribute(QLatin1String("width"), QString::number(m_canvas->d->m_size.resolution().width()));
+    resolution.setAttribute(QLatin1String("height"), QString::number(m_canvas->d->m_size.resolution().height()));
+    resolution.setAttribute(QLatin1String("unit"), CanvasSize::resolutionUnitName(m_canvas->d->m_size.resolutionUnit()));
     svg.appendChild(resolution);
 
     this->sendProgressUpdate( 0.05 );

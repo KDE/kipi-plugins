@@ -45,23 +45,23 @@ void SceneBorderLoader::run()
         this->exit(1);
 
     QDomElement border = m_element.firstChildElement();
-    while (!border.isNull() && border.attribute("id") != "border")
+    while (!border.isNull() && border.attribute(QLatin1String("id")) != QLatin1String("border"))
         border = border.nextSiblingElement();
     if (border.isNull())
         this->exit(1);
 
-    QDomElement defs = border.firstChildElement("defs");
+    QDomElement defs = border.firstChildElement(QLatin1String("defs"));
     if (defs.isNull())
         this->exit(1);
 
-    QDomElement pattern = defs.firstChildElement("pattern");
+    QDomElement pattern = defs.firstChildElement(QLatin1String("pattern"));
     if (pattern.isNull())
         this->exit(1);
 
-    QDomElement image = pattern.firstChildElement("image");
+    QDomElement image = pattern.firstChildElement(QLatin1String("image"));
     if (image.isNull())
         this->exit(1);
-    m_border->m_image = QImage::fromData( QByteArray::fromBase64(image.attributeNS("http://www.w3.org/1999/xlink", "href").remove("data:image/png;base64,").toAscii()) );
+    m_border->m_image = QImage::fromData( QByteArray::fromBase64(image.attributeNS(QLatin1String("http://www.w3.org/1999/xlink"), QLatin1String("href")).remove(QLatin1String("data:image/png;base64,")).toLatin1()) );
 
     this->exit(0);
 }

@@ -51,12 +51,12 @@ void PhotoItemLoader::run()
     QDomElement e = this->element();
 
     // Gets data field
-    QDomElement defs = e.firstChildElement("defs");
-    while (!defs.isNull() && defs.attribute("class") != "data")
-        defs = defs.nextSiblingElement("defs");
+    QDomElement defs = e.firstChildElement(QLatin1String("defs"));
+    while (!defs.isNull() && defs.attribute(QLatin1String("class")) != QLatin1String("data"))
+        defs = defs.nextSiblingElement(QLatin1String("defs"));
     if (defs.isNull())
         this->exit(1);
-    QDomElement data = defs.firstChildElement("data");
+    QDomElement data = defs.firstChildElement(QLatin1String("data"));
     if (data.isNull())
         this->exit(1);
 
@@ -66,7 +66,7 @@ void PhotoItemLoader::run()
         observer->progresChanged(0.5);
         observer->progresName(i18n("Loading shape..."));
     }
-    QDomElement path = data.firstChildElement("path");
+    QDomElement path = data.firstChildElement(QLatin1String("path"));
     if (path.isNull())
         this->exit(1);
     item->m_image_path = PhotoLayoutsEditor::pathFromSvg(path);
@@ -74,17 +74,17 @@ void PhotoItemLoader::run()
         this->exit(1);
 
     // transform
-    QDomElement transform = path.nextSiblingElement("transform");
+    QDomElement transform = path.nextSiblingElement(QLatin1String("transform"));
     if (!transform.isNull())
     {
         item->d->m_brush_transform = QTransform();
-        QRegExp rot("matrix\\([-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+\\)");
-        if (rot.indexIn(transform.attribute("matrix")) >= 0)
+        QRegExp rot(QLatin1String("matrix\\([-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+\\)"));
+        if (rot.indexIn(transform.attribute(QLatin1String("matrix"))) >= 0)
         {
             QStringList list = rot.capturedTexts();
             QString matrix = list.at(0);
             matrix.remove(matrix.length()-1,1).remove(0,7);
-            list = matrix.split(',');
+            list = matrix.split(QLatin1Char(','));
             QString m11 = list.at(0);
             QString m12 = list.at(1);
             QString m21 = list.at(2);
@@ -105,17 +105,17 @@ void PhotoItemLoader::run()
         observer->progresChanged(0.6);
         observer->progresName(i18n("Loading image..."));
     }
-    QDomElement imageElement = data.firstChildElement("image");
+    QDomElement imageElement = data.firstChildElement(QLatin1String("image"));
     QString imageAttribute;
     // Fullsize image is embedded in SVG file!
     if (!(imageAttribute = imageElement.text()).isEmpty())
     {
-        item->d->m_image = QImage::fromData( QByteArray::fromBase64(imageAttribute.toAscii()) );
+        item->d->m_image = QImage::fromData( QByteArray::fromBase64(imageAttribute.toLatin1()) );
         //if (item->d->m_image.isNull())
         //    this->exit(1);
     }
     // Try to find file from path attribute
-    else if ( !(imageAttribute = PhotoItem::PhotoItemPrivate::locateFile( imageElement.attribute("xlink:href") )).isEmpty() )
+    else if ( !(imageAttribute = PhotoItem::PhotoItemPrivate::locateFile( imageElement.attribute(QLatin1String("xlink:href")) )).isEmpty() )
     {
         ImageLoadingThread * loader = new ImageLoadingThread(this);
         loader->setImageUrl(QUrl(imageAttribute));

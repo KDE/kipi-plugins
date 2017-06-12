@@ -23,53 +23,51 @@
  *
  * ============================================================ */
 
-#ifndef CANVASSIZEDIALOG_H
-#define CANVASSIZEDIALOG_H
+#ifndef CANVAS_SIZE_DIALOG_H
+#define CANVAS_SIZE_DIALOG_H
 
 #include "CanvasSize.h"
 
-// KDE
-#include <kdialog.h>
-
-// Qt
+#include <QDialog>
 #include <QSize>
 
 namespace PhotoLayoutsEditor
 {
-    class CanvasSizeDialogPrivate;
+class CanvasSizeDialogPrivate;
 
-    class CanvasSizeDialog : public KDialog
-    {
-            Q_OBJECT
+class CanvasSizeDialog : public QDialog
+{
+    Q_OBJECT
 
-        public:
+public:
 
-            explicit CanvasSizeDialog(QWidget * parent = 0);
-            explicit CanvasSizeDialog(const CanvasSize & canvasSize, QWidget * parent = 0);
-            ~CanvasSizeDialog();
+    explicit CanvasSizeDialog(QWidget * parent = 0);
+    explicit CanvasSizeDialog(const CanvasSize & canvasSize, QWidget * parent = 0);
+    ~CanvasSizeDialog();
 
-            Q_PROPERTY(CanvasSize canvas_size READ canvasSize)
-            CanvasSize canvasSize() const;
+    Q_PROPERTY(CanvasSize canvas_size READ canvasSize)
+    CanvasSize canvasSize() const;
 
-        protected Q_SLOTS:
+protected Q_SLOTS:
 
-            void recalculatePaperSize(const QString & paperSize);
-            void sizeUnitsChanged(const QString & unit);
-            void resolutionUnitsChanged(const QString & unit);
-            void setHorizontal(bool);
-            void setVertical(bool);
-            void widthChanged(double width);
-            void heightChanged(double height);
-            void xResolutionChanged(double xResolution);
-            void yResolutionChanged(double yResolution);
+    void recalculatePaperSize(const QString & paperSize);
+    void sizeUnitsChanged(const QString & unit);
+    void resolutionUnitsChanged(const QString & unit);
+    void setHorizontal(bool);
+    void setVertical(bool);
+    void widthChanged(double width);
+    void heightChanged(double height);
+    void xResolutionChanged(double xResolution);
+    void yResolutionChanged(double yResolution);
 
-        private:
+private:
 
-            void setupDialog(const QSizeF & size, const QString & sizeUnits, const QSizeF & resolution, const QString & resolutionUnits);
-            void prepareSignalsConnections();
+    void setupDialog(const QSizeF & size, const QString & sizeUnits, const QSizeF & resolution, const QString & resolutionUnits);
+    void prepareSignalsConnections();
 
-            CanvasSizeDialogPrivate * d;
-    };
-}
+    CanvasSizeDialogPrivate * d;
+};
 
-#endif // CANVASSIZEDIALOG_H
+} // namespace PhotoLayoutsEditor
+
+#endif // CANVAS_SIZE_DIALOG_H

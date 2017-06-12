@@ -80,7 +80,7 @@ AbstractPhoto * PhotoEffectsLoader::photo() const
 bool PhotoEffectsLoader::registerEffect(AbstractPhotoEffectFactory * effectFactory)
 {
     QString effectName = effectFactory->effectName();
-    QStringList names = effectName.split(';', QString::SkipEmptyParts);
+    QStringList names = effectName.split(QLatin1Char(';'), QString::SkipEmptyParts);
     bool result = true;
     foreach(QString name, names)
         result &= (registeredEffects.insert(name, effectFactory) != registeredEffects.end());
@@ -203,21 +203,21 @@ QtAbstractPropertyBrowser * PhotoEffectsLoader::propertyBrowser(AbstractPhotoEff
 
 QDomElement PhotoEffectsLoader::effectToSvg(AbstractPhotoEffectInterface * effect, QDomDocument & document)
 {
-    QDomElement element = document.createElement("effect");
-    element.setAttribute("name", effect->name());
+    QDomElement element = document.createElement(QLatin1String("effect"));
+    element.setAttribute(QLatin1String("name"), effect->name());
     const QMetaObject * meta = effect->metaObject();
     int count = meta->propertyCount();
     for (int i = 0; i < count; ++i)
     {
         QMetaProperty p = meta->property(i);
-        element.setAttribute( p.name(), QString(p.read(effect).toByteArray().toBase64()) );
+        element.setAttribute( QLatin1String(p.name()), QLatin1String(p.read(effect).toByteArray().toBase64()) );
     }
     return element;
 }
 
 AbstractPhotoEffectInterface * PhotoEffectsLoader::getEffectFromSvg(QDomElement & element)
 {
-    if ( element.tagName() != "effect" )
+    if ( element.tagName() != QLatin1String("effect"))
         return 0;
     QMap<QString,QString> properties;
     QDomNamedNodeMap attributes = element.attributes();
@@ -228,7 +228,7 @@ AbstractPhotoEffectInterface * PhotoEffectsLoader::getEffectFromSvg(QDomElement 
             continue;
         properties.insert(attr.name(), attr.value());
     }
-    QString effectName = properties.take("name");
+    QString effectName = properties.take(QLatin1String("name"));
     if ( !instance()->registeredEffectsNames().contains( effectName ) )
         return 0;
     AbstractPhotoEffectInterface * result = instance()->getEffectByName( effectName );
@@ -237,10 +237,10 @@ AbstractPhotoEffectInterface * PhotoEffectsLoader::getEffectFromSvg(QDomElement 
     for (int i = 0; i < count; ++i)
     {
         QMetaProperty p = meta->property(i);
-        QString value = properties.take(p.name());
+        QString value = properties.take(QLatin1String(p.name()));
         if (value.isEmpty())
             continue;
-        p.write(result, QVariant(QByteArray::fromBase64(value.toAscii())));
+        p.write(result, QVariant(QByteArray::fromBase64(value.toLatin1())));
     }
     return result;
 }

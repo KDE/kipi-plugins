@@ -60,7 +60,7 @@ namespace PhotoLayoutsEditor
             {
                 if (propertyName == RADIUS_PROPERTY)
                     return m_radius;
-                return AbstractPhotoEffectInterface::propertyValue(QLatin1String(propertyName));
+                return AbstractPhotoEffectInterface::propertyValue(propertyName);
             }
             virtual void setPropertyValue(const QString & propertyName, const QVariant & value)
             {

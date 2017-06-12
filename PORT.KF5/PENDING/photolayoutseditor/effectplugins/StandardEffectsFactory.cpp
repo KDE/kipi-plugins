@@ -54,9 +54,9 @@ AbstractPhotoEffectInterface * StandardEffectsFactory::getEffectInstance(const Q
 
 QString StandardEffectsFactory::effectName() const
 {
-    return i18n("Blur effect") + QString(";") +
-           i18n("Colorize effect") + QString(";") +
-           i18n("Grayscale effect") + QString(";") +
-           i18n("Sepia effect") + QString(";") +
+    return i18n("Blur effect") + QLatin1String(";") +
+           i18n("Colorize effect") + QLatin1String(";") +
+           i18n("Grayscale effect") + QLatin1String(";") +
+           i18n("Sepia effect") + QLatin1String(";") +
            i18n("Negative effect");
 }
