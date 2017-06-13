@@ -46,11 +46,11 @@ void CanvasSize::prepare_maps()
         resolution_factors.insert(PixelsPerPoint, 72.27);
         resolution_factors.insert(PixelsPerPicas, 6.0225);
 
-        resolution_names.insert(PixelsPerMilimeter, "px/mm");
-        resolution_names.insert(PixelsPerCentimeter, "px/cm");
-        resolution_names.insert(PixelsPerInch, "px/in");
-        resolution_names.insert(PixelsPerPoint, "px/pt");
-        resolution_names.insert(PixelsPerPicas, "px/pc");
+        resolution_names.insert(PixelsPerMilimeter, QLatin1String("px/mm"));
+        resolution_names.insert(PixelsPerCentimeter, QLatin1String("px/cm"));
+        resolution_names.insert(PixelsPerInch, QLatin1String("px/in"));
+        resolution_names.insert(PixelsPerPoint, QLatin1String("px/pt"));
+        resolution_names.insert(PixelsPerPicas, QLatin1String("px/pc"));
     }
 
     if (size_factors.isEmpty() || size_names.isEmpty())
@@ -65,12 +65,12 @@ void CanvasSize::prepare_maps()
         size_factors.insert(Points, 72.27);
         size_factors.insert(Picas, 6.0225);
 
-        size_names.insert(Pixels, "px");
-        size_names.insert(Milimeters, "mm");
-        size_names.insert(Centimeters, "cm");
-        size_names.insert(Inches, "in");
-        size_names.insert(Points, "pt");
-        size_names.insert(Picas, "pc");
+        size_names.insert(Pixels, QLatin1String("px"));
+        size_names.insert(Milimeters, QLatin1String("mm"));
+        size_names.insert(Centimeters, QLatin1String("cm"));
+        size_names.insert(Inches, QLatin1String("in"));
+        size_names.insert(Points, QLatin1String("pt"));
+        size_names.insert(Picas, QLatin1String("pc"));
     }
 }
 

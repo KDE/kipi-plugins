@@ -100,7 +100,7 @@ void PLEConfigViewWidget::setupGUI()
     gridLayout->addRow(i18n("Show grid lines"), d->showGrid);
 
     d->xGrid = new QDoubleSpinBox(gridBox);
-    KConfigSkeletonItem * hgi = skeleton->findItem("horizontalGrid");
+    KConfigSkeletonItem * hgi = skeleton->findItem(QLatin1String("horizontalGrid"));
     if (hgi)
     {
         d->xGrid->setMinimum(hgi->minValue().toDouble());
@@ -111,7 +111,7 @@ void PLEConfigViewWidget::setupGUI()
     gridLayout->addRow(i18n("Horizontal distance"), d->xGrid);
 
     d->yGrid = new QDoubleSpinBox(gridBox);
-    KConfigSkeletonItem * vgi = skeleton->findItem("verticalGrid");
+    KConfigSkeletonItem * vgi = skeleton->findItem(QLatin1String("verticalGrid"));
     if (hgi)
     {
         d->yGrid->setMinimum(vgi->minValue().toDouble());

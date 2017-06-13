@@ -32,8 +32,8 @@
 #include <QGraphicsScene>
 #include <QMimeData>
 #include <QApplication>
+#include <QMessageBox>
 
-#include <kmessagebox.h>
 #include <klocalizedstring.h>
 
 #include "PhotoEffectsGroup.h"
@@ -45,6 +45,7 @@
 #include "photolayoutswindow.h"
 #include "ImageLoadingThread.h"
 #include "ProgressEvent.h"
+#include "digikam_debug.h"
 
 #define EMPTY_FILL_COLOR QColor(255, 0, 0, 120)
 
@@ -224,14 +225,14 @@ QString PhotoItem::PhotoItemPrivate::locateFile(const QString & filePath)
         // Try to open existing file
         if (!QFile::exists(resultPath))
         {
-            int result = KMessageBox::questionYesNo(0,
-                                                    i18n("Can't find image file in this location:"
-                                                         "\n%1"
-                                                         "\n"
-                                                         "\nWould you like to set new location of this file?"
-                                                         "\nIf not this image will be removed from the composition.", resultPath),
-                                                    i18n("File reading error"));
-            if (result != KMessageBox::Yes)
+            int result = QMessageBox::question(qApp->activeWindow(),
+                                               i18n("File reading error"),
+                                               i18n("Can't find image file in this location:"
+                                                    "\n%1"
+                                                    "\n"
+                                                    "\nWould you like to set new location of this file?"
+                                                    "\nIf not this image will be removed from the composition.", resultPath));
+            if (result != QMessageBox::Yes)
                 resultPath.clear();
             else
             {
@@ -346,20 +347,18 @@ QDomDocument PhotoItem::toSvg() const
 
     if (!isEmpty())
     {
-        QDomElement image = document.createElementNS(PhotoLayoutsEditor::uri(), "image");
+        QDomElement image = document.createElementNS(PhotoLayoutsEditor::uri(), QLatin1String("image"));
         appNS.appendChild(image);
+
         // Saving image data
         if (!PLEConfigSkeleton::embedImagesData())
         {
-            int result = KMessageBox::questionYesNo(0,
-                                                    i18n("Do you want to embed images data?\n"
-                                                            "Remember that when you move or rename image files on your disk or the storage device become unavailable, those images become unavailable for %1 "
-                                                            "and this layout might become broken.", QApplication::applicationName()),
-                                                    i18n("Saving: %1", name()),
-                                                    KStandardGuiItem::yes(),
-                                                    KStandardGuiItem::no(),
-                                                    PLEConfigSkeleton::self()->config()->name());
-            if (result == KMessageBox::Yes)
+            int result = QMessageBox::question(qApp->activeWindow(),
+                                               i18n("Saving: %1", name()),
+                                               i18n("Do you want to embed images data?\n"
+                                                    "Remember that when you move or rename image files on your disk or the storage device become unavailable, those images become unavailable for %1 "
+                                                    "and this layout might become broken.", QApplication::applicationName()));
+            if (result == QMessageBox::Yes)
                 PLEConfigSkeleton::setEmbedImagesData(true);
         }
 
@@ -368,7 +367,7 @@ QDomDocument PhotoItem::toSvg() const
             QByteArray byteArray;
             QBuffer buffer(&byteArray);
             d->image().save(&buffer, "PNG");
-            image.appendChild( document.createTextNode( QString(byteArray.toBase64()) ) );
+            image.appendChild( document.createTextNode( QString::fromUtf8(byteArray.toBase64()) ) );
             image.setAttribute(QLatin1String("width"),QString::number(d->image().width()));
             image.setAttribute(QLatin1String("height"),QString::number(d->image().height()));
         }
@@ -463,7 +462,7 @@ PhotoItem * PhotoItem::fromSvg(QDomElement & element)
         // Fullsize image is embedded in SVG file!
         if (!(imageAttribute = image.text()).isEmpty())
         {
-            img = QImage::fromData( QByteArray::fromBase64(imageAttribute.toAscii()) );
+            img = QImage::fromData( QByteArray::fromBase64(imageAttribute.toLatin1()) );
             if (img.isNull())
                 goto _delete;
         }
@@ -506,17 +505,17 @@ QDomDocument PhotoItem::svgVisibleArea() const
                             QString::number(pos().y())+
                             QLatin1Char(')');
         QString matrix = QLatin1String("matrix(")+
-                         QString::number(this->transform.m11())+
+                         QString::number(transform.m11())+
                          QLatin1Char(',')+
-                         QString::number(this->transform.m12())+
+                         QString::number(transform.m12())+
                          QLatin1Char(',')+
-                         QString::number(this->transform.m21())+
+                         QString::number(transform.m21())+
                          QLatin1Char(',')+
-                         QString::number(this->transform.m22())+
+                         QString::number(transform.m22())+
                          QLatin1Char(',')+
-                         QString::number(this->transform.m31())+
+                         QString::number(transform.m31())+
                          QLatin1Char(',')+
-                         QString::number(this->transform.m32())+
+                         QString::number(transform.m32())+
                          QLatin1Char(')');
         g.setAttribute(QLatin1String("transform"), translate + QLatin1Char(' ') + matrix);
 
@@ -527,7 +526,7 @@ QDomDocument PhotoItem::svgVisibleArea() const
         QDomElement img = document.createElement(QLatin1String("image"));
         img.setAttribute(QLatin1String("width"),m_temp_image.width());
         img.setAttribute(QLatin1String("height"),m_temp_image.height());
-        img.setAttribute(QLatin1String("xlink:href",QLatin1String("data:image/png;base64,"))+byteArray.toBase64());
+        img.setAttribute(QLatin1String("xlink:href"), QLatin1String("data:image/png;base64,") + QString::fromUtf8(byteArray.toBase64()));
         g.appendChild(img);
     }
     return document;
@@ -548,17 +547,17 @@ QDomDocument PhotoItem::svgTemplateArea() const
                             QString::number(pos().y())+
                             QLatin1Char(')');
         QString matrix = QLatin1String("matrix(")+
-                         QString::number(this->transform.m11())+
+                         QString::number(transform.m11())+
                          QLatin1Char(',')+
-                         QString::number(this->transform.m12())+
+                         QString::number(transform.m12())+
                          QLatin1Char(',')+
-                         QString::number(this->transform.m21())+
+                         QString::number(transform.m21())+
                          QLatin1Char(',')+
-                         QString::number(this->transform.m22())+
+                         QString::number(transform.m22())+
                          QLatin1Char(',')+
-                         QString::number(this->transform.m31())+
+                         QString::number(transform.m31())+
                          QLatin1Char(',')+
-                         QString::number(this->transform.m32())+
+                         QString::number(transform.m32())+
                          QLatin1Char(')');
         g.setAttribute(QLatin1String("transform"), translate + QLatin1Char(' ') + matrix);
 
@@ -741,7 +740,7 @@ void PhotoItem::imageLoaded(const QUrl & url, const QImage & image)
 void PhotoItem::setImageUrl(const QUrl & url)
 {
     ImageLoadingThread * ilt = new ImageLoadingThread(this);
-    ilt->setImagesUrls(url);
+    ilt->setImagesUrls(QList<QUrl>() << url);
     connect(ilt, SIGNAL(imageLoaded(QUrl,QImage)), this, SLOT(imageLoaded(QUrl,QImage)));
     ilt->start();
 }

@@ -117,12 +117,10 @@ set(photolayoutseditor_SRCS
     settings/PLEConfigDialog.cpp
     settings/PLEConfigViewWidget.cpp
 
-    main/photolayoutswindow.cpp
-
-    widgets/canvas/Scene.cpp
     widgets/items/PhotoItem.cpp
-    widgets/dialogs/ImageFileDialog.cpp
+    widgets/canvas/Scene.cpp
 
+    main/photolayoutswindow.cpp
 )
 
 set(photolayoutseditor_RCS

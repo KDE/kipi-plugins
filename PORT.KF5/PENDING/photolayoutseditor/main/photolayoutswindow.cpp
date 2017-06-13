@@ -135,7 +135,7 @@ PhotoLayoutsWindow::PhotoLayoutsWindow(QWidget * parent) :
     m_instance = this;
 
     initIconsResource();
-    setXMLFile("photolayoutseditorui.rc");
+    setXMLFile(QLatin1String("photolayoutseditorui.rc"));
     setCaption(i18n("Photo Layouts Editor"));
 
     loadEffects();
@@ -233,80 +233,80 @@ void PhotoLayoutsWindow::setupActions()
 {
     d->openNewFileAction = KStandardAction::openNew(this, SLOT(open()), actionCollection());
 //    d->openNewFileAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_N));
-    actionCollection()->addAction("open_new", d->openNewFileAction);
+    actionCollection()->addAction(QLatin1String("open_new"), d->openNewFileAction);
     //------------------------------------------------------------------------
     d->openFileAction = KStandardAction::open(this, SLOT(openDialog()), actionCollection());
 //    d->openFileAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_O));
-    actionCollection()->addAction("open", d->openFileAction);
+    actionCollection()->addAction(QLatin1String("open"), d->openFileAction);
     //------------------------------------------------------------------------
     d->openRecentFilesMenu = KStandardAction::openRecent(this, SLOT(open(QUrl)), actionCollection());
     QList<QUrl> urls = PLEConfigSkeleton::recentFiles();
     foreach(QUrl url, urls)
         d->openRecentFilesMenu->addUrl(url);
     connect(d->openRecentFilesMenu, SIGNAL(recentListCleared()), this, SLOT(clearRecentList()));
-    actionCollection()->addAction("open_recent", d->openRecentFilesMenu);
+    actionCollection()->addAction(QLatin1String("open_recent"), d->openRecentFilesMenu);
     //------------------------------------------------------------------------
     d->saveAction = KStandardAction::save(this, SLOT(save()), actionCollection());
 //    d->saveAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_S));
-    actionCollection()->addAction("save", d->saveAction);
+    actionCollection()->addAction(QLatin1String("save"), d->saveAction);
     //------------------------------------------------------------------------
     d->saveAsAction = KStandardAction::saveAs(this, SLOT(saveAs()), actionCollection());
     d->saveAsAction->setShortcut(KShortcut(Qt::SHIFT + Qt::CTRL + Qt::Key_S));
-    actionCollection()->addAction("save_as", d->saveAsAction);
+    actionCollection()->addAction(QLatin1String("save_as"), d->saveAsAction);
     //------------------------------------------------------------------------
     d->saveAsTemplateAction = new QAction(i18nc("Saves canvas as a template file...", "Save As Template..."), actionCollection());
     connect(d->saveAsTemplateAction, SIGNAL(triggered()), this, SLOT(saveAsTemplate()));
-    actionCollection()->addAction("save_as_template", d->saveAsTemplateAction);
+    actionCollection()->addAction(QLatin1String("save_as_template"), d->saveAsTemplateAction);
     //------------------------------------------------------------------------
     d->exportFileAction = new QAction(i18nc("Export current frame layout to image file...", "Export..."), actionCollection());
     d->exportFileAction->setShortcut(KShortcut(Qt::SHIFT + Qt::CTRL + Qt::Key_E));
     connect(d->exportFileAction, SIGNAL(triggered()), this, SLOT(exportFile()));
-    actionCollection()->addAction("export", d->exportFileAction);
+    actionCollection()->addAction(QLatin1String("export"), d->exportFileAction);
     //------------------------------------------------------------------------
     d->printPreviewAction = KStandardAction::printPreview(this, SLOT(printPreview()), actionCollection());
     d->printPreviewAction->setShortcut(KShortcut(Qt::SHIFT + Qt::CTRL + Qt::Key_P));
-    actionCollection()->addAction("print_preview", d->printPreviewAction);
+    actionCollection()->addAction(QLatin1String("print_preview"), d->printPreviewAction);
     //------------------------------------------------------------------------
     d->printAction = KStandardAction::print(this, SLOT(print()), actionCollection());
 //    d->printAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_P));
-    actionCollection()->addAction("print", d->printAction);
+    actionCollection()->addAction(QLatin1String("print"), d->printAction);
     //------------------------------------------------------------------------
     d->closeAction = KStandardAction::close(this, SLOT(closeDocument()), actionCollection());
 //    d->closeAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_Q));
-    actionCollection()->addAction("close", d->closeAction);
+    actionCollection()->addAction(QLatin1String("close"), d->closeAction);
     //------------------------------------------------------------------------
     d->quitAction = KStandardAction::quit(this, SLOT(close()), actionCollection());
 //    d->quitAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_Q));
-    actionCollection()->addAction("quit", d->quitAction);
+    actionCollection()->addAction(QLatin1String("quit"), d->quitAction);
     //------------------------------------------------------------------------
     d->undoAction = KStandardAction::undo(0, 0, actionCollection());
 //    d->undoAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_Z));
-    actionCollection()->addAction("undo", d->undoAction);
+    actionCollection()->addAction(QLatin1String("undo"), d->undoAction);
     //------------------------------------------------------------------------
     d->redoAction = KStandardAction::redo(0, 0, actionCollection());
 //    d->redoAction->setShortcut(KShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Z));
-    actionCollection()->addAction("redo", d->redoAction);
+    actionCollection()->addAction(QLatin1String("redo"), d->redoAction);
     //------------------------------------------------------------------------
     d->settingsAction = KStandardAction::preferences(this, SLOT(settings()), actionCollection());
-    actionCollection()->addAction("settings", d->settingsAction);
+    actionCollection()->addAction(QLatin1String("settings"), d->settingsAction);
     //------------------------------------------------------------------------
     d->addImageAction = new QAction(i18nc("Adds new image(s) from file...", "Add image(s)..."), actionCollection());
     connect(d->addImageAction, SIGNAL(triggered()), this, SLOT(loadNewImage()));
-    actionCollection()->addAction("new_image", d->addImageAction);
+    actionCollection()->addAction(QLatin1String("new_image"), d->addImageAction);
     //------------------------------------------------------------------------
     d->showGridToggleAction = new KToggleAction(i18nc("View grid lines...", "Show..."), actionCollection());
     d->showGridToggleAction->setShortcut(KShortcut(Qt::SHIFT + Qt::CTRL + Qt::Key_G));
     d->showGridToggleAction->setChecked( PLEConfigSkeleton::self()->showGrid() );
     connect(d->showGridToggleAction, SIGNAL(triggered(bool)), this, SLOT(setGridVisible(bool)));
-    actionCollection()->addAction("grid_toggle", d->showGridToggleAction);
+    actionCollection()->addAction(QLatin1String("grid_toggle"), d->showGridToggleAction);
     //------------------------------------------------------------------------
     d->gridConfigAction = new QAction(i18nc("Configure grid lines visibility...", "Setup grid..."), actionCollection());
     connect(d->gridConfigAction, SIGNAL(triggered()), this, SLOT(setupGrid()));
-    actionCollection()->addAction("grid_config", d->gridConfigAction);
+    actionCollection()->addAction(QLatin1String("grid_config"), d->gridConfigAction);
     //------------------------------------------------------------------------
     d->changeCanvasSizeAction = new QAction(i18nc("Configure canvas size...", "Change canvas size..."), actionCollection());
     connect(d->changeCanvasSizeAction, SIGNAL(triggered()), this, SLOT(changeCanvasSize()));
-    actionCollection()->addAction("canvas_size", d->changeCanvasSizeAction);
+    actionCollection()->addAction(QLatin1String("canvas_size"), d->changeCanvasSizeAction);
 
     createGUI(xmlFile());
 }
@@ -427,8 +427,9 @@ void PhotoLayoutsWindow::createCanvas(const QUrl & fileUrl)
     }
     else
     {
-        KMessageBox::error(this,
-                           i18n("Cannot read image file."));
+        QMessageBox::critical(this,
+                              i18n("Error"),
+                              i18n("Cannot read image file."));
     }
     file.close();
 }
@@ -478,7 +479,7 @@ void PhotoLayoutsWindow::open()
     dialog->setModal(true);
 
     int result = dialog->exec();
-    if (result != KDialog::Accepted)
+    if (result != QDialog::Accepted)
         return;
 
     QString tmp;
@@ -766,7 +767,7 @@ void PhotoLayoutsWindow::loadEffects()
     StandardEffectsFactory * stdEffects = new StandardEffectsFactory( PhotoEffectsLoader::instance() );
     PhotoEffectsLoader::registerEffect( stdEffects );
 
-    const KService::List offers = KServiceTypeTrader::self()->query("PhotoLayoutsWindow/EffectPlugin");
+    const KService::List offers = KServiceTypeTrader::self()->query(QLatin1String("PhotoLayoutsWindow/EffectPlugin"));
     foreach(const KService::Ptr& service, offers)
     {
         if (service)
@@ -807,7 +808,7 @@ void PhotoLayoutsWindow::loadBorders()
     StandardBordersFactory * stdBorders = new StandardBordersFactory( BorderDrawersLoader::instance() );
     BorderDrawersLoader::registerDrawer( stdBorders );
 
-    const KService::List offers = KServiceTypeTrader::self()->query("PhotoLayoutsWindow/BorderPlugin");
+    const KService::List offers = KServiceTypeTrader::self()->query(QLatin1String("PhotoLayoutsWindow/BorderPlugin"));
     foreach(const KService::Ptr& service, offers)
     {
         if (service)

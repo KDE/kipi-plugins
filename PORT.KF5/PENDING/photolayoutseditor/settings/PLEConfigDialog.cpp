@@ -42,7 +42,7 @@ class PhotoLayoutsEditor::PLEConfigDialogPrivate
 };
 
 PLEConfigDialog::PLEConfigDialog(QWidget * parent) :
-    KConfigDialog(parent, "settings", PLEConfigSkeleton::self()),
+    KConfigDialog(parent, QLatin1String("settings"), PLEConfigSkeleton::self()),
     d(new PLEConfigDialogPrivate)
 {
     d->confVWdg = new PLEConfigViewWidget( 0, i18n("View") );

@@ -119,7 +119,7 @@ void TemplatesView::updateGeometries() //
 {
     QFontMetrics fm(font());
 
-    horizontalScrollBar()->setSingleStep(fm.width("n"));
+    horizontalScrollBar()->setSingleStep(fm.width(QLatin1String("n")));
     horizontalScrollBar()->setPageStep(viewport()->width());
     horizontalScrollBar()->setRange(0, qMax(0, idealWidth - viewport()->width()));
 
@@ -272,7 +272,7 @@ QModelIndex TemplatesView::moveCursor( QAbstractItemView::CursorAction cursorAct
                 index = indexAt(point);
                 if (index.isValid())
                     break;
-                point.rx() -= fm.width("n");
+                point.rx() -= fm.width(QLatin1String("n"));
             }
         }
     }

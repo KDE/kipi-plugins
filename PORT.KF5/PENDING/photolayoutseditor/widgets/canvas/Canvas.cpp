@@ -30,9 +30,9 @@
 #include <QPaintDevice>
 #include <QPaintEngine>
 #include <QVBoxLayout>
-
+#include <QMessageBox>
 #include <QApplication>
-#include <kmessagebox.h>
+
 #include <klocalizedstring.h>
 
 #include "Scene.h"
@@ -168,33 +168,21 @@ void Canvas::setSelectionMode(SelectionMode mode)
         m_selection_mode = mode;
 }
 
-/** ###########################################################################################################################
- * Data model connected with this canvas (in fact this is a Scene's model)
- #############################################################################################################################*/
 LayersModel * Canvas::model() const
 {
     return m_scene->model();
 }
 
-/** ###########################################################################################################################
- * Data selection model connected with this canvas (in fact this is a Scene's selection model)
- #############################################################################################################################*/
 LayersSelectionModel * Canvas::selectionModel() const
 {
     return m_scene->selectionModel();
 }
 
-/** ###########################################################################################################################
- * gets canvas size
- #############################################################################################################################*/
 CanvasSize Canvas::canvasSize() const
 {
     return d->m_size;
 }
 
-/** ###########################################################################################################################
- * Set canvas size
- #############################################################################################################################*/
 void Canvas::setCanvasSize(const CanvasSize & size)
 {
     if (!size.isValid())
@@ -203,9 +191,6 @@ void Canvas::setCanvasSize(const CanvasSize & size)
     m_scene->setSceneRect(QRectF(QPointF(0,0), size.size(CanvasSize::Pixels)));
 }
 
-/** ###########################################################################################################################
- * Sets QPrinter's paper size, etc.
- #############################################################################################################################*/
 void Canvas::preparePrinter(QPrinter * printer)
 {
     printer->setPageMargins(0, 0, 0, 0, QPrinter::Millimeter);
@@ -244,9 +229,6 @@ void Canvas::preparePrinter(QPrinter * printer)
     }
 }
 
-/** ###########################################################################################################################
- * Add new image from QImage object
- #############################################################################################################################*/
 void Canvas::addImage(const QImage & image)
 {
     // Create & setup item
@@ -259,9 +241,6 @@ void Canvas::addImage(const QImage & image)
     it->fitToRect(m_scene->sceneRect().toRect());
 }
 
-/** ###########################################################################################################################
- * Add new image from the specified url
- #############################################################################################################################*/
 void Canvas::addImage(const QUrl & imageUrl)
 {
     ImageLoadingThread * ilt = new ImageLoadingThread(this);
@@ -271,9 +250,6 @@ void Canvas::addImage(const QUrl & imageUrl)
     ilt->start();
 }
 
-/** ###########################################################################################################################
- * Add images from the specified url's list
- #############################################################################################################################*/
 void Canvas::addImages(const QList<QUrl> & images)
 {
     ImageLoadingThread * ilt = new ImageLoadingThread(this);
@@ -283,9 +259,6 @@ void Canvas::addImages(const QList<QUrl> & images)
     ilt->start();
 }
 
-/** ###########################################################################################################################
- * Add new text item
- #############################################################################################################################*/
 void Canvas::addText(const QString & text)
 {
     // Create & setup item
@@ -295,9 +268,6 @@ void Canvas::addText(const QString & text)
     m_scene->addItem(it);
 }
 
-/** ###########################################################################################################################
- * Used when new item has been created and needs to be added to the scene and to the model
- #############################################################################################################################*/
 void Canvas::addNewItem(AbstractPhoto * item)
 {
     if (!item)
@@ -312,9 +282,6 @@ void Canvas::addNewItem(AbstractPhoto * item)
     item->setFocus( Qt::OtherFocusReason );
 }
 
-/** ###########################################################################################################################
- * Turns on/off antialiasing mode
- #############################################################################################################################*/
 void Canvas::setAntialiasing(bool antialiasing)
 {
     this->setRenderHint(QPainter::Antialiasing, antialiasing);                            /// It causes worst quality!
@@ -322,9 +289,6 @@ void Canvas::setAntialiasing(bool antialiasing)
     this->update();
 }
 
-/** ###########################################################################################################################
- * Makes use of loaded image
- #############################################################################################################################*/
 void Canvas::imageLoaded(const QUrl & url, const QImage & image)
 {
     if (!image.isNull())
@@ -336,9 +300,6 @@ void Canvas::imageLoaded(const QUrl & url, const QImage & image)
     }
 }
 
-/** ##########################################################################################################################
- * Creates item move down command and push it to the undo stack
- #############################################################################################################################*/
 void Canvas::moveRowsCommand(const QModelIndex & startIndex, int count, const QModelIndex & parentIndex, int move, const QModelIndex & destinationParent)
 {
     int destination = startIndex.row();
@@ -352,9 +313,6 @@ void Canvas::moveRowsCommand(const QModelIndex & startIndex, int count, const QM
     m_undo_stack->push(undo);
 }
 
-/** ##########################################################################################################################
- * Move selected items up on scene & model. (Called by layers tree)
- #############################################################################################################################*/
 void Canvas::moveSelectedRowsUp()
 {
     QModelIndexList selectedIndexes = selectionModel()->selectedIndexes();
@@ -413,9 +371,6 @@ void Canvas::moveSelectedRowsUp()
     this->selectionChanged();
 }
 
-/** ##########################################################################################################################
- * Move selected items down on scene & model. (Called by layers tree)
- #############################################################################################################################*/
 void Canvas::moveSelectedRowsDown()
 {
     QModelIndexList selectedIndexes = selectionModel()->selectedIndexes();
@@ -474,26 +429,17 @@ void Canvas::moveSelectedRowsDown()
     this->selectionChanged();
 }
 
-/** ##########################################################################################################################
- * Remove from model ONE item removed from scene
- #############################################################################################################################*/
 void Canvas::removeItem(AbstractPhoto * item)
 {
     if (item)
         m_scene->removeItem(item);
 }
 
-/** ##########################################################################################################################
- * Remove from model items removed from scene
- #############################################################################################################################*/
 void Canvas::removeItems(const QList<AbstractPhoto*> & items)
 {
     m_scene->removeItems(items);
 }
 
-/** ##########################################################################################################################
- * Remove from scene items removed from layert tree.
- #############################################################################################################################*/
 void Canvas::removeSelectedRows()
 {
     QList<AbstractPhoto*> items;
@@ -503,9 +449,6 @@ void Canvas::removeSelectedRows()
     m_scene->removeItems(items);
 }
 
-/** ###########################################################################################################################
- * Synchronize scene's selection with model's selection
- #############################################################################################################################*/
 void Canvas::selectionChanged()
 {
     QList<AbstractPhoto*> selectedItems = m_scene->selectedItems();
@@ -542,9 +485,6 @@ void Canvas::selectionChanged()
         emit hasSelectionChanged(selectedItems.count());
 }
 
-/** ###########################################################################################################################
- * Synchronize model's selection with scene's selection
- #############################################################################################################################*/
 void Canvas::selectionChanged(const QItemSelection & newSelection, const QItemSelection & oldSelection)
 {
     LayersModelItem * temp;
@@ -570,9 +510,6 @@ void Canvas::selectionChanged(const QItemSelection & newSelection, const QItemSe
     }
 }
 
-/** ###########################################################################################################################
- * Sets selecting mode
- #############################################################################################################################*/
 void Canvas::enableDefaultSelectionMode()
 {
     this->unsetCursor();
@@ -581,9 +518,6 @@ void Canvas::enableDefaultSelectionMode()
     m_scene->clearSelectingFilters();
 }
 
-/** ###########################################################################################################################
- * Sets viewing mode
- #############################################################################################################################*/
 void Canvas::enableViewingMode()
 {
     this->unsetCursor();
@@ -592,20 +526,14 @@ void Canvas::enableViewingMode()
     m_scene->clearSelectingFilters();
 }
 
-/** ###########################################################################################################################
- * Sets zooming mode
- #############################################################################################################################*/
 void Canvas::enableZoomingMode()
 {
     this->unsetCursor();
     setSelectionMode(Zooming);
-    this->setCursor(QCursor(QPixmap(":/zoom_cursor.png").scaled(QSize(24,24))));
+    this->setCursor(QCursor(QPixmap(QLatin1String(":/zoom_cursor.png")).scaled(QSize(24,24))));
     m_scene->clearSelectingFilters();
 }
 
-/** ###########################################################################################################################
- * Sets canvas editing mode
- #############################################################################################################################*/
 void Canvas::enableCanvasEditingMode()
 {
     this->unsetCursor();
@@ -615,9 +543,6 @@ void Canvas::enableCanvasEditingMode()
     m_scene->clearSelectingFilters();
 }
 
-/** ###########################################################################################################################
- * Sets effects editing mode
- #############################################################################################################################*/
 void Canvas::enableEffectsEditingMode()
 {
     this->unsetCursor();
@@ -628,9 +553,6 @@ void Canvas::enableEffectsEditingMode()
     m_scene->addSelectingFilter(PhotoItem::staticMetaObject);
 }
 
-/** ###########################################################################################################################
- * Sets text editing mode
- #############################################################################################################################*/
 void Canvas::enableTextEditingMode()
 {
     this->unsetCursor();
@@ -640,9 +562,6 @@ void Canvas::enableTextEditingMode()
     m_scene->addSelectingFilter(TextItem::staticMetaObject);
 }
 
-/** ###########################################################################################################################
- * Sets rotating mode
- #############################################################################################################################*/
 void Canvas::enableRotateEditingMode()
 {
     this->unsetCursor();
@@ -652,9 +571,6 @@ void Canvas::enableRotateEditingMode()
     m_scene->clearSelectingFilters();
 }
 
-/** ###########################################################################################################################
- * Sets scaling mode
- #############################################################################################################################*/
 void Canvas::enableScaleEditingMode()
 {
     this->unsetCursor();
@@ -664,9 +580,6 @@ void Canvas::enableScaleEditingMode()
     m_scene->clearSelectingFilters();
 }
 
-/** ###########################################################################################################################
- * Sets cropping mode
- #############################################################################################################################*/
 void Canvas::enableCropEditingMode()
 {
     this->unsetCursor();
@@ -676,9 +589,6 @@ void Canvas::enableCropEditingMode()
     m_scene->clearSelectingFilters();
 }
 
-/** ###########################################################################################################################
- * Sets borders editing mode
- #############################################################################################################################*/
 void Canvas::enableBordersEditingMode()
 {
     this->unsetCursor();
@@ -688,9 +598,6 @@ void Canvas::enableBordersEditingMode()
     m_scene->clearSelectingFilters();
 }
 
-/** ###########################################################################################################################
- * Connect widgets to canvas signals
- #############################################################################################################################*/
 void Canvas::refreshWidgetConnections(bool isVisible)
 {
     if (isVisible)
@@ -702,17 +609,11 @@ void Canvas::refreshWidgetConnections(bool isVisible)
         disconnect(this,SIGNAL(hasSelectionChanged(bool)),sender(),0);
 }
 
-/** ###########################################################################################################################
- * Appends new undo command
- #############################################################################################################################*/
 void Canvas::newUndoCommand(QUndoCommand * command)
 {
     m_undo_stack->push(command);
 }
 
-/** ###########################################################################################################################
- * Progress event type
- #############################################################################################################################*/
 void Canvas::progressEvent(ProgressEvent * event)
 {
     QProgressBar * temp = d->progressMap[event->sender()];
@@ -736,7 +637,7 @@ void Canvas::progressEvent(ProgressEvent * event)
             break;
         case ProgressEvent::ActionUpdate:
             if (temp)
-                temp->setFormat(event->data().toString() + " [%p%]");
+                temp->setFormat(event->data().toString() + QLatin1String(" [%p%]"));
             break;
         case ProgressEvent::Finish:
             if (temp)
@@ -758,9 +659,6 @@ void Canvas::progressEvent(ProgressEvent * event)
     event->setAccepted(temp);
 }
 
-/** ###########################################################################################################################
- * Wheel event - scales the canvas
- #############################################################################################################################*/
 void Canvas::wheelEvent(QWheelEvent * event)
 {
     int steps = event->delta() / 120;
@@ -769,51 +667,49 @@ void Canvas::wheelEvent(QWheelEvent * event)
     scale(scaleFactor, event->pos());
 }
 
-/** ###########################################################################################################################
- * Converts canvas to SVG image
- #############################################################################################################################*/
 QDomDocument Canvas::toSvg() const
 {
-    QDomDocument result(" svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\"");
+    QDomDocument result(QLatin1String(" svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\""));
     QDomElement svg;// = ;//m_scene->toSvg(result);
     result.appendChild(svg);
-    svg.setAttribute("width", QString::number(d->m_size.size().width()));
-    svg.setAttribute("height", QString::number(d->m_size.size().height()));
+    svg.setAttribute(QLatin1String("width"), QString::number(d->m_size.size().width()));
+    svg.setAttribute(QLatin1String("height"), QString::number(d->m_size.size().height()));
     switch (d->m_size.sizeUnit())
     {
         case CanvasSize::Centimeters:
-            svg.setAttribute("width", svg.attribute("width") + "cm");
-            svg.setAttribute("height", svg.attribute("height") + "cm");
+            svg.setAttribute(QLatin1String("width"), svg.attribute(QLatin1String("width")) + QLatin1String("cm"));
+            svg.setAttribute(QLatin1String("height"), svg.attribute(QLatin1String("height")) + QLatin1String("cm"));
             break;
         case CanvasSize::Milimeters:
-            svg.setAttribute("width", svg.attribute("width") + "mm");
-            svg.setAttribute("height", svg.attribute("height") + "mm");
+            svg.setAttribute(QLatin1String("width"), svg.attribute(QLatin1String("width")) + QLatin1String("mm"));
+            svg.setAttribute(QLatin1String("height"), svg.attribute(QLatin1String("height")) + QLatin1String("mm"));
             break;
         case CanvasSize::Inches:
-            svg.setAttribute("width", svg.attribute("width") + "in");
-            svg.setAttribute("height", svg.attribute("height") + "in");
+            svg.setAttribute(QLatin1String("width"), svg.attribute(QLatin1String("width")) + QLatin1String("in"));
+            svg.setAttribute(QLatin1String("height"), svg.attribute(QLatin1String("height")) + QLatin1String("in"));
             break;
         case CanvasSize::Picas:
-            svg.setAttribute("width", svg.attribute("width") + "pc");
-            svg.setAttribute("height", svg.attribute("height") + "pc");
+            svg.setAttribute(QLatin1String("width"), svg.attribute(QLatin1String("width")) + QLatin1String("pc"));
+            svg.setAttribute(QLatin1String("height"), svg.attribute(QLatin1String("height")) + QLatin1String("pc"));
             break;
         case CanvasSize::Points:
-            svg.setAttribute("width", svg.attribute("width") + "pt");
-            svg.setAttribute("height", svg.attribute("height") + "pt");
+            svg.setAttribute(QLatin1String("width"), svg.attribute(QLatin1String("width")) + QLatin1String("pt"));
+            svg.setAttribute(QLatin1String("height"), svg.attribute(QLatin1String("height")) + QLatin1String("pt"));
             break;
         case CanvasSize::Pixels:
-            svg.setAttribute("width", svg.attribute("width") + "px");
-            svg.setAttribute("height", svg.attribute("height") + "px");
+            svg.setAttribute(QLatin1String("width"), svg.attribute(QLatin1String("width")) + QLatin1String("px"));
+            svg.setAttribute(QLatin1String("height"), svg.attribute(QLatin1String("height")) + QLatin1String("px"));
             break;
         default:
-            svg.setAttribute("width", svg.attribute("width") + "px");
-            svg.setAttribute("height", svg.attribute("height") + "px");
+            svg.setAttribute(QLatin1String("width"), svg.attribute(QLatin1String("width")) + QLatin1String("px"));
+            svg.setAttribute(QLatin1String("height"), svg.attribute(QLatin1String("height")) + QLatin1String("px"));
             qCDebug(DIGIKAM_GENERAL_LOG) << "Unhandled size unit at:" << __FILE__ << ":" << __LINE__;
     }
-    QDomElement resolution = result.createElementNS(PhotoLayoutsEditor::uri(), "page");
-    resolution.setAttribute("width", QString::number(d->m_size.resolution().width()));
-    resolution.setAttribute("height", QString::number(d->m_size.resolution().height()));
-    resolution.setAttribute("unit", CanvasSize::resolutionUnitName(d->m_size.resolutionUnit()));
+
+    QDomElement resolution = result.createElementNS(PhotoLayoutsEditor::uri(), QLatin1String("page"));
+    resolution.setAttribute(QLatin1String("width"), QString::number(d->m_size.resolution().width()));
+    resolution.setAttribute(QLatin1String("height"), QString::number(d->m_size.resolution().height()));
+    resolution.setAttribute(QLatin1String("unit"), CanvasSize::resolutionUnitName(d->m_size.resolutionUnit()));
     svg.appendChild(resolution);
     return result;
 }
@@ -822,22 +718,24 @@ Canvas * Canvas::fromSvg(QDomDocument & document)
 {
     Canvas * result = 0;
     QDomNodeList children = document.childNodes();
+
     if (children.count())
     {
-        QDomElement element = document.firstChildElement("svg");
+        QDomElement element = document.firstChildElement(QLatin1String("svg"));
+
         if (!element.isNull())
         {
-            QString width = element.attribute("width");
-            QString height = element.attribute("height");
-            QDomElement pageElement = element.firstChildElement("page");
-            QString xResolution = pageElement.attribute("width");
-            QString yResolution = pageElement.attribute("height");
-            QString resUnit = pageElement.attribute("unit");
+            QString width = element.attribute(QLatin1String("width"));
+            QString height = element.attribute(QLatin1String("height"));
+            QDomElement pageElement = element.firstChildElement(QLatin1String("page"));
+            QString xResolution = pageElement.attribute(QLatin1String("width"));
+            QString yResolution = pageElement.attribute(QLatin1String("height"));
+            QString resUnit = pageElement.attribute(QLatin1String("unit"));
             qCDebug(DIGIKAM_GENERAL_LOG) << pageElement.namespaceURI() << PhotoLayoutsEditor::templateUri();
 
             // Canvas size validation
-            QRegExp sizeRegExp("[0-9.]+((cm)|(mm)|(in)|(pc)|(pt)|(px))");
-            QRegExp resRegExp("[0-9.]+");
+            QRegExp sizeRegExp(QLatin1String("[0-9.]+((cm)|(mm)|(in)|(pc)|(pt)|(px))"));
+            QRegExp resRegExp(QLatin1String("[0-9.]+"));
             if (sizeRegExp.exactMatch(width) &&
                     sizeRegExp.exactMatch(height) &&
                     width.right(2) == height.right(2) &&
@@ -856,9 +754,9 @@ Canvas * Canvas::fromSvg(QDomDocument & document)
                 size.setResolution(resolution);
                 if (dimension.isValid())
                 {
-                    QDomElement sceneElement = element.firstChildElement("g");
-                    while (!sceneElement.isNull() && sceneElement.attribute("id") != "Scene")
-                        sceneElement = sceneElement.nextSiblingElement("g");
+                    QDomElement sceneElement = element.firstChildElement(QLatin1String("g"));
+                    while (!sceneElement.isNull() && sceneElement.attribute(QLatin1String("id")) != QLatin1String("Scene"))
+                        sceneElement = sceneElement.nextSiblingElement(QLatin1String("g"));
                     Scene * scene = Scene::fromSvg(sceneElement);
                     if (scene)
                     {
@@ -870,9 +768,12 @@ Canvas * Canvas::fromSvg(QDomDocument & document)
                 }
             }
             else
-                KMessageBox::error(0, i18n("Invalid image size!"));
+            {
+                QMessageBox::critical(qApp->activeWindow(), i18n("Error"), i18n("Invalid image size!"));
+            }
         }
     }
+
     return result;
 }
 
@@ -931,9 +832,9 @@ void Canvas::save(const QUrl & fileUrl, bool setAsDefault)
     {
         if (m_file.isEmpty() || !m_file.isValid())
         {
-            KMessageBox::detailedError(0,
-                                       i18n("Can't save canvas!"),
-                                       i18n("Invalid file path."));
+            QMessageBox::critical(qApp->activeWindow(),
+                                  i18n("Can't save canvas!"),
+                                  i18n("Invalid file path."));
             return;
         }
         tempFile = m_file;
@@ -951,9 +852,9 @@ void Canvas::saveTemplate(const QUrl & fileUrl)
 {
     if (fileUrl.isEmpty() || !fileUrl.isValid())
     {
-        KMessageBox::detailedError(0,
-                                   i18n("Can't save canvas!"),
-                                   i18n("Invalid file path."));
+        QMessageBox::critical(qApp->activeWindow(),
+                              i18n("Can't save canvas!"),
+                              i18n("Invalid file path."));
         return;
     }
 

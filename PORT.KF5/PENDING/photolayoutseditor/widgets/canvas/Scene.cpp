@@ -50,7 +50,8 @@
 #include <QBuffer>
 #include <QUrl>
 #include <QApplication>
-#include <QMessageBox>
+#include <QMimeData>
+#include <QTemporaryFile>
 
 // KDE
 #include <klocalizedstring.h>
@@ -398,7 +399,7 @@ class PhotoLayoutsEditor::RemoveItemsCommand : public QUndoCommand
     public:
 
         RemoveItemsCommand(AbstractPhoto * item, Scene * scene, QUndoCommand * parent = 0) :
-            QUndoCommand(QString("Remove item"), parent),
+            QUndoCommand(QLatin1String("Remove item"), parent),
             item(item),
             item_row(0),
             m_scene(scene),
@@ -1080,10 +1081,10 @@ void Scene::dropEvent(QGraphicsSceneDragDropEvent * event)
 
     const QMimeData * mimeData = event->mimeData();
     if ( PhotoLayoutsWindow::instance()->hasInterface() &&
-            mimeData->hasFormat("digikam/item-ids"))
+            mimeData->hasFormat(QLatin1String("digikam/item-ids")))
     {
         QList<QUrl> urls;
-        QByteArray ba = mimeData->data("digikam/item-ids");
+        QByteArray ba = mimeData->data(QLatin1String("digikam/item-ids"));
         QDataStream ds(&ba, QIODevice::ReadOnly);
         ds >> urls;
 
@@ -1093,7 +1094,7 @@ void Scene::dropEvent(QGraphicsSceneDragDropEvent * event)
         connect(ilt, SIGNAL(imageLoaded(QUrl,QImage)), this, SLOT(imageLoaded(QUrl,QImage)));
         ilt->start();
     }
-    else if (mimeData->hasFormat("text/uri-list"))
+    else if (mimeData->hasFormat(QLatin1String("text/uri-list")))
     {
         QList<QUrl> urls = mimeData->urls();
         QList<QUrl> list;
@@ -1364,17 +1365,17 @@ QDomDocument Scene::toSvg(ProgressObserver * observer, bool asTemplate)
 {
     QDomDocument document;
 
-    QDomElement sceneElement = document.createElement("g");
-    sceneElement.setAttribute("id", "Scene");
-    sceneElement.setAttribute("width", QString::number(this->width()));
-    sceneElement.setAttribute("height", QString::number(this->height()));
+    QDomElement sceneElement = document.createElement(QLatin1String("g"));
+    sceneElement.setAttribute(QLatin1String("id"), QLatin1String("Scene"));
+    sceneElement.setAttribute(QLatin1String("width"), QString::number(this->width()));
+    sceneElement.setAttribute(QLatin1String("height"), QString::number(this->height()));
     document.appendChild(sceneElement);
 
     if (asTemplate)
     {
-        QDomElement previewImage = document.createElement("defs");
-        previewImage.setAttribute("id", "Preview");
-        QDomElement image = document.createElement("image");
+        QDomElement previewImage = document.createElement(QLatin1String("defs"));
+        previewImage.setAttribute(QLatin1String("id"), QLatin1String("Preview"));
+        QDomElement image = document.createElement(QLatin1String("image"));
 
         QSizeF sceneSize = this->sceneRect().size();
         double imgw = 200, imgh = 200;
@@ -1390,11 +1391,17 @@ QDomDocument Scene::toSvg(ProgressObserver * observer, bool asTemplate)
         QPainter p(&img);
         this->render(&p, QRectF(0, 0, imgw, imgh), this->sceneRect(), Qt::KeepAspectRatio);
         p.end();
-        img.save(QString("/home/coder89/pliczek.png"));
-        img.save(&buffer, "PNG");
-        image.appendChild( document.createTextNode( QString(byteArray.toBase64()) ) );
-        image.setAttribute("width",QString::number((int)imgw));
-        image.setAttribute("height",QString::number((int)imgh));
+        QTemporaryFile temp;
+
+        if (temp.open())
+        {
+            img.save(temp.fileName());
+            img.save(&buffer, "PNG");
+        }
+
+        image.appendChild( document.createTextNode( QString::fromUtf8(byteArray.toBase64()) ) );
+        image.setAttribute(QLatin1String("width"),QString::number((int)imgw));
+        image.setAttribute(QLatin1String("height"),QString::number((int)imgh));
 
         previewImage.appendChild(image);
         sceneElement.appendChild(previewImage);
@@ -1410,8 +1417,8 @@ QDomDocument Scene::toSvg(ProgressObserver * observer, bool asTemplate)
     if (observer)
         observer->progresName( i18n("Saving background...") );
 
-    QDomElement background = document.createElement("g");
-    background.setAttribute("class", "background");
+    QDomElement background = document.createElement(QLatin1String("g"));
+    background.setAttribute(QLatin1String("class"), QLatin1String("background"));
     background.appendChild(d->m_background->toSvg(document));
     sceneElement.appendChild(background);
 
@@ -1443,8 +1450,8 @@ QDomDocument Scene::toSvg(ProgressObserver * observer, bool asTemplate)
     if (observer)
         observer->progresName( i18n("Saving border...") );
 
-    QDomElement border = document.createElement("g");
-    border.setAttribute("class", "border");
+    QDomElement border = document.createElement(QLatin1String("g"));
+    border.setAttribute(QLatin1String("class"), QLatin1String("border"));
     border.appendChild(d->m_border->toSvg(document));
     sceneElement.appendChild(border);
 
@@ -1457,14 +1464,14 @@ QDomDocument Scene::toSvg(ProgressObserver * observer, bool asTemplate)
 //#####################################################################################################
 Scene * Scene::fromSvg(QDomElement & sceneElement)
 {
-    if (sceneElement.isNull() || sceneElement.tagName() != "g" || sceneElement.attribute("id") != "Scene")
+    if (sceneElement.isNull() || sceneElement.tagName() != QLatin1String("g") || sceneElement.attribute(QLatin1String("id")) != QLatin1String("Scene"))
         return 0;
 
     // Scene dimension
     qreal xSceneRect = 0;
     qreal ySceneRect = 0;
-    qreal widthSceneRect = sceneElement.attribute("width").toDouble();
-    qreal heightSceneRect = sceneElement.attribute("height").toDouble();
+    qreal widthSceneRect = sceneElement.attribute(QLatin1String("width")).toDouble();
+    qreal heightSceneRect = sceneElement.attribute(QLatin1String("height")).toDouble();
     QRectF dimension(xSceneRect,ySceneRect,widthSceneRect,heightSceneRect);
     Scene * result = new Scene(dimension);
 
@@ -1477,26 +1484,26 @@ Scene * Scene::fromSvg(QDomElement & sceneElement)
     for (int i = 0; i < children.count(); ++i)
     {
         QDomElement element = children.at(i).toElement();
-        if (element.isNull() || element.tagName() != "g")
+        if (element.isNull() || element.tagName() != QLatin1String("g"))
             continue;
-        QString itemClass = element.attribute("class");
+        QString itemClass = element.attribute(QLatin1String("class"));
         AbstractPhoto * item;
-        if (itemClass == "PhotoItem")
+        if (itemClass == QLatin1String("PhotoItem"))
         {
             item = new PhotoItem();
             thread->addItem(item, element);
         }
-        else if (itemClass == "TextItem")
+        else if (itemClass == QLatin1String("TextItem"))
         {
             item = new TextItem();
             thread->addItem(item, element);
         }
-        else if (itemClass == "background")
+        else if (itemClass == QLatin1String("background"))
         {
             thread->addBackground(result->d->m_background, element);
             continue;
         }
-        else if (itemClass == "border")
+        else if (itemClass == QLatin1String("border"))
         {
             thread->addBorder(result->d->m_border, element);
             continue;
@@ -1520,7 +1527,7 @@ Scene * Scene::fromSvg(QDomElement & sceneElement)
     // Show error message
     if (errorsCount)
     {
-        KMessageBox::error(0, i18np("Unable to create one element", "Unable to create %1 elements", errorsCount));
+        QMessageBox::critical(0, i18n("Error"), i18np("Unable to create one element", "Unable to create %1 elements", errorsCount));
     }
 
     return result;
@@ -1637,7 +1644,7 @@ bool Scene::askAboutRemoving(int count)
 bool Scene::canDecode(const QMimeData * mimeData)
 {
     if (PhotoLayoutsWindow::instance()->hasInterface() &&
-            mimeData->hasFormat("digikam/item-ids"))
+            mimeData->hasFormat(QLatin1String("digikam/item-ids")))
         return true;
 
     QList<QUrl> urls = mimeData->urls();

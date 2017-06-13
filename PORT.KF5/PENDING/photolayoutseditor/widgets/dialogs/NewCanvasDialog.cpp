@@ -62,39 +62,39 @@ class NewCanvasDialog::Private
         verticalButton(0),
         orientationGroup(0)
     {
-        QListWidgetItem* temp = new QListWidgetItem("Custom");
+        QListWidgetItem* temp = new QListWidgetItem(QLatin1String("Custom"));
         temp->setData(PAPER_SIZE_ROLE, -1);
         paperSizes.append(temp);
 
-        names.insert( QPrinter::A0, QPair<QString,QString>("A0", "a0"));
-        names.insert( QPrinter::A1, QPair<QString,QString>("A1", "a1"));
-        names.insert( QPrinter::A2, QPair<QString,QString>("A2", "a2"));
-        names.insert( QPrinter::A3, QPair<QString,QString>("A3", "a3"));
-        names.insert( QPrinter::A4, QPair<QString,QString>("A4", "a4"));
-        names.insert( QPrinter::A5, QPair<QString,QString>("A5", "a5"));
-        names.insert( QPrinter::A6, QPair<QString,QString>("A6", "a6"));
-        names.insert( QPrinter::A7, QPair<QString,QString>("A7", "a7"));
-        names.insert( QPrinter::A8, QPair<QString,QString>("A8", "a8"));
-        names.insert( QPrinter::A9, QPair<QString,QString>("A9", "a9"));
-        names.insert( QPrinter::B0, QPair<QString,QString>("B0", "b0"));
-        names.insert( QPrinter::B1, QPair<QString,QString>("B1", "b1"));
-        names.insert( QPrinter::B2, QPair<QString,QString>("B2", "b2"));
-        names.insert( QPrinter::B3, QPair<QString,QString>("B3", "b3"));
-        names.insert( QPrinter::B4, QPair<QString,QString>("B4", "b4"));
-        names.insert( QPrinter::B5, QPair<QString,QString>("B5", "b5"));
-        names.insert( QPrinter::B6, QPair<QString,QString>("B6", "b6"));
-        names.insert( QPrinter::B7, QPair<QString,QString>("B7", "b7"));
-        names.insert( QPrinter::B8, QPair<QString,QString>("B8", "b8"));
-        names.insert( QPrinter::B9, QPair<QString,QString>("B9", "b9"));
-        names.insert( QPrinter::B10, QPair<QString,QString>("B10", "b10"));
-        names.insert( QPrinter::C5E, QPair<QString,QString>("C5E", "c5e"));
-        names.insert( QPrinter::DLE, QPair<QString,QString>("DLE", "dle"));
-        names.insert( QPrinter::Executive, QPair<QString,QString>("Executive", "executive"));
-        names.insert( QPrinter::Folio, QPair<QString,QString>("Folio", "folio"));
-        names.insert( QPrinter::Ledger, QPair<QString,QString>("Ledger", "ledger"));
-        names.insert( QPrinter::Legal, QPair<QString,QString>("Legal", "legal"));
-        names.insert( QPrinter::Letter, QPair<QString,QString>("Letter", "letter"));
-        names.insert( QPrinter::Tabloid, QPair<QString,QString>("Tabloid", "tabloid"));
+        names.insert( QPrinter::A0, QPair<QString,QString>(QLatin1String("A0"), QLatin1String("a0")));
+        names.insert( QPrinter::A1, QPair<QString,QString>(QLatin1String("A1"), QLatin1String("a1")));
+        names.insert( QPrinter::A2, QPair<QString,QString>(QLatin1String("A2"), QLatin1String("a2")));
+        names.insert( QPrinter::A3, QPair<QString,QString>(QLatin1String("A3"), QLatin1String("a3")));
+        names.insert( QPrinter::A4, QPair<QString,QString>(QLatin1String("A4"), QLatin1String("a4")));
+        names.insert( QPrinter::A5, QPair<QString,QString>(QLatin1String("A5"), QLatin1String("a5")));
+        names.insert( QPrinter::A6, QPair<QString,QString>(QLatin1String("A6"), QLatin1String("a6")));
+        names.insert( QPrinter::A7, QPair<QString,QString>(QLatin1String("A7"), QLatin1String("a7")));
+        names.insert( QPrinter::A8, QPair<QString,QString>(QLatin1String("A8"), QLatin1String("a8")));
+        names.insert( QPrinter::A9, QPair<QString,QString>(QLatin1String("A9"), QLatin1String("a9")));
+        names.insert( QPrinter::B0, QPair<QString,QString>(QLatin1String("B0"), QLatin1String("b0")));
+        names.insert( QPrinter::B1, QPair<QString,QString>(QLatin1String("B1"), QLatin1String("b1")));
+        names.insert( QPrinter::B2, QPair<QString,QString>(QLatin1String("B2"), QLatin1String("b2")));
+        names.insert( QPrinter::B3, QPair<QString,QString>(QLatin1String("B3"), QLatin1String("b3")));
+        names.insert( QPrinter::B4, QPair<QString,QString>(QLatin1String("B4"), QLatin1String("b4")));
+        names.insert( QPrinter::B5, QPair<QString,QString>(QLatin1String("B5"), QLatin1String("b5")));
+        names.insert( QPrinter::B6, QPair<QString,QString>(QLatin1String("B6"), QLatin1String("b6")));
+        names.insert( QPrinter::B7, QPair<QString,QString>(QLatin1String("B7"), QLatin1String("b7")));
+        names.insert( QPrinter::B8, QPair<QString,QString>(QLatin1String("B8"), QLatin1String("b8")));
+        names.insert( QPrinter::B9, QPair<QString,QString>(QLatin1String("B9"), QLatin1String("b9")));
+        names.insert( QPrinter::B10, QPair<QString,QString>(QLatin1String("B10"), QLatin1String("b10")));
+        names.insert( QPrinter::C5E, QPair<QString,QString>(QLatin1String("C5E"), QLatin1String("c5e")));
+        names.insert( QPrinter::DLE, QPair<QString,QString>(QLatin1String("DLE"), QLatin1String("dle")));
+        names.insert( QPrinter::Executive, QPair<QString,QString>(QLatin1String("Executive"), QLatin1String("executive")));
+        names.insert( QPrinter::Folio, QPair<QString,QString>(QLatin1String("Folio"), QLatin1String("folio")));
+        names.insert( QPrinter::Ledger, QPair<QString,QString>(QLatin1String("Ledger"), QLatin1String("ledger")));
+        names.insert( QPrinter::Legal, QPair<QString,QString>(QLatin1String("Legal"), QLatin1String("legal")));
+        names.insert( QPrinter::Letter, QPair<QString,QString>(QLatin1String("Letter"), QLatin1String("letter")));
+        names.insert( QPrinter::Tabloid, QPair<QString,QString>(QLatin1String("Tabloid"), QLatin1String("tabloid")));
 
         QStringList sl = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QLatin1String("digikam/data/templates/"));
 
@@ -105,16 +105,16 @@ class NewCanvasDialog::Private
         for (QMap<int, QPair<QString,QString> >::iterator pair = names.begin(); pair != names.end(); ++pair)
         {
             QString tmp = dir + pair->second;
-            QDir dv(tmp + "/v");
-            if (dv.exists() && dv.entryList(QStringList() << "*.ple", QDir::Files).count())
+            QDir dv(tmp + QLatin1String("/v"));
+            if (dv.exists() && dv.entryList(QStringList() << QLatin1String("*.ple"), QDir::Files).count())
             {
                 QListWidgetItem * temp = new QListWidgetItem(pair->first);
                 temp->setData(PAPER_SIZE_ROLE, pair.key());
                 paperSizes.append(temp);
                 continue;
             }
-            QDir dh(tmp + "/h");
-            if (dh.exists() && dh.entryList(QStringList() << "*.ple", QDir::Files).count())
+            QDir dh(tmp + QLatin1String("/h"));
+            if (dh.exists() && dh.entryList(QStringList() << QLatin1String("*.ple"), QDir::Files).count())
             {
                 QListWidgetItem * temp = new QListWidgetItem(pair->first);
                 temp->setData(PAPER_SIZE_ROLE, pair.key());
@@ -294,11 +294,11 @@ void NewCanvasDialog::paperSizeSelected(QListWidgetItem * current, QListWidgetIt
         d->templatesList->setModel(model);
 
         QPair<QString,QString> paper = d->names[size];
-        model->addTemplate("", i18n("Empty"));
+        model->addTemplate(QString(), i18n("Empty"));
         if (!d->horizontalButton->isChecked())
-            this->loadTemplatesList(QString("kipiplugins_photolayoutseditor/data/templates/") + paper.second + QString("/v"), model);
+            this->loadTemplatesList(QLatin1String("digikam/data/templates/") + paper.second + QLatin1String("/v"), model);
         if (!d->verticalButton->isChecked())
-            this->loadTemplatesList(QString("kipiplugins_photolayoutseditor/data/templates/") + paper.second + QString("/h"), model);
+            this->loadTemplatesList(QLatin1String("digikam/data/templates/") + paper.second + QLatin1String("/h"), model);
     }
 }
 
@@ -398,9 +398,9 @@ void NewCanvasDialog::loadTemplatesList(const QString & path, TemplatesModel * m
         return;
 
     QDir diro(sl.first());
-    QStringList files = diro.entryList(QStringList() << "*.ple", QDir::Files);
+    QStringList files = diro.entryList(QStringList() << QLatin1String("*.ple"), QDir::Files);
     foreach (QString s, files)
-        model->addTemplate(diro.path() + "/" + s, s);
+        model->addTemplate(diro.path() + QLatin1String("/") + s, s);
 }
 
 } // namespace PhotoLayoutsEditor
