@@ -1,4 +1,4 @@
-Kipi-plugins 5.6.0 - Release date: 2017/06/11
+Kipi-plugins 5.7.0 - Release date: 2017/07/23
 ------------------------------------------------------------------------
 
 NEW FEATURES:
@@ -6,6 +6,4 @@ NEW FEATURES:
 
 BUGFIXES FROM BUGZILLA :
 
-001 ==> 349270 - Missing direct .png image URL.
-002 ==> 377837 - Gwenview crashed while using print assistant plugin.
-003 ==> 381026 - Plugin piwigo not sort albums.
+001 ==> 
