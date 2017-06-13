@@ -76,11 +76,14 @@
 #include "LayersModelItem.h"
 #include "LayersSelectionModel.h"
 
-using namespace PhotoLayoutsEditor;
+using namespace Digikam;
+
+namespace PhotoLayoutsEditor
+{
 
 QColor Scene::OUTSIDE_SCENE_COLOR;
 
-class PhotoLayoutsEditor::ScenePrivate
+class ScenePrivate
 {
     ScenePrivate(Scene * scene) :
         m_scene(scene),
@@ -291,7 +294,8 @@ class PhotoLayoutsEditor::ScenePrivate
     friend class Scene;
 };
 
-class PhotoLayoutsEditor::AddItemsCommand : public QUndoCommand
+class AddItemsCommand
+    : public QUndoCommand
 {
         QList<AbstractPhoto*> items;
         int position;
@@ -343,7 +347,9 @@ class PhotoLayoutsEditor::AddItemsCommand : public QUndoCommand
             done = false;
         }
 };
-class PhotoLayoutsEditor::MoveItemsCommand : public QUndoCommand
+
+class MoveItemsCommand
+    : public QUndoCommand
 {
         QMap<AbstractPhoto*,QPointF> m_items;
         Scene * m_scene;
@@ -388,7 +394,9 @@ class PhotoLayoutsEditor::MoveItemsCommand : public QUndoCommand
             }
         }
 };
-class PhotoLayoutsEditor::RemoveItemsCommand : public QUndoCommand
+
+class RemoveItemsCommand
+    : public QUndoCommand
 {
         AbstractPhoto* item;
         int            item_row;
@@ -493,7 +501,9 @@ class PhotoLayoutsEditor::RemoveItemsCommand : public QUndoCommand
             }
         }
 };
-class PhotoLayoutsEditor::CropItemsCommand : public QUndoCommand
+
+class CropItemsCommand
+    : public QUndoCommand
 {
     QMap<AbstractPhoto*,QPainterPath> data;
 public:
@@ -559,37 +569,37 @@ Scene::Scene(const QRectF & dimension, QObject * parent) :
     connect(PLEConfigSkeleton::self(), SIGNAL(verticalGridChanged(double)), this, SLOT(setVerticalGrid(double)));
 }
 
-//#####################################################################################################
+
 Scene::~Scene()
 {
     delete d;
 }
 
-//#####################################################################################################
+
 SceneBackground * Scene::background()
 {
     return d->m_background;
 }
 
-//#####################################################################################################
+
 SceneBorder * Scene::border()
 {
     return d->m_border;
 }
 
-//#####################################################################################################
+
 LayersModel * Scene::model() const
 {
     return d->model;
 }
 
-//#####################################################################################################
+
 LayersSelectionModel * Scene::selectionModel() const
 {
     return d->selection_model;
 }
 
-//#####################################################################################################
+
 void Scene::addItem(AbstractPhoto * item)
 {
     // Prevent multiple addition of the item
@@ -613,7 +623,6 @@ void Scene::addItem(AbstractPhoto * item)
     PLE_PostUndoCommand(command);
 }
 
-//#####################################################################################################
 void Scene::addItems(const QList<AbstractPhoto*> & items)
 {
     // Prevent multiple addition of the item
@@ -654,7 +663,6 @@ void Scene::addItems(const QList<AbstractPhoto*> & items)
         PLE_PostUndoCommand(command);
 }
 
-//#####################################################################################################
 void Scene::removeItem(AbstractPhoto * item)
 {
     if (!askAboutRemoving(1))
@@ -663,7 +671,6 @@ void Scene::removeItem(AbstractPhoto * item)
     PLE_PostUndoCommand(command);
 }
 
-//#####################################################################################################
 void Scene::removeItems(const QList<AbstractPhoto *> & items)
 {
     if (!askAboutRemoving(items.count()))
@@ -680,13 +687,11 @@ void Scene::removeItems(const QList<AbstractPhoto *> & items)
         PLE_PostUndoCommand(command);
 }
 
-//#####################################################################################################
 void Scene::removeSelectedItems()
 {
     removeItems(selectedItems());
 }
 
-//#####################################################################################################
 void Scene::changeSelectedImage()
 {
     QList<AbstractPhoto*> items = selectedItems();
@@ -696,18 +701,18 @@ void Scene::changeSelectedImage()
     if (!item)
         return;
 
-    QList<QUrl> urls = Digikam::ImageDialog::getImageURL(PhotoLayoutsWindow::instance());
-    if (urls.count() != 1)
+    QUrl url = ImageDialog::getImageURL(PhotoLayoutsWindow::instance(), QUrl());
+    if (url.isEmpty())
         return;
 
     ImageLoadingThread * ilt = new ImageLoadingThread(this);
-    ilt->setImageUrl(urls.first());
+    ilt->setImageUrl(url);
     ilt->setMaximumProgress(1);
     connect(ilt, SIGNAL(imageLoaded(QUrl,QImage)), item, SLOT(imageLoaded(QUrl,QImage)));
     ilt->start();
 }
 
-//#####################################################################################################
+
 void Scene::contextMenuEvent(QGraphicsSceneMouseEvent * event)
 {
     QMenu menu;
@@ -738,13 +743,13 @@ void Scene::contextMenuEvent(QGraphicsSceneMouseEvent * event)
     menu.exec(event->screenPos());
 }
 
-//#####################################################################################################
+
 void Scene::contextMenuEvent(QGraphicsSceneContextMenuEvent * event)
 {
     this->contextMenuEvent( (QGraphicsSceneMouseEvent*) event );
 }
 
-//#####################################################################################################
+
 void Scene::keyPressEvent(QKeyEvent * event)
 {
     if (this->focusItem())
@@ -768,7 +773,7 @@ void Scene::keyPressEvent(QKeyEvent * event)
     QGraphicsScene::keyPressEvent(event);
 }
 
-//#####################################################################################################
+
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent * event)
 {
     if (event->button() == Qt::LeftButton)
@@ -871,7 +876,7 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent * event)
         this->contextMenuEvent(event);
 }
 
-//#####################################################################################################
+
 void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
 {
     if (event->buttons() & Qt::LeftButton)
@@ -909,7 +914,7 @@ void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
     }
 }
 
-//#####################################################################################################
+
 void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
 {
     if (event->button() == Qt::LeftButton)
@@ -944,7 +949,7 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
     }
 }
 
-//#####################################################################################################
+
 void Scene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event)
 {
     if (event->buttons() & Qt::LeftButton)
@@ -960,7 +965,7 @@ void Scene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event)
     }
 }
 
-//#####################################################################################################
+
 void Scene::drawBackground(QPainter * painter, const QRectF & rect)
 {
     // Transparent scene background
@@ -987,10 +992,10 @@ void Scene::drawBackground(QPainter * painter, const QRectF & rect)
     }
 }
 
-//#####################################################################################################
+
 void Scene::drawForeground(QPainter * painter, const QRectF & rect)
 {
-    QGraphicsScene::drawForeground(painter, rect.intersect(this->sceneRect()));
+    QGraphicsScene::drawForeground(painter, rect.intersected(this->sceneRect()));
 
     // Draw selected items shape
     if (isSelectionVisible())
@@ -1004,7 +1009,7 @@ void Scene::drawForeground(QPainter * painter, const QRectF & rect)
     }
 }
 
-//#####################################################################################################
+
 void Scene::dragEnterEvent(QGraphicsSceneDragDropEvent * event)
 {
     if (canDecode(event->mimeData()))
@@ -1019,7 +1024,7 @@ void Scene::dragEnterEvent(QGraphicsSceneDragDropEvent * event)
     }
 }
 
-//#####################################################################################################
+
 void Scene::dragLeaveEvent(QGraphicsSceneDragDropEvent * event)
 {
     if (d->m_hovered_photo)
@@ -1029,10 +1034,10 @@ void Scene::dragLeaveEvent(QGraphicsSceneDragDropEvent * event)
     }
 }
 
-//#####################################################################################################
+
 void Scene::dragMoveEvent(QGraphicsSceneDragDropEvent * event)
 {
-    PhotoItem * tempItem = dynamic_cast<PhotoItem*>(this->itemAt(event->scenePos()));
+    PhotoItem * tempItem = dynamic_cast<PhotoItem*>(this->itemAt(event->scenePos(), QTransform()));
     // Send event to item
     if (tempItem)
     {
@@ -1067,10 +1072,10 @@ void Scene::dragMoveEvent(QGraphicsSceneDragDropEvent * event)
     d->m_hovered_photo = tempItem;
 }
 
-//#####################################################################################################
+
 void Scene::dropEvent(QGraphicsSceneDragDropEvent * event)
 {
-    PhotoItem * item = dynamic_cast<PhotoItem*>(this->itemAt(event->scenePos()));
+    PhotoItem * item = dynamic_cast<PhotoItem*>(this->itemAt(event->scenePos(), QTransform()));
     if (item)
     {
         item->dropEvent(event);
@@ -1111,7 +1116,7 @@ void Scene::dropEvent(QGraphicsSceneDragDropEvent * event)
     event->setAccepted( true );
 }
 
-//#####################################################################################################
+
 void Scene::setGrid(double x, double y)
 {
     // Grid can't be 0
@@ -1126,7 +1131,7 @@ void Scene::setGrid(double x, double y)
 
     if (!grid_item)
     {
-        grid_item = new QGraphicsItemGroup(0,this);
+        grid_item = new QGraphicsItemGroup();
         grid_item->setZValue(0);
         grid_item->setVisible(true);
         QGraphicsOpacityEffect * effect = new QGraphicsOpacityEffect(this);
@@ -1150,7 +1155,7 @@ void Scene::setGrid(double x, double y)
         }
         else
         {
-            temp = new QGraphicsLineItem(i,0,i,height, 0, this);
+            temp = new QGraphicsLineItem(i, 0, i, height, 0);
             grid_item->addToGroup(temp);
         }
     }
@@ -1165,7 +1170,7 @@ void Scene::setGrid(double x, double y)
         }
         else
         {
-            temp = new QGraphicsLineItem(0,i,width,i, 0, this);
+            temp = new QGraphicsLineItem(0, i, width, i, 0);
             grid_item->addToGroup(temp);
         }
     }
@@ -1181,19 +1186,19 @@ void Scene::setGrid(double x, double y)
     }
 }
 
-//#####################################################################################################
+
 void Scene::setHorizontalGrid(double x)
 {
     setGrid(x, this->y_grid);
 }
 
-//#####################################################################################################
+
 void Scene::setVerticalGrid(double y)
 {
     this->setGrid(this->x_grid, y);
 }
 
-//#####################################################################################################
+
 void Scene::setGridVisible(bool visible)
 {
     if (grid_visible == visible)
@@ -1209,13 +1214,13 @@ void Scene::setGridVisible(bool visible)
     }
 }
 
-//#####################################################################################################
+
 bool Scene::isGridVisible()
 {
     return this->grid_visible;
 }
 
-//#####################################################################################################
+
 void Scene::setInteractionMode(int mode)
 {
     m_interaction_mode = mode;
@@ -1224,7 +1229,7 @@ void Scene::setInteractionMode(int mode)
     setCropWidgetVisible(mode & Cropping);
 }
 
-//#####################################################################################################
+
 void Scene::setSelectionMode(SelectionMode selectionMode)
 {
     switch(selectionMode)
@@ -1243,19 +1248,19 @@ void Scene::setSelectionMode(SelectionMode selectionMode)
     }
 }
 
-//#####################################################################################################
+
 void Scene::addSelectingFilter(const QMetaObject & classMeta)
 {
     d->m_selection_filters.push_back(classMeta.className());
 }
 
-//#####################################################################################################
+
 void Scene::clearSelectingFilters()
 {
     d->m_selection_filters.clear();
 }
 
-//#####################################################################################################
+
 void Scene::setRotationWidgetVisible(bool isVisible)
 {
     if (d->m_rot_item)
@@ -1276,7 +1281,7 @@ void Scene::setRotationWidgetVisible(bool isVisible)
     }
 }
 
-//#####################################################################################################
+
 void Scene::setScalingWidgetVisible(bool isVisible)
 {
     if (d->m_scale_item)
@@ -1298,7 +1303,7 @@ void Scene::setScalingWidgetVisible(bool isVisible)
     }
 }
 
-//#####################################################################################################
+
 void Scene::setCropWidgetVisible(bool isVisible)
 {
     if (d->m_crop_item)
@@ -1330,37 +1335,37 @@ void Scene::setCropWidgetVisible(bool isVisible)
         this->clearSelection();
 }
 
-//#####################################################################################################
+
 void Scene::closeCropWidget()
 {
     this->setCropWidgetVisible(false);
 }
 
-//#####################################################################################################
+
 qreal Scene::gridHorizontalDistance() const
 {
     return this->x_grid;
 }
 
-//#####################################################################################################
+
 qreal Scene::gridVerticalDistance() const
 {
     return this->y_grid;
 }
 
-//#####################################################################################################
+
 QDomDocument Scene::toSvg(ProgressObserver * observer)
 {
     return toSvg(observer, false);
 }
 
-//#####################################################################################################
+
 QDomDocument Scene::toTemplateSvg(ProgressObserver * observer)
 {
     return toSvg(observer, true);
 }
 
-//#####################################################################################################
+
 QDomDocument Scene::toSvg(ProgressObserver * observer, bool asTemplate)
 {
     QDomDocument document;
@@ -1461,7 +1466,7 @@ QDomDocument Scene::toSvg(ProgressObserver * observer, bool asTemplate)
     return document;
 }
 
-//#####################################################################################################
+
 Scene * Scene::fromSvg(QDomElement & sceneElement)
 {
     if (sceneElement.isNull() || sceneElement.tagName() != QLatin1String("g") || sceneElement.attribute(QLatin1String("id")) != QLatin1String("Scene"))
@@ -1533,7 +1538,7 @@ Scene * Scene::fromSvg(QDomElement & sceneElement)
     return result;
 }
 
-//#####################################################################################################
+
 void Scene::render(QPainter * painter, const QRectF & target, const QRectF & source, Qt::AspectRatioMode aspectRatioMode)
 {
     if (d->m_rot_item)
@@ -1551,7 +1556,7 @@ void Scene::render(QPainter * painter, const QRectF & target, const QRectF & sou
         d->m_scale_item->show();
 }
 
-//#####################################################################################################
+
 void Scene::readSceneMousePress(MousePressListener * mouseListsner)
 {
     d->m_readSceneMousePress_listener = mouseListsner;
@@ -1561,7 +1566,7 @@ void Scene::readSceneMousePress(MousePressListener * mouseListsner)
         d->m_readSceneMousePress_enabled = false;
 }
 
-//#####################################################################################################
+
 QList<AbstractPhoto*> Scene::selectedItems() const
 {
     QList<AbstractPhoto*> result;
@@ -1571,7 +1576,7 @@ QList<AbstractPhoto*> Scene::selectedItems() const
     return result;
 }
 
-//#####################################################################################################
+
 void Scene::updateSelection()
 {
     foreach(AbstractPhoto* item, d->m_selected_items.keys())
@@ -1601,7 +1606,7 @@ void Scene::updateSelection()
     this->setCropWidgetVisible(m_interaction_mode & Cropping);
 }
 
-//#####################################################################################################
+
 void Scene::imageLoaded(const QUrl & url, const QImage & image)
 {
     if (!image.isNull())
@@ -1620,7 +1625,7 @@ void Scene::imageLoaded(const QUrl & url, const QImage & image)
     }
 }
 
-//#####################################################################################################
+
 void Scene::calcSelectionBoundingRect()
 {
     d->m_selected_items_path = QPainterPath();
@@ -1628,19 +1633,21 @@ void Scene::calcSelectionBoundingRect()
         d->m_selected_items_path = d->m_selected_items_path.united(item->mapToScene(item->shape()));
 }
 
-//#####################################################################################################
+
 bool Scene::askAboutRemoving(int count)
 {
     if (count)
     {
-        int result = KMessageBox::questionYesNo(qApp->activeWindow(), i18np("Are you sure you want to delete selected item?", "Are you sure you want to delete %1 selected items?", count), i18n("Items deleting"));
-        if (result == KMessageBox::Yes)
+        int result = QMessageBox::question(qApp->activeWindow(), 
+                                           i18n("Items deleting"),
+                                           i18np("Are you sure you want to delete selected item?", "Are you sure you want to delete %1 selected items?", count));
+        if (result == QMessageBox::Yes)
             return true;
     }
     return false;
 }
 
-//#####################################################################################################
+
 bool Scene::canDecode(const QMimeData * mimeData)
 {
     if (PhotoLayoutsWindow::instance()->hasInterface() &&
@@ -1657,14 +1664,16 @@ bool Scene::canDecode(const QMimeData * mimeData)
     return true;
 }
 
-//#####################################################################################################
+
 bool Scene::isSelectionVisible()
 {
     return d->m_selection_visible;
 }
 
-//#####################################################################################################
+
 void Scene::setSelectionVisible(bool isVisible)
 {
     d->m_selection_visible = isVisible;
 }
+
+} // namespace PhotoLayoutsEditor
