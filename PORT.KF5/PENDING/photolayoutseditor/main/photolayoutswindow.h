@@ -59,13 +59,16 @@ class PhotoLayoutsWindow : public KXmlGuiWindow
 
         ~PhotoLayoutsWindow();
         static PhotoLayoutsWindow * instance(QWidget * parent = 0);
+
         void addUndoCommand(QUndoCommand* command);
         void beginUndoCommandGroup(const QString & name);
         void endUndoCommandGroup();
-        void setInterface(DInfoInterface* interface);
-        bool hasInterface() const;
-        void setItemsList(const QList<QUrl> & images);
+
+        void setInterface(DInfoInterface* const interface);
         DInfoInterface* interface() const;
+        bool hasInterface() const;
+
+        void setItemsList(const QList<QUrl> & images);
 
     public Q_SLOTS:
 

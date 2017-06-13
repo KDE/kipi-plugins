@@ -27,14 +27,13 @@
 #define PHOTO_LAYOUTS_EDITOR_P_H
 
 // KDE
-#include <QAction>
 #include <kactionmenu.h>
 #include <krecentfilesaction.h>
-#include <kfiledialog.h>
 #include <ktoggleaction.h>
 #include <kservicetypetrader.h>
 
 // Qt
+#include <QAction>
 #include <QHBoxLayout>
 #include <QTreeView>
 #include <QDockWidget>
@@ -79,7 +78,6 @@ class PhotoLayoutsWindow::Private
             showGridToggleAction(0),
             gridConfigAction(0),
             changeCanvasSizeAction(0),
-            fileDialog(0),
             tree(0),
             treeWidget(0),
             treeTitle(0),
@@ -118,7 +116,6 @@ class PhotoLayoutsWindow::Private
             Q_DELETE(changeCanvasSizeAction)
 
             // Other
-            Q_DELETE(fileDialog)
             Q_DELETE(tree)
             //Q_DELETE(treeWidget)  // DELETED BY main window
             //Q_DELETE(treeTitle)   // DELETED BY treeWidget
@@ -154,9 +151,6 @@ class PhotoLayoutsWindow::Private
         KToggleAction * showGridToggleAction;
         QAction *   gridConfigAction;
         QAction *   changeCanvasSizeAction;
-
-        // File dialog
-        KFileDialog * fileDialog;
 
         // Tree of layers
         LayersTree *  tree;

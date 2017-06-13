@@ -28,6 +28,7 @@
 
 // Qt includes
 
+#include <QStyle>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QTreeView>
@@ -47,26 +48,23 @@
 #include <QPrintDialog>
 #include <QDesktopWidget>
 #include <QStatusBar>
+#include <QMessageBox>
+#include <QApplication>
+#include <QMenuBar>
+#include <QPrinter>
 
 // KDE includes
 
-#include <kmenubar.h>
 #include <kstandardaction.h>
 #include <kactioncollection.h>
-#include <kfiledialog.h>
-#include <ktip.h>
-#include <kaboutdata.h>
-#include <kmessagebox.h>
-#include <QApplication>
-#include <kprintpreview.h>
 #include <kconfigdialog.h>
 #include <kservice.h>
-#include <kservicetypetrader.h>
 
 // Local includes
 
 #include "digikam_debug.h"
 #include "imagedialog.h"
+#include "dmessagebox.h"
 #include "CanvasSizeDialog.h"
 #include "Canvas.h"
 #include "Scene.h"
@@ -74,11 +72,9 @@
 #include "UndoCommandEventFilter.h"
 #include "PhotoEffectsLoader.h"
 #include "AbstractPhotoEffectFactory.h"
-#include "ImageFileDialog.h"
 #include "GridSetupDialog.h"
 #include "PLEConfigDialog.h"
 #include "PLEConfigSkeleton.h"
-#include "PLEAboutData.h"
 #include "StandardEffectsFactory.h"
 #include "StandardBordersFactory.h"
 #include "global.h"
@@ -87,6 +83,8 @@
 #include "BorderDrawersLoader.h"
 #include "NewCanvasDialog.h"
 
+using namespace Digikam;
+
 // Q_*_RESOURCE cannot be used in a namespace
 inline void initIconsResource() { Q_INIT_RESOURCE(icons); }
 inline void cleanupIconsResource() { Q_CLEANUP_RESOURCE(icons); }
@@ -94,12 +92,14 @@ inline void cleanupIconsResource() { Q_CLEANUP_RESOURCE(icons); }
 namespace PhotoLayoutsEditor
 {
 
-class PhotoLayoutsWindow::CanvasSizeChangeCommand : public QUndoCommand
+class CanvasSizeChangeCommand
+    : public QUndoCommand
 {
     CanvasSize m_size;
     Canvas*    m_canvas;
 
 public:
+
     CanvasSizeChangeCommand(const CanvasSize & size, Canvas * canvas, QUndoCommand * parent = 0) :
         QUndoCommand(i18n("Canvas size change"), parent),
         m_size(size),
@@ -133,7 +133,6 @@ PhotoLayoutsWindow::PhotoLayoutsWindow(QWidget * parent) :
     d(new Private)
 {
     m_instance = this;
-    componentData().setAboutData( PLEAboutData() );
 
     initIconsResource();
     setXMLFile("photolayoutseditorui.rc");
@@ -148,7 +147,7 @@ PhotoLayoutsWindow::PhotoLayoutsWindow(QWidget * parent) :
     setAcceptDrops(true);
     int height = QApplication::desktop()->height()*0.8;
     resize(qRound(height*16.0/9.0),height);
-    QDesktopWidget* d = KApplication::kApplication()->desktop();
+    QDesktopWidget* d = qApp->desktop();
     move(d->rect().center() - this->frameGeometry().center());
 }
 
@@ -172,8 +171,7 @@ PhotoLayoutsWindow * PhotoLayoutsWindow::instance(QWidget * parent)
         return m_instance;
     else
     {
-        KApplication * app = KApplication::kApplication();
-        app->installEventFilter(new UndoCommandEventFilter(app));
+        qApp->installEventFilter(new UndoCommandEventFilter(qApp));
         return (m_instance = new PhotoLayoutsWindow(parent));
     }
 }
@@ -207,7 +205,7 @@ void PhotoLayoutsWindow::endUndoCommandGroup()
         m_canvas->undoStack()->endMacro();
 }
 
-void PhotoLayoutsWindow::setInterface(KIPI::Interface * interface)
+void PhotoLayoutsWindow::setInterface(DInfoInterface* const interface)
 {
     if (interface)
         m_interface = interface;
@@ -218,7 +216,7 @@ bool PhotoLayoutsWindow::hasInterface() const
     return (bool) m_interface;
 }
 
-KIPI::Interface * PhotoLayoutsWindow::interface() const
+DInfoInterface* PhotoLayoutsWindow::interface() const
 {
     return this->m_interface;
 }
@@ -584,12 +582,13 @@ void PhotoLayoutsWindow::exportFile()
 {
     if (!m_canvas)
         return;
-    ImageFileDialog * imageDialog = new ImageFileDialog(QUrl(), this);
-    imageDialog->setOperationMode(KFileDialog::Saving);
-    int result = imageDialog->exec();
-    if (result == KFileDialog::Accepted)
+
+    QUrl url = ImageDialog::getImageURL(QUrl(), this);
+
+    if (!url.isEmpty())
     {
         const char * format = imageDialog->format();
+
         if (format)
         {
             QPixmap image(m_canvas->sceneRect().size().toSize());
@@ -599,14 +598,18 @@ void PhotoLayoutsWindow::exportFile()
             writer.setFormat(format);
             if (!writer.canWrite())
             {
-                KMessageBox::error(this,
-                                   i18n("Image can't be saved in selected file."));
+                QMessageBox::critical(this, 
+                                      i18n("Image can't be saved in selected file."));
             }
             if (!writer.write(image.toImage()))
             {
-                KMessageBox::detailedError(this,
-                                   i18n("Unexpected error while saving an image."),
-                                   writer.errorString());
+                DMessageBox::showInformationList(
+                    qApp->style()->standardIcon(QStyle::SP_MessageBoxCritical,
+                                                0, qApp->activeWindow()),
+                    this,
+                    i18n("Unexpected error while saving an image."),
+                    QString(),
+                    writer.errorString());
             }
         }
     }
