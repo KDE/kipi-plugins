@@ -37,6 +37,7 @@
 #include <QHBoxLayout>
 #include <QTreeView>
 #include <QDockWidget>
+#include <QFileDialog>
 
 // Local
 #include "LayersTree.h"
@@ -84,7 +85,8 @@ class PhotoLayoutsWindow::Private
             toolsWidget(0),
             toolEffects(0),
             toolBorders(0),
-            statusBar(0)
+            statusBar(0),
+            fileDialog(0)
         {}
 
         ~Private()
@@ -129,9 +131,9 @@ class PhotoLayoutsWindow::Private
         QWidget *   centralWidget;
 
         // File menu
-        QAction *   openNewFileAction;
-        QAction *   openFileAction;
-        KRecentFilesAction *   openRecentFilesMenu;
+        QAction *           openNewFileAction;
+        QAction *           openFileAction;
+        KRecentFilesAction* openRecentFilesMenu;
         QAction *   saveAction;
         QAction *   saveAsAction;
         QAction *   saveAsTemplateAction;
@@ -169,6 +171,8 @@ class PhotoLayoutsWindow::Private
         QMap<QString, BorderDrawerFactoryInterface*> bordersMap;
 
         PLEStatusBar * statusBar;
+
+        QFileDialog*   fileDialog;
 };
 
 } // namespace PhotoLayoutsEditor

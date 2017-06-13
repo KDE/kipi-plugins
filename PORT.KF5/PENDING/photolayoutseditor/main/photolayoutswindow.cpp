@@ -503,13 +503,22 @@ void PhotoLayoutsWindow::open()
 void PhotoLayoutsWindow::openDialog()
 {
     if (!d->fileDialog)
-        d->fileDialog = new KFileDialog(QUrl(), i18n("*.ple|Photo Layouts Editor files"), this);
-    d->fileDialog->setOperationMode(KFileDialog::Opening);
-    d->fileDialog->setMode(KFile::File);
-    d->fileDialog->setKeepLocation(true);
+    {
+        d->fileDialog = new QFileDialog(this,
+                                        QString(),
+                                        QString(),
+                                        i18n("*.ple|Photo Layouts Editor files"));
+    }
+
+    d->fileDialog->setFileMode(QFileDialog::AnyFile);
+
     int result = d->fileDialog->exec();
-    if (result == KFileDialog::Accepted)
-        open(d->fileDialog->selectedUrl());
+
+    if (result == QFileDialog::Accepted &&
+        !d->fileDialog->selectedUrls().isEmpty())
+    {
+        open(d->fileDialog->selectedUrls().first());
+    }
 }
 
 void PhotoLayoutsWindow::open(const QUrl & fileUrl)
@@ -539,34 +548,49 @@ void PhotoLayoutsWindow::save()
 void PhotoLayoutsWindow::saveAs()
 {
     if (!d->fileDialog)
-        d->fileDialog = new KFileDialog(QUrl(), i18n("*.ple|Photo Layouts Editor files"), this);
-    d->fileDialog->setOperationMode(KFileDialog::Saving);
-    d->fileDialog->setMode(KFile::File);
-    d->fileDialog->setKeepLocation(true);
-    int result = d->fileDialog->exec();
-    if (result == KFileDialog::Accepted)
     {
-        QUrl url = d->fileDialog->selectedUrl();
-        saveFile(url);
+        d->fileDialog = new QFileDialog(this,
+                                        QString(),
+                                        QString(),
+                                        i18n("*.ple|Photo Layouts Editor files"));
+    }
+
+    d->fileDialog->setFileMode(QFileDialog::AnyFile);
+
+    int result = d->fileDialog->exec();
+
+    if (result == QFileDialog::Accepted &&
+        !d->fileDialog->selectedUrls().isEmpty())
+    {
+        saveFile(d->fileDialog->selectedUrls().first());
     }
 }
 
 void PhotoLayoutsWindow::saveAsTemplate()
 {
     if (!d->fileDialog)
-        d->fileDialog = new KFileDialog(QUrl(), i18n("*.ple|Photo Layouts Editor files"), this);
-    d->fileDialog->setOperationMode(KFileDialog::Saving);
-    d->fileDialog->setMode(KFile::File);
-    d->fileDialog->setKeepLocation(true);
-    int result = d->fileDialog->exec();
-    if (result == KFileDialog::Accepted)
     {
-        QUrl url = d->fileDialog->selectedUrl();
+        d->fileDialog = new QFileDialog(this,
+                                        QString(),
+                                        QString(),
+                                        i18n("*.ple|Photo Layouts Editor files"));
+    }
+
+    d->fileDialog->setFileMode(QFileDialog::AnyFile);
+
+    int result = d->fileDialog->exec();
+
+    if (result == QFileDialog::Accepted &&
+        !d->fileDialog->selectedUrls().isEmpty())
+    {
+        QUrl url = d->fileDialog->selectedUrls().first();
+
         if (m_canvas)
             m_canvas->saveTemplate(url);
         else
-            KMessageBox::error(this,
-                               i18n("There is nothing to save."));
+            QMessageBox::critical(this,
+                                  i18n("Error"),
+                                  i18n("There is nothing to save."));
     }
 }
 
@@ -575,8 +599,9 @@ void PhotoLayoutsWindow::saveFile(const QUrl & fileUrl, bool setFileAsDefault)
     if (m_canvas)
         m_canvas->save(fileUrl, setFileAsDefault);
     else
-        KMessageBox::error(this,
-                           i18n("There is nothing to save."));
+            QMessageBox::critical(this,
+                                  i18n("Error"),
+                                  i18n("There is nothing to save."));
 }
 
 void PhotoLayoutsWindow::exportFile()
@@ -584,22 +609,22 @@ void PhotoLayoutsWindow::exportFile()
     if (!m_canvas)
         return;
 
-    QUrl url = ImageDialog::getImageURL(QUrl(), this);
+    QUrl url = ImageDialog::getImageURL(this, QUrl());
 
     if (!url.isEmpty())
     {
-        const char * format = imageDialog->format();
+        const char * format = ImageDialog(this, QUrl()).fileFormats();
 
         if (format)
         {
             QPixmap image(m_canvas->sceneRect().size().toSize());
             image.fill(Qt::transparent);
             m_canvas->renderCanvas(&image);
-            QImageWriter writer(imageDialog->selectedFile());
+            QImageWriter writer(url);
             writer.setFormat(format);
             if (!writer.canWrite())
             {
-                QMessageBox::critical(this, 
+                QMessageBox::critical(this, i18n("Error"),
                                       i18n("Image can't be saved in selected file."));
             }
             if (!writer.write(image.toImage()))
@@ -610,10 +635,11 @@ void PhotoLayoutsWindow::exportFile()
                     this,
                     i18n("Unexpected error while saving an image."),
                     QString(),
-                    writer.errorString());
+                    QStringList() << writer.errorString());
             }
         }
     }
+
     delete imageDialog;
 }
 

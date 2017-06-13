@@ -84,6 +84,7 @@ set(photolayoutseditor_SRCS
     widgets/items/AbstractPhoto_p.cpp
     widgets/items/TextItem.cpp
     widgets/items/AbstractItemInterface.cpp
+    widgets/items/PhotoItem.cpp
     widgets/menus/LayersTreeMenu.cpp
     widgets/tools/AbstractItemsListViewTool.cpp
     widgets/tools/AbstractItemsTool.cpp
@@ -108,6 +109,7 @@ set(photolayoutseditor_SRCS
     widgets/canvas/ScalingWidgetItem.cpp
     widgets/canvas/SceneBackground.cpp
     widgets/canvas/SceneBorder.cpp
+    widgets/canvas/Scene.cpp
 
     listeners/TextColorChangeListener.cpp
     listeners/TextFontChangeListener.cpp
@@ -116,9 +118,6 @@ set(photolayoutseditor_SRCS
 
     settings/PLEConfigDialog.cpp
     settings/PLEConfigViewWidget.cpp
-
-    widgets/items/PhotoItem.cpp
-    widgets/canvas/Scene.cpp
 
     main/photolayoutswindow.cpp
 )
