@@ -23,13 +23,14 @@
  *
  * ============================================================ */
 
-// Local
 #include "UndoMoveRowsCommand.h"
-#include "LayersModel.h"
-#include "LayersModelItem.h"
 
 // KDE
 #include <klocalizedstring.h>
+
+#include "LayersModel.h"
+#include "LayersModelItem.h"
+#include "digikam_debug.h"
 
 using namespace PhotoLayoutsEditor;
 
@@ -61,14 +62,13 @@ UndoMoveRowsCommand::UndoMoveRowsCommand(int startingRow, int rowsCount, const Q
         m_starting_row = 0;
         m_rows_count = 0;
         m_destination_row = 0;
-#ifdef QT_DEBUG
+
         qCDebug(DIGIKAM_GENERAL_LOG) << "Can't create UndoMoveRowsCommand [NO MODEL!]:";
         qCDebug(DIGIKAM_GENERAL_LOG) << "\tStarting Row =" << startingRow;
         qCDebug(DIGIKAM_GENERAL_LOG) << "\tRows count =" << rowsCount;
         qCDebug(DIGIKAM_GENERAL_LOG) << "\tDestination Row =" << destinationRow;
         qCDebug(DIGIKAM_GENERAL_LOG) << "\tSource Parent =" << sourceParent;
         qCDebug(DIGIKAM_GENERAL_LOG) << "\tDestination Parent =" << destinationParent;
-#endif
     }
 }
 

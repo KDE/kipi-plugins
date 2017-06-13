@@ -25,27 +25,6 @@
 
 #include "Scene.h"
 
-#include "global.h"
-#include "RotationWidgetItem.h"
-#include "ScalingWidgetItem.h"
-#include "CropWidgetItem.h"
-#include "SceneBackground.h"
-#include "MousePressListener.h"
-#include "ToolsDockWidget.h"
-#include "photolayoutswindow.h"
-#include "PLEConfigSkeleton.h"
-#include "ImageLoadingThread.h"
-#include "ProgressEvent.h"
-#include "CanvasLoadingThread.h"
-#include "PhotoItem.h"
-#include "SceneBorder.h"
-
-#include "imagedialog.h"
-
-#include "LayersModel.h"
-#include "LayersModelItem.h"
-#include "LayersSelectionModel.h"
-
 // C++ std includes
 
 #include <limits>
@@ -69,12 +48,32 @@
 #include <QImageReader>
 #include <QtAlgorithms>
 #include <QBuffer>
+#include <QUrl>
+#include <QApplication>
+#include <QMessageBox>
 
 // KDE
-#include <QApplication>
-#include <kmessagebox.h>
 #include <klocalizedstring.h>
-#include <QUrl>
+
+#include "global.h"
+#include "RotationWidgetItem.h"
+#include "ScalingWidgetItem.h"
+#include "CropWidgetItem.h"
+#include "SceneBackground.h"
+#include "MousePressListener.h"
+#include "ToolsDockWidget.h"
+#include "photolayoutswindow.h"
+#include "PLEConfigSkeleton.h"
+#include "ImageLoadingThread.h"
+#include "ProgressEvent.h"
+#include "CanvasLoadingThread.h"
+#include "PhotoItem.h"
+#include "SceneBorder.h"
+#include "digikam_debug.h"
+#include "imagedialog.h"
+#include "LayersModel.h"
+#include "LayersModelItem.h"
+#include "LayersSelectionModel.h"
 
 using namespace PhotoLayoutsEditor;
 

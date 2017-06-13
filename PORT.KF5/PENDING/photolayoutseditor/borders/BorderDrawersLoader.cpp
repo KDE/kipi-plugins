@@ -24,16 +24,17 @@
  * ============================================================ */
 
 #include "BorderDrawersLoader.h"
-#include "BorderDrawerInterface.h"
-#include "BorderDrawerFactoryInterface.h"
-#include "BorderChangeListener.h"
 
 #include <QMap>
 #include <QStringList>
 #include <QMetaProperty>
-#include <QtTreePropertyBrowser>
-#include <KEditFactory.h>
 #include <QUndoCommand>
+
+#include "BorderDrawerInterface.h"
+#include "BorderDrawerFactoryInterface.h"
+#include "BorderChangeListener.h"
+#include "KEditFactory.h"
+#include "qttreepropertybrowser.h"
 
 using namespace PhotoLayoutsEditor;
 

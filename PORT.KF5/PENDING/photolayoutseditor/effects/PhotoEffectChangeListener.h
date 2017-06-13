@@ -27,30 +27,33 @@
 #define PHOTOEFFECTCHANGELISTENER_H
 
 #include <QObject>
-#include <QtProperty>
+#include "qtpropertybrowser.h"
 
 #include "AbstractPhotoEffectInterface.h"
 
 namespace PhotoLayoutsEditor
 {
-    class PhotoEffectChangeCommand;
-    class PhotoEffectChangeListener : public QObject
-    {
-            Q_OBJECT
 
-            AbstractPhotoEffectInterface * effect;
-            PhotoEffectChangeCommand * command;
-            bool createCommands;
+class PhotoEffectChangeCommand;
 
-        public:
+class PhotoEffectChangeListener : public QObject
+{
+        Q_OBJECT
 
-            explicit PhotoEffectChangeListener(AbstractPhotoEffectInterface * effect, QObject * parent, bool createCommands);
+        AbstractPhotoEffectInterface * effect;
+        PhotoEffectChangeCommand * command;
+        bool createCommands;
 
-        public Q_SLOTS:
+    public:
 
-            void propertyChanged(QtProperty * property);
-            void editingFinished();
-    };
-}
+        explicit PhotoEffectChangeListener(AbstractPhotoEffectInterface * effect, QObject * parent, bool createCommands);
+
+    public Q_SLOTS:
+
+        void propertyChanged(QtProperty * property);
+        void editingFinished();
+};
+
+} // namespace PhotoLayoutsEditor
 
 #endif // PHOTOEFFECTCHANGELISTENER_H

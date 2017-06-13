@@ -37,11 +37,12 @@
 #include <QFont>
 #include <QColorDialog>
 #include <QMetaProperty>
-#include <QtTreePropertyBrowser>
-#include "KEditFactory.h"
-
 #include <QPushButton>
+
 #include <klocalizedstring.h>
+
+#include "KEditFactory.h"
+#include "qttreepropertybrowser.h"
 
 using namespace PhotoLayoutsEditor;
 

@@ -64,6 +64,17 @@ set(photolayoutseditor_SRCS
     threads/SceneBorderLoader.cpp
     threads/TextItemLoader.cpp
 
+    extra/global.cpp
+    extra/KEditFactory.cpp
+    extra/qtpropertybrowser/qtbuttonpropertybrowser.cpp
+    extra/qtpropertybrowser/qteditorfactory.cpp
+    extra/qtpropertybrowser/qtgroupboxpropertybrowser.cpp
+    extra/qtpropertybrowser/qtpropertybrowser.cpp
+    extra/qtpropertybrowser/qtpropertybrowserutils.cpp
+    extra/qtpropertybrowser/qtpropertymanager.cpp
+    extra/qtpropertybrowser/qttreepropertybrowser.cpp
+    extra/qtpropertybrowser/qtvariantproperty.cpp
+
     widgets/extra/PatternsComboBox.cpp
     widgets/extra/PLEStatusBar.cpp
     widgets/layers/LayersTree.cpp
@@ -94,7 +105,6 @@ set(photolayoutseditor_SRCS
     widgets/canvas/MousePressListener.cpp
     widgets/canvas/RotationWidgetItem.cpp
     widgets/canvas/ScalingWidgetItem.cpp
-    widgets/canvas/Scene.cpp
     widgets/canvas/SceneBackground.cpp
     widgets/canvas/SceneBorder.cpp
 
@@ -106,11 +116,9 @@ set(photolayoutseditor_SRCS
     settings/PLEConfigDialog.cpp
     settings/PLEConfigViewWidget.cpp
 
-    extra/global.cpp
-    extra/KEditFactory.cpp
-
     main/photolayoutswindow.cpp
 
+    widgets/canvas/Scene.cpp
     widgets/items/PhotoItem.cpp
     widgets/dialogs/ImageFileDialog.cpp
 
@@ -118,6 +126,7 @@ set(photolayoutseditor_SRCS
 
 set(photolayoutseditor_RCS
     resources/icons.qrc
+    extra/qtpropertybrowser/qtpropertybrowser.qrc
    )
 
 qt5_add_resources(photolayoutseditor_SRCS ${photolayoutseditor_RCS})

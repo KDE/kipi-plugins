@@ -33,11 +33,12 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QListView>
-#include <QtAbstractPropertyBrowser>
-
-#include <klocalizedstring.h>
 #include <QPushButton>
 #include <QComboBox>
+
+#include <klocalizedstring.h>
+
+#include "qtpropertybrowser.h"
 
 using namespace PhotoLayoutsEditor;
 

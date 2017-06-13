@@ -31,11 +31,11 @@
 #include <QListView>
 #include <QPushButton>
 #include <QComboBox>
-#include <QtAbstractPropertyBrowser>
 #include <QIcon>
 
 #include <klocalizedstring.h>
 
+#include "qtpropertybrowser.h"
 #include "AbstractPhoto.h"
 #include "ToolsDockWidget.h"
 #include "BorderDrawersLoader.h"

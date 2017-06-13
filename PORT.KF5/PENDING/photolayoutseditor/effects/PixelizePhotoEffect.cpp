@@ -29,8 +29,6 @@
 
 #include <QImage>
 #include <QPainter>
-#include <QtTreePropertyBrowser>
-#include <QtIntPropertyManager>
 
 // KDE includes
 
@@ -38,6 +36,8 @@
 
 // Local includes
 
+#include "qttreepropertybrowser.h"
+#include "qtpropertymanager.h"
 #include "KEditFactory.h"
 
 using namespace PhotoLayoutsEditor;

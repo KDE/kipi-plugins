@@ -28,8 +28,8 @@
 #include "global.h"
 #include "KEditFactory.h"
 
-#include <QtProperty>
-#include <QtVariantPropertyManager>
+#include "qtpropertybrowser.h"
+#include "qtvariantproperty.h"
 
 #include <QUndoCommand>
 #include <QMetaProperty>

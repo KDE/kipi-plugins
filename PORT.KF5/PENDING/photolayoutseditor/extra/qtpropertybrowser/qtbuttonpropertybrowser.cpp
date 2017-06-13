@@ -40,12 +40,12 @@
 
 #include "qtbuttonpropertybrowser.h"
 #include <QtCore/QSet>
-#include <QtGui/QGridLayout>
-#include <QtGui/QLabel>
 #include <QtCore/QTimer>
 #include <QtCore/QMap>
-#include <QtGui/QToolButton>
-#include <QtGui/QStyle>
+#include <QGridLayout>
+#include <QLabel>
+#include <QToolButton>
+#include <QStyle>
 
 #if QT_VERSION >= 0x040400
 QT_BEGIN_NAMESPACE
@@ -235,9 +235,9 @@ void QtButtonPropertyBrowserPrivate::slotToggled(bool checked)
     setExpanded(item, checked);
 
     if (checked)
-        emit (q_ptr->expanded(m_itemToIndex.value(item)));
+        emit q_ptr->expanded(m_itemToIndex.value(item));
     else
-        emit (q_ptr->collapsed(m_itemToIndex.value(item)));
+        emit q_ptr->collapsed(m_itemToIndex.value(item));
 }
 
 void QtButtonPropertyBrowserPrivate::updateLater()
@@ -277,14 +277,14 @@ void QtButtonPropertyBrowserPrivate::propertyInserted(QtBrowserItem *index, QtBr
         if (!parentItem->container) {
             m_recreateQueue.removeAll(parentItem);
             WidgetItem *grandParent = parentItem->parent;
-//            QWidget *w = 0;
+            QWidget *w = 0;
             QGridLayout *l = 0;
             const int oldRow = gridRow(parentItem);
             if (grandParent) {
-//                w = grandParent->container;
+                w = grandParent->container;
                 l = grandParent->layout;
             } else {
-//                w = q_ptr;
+                w = q_ptr;
                 l = m_mainLayout;
             }
             QFrame *container = new QFrame();

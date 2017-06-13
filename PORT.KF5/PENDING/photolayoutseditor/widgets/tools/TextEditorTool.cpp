@@ -28,7 +28,7 @@
 #include "ToolsDockWidget.h"
 
 #include <QVBoxLayout>
-#include <QtAbstractPropertyBrowser>
+#include "qtpropertybrowser.h"
 
 using namespace PhotoLayoutsEditor;
 

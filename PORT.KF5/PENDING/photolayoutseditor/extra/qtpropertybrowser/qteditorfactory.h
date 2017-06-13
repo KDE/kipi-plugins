@@ -185,7 +185,6 @@ private:
     Q_DISABLE_COPY(QtLineEditFactory)
     Q_PRIVATE_SLOT(d_func(), void slotPropertyChanged(QtProperty *, const QString &))
     Q_PRIVATE_SLOT(d_func(), void slotRegExpChanged(QtProperty *, const QRegExp &))
-    Q_PRIVATE_SLOT(d_func(), void slotEchoModeChanged(QtProperty *, int))
     Q_PRIVATE_SLOT(d_func(), void slotSetValue(const QString &))
     Q_PRIVATE_SLOT(d_func(), void slotEditorDestroyed(QObject *))
 };
@@ -268,7 +267,7 @@ public:
     ~QtKeySequenceEditorFactory();
 protected:
     void connectPropertyManager(QtKeySequencePropertyManager *manager);
-    virtual QWidget *createEditor(QtKeySequencePropertyManager *manager, QtProperty *property,
+    QWidget *createEditor(QtKeySequencePropertyManager *manager, QtProperty *property,
                 QWidget *parent);
     void disconnectPropertyManager(QtKeySequencePropertyManager *manager);
 private:
@@ -290,7 +289,7 @@ public:
     ~QtCharEditorFactory();
 protected:
     void connectPropertyManager(QtCharPropertyManager *manager);
-    virtual QWidget *createEditor(QtCharPropertyManager *manager, QtProperty *property,
+    QWidget *createEditor(QtCharPropertyManager *manager, QtProperty *property,
                 QWidget *parent);
     void disconnectPropertyManager(QtCharPropertyManager *manager);
 private:
@@ -312,7 +311,7 @@ public:
     ~QtEnumEditorFactory();
 protected:
     void connectPropertyManager(QtEnumPropertyManager *manager);
-    virtual QWidget *createEditor(QtEnumPropertyManager *manager, QtProperty *property,
+    QWidget *createEditor(QtEnumPropertyManager *manager, QtProperty *property,
                 QWidget *parent);
     void disconnectPropertyManager(QtEnumPropertyManager *manager);
 private:
@@ -338,7 +337,7 @@ public:
     ~QtCursorEditorFactory();
 protected:
     void connectPropertyManager(QtCursorPropertyManager *manager);
-    virtual QWidget *createEditor(QtCursorPropertyManager *manager, QtProperty *property,
+    QWidget *createEditor(QtCursorPropertyManager *manager, QtProperty *property,
                 QWidget *parent);
     void disconnectPropertyManager(QtCursorPropertyManager *manager);
 private:
@@ -360,7 +359,7 @@ public:
     ~QtColorEditorFactory();
 protected:
     void connectPropertyManager(QtColorPropertyManager *manager);
-    virtual QWidget *createEditor(QtColorPropertyManager *manager, QtProperty *property,
+    QWidget *createEditor(QtColorPropertyManager *manager, QtProperty *property,
                 QWidget *parent);
     void disconnectPropertyManager(QtColorPropertyManager *manager);
 private:
@@ -382,7 +381,7 @@ public:
     ~QtFontEditorFactory();
 protected:
     void connectPropertyManager(QtFontPropertyManager *manager);
-    virtual QWidget *createEditor(QtFontPropertyManager *manager, QtProperty *property,
+    QWidget *createEditor(QtFontPropertyManager *manager, QtProperty *property,
                 QWidget *parent);
     void disconnectPropertyManager(QtFontPropertyManager *manager);
 private:

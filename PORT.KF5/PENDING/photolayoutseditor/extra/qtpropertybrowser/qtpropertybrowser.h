@@ -42,14 +42,13 @@
 #define QTPROPERTYBROWSER_H
 
 #include <QWidget>
-#include <QSet>
-#include <QLineEdit>
+#include <QtCore/QSet>
 
 #if QT_VERSION >= 0x040400
 QT_BEGIN_NAMESPACE
 #endif
 
-#if defined(Q_OS_WIN)
+#if defined(Q_WS_WIN)
 #  if !defined(QT_QTPROPERTYBROWSER_EXPORT) && !defined(QT_QTPROPERTYBROWSER_IMPORT)
 #    define QT_QTPROPERTYBROWSER_EXPORT
 #  elif defined(QT_QTPROPERTYBROWSER_IMPORT)
@@ -65,7 +64,6 @@ QT_BEGIN_NAMESPACE
 #  define QT_QTPROPERTYBROWSER_EXPORT
 #endif
 
-typedef QLineEdit::EchoMode EchoMode;
 
 class QtAbstractPropertyManager;
 class QtPropertyPrivate;
@@ -83,21 +81,25 @@ public:
     QString statusTip() const;
     QString whatsThis() const;
     QString propertyName() const;
+    QString propertyId() const;
     bool isEnabled() const;
     bool isModified() const;
 
     bool hasValue() const;
     QIcon valueIcon() const;
     QString valueText() const;
-    QString displayText() const;
+
+    virtual bool compare(QtProperty* otherProperty)const;
 
     void setToolTip(const QString &text);
     void setStatusTip(const QString &text);
     void setWhatsThis(const QString &text);
     void setPropertyName(const QString &text);
+    void setPropertyId(const QString &text);
     void setEnabled(bool enable);
     void setModified(bool modified);
 
+    bool isSubProperty()const;
     void addSubProperty(QtProperty *property);
     void insertSubProperty(QtProperty *property, QtProperty *afterProperty);
     void removeSubProperty(QtProperty *property);
@@ -123,6 +125,7 @@ public:
     void clear() const;
 
     QtProperty *addProperty(const QString &name = QString());
+    QtProperty *qtProperty(const QString &id)const;
 Q_SIGNALS:
 
     void propertyInserted(QtProperty *property,
@@ -134,8 +137,6 @@ protected:
     virtual bool hasValue(const QtProperty *property) const;
     virtual QIcon valueIcon(const QtProperty *property) const;
     virtual QString valueText(const QtProperty *property) const;
-    virtual QString displayText(const QtProperty *property) const;
-    virtual EchoMode echoMode(const QtProperty *) const;
     virtual void initializeProperty(QtProperty *property) = 0;
     virtual void uninitializeProperty(QtProperty *property);
     virtual QtProperty *createProperty();
@@ -150,9 +151,7 @@ class QT_QTPROPERTYBROWSER_EXPORT QtAbstractEditorFactoryBase : public QObject
 {
     Q_OBJECT
 public:
-    virtual QWidget * createPropertyEditor(QtProperty *property, QWidget *parent) = 0;
-Q_SIGNALS:
-    void editingFinished();
+    virtual QWidget *createEditor(QtProperty *property, QWidget *parent) = 0;
 protected:
     explicit QtAbstractEditorFactoryBase(QObject *parent = 0)
         : QObject(parent) {}
@@ -160,10 +159,6 @@ protected:
     virtual void breakConnection(QtAbstractPropertyManager *manager) = 0;
 protected Q_SLOTS:
     virtual void managerDestroyed(QObject *manager) = 0;
-    void emitEditingFinished()
-    {
-        emit editingFinished();
-    }
 
     friend class QtAbstractPropertyBrowser;
 };
@@ -173,7 +168,7 @@ class QtAbstractEditorFactory : public QtAbstractEditorFactoryBase
 {
 public:
     explicit QtAbstractEditorFactory(QObject *parent) : QtAbstractEditorFactoryBase(parent) {}
-    QWidget * createPropertyEditor(QtProperty *property, QWidget *parent)
+    QWidget *createEditor(QtProperty *property, QWidget *parent)
     {
         QSetIterator<PropertyManager *> it(m_managers);
         while (it.hasNext()) {

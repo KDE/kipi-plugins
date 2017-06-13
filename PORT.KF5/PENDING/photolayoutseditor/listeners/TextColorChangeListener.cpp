@@ -25,8 +25,7 @@
 
 #include "TextColorChangeListener.h"
 #include "TextItem.h"
-
-#include <QtColorPropertyManager>
+#include "qtpropertymanager.h"
 
 using namespace PhotoLayoutsEditor;
 

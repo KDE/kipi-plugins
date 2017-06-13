@@ -30,6 +30,9 @@
 #include <QSlider>
 #include <QDebug>
 
+namespace PhotoLayoutsEditor
+{
+
 KSpinBoxFactory::KSpinBoxFactory(QObject* parent)
     : QtSpinBoxFactory(parent)
 {
@@ -237,7 +240,7 @@ QWidget * KSliderEditFactory::createEditor(QtIntPropertyManager * manager, QtPro
 {
     QtAbstractEditorFactoryBase* const base = originalFactory;
 
-    QWidget* w = base->createPropertyEditor(property,parent);
+    QWidget* w = base->createEditor(property,parent);
 
     if (!w)
         return 0;
@@ -295,3 +298,5 @@ void KSliderEditFactory::slotEditorDestroyed(QObject *object)
         itEditor++;
     }
 }
+
+} // namespace PhotoLayoutsEditor

@@ -25,8 +25,7 @@
 
 #include "TextFontChangeListener.h"
 #include "TextItem.h"
-
-#include <QtFontPropertyManager>
+#include "qtpropertymanager.h"
 
 using namespace PhotoLayoutsEditor;
 

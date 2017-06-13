@@ -63,6 +63,8 @@ public:
     int valueType() const;
     int propertyType() const;
 
+    virtual bool compare(QtProperty* otherProperty)const;
+
     void setValue(const QVariant &value);
     void setAttribute(const QString &attribute, const QVariant &value);
 protected:
@@ -82,6 +84,8 @@ public:
     ~QtVariantPropertyManager();
 
     virtual QtVariantProperty *addProperty(int propertyType, const QString &name = QString());
+
+    void setProperties(QSet<QtProperty *> properties);
 
     int propertyType(const QtProperty *property) const;
     int valueType(const QtProperty *property) const;
@@ -107,7 +111,6 @@ Q_SIGNALS:
     void valueChanged(QtProperty *property, const QVariant &val);
     void attributeChanged(QtProperty *property,
                 const QString &attribute, const QVariant &val);
-    void editingFinished();
 protected:
     virtual bool hasValue(const QtProperty *property) const;
     QString valueText(const QtProperty *property) const;
@@ -127,7 +130,6 @@ private:
     Q_PRIVATE_SLOT(d_func(), void slotValueChanged(QtProperty *, bool))
     Q_PRIVATE_SLOT(d_func(), void slotValueChanged(QtProperty *, const QString &))
     Q_PRIVATE_SLOT(d_func(), void slotRegExpChanged(QtProperty *, const QRegExp &))
-    Q_PRIVATE_SLOT(d_func(), void slotEchoModeChanged(QtProperty *, int))
     Q_PRIVATE_SLOT(d_func(), void slotValueChanged(QtProperty *, const QDate &))
     Q_PRIVATE_SLOT(d_func(), void slotRangeChanged(QtProperty *, const QDate &, const QDate &))
     Q_PRIVATE_SLOT(d_func(), void slotValueChanged(QtProperty *, const QTime &))
@@ -169,8 +171,9 @@ public:
     ~QtVariantEditorFactory();
 protected:
     void connectPropertyManager(QtVariantPropertyManager *manager);
-    virtual QWidget *createEditor(QtVariantPropertyManager *manager, QtProperty *property,
+    QWidget *createEditor(QtVariantPropertyManager *manager, QtProperty *property,
                 QWidget *parent);
+    QWidget *createEditor(QtProperty *property, QWidget *parent);
     void disconnectPropertyManager(QtVariantPropertyManager *manager);
 private:
     QtVariantEditorFactoryPrivate *d_ptr;

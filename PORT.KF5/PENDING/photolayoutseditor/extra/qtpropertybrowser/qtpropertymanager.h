@@ -42,7 +42,6 @@
 #define QTPROPERTYMANAGER_H
 
 #include "qtpropertybrowser.h"
-#include <QLineEdit>
 
 #if QT_VERSION >= 0x040400
 QT_BEGIN_NAMESPACE
@@ -175,19 +174,15 @@ public:
 
     QString value(const QtProperty *property) const;
     QRegExp regExp(const QtProperty *property) const;
-    EchoMode echoMode(const QtProperty *property) const;
 
 public Q_SLOTS:
     void setValue(QtProperty *property, const QString &val);
     void setRegExp(QtProperty *property, const QRegExp &regExp);
-    void setEchoMode(QtProperty *property, EchoMode echoMode);
 Q_SIGNALS:
     void valueChanged(QtProperty *property, const QString &val);
     void regExpChanged(QtProperty *property, const QRegExp &regExp);
-    void echoModeChanged(QtProperty *property, const int);
 protected:
     QString valueText(const QtProperty *property) const;
-    QString displayText(const QtProperty *property) const;
     virtual void initializeProperty(QtProperty *property);
     virtual void uninitializeProperty(QtProperty *property);
 private:

@@ -31,10 +31,11 @@
 
 #include <QTimeLine>
 #include <QInputMethodEvent>
-#include <QtTreePropertyBrowser>
-#include <QtColorPropertyManager>
 
 #include <klocalizedstring.h>
+
+#include "qttreepropertybrowser.h"
+#include "qtpropertymanager.h"
 
 #define IS_NULL(node) if (node.isNull()) goto _delete;
 

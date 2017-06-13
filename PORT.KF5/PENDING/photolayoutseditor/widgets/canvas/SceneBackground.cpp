@@ -168,13 +168,14 @@ public:
 };
 
 SceneBackground::SceneBackground(QGraphicsScene * scene) :
-    QGraphicsItem(0, scene),
+    QGraphicsItem(0),
     m_first_brush(Qt::transparent),
     m_second_brush(Qt::transparent)
 {
-    this->setZValue(-std::numeric_limits<double>::infinity());
-    this->setFlags(0);
-    this->sceneChanged();
+    scene->addItem(this);
+    setZValue(-std::numeric_limits<double>::infinity());
+    setFlags(0);
+    sceneChanged();
 }
 
 QRectF SceneBackground::boundingRect() const

@@ -79,11 +79,12 @@ public:
 };
 
 SceneBorder::SceneBorder(QGraphicsScene * scene) :
-    QGraphicsItem(0, scene)
+    QGraphicsItem(0)
 {
-    this->setZValue(std::numeric_limits<double>::infinity());
-    this->setFlags(0);
-    this->sceneChanged();
+    scene->addItem(this);
+    setZValue(std::numeric_limits<double>::infinity());
+    setFlags(0);
+    sceneChanged();
 }
 
 QRectF SceneBorder::boundingRect() const

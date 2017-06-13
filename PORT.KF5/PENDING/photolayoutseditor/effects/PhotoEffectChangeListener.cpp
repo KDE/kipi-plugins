@@ -28,10 +28,8 @@
 #include "AbstractPhoto.h"
 #include "global.h"
 
-#include <QtProperty>
-#include <QtIntPropertyManager>
-#include <QtDoublePropertyManager>
-#include <QtVariantPropertyManager>
+#include "qtpropertymanager.h"
+#include "qtvariantproperty.h"
 
 using namespace PhotoLayoutsEditor;
 

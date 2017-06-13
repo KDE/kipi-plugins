@@ -33,10 +33,10 @@
 #include "AbstractPhotoEffectInterface.h"
 #include "PhotoEffectChangeListener.h"
 
-#include <QtAbstractPropertyBrowser>
-#include <QtTreePropertyBrowser>
-#include <QtIntPropertyManager>
-#include <QtVariantPropertyManager>
+#include "qtpropertybrowser.h"
+#include "qtpropertymanager.h"
+#include "qtvariantproperty.h"
+#include "qttreepropertybrowser.h"
 
 #include <QApplication>
 #include <klocalizedstring.h>

@@ -54,7 +54,7 @@
 
 #include <QtCore/QMap>
 #include <QtGui/QIcon>
-#include <QtGui/QWidget>
+#include <QWidget>
 #include <QtCore/QStringList>
 
 #if QT_VERSION >= 0x040400
@@ -144,7 +144,7 @@ protected:
     void keyReleaseEvent(QKeyEvent *e);
     void paintEvent(QPaintEvent *);
     bool event(QEvent *e);
-private Q_SLOTS:
+private slots:
     void slotClearShortcut();
 private:
     void handleKeyEvent(QKeyEvent *e);
