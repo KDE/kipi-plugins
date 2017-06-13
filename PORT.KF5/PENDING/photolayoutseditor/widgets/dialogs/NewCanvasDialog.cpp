@@ -5,9 +5,9 @@
  *
  * Date        : 2011-09-01
  * Description : a plugin to create photo layouts by fusion of several images.
- * Acknowledge : based on the expoblending plugin
+ * 
  *
- * Copyright (C) 2011-2012 by Łukasz Spas <lukasz dot spas at gmail dot com>
+ * Copyright (C) 2011-2012 by Lukasz Spas <lukasz dot spas at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -35,11 +35,11 @@
 #include <QDir>
 #include <QMap>
 #include <QButtonGroup>
-
-#include <klocalizedstring.h>
-#include <kstandarddirs.h>
 #include <QPushButton>
 #include <QIcon>
+#include <QStandardPaths>
+
+#include <klocalizedstring.h>
 
 #include "CanvasSizeWidget.h"
 #include "TemplatesView.h"
@@ -48,7 +48,8 @@
 
 #define PAPER_SIZE_ROLE 128
 
-using namespace PhotoLayoutsEditor;
+namespace PhotoLayoutsEditor
+{
 
 class NewCanvasDialog::Private
 {
@@ -95,10 +96,11 @@ class NewCanvasDialog::Private
         names.insert( QPrinter::Letter, QPair<QString,QString>("Letter", "letter"));
         names.insert( QPrinter::Tabloid, QPair<QString,QString>("Tabloid", "tabloid"));
 
-        KStandardDirs sd;
-        QStringList sl = sd.findDirs("templates", "kipiplugins_photolayoutseditor/data/templates/");
+        QStringList sl = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QLatin1String("digikam/data/templates/"));
+
         if (sl.count() == 0)
             return;
+
         QString dir = sl.first();
         for (QMap<int, QPair<QString,QString> >::iterator pair = names.begin(); pair != names.end(); ++pair)
         {
@@ -139,7 +141,7 @@ class NewCanvasDialog::Private
 };
 
 NewCanvasDialog::NewCanvasDialog(QWidget *parent) :
-    KDialog(parent),
+    QDialog(parent),
     d(new Private)
 {
     this->setupUI();
@@ -331,13 +333,10 @@ void NewCanvasDialog::setVertical(bool isset)
 
 void NewCanvasDialog::setupUI()
 {
-    this->setCaption(i18n("Create new canvas..."));
+    this->setWindowTitle(i18n("Create new canvas..."));
 
-    QWidget * main = new QWidget(this);
-    setMainWidget(main);
-
-    QVBoxLayout * layout = new QVBoxLayout();
-    main->setLayout(layout);
+    QVBoxLayout* layout = new QVBoxLayout();
+    setLayout(layout);
 
     QHBoxLayout * mainLayout = new QHBoxLayout();
     layout->addLayout(mainLayout);
@@ -345,9 +344,9 @@ void NewCanvasDialog::setupUI()
     QVBoxLayout * leftLayout = new QVBoxLayout();
     mainLayout->addLayout(leftLayout);
 
-    leftLayout->addWidget(new QLabel(i18n("Paper sizes"), main));
+    leftLayout->addWidget(new QLabel(i18n("Paper sizes"), this));
 
-    d->paperSize = new QListWidget(main);
+    d->paperSize = new QListWidget(this);
     d->paperSize->setMaximumWidth(150);
     connect(d->paperSize, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)), this, SLOT(paperSizeSelected(QListWidgetItem*,QListWidgetItem*)));
     foreach (QListWidgetItem * i, d->paperSizes)
@@ -355,17 +354,17 @@ void NewCanvasDialog::setupUI()
     leftLayout->addWidget(d->paperSize);
 
     // Orientation buttons
-    d->horizontalButton = new QPushButton(QIcon::fromTheme(":horizontal_orientation.png"),"", main);
+    d->horizontalButton = new QPushButton(QIcon::fromTheme(QLatin1String(":horizontal_orientation.png")), QString(), this);
     d->horizontalButton->setCheckable(true);
     d->horizontalButton->setIconSize(QSize(24,24));
-    d->verticalButton = new QPushButton(QIcon::fromTheme(":vertical_orientation.png"),"", main);
+    d->verticalButton = new QPushButton(QIcon::fromTheme(QLatin1String(":vertical_orientation.png")), QString(), this);
     d->verticalButton->setCheckable(true);
     d->verticalButton->setIconSize(QSize(24,24));
     QHBoxLayout * hLayout = new QHBoxLayout();
     hLayout->addWidget(d->horizontalButton);
     hLayout->addWidget(d->verticalButton);
     leftLayout->addLayout(hLayout);
-    d->orientationGroup = new QButtonGroup(main);
+    d->orientationGroup = new QButtonGroup(this);
     d->orientationGroup->addButton(d->horizontalButton);
     d->orientationGroup->addButton(d->verticalButton);
     connect(d->horizontalButton, SIGNAL(toggled(bool)), this, SLOT(setHorizontal(bool)));
@@ -374,18 +373,18 @@ void NewCanvasDialog::setupUI()
     QVBoxLayout * rightLayout = new QVBoxLayout();
     mainLayout->addLayout(rightLayout);
 
-    rightLayout->addWidget(new QLabel(i18n("Select a template"), main));
+    rightLayout->addWidget(new QLabel(i18n("Select a template"), this));
 
     d->stack = new QStackedLayout();
     rightLayout->addLayout(d->stack, 1);
 
-    d->canvasSize = new CanvasSizeWidget(main);
+    d->canvasSize = new CanvasSizeWidget(this);
     d->stack->addWidget(d->canvasSize);
     connect(d->canvasSize, SIGNAL(orientationChanged()), this, SLOT(orientationChanged()));
     connect(d->horizontalButton, SIGNAL(toggled(bool)), d->canvasSize, SLOT(setHorizontal(bool)));
     connect(d->verticalButton, SIGNAL(toggled(bool)), d->canvasSize, SLOT(setVertical(bool)));
 
-    d->templatesList = new TemplatesView(main);
+    d->templatesList = new TemplatesView(this);
     d->stack->addWidget(d->templatesList);
 
     d->paperSize->setCurrentRow(0);
@@ -393,12 +392,15 @@ void NewCanvasDialog::setupUI()
 
 void NewCanvasDialog::loadTemplatesList(const QString & path, TemplatesModel * model)
 {
-    KStandardDirs sd;
-    QStringList sl = sd.findDirs("templates", path);
+    QStringList sl = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QLatin1String("digikam/data/templates/"));
+
     if (sl.count() == 0)
         return;
+
     QDir diro(sl.first());
     QStringList files = diro.entryList(QStringList() << "*.ple", QDir::Files);
     foreach (QString s, files)
         model->addTemplate(diro.path() + "/" + s, s);
 }
+
+} // namespace PhotoLayoutsEditor

@@ -5,9 +5,9 @@
  *
  * Date        : 2011-09-01
  * Description : a plugin to create photo layouts by fusion of several images.
- * Acknowledge : based on the expoblending plugin
+ * 
  *
- * Copyright (C) 2011-2012 by Łukasz Spas <lukasz dot spas at gmail dot com>
+ * Copyright (C) 2011-2012 by Lukasz Spas <lukasz dot spas at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -162,7 +162,7 @@ void CanvasSizeWidget::setupUI(const QSizeF & size, const QString & sizeUnits, c
     // Unit widget
     d->sizeUnitsWidget = new QComboBox(d->sizeWidget);
     d->sizeUnitsWidget->addItems(CanvasSize::sizeUnitsNames());
-    d->sizeUnitsWidget->setCurrentItem(tempSizeUnits);
+    d->sizeUnitsWidget->setCurrentText(tempSizeUnits);
     d->currentSizeUnit = tempSizeUnits;
     gridLayout->addWidget(d->sizeUnitsWidget,1,2);
 
@@ -199,7 +199,7 @@ void CanvasSizeWidget::setupUI(const QSizeF & size, const QString & sizeUnits, c
     // Unit widget
     d->resolutionUnitsWidget = new QComboBox(d->sizeWidget);
     d->resolutionUnitsWidget->addItems(CanvasSize::resolutionUnitsNames());
-    d->resolutionUnitsWidget->setCurrentItem(tempResolutionUnits);
+    d->resolutionUnitsWidget->setCurrentText(tempResolutionUnits);
     d->currentResolutionUnit = tempResolutionUnits;
     gridLayout->addWidget(d->resolutionUnitsWidget,1,2);
 

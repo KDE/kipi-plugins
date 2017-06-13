@@ -5,9 +5,9 @@
  *
  * Date        : 2011-09-01
  * Description : a plugin to create photo layouts by fusion of several images.
- * Acknowledge : based on the expoblending plugin
+ * 
  *
- * Copyright (C) 2011 by Łukasz Spas <lukasz dot spas at gmail dot com>
+ * Copyright (C) 2011 by Lukasz Spas <lukasz dot spas at gmail dot com>
  * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -35,6 +35,7 @@
 
 #include "CanvasEditTool.h"
 
+#include <QApplication>
 #include <QFormLayout>
 #include <QGroupBox>
 #include <QStackedLayout>
@@ -44,21 +45,25 @@
 #include <QCheckBox>
 #include <QDebug>
 #include <QLabel>
+#include <QMessageBox>
+#include <QStandardPaths>
 
 #include <klocalizedstring.h>
-#include <kcolorbutton.h>
-#include <kurlrequester.h>
-#include <kmessagebox.h>
-#include <kfiledialog.h>
 
+#include "digikam_debug.h"
+#include "dcolorselector.h"
+#include "imagedialog.h"
 #include "SceneBackground.h"
 #include "MousePressListener.h"
 #include "PatternsComboBox.h"
 #include "SceneBorder.h"
 
-using namespace PhotoLayoutsEditor;
+using namespace Digikam;
 
-class PhotoLayoutsEditor::CanvasEditToolPrivate
+namespace PhotoLayoutsEditor
+{
+
+class CanvasEditToolPrivate
 {
     enum BackgroundType
     {
@@ -146,7 +151,7 @@ class PhotoLayoutsEditor::CanvasEditToolPrivate
     QStackedLayout * background_widgets;
 
     QWidget * background_color_widget;
-    KColorButton * background_color;
+    DColorSelector * background_color;
 
 //    QWidget * background_gradient_widget;
 
@@ -166,7 +171,7 @@ class PhotoLayoutsEditor::CanvasEditToolPrivate
     QGroupBox * background_sizeBox;
     QSpinBox * background_image_width;
     QSpinBox * background_image_height;
-    KColorButton * background_image_color;
+    DColorSelector * background_image_color;
     QImage m_image;
 
     QPixmap border_image_empty_pixmap;
@@ -174,8 +179,8 @@ class PhotoLayoutsEditor::CanvasEditToolPrivate
     QImage m_border_image;
 
     QWidget * background_pattern_widget;
-    KColorButton * background_pattern_color1;
-    KColorButton * background_pattern_color2;
+    DColorSelector * background_pattern_color1;
+    DColorSelector * background_pattern_color2;
     PatternsComboBox * background_pattern_type;
 
     MousePressListener mouse_listener;
@@ -183,10 +188,10 @@ class PhotoLayoutsEditor::CanvasEditToolPrivate
     friend class CanvasEditTool;
 };
 
-CanvasEditTool::CanvasEditTool(Scene * scene, QWidget * parent) :
-    AbstractTool(scene, Canvas::Viewing, parent),
-    d(new CanvasEditToolPrivate(this)),
-    hold_update(false)
+CanvasEditTool::CanvasEditTool(Scene * scene, QWidget * parent)
+    : AbstractTool(scene, Canvas::Viewing, parent),
+      d(new CanvasEditToolPrivate(this)),
+      hold_update(false)
 {
     setupGUI();
 }
@@ -325,15 +330,14 @@ void CanvasEditTool::patternStyleChanged(Qt::BrushStyle /*patternStyle*/)
 
 void CanvasEditTool::imageUrlRequest()
 {
-    static QUrl startUrl("~");
-    KFileDialog fd(startUrl, "", 0);
-    fd.setOperationMode(KFileDialog::Opening);
-    fd.setMode(KFile::File);
-    if (fd.exec() != KFileDialog::Accepted)
+    static QString startUrl(QStandardPaths::writableLocation(QStandardPaths::HomeLocation));
+    QUrl url = ImageDialog::getImageURL(this, QUrl::fromLocalFile(startUrl), QString());
+    if (url.isEmpty())
         return;
 
     bool valid = false;
-    QImageReader ir(fd.selectedFile());
+    QImageReader ir(url.toLocalFile());
+
     if (ir.canRead())
     {
         if (ir.read(&d->m_image))
@@ -350,11 +354,11 @@ void CanvasEditTool::imageUrlRequest()
             d->background_image_width->setValue(imageSize.width());
             d->background_image_height->setValue(imageSize.height());
             if (widthSmaller && heightSmaller)
-                d->background_image_scalling->setCurrentItem( d->background_image_scalling_map.value(CanvasEditToolPrivate::Manual) );
+                d->background_image_scalling->setCurrentText( d->background_image_scalling_map.value(CanvasEditToolPrivate::Manual) );
             else if (widthSmaller || heightSmaller)
-                d->background_image_scalling->setCurrentItem( d->background_image_scalling_map.value(CanvasEditToolPrivate::Expanded) );
+                d->background_image_scalling->setCurrentText( d->background_image_scalling_map.value(CanvasEditToolPrivate::Expanded) );
             else
-                d->background_image_scalling->setCurrentItem( d->background_image_scalling_map.value(CanvasEditToolPrivate::Scaled) );
+                d->background_image_scalling->setCurrentText( d->background_image_scalling_map.value(CanvasEditToolPrivate::Scaled) );
 
             this->hold_update = false;
             this->setImageBackground();
@@ -365,27 +369,25 @@ void CanvasEditTool::imageUrlRequest()
 
     if (!valid)
     {
-        KMessageBox::error(0,
-                           i18n("Invalid or unsupported image file."));
+        QMessageBox::critical(qApp->activeWindow(), i18n("Error"), i18n("Invalid or unsupported image file."));
         d->background_image_label->setIcon(QIcon(d->background_image_empty_pixmap));
         d->background_image_label->setIconSize(d->background_image_empty_pixmap.size());
     }
     d->setImageWidgetsEnabled(valid);
 
-    startUrl = fd.baseUrl();
+    startUrl = QFileInfo(url.toLocalFile()).path();
 }
 
 void CanvasEditTool::borderImageUrlRequest()
 {
-    static QUrl startUrl("~");
-    KFileDialog fd(startUrl, "", 0);
-    fd.setOperationMode(KFileDialog::Opening);
-    fd.setMode(KFile::File);
-    if (fd.exec() != KFileDialog::Accepted)
+    static QString startUrl(QStandardPaths::writableLocation(QStandardPaths::HomeLocation));
+    QUrl url = ImageDialog::getImageURL(this, QUrl::fromLocalFile(startUrl), QString());
+    if (url.isEmpty())
         return;
 
     bool valid = false;
-    QImageReader ir(fd.selectedFile());
+    QImageReader ir(url.toLocalFile());
+
     if (ir.canRead())
     {
         if (ir.read(&d->m_border_image))
@@ -401,13 +403,12 @@ void CanvasEditTool::borderImageUrlRequest()
 
     if (!valid)
     {
-        KMessageBox::error(0,
-                           i18n("Invalid or unsupported image file."));
+        QMessageBox::critical(qApp->activeWindow(), i18n("Error"), i18n("Invalid or unsupported image file."));
         d->border_image_label->setIcon(QIcon(d->border_image_empty_pixmap));
         d->border_image_label->setIconSize(d->border_image_empty_pixmap.size());
     }
 
-    startUrl = fd.baseUrl();
+    startUrl = QFileInfo(url.toLocalFile()).path();
 }
 
 void CanvasEditTool::imageScallingChanged(const QString & scallingName)
@@ -538,8 +539,8 @@ void CanvasEditTool::setupGUI()
         QFormLayout * colorFormLayout = new QFormLayout();
         d->background_color_widget->setLayout(colorFormLayout);
         d->background_widgets->addWidget(d->background_color_widget);
-        d->background_color = new KColorButton(Qt::transparent, d->background_color_widget);
-        d->background_color->setAlphaChannelEnabled(true);
+        d->background_color = new DColorSelector(d->background_color_widget);
+        //d->background_color->setAlphaChannelEnabled(true);
         d->background_color->setColor(Qt::transparent);
         colorFormLayout->addRow(i18n("Color"), d->background_color);
 
@@ -594,8 +595,9 @@ void CanvasEditTool::setupGUI()
             sizeForm->addRow(i18n("Height"), d->background_image_height);
         d->backgroundImageFormLayout->addRow(d->background_sizeBox);
 
-        d->background_image_color = new KColorButton(Qt::transparent, d->background_image_widget);
-        d->background_image_color->setAlphaChannelEnabled(true);
+        d->background_image_color = new DColorSelector(d->background_image_widget);
+        d->background_image_color->setColor(Qt::transparent);
+        //d->background_image_color->setAlphaChannelEnabled(true);
         d->backgroundImageFormLayout->addRow(i18n("Color"), d->background_image_color);
 
         // Pattern type widget
@@ -603,11 +605,13 @@ void CanvasEditTool::setupGUI()
         QFormLayout * patternFormLayout = new QFormLayout();
         d->background_pattern_widget->setLayout(patternFormLayout);
         d->background_widgets->addWidget(d->background_pattern_widget);
-        d->background_pattern_color1 = new KColorButton(Qt::transparent, d->background_pattern_widget);
-        d->background_pattern_color1->setAlphaChannelEnabled(true);
+        d->background_pattern_color1 = new DColorSelector(d->background_pattern_widget);
+        d->background_pattern_color1->setColor(Qt::transparent);
+        //d->background_pattern_color1->setAlphaChannelEnabled(true);
         patternFormLayout->addRow(i18n("Color 1"), d->background_pattern_color1);
-        d->background_pattern_color2 = new KColorButton(Qt::transparent, d->background_pattern_widget);
-        d->background_pattern_color2->setAlphaChannelEnabled(true);
+        d->background_pattern_color2 = new DColorSelector(d->background_pattern_widget);
+        d->background_pattern_color2->setColor(Qt::transparent);
+        //d->background_pattern_color2->setAlphaChannelEnabled(true);
         patternFormLayout->addRow(i18n("Color 2"), d->background_pattern_color2);
         d->background_pattern_type = new PatternsComboBox(d->background_pattern_widget);
         patternFormLayout->addRow(i18n("Pattern"), d->background_pattern_type);
@@ -688,7 +692,7 @@ void CanvasEditTool::updateWidgets()
         d->background_pattern_type->setPattern(background->pattern());
         d->background_pattern_color1->setColor(background->firstColor());
         d->background_pattern_color2->setColor(background->secondColor());
-        d->background_type_widget->setCurrentItem(d->background_types.key(CanvasEditToolPrivate::PatternFill));
+        d->background_type_widget->setCurrentText(d->background_types.key(CanvasEditToolPrivate::PatternFill));
     }
     else if (background->isImage())
     {
@@ -697,8 +701,8 @@ void CanvasEditTool::updateWidgets()
         QPixmap tempPX = QPixmap::fromImage(d->m_image.scaled(QSize(150,150), Qt::KeepAspectRatio, Qt::SmoothTransformation));
         d->background_image_label->setIcon(QIcon(tempPX));
         d->background_image_label->setIconSize(tempPX.size());
-        d->background_image_HAlign->setCurrentItem( d->background_image_Halignment_map.value(background->imageAlignment() & (Qt::AlignHorizontal_Mask)) );
-        d->background_image_VAlign->setCurrentItem( d->background_image_Valignment_map.value(background->imageAlignment() & (Qt::AlignVertical_Mask)) );
+        d->background_image_HAlign->setCurrentText( d->background_image_Halignment_map.value(background->imageAlignment() & (Qt::AlignHorizontal_Mask)) );
+        d->background_image_VAlign->setCurrentText( d->background_image_Valignment_map.value(background->imageAlignment() & (Qt::AlignVertical_Mask)) );
         d->background_image_width->setValue( background->imageSize().width() );
         d->background_image_height->setValue( background->imageSize().height() );
         CanvasEditToolPrivate::ScallingType scallingType;
@@ -713,17 +717,19 @@ void CanvasEditTool::updateWidgets()
             default:
                 scallingType = CanvasEditToolPrivate::Manual;
         }
-        d->background_image_scalling->setCurrentItem( d->background_image_scalling_map.value(scallingType) );
+        d->background_image_scalling->setCurrentText( d->background_image_scalling_map.value(scallingType) );
         d->background_image_tiled->setChecked( background->imageRepeated() );
         d->background_image_color->setColor( background->secondColor() );
-        d->background_type_widget->setCurrentItem(d->background_types.key(CanvasEditToolPrivate::ImageFill));
+        d->background_type_widget->setCurrentText(d->background_types.key(CanvasEditToolPrivate::ImageFill));
         d->setImageWidgetsEnabled(!d->m_image.isNull());
     }
     else
     {
         d->background_widgets->setCurrentWidget(d->background_color_widget);
         d->background_color->setColor(background->firstColor());
-        d->background_type_widget->setCurrentItem(d->background_types.key(CanvasEditToolPrivate::ColorFill));
+        d->background_type_widget->setCurrentText(d->background_types.key(CanvasEditToolPrivate::ColorFill));
     }
     this->hold_update = false;
 }
+
+} // namespace PhotoLayoutsEditor

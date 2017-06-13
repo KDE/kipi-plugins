@@ -126,7 +126,7 @@ qt5_add_resources(photolayoutseditor_SRCS ${photolayoutseditor_RCS})
 
 add_library(photolayoutseditor_src OBJECT ${photolayoutseditor_SRCS})
 
-install(FILES ./settings/photolayoutseditor.kcfg DESTINATION ${KCFG_INSTALL_DIR})
+install(FILES settings/photolayoutseditor.kcfg DESTINATION ${KCFG_INSTALL_DIR})
 install(PROGRAMS main/photolayoutseditor.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 install(FILES main/photolayoutseditorui.rc DESTINATION ${DATA_INSTALL_DIR}/photolayoutseditor)
 install(FILES effects/photolayoutseditoreffectplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})

@@ -5,9 +5,9 @@
  *
  * Date        : 2011-09-01
  * Description : a plugin to create photo layouts by fusion of several images.
- * Acknowledge : based on the expoblending plugin
+ * 
  *
- * Copyright (C) 2011-2012 by Łukasz Spas <lukasz dot spas at gmail dot com>
+ * Copyright (C) 2011-2012 by Lukasz Spas <lukasz dot spas at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -25,45 +25,45 @@
 #ifndef NEWCANVASDIALOG_H
 #define NEWCANVASDIALOG_H
 
-#include <kdialog.h>
-
+#include <QDialog>
 #include <QListWidgetItem>
 
 namespace PhotoLayoutsEditor
 {
-    class CanvasSize;
-    class TemplatesModel;
 
-    class NewCanvasDialog : public KDialog
-    {
-            Q_OBJECT
+class CanvasSize;
+class TemplatesModel;
 
-        public:
+class NewCanvasDialog : public QDialog
+{
+    Q_OBJECT
 
-            explicit NewCanvasDialog(QWidget* parent = 0);
-            ~NewCanvasDialog();
+public:
 
-            bool hasTemplateSelected() const;
-            QString templateSelected() const;
-            CanvasSize canvasSize() const;
+    explicit NewCanvasDialog(QWidget* parent = 0);
+    ~NewCanvasDialog();
 
-        private Q_SLOTS:
+    bool hasTemplateSelected() const;
+    QString templateSelected() const;
+    CanvasSize canvasSize() const;
 
-            void paperSizeSelected(QListWidgetItem* current, QListWidgetItem* previous);
-            void orientationChanged();
-            void setHorizontal(bool);
-            void setVertical(bool);
+private Q_SLOTS:
 
-        private:
+    void paperSizeSelected(QListWidgetItem* current, QListWidgetItem* previous);
+    void orientationChanged();
+    void setHorizontal(bool);
+    void setVertical(bool);
 
-            void setupUI();
-            void loadTemplatesList(const QString & path, TemplatesModel* model);
+private:
 
-            class Private;
-            Private* d;
-            friend class Private;
+    void setupUI();
+    void loadTemplatesList(const QString & path, TemplatesModel* model);
 
-    };
-}
+    class Private;
+    Private* d;
+    friend class Private;
+};
+
+} // namespace PhotoLayoutsEditor
 
 #endif // NEWCANVASDIALOG_H

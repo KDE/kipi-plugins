@@ -5,9 +5,9 @@
  *
  * Date        : 2011-09-01
  * Description : a plugin to create photo layouts by fusion of several images.
- * Acknowledge : based on the expoblending plugin
+ * 
  *
- * Copyright (C) 2011 by Łukasz Spas <lukasz dot spas at gmail dot com>
+ * Copyright (C) 2011 by Lukasz Spas <lukasz dot spas at gmail dot com>
  * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -24,21 +24,21 @@
  * ============================================================ */
 
 #include "ToolsDockWidget.h"
-#include "CanvasEditTool.h"
-#include "EffectsEditorTool.h"
-#include "TextEditorTool.h"
-#include "BorderEditTool.h"
-#include "ZoomTool.h"
 
 #include <QDebug>
 #include <QButtonGroup>
 #include <QGridLayout>
 #include <QPropertyAnimation>
 #include <QScrollArea>
-
 #include <QIcon>
-#include <kguiitem.h>
+
 #include <klocalizedstring.h>
+#include "CanvasEditTool.h"
+#include "EffectsEditorTool.h"
+#include "TextEditorTool.h"
+#include "BorderEditTool.h"
+#include "ZoomTool.h"
+#include "digikam_debug.h"
 
 using namespace PhotoLayoutsEditor;
 
@@ -125,9 +125,8 @@ ToolsDockWidget::ToolsDockWidget(QWidget * parent) :
 
     // Selection tool
 
-    m_tool_pointer = new QPushButton(KGuiItem("",":/pointer.png",
-                                              i18n("Allows to select and move images on canvas"),
-                                              i18n("Tool which allows one to select and move images on canvas. Any other operations are disabled.")), widget);
+    m_tool_pointer = new QPushButton(QIcon::fromTheme(QLatin1String(":/pointer.png")), QString(), widget);
+    m_tool_pointer->setToolTip(i18n("Tool which allows one to select and move images on canvas. Any other operations are disabled."));
     m_tool_pointer->setIconSize(QSize(24,24));
     m_tool_pointer->setFixedSize(32,32);
     m_tool_pointer->setCheckable(true);
@@ -136,9 +135,8 @@ ToolsDockWidget::ToolsDockWidget(QWidget * parent) :
     connect(m_tool_pointer,SIGNAL(toggled(bool)),this,SLOT(setPointerToolVisible(bool)));
 
     // View tool
-    m_tool_hand = new QPushButton(KGuiItem("",":/hand.png",
-                                           i18n("Viewing tool"),
-                                           i18n("This tool allows one to view whole canvas in read-only mode. Only scrolling and zooming are available.")), widget);
+    m_tool_hand = new QPushButton(QIcon::fromTheme(QLatin1String(":/hand.png")), QString(), widget);
+    m_tool_hand->setToolTip(i18n("This tool allows one to view whole canvas in read-only mode. Only scrolling and zooming are available."));
     m_tool_hand->setIconSize(QSize(24,24));
     m_tool_hand->setFixedSize(32,32);
     m_tool_hand->setCheckable(true);
@@ -147,9 +145,8 @@ ToolsDockWidget::ToolsDockWidget(QWidget * parent) :
     connect(m_tool_hand,SIGNAL(toggled(bool)),this,SLOT(setHandToolVisible(bool)));
 
     // Zoom tool
-    m_tool_zoom = new QPushButton(KGuiItem("",":/zoom.png",
-                                           i18n("Zooming tool"),
-                                           i18n("This tool allows one to zoom canvas to fit it to the application window or users preferences.")), widget);
+    m_tool_zoom = new QPushButton(QIcon::fromTheme(QLatin1String(":/zoom.png")), QString(), widget);
+    m_tool_zoom->setToolTip(i18n("This tool allows one to zoom canvas to fit it to the application window or users preferences."));
     m_tool_zoom->setIconSize(QSize(24,24));
     m_tool_zoom->setFixedSize(32,32);
     m_tool_zoom->setCheckable(true);
@@ -158,9 +155,8 @@ ToolsDockWidget::ToolsDockWidget(QWidget * parent) :
     connect(m_tool_zoom,SIGNAL(toggled(bool)),this,SLOT(setZoomWidgetVisible(bool)));
 
     // Canvas edit tool
-    m_canvas_button = new QPushButton(KGuiItem("", ":/tool_canvas.png",
-                                               i18n("Canvas editor"),
-                                               i18n("This tool allows you to edit canvas properties like size and background.")), widget);
+    m_canvas_button = new QPushButton(QIcon::fromTheme(QLatin1String(":/tool_canvas.png")), QString(), widget);
+    m_canvas_button->setToolTip(i18n("This tool allows you to edit canvas properties like size and background."));
     m_canvas_button->setIconSize(QSize(24,24));
     m_canvas_button->setFixedSize(32,32);
     m_canvas_button->setCheckable(true);
@@ -169,9 +165,9 @@ ToolsDockWidget::ToolsDockWidget(QWidget * parent) :
     connect(m_canvas_button,SIGNAL(toggled(bool)),this,SLOT(setCanvasWidgetVisible(bool)));
 
     // Text tool
-    m_text_button = new QPushButton(KGuiItem("", ":/tool_text.png",
-                                              i18n("Text editor"),
-                                              i18n("This tool allows you to write text on the canvas. It's simple - just click on the canvas where you want to add some text and write it!")), widget);
+    m_text_button = new QPushButton(QIcon::fromTheme(QLatin1String(":/tool_text.png")), QString(), 
+    widget);
+    m_text_button->setToolTip(i18n("This tool allows you to write text on the canvas. It's simple - just click on the canvas where you want to add some text and write it!"));
 
     m_text_button->setIconSize(QSize(24,24));
     m_text_button->setFixedSize(32,32);
@@ -181,9 +177,8 @@ ToolsDockWidget::ToolsDockWidget(QWidget * parent) :
     connect(m_text_button,SIGNAL(toggled(bool)),this,SLOT(setTextWidgetVisible(bool)));
 
     // Rotate tool
-    m_rotate_button = new QPushButton(KGuiItem("", ":/tool_rotate.png",
-                                              i18n("Rotation tool"),
-                                              i18n("This tool allows you to rotate items on your canvas.")), widget);
+    m_rotate_button = new QPushButton(QIcon::fromTheme(QLatin1String(":/tool_rotate.png")), QString(), widget);
+    m_rotate_button->setToolTip(i18n("This tool allows you to rotate items on your canvas."));
     m_rotate_button->setIconSize(QSize(24,24));
     m_rotate_button->setFixedSize(32,32);
     m_rotate_button->setCheckable(true);
@@ -192,9 +187,8 @@ ToolsDockWidget::ToolsDockWidget(QWidget * parent) :
     connect(m_rotate_button,SIGNAL(toggled(bool)),this,SLOT(setRotateWidgetVisible(bool)));
 
     // Scale tool
-    m_scale_button = new QPushButton(KGuiItem("", ":/tool_scale4.png",
-                                              i18n("Scaling tool"),
-                                              i18n("This tool allows you to scale items on your canvas.")), widget);
+    m_scale_button = new QPushButton(QIcon::fromTheme(QLatin1String(":/tool_scale4.png")), QString(), widget);
+    m_scale_button->setToolTip(i18n("This tool allows you to scale items on your canvas."));
     m_scale_button->setIconSize(QSize(24,24));
     m_scale_button->setFixedSize(32,32);
     m_scale_button->setCheckable(true);
@@ -203,9 +197,8 @@ ToolsDockWidget::ToolsDockWidget(QWidget * parent) :
     connect(m_scale_button,SIGNAL(toggled(bool)),this,SLOT(setScaleWidgetVisible(bool)));
 
     // Crop tool
-    m_crop_button = new QPushButton(KGuiItem("", ":/tool_cropt.png",
-                                              i18n("Crop tool"),
-                                              i18n("This tool allows you to crop items.")), widget);
+    m_crop_button = new QPushButton(QIcon::fromTheme(QLatin1String(":/tool_cropt.png")), QString(), widget);
+    m_crop_button->setToolTip(i18n("This tool allows you to crop items."));
     m_crop_button->setIconSize(QSize(24,24));
     m_crop_button->setFixedSize(32,32);
     m_crop_button->setCheckable(true);
@@ -214,9 +207,8 @@ ToolsDockWidget::ToolsDockWidget(QWidget * parent) :
     connect(m_crop_button,SIGNAL(toggled(bool)),this,SLOT(setCropWidgetVisible(bool)));
 
     // Photo effects tool
-    m_effects_button = new QPushButton(KGuiItem("", ":/tool_effects.png",
-                                              i18n("Image effects editor"),
-                                              i18n("This tool allows you to edit existing effects of your photo layers and add some new one.")), widget);
+    m_effects_button = new QPushButton(QIcon::fromTheme(QLatin1String(":/tool_effects.png")), QString(), widget);
+    m_effects_button->setToolTip(i18n("This tool allows you to edit existing effects of your photo layers and add some new one."));
     m_effects_button->setIconSize(QSize(24,24));
     m_effects_button->setFixedSize(32,32);
     m_effects_button->setCheckable(true);
@@ -225,7 +217,7 @@ ToolsDockWidget::ToolsDockWidget(QWidget * parent) :
     connect(m_effects_button,SIGNAL(toggled(bool)),this,SLOT(setEffectsWidgetVisible(bool)));
 
     // Border edit tool
-    m_tool_border = new QPushButton(QIcon::fromTheme(":/tool_border.png"), "", widget);
+    m_tool_border = new QPushButton(QIcon::fromTheme(QLatin1String(":/tool_border.png")), QString(), widget);
     m_tool_border->setIconSize(QSize(24,24));
     m_tool_border->setFixedSize(32,32);
     m_tool_border->setCheckable(true);

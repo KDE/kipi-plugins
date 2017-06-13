@@ -5,9 +5,9 @@
  *
  * Date        : 2011-09-01
  * Description : a plugin to create photo layouts by fusion of several images.
- * Acknowledge : based on the expoblending plugin
+ * 
  *
- * Copyright (C) 2011 by Łukasz Spas <lukasz dot spas at gmail dot com>
+ * Copyright (C) 2011 by Lukasz Spas <lukasz dot spas at gmail dot com>
  * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -29,16 +29,18 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QListView>
-#include <QtAbstractPropertyBrowser>
-
-#include <klocalizedstring.h>
 #include <QPushButton>
 #include <QComboBox>
+#include <QtAbstractPropertyBrowser>
+#include <QIcon>
+
+#include <klocalizedstring.h>
 
 #include "AbstractPhoto.h"
 #include "ToolsDockWidget.h"
 #include "BorderDrawersLoader.h"
 #include "global.h"
+#include "digikam_debug.h"
 
 using namespace PhotoLayoutsEditor;
 
@@ -218,10 +220,10 @@ AbstractItemsListViewTool::AbstractItemsListViewTool(const QString & toolName, S
 
     // Move add/remove buttons
     QHBoxLayout * addLayout = new QHBoxLayout();
-    d->m_add_button = new QPushButton(KGuiItem("",":action_add.png"));
+    d->m_add_button = new QPushButton(QIcon::fromTheme(QLatin1String(":action_add.png")), QString());
     d->m_add_button->setIconSize(QSize(16,16));
     d->m_add_button->setFixedSize(24,24);
-    d->m_remove_button = new QPushButton(KGuiItem("",":action_remove.png"));
+    d->m_remove_button = new QPushButton(QIcon::fromTheme(QLatin1String(":action_remove.png")), QString());
     d->m_remove_button->setIconSize(QSize(16,16));
     d->m_remove_button->setFixedSize(24,24);
     addLayout->addWidget(d->m_add_button);
@@ -233,10 +235,10 @@ AbstractItemsListViewTool::AbstractItemsListViewTool(const QString & toolName, S
 
     // Move up/down buttons
     QHBoxLayout * moveLayout = new QHBoxLayout();
-    d->m_down_button = new QPushButton(KGuiItem("",":arrow_down.png"));
+    d->m_down_button = new QPushButton(QIcon::fromTheme(QLatin1String(":arrow_down.png")), QString());
     d->m_down_button->setIconSize(QSize(16,16));
     d->m_down_button->setFixedSize(24,24);
-    d->m_up_button = new QPushButton(KGuiItem("",":arrow_top.png"));
+    d->m_up_button = new QPushButton(QIcon::fromTheme(QLatin1String(":arrow_top.png")), QString());
 
     d->m_up_button->setIconSize(QSize(16,16));
     d->m_up_button->setFixedSize(24,24);

@@ -5,9 +5,9 @@
  *
  * Date        : 2011-09-01
  * Description : a plugin to create photo layouts by fusion of several images.
- * Acknowledge : based on the expoblending plugin
+ * 
  *
- * Copyright (C) 2011-2012 by Łukasz Spas <lukasz dot spas at gmail dot com>
+ * Copyright (C) 2011-2012 by Lukasz Spas <lukasz dot spas at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
