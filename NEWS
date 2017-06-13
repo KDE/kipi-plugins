@@ -6,4 +6,5 @@ NEW FEATURES:
 
 BUGFIXES FROM BUGZILLA :
 
-001 ==> 
+001 ==> 381144 - SmugMug export max dimension limited to 5000 pixels.
+002 ==> 
