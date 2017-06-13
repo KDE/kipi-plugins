@@ -7,7 +7,7 @@
  * Description : a plugin to create photo layouts by fusion of several images.
  * 
  *
- * Copyright (C) 2011 by Lukasz Spas <lukasz dot spas at gmail dot com>
+ * Copyright (C) 2011      by Lukasz Spas <lukasz dot spas at gmail dot com>
  * Copyright (C) 2009-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -150,7 +150,7 @@ AbstractPhotoEffectInterface * PhotoEffectsGroup::graphicsItem(const QModelIndex
     return static_cast<AbstractPhotoEffectInterface*>(index.internalPointer());
 }
 
-bool PhotoEffectsGroup::moveRows(int sourcePosition, int sourceCount, int destPosition)
+bool PhotoEffectsGroup::moveRowsData(int sourcePosition, int sourceCount, int destPosition)
 {
     if (  (sourcePosition <= destPosition && sourcePosition+sourceCount >= destPosition) ||
             sourceCount <= 0 ||

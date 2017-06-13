@@ -7,7 +7,7 @@
  * Description : a plugin to create photo layouts by fusion of several images.
  * 
  *
- * Copyright (C) 2011 by Lukasz Spas <lukasz dot spas at gmail dot com>
+ * Copyright (C) 2011      by Lukasz Spas <lukasz dot spas at gmail dot com>
  * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -191,27 +191,27 @@ QDomDocument AbstractPhoto::toSvg() const
     QTransform transform = this->transform();
     QString translate = QLatin1String("translate(")+
                         QString::number(this->pos().x())+
-                        ','+
+                        QLatin1Char(QLatin1Char(','))+
                         QString::number(this->pos().y())+
-                        ')';
+                        QLatin1Char(')');
     QString matrix = QLatin1String("matrix(")+
                      QString::number(transform.m11())+
-                     ','+
+                     QLatin1Char(',')+
                      QString::number(transform.m12())+
-                     ','+
+                     QLatin1Char(',')+
                      QString::number(transform.m21())+
-                     ','+
+                     QLatin1Char(',')+
                      QString::number(transform.m22())+
-                     ','+
+                     QLatin1Char(',')+
                      QString::number(transform.m31())+
-                     ','+
+                     QLatin1Char(',')+
                      QString::number(transform.m32())+
-                     ')';
+                     QLatin1Char(')');
     QDomElement itemSVG = document.createElement(QLatin1String("g"));
     document.appendChild(itemSVG);
-    itemSVG.setAttribute(QLatin1String("transform"), translate + ' ' + matrix);
+    itemSVG.setAttribute(QLatin1String("transform"), translate + QLatin1Char(' ') + matrix);
     itemSVG.setAttribute(QLatin1String("id"), this->id());
-    itemSVG.setAttribute(QLatin1String("name"), QString(this->name().toUtf8()));
+    itemSVG.setAttribute(QLatin1String("name"), QString::fromUtf8(this->name().toUtf8()));
     if (!this->isVisible())
         itemSVG.setAttribute(QLatin1String("visibility"), QLatin1String("hide"));
 
@@ -252,8 +252,8 @@ QDomDocument AbstractPhoto::toSvg() const
 
     // 'use'
     QDomElement use = document.createElement(QLatin1String("use"));
-    use.setAttribute(QLatin1String("xlink:href"),'#'+visibleData.attribute(QLatin1String("id")));
-    use.setAttribute("style","clip-path: url(#" + clipPath.attribute("id") + ");");
+    use.setAttribute(QLatin1String("xlink:href"),QLatin1Char('#')+visibleData.attribute(QLatin1String("id")));
+    use.setAttribute(QLatin1String("style"), QLatin1String("clip-path: url(#") + clipPath.attribute(QLatin1String("id")) + QLatin1String(");"));
     itemSVG.appendChild(use);
 
     // 'g'
@@ -262,7 +262,7 @@ QDomDocument AbstractPhoto::toSvg() const
 
     // 'g'->'use'
     QDomElement use3 = document.createElement(QLatin1String("use"));
-    use3.setAttribute(QLatin1String("xlink:href"),'#' + clipPath.attribute(QLatin1String("id")));
+    use3.setAttribute(QLatin1String("xlink:href"),QLatin1Char('#') + clipPath.attribute(QLatin1String("id")));
     g2.appendChild(use3);
 
      /*
@@ -297,27 +297,27 @@ QDomDocument AbstractPhoto::toTemplateSvg() const
     QTransform transform = this->transform();
     QString translate = QLatin1String("translate(")+
                         QString::number(this->pos().x())+
-                        ','+
+                        QLatin1Char(',')+
                         QString::number(this->pos().y())+
-                        ')';
+                        QLatin1Char(')');
     QString matrix = QLatin1String("matrix(")+
                      QString::number(transform.m11())+
-                     ','+
+                     QLatin1Char(',')+
                      QString::number(transform.m12())+
-                     ','+
+                     QLatin1Char(',')+
                      QString::number(transform.m21())+
-                     ','+
+                     QLatin1Char(',')+
                      QString::number(transform.m22())+
-                     ','+
+                     QLatin1Char(',')+
                      QString::number(transform.m31())+
-                     ','+
+                     QLatin1Char(',')+
                      QString::number(transform.m32())+
-                     ')';
-    QDomElement itemSVG = document.createElement(QLatin1String("g")));
+                     QLatin1Char(')');
+    QDomElement itemSVG = document.createElement(QLatin1String("g"));
     document.appendChild(itemSVG);
-    itemSVG.setAttribute(QLatin1String("transform"), translate + ' ' + matrix);
+    itemSVG.setAttribute(QLatin1String("transform"), translate + QLatin1Char(' ') + matrix);
     itemSVG.setAttribute(QLatin1String("id"), this->id());
-    itemSVG.setAttribute(QLatin1String("name"), QString(this->name().toUtf8()));
+    itemSVG.setAttribute(QLatin1String("name"), QString::fromUtf8(this->name().toUtf8()));
     if (!this->isVisible())
         itemSVG.setAttribute(QLatin1String("visibility"), QLatin1String("hide"));
 
@@ -328,7 +328,7 @@ QDomDocument AbstractPhoto::toTemplateSvg() const
 
     // 'defs'->'clipPath'
     QDomElement clipPath = document.createElement(QLatin1String("clipPath"));
-    clipPath.setAttribute("id", "clipPath_"+this->id());
+    clipPath.setAttribute(QLatin1String("id"), QLatin1String("clipPath_")+this->id());
     defs.appendChild(clipPath);
 
     // 'defs'->'ple:data'
@@ -358,17 +358,17 @@ QDomDocument AbstractPhoto::toTemplateSvg() const
 
     // 'use'
     QDomElement use = document.createElement(QLatin1String("use"));
-    use.setAttribute(QLatin1String("xlink:href"),'#'+visibleData.attribute(QLatin1String("id")));
+    use.setAttribute(QLatin1String("xlink:href"),QLatin1Char('#')+visibleData.attribute(QLatin1String("id")));
     use.setAttribute(QLatin1String("style"),QLatin1String("clip-path: url(#") + clipPath.attribute(QLatin1String("id")) + QLatin1String(");"));
     itemSVG.appendChild(use);
 
     // 'g'
-    QDomElement g2 = document.createElement(QLatin1String("g");
+    QDomElement g2 = document.createElement(QLatin1String("g"));
     itemSVG.appendChild(g2);
 
     // 'g'->'use'
     QDomElement use3 = document.createElement(QLatin1String("use"));
-    use3.setAttribute(QLatin1String("xlink:href"),'#' + clipPath.attribute(QLatin1String("id")));
+    use3.setAttribute(QLatin1String("xlink:href"),QLatin1Char('#') + clipPath.attribute(QLatin1String("id")));
     g2.appendChild(use3);
 
      /*
@@ -421,7 +421,7 @@ bool AbstractPhoto::fromSvg(QDomElement & element)
         {
             QStringList list = tr.capturedTexts();
             QString translate = list.at(0);
-            list = translate.split(',');
+            list = translate.split(QLatin1Char(','));
             QString x = list.at(0);
             QString y = list.at(1);
             this->setPos( x.right(x.length()-10).toDouble(),
@@ -434,7 +434,7 @@ bool AbstractPhoto::fromSvg(QDomElement & element)
             QStringList list = rot.capturedTexts();
             QString matrix = list.at(0);
             matrix.remove(matrix.length()-1,1).remove(0,7);
-            list = matrix.split(',');
+            list = matrix.split(QLatin1Char(','));
             QString m11 = list.at(0);
             QString m12 = list.at(1);
             QString m21 = list.at(2);
@@ -462,7 +462,7 @@ bool AbstractPhoto::fromSvg(QDomElement & element)
                 QStringList list = rot.capturedTexts();
                 QString matrix = list.at(0);
                 matrix.remove(matrix.length()-1,1).remove(0,7);
-                list = matrix.split(',');
+                list = matrix.split(QLatin1Char(','));
                 QString m11 = list.at(0);
                 QString m12 = list.at(1);
                 QString m21 = list.at(2);
@@ -518,15 +518,15 @@ bool AbstractPhoto::fromSvg(QDomElement & element)
 
     qCDebug(DIGIKAM_GENERAL_LOG) << "9";
 
-    QDomElement clipPath = defs.firstChildElement("clipPath");
-    if (clipPath.isNull() || clipPath.attribute("id") != "clipPath_"+this->id())
+    QDomElement clipPath = defs.firstChildElement(QLatin1String("clipPath"));
+    if (clipPath.isNull() || clipPath.attribute(QLatin1String("id")) != QLatin1String("clipPath_")+this->id())
         return false;
 
 
     qCDebug(DIGIKAM_GENERAL_LOG) << "10";
 
     // Other application specific data
-    QDomElement appNS = defs.firstChildElement("data");
+    QDomElement appNS = defs.firstChildElement(QLatin1String("data"));
     if (appNS.isNull() || appNS.prefix() != PhotoLayoutsEditor::name())
         return false;
 
@@ -544,9 +544,9 @@ bool AbstractPhoto::fromSvg(QDomElement & element)
     qCDebug(DIGIKAM_GENERAL_LOG) << "12";
 
     // Crop path
-    QDomElement cropPath = appNS.firstChildElement("crop_path");
+    QDomElement cropPath = appNS.firstChildElement(QLatin1String("crop_path"));
     if (!cropPath.isNull())
-        this->d->setCropShape( PhotoLayoutsEditor::pathFromSvg( cropPath.firstChildElement("path") ) );
+        this->d->setCropShape( PhotoLayoutsEditor::pathFromSvg( cropPath.firstChildElement(QLatin1String("path")) ) );
     else
         return false;
 

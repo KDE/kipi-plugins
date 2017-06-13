@@ -7,7 +7,7 @@
  * Description : a plugin to create photo layouts by fusion of several images.
  * 
  *
- * Copyright (C) 2011 by Lukasz Spas <lukasz dot spas at gmail dot com>
+ * Copyright (C) 2011      by Lukasz Spas <lukasz dot spas at gmail dot com>
  * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -411,7 +411,7 @@ TextItem::TextItem(const QString & text, Scene * scene) :
     m_font(DEFAULT_FONT),
     m_metrics(m_font)
 {
-    d->m_string_list = QString(text).remove('\t').split('\n');
+    d->m_string_list = QString(text).remove(QLatin1Char('\t')).split(QLatin1Char('\n'));
 
     this->setFlag(QGraphicsItem::ItemIsFocusable);
     this->refresh();
@@ -556,7 +556,7 @@ QStringList TextItem::text() const
 
 QString TextItem::textMultiline() const
 {
-    return d->m_string_list.join("\n");
+    return d->m_string_list.join(QLatin1String("\n"));
 }
 
 void TextItem::setText(const QStringList & textList)
@@ -568,8 +568,8 @@ void TextItem::setText(const QStringList & textList)
 void TextItem::setText(const QString & text)
 {
     QString temp = text;
-    temp.remove('\t');
-    this->setText(temp.split('\n'));
+    temp.remove(QLatin1Char('\t'));
+    this->setText(temp.split(QLatin1Char('\n')));
 }
 
 QPainterPath TextItem::itemShape() const
@@ -629,34 +629,34 @@ QDomDocument TextItem::toSvg() const
 {
     QDomDocument document = AbstractPhoto::toSvg();
     QDomElement result = document.firstChildElement();
-    result.setAttribute("class", "TextItem");
+    result.setAttribute(QLatin1String("class"), QLatin1String("TextItem"));
 
     // 'defs' tag
-    QDomElement defs = document.createElement("defs");
-    defs.setAttribute("class", "data");
+    QDomElement defs = document.createElement(QLatin1String("defs"));
+    defs.setAttribute(QLatin1String("class"), QLatin1String("data"));
     result.appendChild(defs);
 
     // 'defs'-> ple:'data'
-    QDomElement appNS = document.createElementNS(PhotoLayoutsEditor::uri(), "data");
+    QDomElement appNS = document.createElementNS(PhotoLayoutsEditor::uri(), QLatin1String("data"));
     appNS.setPrefix(PhotoLayoutsEditor::name());
     defs.appendChild(appNS);
 
     // 'defs'-> ple:'data' -> 'text'
-    QDomElement text = document.createElement("text");
-    text.appendChild(document.createTextNode(d->m_string_list.join("\n").toUtf8()));
+    QDomElement text = document.createElement(QLatin1String("text"));
+    text.appendChild(document.createTextNode(d->m_string_list.join(QLatin1Char('\n'))));
     text.setPrefix(PhotoLayoutsEditor::name());
     appNS.appendChild(text);
 
     // 'defs'-> ple:'data' -> 'color'
-    QDomElement color = document.createElement("color");
+    QDomElement color = document.createElement(QLatin1String("color"));
     color.setPrefix(PhotoLayoutsEditor::name());
-    color.setAttribute("name", m_color.name());
+    color.setAttribute(QLatin1String("name"), m_color.name());
     appNS.appendChild(color);
 
     // 'defs'-> ple:'data' -> 'font'
-    QDomElement font = document.createElement("font");
+    QDomElement font = document.createElement(QLatin1String("font"));
     font.setPrefix(PhotoLayoutsEditor::name());
-    font.setAttribute("data", m_font.toString());
+    font.setAttribute(QLatin1String("data"), m_font.toString());
     appNS.appendChild(font);
 
     return document;
@@ -666,34 +666,34 @@ QDomDocument TextItem::toTemplateSvg() const
 {
     QDomDocument document = AbstractPhoto::toSvg();
     QDomElement result = document.firstChildElement();
-    result.setAttribute("class", "TextItem");
+    result.setAttribute(QLatin1String("class"), QLatin1String("TextItem"));
 
     // 'defs' tag
-    QDomElement defs = document.createElement("defs");
-    defs.setAttribute("class", "data");
+    QDomElement defs = document.createElement(QLatin1String("defs"));
+    defs.setAttribute(QLatin1String("class"), QLatin1String("data"));
     result.appendChild(defs);
 
     // 'defs'-> ple:'data'
-    QDomElement appNS = document.createElementNS(PhotoLayoutsEditor::uri(), "data");
+    QDomElement appNS = document.createElementNS(PhotoLayoutsEditor::uri(), QLatin1String("data"));
     appNS.setPrefix(PhotoLayoutsEditor::name());
     defs.appendChild(appNS);
 
     // 'defs'-> ple:'data' -> 'text'
-    QDomElement text = document.createElement("text");
-    text.appendChild(document.createTextNode(d->m_string_list.join("\n").toUtf8()));
+    QDomElement text = document.createElement(QLatin1String("text"));
+    text.appendChild(document.createTextNode(d->m_string_list.join(QLatin1String("\n"))));
     text.setPrefix(PhotoLayoutsEditor::name());
     appNS.appendChild(text);
 
     // 'defs'-> ple:'data' -> 'color'
-    QDomElement color = document.createElement("color");
+    QDomElement color = document.createElement(QLatin1String("color"));
     color.setPrefix(PhotoLayoutsEditor::name());
-    color.setAttribute("name", m_color.name());
+    color.setAttribute(QLatin1String("name"), m_color.name());
     appNS.appendChild(color);
 
     // 'defs'-> ple:'data' -> 'font'
-    QDomElement font = document.createElement("font");
+    QDomElement font = document.createElement(QLatin1String("font"));
     font.setPrefix(PhotoLayoutsEditor::name());
-    font.setAttribute("data", m_font.toString());
+    font.setAttribute(QLatin1String("data"), m_font.toString());
     appNS.appendChild(font);
 
     return document;
@@ -702,14 +702,14 @@ QDomDocument TextItem::toTemplateSvg() const
 QDomDocument TextItem::svgVisibleArea() const
 {
     QDomDocument document = PhotoLayoutsEditor::pathToSvg(m_text_path);
-    document.firstChildElement("path").setAttribute("fill", m_color.name());
+    document.firstChildElement(QLatin1String("path")).setAttribute(QLatin1String("fill"), m_color.name());
     return document;
 }
 
 QDomDocument TextItem::svgTemplateArea() const
 {
     QDomDocument document = PhotoLayoutsEditor::pathToSvg(m_text_path);
-    document.firstChildElement("path").setAttribute("fill", m_color.name());
+    document.firstChildElement(QLatin1String("path")).setAttribute(QLatin1String("fill"), m_color.name());
     return document;
 }
 
@@ -718,32 +718,32 @@ TextItem * TextItem::fromSvg(QDomElement & element)
     TextItem * result = new TextItem();
     if (result->AbstractPhoto::fromSvg(element))
     {
-        QDomElement defs = element.firstChildElement("defs");
-        while (!defs.isNull() && defs.attribute("class") != "data")
-            defs = defs.nextSiblingElement("defs");
+        QDomElement defs = element.firstChildElement(QLatin1String("defs"));
+        while (!defs.isNull() && defs.attribute(QLatin1String("class")) != QLatin1String("data"))
+            defs = defs.nextSiblingElement(QLatin1String("defs"));
         IS_NULL(defs);
 
-        QDomElement data = defs.firstChildElement("data");
+        QDomElement data = defs.firstChildElement(QLatin1String("data"));
         IS_NULL(data);
 
         // text
-        QDomElement text = data.firstChildElement("text");
+        QDomElement text = data.firstChildElement(QLatin1String("text"));
         IS_NULL(text);
         QDomNode textValue = text.firstChild();
         while (!textValue.isNull() && !textValue.isText())
             textValue = textValue.nextSibling();
         IS_NULL(textValue);
-        result->d->m_string_list = textValue.toText().data().remove('\t').split('\n');
+        result->d->m_string_list = textValue.toText().data().remove(QLatin1Char('\t')).split(QLatin1Char('\n'));
 
         // Color
-        QDomElement color = data.firstChildElement("color");
+        QDomElement color = data.firstChildElement(QLatin1String("color"));
         IS_NULL(color);
-        result->m_color = QColor(color.attribute("name"));
+        result->m_color = QColor(color.attribute(QLatin1String("name")));
 
         // Font
-        QDomElement font = data.firstChildElement("font");
+        QDomElement font = data.firstChildElement(QLatin1String("font"));
         IS_NULL(font);
-        result->m_font.fromString(font.attribute("data"));
+        result->m_font.fromString(font.attribute(QLatin1String("data")));
 
         result->refresh();
         return result;
@@ -843,6 +843,6 @@ void TextItem::updateIcon()
     QFont f = this->font();
     f.setPixelSize(40);
     p.setFont(f);
-    p.drawText(px.rect(), Qt::AlignCenter, "T");
+    p.drawText(px.rect(), Qt::AlignCenter, QLatin1String("T"));
     this->setIcon(QIcon(px));
 }

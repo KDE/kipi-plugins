@@ -7,7 +7,7 @@
  * Description : a plugin to create photo layouts by fusion of several images.
  * 
  *
- * Copyright (C) 2011 by Lukasz Spas <lukasz dot spas at gmail dot com>
+ * Copyright (C) 2011      by Lukasz Spas <lukasz dot spas at gmail dot com>
  * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -144,13 +144,13 @@ public:
 
     virtual void redo()
     {
-        model->moveRows(sourceStart, count, destinationRow);
+        model->moveRowsData(sourceStart, count, destinationRow);
         this->swap();
     }
 
     virtual void undo()
     {
-        model->moveRows(sourceStart, count, destinationRow);
+        model->moveRowsData(sourceStart, count, destinationRow);
         this->swap();
     }
 
@@ -367,7 +367,7 @@ void AbstractItemsListViewTool::moveSelectedDown()
             PLE_PostUndoCommand(command);
         }
         else
-            model->moveRows(index.row(),1,index.row()+2);
+            model->moveRowsData(index.row(),1,index.row()+2);
     }
     d->setButtonsEnabled(true);
 }
@@ -386,7 +386,7 @@ void AbstractItemsListViewTool::moveSelectedUp()
             PLE_PostUndoCommand(command);
         }
         else
-            model->moveRows(index.row(),1,index.row()-1);
+            model->moveRowsData(index.row(),1,index.row()-1);
     }
     d->setButtonsEnabled(true);
 }
@@ -421,12 +421,12 @@ AbstractListToolViewDelegate::AbstractListToolViewDelegate(AbstractMovableModel 
     comboBox->setCurrentIndex(-1);
     connect(comboBox,SIGNAL(currentIndexChanged(QString)),this,SLOT(itemSelected(QString)));
     layout->addWidget(comboBox,1);
-    m_acceptButton = new QPushButton(QIcon::fromTheme(":action_check.png"), "", this);
+    m_acceptButton = new QPushButton(QIcon::fromTheme(QLatin1String(":action_check.png")), QString(), this);
     m_acceptButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum);
     m_acceptButton->setEnabled(false);
     connect(m_acceptButton,SIGNAL(clicked()),this,SLOT(editorAccepted()));
     layout->addWidget(m_acceptButton);
-    QPushButton * cancelButton = new QPushButton(QIcon::fromTheme(":action_delete.png"), "", this);
+    QPushButton * cancelButton = new QPushButton(QIcon::fromTheme(QLatin1String(":action_delete.png")), QString(), this);
     cancelButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum);
     connect(cancelButton,SIGNAL(clicked()),this,SLOT(editorCancelled()));
     layout->addWidget(cancelButton);

@@ -48,7 +48,7 @@ namespace PhotoLayoutsEditor
                 fpath(path),
                 fname(name)
             {
-                fname.remove(".ple");
+                fname.remove(QLatin1String(".ple"));
                 if (fpath.isEmpty())
                     return;
 
@@ -59,38 +59,39 @@ namespace PhotoLayoutsEditor
                 QString imageAttribute;
 		document.setContent(&f, true);
 
-                QDomElement svg = document.firstChildElement("svg");
+                QDomElement svg = document.firstChildElement(QLatin1String("svg"));
                 if  (svg.isNull())
                     return;
 
-                QDomElement g = svg.firstChildElement("g");
+                QDomElement g = svg.firstChildElement(QLatin1String("g"));
                 if  (svg.isNull())
                     return;
 
-                QDomElement defs = g.firstChildElement("defs");
-                while(!defs.isNull() && (defs.attribute("id") != "Preview"))
-                    defs = defs.nextSiblingElement("defs");
-                QDomElement img = defs.firstChildElement("image");
+                QDomElement defs = g.firstChildElement(QLatin1String("defs"));
+                while(!defs.isNull() && (defs.attribute(QLatin1String("id")) != QLatin1String("Preview")))
+                    defs = defs.nextSiblingElement(QLatin1String("defs"));
+                QDomElement img = defs.firstChildElement(QLatin1String("image"));
 
                 if (!img.isNull() && !(imageAttribute = img.text()).isEmpty())
                 {
-                    image = QImage::fromData( QByteArray::fromBase64(imageAttribute.toAscii()) );
+                    image = QImage::fromData( QByteArray::fromBase64(imageAttribute.toLatin1()) );
                     if (image.isNull())
                         render = true;
                 }
-		else
+                else
                      render = true;
+
                 if (render)
-		{
-		    // Try to render preview image
+                {
+                    // Try to render preview image
                     QSvgRenderer renderer(fpath);
                     if (renderer.isValid())
                     {
-                    	image = QImage( renderer.viewBoxF().size().toSize(), QImage::Format_ARGB32 );
-                    	image.fill(Qt::white);
-                    	QPainter p(&image);
-                    	renderer.render(&p);
-                    	p.end();
+                        image = QImage( renderer.viewBoxF().size().toSize(), QImage::Format_ARGB32 );
+                        image.fill(Qt::white);
+                        QPainter p(&image);
+                        renderer.render(&p);
+                        p.end();
                     }
                 }
                 image = image.scaled(QSize(100, 100), Qt::KeepAspectRatio, Qt::SmoothTransformation);
