@@ -170,7 +170,7 @@ SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool
 
     m_dimensionSpB = new QSpinBox(optionsBox);
     m_dimensionSpB->setMinimum(0);
-    m_dimensionSpB->setMaximum(100000);
+    m_dimensionSpB->setMaximum(15000);
     m_dimensionSpB->setSingleStep(10);
     m_dimensionSpB->setValue(600);
     m_dimensionSpB->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
