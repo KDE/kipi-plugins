@@ -32,27 +32,30 @@
 
 #include <QApplication>
 
-QString PhotoLayoutsEditor::name()
+namespace PhotoLayoutsEditor
 {
-    return QString("ple");
+
+QString name()
+{
+    return QLatin1String("ple");
 }
 
-QString PhotoLayoutsEditor::uri()
+QString uri()
 {
-    return QString("http://coder89.pl/ple");
+    return QLatin1String("http://www.digikam.org/ple");
 }
 
-QString PhotoLayoutsEditor::templateUri()
+QString templateUri()
 {
-    return QString("http://coder89.pl/ple/template");
+    return QLatin1String("http://www.digikam.org/ple/template");
 }
 
-void PhotoLayoutsEditor::PLE_PostUndoCommand(QUndoCommand * command)
+void PLE_PostUndoCommand(QUndoCommand * command)
 {
     PhotoLayoutsWindow::instance()->addUndoCommand(command);
 }
 
-QDomDocument PhotoLayoutsEditor::pathToSvg(const QPainterPath & path)
+QDomDocument pathToSvg(const QPainterPath & path)
 {
     QDomDocument document;
 
@@ -63,22 +66,23 @@ QDomDocument PhotoLayoutsEditor::pathToSvg(const QPainterPath & path)
     // Conversion loop
     QString str_path_d;
     int elementsCount = path.elementCount();
+
     for (int i = 0; i < elementsCount; ++i)
     {
         QPainterPath::Element e = path.elementAt(i);
         switch (e.type)
         {
             case QPainterPath::LineToElement:
-                str_path_d.append("L " + QString::number(e.x) + ' ' + QString::number(e.y) + ' ');
+                str_path_d.append(QLatin1String("L ") + QString::number(e.x) + QLatin1Char(' ') + QString::number(e.y) + QLatin1Char(' '));
                 break;
             case QPainterPath::MoveToElement:
-                str_path_d.append("M " + QString::number(e.x) + ' ' + QString::number(e.y) + ' ');
+                str_path_d.append(QLatin1String("M ") + QString::number(e.x) + QLatin1Char(' ') + QString::number(e.y) + QLatin1Char(' '));
                 break;
             case QPainterPath::CurveToElement:
-                str_path_d.append("C " + QString::number(e.x) + ' ' + QString::number(e.y) + ' ');
+                str_path_d.append(QLatin1String("C ") + QString::number(e.x) + QLatin1Char(' ') + QString::number(e.y) + QLatin1Char(' '));
                 break;
             case QPainterPath::CurveToDataElement:
-                str_path_d.append(QString::number(e.x) + ' ' + QString::number(e.y) + ' ');
+                str_path_d.append(QString::number(e.x) + QLatin1Char(' ') + QString::number(e.y) + QLatin1Char(' '));
                 break;
             default:
                 Q_ASSERT(e.type == QPainterPath::CurveToDataElement ||
@@ -87,38 +91,38 @@ QDomDocument PhotoLayoutsEditor::pathToSvg(const QPainterPath & path)
                          e.type == QPainterPath::MoveToElement);
         }
     }
-    str_path_d.append("z");
+    str_path_d.append(QLatin1String("z"));
 
     // If path length is empty
     if (str_path_d.isEmpty())
         return document;
 
     // Create QDomElement
-    QDomElement element = document.createElement("path");
-    element.setAttribute("d", str_path_d);
+    QDomElement element = document.createElement(QLatin1String("path"));
+    element.setAttribute(QLatin1String("d"), str_path_d);
     document.appendChild(element);
     return document;
 }
 
-QPainterPath PhotoLayoutsEditor::pathFromSvg(const QDomElement & element)
+QPainterPath pathFromSvg(const QDomElement & element)
 {
     QPainterPath result;
-    if (element.tagName() != "path")
+    if (element.tagName() != QLatin1String("path"))
         return result;
-    QString d = element.attribute("d");
-    QStringList list = d.split(' ', QString::SkipEmptyParts);
+    QString d = element.attribute(QLatin1String("d"));
+    QStringList list = d.split(QLatin1Char(' '), QString::SkipEmptyParts);
     QStringList::const_iterator it = list.constBegin();
     QQueue<qreal> coordinates;
     QQueue<char> operations;
     while (it != list.constEnd())
     {
-        if (*it == "M")
+        if (*it == QLatin1String("M"))
             operations.enqueue('M');
-        else if (*it == "L")
+        else if (*it == QLatin1String("L"))
             operations.enqueue('L');
-        else if (*it == "C")
+        else if (*it == QLatin1String("C"))
             operations.enqueue('C');
-        else if (*it == "z")
+        else if (*it == QLatin1String("z"))
             operations.enqueue('z');
         else
         {
@@ -136,6 +140,7 @@ QPainterPath PhotoLayoutsEditor::pathFromSvg(const QDomElement & element)
     while (operations.count())
     {
         char opc = operations.dequeue();
+
         switch (opc)
         {
             case 'M':
@@ -170,5 +175,8 @@ QPainterPath PhotoLayoutsEditor::pathFromSvg(const QDomElement & element)
                 return QPainterPath();
         }
     }
+
     return result;
 }
+
+} // namespace PhotoLayoutsEditor

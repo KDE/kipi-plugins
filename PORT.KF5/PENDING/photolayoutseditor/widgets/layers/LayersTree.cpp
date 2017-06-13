@@ -44,14 +44,14 @@ LayersTree::LayersTree(QWidget * parent) :
     m_menu(new LayersTreeMenu(this))
 {
     header()->setVisible(true);
-    header()->setMovable(false);
-    header()->setClickable(false);
+    header()->setSectionsMovable(false);
+    header()->setSectionsClickable(false);
+    header()->setSectionResizeMode(QHeaderView::ResizeToContents);
     setDragEnabled(true);
     setAcceptDrops(true);
     setDropIndicatorShown(true);
     setDragDropMode(QAbstractItemView::DragDrop);
     setDefaultDropAction(Qt::MoveAction);
-    header()->setResizeMode(QHeaderView::ResizeToContents);
     setContextMenuPolicy(Qt::DefaultContextMenu);
     setSelectionBehavior(QAbstractItemView::SelectRows);
     setAnimated(true);

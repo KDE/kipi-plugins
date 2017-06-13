@@ -33,9 +33,9 @@ using namespace PhotoLayoutsEditor;
 
 LayersTreeDelegate::LayersTreeDelegate(QWidget * parent) :
     QStyledItemDelegate(parent),
-    m_eye(QPixmap::fromImage(QImage(":/eye.png"))),
+    m_eye(QPixmap::fromImage(QImage(QLatin1String(":/eye.png")))),
     m_eye_off(m_eye.size()),
-    m_padlock(QPixmap::fromImage(QImage(":/padlock.png"))),
+    m_padlock(QPixmap::fromImage(QImage(QLatin1String(":/padlock.png")))),
     m_padlock_off(m_padlock.size())
 {
     QPainter p;

@@ -254,7 +254,7 @@ protected:
     void drawDisplay(QPainter *painter, const QStyleOptionViewItem &option,
             const QRect &rect, const QString &text) const;
 
-private slots:
+private Q_SLOTS:
     void slotEditorDestroyed(QObject *object);
 
 private:

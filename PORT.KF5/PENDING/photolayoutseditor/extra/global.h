@@ -23,8 +23,8 @@
  *
  * ============================================================ */
 
-#ifndef GLOBAL_H
-#define GLOBAL_H
+#ifndef PLE_GLOBAL_H
+#define PLE_GLOBAL_H
 
 #define Q_DELETE(ptr)   if(ptr) { delete ptr; ptr = 0; }
 
@@ -37,12 +37,14 @@
 
 namespace PhotoLayoutsEditor
 {
-    extern QString name();
-    extern QString uri();
-    extern QString templateUri();
-    extern void PLE_PostUndoCommand(QUndoCommand * command);
-    extern QDomDocument pathToSvg(const QPainterPath & path);
-    extern QPainterPath pathFromSvg(const QDomElement & element);
-}
 
-#endif // GLOBAL_H
+extern QString name();
+extern QString uri();
+extern QString templateUri();
+extern void PLE_PostUndoCommand(QUndoCommand * command);
+extern QDomDocument pathToSvg(const QPainterPath & path);
+extern QPainterPath pathFromSvg(const QDomElement & element);
+
+} // namespace PhotoLayoutsEditor
+
+#endif // PLE_GLOBAL_H
