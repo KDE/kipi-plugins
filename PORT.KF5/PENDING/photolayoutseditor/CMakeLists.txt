@@ -64,20 +64,12 @@ set(photolayoutseditor_SRCS
     threads/SceneBorderLoader.cpp
     threads/TextItemLoader.cpp
 
-    widgets/dialogs/CanvasSizeDialog.cpp
-    widgets/dialogs/GridSetupDialog.cpp
-    widgets/dialogs/ImageFileDialog.cpp
-    widgets/dialogs/NewCanvasDialog.cpp
-    widgets/dialogs/CanvasSizeWidget.cpp
-    widgets/dialogs/TemplatesModel.cpp
-    widgets/dialogs/TemplatesView.cpp
     widgets/extra/PatternsComboBox.cpp
     widgets/extra/PLEStatusBar.cpp
     widgets/layers/LayersTree.cpp
     widgets/layers/LayersTreeDelegate.cpp
     widgets/items/AbstractPhoto.cpp
     widgets/items/AbstractPhoto_p.cpp
-    widgets/items/PhotoItem.cpp
     widgets/items/TextItem.cpp
     widgets/items/AbstractItemInterface.cpp
     widgets/menus/LayersTreeMenu.cpp
@@ -90,6 +82,12 @@ set(photolayoutseditor_SRCS
     widgets/tools/TextEditorTool.cpp
     widgets/tools/ToolsDockWidget.cpp
     widgets/tools/ZoomTool.cpp
+    widgets/dialogs/CanvasSizeDialog.cpp
+    widgets/dialogs/GridSetupDialog.cpp
+    widgets/dialogs/NewCanvasDialog.cpp
+    widgets/dialogs/CanvasSizeWidget.cpp
+    widgets/dialogs/TemplatesModel.cpp
+    widgets/dialogs/TemplatesView.cpp
     widgets/canvas/Canvas.cpp
     widgets/canvas/CanvasSize.cpp
     widgets/canvas/CropWidgetItem.cpp
@@ -112,7 +110,11 @@ set(photolayoutseditor_SRCS
     extra/KEditFactory.cpp
 
     main/photolayoutswindow.cpp
-   )
+
+    widgets/items/PhotoItem.cpp
+    widgets/dialogs/ImageFileDialog.cpp
+
+)
 
 set(photolayoutseditor_RCS
     resources/icons.qrc

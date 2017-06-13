@@ -65,21 +65,21 @@ class PatternDelegate : public QStyledItemDelegate
 PatternsComboBox::PatternsComboBox(QWidget * parent) :
     QComboBox(parent)
 {
-    this->addItem("", QVariant(Qt::Dense1Pattern));
-    this->addItem("", QVariant(Qt::Dense2Pattern));
-    this->addItem("", QVariant(Qt::Dense3Pattern));
-    this->addItem("", QVariant(Qt::Dense4Pattern));
-    this->addItem("", QVariant(Qt::Dense5Pattern));
-    this->addItem("", QVariant(Qt::Dense6Pattern));
-    this->addItem("", QVariant(Qt::Dense7Pattern));
-    this->addItem("", QVariant(Qt::HorPattern));
-    this->addItem("", QVariant(Qt::VerPattern));
-    this->addItem("", QVariant(Qt::CrossPattern));
-    this->addItem("", QVariant(Qt::BDiagPattern));
-    this->addItem("", QVariant(Qt::FDiagPattern));
-    this->addItem("", QVariant(Qt::DiagCrossPattern));
-    this->setItemDelegate(new PatternDelegate(this));
-    this->setMinimumWidth(100);
+    addItem(QLatin1String(""), QVariant((int)Qt::Dense1Pattern));
+    addItem(QLatin1String(""), QVariant((int)Qt::Dense2Pattern));
+    addItem(QLatin1String(""), QVariant((int)Qt::Dense3Pattern));
+    addItem(QLatin1String(""), QVariant((int)Qt::Dense4Pattern));
+    addItem(QLatin1String(""), QVariant((int)Qt::Dense5Pattern));
+    addItem(QLatin1String(""), QVariant((int)Qt::Dense6Pattern));
+    addItem(QLatin1String(""), QVariant((int)Qt::Dense7Pattern));
+    addItem(QLatin1String(""), QVariant((int)Qt::HorPattern));
+    addItem(QLatin1String(""), QVariant((int)Qt::VerPattern));
+    addItem(QLatin1String(""), QVariant((int)Qt::CrossPattern));
+    addItem(QLatin1String(""), QVariant((int)Qt::BDiagPattern));
+    addItem(QLatin1String(""), QVariant((int)Qt::FDiagPattern));
+    addItem(QLatin1String(""), QVariant((int)Qt::DiagCrossPattern));
+    setItemDelegate(new PatternDelegate(this));
+    setMinimumWidth(100);
     connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(emitPatternChanged(int)));
 }
 

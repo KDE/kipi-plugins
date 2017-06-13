@@ -62,11 +62,11 @@
 #include <kconfigdialog.h>
 #include <kservice.h>
 #include <kservicetypetrader.h>
-#include "digikam_debug.h"
 
 // Local includes
 
-#include "kpimagedialog.h"
+#include "digikam_debug.h"
+#include "imagedialog.h"
 #include "CanvasSizeDialog.h"
 #include "Canvas.h"
 #include "Scene.h"

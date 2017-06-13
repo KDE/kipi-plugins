@@ -31,8 +31,9 @@ using namespace PhotoLayoutsEditor;
 
 AbstractItemInterface::AbstractItemInterface(QGraphicsItem * parent, QGraphicsScene * scene) :
     QObject(scene),
-    QGraphicsItem(parent, scene)
+    QGraphicsItem(parent)
 {
+    scene->addItem(this);
 }
 
 void AbstractItemInterface::mousePressEvent(QGraphicsSceneMouseEvent * event)

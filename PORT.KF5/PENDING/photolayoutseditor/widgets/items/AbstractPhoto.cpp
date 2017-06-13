@@ -26,11 +26,6 @@
 #include "AbstractPhoto_p.h"
 #include "AbstractPhoto.h"
 
-#include "Scene.h"
-#include "PhotoEffectsGroup.h"
-#include "BordersGroup.h"
-#include "global.h"
-
 #include <QMenu>
 #include <QStyle>
 #include <QStyleOptionGraphicsItem>
@@ -42,6 +37,12 @@
 #include <QDebug>
 
 #include <klocalizedstring.h>
+
+#include "digikam_debug.h"
+#include "Scene.h"
+#include "PhotoEffectsGroup.h"
+#include "BordersGroup.h"
+#include "global.h"
 
 using namespace PhotoLayoutsEditor;
 

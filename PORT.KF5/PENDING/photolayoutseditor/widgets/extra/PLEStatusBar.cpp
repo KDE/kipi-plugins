@@ -26,18 +26,19 @@
 #include "PLEStatusBar.h"
 
 #include <QDebug>
+#include <QLabel>
 
 using namespace PhotoLayoutsEditor;
 
 PLEStatusBar::PLEStatusBar(QWidget * parent) :
     QStatusBar(parent)
 {
-    this->insertItem("",0,1);
+    addWidget(new QLabel(this), 1);
     m_pb = new QProgressBar(this);
     m_pb->setMinimum(0);
     m_pb->setMaximum(0);
-    this->addPermanentWidget(m_pb);
-    this->stopBusyIndicator();
+    addPermanentWidget(m_pb);
+    stopBusyIndicator();
 }
 
 void PLEStatusBar::runBusyIndicator()

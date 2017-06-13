@@ -31,15 +31,14 @@
 #include <QImageReader>
 #include <QGraphicsScene>
 #include <QMimeData>
-
 #include <QApplication>
+
 #include <kmessagebox.h>
 #include <klocalizedstring.h>
-#include <kstandarddirs.h>
 
 #include "PhotoEffectsGroup.h"
 #include "PhotoEffectsLoader.h"
-#include "ImageFileDialog.h"
+#include "imagedialog.h"
 #include "BordersGroup.h"
 #include "global.h"
 #include "PLEConfigSkeleton.h"
@@ -49,26 +48,35 @@
 
 #define EMPTY_FILL_COLOR QColor(255, 0, 0, 120)
 
-using namespace PhotoLayoutsEditor;
+using namespace Digikam;
 
-class PhotoLayoutsEditor::PhotoItemPixmapChangeCommand : public QUndoCommand
+namespace PhotoLayoutsEditor
+{
+
+class PhotoItemPixmapChangeCommand : public QUndoCommand
 {
     QImage     m_image;
     PhotoItem* m_item;
 
 public:
 
-    PhotoItemPixmapChangeCommand(const QImage & image, PhotoItem * item, QUndoCommand * parent = 0) :
+    PhotoItemPixmapChangeCommand(const QImage & image,
+                                 PhotoItem * item,
+                                 QUndoCommand * parent = 0) :
         QUndoCommand(i18n("Image Change"), parent),
         m_image(image),
         m_item(item)
-    {}
+    {
+    }
 
-    PhotoItemPixmapChangeCommand(const QPixmap & pixmap, PhotoItem * item, QUndoCommand * parent = 0) :
+    PhotoItemPixmapChangeCommand(const QPixmap & pixmap,
+                                 PhotoItem * item,
+                                 QUndoCommand * parent = 0) :
         QUndoCommand(i18n("Image Change"), parent),
         m_image(pixmap.toImage()),
         m_item(item)
-    {}
+    {
+    }
 
     virtual void redo()
     {
@@ -86,7 +94,7 @@ public:
     }
 };
 
-class PhotoLayoutsEditor::PhotoItemUrlChangeCommand : public QUndoCommand
+class PhotoItemUrlChangeCommand : public QUndoCommand
 {
     QUrl       m_url;
     PhotoItem* m_item;
@@ -97,16 +105,17 @@ public:
         QUndoCommand(i18n("Image Path Change"), parent),
         m_url(url),
         m_item(item)
-    {}
+    {
+    }
 
     virtual void redo()
     {
-        this->run();
+        run();
     }
 
     virtual void undo()
     {
-        this->run();
+        run();
     }
 
     void run()
@@ -117,7 +126,7 @@ public:
     }
 };
 
-class PhotoLayoutsEditor::PhotoItemImagePathChangeCommand : public QUndoCommand
+class PhotoItemImagePathChangeCommand : public QUndoCommand
 {
     PhotoItem*              m_item;
     QPainterPath            m_image_path;
@@ -146,7 +155,7 @@ public:
     }
 };
 
-class PhotoLayoutsEditor::PhotoItemImageMovedCommand : public QUndoCommand
+class PhotoItemImageMovedCommand : public QUndoCommand
 {
     PhotoItem* m_item;
     QPointF    translation;
@@ -169,9 +178,9 @@ public:
         return m_instance;
     }
 
-    void translate(const QPointF & translation)
+    void translate(QPointF & translation)
     {
-        this->translation += translation;
+        translation += translation;
     }
 
     virtual void redo()
@@ -227,10 +236,9 @@ QString PhotoItem::PhotoItemPrivate::locateFile(const QString & filePath)
             else
             {
                 QUrl fileUrl(filePath);
-                ImageFileDialog dialog(fileUrl);
-                result = dialog.exec();
-                resultPath = dialog.selectedFile();
-                if (result != ImageFileDialog::Accepted || !QFile::exists(resultPath))
+                resultPath = ImageDialog::getImageURL(qApp->activeWindow(), fileUrl).toLocalFile();
+
+                if (!QFile::exists(resultPath))
                     resultPath.clear();
             }
         }
@@ -253,12 +261,12 @@ QImage & PhotoItem::PhotoItemPrivate::image()
 
 void PhotoItem::PhotoItemPrivate::setFileUrl(const QUrl & url)
 {
-    this->m_file_path = url;
+    m_file_path = url;
 }
 
 QUrl & PhotoItem::PhotoItemPrivate::fileUrl()
 {
-    return this->m_file_path;
+    return m_file_path;
 }
 
 PhotoItem::PhotoItem(const QImage & photo, const QString & name, Scene * scene) :
@@ -266,7 +274,7 @@ PhotoItem::PhotoItem(const QImage & photo, const QString & name, Scene * scene) 
     m_highlight(false),
     d(new PhotoItemPrivate(this))
 {
-    this->setupItem(photo);
+    setupItem(photo);
 }
 
 PhotoItem::PhotoItem(const QPainterPath & shape, const QString & name, Scene * scene) :
@@ -275,7 +283,7 @@ PhotoItem::PhotoItem(const QPainterPath & shape, const QString & name, Scene * s
     d(new PhotoItemPrivate(this))
 {
     m_image_path = shape;
-    this->refresh();
+    refresh();
 }
 
 PhotoItem::PhotoItem(const QString & name, Scene * scene) :
@@ -283,7 +291,7 @@ PhotoItem::PhotoItem(const QString & name, Scene * scene) :
     m_highlight(false),
     d(new PhotoItemPrivate(this))
 {
-    this->setupItem(QImage());
+    setupItem(QImage());
 }
 
 PhotoItem::~PhotoItem()
@@ -295,15 +303,15 @@ QDomDocument PhotoItem::toSvg() const
 {
     QDomDocument document = AbstractPhoto::toSvg();
     QDomElement itemElement = document.firstChildElement();
-    itemElement.setAttribute("class", "PhotoItem");
+    itemElement.setAttribute(QLatin1String("class"), QLatin1String("PhotoItem"));
 
     // 'defs' tag
-    QDomElement defs = document.createElement("defs");
-    defs.setAttribute("class", "data");
+    QDomElement defs = document.createElement(QLatin1String("defs"));
+    defs.setAttribute(QLatin1String("class"), QLatin1String("data"));
     itemElement.appendChild(defs);
 
     // 'defs'-> ple:'data'
-    QDomElement appNS = document.createElementNS(PhotoLayoutsEditor::uri(), "data");
+    QDomElement appNS = document.createElementNS(PhotoLayoutsEditor::uri(), QLatin1String("data"));
     appNS.setPrefix(PhotoLayoutsEditor::name());
     defs.appendChild(appNS);
 
@@ -311,32 +319,32 @@ QDomDocument PhotoItem::toSvg() const
     {
         // 'defs'-> ple:'data' ->'path'
         QDomDocument document = PhotoLayoutsEditor::pathToSvg(m_image_path);
-        QDomElement path = document.firstChildElement("path");
-        path.setAttribute("class", "m_image_path");
+        QDomElement path = document.firstChildElement(QLatin1String("path"));
+        path.setAttribute(QLatin1String("class"), QLatin1String("m_image_path"));
         path.setPrefix(PhotoLayoutsEditor::name());
         appNS.appendChild(document.documentElement());
     }
 
     // 'defs'-> ple:'data' ->'transform'
-    QDomElement transform = document.createElement("transform");
+    QDomElement transform = document.createElement(QLatin1String("transform"));
     transform.setPrefix(PhotoLayoutsEditor::name());
-    QString matrix = "matrix("+
+    QString matrix = QLatin1String("matrix(") +
                      QString::number(this->transform().m11())+
-                     ','+
+                     QLatin1Char(',')+
                      QString::number(this->transform().m12())+
-                     ','+
+                     QLatin1Char(',')+
                      QString::number(this->transform().m21())+
-                     ','+
+                     QLatin1Char(',')+
                      QString::number(this->transform().m22())+
-                     ','+
+                     QLatin1Char(',')+
                      QString::number(this->transform().m31())+
-                     ','+
+                     QLatin1Char(',')+
                      QString::number(this->transform().m32())+
-                     ')';
-    transform.setAttribute("matrix", matrix);
+                     QLatin1Char(')');
+    transform.setAttribute(QLatin1String("matrix"), matrix);
     appNS.appendChild(transform);
 
-    if (!this->isEmpty())
+    if (!isEmpty())
     {
         QDomElement image = document.createElementNS(PhotoLayoutsEditor::uri(), "image");
         appNS.appendChild(image);
@@ -346,8 +354,8 @@ QDomDocument PhotoItem::toSvg() const
             int result = KMessageBox::questionYesNo(0,
                                                     i18n("Do you want to embed images data?\n"
                                                             "Remember that when you move or rename image files on your disk or the storage device become unavailable, those images become unavailable for %1 "
-                                                            "and this layout might become broken.", KApplication::applicationName()),
-                                                    i18n("Saving: %1", this->name()),
+                                                            "and this layout might become broken.", QApplication::applicationName()),
+                                                    i18n("Saving: %1", name()),
                                                     KStandardGuiItem::yes(),
                                                     KStandardGuiItem::no(),
                                                     PLEConfigSkeleton::self()->config()->name());
@@ -361,17 +369,17 @@ QDomDocument PhotoItem::toSvg() const
             QBuffer buffer(&byteArray);
             d->image().save(&buffer, "PNG");
             image.appendChild( document.createTextNode( QString(byteArray.toBase64()) ) );
-            image.setAttribute("width",QString::number(d->image().width()));
-            image.setAttribute("height",QString::number(d->image().height()));
+            image.setAttribute(QLatin1String("width"),QString::number(d->image().width()));
+            image.setAttribute(QLatin1String("height"),QString::number(d->image().height()));
         }
 
         // Saving image path
         if (d->fileUrl().isValid())
-            image.setAttribute("src", d->fileUrl().url());
+            image.setAttribute(QLatin1String("src"), d->fileUrl().url());
     }
     else
     {
-        itemElement.setAttribute("visibility", "hidden");
+        itemElement.setAttribute(QLatin1String("visibility"), QLatin1String("hidden"));
     }
 
     return document;
@@ -381,15 +389,15 @@ QDomDocument PhotoItem::toTemplateSvg() const
 {
     QDomDocument document = AbstractPhoto::toTemplateSvg();
     QDomElement itemElement = document.firstChildElement();
-    itemElement.setAttribute("class", "PhotoItem");
+    itemElement.setAttribute(QLatin1String("class"), QLatin1String("PhotoItem"));
 
     // 'defs' tag
-    QDomElement defs = document.createElement("defs");
-    defs.setAttribute("class", "data");
+    QDomElement defs = document.createElement(QLatin1String("defs"));
+    defs.setAttribute(QLatin1String("class"), QLatin1String("data"));
     itemElement.appendChild(defs);
 
     // 'defs'-> ple:'data'
-    QDomElement appNS = document.createElementNS(PhotoLayoutsEditor::uri(), "data");
+    QDomElement appNS = document.createElementNS(PhotoLayoutsEditor::uri(), QLatin1String("data"));
     appNS.setPrefix(PhotoLayoutsEditor::name());
     defs.appendChild(appNS);
 
@@ -397,29 +405,29 @@ QDomDocument PhotoItem::toTemplateSvg() const
     {
         // 'defs'-> ple:'data' ->'path'
         QDomDocument document = PhotoLayoutsEditor::pathToSvg(m_image_path);
-        QDomElement path = document.firstChildElement("path");
-        path.setAttribute("class", "m_image_path");
+        QDomElement path = document.firstChildElement(QLatin1String("path"));
+        path.setAttribute(QLatin1String("class"), QLatin1String("m_image_path"));
         path.setPrefix(PhotoLayoutsEditor::name());
         appNS.appendChild(document.documentElement());
     }
 
     // 'defs'-> ple:'data' ->'transform'
-    QDomElement transform = document.createElement("transform");
+    QDomElement transform = document.createElement(QLatin1String("transform"));
     transform.setPrefix(PhotoLayoutsEditor::name());
-    QString matrix = "matrix("+
+    QString matrix = QLatin1String("matrix(")+
                      QString::number(this->transform().m11())+
-                     ','+
+                     QLatin1Char(',')+
                      QString::number(this->transform().m12())+
-                     ','+
+                     QLatin1Char(',')+
                      QString::number(this->transform().m21())+
-                     ','+
+                     QLatin1Char(',')+
                      QString::number(this->transform().m22())+
-                     ','+
+                     QLatin1Char(',')+
                      QString::number(this->transform().m31())+
-                     ','+
+                     QLatin1Char(',')+
                      QString::number(this->transform().m32())+
-                     ')';
-    transform.setAttribute("matrix", matrix);
+                     QLatin1Char(')');
+    transform.setAttribute(QLatin1String("matrix"), matrix);
     appNS.appendChild(transform);
 
     return document;
@@ -431,17 +439,17 @@ PhotoItem * PhotoItem::fromSvg(QDomElement & element)
     if (item->AbstractPhoto::fromSvg(element))
     {
         // Gets data field
-        QDomElement defs = element.firstChildElement("defs");
-        while (!defs.isNull() && defs.attribute("class") != "data")
-            defs = defs.nextSiblingElement("defs");
+        QDomElement defs = element.firstChildElement(QLatin1String("defs"));
+        while (!defs.isNull() && defs.attribute(QLatin1String("class")) != QLatin1String("data"))
+            defs = defs.nextSiblingElement(QLatin1String("defs"));
         if (defs.isNull())
             goto _delete;
-        QDomElement data = defs.firstChildElement("data");
+        QDomElement data = defs.firstChildElement(QLatin1String("data"));
         if (data.isNull())
             goto _delete;
 
         // m_image_path
-        QDomElement path = data.firstChildElement("path");
+        QDomElement path = data.firstChildElement(QLatin1String("path"));
         if (path.isNull())
             goto _delete;
         item->m_image_path = PhotoLayoutsEditor::pathFromSvg(path);
@@ -449,7 +457,7 @@ PhotoItem * PhotoItem::fromSvg(QDomElement & element)
             goto _delete;
 
         // m_pixmap_original
-        QDomElement image = data.firstChildElement("image");
+        QDomElement image = data.firstChildElement(QLatin1String("image"));
         QString imageAttribute;
         QImage img;
         // Fullsize image is embedded in SVG file!
@@ -460,7 +468,7 @@ PhotoItem * PhotoItem::fromSvg(QDomElement & element)
                 goto _delete;
         }
         // Try to find file from path attribute
-        else if ( !(imageAttribute = PhotoItemPrivate::locateFile( image.attribute("xlink:href") )).isEmpty() )
+        else if ( !(imageAttribute = PhotoItemPrivate::locateFile( image.attribute(QLatin1String("xlink:href")) )).isEmpty() )
         {
             QImageReader reader(imageAttribute);
             if (!reader.canRead())
@@ -486,40 +494,40 @@ _delete:
 QDomDocument PhotoItem::svgVisibleArea() const
 {
     QDomDocument document;
-    if (!this->isEmpty())
+    if (!isEmpty())
     {
         // 'defs' -> 'g'
-        QDomElement g = document.createElement("g");
+        QDomElement g = document.createElement(QLatin1String("g"));
         document.appendChild(g);
         QTransform transform = d->m_brush_transform;
-        QString translate = "translate("+
-                            QString::number(this->pos().x())+
-                            ','+
-                            QString::number(this->pos().y())+
-                            ')';
-        QString matrix = "matrix("+
-                         QString::number(transform.m11())+
-                         ','+
-                         QString::number(transform.m12())+
-                         ','+
-                         QString::number(transform.m21())+
-                         ','+
-                         QString::number(transform.m22())+
-                         ','+
-                         QString::number(transform.m31())+
-                         ','+
-                         QString::number(transform.m32())+
-                         ')';
-        g.setAttribute("transform", translate + ' ' + matrix);
+        QString translate = QLatin1String("translate(")+
+                            QString::number(pos().x())+
+                            QLatin1Char(',')+
+                            QString::number(pos().y())+
+                            QLatin1Char(')');
+        QString matrix = QLatin1String("matrix(")+
+                         QString::number(this->transform.m11())+
+                         QLatin1Char(',')+
+                         QString::number(this->transform.m12())+
+                         QLatin1Char(',')+
+                         QString::number(this->transform.m21())+
+                         QLatin1Char(',')+
+                         QString::number(this->transform.m22())+
+                         QLatin1Char(',')+
+                         QString::number(this->transform.m31())+
+                         QLatin1Char(',')+
+                         QString::number(this->transform.m32())+
+                         QLatin1Char(')');
+        g.setAttribute(QLatin1String("transform"), translate + QLatin1Char(' ') + matrix);
 
         // 'defs' -> 'g' -> 'image'
         QByteArray byteArray;
         QBuffer buffer(&byteArray);
         m_temp_image.save(&buffer, "PNG");
-        QDomElement img = document.createElement("image");
-        img.setAttribute("width",m_temp_image.width());
-        img.setAttribute("height",m_temp_image.height());
-        img.setAttribute("xlink:href",QString("data:image/png;base64,")+byteArray.toBase64());
+        QDomElement img = document.createElement(QLatin1String("image"));
+        img.setAttribute(QLatin1String("width"),m_temp_image.width());
+        img.setAttribute(QLatin1String("height"),m_temp_image.height());
+        img.setAttribute(QLatin1String("xlink:href",QLatin1String("data:image/png;base64,"))+byteArray.toBase64());
         g.appendChild(img);
     }
     return document;
@@ -528,37 +536,37 @@ QDomDocument PhotoItem::svgVisibleArea() const
 QDomDocument PhotoItem::svgTemplateArea() const
 {
     QDomDocument document;
-    if (!this->isEmpty())
+    if (!isEmpty())
     {
         // 'defs' -> 'g'
-        QDomElement g = document.createElement("g");
+        QDomElement g = document.createElement(QLatin1String("g"));
         document.appendChild(g);
         QTransform transform = d->m_brush_transform;
-        QString translate = "translate("+
-                            QString::number(this->pos().x())+
-                            ','+
-                            QString::number(this->pos().y())+
-                            ')';
-        QString matrix = "matrix("+
-                         QString::number(transform.m11())+
-                         ','+
-                         QString::number(transform.m12())+
-                         ','+
-                         QString::number(transform.m21())+
-                         ','+
-                         QString::number(transform.m22())+
-                         ','+
-                         QString::number(transform.m31())+
-                         ','+
-                         QString::number(transform.m32())+
-                         ')';
-        g.setAttribute("transform", translate + ' ' + matrix);
+        QString translate = QLatin1String("translate(")+
+                            QString::number(pos().x())+
+                            QLatin1Char(',')+
+                            QString::number(pos().y())+
+                            QLatin1Char(')');
+        QString matrix = QLatin1String("matrix(")+
+                         QString::number(this->transform.m11())+
+                         QLatin1Char(',')+
+                         QString::number(this->transform.m12())+
+                         QLatin1Char(',')+
+                         QString::number(this->transform.m21())+
+                         QLatin1Char(',')+
+                         QString::number(this->transform.m22())+
+                         QLatin1Char(',')+
+                         QString::number(this->transform.m31())+
+                         QLatin1Char(',')+
+                         QString::number(this->transform.m32())+
+                         QLatin1Char(')');
+        g.setAttribute(QLatin1String("transform"), translate + QLatin1Char(' ') + matrix);
 
         // 'defs' -> 'g' -> 'path'
         QDomDocument document = PhotoLayoutsEditor::pathToSvg(m_image_path);
-        QDomElement path = document.firstChildElement("path");
-        path.setAttribute("opacity", 100);
-        path.setAttribute("fill", "#ff0000");
+        QDomElement path      = document.firstChildElement(QLatin1String("path"));
+        path.setAttribute(QLatin1String("opacity"), 100);
+        path.setAttribute(QLatin1String("fill"), QLatin1String("#ff0000"));
         g.appendChild(path);
     }
     return document;
@@ -568,10 +576,10 @@ void PhotoItem::dragEnterEvent(QGraphicsSceneDragDropEvent * event)
 {
     const QMimeData * mimeData = event->mimeData();
     if ( PhotoLayoutsWindow::instance()->hasInterface() &&
-            mimeData->hasFormat("digikam/item-ids"))
+            mimeData->hasFormat(QLatin1String("digikam/item-ids")))
     {
         QList<QUrl> urls;
-        QByteArray ba = mimeData->data("digikam/item-ids");
+        QByteArray ba = mimeData->data(QLatin1String("digikam/item-ids"));
         QDataStream ds(&ba, QIODevice::ReadOnly);
         ds >> urls;
         event->setAccepted( (urls.count() == 1) );
@@ -580,7 +588,7 @@ void PhotoItem::dragEnterEvent(QGraphicsSceneDragDropEvent * event)
         else
             event->setDropAction( Qt::IgnoreAction );
     }
-    else if (mimeData->hasFormat("text/uri-list"))
+    else if (mimeData->hasFormat(QLatin1String("text/uri-list")))
     {
         QList<QUrl> urls = mimeData->urls();
         event->setAccepted( (urls.count() == 1) );
@@ -589,22 +597,22 @@ void PhotoItem::dragEnterEvent(QGraphicsSceneDragDropEvent * event)
         else
             event->setDropAction( Qt::IgnoreAction );
     }
-    this->setHighlightItem( event->isAccepted() );
+    setHighlightItem( event->isAccepted() );
 }
 
 void PhotoItem::dragLeaveEvent(QGraphicsSceneDragDropEvent * /*event*/)
 {
-    this->setHighlightItem(false);
+    setHighlightItem(false);
 }
 
 void PhotoItem::dragMoveEvent(QGraphicsSceneDragDropEvent * event)
 {
     const QMimeData * mimeData = event->mimeData();
     if ( PhotoLayoutsWindow::instance()->hasInterface() &&
-            mimeData->hasFormat("digikam/item-ids"))
+            mimeData->hasFormat(QLatin1String("digikam/item-ids")))
     {
         QList<QUrl> urls;
-        QByteArray ba = mimeData->data("digikam/item-ids");
+        QByteArray ba = mimeData->data(QLatin1String("digikam/item-ids"));
         QDataStream ds(&ba, QIODevice::ReadOnly);
         ds >> urls;
         event->setAccepted( (urls.count() == 1) );
@@ -613,7 +621,7 @@ void PhotoItem::dragMoveEvent(QGraphicsSceneDragDropEvent * event)
         else
             event->setDropAction( Qt::IgnoreAction );
     }
-    else if (mimeData->hasFormat("text/uri-list"))
+    else if (mimeData->hasFormat(QLatin1String("text/uri-list")))
     {
         QList<QUrl> urls = mimeData->urls();
         event->setAccepted( (urls.count() == 1) );
@@ -622,7 +630,7 @@ void PhotoItem::dragMoveEvent(QGraphicsSceneDragDropEvent * event)
         else
             event->setDropAction( Qt::IgnoreAction );
     }
-    this->setHighlightItem( event->isAccepted() );
+    setHighlightItem( event->isAccepted() );
 }
 
 void PhotoItem::dropEvent(QGraphicsSceneDragDropEvent * event)
@@ -630,23 +638,23 @@ void PhotoItem::dropEvent(QGraphicsSceneDragDropEvent * event)
     QImage img;
     const QMimeData * mimeData = event->mimeData();
     if ( PhotoLayoutsWindow::instance()->hasInterface() &&
-            mimeData->hasFormat("digikam/item-ids"))
+            mimeData->hasFormat(QLatin1String("digikam/item-ids")))
     {
         QList<QUrl> urls;
-        QByteArray ba = mimeData->data("digikam/item-ids");
+        QByteArray ba = mimeData->data(QLatin1String("digikam/item-ids"));
         QDataStream ds(&ba, QIODevice::ReadOnly);
         ds >> urls;
         if (urls.count() == 1)
-            this->setImageUrl(urls.at(0));
+            setImageUrl(urls.at(0));
     }
-    else if (mimeData->hasFormat("text/uri-list"))
+    else if (mimeData->hasFormat(QLatin1String("text/uri-list")))
     {
         QList<QUrl> urls = mimeData->urls();
         if (urls.count() == 1)
-            this->setImageUrl(urls.at(0));
+            setImageUrl(urls.at(0));
     }
 
-    this->setHighlightItem(false);
+    setHighlightItem(false);
     event->setAccepted( !img.isNull() );
 }
 
@@ -670,7 +678,7 @@ void PhotoItem::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
             d->m_complete_path_transform.translate(p.x(), p.y());
             m_complete_path.translate(p);
             PhotoItemImageMovedCommand::instance(this)->translate(p);
-            this->update();
+            update();
         }
         else
             PhotoItemImageMovedCommand::post();
@@ -710,8 +718,8 @@ void PhotoItem::setImage(const QImage & image)
         return;
     PhotoLayoutsWindow::instance()->beginUndoCommandGroup(i18n("Image Change"));
     PLE_PostUndoCommand(new PhotoItemPixmapChangeCommand(image, this));
-    if (this->cropShape().isEmpty())
-        this->setCropShape( m_image_path );
+    if (cropShape().isEmpty())
+        setCropShape( m_image_path );
     PLE_PostUndoCommand(new PhotoItemImagePathChangeCommand(this));
     PhotoLayoutsWindow::instance()->endUndoCommandGroup();
 }
@@ -723,8 +731,8 @@ void PhotoItem::imageLoaded(const QUrl & url, const QImage & image)
 
     PhotoLayoutsWindow::instance()->beginUndoCommandGroup(i18n("Image Change"));
     PLE_PostUndoCommand(new PhotoItemPixmapChangeCommand(image, this));
-    if (this->cropShape().isEmpty())
-        this->setCropShape( m_image_path );
+    if (cropShape().isEmpty())
+        setCropShape( m_image_path );
     PLE_PostUndoCommand(new PhotoItemImagePathChangeCommand(this));
     PLE_PostUndoCommand(new PhotoItemUrlChangeCommand(url, this));
     PhotoLayoutsWindow::instance()->endUndoCommandGroup();
@@ -748,7 +756,7 @@ void PhotoItem::updateIcon()
     QPainter p(&temp);
     if (!m_temp_image.isNull())
     {
-        p.fillPath(itemOpaqueArea(), QBrush(this->m_temp_image));
+        p.fillPath(itemOpaqueArea(), QBrush(m_temp_image));
         p.end();
         temp = temp.scaled(48,48,Qt::KeepAspectRatio);
         p.begin(&temp);
@@ -758,7 +766,7 @@ void PhotoItem::updateIcon()
     p.setPen(pen);
     p.drawRect( QRect(QPoint(0,0), temp.size()-QSize(1,1)) );
     p.end();
-    this->setIcon(QIcon(temp));
+    setIcon(QIcon(temp));
 }
 
 void PhotoItem::fitToRect(const QRect & rect)
@@ -775,11 +783,11 @@ void PhotoItem::fitToRect(const QRect & rect)
     QPainterPath p;
     p.addRect(r);
     m_image_path = p;
-    this->m_image_path = m_image_path.simplified();
-    this->recalcShape();
+    m_image_path = m_image_path.simplified();
+    recalcShape();
 
     // Create effective pixmap
-    this->refresh();
+    refresh();
 }
 
 void PhotoItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
@@ -787,7 +795,7 @@ void PhotoItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * optio
     painter->fillPath(itemOpaqueArea(), EMPTY_FILL_COLOR);
     if (!m_temp_image.isNull())
     {
-        QBrush b(this->m_temp_image);
+        QBrush b(m_temp_image);
         b.setTransform(d->m_brush_transform);
         painter->fillPath(itemOpaqueArea() & m_complete_path, b);
     }
@@ -796,7 +804,7 @@ void PhotoItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * optio
     // Highlight item
     if (m_highlight)
     {
-        painter->fillPath(this->shape(), QColor(255,0,0,100));
+        painter->fillPath(shape(), QColor(255,0,0,100));
     }
 }
 
@@ -804,13 +812,13 @@ void PhotoItem::refreshItem()
 {
     if (d->image().isNull())
         return;
-    this->m_temp_image = effectsGroup()->apply( d->image().scaled(this->m_image_path.boundingRect().size().toSize(),
+    m_temp_image = effectsGroup()->apply( d->image().scaled(m_image_path.boundingRect().size().toSize(),
                                                               Qt::KeepAspectRatioByExpanding,
                                                               Qt::SmoothTransformation));
 
-    this->updateIcon();
-    this->recalcShape();
-    this->update();
+    updateIcon();
+    recalcShape();
+    update();
 }
 
 QtAbstractPropertyBrowser * PhotoItem::propertyBrowser()
@@ -837,9 +845,9 @@ void PhotoItem::setupItem(const QImage & image)
         fitToRect(image.rect());
 
     // Create effective pixmap
-    this->refresh();
+    refresh();
 
-    this->setFlag(QGraphicsItem::ItemIsSelectable);
+    setFlag(QGraphicsItem::ItemIsSelectable);
 }
 
 void PhotoItem::recalcShape()
@@ -858,5 +866,7 @@ void PhotoItem::setHighlightItem(bool isHighlighted)
     if (m_highlight == isHighlighted)
         return;
     m_highlight = isHighlighted;
-    this->update();
+    update();
 }
+
+} // namespace PhotoLayoutsEditor
