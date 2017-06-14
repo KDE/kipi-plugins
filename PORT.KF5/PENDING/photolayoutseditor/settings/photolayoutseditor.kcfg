@@ -3,7 +3,7 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
                           http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
-  <kcfgfile/>
+  <kcfgfile />
 
   <signal name="antialiasingChanged">
     <argument type="bool">antialiasing</argument>
@@ -47,15 +47,11 @@
     </entry>
     <entry name="horizontalGrid" type="Double">
       <label>Horizontal distance</label>
-      <min>1.0</min>
-      <max>999</max>
       <default>25.0</default>
       <emit signal="horizontalGridChanged" />
     </entry>
     <entry name="verticalGrid" type="Double">
       <label>Vertical distance</label>
-      <min>1.0</min>
-      <max>999</max>
       <default>25.0</default>
       <emit signal="verticalGridChanged" />
     </entry>

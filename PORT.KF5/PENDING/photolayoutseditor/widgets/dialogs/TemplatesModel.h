@@ -52,12 +52,12 @@ namespace PhotoLayoutsEditor
                 if (fpath.isEmpty())
                     return;
 
-		// Try to read preview image
+                // Try to read preview image
                 bool render = false;
-		QFile f(path);
-		QDomDocument document;
+                QFile f(path);
+                QDomDocument document;
                 QString imageAttribute;
-		document.setContent(&f, true);
+                document.setContent(&f, true);
 
                 QDomElement svg = document.firstChildElement(QLatin1String("svg"));
                 if  (svg.isNull())
@@ -68,8 +68,10 @@ namespace PhotoLayoutsEditor
                     return;
 
                 QDomElement defs = g.firstChildElement(QLatin1String("defs"));
+
                 while(!defs.isNull() && (defs.attribute(QLatin1String("id")) != QLatin1String("Preview")))
                     defs = defs.nextSiblingElement(QLatin1String("defs"));
+
                 QDomElement img = defs.firstChildElement(QLatin1String("image"));
 
                 if (!img.isNull() && !(imageAttribute = img.text()).isEmpty())
@@ -132,11 +134,6 @@ namespace PhotoLayoutsEditor
             virtual QModelIndex parent(const QModelIndex & child) const;
 
             void addTemplate(const QString & path, const QString & name);
-
-        Q_SIGNALS:
-
-        public Q_SLOTS:
-
     };
 }
 

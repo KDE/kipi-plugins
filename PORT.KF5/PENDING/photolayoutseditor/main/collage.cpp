@@ -8,7 +8,7 @@
  * 
  *
  * Copyright (C) 2011      by Lukasz Spas <lukasz dot spas at gmail dot com>
- * Copyright (C) 2009-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2017 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -23,42 +23,47 @@
  *
  * ============================================================ */
 
-#include "photolayoutswindow.h"
-#include "PLEAboutData.h"
+// Qt Includes
 
-#include <QDesktopWidget>
-#include <QResource>
 #include <QString>
-
-#include <klocalizedstring.h>
 #include <QApplication>
-#include <kcmdlineargs.h>
-#include <kaboutdata.h>
 #include <QIcon>
+#include <QCommandLineParser>
+
+// Local includes
+
+#include "metaengine.h"
+#include "photolayoutswindow.h"
 
 using namespace PhotoLayoutsEditor;
+using namespace Digikam;
 
 int main(int argc, char* argv[])
 {
-    PLEAboutData aboutData;
-    aboutData.setAppName("photolayoutseditor");
-    aboutData.setCatalogName("kipiplugin_photolayouteditor");
+    QApplication app(argc, argv);
 
-    KCmdLineArgs::init(argc,argv,&aboutData);
-    KCmdLineOptions options;
-    options.add("+file", ki18n("Input file"));
-    KCmdLineArgs::addCmdLineOptions(options);
+    QCommandLineParser parser;
+    parser.addHelpOption();
+    parser.addPositionalArgument(QLatin1String("files"), QLatin1String("File(s) to open"), QLatin1String("+[file(s)]"));
+    parser.process(app);
 
-    KApplication app;
-    aboutData.setProgramLogo(QIcon::fromTheme("photolayoutseditor"));
+    MetaEngine::initializeExiv2();
 
-    PhotoLayoutsWindow* w = PhotoLayoutsEditor::instance(0);
+    QList<QUrl> urlList;
+    const QStringList args = parser.positionalArguments();
+
+    for (auto& arg : args)
+    {
+        urlList.append(QUrl::fromLocalFile(arg));
+    }
+
+    PhotoLayoutsWindow* const w = PhotoLayoutsWindow::instance(0);
     w->setAttribute(Qt::WA_DeleteOnClose, true);
 
-    KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
-    if (args->count())
+    if (!urlList.isEmpty())
     {
-        QUrl url = args->url(0);
+        QUrl url = urlList.first();
+
         if (url.isValid())
             w->open(url);
     }
@@ -66,6 +71,7 @@ int main(int argc, char* argv[])
     w->show();
 
     int result = app.exec();
+    MetaEngine::cleanupExiv2();
 
     return result;
 }

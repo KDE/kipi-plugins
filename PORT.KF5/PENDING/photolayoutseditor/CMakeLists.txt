@@ -8,11 +8,17 @@ if (POLICY CMP0063)
     cmake_policy(SET CMP0063 NEW)
 endif (POLICY CMP0063)
 
-#add_subdirectory(extra/qtpropertybrowser)
+find_package(Qt5 ${QT_MIN_VERSION}
+             OPTIONAL_COMPONENTS
+             Svg
+)
+
+
 add_subdirectory(resources/app)
 add_subdirectory(data)
 
 include_directories($<TARGET_PROPERTY:Qt5::Xml,INTERFACE_INCLUDE_DIRECTORIES>
+                    $<TARGET_PROPERTY:Qt5::Svg,INTERFACE_INCLUDE_DIRECTORIES>
                     $<TARGET_PROPERTY:Qt5::Gui,INTERFACE_INCLUDE_DIRECTORIES>
                     $<TARGET_PROPERTY:Qt5::Core,INTERFACE_INCLUDE_DIRECTORIES>
                     $<TARGET_PROPERTY:Qt5::Widgets,INTERFACE_INCLUDE_DIRECTORIES>
@@ -134,19 +140,34 @@ kconfig_add_kcfg_files(photolayoutseditor_SRCS GENERATE_MOC settings/PLEConfigSk
 add_library(photolayoutseditor_src OBJECT ${photolayoutseditor_SRCS})
 
 install(FILES settings/photolayoutseditor.kcfg DESTINATION ${KCFG_INSTALL_DIR})
-install(PROGRAMS main/photolayoutseditor.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
-install(FILES main/photolayoutseditorui.rc DESTINATION ${DATA_INSTALL_DIR}/photolayoutseditor)
+#install(PROGRAMS main/photolayoutseditor.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+install(FILES main/photolayoutseditorui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/photolayoutseditor)
 install(FILES effects/photolayoutseditoreffectplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
 install(FILES borders/photolayoutseditorborderplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
 
 # =======================================================
 # Stand-alone version of PhotoLayoutsEditor
 
-#set(photolayoutseditor_SRCS main/main.cpp)
+set(collage_SRCS main/collage.cpp)
 
 #file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/./resources/app/*photolayoutseditor.png")
 #ecm_add_app_icon(photolayoutseditor_SRCS ICONS ${ICONS_SRCS})
 
-#add_executable(photolayoutseditor ${photolayoutseditor_SRCS})
+set(DIGIKAMCORE_OBJECTS
+    ${DIGIKAMCORE_OBJECTS}
+)
 
-#target_link_libraries(photolayoutseditor libphotolayoutseditor)
+add_executable(collage
+               ${collage_SRCS}
+               $<TARGET_OBJECTS:photolayoutseditor_src>
+)
+
+target_link_libraries(collage
+
+                      digikamcore
+                      libdng
+
+                      Qt5::Gui
+                      Qt5::Xml
+                      Qt5::Svg
+)
