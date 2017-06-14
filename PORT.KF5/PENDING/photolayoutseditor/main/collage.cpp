@@ -29,11 +29,19 @@
 #include <QApplication>
 #include <QIcon>
 #include <QCommandLineParser>
+#include <QCommandLineOption>
+
+// KDE includes
+
+#include <klocalizedstring.h>
+#include <kaboutdata.h>
 
 // Local includes
 
 #include "metaengine.h"
 #include "photolayoutswindow.h"
+#include "daboutdata.h"
+#include "digikam_version.h"
 
 using namespace PhotoLayoutsEditor;
 using namespace Digikam;
@@ -42,10 +50,28 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
+    KAboutData aboutData(QString::fromLatin1("photolayoutseditor"), // component name
+                         i18n("Photo Layout Editor"),               // display name
+                         digiKamVersion());                         // NOTE: photolayouteditor version = digiKam version
+
+    aboutData.setShortDescription(DAboutData::digiKamSlogan());;
+    aboutData.setLicense(KAboutLicense::GPL);
+    aboutData.setCopyrightStatement(DAboutData::copyright());
+    aboutData.setOtherText(additionalInformation());
+    aboutData.setHomepage(DAboutData::webProjectUrl().url());
+    aboutData.setProductName(QByteArray("digikam/photolayoutseditor"));   // For bugzilla
+
+    DAboutData::authorsRegistration(aboutData);
+
+
     QCommandLineParser parser;
+    KAboutData::setApplicationData(aboutData);
+    parser.addVersionOption();
     parser.addHelpOption();
+    aboutData.setupCommandLine(&parser);
     parser.addPositionalArgument(QLatin1String("files"), QLatin1String("File(s) to open"), QLatin1String("+[file(s)]"));
     parser.process(app);
+    aboutData.processCommandLine(&parser);
 
     MetaEngine::initializeExiv2();
 
@@ -56,6 +82,8 @@ int main(int argc, char* argv[])
     {
         urlList.append(QUrl::fromLocalFile(arg));
     }
+
+    parser.clearPositionalArguments();
 
     PhotoLayoutsWindow* const w = PhotoLayoutsWindow::instance(0);
     w->setAttribute(Qt::WA_DeleteOnClose, true);
