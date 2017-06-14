@@ -723,7 +723,7 @@ bool PhotoLayoutsWindow::queryClose()
 
 void PhotoLayoutsWindow::settings()
 {
-    if ( KConfigDialog::showDialog( "settings" ) )
+    if ( KConfigDialog::showDialog( QLatin1String("settings") ) )
         return;
 
     PLEConfigDialog * dialog = new PLEConfigDialog(this);
