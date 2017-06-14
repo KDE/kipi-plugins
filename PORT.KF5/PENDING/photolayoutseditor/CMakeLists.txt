@@ -129,7 +129,7 @@ set(photolayoutseditor_RCS
 
 qt5_add_resources(photolayoutseditor_SRCS ${photolayoutseditor_RCS})
 
-kconfig_add_kcfg_files(photolayoutseditor_SRCS settings/PLEConfigSkeleton.kcfgc)
+kconfig_add_kcfg_files(photolayoutseditor_SRCS GENERATE_MOC settings/PLEConfigSkeleton.kcfgc)
 
 add_library(photolayoutseditor_src OBJECT ${photolayoutseditor_SRCS})
 

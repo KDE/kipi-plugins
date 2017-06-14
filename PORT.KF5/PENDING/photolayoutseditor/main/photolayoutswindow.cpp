@@ -63,6 +63,7 @@
 // Local includes
 
 #include "digikam_debug.h"
+#include "digikam_globals.h"
 #include "imagedialog.h"
 #include "dmessagebox.h"
 #include "CanvasSizeDialog.h"
@@ -232,26 +233,27 @@ void PhotoLayoutsWindow::setItemsList(const QList<QUrl> & images)
 void PhotoLayoutsWindow::setupActions()
 {
     d->openNewFileAction = KStandardAction::openNew(this, SLOT(open()), actionCollection());
-//    d->openNewFileAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_N));
     actionCollection()->addAction(QLatin1String("open_new"), d->openNewFileAction);
     //------------------------------------------------------------------------
     d->openFileAction = KStandardAction::open(this, SLOT(openDialog()), actionCollection());
-//    d->openFileAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_O));
     actionCollection()->addAction(QLatin1String("open"), d->openFileAction);
     //------------------------------------------------------------------------
     d->openRecentFilesMenu = KStandardAction::openRecent(this, SLOT(open(QUrl)), actionCollection());
     QList<QUrl> urls = PLEConfigSkeleton::recentFiles();
+
     foreach(QUrl url, urls)
+    {
         d->openRecentFilesMenu->addUrl(url);
+    }
+
     connect(d->openRecentFilesMenu, SIGNAL(recentListCleared()), this, SLOT(clearRecentList()));
     actionCollection()->addAction(QLatin1String("open_recent"), d->openRecentFilesMenu);
     //------------------------------------------------------------------------
     d->saveAction = KStandardAction::save(this, SLOT(save()), actionCollection());
-//    d->saveAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_S));
     actionCollection()->addAction(QLatin1String("save"), d->saveAction);
     //------------------------------------------------------------------------
     d->saveAsAction = KStandardAction::saveAs(this, SLOT(saveAs()), actionCollection());
-    d->saveAsAction->setShortcut(KShortcut(Qt::SHIFT + Qt::CTRL + Qt::Key_S));
+    actionCollection()->setDefaultShortcut(d->saveAsAction, Qt::SHIFT + Qt::CTRL + Qt::Key_S);
     actionCollection()->addAction(QLatin1String("save_as"), d->saveAsAction);
     //------------------------------------------------------------------------
     d->saveAsTemplateAction = new QAction(i18nc("Saves canvas as a template file...", "Save As Template..."), actionCollection());
@@ -259,32 +261,27 @@ void PhotoLayoutsWindow::setupActions()
     actionCollection()->addAction(QLatin1String("save_as_template"), d->saveAsTemplateAction);
     //------------------------------------------------------------------------
     d->exportFileAction = new QAction(i18nc("Export current frame layout to image file...", "Export..."), actionCollection());
-    d->exportFileAction->setShortcut(KShortcut(Qt::SHIFT + Qt::CTRL + Qt::Key_E));
+    actionCollection()->setDefaultShortcut(d->exportFileAction, Qt::SHIFT + Qt::CTRL + Qt::Key_E);
     connect(d->exportFileAction, SIGNAL(triggered()), this, SLOT(exportFile()));
     actionCollection()->addAction(QLatin1String("export"), d->exportFileAction);
     //------------------------------------------------------------------------
     d->printPreviewAction = KStandardAction::printPreview(this, SLOT(printPreview()), actionCollection());
-    d->printPreviewAction->setShortcut(KShortcut(Qt::SHIFT + Qt::CTRL + Qt::Key_P));
+    actionCollection()->setDefaultShortcut(d->printPreviewAction, Qt::SHIFT + Qt::CTRL + Qt::Key_P);
     actionCollection()->addAction(QLatin1String("print_preview"), d->printPreviewAction);
     //------------------------------------------------------------------------
     d->printAction = KStandardAction::print(this, SLOT(print()), actionCollection());
-//    d->printAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_P));
     actionCollection()->addAction(QLatin1String("print"), d->printAction);
     //------------------------------------------------------------------------
     d->closeAction = KStandardAction::close(this, SLOT(closeDocument()), actionCollection());
-//    d->closeAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_Q));
     actionCollection()->addAction(QLatin1String("close"), d->closeAction);
     //------------------------------------------------------------------------
     d->quitAction = KStandardAction::quit(this, SLOT(close()), actionCollection());
-//    d->quitAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_Q));
     actionCollection()->addAction(QLatin1String("quit"), d->quitAction);
     //------------------------------------------------------------------------
     d->undoAction = KStandardAction::undo(0, 0, actionCollection());
-//    d->undoAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_Z));
     actionCollection()->addAction(QLatin1String("undo"), d->undoAction);
     //------------------------------------------------------------------------
     d->redoAction = KStandardAction::redo(0, 0, actionCollection());
-//    d->redoAction->setShortcut(KShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Z));
     actionCollection()->addAction(QLatin1String("redo"), d->redoAction);
     //------------------------------------------------------------------------
     d->settingsAction = KStandardAction::preferences(this, SLOT(settings()), actionCollection());
@@ -295,7 +292,7 @@ void PhotoLayoutsWindow::setupActions()
     actionCollection()->addAction(QLatin1String("new_image"), d->addImageAction);
     //------------------------------------------------------------------------
     d->showGridToggleAction = new KToggleAction(i18nc("View grid lines...", "Show..."), actionCollection());
-    d->showGridToggleAction->setShortcut(KShortcut(Qt::SHIFT + Qt::CTRL + Qt::Key_G));
+    actionCollection()->setDefaultShortcut(d->showGridToggleAction, Qt::SHIFT + Qt::CTRL + Qt::Key_G);
     d->showGridToggleAction->setChecked( PLEConfigSkeleton::self()->showGrid() );
     connect(d->showGridToggleAction, SIGNAL(triggered(bool)), this, SLOT(setGridVisible(bool)));
     actionCollection()->addAction(QLatin1String("grid_toggle"), d->showGridToggleAction);
@@ -383,12 +380,10 @@ void PhotoLayoutsWindow::createWidgets()
     d->centralWidget->setLayout(new QHBoxLayout(d->centralWidget));
     d->centralWidget->layout()->setContentsMargins(QMargins());
     d->centralWidget->layout()->setSpacing(0);
-    this->setCentralWidget(d->centralWidget);
+    setCentralWidget(d->centralWidget);
 
     d->statusBar = new PLEStatusBar(this);
-    this->setStatusBar(d->statusBar);
-
-    //this->open(QUrl("/home/coder89/Desktop/second.ple"));   /// TODO : Uncomment and set correct path when delevoping
+    setStatusBar(d->statusBar);
 }
 
 void PhotoLayoutsWindow::createCanvas(const CanvasSize & size)
@@ -609,38 +604,47 @@ void PhotoLayoutsWindow::exportFile()
     if (!m_canvas)
         return;
 
-    QUrl url = ImageDialog::getImageURL(this, QUrl());
+    QString all;
+    QStringList list                       = supportedImageMimeTypes(QIODevice::WriteOnly, all);
+    QFileDialog* const imageFileSaveDialog = new QFileDialog(this);
+    imageFileSaveDialog->setWindowTitle(i18n("New Image File Name"));
+    imageFileSaveDialog->setAcceptMode(QFileDialog::AcceptSave);
+    imageFileSaveDialog->setFileMode(QFileDialog::AnyFile);
+    imageFileSaveDialog->setNameFilters(list);
 
-    if (!url.isEmpty())
+    int result       = imageFileSaveDialog->exec();
+    QList<QUrl> urls = imageFileSaveDialog->selectedUrls();
+    QString ext      = imageFileSaveDialog->selectedNameFilter().section(QLatin1String("*."), 1, 1);
+    ext              = ext.left(ext.length() - 1);
+
+    if (result == QFileDialog::Accepted && !urls.isEmpty() && !ext.isEmpty())
     {
-        const char * format = ImageDialog(this, QUrl()).fileFormats();
+        QUrl url = urls.first();
 
-        if (format)
+        QPixmap image(m_canvas->sceneRect().size().toSize());
+        image.fill(Qt::transparent);
+        m_canvas->renderCanvas(&image);
+        QImageWriter writer(url.toLocalFile());
+        writer.setFormat(ext.toLatin1());
+
+        if (!writer.canWrite())
         {
-            QPixmap image(m_canvas->sceneRect().size().toSize());
-            image.fill(Qt::transparent);
-            m_canvas->renderCanvas(&image);
-            QImageWriter writer(url);
-            writer.setFormat(format);
-            if (!writer.canWrite())
-            {
-                QMessageBox::critical(this, i18n("Error"),
-                                      i18n("Image can't be saved in selected file."));
-            }
-            if (!writer.write(image.toImage()))
-            {
-                DMessageBox::showInformationList(
-                    qApp->style()->standardIcon(QStyle::SP_MessageBoxCritical,
-                                                0, qApp->activeWindow()),
-                    this,
-                    i18n("Unexpected error while saving an image."),
-                    QString(),
-                    QStringList() << writer.errorString());
-            }
+            QMessageBox::critical(this, i18n("Error"),
+                                    i18n("Image can't be saved in selected file."));
+        }
+
+        if (!writer.write(image.toImage()))
+        {
+            DMessageBox::showInformationList(
+                QMessageBox::Critical,
+                qApp->activeWindow(),
+                qApp->applicationName(),
+                i18n("Unexpected error while saving an image."),
+                QStringList() << writer.errorString());
         }
     }
 
-    delete imageDialog;
+    delete imageFileSaveDialog;
 }
 
 void PhotoLayoutsWindow::printPreview()
@@ -676,14 +680,19 @@ bool PhotoLayoutsWindow::closeDocument()
         this->addRecentFile(m_canvas->file());
 
         // Try to save unsaved changes
-        int saving = KMessageBox::No;
+        int saving = QMessageBox::No;
+
         if (!m_canvas->isSaved())
-            saving = KMessageBox::warningYesNoCancel( this, i18n("Save changes to current frame?"));
+            saving = QMessageBox::question(this,
+                                           i18n("Save"),
+                                           i18n("Save changes to current frame?"),
+                                           QMessageBox::StandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel));
+
         switch (saving)
         {
-            case KMessageBox::Yes:
+            case QMessageBox::Yes:
                 save();
-            case KMessageBox::No:
+            case QMessageBox::No:
                 d->tree->setModel(0);
                 m_canvas->deleteLater();
                 m_canvas = 0;
@@ -693,6 +702,7 @@ bool PhotoLayoutsWindow::closeDocument()
                 return false;
         }
     }
+
     refreshActions();
     return true;
 }
@@ -725,7 +735,7 @@ void PhotoLayoutsWindow::loadNewImage()
     if (!m_canvas)
         return;
 
-    QList<QUrl> urls = Digikam::ImageDialog::getImageUrls(this, QUrl());
+    QList<QUrl> urls = ImageDialog::getImageURLs(this, QUrl());
     if (!urls.isEmpty())
         m_canvas->addImages(urls);
 }
@@ -762,7 +772,7 @@ void PhotoLayoutsWindow::changeCanvasSize()
     int result            = ccd->exec();
     CanvasSize size       = ccd->canvasSize();
 
-    if (result == KDialog::Accepted)
+    if (result == QDialog::Accepted)
     {
         if (size.isValid())
         {
@@ -773,7 +783,9 @@ void PhotoLayoutsWindow::changeCanvasSize()
             }
         }
         else
-            KMessageBox::error(this, i18n("Invalid image size."));
+        {
+            QMessageBox::critical(this, i18n("Error"), i18n("Invalid image size."));
+        }
     }
 
     delete ccd;
