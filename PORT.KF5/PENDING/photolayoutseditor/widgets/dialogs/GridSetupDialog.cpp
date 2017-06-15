@@ -85,10 +85,6 @@ GridSetupDialog::GridSetupDialog(QWidget * parent) :
 
     connect(buttons->button(QDialogButtonBox::Cancel), SIGNAL(clicked()),
             this, SLOT(reject()));
-
-    centralWidget->setLayout(layout);
-
-    setFixedSize(sizeHint());
 }
 
 void GridSetupDialog::setHorizontalDistance(qreal value)

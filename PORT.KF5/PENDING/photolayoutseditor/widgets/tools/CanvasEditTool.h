@@ -5,7 +5,6 @@
  *
  * Date        : 2011-09-01
  * Description : a plugin to create photo layouts by fusion of several images.
- * 
  *
  * Copyright (C) 2011      by Lukasz Spas <lukasz dot spas at gmail dot com>
  * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
@@ -23,11 +22,10 @@
  *
  * ============================================================ */
 
-#ifndef CANVASEDITTOOL_H
-#define CANVASEDITTOOL_H
+#ifndef CANVAS_EDIT_TOOL_H
+#define CANVAS_EDIT_TOOL_H
 
 #include <QWidget>
-
 #include <QComboBox>
 
 #include "AbstractTool.h"
@@ -101,4 +99,4 @@ namespace PhotoLayoutsEditor
     };
 }
 
-#endif // CANVASEDITTOOL_H
+#endif // CANVAS_EDIT_TOOL_H

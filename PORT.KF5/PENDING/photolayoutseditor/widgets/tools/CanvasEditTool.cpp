@@ -5,7 +5,6 @@
  *
  * Date        : 2011-09-01
  * Description : a plugin to create photo layouts by fusion of several images.
- * 
  *
  * Copyright (C) 2011      by Lukasz Spas <lukasz dot spas at gmail dot com>
  * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
@@ -618,7 +617,7 @@ void CanvasEditTool::setupGUI()
     }
 
     connect(d->background_type_widget, SIGNAL(currentIndexChanged(QString)), this, SLOT(backgroundTypeChanged(QString)));
-    connect(d->background_color, SIGNAL(changed(QColor)), this, SLOT(solidColorChanged(QColor)));
+    connect(d->background_color, SIGNAL(signalColorSelected(QColor)), this, SLOT(solidColorChanged(QColor)));
     connect(d->background_image_label, SIGNAL(clicked()), this, SLOT(imageUrlRequest()));
     connect(d->background_image_scalling, SIGNAL(currentIndexChanged(QString)), this, SLOT(imageScallingChanged(QString)));
     connect(d->background_image_tiled, SIGNAL(stateChanged(int)), this, SLOT(imageTiledChanged(int)));
@@ -626,9 +625,9 @@ void CanvasEditTool::setupGUI()
     connect(d->background_image_VAlign, SIGNAL(currentIndexChanged(int)), this, SLOT(imageVerticalAlignmentChanged(int)));
     connect(d->background_image_width, SIGNAL(editingFinished()), this, SLOT(imageWidthChanged()));
     connect(d->background_image_height, SIGNAL(editingFinished()), this, SLOT(imageHeightChanged()));
-    connect(d->background_image_color, SIGNAL(changed(QColor)), this, SLOT(imageBackgroundColorChanged(QColor)));
-    connect(d->background_pattern_color1, SIGNAL(changed(QColor)), this, SLOT(patternFirstColorChanged(QColor)));
-    connect(d->background_pattern_color2, SIGNAL(changed(QColor)), this, SLOT(patternSecondColorChanged(QColor)));
+    connect(d->background_image_color, SIGNAL(signalColorSelected(QColor)), this, SLOT(imageBackgroundColorChanged(QColor)));
+    connect(d->background_pattern_color1, SIGNAL(signalColorSelected(QColor)), this, SLOT(patternFirstColorChanged(QColor)));
+    connect(d->background_pattern_color2, SIGNAL(signalColorSelected(QColor)), this, SLOT(patternSecondColorChanged(QColor)));
     connect(d->background_pattern_type, SIGNAL(currentPatternChanged(Qt::BrushStyle)), this, SLOT(patternStyleChanged(Qt::BrushStyle)));
     connect(&(d->mouse_listener), SIGNAL(mousePressed(QPointF)), this, SLOT(readMousePosition(QPointF)));
     connect(d->border_image_label, SIGNAL(clicked()), this, SLOT(borderImageUrlRequest()));

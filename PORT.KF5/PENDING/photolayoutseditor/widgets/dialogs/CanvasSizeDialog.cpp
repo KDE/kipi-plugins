@@ -331,7 +331,7 @@ void CanvasSizeDialog::setupDialog(const QSizeF & size,
         tempResolutionUnits = CanvasSize::resolutionUnitName(CanvasSize::PixelsPerInch);;
 
     QWidget * main        = new QWidget(this);
-    QVBoxLayout * vLayout = new  QVBoxLayout(main);
+    QVBoxLayout * vLayout = new QVBoxLayout(main);
     setLayout(vLayout);
 
     /// ----------------------- TEMPLATES PART -----------------------
