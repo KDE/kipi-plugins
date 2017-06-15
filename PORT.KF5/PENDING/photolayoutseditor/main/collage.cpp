@@ -69,7 +69,7 @@ int main(int argc, char* argv[])
     parser.addVersionOption();
     parser.addHelpOption();
     aboutData.setupCommandLine(&parser);
-    parser.addPositionalArgument(QLatin1String("files"), QLatin1String("File(s) to open"), QLatin1String("+[file(s)]"));
+    parser.addPositionalArgument(QLatin1String("file"), QLatin1String("Template file to open"), QLatin1String("+[file]"));
     parser.process(app);
     aboutData.processCommandLine(&parser);
 

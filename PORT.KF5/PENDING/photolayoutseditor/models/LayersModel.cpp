@@ -53,7 +53,7 @@ LayersModel::~LayersModel()
     delete root;
 }
 
-Qt::DropActions LayersModel::supportedDragActions()
+Qt::DropActions LayersModel::supportedDragActions() const
 {
     return Qt::MoveAction;
 }

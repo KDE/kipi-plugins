@@ -344,6 +344,7 @@ void QtGroupBoxPropertyBrowserPrivate::propertyRemoved(QtBrowserItem *index)
         if (!m_recreateQueue.contains(parentItem))
             m_recreateQueue.append(parentItem);
         updateLater();
+        (void)w;
     }
     m_recreateQueue.removeAll(item);
 

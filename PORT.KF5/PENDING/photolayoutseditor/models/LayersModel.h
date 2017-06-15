@@ -76,13 +76,24 @@ class LayersModel : public QAbstractItemModel
         bool insertRows(int row, int count, const QModelIndex& parent);
         LayersModelItem* getItem(const QModelIndex& index) const;
         bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex());
-        bool moveRows(int sourcePosition, const QModelIndex& sourceParent, int destPosition, const QModelIndex& destinationParent);
-        bool moveRows(const QModelIndex& sourceIndex, const QModelIndex& sourdeParent, const QModelIndex& destinationIndex, const QModelIndex& destinationParent);
-        bool moveRows(int sourcePosition, int sourceCount, const QModelIndex& sourceParent, int destPosition, const QModelIndex& destinationParent);
-        bool moveRows(const QModelIndex& start1, const QModelIndex& end1, const QModelIndex& parent1, const QModelIndex& start2, const QModelIndex& parent2);
+
+        bool moveRows(int sourcePosition, const QModelIndex& sourceParent,
+                      int destPosition, const QModelIndex& destinationParent);
+
+        bool moveRows(const QModelIndex& sourceIndex, const QModelIndex& sourdeParent,
+                      const QModelIndex& destinationIndex, const QModelIndex& destinationParent);
+
+        bool moveRows(int sourcePosition, int sourceCount,
+                      const QModelIndex& sourceParent, int destPosition,
+                      const QModelIndex& destinationParent);
+
+        bool moveRows(const QModelIndex& start1, const QModelIndex& end1,
+                      const QModelIndex& parent1, const QModelIndex& start2,
+                      const QModelIndex& parent2);
+
         void updateModel(const QModelIndex& topLeft, const QModelIndex& bottomRight);
 
-        Qt::DropActions supportedDragActions();
+        Qt::DropActions supportedDragActions() const;
 
     Q_SIGNALS:
 

@@ -39,10 +39,12 @@
 
 #include "CanvasSize.h"
 #include "global.h"
+#include "digikam_debug.h"
 
-using namespace PhotoLayoutsEditor;
+namespace PhotoLayoutsEditor
+{
 
-class PhotoLayoutsEditor::CanvasSizeDialogPrivate
+class CanvasSizeDialogPrivate
 {
     public:
         CanvasSizeDialogPrivate() :
@@ -125,11 +127,11 @@ class PhotoLayoutsEditor::CanvasSizeDialogPrivate
         QMap<QString,QPrinter::PaperSize> paperSizes;
 };
 
-int CanvasSizeDialogPrivate::WIDTH = 800;
-int CanvasSizeDialogPrivate::HEIGHT = 800;
-QString CanvasSizeDialogPrivate::currentSizeUnit = QLatin1String("");
-qreal CanvasSizeDialogPrivate::WIDTH_RES = 72;
-qreal CanvasSizeDialogPrivate::HEIGHT_RES = 72;
+int     CanvasSizeDialogPrivate::WIDTH                 = 800;
+int     CanvasSizeDialogPrivate::HEIGHT                = 800;
+QString CanvasSizeDialogPrivate::currentSizeUnit       = QLatin1String("");
+qreal   CanvasSizeDialogPrivate::WIDTH_RES             = 72;
+qreal   CanvasSizeDialogPrivate::HEIGHT_RES            = 72;
 QString CanvasSizeDialogPrivate::currentResolutionUnit = QLatin1String("");
 
 void CanvasSizeDialogPrivate::swapSizes()
@@ -159,130 +161,135 @@ void CanvasSizeDialogPrivate::updateSizeLabel()
 void CanvasSizeDialogPrivate::setPaper(QPrinter::PageSize pageSize)
 {
     QSizeF result;
+
     switch (pageSize)
     {
-    case QPrinter::A0:
-        result = QSizeF(841,1189);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
-        break;
-    case QPrinter::A1:
-        result = QSizeF(594,841);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
-        break;
-    case QPrinter::A2:
-        result = QSizeF(420,594);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
-        break;
-    case QPrinter::A3:
-        result = QSizeF(297,420);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
-        break;
-    case QPrinter::A4:
-        result = QSizeF(210,297);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
-        break;
-    case QPrinter::A5:
-        result = QSizeF(148,210);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
-        break;
-    case QPrinter::A6:
-        result = QSizeF(105,148);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
-        break;
-    case QPrinter::A7:
-        result = QSizeF(74,105);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
-        break;
-    case QPrinter::A8:
-        result = QSizeF(52,74);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
-        break;
-    case QPrinter::A9:
-        result = QSizeF(37,52);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
-        break;
-    case QPrinter::B0:
-        result = QSizeF(1030,1456);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
-        break;
-    case QPrinter::B1:
-        result = QSizeF(728,1030);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
-        break;
-    case QPrinter::B10:
-        result = QSizeF(32,45);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
-        break;
-    case QPrinter::B2:
-        result = QSizeF(515,728);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
-        break;
-    case QPrinter::B3:
-        result = QSizeF(364,515);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
-        break;
-    case QPrinter::B4:
-        result = QSizeF(257,364);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
-        break;
-    case QPrinter::B5:
-        result = QSizeF(182,257);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
-        break;
-    case QPrinter::B6:
-        result = QSizeF(128,182);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
-        break;
-    case QPrinter::B7:
-        result = QSizeF(91,128);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
-        break;
-    case QPrinter::B8:
-        result = QSizeF(64,91);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
-        break;
-    case QPrinter::B9:
-        result = QSizeF(45,64);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
-        break;
-    case QPrinter::C5E:
-        result = QSizeF(163,229);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
-        break;
-    case QPrinter::Comm10E:
-        result = QSizeF(105,241);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
-        break;
-    case QPrinter::DLE:
-        result = QSizeF(110,220);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
-        break;
-    case QPrinter::Executive:
-        result = QSizeF(7.5,10);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Inches) );
-        break;
-    case QPrinter::Folio:
-        result = QSizeF(210,330);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
-        break;
-    case QPrinter::Ledger:
-        result = QSizeF(432,279);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
-        break;
-    case QPrinter::Legal:
-        result = QSizeF(8.5,14);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Inches) );
-        break;
-    case QPrinter::Letter:
-        result = QSizeF(8.5,11);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Inches) );
-        break;
-    case QPrinter::Tabloid:
-        result = QSizeF(279,432);
-        sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
-        break;
-    case QPrinter::Custom:
-        return;
+        case QPrinter::A0:
+            result = QSizeF(841,1189);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
+            break;
+        case QPrinter::A1:
+            result = QSizeF(594,841);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
+            break;
+        case QPrinter::A2:
+            result = QSizeF(420,594);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
+            break;
+        case QPrinter::A3:
+            result = QSizeF(297,420);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
+            break;
+        case QPrinter::A4:
+            result = QSizeF(210,297);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
+            break;
+        case QPrinter::A5:
+            result = QSizeF(148,210);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
+            break;
+        case QPrinter::A6:
+            result = QSizeF(105,148);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
+            break;
+        case QPrinter::A7:
+            result = QSizeF(74,105);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
+            break;
+        case QPrinter::A8:
+            result = QSizeF(52,74);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
+            break;
+        case QPrinter::A9:
+            result = QSizeF(37,52);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
+            break;
+        case QPrinter::B0:
+            result = QSizeF(1030,1456);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
+            break;
+        case QPrinter::B1:
+            result = QSizeF(728,1030);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
+            break;
+        case QPrinter::B10:
+            result = QSizeF(32,45);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
+            break;
+        case QPrinter::B2:
+            result = QSizeF(515,728);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
+            break;
+        case QPrinter::B3:
+            result = QSizeF(364,515);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
+            break;
+        case QPrinter::B4:
+            result = QSizeF(257,364);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
+            break;
+        case QPrinter::B5:
+            result = QSizeF(182,257);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
+            break;
+        case QPrinter::B6:
+            result = QSizeF(128,182);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
+            break;
+        case QPrinter::B7:
+            result = QSizeF(91,128);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
+            break;
+        case QPrinter::B8:
+            result = QSizeF(64,91);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
+            break;
+        case QPrinter::B9:
+            result = QSizeF(45,64);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
+            break;
+        case QPrinter::C5E:
+            result = QSizeF(163,229);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
+            break;
+        case QPrinter::Comm10E:
+            result = QSizeF(105,241);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
+            break;
+        case QPrinter::DLE:
+            result = QSizeF(110,220);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
+            break;
+        case QPrinter::Executive:
+            result = QSizeF(7.5,10);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Inches) );
+            break;
+        case QPrinter::Folio:
+            result = QSizeF(210,330);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
+            break;
+        case QPrinter::Ledger:
+            result = QSizeF(432,279);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
+            break;
+        case QPrinter::Legal:
+            result = QSizeF(8.5,14);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Inches) );
+            break;
+        case QPrinter::Letter:
+            result = QSizeF(8.5,11);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Inches) );
+            break;
+        case QPrinter::Tabloid:
+            result = QSizeF(279,432);
+            sizeUnitsWidget->setCurrentText( CanvasSize::sizeUnitName(CanvasSize::Milimeters) );
+            break;
+        case QPrinter::Custom:
+            return;
+
+        default:
+            qCWarning(DIGIKAM_GENERAL_LOG) << "Page size value not handled:" << pageSize;
+            return;
     }
 
     xSize->setValue(result.width());
@@ -602,3 +609,5 @@ void CanvasSizeDialog::yResolutionChanged(double yResolution)
     d->HEIGHT_RES = yResolution * resolutionFactor;
     d->updateSizeLabel();
 }
+
+} // namespace PhotoLayoutsEditor

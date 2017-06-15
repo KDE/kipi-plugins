@@ -1892,6 +1892,7 @@ QtBrowserItem *QtAbstractPropertyBrowser::insertProperty(QtProperty *property,
 
     d_ptr->m_subItems.insert(newPos, property);
     //propertyInserted(property, 0, properAfterProperty);
+    (void)properAfterProperty;
     return topLevelItem(property);
 }
 
