@@ -104,10 +104,10 @@ AbstractPhoto::AbstractPhoto(const QString & name, Scene * scene) :
     if (scene)
         scene->addItem(this);
 
-    this->setupItem();
+    setupItem();
 
     // Item's name
-    this->d->setName( this->uniqueName( name.isEmpty() ? i18n("New layer") : name ) );
+    d->setName(uniqueName( name.isEmpty() ? i18n("New layer") : name ) );
 
     // Effects group
     d->m_effects_group = new PhotoEffectsGroup(this);

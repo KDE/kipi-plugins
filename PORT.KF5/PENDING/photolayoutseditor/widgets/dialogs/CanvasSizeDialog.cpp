@@ -5,10 +5,9 @@
  *
  * Date        : 2011-09-01
  * Description : a plugin to create photo layouts by fusion of several images.
- * 
  *
  * Copyright (C) 2011      by Lukasz Spas <lukasz dot spas at gmail dot com>
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2017 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -34,6 +33,7 @@
 #include <QGroupBox>
 #include <QButtonGroup>
 #include <QDebug>
+#include <QDialogButtonBox>
 
 #include <klocalizedstring.h>
 
@@ -319,7 +319,7 @@ void CanvasSizeDialog::setupDialog(const QSizeF & size,
                                    const QSizeF & resolution,
                                    const QString & resolutionUnits)
 {
-    setWindowTitle(i18n("Canvas size"));
+    setWindowTitle(i18n("Canvas Size"));
 
     QString tempSizeUnits = sizeUnits;
     QString tempResolutionUnits = resolutionUnits;
@@ -384,11 +384,11 @@ void CanvasSizeDialog::setupDialog(const QSizeF & size,
     gridLayout->addWidget(d->sizeUnitsWidget,1,2);
 
     // Orientation buttons
-    d->horizontalButton = new QPushButton(QIcon::fromTheme(QLatin1String(":horizontal_orientation.png")), QLatin1String(""), d->sizeWidget);
+    d->horizontalButton = new QPushButton(QIcon::fromTheme(QLatin1String(":/horizontal_orientation.png")), QLatin1String(""), d->sizeWidget);
     d->horizontalButton->setCheckable(true);
     d->horizontalButton->setFlat(true);
     d->horizontalButton->setIconSize(QSize(24,24));
-    d->verticalButton = new QPushButton(QIcon::fromTheme(QLatin1String(":vertical_orientation.png")), QLatin1String(""), d->sizeWidget);
+    d->verticalButton = new QPushButton(QIcon::fromTheme(QLatin1String(":/vertical_orientation.png")), QLatin1String(""), d->sizeWidget);
     d->verticalButton->setCheckable(true);
     d->verticalButton->setFlat(true);
     d->verticalButton->setIconSize(QSize(24,24));
@@ -433,9 +433,19 @@ void CanvasSizeDialog::setupDialog(const QSizeF & size,
     d->currentResolutionUnit = tempResolutionUnits;
     gridLayout->addWidget(d->resolutionUnitsWidget,1,2);
 
-    this->prepareSignalsConnections();
+    prepareSignalsConnections();
 
     d->updateSizeLabel();
+
+    QDialogButtonBox* const buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+    buttons->button(QDialogButtonBox::Ok)->setDefault(true);
+    vLayout->addWidget(buttons);
+
+    connect(buttons->button(QDialogButtonBox::Ok), SIGNAL(clicked()),
+            this, SLOT(accept()));
+
+    connect(buttons->button(QDialogButtonBox::Cancel), SIGNAL(clicked()),
+            this, SLOT(reject()));
 }
 
 void CanvasSizeDialog::prepareSignalsConnections()

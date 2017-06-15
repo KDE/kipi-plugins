@@ -235,7 +235,8 @@ void PhotoLayoutsWindow::setupActions()
     d->openNewFileAction = KStandardAction::openNew(this, SLOT(open()), actionCollection());
     actionCollection()->addAction(QLatin1String("open_new"), d->openNewFileAction);
     //------------------------------------------------------------------------
-    d->openFileAction = KStandardAction::open(this, SLOT(openDialog()), actionCollection());
+    d->openFileAction = new QAction(i18n("Open Template File..."), actionCollection());
+    connect(d->openFileAction, SIGNAL(triggered()), this, SLOT(openDialog()));
     actionCollection()->addAction(QLatin1String("open"), d->openFileAction);
     //------------------------------------------------------------------------
     d->openRecentFilesMenu = KStandardAction::openRecent(this, SLOT(open(QUrl)), actionCollection());
@@ -405,7 +406,7 @@ void PhotoLayoutsWindow::createCanvas(const QUrl & fileUrl)
         m_canvas->deleteLater();
     }
 
-    QFile file(fileUrl.path());
+    QFile file(fileUrl.toLocalFile());
     QDomDocument document;
     document.setContent(&file, true);
     m_canvas = Canvas::fromSvg(document);
@@ -512,7 +513,9 @@ void PhotoLayoutsWindow::openDialog()
     if (result == QFileDialog::Accepted &&
         !d->fileDialog->selectedUrls().isEmpty())
     {
-        open(d->fileDialog->selectedUrls().first());
+        QUrl url = d->fileDialog->selectedUrls().first();
+        qCDebug(DIGIKAM_GENERAL_LOG) << url;
+        open(url);
     }
 }
 

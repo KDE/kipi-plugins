@@ -33,7 +33,6 @@ AbstractItemInterface::AbstractItemInterface(QGraphicsItem * parent, QGraphicsSc
     QObject(scene),
     QGraphicsItem(parent)
 {
-    scene->addItem(this);
 }
 
 void AbstractItemInterface::mousePressEvent(QGraphicsSceneMouseEvent * event)

@@ -5,7 +5,6 @@
  *
  * Date        : 2011-09-01
  * Description : a plugin to create photo layouts by fusion of several images.
- * 
  *
  * Copyright (C) 2011      by Lukasz Spas <lukasz dot spas at gmail dot com>
  * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
@@ -27,6 +26,8 @@
 #include "PLEConfigSkeleton.h"
 
 #include <QFormLayout>
+#include <QDialogButtonBox>
+#include <QPushButton>
 
 #include <klocalizedstring.h>
 
@@ -75,9 +76,19 @@ GridSetupDialog::GridSetupDialog(QWidget * parent) :
     connect(skeleton, SIGNAL(verticalGridChanged(double)), y, SLOT(setValue(double)));
     layout->addRow(i18n("Vertical distance"), y);
 
+    QDialogButtonBox* const buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+    buttons->button(QDialogButtonBox::Ok)->setDefault(true);
+    layout->addRow(buttons);
+
+    connect(buttons->button(QDialogButtonBox::Ok), SIGNAL(clicked()),
+            this, SLOT(accept()));
+
+    connect(buttons->button(QDialogButtonBox::Cancel), SIGNAL(clicked()),
+            this, SLOT(reject()));
+
     centralWidget->setLayout(layout);
 
-    this->setFixedSize( this->sizeHint() );
+    setFixedSize(sizeHint());
 }
 
 void GridSetupDialog::setHorizontalDistance(qreal value)

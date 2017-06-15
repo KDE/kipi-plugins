@@ -49,8 +49,8 @@ namespace PhotoLayoutsEditor
                 QWidget(parent),
                 m_layout(new QHBoxLayout(this)),
                 m_label(new QLabel(i18n("Layers"),this)),
-                m_up_btn(new QPushButton(QIcon::fromTheme(QLatin1String(":/arrow_top.png")), QString(), this)),
-                m_dwn_btn(new QPushButton(QIcon::fromTheme(QLatin1String(":/arrow_down.png")), QString(), this))
+                m_up_btn(new QPushButton(QIcon(QLatin1String(":/arrow_top.png")), QString(), this)),
+                m_dwn_btn(new QPushButton(QIcon(QLatin1String(":/arrow_down.png")), QString(), this))
             {
                 m_layout->addWidget(m_label,1);
                 m_layout->addWidget(m_up_btn);

@@ -5,9 +5,9 @@
  *
  * Date        : 2011-09-01
  * Description : a plugin to create photo layouts by fusion of several images.
- * 
  *
  * Copyright (C) 2011-2012 by Lukasz Spas <lukasz dot spas at gmail dot com>
+ * Copyright (C) 2012-2017 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -38,6 +38,7 @@
 #include <QPushButton>
 #include <QIcon>
 #include <QStandardPaths>
+#include <QDialogButtonBox>
 
 #include <klocalizedstring.h>
 
@@ -144,7 +145,7 @@ NewCanvasDialog::NewCanvasDialog(QWidget *parent) :
     QDialog(parent),
     d(new Private)
 {
-    this->setupUI();
+    setupUI();
 }
 
 NewCanvasDialog::~NewCanvasDialog()
@@ -333,7 +334,7 @@ void NewCanvasDialog::setVertical(bool isset)
 
 void NewCanvasDialog::setupUI()
 {
-    this->setWindowTitle(i18n("Create new canvas..."));
+    setWindowTitle(i18n("Create New Canvas..."));
 
     QVBoxLayout* layout = new QVBoxLayout();
     setLayout(layout);
@@ -354,10 +355,10 @@ void NewCanvasDialog::setupUI()
     leftLayout->addWidget(d->paperSize);
 
     // Orientation buttons
-    d->horizontalButton = new QPushButton(QIcon::fromTheme(QLatin1String(":horizontal_orientation.png")), QString(), this);
+    d->horizontalButton = new QPushButton(QIcon(QLatin1String(":/horizontal_orientation.png")), QString(), this);
     d->horizontalButton->setCheckable(true);
     d->horizontalButton->setIconSize(QSize(24,24));
-    d->verticalButton = new QPushButton(QIcon::fromTheme(QLatin1String(":vertical_orientation.png")), QString(), this);
+    d->verticalButton = new QPushButton(QIcon(QLatin1String(":/vertical_orientation.png")), QString(), this);
     d->verticalButton->setCheckable(true);
     d->verticalButton->setIconSize(QSize(24,24));
     QHBoxLayout * hLayout = new QHBoxLayout();
@@ -388,6 +389,16 @@ void NewCanvasDialog::setupUI()
     d->stack->addWidget(d->templatesList);
 
     d->paperSize->setCurrentRow(0);
+
+    QDialogButtonBox* const buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+    buttons->button(QDialogButtonBox::Ok)->setDefault(true);
+    layout->addWidget(buttons);
+
+    connect(buttons->button(QDialogButtonBox::Ok), SIGNAL(clicked()),
+            this, SLOT(accept()));
+
+    connect(buttons->button(QDialogButtonBox::Cancel), SIGNAL(clicked()),
+            this, SLOT(reject()));
 }
 
 void NewCanvasDialog::loadTemplatesList(const QString & path, TemplatesModel * model)

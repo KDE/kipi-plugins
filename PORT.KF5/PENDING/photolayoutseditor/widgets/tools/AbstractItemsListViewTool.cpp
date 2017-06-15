@@ -220,10 +220,10 @@ AbstractItemsListViewTool::AbstractItemsListViewTool(const QString & toolName, S
 
     // Move add/remove buttons
     QHBoxLayout * addLayout = new QHBoxLayout();
-    d->m_add_button = new QPushButton(QIcon::fromTheme(QLatin1String(":action_add.png")), QString());
+    d->m_add_button = new QPushButton(QIcon::fromTheme(QLatin1String(":/action_add.png")), QString());
     d->m_add_button->setIconSize(QSize(16,16));
     d->m_add_button->setFixedSize(24,24);
-    d->m_remove_button = new QPushButton(QIcon::fromTheme(QLatin1String(":action_remove.png")), QString());
+    d->m_remove_button = new QPushButton(QIcon::fromTheme(QLatin1String(":/action_remove.png")), QString());
     d->m_remove_button->setIconSize(QSize(16,16));
     d->m_remove_button->setFixedSize(24,24);
     addLayout->addWidget(d->m_add_button);
@@ -235,10 +235,10 @@ AbstractItemsListViewTool::AbstractItemsListViewTool(const QString & toolName, S
 
     // Move up/down buttons
     QHBoxLayout * moveLayout = new QHBoxLayout();
-    d->m_down_button = new QPushButton(QIcon::fromTheme(QLatin1String(":arrow_down.png")), QString());
+    d->m_down_button = new QPushButton(QIcon::fromTheme(QLatin1String(":/arrow_down.png")), QString());
     d->m_down_button->setIconSize(QSize(16,16));
     d->m_down_button->setFixedSize(24,24);
-    d->m_up_button = new QPushButton(QIcon::fromTheme(QLatin1String(":arrow_top.png")), QString());
+    d->m_up_button = new QPushButton(QIcon::fromTheme(QLatin1String(":/arrow_top.png")), QString());
 
     d->m_up_button->setIconSize(QSize(16,16));
     d->m_up_button->setFixedSize(24,24);
@@ -421,12 +421,12 @@ AbstractListToolViewDelegate::AbstractListToolViewDelegate(AbstractMovableModel 
     comboBox->setCurrentIndex(-1);
     connect(comboBox,SIGNAL(currentIndexChanged(QString)),this,SLOT(itemSelected(QString)));
     layout->addWidget(comboBox,1);
-    m_acceptButton = new QPushButton(QIcon::fromTheme(QLatin1String(":action_check.png")), QString(), this);
+    m_acceptButton = new QPushButton(QIcon::fromTheme(QLatin1String(":/action_check.png")), QString(), this);
     m_acceptButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum);
     m_acceptButton->setEnabled(false);
     connect(m_acceptButton,SIGNAL(clicked()),this,SLOT(editorAccepted()));
     layout->addWidget(m_acceptButton);
-    QPushButton * cancelButton = new QPushButton(QIcon::fromTheme(QLatin1String(":action_delete.png")), QString(), this);
+    QPushButton * cancelButton = new QPushButton(QIcon::fromTheme(QLatin1String(":/action_delete.png")), QString(), this);
     cancelButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum);
     connect(cancelButton,SIGNAL(clicked()),this,SLOT(editorCancelled()));
     layout->addWidget(cancelButton);
