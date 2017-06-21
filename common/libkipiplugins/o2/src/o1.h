@@ -5,12 +5,13 @@
 #include <QUrl>
 #include <QNetworkReply>
 
+#include "o0export.h"
 #include "o0baseauth.h"
 
 class O2ReplyServer;
 
 /// Simple OAuth 1.0 authenticator.
-class O1: public O0BaseAuth {
+class O0_EXPORT O1: public O0BaseAuth {
     Q_OBJECT
 
 public:
@@ -47,7 +48,7 @@ public:
     void setAccessTokenUrl(const QUrl &value);
 
     /// Constructor.
-    explicit O1(QObject *parent = 0);
+    explicit O1(QObject *parent = 0, QNetworkAccessManager *manager = 0);
 
     /// Parse a URL-encoded response string.
     static QMap<QString, QString> parseResponse(const QByteArray &response);

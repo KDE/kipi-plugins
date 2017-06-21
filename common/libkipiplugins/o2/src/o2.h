@@ -6,6 +6,7 @@
 #include <QNetworkReply>
 #include <QPair>
 
+#include "o0export.h"
 #include "o0baseauth.h"
 #include "o2reply.h"
 #include "o0abstractstore.h"
@@ -13,7 +14,7 @@
 class O2ReplyServer;
 
 /// Simple OAuth2 authenticator.
-class O2: public O0BaseAuth {
+class O0_EXPORT O2: public O0BaseAuth {
     Q_OBJECT
     Q_ENUMS(GrantFlow)
 
@@ -75,6 +76,11 @@ public:
     QString requestUrl();
     void setRequestUrl(const QString &value);
 
+    /// User-defined extra parameters to append to request URL
+    Q_PROPERTY(QVariantMap extraRequestParams READ extraRequestParams WRITE setExtraRequestParams NOTIFY extraRequestParamsChanged)
+    QVariantMap extraRequestParams();
+    void setExtraRequestParams(const QVariantMap &value);
+
     /// Token request URL.
     Q_PROPERTY(QString tokenUrl READ tokenUrl WRITE setTokenUrl NOTIFY tokenUrlChanged)
     QString tokenUrl();
@@ -88,7 +94,7 @@ public:
 public:
     /// Constructor.
     /// @param  parent  Parent object.
-    explicit O2(QObject *parent = 0);
+    explicit O2(QObject *parent = 0, QNetworkAccessManager *manager = 0);
 
     /// Get authentication code.
     QString code();
@@ -109,6 +115,9 @@ public Q_SLOTS:
     /// Refresh token.
     Q_INVOKABLE void refresh();
 
+    /// Handle situation where reply server has opted to close its connection
+    void serverHasClosed(bool paramsfound = false);
+
 Q_SIGNALS:
     /// Emitted when a token refresh has been completed or failed.
     void refreshFinished(QNetworkReply::NetworkError error);
@@ -119,6 +128,7 @@ Q_SIGNALS:
     void usernameChanged();
     void passwordChanged();
     void requestUrlChanged();
+    void extraRequestParamsChanged();
     void refreshTokenUrlChanged();
     void tokenUrlChanged();
 
@@ -155,6 +165,7 @@ protected:
     QString username_;
     QString password_;
     QUrl requestUrl_;
+    QVariantMap extraReqParams_;
     QUrl tokenUrl_;
     QUrl refreshTokenUrl_;
     QString scope_;

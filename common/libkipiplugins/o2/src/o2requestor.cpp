@@ -9,12 +9,8 @@
 #include "o0globals.h"
 
 O2Requestor::O2Requestor(QNetworkAccessManager *manager, O2 *authenticator, QObject *parent): QObject(parent), reply_(NULL), status_(Idle) {
-    id_            = 0;
-    manager_       = manager;
+    manager_ = manager;
     authenticator_ = authenticator;
-    operation_     = QNetworkAccessManager::HeadOperation;
-    error_         = QNetworkReply::NoError;
-
     if (authenticator) {
         timedReplies_.setIgnoreSslErrors(authenticator->ignoreSslErrors());
     }
