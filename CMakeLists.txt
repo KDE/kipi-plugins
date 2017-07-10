@@ -273,10 +273,6 @@ if(KF5Kipi_FOUND)
             add_subdirectory(remotestorage)    # kioimportwindow.cpp, kioexportwindow.cpp
         endif()
 
-        if(BUILD_TESTING)
-            add_subdirectory(tests)
-        endif()
-
     endif()
 
 else()
