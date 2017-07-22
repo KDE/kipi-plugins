@@ -107,14 +107,14 @@ find_package(KF5 ${KF5_MIN_VERSION}
              I18n
 )
 
-find_package(KF5 ${KF5_MIN_VERSION}
+find_package(KF5 ${KF5_MIN_VERSION} QUIET
              OPTIONAL_COMPONENTS
              Archive      # for FlashExport
 )
 
 if(ENABLE_KIO)
 
-    find_package(KF5 ${KF5_MIN_VERSION}
+    find_package(KF5 ${KF5_MIN_VERSION} QUIET
                  OPTIONAL_COMPONENTS
                  KIO          # Some kipi-plugins depends of KIO indeep.
     )

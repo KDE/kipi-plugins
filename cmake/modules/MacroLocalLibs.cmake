@@ -81,7 +81,7 @@ macro(DETECT_LIBKVKONTAKTE MIN_VERSION)
     if (NOT DIGIKAMSC_COMPILE_LIBKVKONTAKTE)
 
         message(STATUS "libkvkontakte : search system based library")
-        find_package(KF5Vkontakte ${MIN_VERSION})
+        find_package(KF5Vkontakte ${MIN_VERSION} QUIET)
 
         if(KF5Vkontakte_FOUND)
             set(LIBKVKONTAKTE_LIBRARIES KF5::Vkontakte)
@@ -120,7 +120,7 @@ macro(DETECT_LIBMEDIAWIKI MIN_VERSION)
     if (NOT DIGIKAMSC_COMPILE_LIBMEDIAWIKI)
 
         message(STATUS "libmediawiki : search system based library")
-        find_package(KF5MediaWiki ${MIN_VERSION})
+        find_package(KF5MediaWiki ${MIN_VERSION} QUIET)
 
         if(KF5MediaWiki_FOUND)
             set(LIBMEDIAWIKI_LIBRARIES KF5::MediaWiki)
