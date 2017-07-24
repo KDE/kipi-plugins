@@ -23,13 +23,6 @@
 
 #include "kputil.h"
 
-// C ANSI includes
-
-extern "C"
-{
-#include <unistd.h>
-}
-
 // Qt includes
 
 #include <QWidget>
@@ -67,7 +60,7 @@ namespace KIPIPlugins
 
 QDir makeTemporaryDir(const char* prefix)
 {
-    QString subDir = QString::fromLatin1("kipi-%1-%2").arg(QString::fromUtf8(prefix)).arg(getpid());
+    QString subDir = QString::fromLatin1("kipi-%1-%2").arg(QString::fromUtf8(prefix)).arg(qApp->applicationPid());
     QString path   = QDir(QDir::tempPath()).filePath(subDir);
 
     if (!QDir().exists(path))
@@ -80,7 +73,7 @@ QDir makeTemporaryDir(const char* prefix)
 
 void removeTemporaryDir(const char* prefix)
 {
-    QString subDir = QString::fromLatin1("kipi-%1-%2").arg(QString::fromUtf8(prefix)).arg(getpid());
+    QString subDir = QString::fromLatin1("kipi-%1-%2").arg(QString::fromUtf8(prefix)).arg(qApp->applicationPid());
     QString path   = QDir(QDir::tempPath()).filePath(subDir);
 
     if (QDir().exists(path))

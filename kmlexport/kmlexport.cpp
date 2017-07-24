@@ -23,13 +23,6 @@
 
 #include "kmlexport.h"
 
-// C ANSI includes
-
-extern "C"
-{
-#include <unistd.h>
-}
-
 // Qt includes
 
 #include <QImageReader>
@@ -618,7 +611,7 @@ int KmlExport::getConfig()
     m_GPXOpacity         = group.readEntry(QLatin1String("Track Opacity"),     64);
     m_GPXAltitudeMode    = group.readEntry(QLatin1String("GPX Altitude Mode"), 0);
 
-    m_tempDestDir        = QDir(QDir::temp().filePath(QString::fromLatin1("kipi-kmlrexportplugin-%1").arg(getpid())));
+    m_tempDestDir        = QDir(QDir::temp().filePath(QString::fromLatin1("kipi-kmlrexportplugin-%1").arg(qApp->applicationPid())));
 
     m_imageDirBasename   = QLatin1String("images");
     m_imageDir           = QDir(m_tempDestDir.filePath(m_imageDirBasename));

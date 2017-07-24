@@ -23,13 +23,6 @@
 
 #include "utils.h"
 
-// C ANSI includes
-
-extern "C"
-{
-#include <unistd.h>
-}
-
 // C++ includes
 
 #include <cstdio>
