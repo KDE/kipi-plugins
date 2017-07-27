@@ -29,6 +29,7 @@ Name[sv]=Export till Dropbox
 Name[tr]=Dropbox Aktarımı
 Name[uk]=Експорт до Dropbox
 Name[x-test]=xxDropbox Exportxx
+Name[zh_CN]=Dropbox 导出
 Name[zh_TW]=Dropbox 匯出
 Comment=A tool to export images to a remote Dropbox web service
 Comment[bs]=Alat za izvoz slika na udaljeni Dropbox web servis
