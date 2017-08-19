@@ -1,12 +1,1 @@
 See plugins to see specifics to do list by tools.
-
-Common todo list :
-
- * Factoring Image Resize code and widget used in web export tools to libkipiplugins 
-   (flickr, PicasaWeb, smug, KIOExportImport, facebook, shwup, etc...)
-   * Resize to new dimension
-   * Extract JPG preview from RAW files
-   * Convert image to JPG/PNG 
- * ImageList widget improvements
-   * Thumbnail and List view (user can switch)
-   * Editable fields (use case Wikimedia upload)
