@@ -37,18 +37,8 @@ https://quickgit.kde.org/?p=digikam-software-compilation.git&a=blob&f=DEPENDENCI
 
 -- CONTACT ------------------------------------------------------------
 
-If you have questions, comments, suggestions to make send an email to :
-
-kde-imaging@kde.org
-
-IRC channel from irc.freenode.org server: #kde-imaging
-                                          #digikam
-
 IMPORTANT : the bugreports and wishlist are hosted by the KDE bugs report 
 system who can be contacted by the standard Kde help menu of plugins dialog. 
-A mail will be automaticly sent to the Kipi mailing list.
-There is no need to contact directly the Kipi mailing list for a bug report 
-or a devel wish.
 
 The current Kipi bugs and devel wishes reported to the Kde bugs report can be
 seen at this url :
