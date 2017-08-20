@@ -95,7 +95,7 @@ FlickrTalker::FlickrTalker(QWidget* const parent, const QString& serviceName)
         m_authUrl   = QLatin1String("https://www.flickr.com/services/oauth/authorize?perms=write");
         m_tokenUrl  = QLatin1String("https://www.flickr.com/services/oauth/request_token");
         m_accessUrl = QLatin1String("https://www.flickr.com/services/oauth/access_token");
-        m_uploadUrl = QLatin1String("https://api.flickr.com/services/upload/");
+        m_uploadUrl = QLatin1String("https://up.flickr.com/services/upload/");
 
         m_apikey    = QLatin1String("49d585bafa0758cb5c58ab67198bf632");
         m_secret    = QLatin1String("34b39925e6273ffd");

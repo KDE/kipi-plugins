@@ -101,7 +101,7 @@ void Plugin_Flickr::setupActions()
     m_actionFlickr->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-flickr")));
     actionCollection()->setDefaultShortcut(m_actionFlickr, Qt::ALT + Qt::SHIFT + Qt::Key_R);
 
-    //selectFlickr = new SelectUserDlg(0,QString::fromLatin1("Flickr"));
+    //selectFlickr = new SelectUserDlg(0, QString::fromLatin1("Flickr"));
 
     connect(m_actionFlickr, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateFlickr()));
