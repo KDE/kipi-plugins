@@ -56,7 +56,6 @@ public Q_SLOTS:
 
     void slotActivateFlickr();
     void slotActivate23();
-    void slotActivateZooomr();
 
 private:
 
@@ -66,15 +65,12 @@ private:
 
     QAction*       m_actionFlickr;
     QAction*       m_action23;
-    QAction*       m_actionZooomr;
 
     FlickrWindow*  m_dlgFlickr;
     FlickrWindow*  m_dlg23;
-    FlickrWindow*  m_dlgZooomr;
 
     SelectUserDlg* selectFlickr;
     SelectUserDlg* select23;
-    SelectUserDlg* selectZoomr;
 };
 
 } //namespace KIPIFlickrPlugin

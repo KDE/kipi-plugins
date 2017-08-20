@@ -95,7 +95,7 @@ public:
 
 private Q_SLOTS:
 
-    void slotTokenObtained(const QString& token);
+    void slotLinkingSucceeded();
     void slotDoLogin();
     void slotBusy(bool val);
     void slotError(const QString& msg);
@@ -165,7 +165,6 @@ private:
 
 //  QHash<int, GAlbumViewItem>             m_albumDict;
 
-    QString                                m_token;
     QString                                m_username;
     QString                                m_userId;
     QString                                m_lastSelectedAlbum;

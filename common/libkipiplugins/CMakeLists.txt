@@ -58,9 +58,9 @@ set(o2_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/o2/src/o0abstractstore.h
     ${CMAKE_CURRENT_SOURCE_DIR}/o2/src/o0globals.h
     # Enable when needed
-    #${CMAKE_CURRENT_SOURCE_DIR}/o2/src/o1.cpp
-    #${CMAKE_CURRENT_SOURCE_DIR}/o2/src/o1requestor.cpp
-    #${CMAKE_CURRENT_SOURCE_DIR}/o2/src/o1timedreply.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/o2/src/o1.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/o2/src/o1requestor.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/o2/src/o1timedreply.cpp
     #${CMAKE_CURRENT_SOURCE_DIR}/o2/src/o1twitter.h
     #${CMAKE_CURRENT_SOURCE_DIR}/o2/src/oxtwitter.cpp
     #${CMAKE_CURRENT_SOURCE_DIR}/o2/src/o1dropbox.h

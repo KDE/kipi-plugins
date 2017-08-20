@@ -42,6 +42,9 @@
 // Local includes
 
 #include "flickritem.h"
+#include "o1.h"
+#include "o0globals.h"
+#include "o1requestor.h"
 
 class QProgressDialog;
 
@@ -69,10 +72,6 @@ public:
         FE_LISTPHOTOS,
         FE_GETPHOTOPROPERTY,
         FE_ADDPHOTO,
-        FE_GETFROB,
-        FE_CHECKTOKEN,
-        FE_GETTOKEN,
-        FE_GETAUTHORIZED,
         FE_CREATEPHOTOSET,
         FE_ADDPHOTOTOPHOTOSET,
         FE_GETMAXSIZE
@@ -83,13 +82,12 @@ public:
     FlickrTalker(QWidget* const parent, const QString& serviceName);
     ~FlickrTalker();
 
+    void    link();
+    void    unlink();
     QString getUserName() const;
     QString getUserId() const;
     void    maxAllowedFileSize();
     QString getMaxAllowedFileSize();
-    void    getFrob();
-    void    getToken();
-    void    checkToken(const QString& token);
     void    getPhotoProperty(const QString& method, const QStringList& argList);
     void    cancel();
 
@@ -124,8 +122,7 @@ Q_SIGNALS:
     void signalListPhotoSetsFailed(QString& msg);
     void signalAddPhotoFailed(const QString& msg);
     void signalListPhotoSetsFailed(const QString& msg);
-    void signalAuthenticate();
-    void signalTokenObtained(const QString& token);
+    void signalLinkingSucceeded();
 
 private:
 
@@ -135,36 +132,32 @@ private:
     void parseResponseListPhotos(const QByteArray& data);
     void parseResponseCreateAlbum(const QByteArray& data);
     void parseResponseAddPhoto(const QByteArray& data);
-    void parseResponseGetFrob(const QByteArray& data);
-    void parseResponseGetToken(const QByteArray& data);
-    void parseResponseCheckToken(const QByteArray& data);
     void parseResponsePhotoProperty(const QByteArray& data);
     void parseResponseCreatePhotoSet(const QByteArray& data);
     void parseResponseAddPhotoToPhotoSet(const QByteArray& data);
 
-    QString getApiSig(const QString& secret, const QUrl& url);
-
 private Q_SLOTS:
 
+    void slotLinkingFailed();
+    void slotLinkingSucceeded();
+    void slotOpenBrowser(const QUrl& url); 
     void slotError(const QString& msg);
-    void slotAuthenticate();
     void slotFinished(QNetworkReply* reply);
 
 private:
 
     QWidget*               m_parent;
-//  QString                m_cookie;
     QByteArray             m_buffer;
 
     QString                m_serviceName;
     QString                m_apiUrl;
     QString                m_authUrl;
+    QString                m_tokenUrl;
+    QString                m_accessUrl;
     QString                m_uploadUrl;
     QString                m_apikey;
     QString                m_secret;
-    QString                m_frob;
     QString                m_maxSize;
-    QString                m_token;
     QString                m_username;
     QString                m_userId;
     QString                m_lastTmpFile;
@@ -175,6 +168,9 @@ private:
     State                  m_state;
 
     Interface*             m_iface;
+
+    O1*                    m_o1;
+    O1Requestor*           m_requestor;
 };
 
 } // namespace KIPIFlickrPlugin
