@@ -149,7 +149,7 @@ void FlickrTalker::link()
     m_o1->link();
 }
 
-void FlickrTalker::unlink()
+void FlickrTalker::unLink()
 {
     m_o1->unlink();
 }

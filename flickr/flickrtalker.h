@@ -83,7 +83,7 @@ public:
     ~FlickrTalker();
 
     void    link();
-    void    unlink();
+    void    unLink();
     QString getUserName() const;
     QString getUserId() const;
     void    maxAllowedFileSize();

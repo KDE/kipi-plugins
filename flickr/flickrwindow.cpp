@@ -449,11 +449,12 @@ void FlickrWindow::slotError(const QString& msg)
 void FlickrWindow::slotUserChangeRequest()
 {
     writeSettings();
+    m_userNameDisplayLabel->setText(QString());
     qCDebug(KIPIPLUGINS_LOG) << "Slot Change User Request ";
     //m_select->reactivate();
     //readSettings(m_select->getUname());
 
-     m_talker->unlink();
+     m_talker->unLink();
      m_talker->link();
 }
 
