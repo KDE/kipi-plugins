@@ -157,6 +157,7 @@ void FlickrTalker::unlink()
 void FlickrTalker::slotLinkingFailed()
 {
     qCDebug(KIPIPLUGINS_LOG) << "LINK to Fickr fail";
+    emit signalBusy(false);
 }
 
 void FlickrTalker::slotLinkingSucceeded()
