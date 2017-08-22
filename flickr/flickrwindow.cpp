@@ -599,7 +599,7 @@ void FlickrWindow::slotPopulatePhotoSetComboBox()
     {
         QLinkedList <FPhotoSet>* const list = m_talker->m_photoSetsList;
         m_albumsListComboBox->clear();
-        m_albumsListComboBox->insertItem(0, i18n("&lt;Photostream Only&gt;"));
+        m_albumsListComboBox->insertItem(0, i18n("Photostream Only"));
         m_albumsListComboBox->insertSeparator(1);
         QLinkedList<FPhotoSet>::iterator it = list->begin();
         int index = 2, curr_index = 0;
