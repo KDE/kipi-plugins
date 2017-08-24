@@ -225,7 +225,13 @@ void GeneralPage::setSettings(const SimpleViewerSettingsContainer* const setting
 void GeneralPage::settings(SimpleViewerSettingsContainer* const settings)
 {
     settings->title                = d->title->text();
-    settings->exportPath           = d->exportPath->lineEdit()->text();
+
+    QString exportPath             = d->exportPath->lineEdit()->text();
+
+    if (exportPath.endsWith(QLatin1Char('/')))
+        exportPath.chop(1);
+
+    settings->exportPath           = exportPath;
     settings->resizeExportImages   = d->resizeExportImages->isChecked();
     settings->imagesExportSize     = d->imagesExportSize->value();
     settings->maxImageDimension    = d->maxImageDimension->value();

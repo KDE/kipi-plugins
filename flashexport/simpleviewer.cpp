@@ -284,7 +284,7 @@ void SimpleViewer::slotProcess()
         emit signalProcessingDone();
 
         if (d->settings->openInBrowser)
-            QDesktopServices::openUrl(QUrl::fromLocalFile(d->settings->exportPath + QLatin1String("index.html")));
+            QDesktopServices::openUrl(QUrl::fromLocalFile(d->settings->exportPath + QLatin1String("/index.html")));
     }
 }
 
@@ -1056,7 +1056,7 @@ bool SimpleViewer::upload() const
 
     d->progressWdg->addedAction(i18n("Copying gallery..."), StartingMessage);
 
-    if (!copyFolderRecursively(d->tempDir->path(), d->settings->exportPath))
+    if (!copyFolderRecursively(d->tempDir->path(), d->settings->exportPath, false))
         return false;
 
     d->progressWdg->addedAction(i18n("Gallery copied..."), SuccessMessage);
@@ -1064,10 +1064,15 @@ bool SimpleViewer::upload() const
     return true;
 }
 
-bool SimpleViewer::copyFolderRecursively(const QString& srcPath, const QString& dstPath) const
+bool SimpleViewer::copyFolderRecursively(const QString& srcPath, const QString& dstPath, bool copyDir) const
 {
     QDir srcDir(srcPath);
-    QString newCopyPath = dstPath + QLatin1Char('/') + srcDir.dirName();
+    QString newCopyPath = dstPath + QLatin1Char('/');
+
+    if (copyDir)
+    {
+        newCopyPath += srcDir.dirName();
+    }
 
     if (!srcDir.mkpath(newCopyPath))
     {

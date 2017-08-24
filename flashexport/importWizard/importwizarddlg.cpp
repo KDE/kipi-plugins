@@ -237,7 +237,7 @@ void ImportWizardDlg::slotCurrentIdChanged(int id)
 
 bool ImportWizardDlg::checkIfFolderExist()
 {
-    if (!QDir(d->settings->exportPath).exists())
+    if (QDir(d->settings->exportPath).exists())
     {
         int ret = QMessageBox::warning(this, i18n("Target Folder Exists"),
                                        i18n("Target folder %1 already exists.\n"

@@ -146,7 +146,7 @@ private:
 
     bool upload() const;
 
-    bool copyFolderRecursively(const QString& srcPath, const QString& dstPath) const;
+    bool copyFolderRecursively(const QString& srcPath, const QString& dstPath, bool copyDir = true) const;
     bool copyFiles(const QStringList& srcPaths, const QString& dstPath) const;
 
     bool openArchive(KZip& zip) const;
