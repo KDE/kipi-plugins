@@ -45,8 +45,8 @@
 #include "kpaboutdata.h"
 #include "kpversion.h"
 
-static const constexpr char *IMGUR_CLIENT_ID("575411e9c939b2b"),
-                            *IMGUR_CLIENT_SECRET("f39bbddf4052062735bdc7168b33aa795cab361f");
+static const constexpr char *IMGUR_CLIENT_ID("bd2572bce74b73d"),
+                            *IMGUR_CLIENT_SECRET("300988683e99cb7b203a5889cf71de9ac891c1c1");
 
 namespace KIPIImgurPlugin
 {

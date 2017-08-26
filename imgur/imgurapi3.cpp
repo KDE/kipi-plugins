@@ -41,7 +41,7 @@
 
 static const QString imgur_auth_url = QLatin1String("https://api.imgur.com/oauth2/authorize"),
 imgur_token_url = QLatin1String("https://api.imgur.com/oauth2/token");
-static const uint16_t imgur_redirect_port = 8000; // Redirect URI is http://127.0.0.1:8000
+//static const uint16_t imgur_redirect_port = 8000; // Redirect URI is http://127.0.0.1:8000
 
 ImgurAPI3::ImgurAPI3(const QString& client_id, const QString& client_secret, QObject* parent)
     : QObject(parent)
@@ -51,7 +51,8 @@ ImgurAPI3::ImgurAPI3(const QString& client_id, const QString& client_secret, QOb
     m_auth.setRequestUrl(imgur_auth_url);
     m_auth.setTokenUrl(imgur_token_url);
     m_auth.setRefreshTokenUrl(imgur_token_url);
-    m_auth.setLocalPort(imgur_redirect_port);
+    //m_auth.setLocalPort(imgur_redirect_port);
+    m_auth.setLocalhostPolicy(QString());
 
     connect(&m_auth, &O2::linkedChanged, this, &ImgurAPI3::oauthAuthorized);
     connect(&m_auth, &O2::openBrowser,   this, &ImgurAPI3::oauthRequestPin);
