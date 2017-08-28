@@ -1,4 +1,4 @@
-Kipi-plugins 5.7.0 - Release date: 2017/08/27
+Kipi-plugins 5.8.0 - Release date: 2017/??/??
 ------------------------------------------------------------------------
 
 NEW FEATURES:
@@ -6,6 +6,4 @@ NEW FEATURES:
 
 BUGFIXES FROM BUGZILLA :
 
-001 ==> 381144 - SmugMug export max dimension limited to 5000 pixels.
-002 ==> 381664 - Plugin leads to the home page of Flickr and 'An error has occurred: Invalid Frob It can not be continued.'
-003 ==> 383988 - Imgur plugin does not provide authentication mechanism.
+001 ==> 
