@@ -409,19 +409,19 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
     if (tags.length() > 0)
     {
         form.addPair(QLatin1String("tags"), tags, QLatin1String("text/plain"));
-        reqParams << O0RequestParameter("tags", tags.toLatin1());
+        reqParams << O0RequestParameter("tags", tags.toUtf8());
     }
 
     if (!info.title.isEmpty())
     {
         form.addPair(QLatin1String("title"), info.title, QLatin1String("text/plain"));
-        reqParams << O0RequestParameter("title", info.title.toLatin1());
+        reqParams << O0RequestParameter("title", info.title.toUtf8());
     }
 
     if (!info.description.isEmpty())
     {
         form.addPair(QLatin1String("description"), info.description, QLatin1String("text/plain"));
-        reqParams << O0RequestParameter("description", info.description.toLatin1());
+        reqParams << O0RequestParameter("description", info.description.toUtf8());
     }
 
     if (!original)
