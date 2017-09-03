@@ -298,8 +298,8 @@ KPImagesList* KPSettingsWidget::imagesList() const
 void KPSettingsWidget::slotResizeChecked()
 {
     d->m_resizeChB->setEnabled(!d->m_originalChB->isChecked());
+    d->m_imageQualitySpB->setEnabled(!d->m_originalChB->isChecked());
     d->m_dimensionSpB->setEnabled(d->m_resizeChB->isChecked() && !d->m_originalChB->isChecked());
-    d->m_imageQualitySpB->setEnabled(d->m_resizeChB->isChecked() && !d->m_originalChB->isChecked());
 }
 
 KPProgressWidget* KPSettingsWidget::progressBar() const
