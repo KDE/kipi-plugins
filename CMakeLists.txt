@@ -239,6 +239,11 @@ if(KF5Kipi_FOUND)
             string(REPLACE "-Wsuggest-override" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
         endwhile()
 
+        # Remove Wdate-time GCC flag which generate a lots of compile warnings
+        while(CMAKE_CXX_FLAGS MATCHES "-Wdate-time")
+            string(REPLACE "-Wdate-time" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+        endwhile()
+
         add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
 
         add_subdirectory(common)
