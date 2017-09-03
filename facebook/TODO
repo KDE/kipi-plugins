@@ -1,4 +1,4 @@
-Facebook import/export plugin
+Facebook export plugin
 ----------------------------------------------------------------------------
 - Stop upload, start should continue and not upload all again
 - Continue on error (just report at the end)

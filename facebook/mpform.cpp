@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2008-12-28
- * Description : a kipi plugin to import/export images to Facebook web service
+ * Description : a kipi plugin to export images to Facebook web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008-2017 by Gilles Caulier <caulier dot gilles at gmail dot com>

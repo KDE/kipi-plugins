@@ -1,12 +1,8 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
 <!-- NOTE: don't forget to increase version ID when this file is modified -->
-<gui version="1" name="kipiplugin_facebook" >
+<gui version="2" name="kipiplugin_facebook" >
 
     <MenuBar>
-
-        <Menu name="Import"><text>&amp;Import</text>
-            <Action name="facebookimport" group="kipi_import_group" />
-        </Menu>
 
         <Menu name="Export"><text>&amp;Export</text>
             <Action name="facebookexport" group="kipi_export_group" />

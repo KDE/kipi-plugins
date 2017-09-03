@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2008-12-26
- * Description : a kipi plugin to import/export images to Facebook web service
+ * Description : a kipi plugin to export images to Facebook web service
  *
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  *

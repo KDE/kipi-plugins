@@ -1,6 +1,6 @@
 [Desktop Entry]
-UntranslatedGenericName=Facebook Import/Export
-Name=Facebook Import/Export
+UntranslatedGenericName=Facebook Export
+Name=Facebook Export
 Name[bg]=Внасяне и изнасяне от Facebook
 Name[bs]=Facebook uvoz/izvoz
 Name[ca]=Importador/Exportador a Facebook
@@ -44,7 +44,7 @@ Name[uk]=Імпорт/Експорт до Facebook
 Name[x-test]=xxFacebook Import/Exportxx
 Name[zh_CN]=Facebook 导入/导出
 Name[zh_TW]=Facebook 匯入/匯出
-Comment=A tool to import/export images to/from a remote Facebook web service
+Comment=A tool to export images to a remote Facebook web service
 Comment[bg]=Инструмент за внасяне и изнасяне на изображения към и от отдалечена уеб-услуга Facebook
 Comment[bs]=Alat za uvoz/izvoz slika u/iz udaljeni/udaljenog Facebook web servis
 Comment[ca]=Una eina per importar/exportar imatges a un servei web remot Facebook
@@ -90,6 +90,6 @@ Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_facebook
 Icon=kipi-facebook
-X-KIPI-PluginCategories=Export,Import
+X-KIPI-PluginCategories=Export
 X-KIPI-BinaryVersion=${KIPI_LIB_SO_CUR_VERSION}
 author=Luka Renko, lure at kubuntu dot org
