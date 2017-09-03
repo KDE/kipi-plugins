@@ -145,7 +145,7 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
 
     d->m_imgList->setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
     d->m_imgList->setAllowRAW(true);
-    d->m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your %1 account.",d->m_pluginName));
+    d->m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your %1 account.", d->m_pluginName));
 
     d->settingsScrollArea->setMinimumSize(400,500);
     d->settingsScrollArea->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
@@ -153,18 +153,18 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
     d->settingsScrollArea->setWidgetResizable(true);
     d->settingsScrollArea->setFrameShadow(QFrame::Plain);
 
-    d->m_headerLbl->setWhatsThis(i18n("This is a clickable link to open %1 in a browser.",d->m_pluginName));
+    d->m_headerLbl->setWhatsThis(i18n("This is a clickable link to open %1 in a browser.", d->m_pluginName));
     d->m_headerLbl->setOpenExternalLinks(true);
     d->m_headerLbl->setFocusPolicy(Qt::NoFocus);
 
     //------------------------------------------------------------
 
-    d->m_accountBox->setWhatsThis(i18n("This is the %1 account that is currently logged in.",d->m_pluginName));
+    d->m_accountBox->setWhatsThis(i18n("This is the %1 account that is currently logged in.", d->m_pluginName));
 
-    QLabel* const userNameLbl = new QLabel(i18nc("account settings","Name:"),d->m_accountBox);
+    QLabel* const userNameLbl = new QLabel(i18nc("account settings","Name:"), d->m_accountBox);
     d->m_changeUserBtn->setText(i18n("Change Account"));
     d->m_changeUserBtn->setIcon(QIcon::fromTheme(QString::fromLatin1("system-switch-user")).pixmap(16));
-    d->m_changeUserBtn->setToolTip(i18n("Change %1 account for transfer",d->m_pluginName));
+    d->m_changeUserBtn->setToolTip(i18n("Change %1 account for transfer", d->m_pluginName));
 
     d->m_accountBoxLayout->addWidget(userNameLbl,             0, 0, 1, 2);
     d->m_accountBoxLayout->addWidget(d->m_userNameDisplayLbl, 0, 2, 1, 2);
@@ -174,15 +174,15 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
 
     //-------------------------------------------------------------
 
-    d->m_albBox->setWhatsThis(i18n("This is the %1 folder to/from which selected photos will be uploaded/downloaded.",d->m_pluginName));
+    d->m_albBox->setWhatsThis(i18n("This is the %1 folder to/from which selected photos will be uploaded/downloaded.", d->m_pluginName));
 
-    QLabel* const albLbl = new QLabel(i18n("Album:"),d->m_albBox);
+    QLabel* const albLbl = new QLabel(i18n("Album:"), d->m_albBox);
 
     d->m_albumsCoB->setEditable(false);
 
     d->m_newAlbumBtn->setText(i18n("New Album"));
     d->m_newAlbumBtn->setIcon(QIcon::fromTheme(QString::fromLatin1("list-add")).pixmap(16));
-    d->m_newAlbumBtn->setToolTip(i18n("Create new %1 folder",d->m_pluginName));
+    d->m_newAlbumBtn->setToolTip(i18n("Create new %1 folder", d->m_pluginName));
 
     d->m_reloadAlbumsBtn->setText(i18nc("album list","Reload"));
     d->m_reloadAlbumsBtn->setIcon(QIcon::fromTheme(QString::fromLatin1("view-refresh")).pixmap(16));
@@ -207,7 +207,7 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
 
     // ------------------------------------------------------------------------
 
-    d->m_uploadBox->setWhatsThis(i18n("This is the location where %1 images will be downloaded.",d->m_pluginName));
+    d->m_uploadBox->setWhatsThis(i18n("This is the location where %1 images will be downloaded.", d->m_pluginName));
     d->m_uploadBoxLayout->addWidget(d->m_uploadWidget);
 
     //-----------------------------------------------------------
@@ -228,16 +228,15 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
     d->m_dimensionSpB->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
     d->m_dimensionSpB->setEnabled(false);
 
-    QLabel* const dimensionLbl = new QLabel(i18n("Maximum Dimension:"),d->m_optionsBox);
+    QLabel* const dimensionLbl = new QLabel(i18n("Maximum Dimension:"), d->m_optionsBox);
 
     d->m_imageQualitySpB->setMinimum(0);
     d->m_imageQualitySpB->setMaximum(100);
     d->m_imageQualitySpB->setSingleStep(1);
     d->m_imageQualitySpB->setValue(90);
     d->m_imageQualitySpB->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-    d->m_imageQualitySpB->setEnabled(false);
 
-    QLabel* const imageQualityLbl = new QLabel(i18n("JPEG Quality:"),d->m_optionsBox);
+    QLabel* const imageQualityLbl = new QLabel(i18n("JPEG Quality:"), d->m_optionsBox);
 
     d->m_optionsBoxLayout->addWidget(d->m_originalChB,     0, 0, 1, 5);
     d->m_optionsBoxLayout->addWidget(d->m_resizeChB,       1, 0, 1, 5);
