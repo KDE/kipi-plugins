@@ -6,4 +6,5 @@ NEW FEATURES:
 
 BUGFIXES FROM BUGZILLA :
 
-001 ==> 
+001 ==> 384260 - Export to flickr includes un-checked tag group names.
+002 ==> 
