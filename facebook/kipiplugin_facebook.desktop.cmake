@@ -1,7 +1,19 @@
 [Desktop Entry]
 UntranslatedGenericName=Facebook Export
 Name=Facebook Export
+Name[ca]=Exportador a Facebook
+Name[nl]=Facebook-export
+Name[pt]=Exportação para o Facebook
+Name[sv]=Facebook export
+Name[uk]=Експорт до Facebook
+Name[x-test]=xxFacebook Exportxx
 Comment=A tool to export images to a remote Facebook web service
+Comment[ca]=Una eina per exportar imatges a un servei web remot Facebook
+Comment[nl]=Een hulpmiddel om afbeeldingen naar een Facebook-webservice te exporteren
+Comment[pt]=Uma ferramenta para exportar imagens para o serviço Web remoto do Facebook
+Comment[sv]=Ett verktyg för att exportera bilder till en Facebook webbtjänst
+Comment[uk]=Інструмент для експортування зображень до віддаленої служби Facebook
+Comment[x-test]=xxA tool to export images to a remote Facebook web servicexx
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_facebook
