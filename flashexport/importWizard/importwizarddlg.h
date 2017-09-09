@@ -68,8 +68,8 @@ public:
 
     bool checkIfFolderExist();
 
-    virtual bool validateCurrentPage();
-    virtual int nextId() const;
+    bool validateCurrentPage() Q_DECL_OVERRIDE;
+    int nextId() const Q_DECL_OVERRIDE;
 
 private Q_SLOTS:
 

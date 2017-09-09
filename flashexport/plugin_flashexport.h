@@ -58,7 +58,7 @@ public:
     Plugin_FlashExport(QObject* const parent, const QVariantList& args);
     virtual ~Plugin_FlashExport();
 
-    void setup(QWidget* const);
+    void setup(QWidget* const) Q_DECL_OVERRIDE;
 
 private:
 

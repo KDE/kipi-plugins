@@ -69,7 +69,7 @@ public:
 
 protected:
 
-    void closeEvent(QCloseEvent*);
+    void closeEvent(QCloseEvent*) Q_DECL_OVERRIDE;
 
 private Q_SLOTS:
 

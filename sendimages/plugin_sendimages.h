@@ -49,7 +49,7 @@ public:
     Plugin_SendImages(QObject* const parent, const QVariantList& args);
     ~Plugin_SendImages();
 
-    void setup(QWidget* const);
+    void setup(QWidget* const)  Q_DECL_OVERRIDE;
 
 public Q_SLOTS:
 

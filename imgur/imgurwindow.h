@@ -77,7 +77,7 @@ public Q_SLOTS:
     void apiBusy(bool busy);
 
 private:
-    void closeEvent(QCloseEvent* e);
+    void closeEvent(QCloseEvent* e) Q_DECL_OVERRIDE;
     void setContinueUpload(bool state);
     void readSettings();
     void saveSettings();

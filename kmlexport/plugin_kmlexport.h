@@ -53,7 +53,7 @@ public:
     Plugin_KMLExport(QObject* const parent, const QVariantList& args);
     ~Plugin_KMLExport();
 
-    void setup(QWidget* const);
+    void setup(QWidget* const)  Q_DECL_OVERRIDE;
 
 protected Q_SLOTS:
 

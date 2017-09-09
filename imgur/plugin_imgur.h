@@ -49,7 +49,7 @@ public:
     explicit Plugin_Imgur(QObject* const parent, const QVariantList& args);
     ~Plugin_Imgur();
 
-    void setup(QWidget* const);
+    void setup(QWidget* const) Q_DECL_OVERRIDE;
 
 public Q_SLOTS:
 

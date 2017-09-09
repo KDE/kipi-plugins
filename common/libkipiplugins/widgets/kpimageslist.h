@@ -161,14 +161,14 @@ public:
 
 private:
 
-    void dragEnterEvent(QDragEnterEvent* e);
-    void dragMoveEvent(QDragMoveEvent* e);
-    void dropEvent(QDropEvent* e);
-    void contextMenuEvent(QContextMenuEvent * e);
+    void dragEnterEvent(QDragEnterEvent* e) Q_DECL_OVERRIDE;
+    void dragMoveEvent(QDragMoveEvent* e) Q_DECL_OVERRIDE;
+    void dropEvent(QDropEvent* e) Q_DECL_OVERRIDE;
+    void contextMenuEvent(QContextMenuEvent * e) Q_DECL_OVERRIDE;
 
     void setup(int iconSize);
 
-    void drawRow(QPainter* p, const QStyleOptionViewItem& opt, const QModelIndex& index) const;
+    void drawRow(QPainter* p, const QStyleOptionViewItem& opt, const QModelIndex& index) const Q_DECL_OVERRIDE;
 
 private:
 

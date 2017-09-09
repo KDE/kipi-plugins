@@ -60,11 +60,11 @@ public:
 
     /* Overloaded functions to provide the delegate functionality.
      */
-    void paint(QPainter*, const QStyleOptionViewItem&, const QModelIndex&) const;
-    QSize sizeHint(const QStyleOptionViewItem&, const QModelIndex&) const;
-    QWidget* createEditor(QWidget*, const QStyleOptionViewItem&, const QModelIndex&) const;
-    void setEditorData(QWidget*, const QModelIndex&) const;
-    void setModelData(QWidget*, QAbstractItemModel*, const QModelIndex&) const;
+    void paint(QPainter*, const QStyleOptionViewItem&, const QModelIndex&) const Q_DECL_OVERRIDE;
+    QSize sizeHint(const QStyleOptionViewItem&, const QModelIndex&) const Q_DECL_OVERRIDE;
+    QWidget* createEditor(QWidget*, const QStyleOptionViewItem&, const QModelIndex&) const Q_DECL_OVERRIDE;
+    void setEditorData(QWidget*, const QModelIndex&) const Q_DECL_OVERRIDE;
+    void setModelData(QWidget*, QAbstractItemModel*, const QModelIndex&) const Q_DECL_OVERRIDE;
 
 private Q_SLOTS:
 

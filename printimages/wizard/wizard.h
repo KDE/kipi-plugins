@@ -67,7 +67,7 @@ public:
 
 protected Q_SLOTS:
 
-    virtual void accept();
+    virtual void accept() Q_DECL_OVERRIDE;
     virtual void pageChanged(int curr);
     virtual void captionChanged(const QString& text);
     virtual void saveCaptionSettings();
@@ -84,7 +84,7 @@ protected Q_SLOTS:
     virtual void BtnSaveAs_clicked();
     virtual void ListPhotoSizes_selected();
 
-    virtual void reject();
+    virtual void reject() Q_DECL_OVERRIDE;
     virtual void crop_selection(int);
     virtual void slotPageRemoved(int);
 

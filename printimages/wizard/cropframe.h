@@ -53,11 +53,11 @@ public:
 
 protected:
 
-    virtual void paintEvent(QPaintEvent*);
-    virtual void mousePressEvent(QMouseEvent*);
-    virtual void mouseReleaseEvent(QMouseEvent*);
-    virtual void mouseMoveEvent(QMouseEvent*);
-    virtual void keyPressEvent(QKeyEvent*);
+    virtual void paintEvent(QPaintEvent*) Q_DECL_OVERRIDE;
+    virtual void mousePressEvent(QMouseEvent*) Q_DECL_OVERRIDE;
+    virtual void mouseReleaseEvent(QMouseEvent*) Q_DECL_OVERRIDE;
+    virtual void mouseMoveEvent(QMouseEvent*) Q_DECL_OVERRIDE;
+    virtual void keyPressEvent(QKeyEvent*) Q_DECL_OVERRIDE;
 
 private:
 

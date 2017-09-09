@@ -118,7 +118,7 @@ protected:
 
     /** Main thread loop used to process jobs in todo list.
      */
-    void run();
+    void run() Q_DECL_OVERRIDE;
 
     /** Append a collection of jobs to process into QThreadPool.
      *  Jobs are add to pending lists and will be deleted by KPThreadManager, not QThreadPool.

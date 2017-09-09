@@ -47,7 +47,7 @@ public:
     Plugin_YandexFotki(QObject* const parent, const QVariantList& args);
     ~Plugin_YandexFotki();
 
-    void setup(QWidget* const);
+    void setup(QWidget* const) Q_DECL_OVERRIDE;
 
 public Q_SLOTS:
 

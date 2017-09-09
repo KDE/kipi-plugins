@@ -63,7 +63,7 @@ public Q_SLOTS:
 
 private:
 
-    void closeEvent(QCloseEvent* e);
+    void closeEvent(QCloseEvent* e) Q_DECL_OVERRIDE;
     void connectSignals();
     void readSettings();
     void saveSettings();

@@ -50,7 +50,7 @@ public:
     Plugin_Flickr(QObject* const parent, const QVariantList& args);
     ~Plugin_Flickr();
 
-    void setup(QWidget* const);
+    void setup(QWidget* const)  Q_DECL_OVERRIDE;
 
 public Q_SLOTS:
 

@@ -75,7 +75,7 @@ private:
     void downloadNextPhoto();
 
     void buttonStateChange(bool state);
-    void closeEvent(QCloseEvent*);
+    void closeEvent(QCloseEvent*) Q_DECL_OVERRIDE;
     void googlePhotoTransferHandler();
 
 private Q_SLOTS:

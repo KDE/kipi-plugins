@@ -52,7 +52,7 @@ public:
     Plugin_PrintImages(QObject* const parent, const QVariantList& args);
     ~Plugin_PrintImages();
 
-    void setup(QWidget* const widget);
+    void setup(QWidget* const widget) Q_DECL_OVERRIDE;
 
 public Q_SLOTS:
 

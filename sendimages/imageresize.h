@@ -68,7 +68,7 @@ Q_SIGNALS:
 
 private:
 
-    void run();
+    void run()  Q_DECL_OVERRIDE;
     bool imageResize(const EmailSettings& settings,
                      const QUrl& orgUrl, const QString& destName, QString& err);
 

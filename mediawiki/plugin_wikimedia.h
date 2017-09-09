@@ -55,7 +55,7 @@ public:
     Plugin_WikiMedia(QObject* const parent, const QVariantList& args);
     ~Plugin_WikiMedia();
 
-    void setup(QWidget* const);
+    void setup(QWidget* const) Q_DECL_OVERRIDE;
     void runMWindow();
 
 public Q_SLOTS:

@@ -56,7 +56,7 @@ public:
     Plugin_Facebook(QObject* const parent, const QVariantList& args);
     ~Plugin_Facebook();
 
-    void setup(QWidget* const);
+    void setup(QWidget* const) Q_DECL_OVERRIDE;
 
 public Q_SLOTS:
 
