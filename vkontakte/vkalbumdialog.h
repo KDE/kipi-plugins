@@ -72,7 +72,7 @@ public:
 
 protected Q_SLOTS:
 
-    virtual void accept();
+    void accept() Q_DECL_OVERRIDE;
 
 private:
 
