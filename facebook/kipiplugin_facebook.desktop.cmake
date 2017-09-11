@@ -2,13 +2,17 @@
 UntranslatedGenericName=Facebook Export
 Name=Facebook Export
 Name[ca]=Exportador a Facebook
+Name[de]=Facebook-Export
+Name[es]=Exportar a Facebook
 Name[nl]=Facebook-export
 Name[pt]=Exportação para o Facebook
 Name[sv]=Facebook export
 Name[uk]=Експорт до Facebook
 Name[x-test]=xxFacebook Exportxx
+Name[zh_CN]=Facebook 导出
 Comment=A tool to export images to a remote Facebook web service
 Comment[ca]=Una eina per exportar imatges a un servei web remot Facebook
+Comment[es]=Una herramienta para exportar imágenes al servicio web remoto de Facebook
 Comment[nl]=Een hulpmiddel om afbeeldingen naar een Facebook-webservice te exporteren
 Comment[pt]=Uma ferramenta para exportar imagens para o serviço Web remoto do Facebook
 Comment[sv]=Ett verktyg för att exportera bilder till en Facebook webbtjänst
