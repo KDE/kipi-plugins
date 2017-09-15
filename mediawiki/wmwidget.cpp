@@ -402,11 +402,13 @@ WmWidget::WmWidget(QWidget* const parent)
     d->licenseComboBox       = new QComboBox(textGBox);
     d->licenseComboBox->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
 
+    d->licenseComboBox->addItem(i18n("Own work, Creative Commons Attribution-Share Alike 4.0"),
+                                       QLatin1String("{{self|cc-by-sa-4.0}}"));
     d->licenseComboBox->addItem(i18n("Own work, multi-license with CC-BY-SA-3.0 and GFDL"),
                                        QLatin1String("{{self|cc-by-sa-3.0|GFDL|migration=redundant}}"));
     d->licenseComboBox->addItem(i18n("Own work, multi-license with CC-BY-SA-3.0 and older"),
                                        QLatin1String("{{self|cc-by-sa-3.0,2.5,2.0,1.0}}"));
-    d->licenseComboBox->addItem(i18n("Creative Commons Attribution-Share Alike 3.0"),
+    d->licenseComboBox->addItem(i18n("Own work, Creative Commons Attribution-Share Alike 3.0"),
                                        QLatin1String("{{self|cc-by-sa-3.0}}"));
     d->licenseComboBox->addItem(i18n("Own work, Creative Commons Attribution 3.0"),
                                        QLatin1String("{{self|cc-by-3.0}}"));
