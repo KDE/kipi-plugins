@@ -1,8 +1,8 @@
 [Desktop Entry]
 UntranslatedGenericName=Facebook Export
 Name=Facebook Export
-Name[ca]=Exportador a Facebook
-Name[ca@valencia]=Exportador a Facebook
+Name[ca]=Exportador al Facebook
+Name[ca@valencia]=Exportador al Facebook
 Name[cs]=Export do Facebooku
 Name[de]=Facebook-Export
 Name[es]=Exportar a Facebook
@@ -14,8 +14,8 @@ Name[uk]=Експорт до Facebook
 Name[x-test]=xxFacebook Exportxx
 Name[zh_CN]=Facebook 导出
 Comment=A tool to export images to a remote Facebook web service
-Comment[ca]=Una eina per exportar imatges a un servei web remot Facebook
-Comment[ca@valencia]=Una eina per exportar imatges a un servei web remot Facebook
+Comment[ca]=Una eina per exportar les imatges a un servei web remot Facebook
+Comment[ca@valencia]=Una eina per exportar les imatges a un servei web remot Facebook
 Comment[cs]=Nástroj pro export obrázků do vzdálené webové služby Facebook
 Comment[es]=Una herramienta para exportar imágenes al servicio web remoto de Facebook
 Comment[fr]=Outil pour exporter des images vers le service en ligne Facebook
