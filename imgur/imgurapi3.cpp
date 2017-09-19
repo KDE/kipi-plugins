@@ -30,6 +30,7 @@
 #include <QJsonObject>
 #include <QTimerEvent>
 #include <QUrlQuery>
+#include <QStandardPaths>
 
 // KDE includes
 
@@ -38,6 +39,8 @@
 // Local includes
 
 #include "kipiplugins_debug.h"
+#include "o0settingsstore.h"
+#include "o0globals.h"
 
 static const QString imgur_auth_url = QLatin1String("https://api.imgur.com/oauth2/authorize"),
 imgur_token_url = QLatin1String("https://api.imgur.com/oauth2/token");
@@ -53,6 +56,13 @@ ImgurAPI3::ImgurAPI3(const QString& client_id, const QString& client_secret, QOb
     m_auth.setRefreshTokenUrl(imgur_token_url);
     m_auth.setLocalPort(imgur_redirect_port);
     m_auth.setLocalhostPolicy(QString());
+
+    QString kipioauth = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QLatin1String("/kipioauth.conf");
+
+    QSettings* const settings    = new QSettings(kipioauth, QSettings::NativeFormat, this);
+    O0SettingsStore* const store = new O0SettingsStore(settings, QLatin1String(O2_ENCRYPTION_KEY), this);
+    store->setGroupKey(QLatin1String("Imgur"));
+    m_auth.setStore(store);
 
     connect(&m_auth, &O2::linkedChanged, this, &ImgurAPI3::oauthAuthorized);
     connect(&m_auth, &O2::openBrowser,   this, &ImgurAPI3::oauthRequestPin);
