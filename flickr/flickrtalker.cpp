@@ -52,6 +52,7 @@
 #include "flickritem.h"
 #include "flickrwindow.h"
 #include "kipiplugins_debug.h"
+#include "o0settingsstore.h"
 
 using namespace KIPIPlugins;
 
@@ -118,6 +119,13 @@ FlickrTalker::FlickrTalker(QWidget* const parent, const QString& serviceName)
     m_o1->setAuthorizeUrl(QUrl(m_authUrl));
     m_o1->setAccessTokenUrl(QUrl(m_accessUrl));
     m_o1->setRequestTokenUrl(QUrl(m_tokenUrl));
+
+    QString kipioauth = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QLatin1String("/kipioauth.conf");
+
+    QSettings* const settings    = new QSettings(kipioauth, QSettings::NativeFormat, this);
+    O0SettingsStore* const store = new O0SettingsStore(settings, QLatin1String(O2_ENCRYPTION_KEY), this);
+    store->setGroupKey(QLatin1String("Flickr"));
+    m_o1->setStore(store);
 
     connect(m_o1, SIGNAL(linkingFailed()),
             this, SLOT(slotLinkingFailed()));
