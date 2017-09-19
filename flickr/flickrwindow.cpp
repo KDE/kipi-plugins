@@ -54,7 +54,6 @@
 #include "kpimageinfo.h"
 #include "kpversion.h"
 #include "kpprogresswidget.h"
-#include "login.h"
 #include "flickrtalker.h"
 #include "flickritem.h"
 #include "flickrlist.h"
