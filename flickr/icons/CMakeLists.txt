@@ -17,10 +17,5 @@ ecm_install_icons(
         32-apps-kipi-hq.png
         48-apps-kipi-hq.png
         sc-apps-kipi-hq.svgz
-        16-apps-kipi-zooomr.png
-        22-apps-kipi-zooomr.png
-        32-apps-kipi-zooomr.png
-        48-apps-kipi-zooomr.png
-        sc-apps-kipi-zooomr.svgz
     DESTINATION ${ICON_INSTALL_DIR}
 )

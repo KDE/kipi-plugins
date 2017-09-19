@@ -11,7 +11,6 @@ add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_flickr\")
 set(kipiplugin_flickr_PART_SRCS
     plugin_flickr.cpp
     flickrwindow.cpp
-    login.cpp
     flickrtalker.cpp
     flickrwidget.cpp
     flickrlist.cpp
