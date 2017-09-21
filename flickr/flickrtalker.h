@@ -45,6 +45,7 @@
 #include "o1.h"
 #include "o0globals.h"
 #include "o1requestor.h"
+#include "o0settingsstore.h"
 
 class QProgressDialog;
 
@@ -82,8 +83,9 @@ public:
     FlickrTalker(QWidget* const parent, const QString& serviceName);
     ~FlickrTalker();
 
-    void    link();
+    void    link(const QString& userName);
     void    unLink();
+    void    removeUserName(const QString& userName);
     QString getUserName() const;
     QString getUserId() const;
     void    maxAllowedFileSize();
@@ -165,11 +167,14 @@ private:
     QNetworkAccessManager* m_netMngr;
     QNetworkReply*         m_reply;
 
+    QSettings*             m_settings;
+
     State                  m_state;
 
     Interface*             m_iface;
 
     O1*                    m_o1;
+    O0SettingsStore*       m_store;
     O1Requestor*           m_requestor;
 };
 

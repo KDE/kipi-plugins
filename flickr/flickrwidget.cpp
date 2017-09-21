@@ -61,7 +61,6 @@ FlickrWidget::FlickrWidget(QWidget* const parent, KIPI::Interface* const iface, 
     //Adding Remove Account button
     m_removeAccount              = new QPushButton(getAccountBox());
     m_removeAccount->setText(i18n("Remove Account"));
-    m_removeAccount->hide();
     getAccountBoxLayout()->addWidget(m_removeAccount, 2, 0, 1, 4);
 
     // -- The image list --------------------------------------------------

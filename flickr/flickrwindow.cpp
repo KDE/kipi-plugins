@@ -299,8 +299,8 @@ void FlickrWindow::slotAddPhotoCancelAndClose()
 void FlickrWindow::reactivate()
 {
     m_userNameDisplayLabel->setText(QString());
-    //readSettings(m_select->getUname());
-    m_talker->link();
+    readSettings(m_select->getUname());
+    m_talker->link(m_select->getUname());
 
     m_widget->m_imglst->loadImagesFromCurrentSelection();
     show();
@@ -450,11 +450,10 @@ void FlickrWindow::slotUserChangeRequest()
     writeSettings();
     m_userNameDisplayLabel->setText(QString());
     qCDebug(KIPIPLUGINS_LOG) << "Slot Change User Request ";
-    //m_select->reactivate();
-    //readSettings(m_select->getUname());
+    m_select->reactivate();
+    readSettings(m_select->getUname());
 
-     m_talker->unLink();
-     m_talker->link();
+    m_talker->link(m_select->getUname());
 }
 
 void FlickrWindow::slotRemoveAccount()
@@ -468,9 +467,11 @@ void FlickrWindow::slotRemoveAccount()
         grp.deleteGroup();
     }
 
+    m_talker->unLink();
+    m_talker->removeUserName(m_serviceName + m_username);
+
+    m_userNameDisplayLabel->setText(QString());
     m_username = QString();
-    qCDebug(KIPIPLUGINS_LOG) << "SlotTokenObtained invoked setting user Display name to " << m_username;
-    m_userNameDisplayLabel->setText(QString::fromLatin1("<b>%1</b>").arg(m_username));
 }
 
 /**

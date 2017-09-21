@@ -52,7 +52,6 @@
 #include "flickritem.h"
 #include "flickrwindow.h"
 #include "kipiplugins_debug.h"
-#include "o0settingsstore.h"
 
 using namespace KIPIPlugins;
 
@@ -64,12 +63,14 @@ FlickrTalker::FlickrTalker(QWidget* const parent, const QString& serviceName)
     m_parent          = parent;
     m_netMngr         = 0;
     m_reply           = 0;
+    m_settings        = 0;
     m_photoSetsList   = 0;
     m_authProgressDlg = 0;
     m_state           = FE_LOGOUT;
     m_serviceName     = serviceName;
     m_iface           = 0;
     m_o1              = 0;
+    m_store           = 0;
     m_requestor       = 0;
 
     PluginLoader* const pl = PluginLoader::instance();
@@ -122,10 +123,10 @@ FlickrTalker::FlickrTalker(QWidget* const parent, const QString& serviceName)
 
     QString kipioauth = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QLatin1String("/kipioauth.conf");
 
-    QSettings* const settings    = new QSettings(kipioauth, QSettings::NativeFormat, this);
-    O0SettingsStore* const store = new O0SettingsStore(settings, QLatin1String(O2_ENCRYPTION_KEY), this);
-    store->setGroupKey(QLatin1String("Flickr"));
-    m_o1->setStore(store);
+    m_settings = new QSettings(kipioauth, QSettings::NativeFormat, this);
+    m_store    = new O0SettingsStore(m_settings, QLatin1String(O2_ENCRYPTION_KEY), this);
+    m_store->setGroupKey(m_serviceName);
+    m_o1->setStore(m_store);
 
     connect(m_o1, SIGNAL(linkingFailed()),
             this, SLOT(slotLinkingFailed()));
@@ -151,15 +152,35 @@ FlickrTalker::~FlickrTalker()
     removeTemporaryDir(m_serviceName.toLatin1().constData());
 }
 
-void FlickrTalker::link()
+void FlickrTalker::link(const QString& userName)
 {
     emit signalBusy(true);
+
+    if (userName.isEmpty())
+    {
+        m_store->setGroupKey(m_serviceName);
+    }
+    else
+    {
+        m_store->setGroupKey(m_serviceName + userName);
+    }
+
     m_o1->link();
 }
 
 void FlickrTalker::unLink()
 {
     m_o1->unlink();
+}
+
+void FlickrTalker::removeUserName(const QString& userName)
+{
+    if (userName.startsWith(m_serviceName))
+    {
+        m_settings->beginGroup(userName);
+        m_settings->remove(QString());
+        m_settings->endGroup();
+    }
 }
 
 void FlickrTalker::slotLinkingFailed()
@@ -180,6 +201,26 @@ void FlickrTalker::slotLinkingSucceeded()
 
     m_username = m_o1->extraTokens()[QLatin1String("username")].toString();
     m_userId   = m_o1->extraTokens()[QLatin1String("user_nsid")].toString();
+
+    if (m_store->groupKey() == m_serviceName)
+    {
+        m_settings->beginGroup(m_serviceName);
+        QStringList keys = m_settings->allKeys();
+        m_settings->endGroup();
+
+        foreach(const QString& key, keys)
+        {
+            m_settings->beginGroup(m_serviceName);
+            QVariant value = m_settings->value(key);
+            m_settings->endGroup();
+            m_settings->beginGroup(m_serviceName + m_username);
+            m_settings->setValue(key, value);
+            m_settings->endGroup();
+        }
+
+        m_store->setGroupKey(m_serviceName + m_username);
+        removeUserName(m_serviceName);
+    }
 
     emit signalLinkingSucceeded();
 }

@@ -7,4 +7,5 @@ NEW FEATURES:
 BUGFIXES FROM BUGZILLA :
 
 001 ==> 384260 - Export to flickr includes un-checked tag group names.
-002 ==> 
+002 ==> 384826 - Flickr export broken.
+003 ==> 
