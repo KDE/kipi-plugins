@@ -372,10 +372,6 @@ void FlickrWindow::writeSettings()
     config.sync();
 }
 
-void FlickrWindow::slotDoLogin()
-{
-}
-
 void FlickrWindow::slotLinkingSucceeded()
 {
     m_username = m_talker->getUserName();
@@ -408,20 +404,15 @@ void FlickrWindow::slotBusy(bool val)
     if (val)
     {
         setCursor(Qt::WaitCursor);
-        //      m_newAlbumBtn->setEnabled( false );
-        //      m_addPhotoButton->setEnabled( false );
     }
     else
     {
         setCursor(Qt::ArrowCursor);
-        //      m_newAlbumBtn->setEnabled( loggedIn );
-        //      m_addPhotoButton->setEnabled( loggedIn && m_albumView->selectedItem() );
     }
 }
 
 void FlickrWindow::slotError(const QString& msg)
 {
-    //m_talker->slotError(msg);
     QMessageBox::critical(this, i18n("Error"), msg);
 }
 
@@ -468,7 +459,7 @@ QString FlickrWindow::guessSensibleSetName(const QList<QUrl>& urlList)
     // Extract last component of directory
     foreach(const QUrl& url, urlList)
     {
-        QString dir      = url.adjusted(QUrl::RemoveFilename|QUrl::StripTrailingSlash).toLocalFile();
+        QString dir      = url.adjusted(QUrl::RemoveFilename | QUrl::StripTrailingSlash).toLocalFile();
         QStringList list = dir.split(QLatin1Char('/'));
 
         if (list.isEmpty())
@@ -700,7 +691,6 @@ void FlickrWindow::slotAddPhotoNext()
     {
         m_widget->progressBar()->reset();
         setUiInProgressState(false);
-        //slotAlbumSelected();
         return;
     }
 

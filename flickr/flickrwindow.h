@@ -95,7 +95,6 @@ public:
 private Q_SLOTS:
 
     void slotLinkingSucceeded();
-    void slotDoLogin();
     void slotBusy(bool val);
     void slotError(const QString& msg);
     void slotFinished();
