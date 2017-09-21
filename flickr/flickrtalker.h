@@ -114,10 +114,7 @@ public:
 Q_SIGNALS:
 
     void signalError(const QString& msg);
-    //  void signalLoginFailed( const QString& msg );
     void signalBusy(bool val);
-    void signalAlbums(const QList<GAlbum>& albumList);
-    void signalPhotos(const QList<GPhoto>& photoList);
     void signalAddPhotoSucceeded();
     void signalAddPhotoSetSucceeded();
     void signalListPhotoSetsSucceeded();

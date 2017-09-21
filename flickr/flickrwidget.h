@@ -81,7 +81,6 @@ private Q_SLOTS:
     void slotExtendedTagsToggled(bool);
     void slotAddExtraTagsToggled(bool);
 
-
 private: // Functions
 
     void mainPermissionToggled(FlickrList::FieldType, Qt::CheckState);

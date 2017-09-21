@@ -300,16 +300,20 @@ FlickrWidget::~FlickrWidget()
 void FlickrWidget::updateLabels(const QString& /*name*/, const QString& /*url*/)
 {
     if (m_serviceName == QString::fromLatin1("23"))
+    {
         getHeaderLbl()->setText(i18n("<b><h2><a href='http://www.23hq.com'>"
                                   "<font color=\"#7CD164\">23</font></a>"
                                   " Export"
                                   "</h2></b>"));
+    }
     else
+    {
         getHeaderLbl()->setText(i18n("<b><h2><a href='http://www.flickr.com'>"
                                   "<font color=\"#0065DE\">flick</font>"
                                   "<font color=\"#FF0084\">r</font></a>"
                                   " Export"
                                   "</h2></b>"));
+    }
 }
 
 void FlickrWidget::slotPermissionChanged(FlickrList::FieldType checkbox, Qt::CheckState state)
@@ -510,10 +514,5 @@ void FlickrWidget::slotAddExtraTagsToggled(bool status)
         m_imglst->listView()->setColumnHidden(FlickrList::TAGS, !status);
     }
 }
-
-// void FlickrWidget::showEvent(QShowEvent*)
-// {
-//     slotOriginalChecked();
-// }
 
 } // namespace KIPIFlickrPlugin

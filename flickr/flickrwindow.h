@@ -73,7 +73,6 @@ class FPhotoInfo;
 class GPhoto;
 class GAlbum;
 class NewAlbum;
-//class GAlbumViewItem;
 
 using namespace KIPI;
 using namespace KIPIPlugins;
@@ -99,13 +98,6 @@ private Q_SLOTS:
     void slotDoLogin();
     void slotBusy(bool val);
     void slotError(const QString& msg);
-
-    //  void slotLoginFailed( const QString& msg );
-    //  void slotAlbums( const QValueList<GAlbum>& albumList );
-    //  void slotPhotos( const QValueList<GPhoto>& photoList );
-    //  void slotTagSelected();
-    //  void slotOpenPhoto( const KUrl &url );
-
     void slotFinished();
     void slotUser1();
     void slotCancelClicked();
@@ -162,8 +154,6 @@ private:
     QPushButton*                           m_extendedTagsButton;
     ComboBoxIntermediate*                  m_contentTypeComboBox;
     ComboBoxIntermediate*                  m_safetyLevelComboBox;
-
-//  QHash<int, GAlbumViewItem>             m_albumDict;
 
     QString                                m_username;
     QString                                m_userId;

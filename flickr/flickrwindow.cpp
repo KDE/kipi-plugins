@@ -33,7 +33,6 @@
 #include <QStringList>
 #include <QSpinBox>
 #include <QPointer>
-#include <QDebug>
 #include <QApplication>
 #include <QMenu>
 #include <QMessageBox>
@@ -84,7 +83,7 @@ FlickrWindow::FlickrWindow(QWidget* const /*parent*/, const QString& serviceName
     KConfig config(QString::fromLatin1("kipirc"));
     KConfigGroup grp = config.group(QString::fromLatin1("%1Export Settings").arg(m_serviceName));
 
-    if(grp.exists())
+    if (grp.exists())
     {
         qCDebug(KIPIPLUGINS_LOG) << QString::fromLatin1("%1Export Settings").arg(m_serviceName) << " exists, deleting it";
         grp.deleteGroup();
@@ -125,8 +124,6 @@ FlickrWindow::FlickrWindow(QWidget* const /*parent*/, const QString& serviceName
 
     connect(m_imglst, SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
-
-    //m_startUploadButton->setEnabled(false);
 
     // --------------------------------------------------------------------------
     // About data and help button.
@@ -185,14 +182,7 @@ FlickrWindow::FlickrWindow(QWidget* const /*parent*/, const QString& serviceName
     connect(m_widget->getReloadBtn(), SIGNAL(clicked()),
             this, SLOT(slotReloadPhotoSetRequest()));
 
-    //connect( m_talker, SIGNAL(signalAlbums(QValueList<GAlbum>)),
-    //         SLOT(slotAlbums(QValueList<GAlbum>)) );
-
-    //connect( m_talker, SIGNAL(signalPhotos(QValueList<GPhoto>)),
-    //         SLOT(slotPhotos(QValueList<GPhoto>)) );
-
     // --------------------------------------------------------------------------
-
 
     connect(m_changeUserButton, SIGNAL(clicked()),
             this, SLOT(slotUserChangeRequest()));
@@ -202,13 +192,6 @@ FlickrWindow::FlickrWindow(QWidget* const /*parent*/, const QString& serviceName
 
     connect(m_newAlbumBtn, SIGNAL(clicked()),
             this, SLOT(slotCreateNewPhotoSet()));
-
-
-    //connect( m_tagView, SIGNAL(selectionChanged()),
-    //         SLOT(slotTagSelected()) );
-
-    //connect( m_photoView->browserExtension(), SIGNAL(openURLRequest(KUrl,KParts::URLArgs)),
-    //         SLOT(slotOpenPhoto(KUrl)) );
 
     // --------------------------------------------------------------------------
 
@@ -291,9 +274,6 @@ void FlickrWindow::slotAddPhotoCancelAndClose()
     setUiInProgressState(false);
     m_talker->cancel();
     reject();
-
-    // refresh the thumbnails
-    //slotTagSelected();
 }
 
 void FlickrWindow::reactivate()
@@ -405,7 +385,7 @@ void FlickrWindow::slotLinkingSucceeded()
 
     KConfig config(QString::fromLatin1("kipirc"));
 
-    foreach (const QString& group, config.groupList())
+    foreach(const QString& group, config.groupList())
     {
         if (!(group.contains(m_serviceName)))
             continue;
@@ -502,7 +482,7 @@ QString FlickrWindow::guessSensibleSetName(const QList<QUrl>& urlList)
     QString name;
 
     for (QMap<QString,int>::const_iterator it=nrFolderOccurences.constBegin();
-         it!=nrFolderOccurences.constEnd(); ++it)
+         it != nrFolderOccurences.constEnd() ; ++it)
     {
         totalCount += it.value();
 
@@ -574,22 +554,6 @@ void FlickrWindow::slotAuthCancel()
     m_talker->cancel();
     m_authProgressDlg->hide();
 }
-
-/*
-void FlickrWindow::slotPhotos( const QValueList<GPhoto>& photoList)
-{
-    // TODO
-}
-
-void FlickrWindow::slotTagSelected()
-{
-    // TODO
-}
-void FlickrWindow::slotOpenPhoto( const QUrl &url )
-{
-    new KRun(url);
-}
-*/
 
 void FlickrWindow::slotPopulatePhotoSetComboBox()
 {
@@ -820,8 +784,6 @@ void FlickrWindow::slotAddPhotoFailed(const QString& msg)
         m_uploadQueue.clear();
         m_widget->progressBar()->reset();
         setUiInProgressState(false);
-        // refresh the thumbnails
-        //slotTagSelected();
     }
     else
     {
