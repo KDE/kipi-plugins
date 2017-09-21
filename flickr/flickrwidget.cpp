@@ -251,12 +251,6 @@ FlickrWidget::FlickrWidget(QWidget* const parent, KIPI::Interface* const iface, 
     connect(m_addExtraTagsCheckBox, SIGNAL(toggled(bool)),
             this, SLOT(slotAddExtraTagsToggled(bool)));
 
-    // Zooomr doesn't support explicit Photosets.
-    if (serviceName == QString::fromLatin1("Zooomr"))
-    {
-        getAlbumBox()->hide();
-    }
-
     // 23HQ doesn't support the Family and Friends concept.
     if (serviceName != QString::fromLatin1("23"))
     {
@@ -272,8 +266,8 @@ FlickrWidget::FlickrWidget(QWidget* const parent, KIPI::Interface* const iface, 
         m_friendsCheckBox->hide();
     }
 
-    // 23HQ and Zooomr don't support the Safety Level and Content Type concept.
-    if ((serviceName != QString::fromLatin1("23")) && (serviceName != QString::fromLatin1("Zooomr")))
+    // 23HQ don't support the Safety Level and Content Type concept.
+    if (serviceName != QString::fromLatin1("23"))
     {
         connect(m_safetyLevelComboBox, SIGNAL(currentIndexChanged(int)),
                 this, SLOT(slotMainSafetyLevelChanged(int)));
@@ -308,11 +302,6 @@ void FlickrWidget::updateLabels(const QString& /*name*/, const QString& /*url*/)
     if (m_serviceName == QString::fromLatin1("23"))
         getHeaderLbl()->setText(i18n("<b><h2><a href='http://www.23hq.com'>"
                                   "<font color=\"#7CD164\">23</font></a>"
-                                  " Export"
-                                  "</h2></b>"));
-    else if (m_serviceName == QString::fromLatin1("Zooomr"))
-        getHeaderLbl()->setText(i18n("<b><h2><a href='http://www.zooomr.com'>"
-                                  "<font color=\"#7CD164\">zooomr</font></a>"
                                   " Export"
                                   "</h2></b>"));
     else

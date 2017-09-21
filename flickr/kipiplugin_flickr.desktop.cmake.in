@@ -1,6 +1,6 @@
 [Desktop Entry]
-UntranslatedGenericName=Flickr/23/Zooomr 
-Name=Flickr/23/Zooomr 
+UntranslatedGenericName=Flickr/23
+Name=Flickr/23
 Name[ast]=Esportador Flickr/23/Zooomr
 Name[bg]=Изнасяне към Flickr, 23 или Zooomr
 Name[bs]=Flickr/23/Zooomr 
@@ -41,7 +41,7 @@ Name[uk]=Експорт до Flickr/23/Zooomr
 Name[x-test]=xxFlickr/23/Zooomr xx
 Name[zh_CN]=Flickr/23/Zooomr 导出
 Name[zh_TW]=Flickr/23/Zooomr 匯出程式
-Comment=A tool to export images to remote Flickr, 23 and Zooomr web services.
+Comment=A tool to export images to remote Flickr and 23 web services.
 Comment[ast]=Un preséu pa esportar imáxenes a servicios web remotos como Flickr, 23 y Zooomr
 Comment[bg]=Инструмент за изнасяне на изображения към отдалечена уеб-услуга Flickr, 23 или Zooomr.
 Comment[bs]=Alat za izvoz slika u udaljeni Flickr, 23 i Zoomr web servis.

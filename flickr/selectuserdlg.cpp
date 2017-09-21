@@ -64,10 +64,6 @@ SelectUserDlg::SelectUserDlg(QWidget* const parent, const QString& serviceName)
     {
         setWindowIcon(QIcon::fromTheme(QString::fromLatin1("kipi-hq")));
     }
-    else if (m_serviceName == QString::fromLatin1("Zooomr"))
-    {
-        setWindowIcon(QIcon::fromTheme(QString::fromLatin1("kipi-zooomr")));
-    }
     else
     {
         setWindowIcon(QIcon::fromTheme(QString::fromLatin1("kipi-flickr")));
