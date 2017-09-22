@@ -33,7 +33,7 @@ target_link_libraries(kipiplugin_flickr
                       KF5::WindowSystem
                      )
 
-configure_file(kipiplugin_flickr.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_flickr.desktop)
+configure_file(kipiplugin_flickr.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_flickr.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_flickr.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_flickr                                     DESTINATION ${PLUGIN_INSTALL_DIR})
