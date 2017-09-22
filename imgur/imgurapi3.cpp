@@ -57,9 +57,9 @@ ImgurAPI3::ImgurAPI3(const QString& client_id, const QString& client_secret, QOb
     m_auth.setLocalPort(imgur_redirect_port);
     m_auth.setLocalhostPolicy(QString());
 
-    QString kipioauth = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QLatin1String("/kipioauth.conf");
+    QString kipioauth = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QLatin1String("/kipioauthrc");
 
-    QSettings* const settings    = new QSettings(kipioauth, QSettings::NativeFormat, this);
+    QSettings* const settings    = new QSettings(kipioauth, QSettings::IniFormat, this);
     O0SettingsStore* const store = new O0SettingsStore(settings, QLatin1String(O2_ENCRYPTION_KEY), this);
     store->setGroupKey(QLatin1String("Imgur"));
     m_auth.setStore(store);
