@@ -185,7 +185,7 @@ void FlickrTalker::removeUserName(const QString& userName)
 
 void FlickrTalker::slotLinkingFailed()
 {
-    qCDebug(KIPIPLUGINS_LOG) << "LINK to Fickr fail";
+    qCDebug(KIPIPLUGINS_LOG) << "LINK to Flickr fail";
     m_username = QString();
     emit signalBusy(false);
 }
@@ -194,12 +194,12 @@ void FlickrTalker::slotLinkingSucceeded()
 {
     if (!m_o1->linked())
     {
-        qCDebug(KIPIPLUGINS_LOG) << "UNLINK to Fickr ok";
+        qCDebug(KIPIPLUGINS_LOG) << "UNLINK to Flickr ok";
         m_username = QString();
         return;
     }
 
-    qCDebug(KIPIPLUGINS_LOG) << "LINK to Fickr ok";
+    qCDebug(KIPIPLUGINS_LOG) << "LINK to Flickr ok";
 
     m_username = m_o1->extraTokens()[QLatin1String("username")].toString();
     m_userId   = m_o1->extraTokens()[QLatin1String("user_nsid")].toString();
