@@ -530,7 +530,7 @@ void SimpleViewer::processQUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
     QUrl imagesDir = QUrl::fromLocalFile(d->tempDir->path());
     imagesDir.setPath(imagesDir.path() + QLatin1String("/images/"));
 
-    qSort(images.begin(), images.end(), cmpUrl);
+    std::sort(images.begin(), images.end(), cmpUrl);
 
     for (QList<QUrl>::ConstIterator it = images.constBegin();
          !d->canceled && (it != images.constEnd()) ; ++it)

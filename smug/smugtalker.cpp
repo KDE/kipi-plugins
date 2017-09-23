@@ -846,7 +846,7 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
     if (errCode == 15)  // 15: empty list
         errCode = 0;
 
-    qSort(albumsList.begin(), albumsList.end(), SmugAlbum::lessThan);
+    std::sort(albumsList.begin(), albumsList.end(), SmugAlbum::lessThan);
 
     emit signalBusy(false);
     emit signalListAlbumsDone(errCode, errorToText(errCode, errMsg), albumsList);

@@ -43,7 +43,6 @@
 #include <QPlainTextEdit>
 #include <QList>
 #include <QDesktopServices>
-#include <QDebug>
 #include <QApplication>
 #include <QPushButton>
 #include <QDialog>
@@ -864,7 +863,7 @@ void FbTalker::parseResponseListAlbums(const QByteArray& data)
         errMsg  = obj[QString::fromLatin1("message")].toString();
     }
 
-    qSort(albumsList.begin(), albumsList.end());
+    std::sort(albumsList.begin(), albumsList.end());
 
     emit signalBusy(false);
     emit signalListAlbumsDone(errCode, errorToText(errCode, errMsg),

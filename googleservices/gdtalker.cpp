@@ -355,7 +355,7 @@ void GDTalker::parseResponseListFolders(const QByteArray& data)
         albumList.append(fps);
     }
 
-    qSort(albumList.begin(), albumList.end(), gdriveLessThan);
+    std::sort(albumList.begin(), albumList.end(), gdriveLessThan);
     emit signalBusy(false);
     emit signalListAlbumsDone(1,QString(),albumList);
 }

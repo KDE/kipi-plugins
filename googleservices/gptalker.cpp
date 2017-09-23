@@ -745,7 +745,7 @@ void GPTalker::parseResponseListAlbums(const QByteArray& data)
         node = node.nextSibling();
     }
 
-    qSort(albumList.begin(), albumList.end(), gphotoLessThan);
+    std::sort(albumList.begin(), albumList.end(), gphotoLessThan);
     emit signalListAlbumsDone(1, QString::fromLatin1(""), albumList);
 }
 

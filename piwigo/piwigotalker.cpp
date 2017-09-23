@@ -569,7 +569,7 @@ void PiwigoTalker::parseResponseListAlbums(const QByteArray& data)
     }
 
     // We need parent albums to come first for rest of the code to work
-    qSort(albumList);
+    std::sort(albumList.begin(), albumList.end());
 
     emit signalAlbums(albumList);
 }
