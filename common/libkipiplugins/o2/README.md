@@ -25,6 +25,7 @@ O1Freshbooks | o1freshbooks.h | Freshbooks OAuth specialization
 O1Requestor | o1requestor.h | Makes authenticated OAuth 1.0 requests: GET, POST or PUT, handles timeouts
 O1RequestParameter | o1.h | An extra request parameter participating in request signing
 O1Twitter | o1twitter.h | Twitter OAuth specialization
+O1SmugMug | o1smugmug.h | SmugMug OAuth specialization
 O2 | o2.h | Generic OAuth 2.0 authenticator
 O2Facebook | o2facebook.h | Facebook OAuth specialization
 O2Gft | o2gft.h | Google Fusion Tables OAuth specialization
@@ -193,7 +194,15 @@ You can also create it with your customized QSettings object. O2SettingsStore wi
 
 Once set, O2SettingsStore takes ownership of the QSettings object.
 
-**Note:** If you do not specify a storage object to use, O2 will create one by default (which QSettings based), and use it. In such a case, a default encryption key is used for encrypting the data.
+**Note:** If you do not specify a storage object to use, O2 will create one by default (which QSettings based), and use it. In such a case, a default encryption key is used for encrypting the data. *This is not a secure solution: prefer storing the tokens in a Keychain or Wallet based facility instead*.
+
+**Note:** If using O2SettingsStore, make sure organization name, domain and application name are set:
+
+```
+QCoreApplication::setOrganizationName("MySoft");
+QCoreApplication::setOrganizationDomain("mysoft.com");
+QCoreApplication::setApplicationName("Star Runner");
+```
 
 ### Extra OAuth Tokens
 

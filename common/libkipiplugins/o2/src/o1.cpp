@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QDataStream>
 #include <QStringList>
+#include <algorithm>
 
 #if QT_VERSION >= 0x050000
 #include <QUrlQuery>
@@ -20,13 +21,21 @@
 #include "o0globals.h"
 #include "o0settingsstore.h"
 
-O1::O1(QObject *parent, QNetworkAccessManager *manager): O0BaseAuth(parent) {
+O1::O1(QObject *parent, QNetworkAccessManager *manager, O0AbstractStore *store): O0BaseAuth(parent, store) {
     setSignatureMethod(O2_SIGNATURE_TYPE_HMAC_SHA1);
     manager_ = manager ? manager : new QNetworkAccessManager(this);
     replyServer_ = new O2ReplyServer(this);
     qRegisterMetaType<QNetworkReply::NetworkError>("QNetworkReply::NetworkError");
     connect(replyServer_, SIGNAL(verificationReceived(QMap<QString,QString>)), this, SLOT(onVerificationReceived(QMap<QString,QString>)));
     setCallbackUrl(O2_CALLBACK_URL);
+}
+
+QByteArray O1::userAgent() const {
+    return userAgent_;
+}
+
+void O1::setUserAgent(const QByteArray &v) {
+    userAgent_ = v;
 }
 
 QUrl O1::requestTokenUrl() {
@@ -141,7 +150,7 @@ QByteArray O1::getRequestBase(const QList<O0RequestParameter> &oauthParams, cons
     // Append a sorted+encoded list of all request parameters to the base string
     QList<O0RequestParameter> headers(oauthParams);
     headers.append(otherParams);
-    qSort(headers);
+    std::sort(headers.begin(), headers.end());
     base.append(encodeHeaders(headers));
 
     return base;
@@ -161,7 +170,7 @@ QByteArray O1::buildAuthorizationHeader(const QList<O0RequestParameter> &oauthPa
     bool first = true;
     QByteArray ret("OAuth ");
     QList<O0RequestParameter> headers(oauthParams);
-    qSort(headers);
+    std::sort(headers.begin(), headers.end());
     foreach (O0RequestParameter h, headers) {
         if (first) {
             first = false;
@@ -174,6 +183,17 @@ QByteArray O1::buildAuthorizationHeader(const QList<O0RequestParameter> &oauthPa
         ret.append("\"");
     }
     return ret;
+}
+
+void O1::decorateRequest(QNetworkRequest &req, const QList<O0RequestParameter> &oauthParams) {
+    req.setRawHeader(O2_HTTP_AUTHORIZATION_HEADER, buildAuthorizationHeader(oauthParams));
+    if (!userAgent_.isEmpty()) {
+#if QT_VERSION >= 0x050000
+        req.setHeader(QNetworkRequest::UserAgentHeader, userAgent_);
+#else
+        req.setRawHeader("User-Agent", userAgent_);
+#endif
+    }
 }
 
 QByteArray O1::generateSignature(const QList<O0RequestParameter> headers, const QNetworkRequest &req, const QList<O0RequestParameter> &signingParameters, QNetworkAccessManager::Operation operation) {
@@ -239,7 +259,7 @@ void O1::link() {
     requestTokenSecret_.clear();
 
     // Post request
-    request.setRawHeader(O2_HTTP_AUTHORIZATION_HEADER, buildAuthorizationHeader(headers));
+    decorateRequest(request, headers);
     request.setHeader(QNetworkRequest::ContentTypeHeader, O2_MIME_TYPE_XFORM);
     QNetworkReply *reply = manager_->post(request, QByteArray());
     connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(onTokenRequestError(QNetworkReply::NetworkError)));
@@ -321,7 +341,7 @@ void O1::exchangeToken() {
     oauthParams.append(O0RequestParameter(O2_OAUTH_SIGNATURE, generateSignature(oauthParams, request, QList<O0RequestParameter>(), QNetworkAccessManager::PostOperation)));
 
     // Post request
-    request.setRawHeader(O2_HTTP_AUTHORIZATION_HEADER, buildAuthorizationHeader(oauthParams));
+    decorateRequest(request, oauthParams);
     request.setHeader(QNetworkRequest::ContentTypeHeader, O2_MIME_TYPE_XFORM);
     QNetworkReply *reply = manager_->post(request, QByteArray());
     connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(onTokenExchangeError(QNetworkReply::NetworkError)));
