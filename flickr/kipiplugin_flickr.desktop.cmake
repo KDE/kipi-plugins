@@ -1,7 +1,19 @@
 [Desktop Entry]
 UntranslatedGenericName=Flickr/23
 Name=Flickr/23
+Name[ca]=Flickr/23
+Name[nl]=Flickr/23
+Name[pt]=Flickr/23
+Name[sv]=Flickr/23
+Name[uk]=Flickr/23
+Name[x-test]=xxFlickr/23xx
 Comment=A tool to export images to remote Flickr and 23 web services.
+Comment[ca]=Una eina per exportar les imatges als serveis web remots Flickr i 23
+Comment[nl]=Een hulpmiddel om afbeeldingen naar een Flickr- en 23-webservice op afstand te exporteren.
+Comment[pt]=Uma ferramenta para exportar imagens para os serviços Web remotos do Flickr e 23.
+Comment[sv]=Ett verktyg för att exportera bilder till webbtjänsterna Flickr eller 23.
+Comment[uk]=Інструмент для експорту зображень до віддалених служб Flickr та 23.
+Comment[x-test]=xxA tool to export images to remote Flickr and 23 web services.xx
 Type=Service
 Icon=kipi-flickr
 ServiceTypes=KIPI/Plugin
