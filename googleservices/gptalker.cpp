@@ -63,7 +63,7 @@
 namespace KIPIGoogleServicesPlugin
 {
 
-static bool gphotoLessThan(GSFolder& p1, GSFolder& p2)
+static bool gphotoLessThan(const GSFolder& p1, const GSFolder& p2)
 {
     return (p1.title.toLower() < p2.title.toLower());
 }

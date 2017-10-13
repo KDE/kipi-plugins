@@ -62,7 +62,7 @@
 namespace KIPIGoogleServicesPlugin
 {
 
-static bool gdriveLessThan(GSFolder& p1, GSFolder& p2)
+static bool gdriveLessThan(const GSFolder& p1, const GSFolder& p2)
 {
     return (p1.title.toLower() < p2.title.toLower());
 }
