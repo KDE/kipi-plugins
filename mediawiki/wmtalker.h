@@ -63,7 +63,7 @@ public:
     QString buildWikiText(const QMap<QString, QString>& info) const;
 
     void setImageMap(const QMap <QString,QMap <QString,QString> >& imageDesc);
-    void start();
+    void start() Q_DECL_OVERRIDE;
 
 Q_SIGNALS:
 
