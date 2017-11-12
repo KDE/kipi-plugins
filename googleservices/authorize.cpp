@@ -240,7 +240,7 @@ void Authorize::slotAuthFinished(QNetworkReply* reply)
         if (m_Authstate == GD_ACCESSTOKEN)
         {
             emit signalBusy(false);
-            emit signalAccessTokenFailed(m_reply->error(), reply->errorString());
+            emit signalAccessTokenFailed(reply->error(), reply->errorString());
         }
         else
         {
