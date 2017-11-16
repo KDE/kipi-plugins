@@ -1,11 +1,11 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<gui version="3" name="kipiplugin_sendimages" >
+<gui version="4" name="kipiplugin_sendimages" >
 <!-- NOTE: don't forget to increase version ID when this file is modified -->
 
     <MenuBar>
 
-        <Menu name="Tools"><text>&amp;Tools</text>
-            <Action name="sendimages" group="kipi_tool_group" />
+        <Menu name="Export"><text>&amp;Export</text>
+            <Action name="sendimages" group="kipi_export_group" />
         </Menu>
 
     </MenuBar>

@@ -109,7 +109,7 @@ void Plugin_SendImages::setup(QWidget* const widget)
 
 void Plugin_SendImages::setupActions()
 {
-    setDefaultCategory(ToolsPlugin);
+    setDefaultCategory(ExportPlugin);
 
     d->action_sendimages = new QAction(this);
     d->action_sendimages->setText(i18n("Email Images..."));
