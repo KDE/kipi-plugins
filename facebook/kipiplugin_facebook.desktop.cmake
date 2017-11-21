@@ -22,6 +22,7 @@ Comment=A tool to export images to a remote Facebook web service
 Comment[ca]=Una eina per exportar les imatges a un servei web remot Facebook
 Comment[ca@valencia]=Una eina per exportar les imatges a un servei web remot Facebook
 Comment[cs]=Nástroj pro export obrázků do vzdálené webové služby Facebook
+Comment[de]=Ein Werkzeug, um Bilder zum Facebook-Webdienst zu exportieren.
 Comment[el]=Εργαλείο εξαγωγής εικόνων σε μια απομακρυσμένη υπηρεσία ιστού Facebook
 Comment[es]=Una herramienta para exportar imágenes al servicio web remoto de Facebook
 Comment[fr]=Outil pour exporter des images vers le service en ligne Facebook
