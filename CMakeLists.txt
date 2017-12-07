@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2010-2017 by Gilles Caulier, <caulier dot gilles at gmail dot com>
+# Copyright (c) 2010-2018 by Gilles Caulier, <caulier dot gilles at gmail dot com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
@@ -77,7 +77,8 @@ include(MacroLocalLibs)
 
 ##########################################################################
 
-option(ENABLE_KIO "Build Kipi-plugins with KIO support (default=ON)" ON)
+option(ENABLE_KIO    "Build Kipi-plugins with KIO support (default=ON)" ON)
+option(ENABLE_LEGACY "Build Kipi-plugins with legacy plugins support (default=ON)" ON)
 
 ############## Find Packages ###################
 
@@ -181,6 +182,7 @@ if(KF5Kipi_FOUND)
         set(KIPIPLUGINS_CAN_BE_COMPILED false)
     endif()
 
+    PRINT_COMPONENT_COMPILE_STATUS("Legacy plugins"     ENABLE_LEGACY)
     PRINT_COMPONENT_COMPILE_STATUS("VKontakte"          KF5Vkontakte_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("Mediawiki"          KF5MediaWiki_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("FlashExport"        KF5Archive_FOUND)
@@ -241,9 +243,6 @@ if(KF5Kipi_FOUND)
         add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
 
         add_subdirectory(common)
-        add_subdirectory(printimages)
-        add_subdirectory(kmlexport)
-        add_subdirectory(sendimages)
         add_subdirectory(flickr)
         add_subdirectory(dropbox)
         add_subdirectory(facebook)
@@ -254,10 +253,17 @@ if(KF5Kipi_FOUND)
         add_subdirectory(imageshack)
         add_subdirectory(yandexfotki)
         add_subdirectory(googleservices)
-        add_subdirectory(jalbum)
 
-        if(KF5Archive_FOUND)
-            add_subdirectory(flashexport)
+        if(ENABLE_LEGACY)
+            add_subdirectory(printimages)
+            add_subdirectory(kmlexport)
+            add_subdirectory(sendimages)
+            add_subdirectory(jalbum)
+
+            if(KF5Archive_FOUND)
+                add_subdirectory(flashexport)
+            endif()
+
         endif()
 
         if(KF5Vkontakte_FOUND)
