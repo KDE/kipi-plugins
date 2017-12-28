@@ -9,4 +9,5 @@ BUGFIXES FROM BUGZILLA :
 001 ==> 384260 - Export to flickr includes un-checked tag group names.
 002 ==> 384826 - Flickr export broken.
 003 ==> 381969 - Cannot log on flickr exporter.
-004 ==> 
+004 ==> 388271 - Fix for flickr authentication generates URL that can't work on Windows.
+005 ==> 
