@@ -310,17 +310,20 @@ void DBTalker::slotFinished(QNetworkReply* reply)
 
     if (reply->error() != QNetworkReply::NoError)
     {
-        emit signalBusy(false);
-        QMessageBox::critical(QApplication::activeWindow(),
-                              i18n("Error"), reply->errorString());
+        if (m_state != DB_CREATEFOLDER)
+        {
+            emit signalBusy(false);
+            QMessageBox::critical(QApplication::activeWindow(),
+                                  i18n("Error"), reply->errorString());
 
-        reply->deleteLater();
-        return;
+            reply->deleteLater();
+            return;
+        }
     }
 
     m_buffer.append(reply->readAll());
 
-    switch(m_state)
+    switch (m_state)
     {
         case (DB_LISTFOLDERS):
             qCDebug(KIPIPLUGINS_LOG) << "In DB_LISTFOLDERS";
@@ -417,13 +420,12 @@ void DBTalker::parseResponseCreateFolder(const QByteArray& data)
     QJsonDocument doc      = QJsonDocument::fromJson(data);
     QJsonObject jsonObject = doc.object();
     bool fail              = jsonObject.contains(QLatin1String("error"));
-    QString temp;
 
     emit signalBusy(false);
 
     if (fail)
     {
-        emit signalCreateFolderFailed(jsonObject[QLatin1String("error")].toString());
+        emit signalCreateFolderFailed(jsonObject[QLatin1String("error_summary")].toString());
     }
     else
     {
