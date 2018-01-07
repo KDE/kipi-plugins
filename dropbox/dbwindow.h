@@ -91,9 +91,8 @@ private Q_SLOTS:
     void slotStartTransfer();
 
     void slotBusy(bool);
-    //void slotAccessTokenFailed(int errCode, const QString& errMsg);
-    void slotAccessTokenFailed();
-    void slotAccessTokenObtained(const QString& msg1, const QString& msg2, const QString& msg3);
+    void slotSignalLinkingFailed();
+    void slotSignalLinkingSucceeded();
     void slotSetUserName(const QString& msg);
     void slotListAlbumsFailed(const QString& msg);
     void slotListAlbumsDone(const QList<QPair<QString, QString> >& list);
@@ -102,7 +101,6 @@ private Q_SLOTS:
     void slotAddPhotoFailed(const QString& msg);
     void slotAddPhotoSucceeded();
     void slotTransferCancel();
-    void slotTextBoxEmpty();
 
     void slotFinished();
 
@@ -120,10 +118,6 @@ private:
     QString              m_currentAlbumName;
 
     QList<QUrl>          m_transferQueue;
-
-    QString              m_accToken;
-    QString              m_accTokenSecret;
-    QString              m_accoauthToken;
 };
 
 } // namespace KIPIDropboxPlugin

@@ -43,11 +43,11 @@ MPForm::~MPForm()
 {
 }
 
-bool MPForm::addFile(const QString &imgPath)
+bool MPForm::addFile(const QString& imgPath)
 {
     QFile file(imgPath);
 
-    if(!file.open(QIODevice::ReadOnly))
+    if (!file.open(QIODevice::ReadOnly))
     {
         return false;
     }

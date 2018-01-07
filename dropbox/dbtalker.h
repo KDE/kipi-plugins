@@ -25,12 +25,9 @@
 
 // Qt includes
 
-#include <QString>
-#include <QObject>
 #include <QList>
 #include <QPair>
-#include <QQueue>
-#include <QDialog>
+#include <QString>
 #include <QNetworkReply>
 #include <QNetworkAccessManager>
 
@@ -41,6 +38,9 @@
 // Local includes
 
 #include "dbitem.h"
+#include "o2.h"
+#include "o0globals.h"
+#include "o0settingsstore.h"
 
 using namespace KIPI;
 
@@ -58,24 +58,20 @@ public:
 
 public:
 
-    void obtain_req_token();
-    void doOAuth();
+    void link();
+    void unLink();
     bool authenticated();
-    void getAccessToken();
-    void continueWithAccessToken(const QString& msg1, const QString& msg2, const QString& msg3);
     void getUserName();
     void cancel();
-    void listFolders(const QString& path);
+    void listFolders(const QString& path = QString());
     bool addPhoto(const QString& imgPath, const QString& uploadFolder, bool rescale, int maxDim, int imageQuality);
     void createFolder(const QString& path);
-    QString generateNonce(qint32 length);
 
 Q_SIGNALS:
 
     void signalBusy(bool val);
-    void signalAccessTokenObtained(const QString& msg1, const QString& msg2, const QString& msg3);
-    void signalAccessTokenFailed();
-    void signalRequestTokenFailed(int errCode, const QString& errMsg);
+    void signalLinkingSucceeded();
+    void signalLinkingFailed();
     void signalSetUserName(const QString& msg);
     void signalListAlbumsFailed(const QString& msg);
     void signalListAlbumsDone(const QList<QPair<QString, QString> >& list);
@@ -83,18 +79,16 @@ Q_SIGNALS:
     void signalCreateFolderSucceeded();
     void signalAddPhotoFailed(const QString& msg);
     void signalAddPhotoSucceeded();
-    void signalTextBoxEmpty();
 
 private Q_SLOTS:
 
+    void slotLinkingFailed();
+    void slotLinkingSucceeded();
+    void slotOpenBrowser(const QUrl& url); 
     void slotFinished(QNetworkReply* reply);
-    void slotAccept();
-    void slotReject();
 
 private:
 
-    void parseResponseAccessToken(const QByteArray& data);
-    void parseResponseRequestToken(const QByteArray& data);
     void parseResponseUserName(const QByteArray& data);
     void parseResponseListFolders(const QByteArray& data);
     void parseResponseCreateFolder(const QByteArray& data);
@@ -104,9 +98,7 @@ private:
 
     enum State
     {
-        DB_REQ_TOKEN = 0,
-        DB_ACCESSTOKEN,
-        DB_USERNAME,
+        DB_USERNAME = 0,
         DB_LISTFOLDERS,
         DB_CREATEFOLDER,
         DB_ADDPHOTO
@@ -114,32 +106,29 @@ private:
 
 private:
 
-    QDialog*                        m_dialog;
-    bool                            m_auth;
-    long                            m_timestamp;
-    QString                         m_nonce;
-    QString                         m_oauth_consumer_key;
-    QString                         m_oauth_signature;
-    QString                         m_oauth_signature_method;
-    QString                         m_access_oauth_signature;
-    QString                         m_oauth_version;
-    QString                         m_oauthToken;
-    QString                         m_oauthTokenSecret;
-    QString                         m_root;
+    QString                m_apikey;
+    QString                m_secret;
+    QString                m_authUrl;
+    QString                m_tokenUrl;
 
-    QWidget*                        m_parent;
+    QWidget*               m_parent;
 
-    QNetworkAccessManager*          m_netMngr;
+    QNetworkAccessManager* m_netMngr;
 
-    QNetworkReply*                  m_reply;
+    QNetworkReply*         m_reply;
 
-    State                           m_state;
+    QSettings*             m_settings;
 
-    QByteArray                      m_buffer;
-    QQueue<QString>                 m_queue;
+    State                  m_state;
 
-    Interface*                      m_iface;
-    MetadataProcessor*              m_meta;
+    QByteArray             m_buffer;
+
+    Interface*             m_iface;
+
+    MetadataProcessor*     m_meta;
+
+    O2*                    m_o2;
+    O0SettingsStore*       m_store;
 };
 
 } // namespace KIPIDropboxPlugin

@@ -49,7 +49,7 @@ namespace KIPIDropboxPlugin
 
 K_PLUGIN_FACTORY(DropboxFactory, registerPlugin<Plugin_Dropbox>(); )
 
-Plugin_Dropbox::Plugin_Dropbox(QObject* const parent,const QVariantList& /*args*/)
+Plugin_Dropbox::Plugin_Dropbox(QObject* const parent, const QVariantList& /*args*/)
     : Plugin(parent, "Dropbox")
 {
     qCDebug(KIPIPLUGINS_LOG) << "Plugin_Dropbox Plugin Loaded";
@@ -85,14 +85,14 @@ void Plugin_Dropbox::setup(QWidget* const widget)
 
 void Plugin_Dropbox::setupActions()
 {
-    setDefaultCategory(ExportPlugin);// uncomment if import feature is added to google drive
+    setDefaultCategory(ExportPlugin);
     m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to &Dropbox..."));
     m_actionExport->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-dropbox")));
     actionCollection()->setDefaultShortcut(m_actionExport, Qt::ALT + Qt::SHIFT + Qt::CTRL + Qt::Key_D);
 
     connect(m_actionExport,SIGNAL(triggered(bool)),
-            this,SLOT(slotExport()));
+            this, SLOT(slotExport()));
 
     addAction(QString::fromLatin1("dropboxexport"), m_actionExport);
 }

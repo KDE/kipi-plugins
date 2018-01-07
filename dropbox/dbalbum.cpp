@@ -22,12 +22,6 @@
 
 #include "dbalbum.h"
 
-// Qt includes
-
-#include <QFormLayout>
-#include <QApplication>
-#include <QStyle>
-
 // Local includes
 
 #include "kipiplugins_debug.h"
@@ -42,7 +36,7 @@ DBNewAlbum::DBNewAlbum(QWidget* const parent, const QString& pluginName)
     hideDateTime();
     hideDesc();
     hideLocation();
-    getMainWidget()->setMinimumSize(300,0);
+    getMainWidget()->setMinimumSize(300, 0);
 }
 
 DBNewAlbum::~DBNewAlbum()
@@ -51,8 +45,8 @@ DBNewAlbum::~DBNewAlbum()
 
 void DBNewAlbum::getFolderTitle(DBFolder& folder)
 {
-    folder.title = QString::fromLatin1("/") + getTitleEdit()->text();
-    qCDebug(KIPIPLUGINS_LOG) << "getFolderTitle " << folder.title;
+    folder.title = QLatin1String("/") + getTitleEdit()->text();
+    qCDebug(KIPIPLUGINS_LOG) << "getFolderTitle:" << folder.title;
 }
 
 } // namespace KIPIDropboxPlugin

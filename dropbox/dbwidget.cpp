@@ -25,18 +25,7 @@
 // Qt includes
 
 #include <QLabel>
-#include <QSpinBox>
-#include <QCheckBox>
 #include <QGroupBox>
-#include <QRadioButton>
-#include <QButtonGroup>
-#include <QGridLayout>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QPixmap>
-#include <QComboBox>
-#include <QApplication>
-#include <QStyle>
 
 // Libkipi includes
 
@@ -65,7 +54,7 @@ DropboxWidget::~DropboxWidget()
 
 void DropboxWidget::updateLabels(const QString& name, const QString& url)
 {
-    QString web(QString::fromLatin1("https://www.dropbox.com/"));
+    QString web(QLatin1String("https://www.dropbox.com/"));
 
     if (!url.isEmpty())
         web = url;
