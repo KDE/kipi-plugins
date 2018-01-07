@@ -3,6 +3,7 @@ Kipi-plugins 5.8.0 - Release date: 2017/12/17
 
 NEW FEATURES:
 
+DropBox : tool ported AuthO2 API.
 
 BUGFIXES FROM BUGZILLA :
 
