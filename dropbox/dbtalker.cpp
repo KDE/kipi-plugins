@@ -92,10 +92,9 @@ DBTalker::DBTalker(QWidget* const parent)
 
     m_o2->setClientId(m_apikey);
     m_o2->setClientSecret(m_secret);
-
+    m_o2->setRefreshTokenUrl(m_tokenUrl);
     m_o2->setRequestUrl(m_authUrl);
     m_o2->setTokenUrl(m_tokenUrl);
-    m_o2->setRefreshTokenUrl(m_tokenUrl);
     m_o2->setLocalPort(8000);
 
     QString kipioauth = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QLatin1String("/kipioauthrc");
@@ -173,7 +172,7 @@ bool DBTalker::authenticated()
 void DBTalker::createFolder(const QString& path)
 {
     //path also has name of new folder so send path parameter accordingly
-    qCDebug(KIPIPLUGINS_LOG) << "in create folder" << path;
+    qCDebug(KIPIPLUGINS_LOG) << "createFolder:" << path;
 
     QUrl url(QLatin1String("https://api.dropboxapi.com/2/files/create_folder_v2"));
 
