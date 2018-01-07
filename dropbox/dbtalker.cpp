@@ -58,20 +58,20 @@ namespace KIPIDropboxPlugin
 
 DBTalker::DBTalker(QWidget* const parent)
 {
-    m_parent                 = parent;
-    m_apikey                 = QLatin1String("mv2pk07ym9bx3r8");
-    m_secret                 = QLatin1String("f33sflc8jhiozqu");
+    m_parent               = parent;
+    m_apikey               = QLatin1String("mv2pk07ym9bx3r8");
+    m_secret               = QLatin1String("f33sflc8jhiozqu");
 
-    m_authUrl                = QLatin1String("https://www.dropbox.com/oauth2/authorize");
-    m_tokenUrl               = QLatin1String("https://api.dropboxapi.com/oauth2/token");
+    m_authUrl              = QLatin1String("https://www.dropbox.com/oauth2/authorize");
+    m_tokenUrl             = QLatin1String("https://api.dropboxapi.com/oauth2/token");
 
-    m_state                  = DB_USERNAME;
-    m_meta                   = 0;
-    m_iface                  = 0;
-    m_netMngr                = 0;
-    m_reply                  = 0;
-    m_o2                     = 0;
-    m_store                  = 0;
+    m_state                = DB_USERNAME;
+    m_meta                 = 0;
+    m_iface                = 0;
+    m_netMngr              = 0;
+    m_reply                = 0;
+    m_o2                   = 0;
+    m_store                = 0;
 
     PluginLoader* const pl = PluginLoader::instance();
 
@@ -275,8 +275,8 @@ bool DBTalker::addPhoto(const QString& imgPath, const QString& uploadFolder, boo
     QUrl url(QLatin1String("https://content.dropboxapi.com/2/files/upload"));
 
     QNetworkRequest netRequest(url);
-    netRequest.setRawHeader("Authorization", QString::fromLatin1("Bearer %1").arg(m_o2->token()).toUtf8());
     netRequest.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/octet-stream"));
+    netRequest.setRawHeader("Authorization", QString::fromLatin1("Bearer %1").arg(m_o2->token()).toUtf8());
 
     QByteArray postData = QString::fromUtf8("{\"path\": \"%1\",\"mode\": \"add\"}").arg(uploadPath).toUtf8();
     netRequest.setRawHeader("Dropbox-API-Arg", postData);
