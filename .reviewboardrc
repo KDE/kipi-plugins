@@ -1,3 +1,0 @@
-REPOSITORY = "kipi-plugins"
-REVIEWBOARD_URL = "https://git.reviewboard.kde.org"
-TARGET_GROUPS = "kipi-plugins"
