@@ -1,17 +1,9 @@
-Kipi-plugins 5.8.0 - Release date: 2017/12/17
+Kipi-plugins 5.9.0 - Release date: 2018/xx/xx
 ------------------------------------------------------------------------
 
 NEW FEATURES:
 
-DropBox : tool ported AuthO2 API.
-
 BUGFIXES FROM BUGZILLA :
 
-001 ==> 384260 - Export to flickr includes un-checked tag group names.
-002 ==> 384826 - Flickr export broken.
-003 ==> 381969 - Cannot log on flickr exporter.
-004 ==> 388271 - Fix for flickr authentication generates URL that can't work on Windows.
-005 ==> 381354 - Dropbox export: API v1 deprecation.
-006 ==> 232516 - Importing photos from dropbox directory causes crash.
-007 ==> 386044 - digiKam Segfault on Dropbox export.
-008 ==> 
+001 ==> 
+

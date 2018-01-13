@@ -1,4 +1,4 @@
-Kipi-plugins 5.8.0 - Release date: 2017/12/17
+Kipi-plugins 5.8.0 - Release date: 2017/01/14
 ------------------------------------------------------------------------
 
 NEW FEATURES:
@@ -14,4 +14,4 @@ BUGFIXES FROM BUGZILLA :
 005 ==> 381354 - Dropbox export: API v1 deprecation.
 006 ==> 232516 - Importing photos from dropbox directory causes crash.
 007 ==> 386044 - digiKam Segfault on Dropbox export.
-008 ==> 
+
