@@ -72,7 +72,7 @@ SelectUserDlg::SelectUserDlg(QWidget* const parent, const QString& serviceName)
     m_uname = QString();
 
     m_label = new QLabel(this);
-    m_label->setText(QString::fromLatin1("Choose the ") + m_serviceName + QString::fromLatin1(" account to use for exporting images: "));
+    m_label->setText(i18n("Choose the %1 account to use for exporting images:", m_serviceName));
 
     m_userComboBox = new QComboBox(this);
 

@@ -4,6 +4,8 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
+add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugins\")
+
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tools/kpversion.h.cmake.in              ${CMAKE_CURRENT_BINARY_DIR}/kpversion.h)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/templates/Doxyfile.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
 
