@@ -226,6 +226,17 @@ void JAlbumWindow::slotNewAlbum()
 
     settingsFile.close();
 
+    QString javaExecutable;
+    QDir jrePath = QFileInfo(d->jalbum->jarPath().path()).dir();
+    if (jrePath.cd(QString::fromLatin1("jre64/bin/")))
+    {
+        javaExecutable = jrePath.filePath(QString::fromLatin1("java"));
+    }
+    else
+    {
+        javaExecutable = QString::fromLatin1("java");
+    }
+
     QStringList args;
     args.append(QString::fromLatin1("-Xmx400M"));
     args.append(QString::fromLatin1("-jar"));
@@ -234,7 +245,7 @@ void JAlbumWindow::slotNewAlbum()
 
     QProcess process;
     process.setProcessEnvironment(adjustedEnvironmentForAppImage());
-    process.startDetached(QString::fromLatin1("java"), args);
+    process.startDetached(javaExecutable, args);
     accept();
 }
 
