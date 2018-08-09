@@ -25,7 +25,7 @@
 
 // KDE includes
 
-#include <QtWidgets/QDialog>
+#include <QDialog>
 
 //local includes
 

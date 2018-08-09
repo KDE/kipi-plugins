@@ -34,8 +34,8 @@
 #include <QApplication>
 #include <QTextEdit>
 #include <QLineEdit>
-#include <QtWidgets/QDialogButtonBox>
-#include <QtWidgets/QPushButton>
+#include <QDialogButtonBox>
+#include <QPushButton>
 
 // KDE includes
 

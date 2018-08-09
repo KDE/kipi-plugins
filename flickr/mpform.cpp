@@ -28,7 +28,6 @@
 #include <QFile>
 #include <QUrl>
 #include <QApplication>
-#include <QUrl>
 #include <QMimeDatabase>
 #include <QMimeType>
 #include <QtGlobal>

@@ -28,8 +28,8 @@
 #include <QComboBox>
 #include <QApplication>
 #include <QStyle>
-#include <QtWidgets/QDialogButtonBox>
-#include <QtWidgets/QPushButton>
+#include <QDialogButtonBox>
+#include <QPushButton>
 
 // KDE includes
 

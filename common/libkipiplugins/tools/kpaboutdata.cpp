@@ -34,7 +34,6 @@
 #include <QPushButton>
 #include <QStandardPaths>
 #include <QMessageBox>
-#include <QMenu>
 #include <QApplication>
 
 // Local includes

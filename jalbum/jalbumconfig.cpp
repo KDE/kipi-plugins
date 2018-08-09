@@ -46,7 +46,6 @@
 // Local includes
 
 #include "jalbum.h"
-#include "jalbumconfig.h"
 #include "kipiplugins_debug.h"
 
 namespace KIPIJAlbumExportPlugin

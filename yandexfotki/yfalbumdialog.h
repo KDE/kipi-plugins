@@ -25,7 +25,7 @@
 
 // Qt includes
 
-#include <QtWidgets/QDialog>
+#include <QDialog>
 #include <QLineEdit>
 
 // Local includes

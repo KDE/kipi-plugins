@@ -30,7 +30,7 @@
 // Qt includes
 
 #include <QString>
-#include <QtWidgets/QDialog>
+#include <QDialog>
 #include <QLineEdit>
 
 namespace KIPIPiwigoExportPlugin

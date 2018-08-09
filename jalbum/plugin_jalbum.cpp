@@ -20,6 +20,8 @@
  *
  * ============================================================ */
 
+#include "plugin_jalbum.h"
+
 // Qt includes
 
 #include <QApplication>
@@ -42,7 +44,6 @@
 #include "jalbum.h"
 #include "jalbumconfig.h"
 #include "jalbumwindow.h"
-#include "plugin_jalbum.h"
 #include "kipiplugins_debug.h"
 
 using namespace KIPIPlugins;

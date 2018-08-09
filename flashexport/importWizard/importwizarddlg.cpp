@@ -29,7 +29,6 @@
 #include <QStandardPaths>
 #include <QApplication>
 #include <QMessageBox>
-#include <QStandardPaths>
 
 // KDE includes
 

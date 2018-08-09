@@ -36,8 +36,8 @@
 #include <QDomNode>
 #include <QXmlStreamReader>
 #include <QApplication>
-#include <QtCore/QMimeDatabase>
-#include <QtCore/QMimeType>
+#include <QMimeDatabase>
+#include <QMimeType>
 #include <QUrlQuery>
 
 // Local includes

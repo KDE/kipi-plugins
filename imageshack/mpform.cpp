@@ -26,8 +26,8 @@
 
 #include <QFile>
 #include <QUrl>
-#include <QtCore/QMimeDatabase>
-#include <QtCore/QMimeType>
+#include <QMimeDatabase>
+#include <QMimeType>
 
 // Local includes
 

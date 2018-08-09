@@ -43,13 +43,10 @@
 #include <QSpinBox>
 #include <QTabWidget>
 #include <QVBoxLayout>
-#include <QComboBox>
 #include <QApplication>
 #include <QPushButton>
 #include <QTextEdit>
 #include <QLineEdit>
-#include <QComboBox>
-#include <QGroupBox>
 
 // KDE includes
 

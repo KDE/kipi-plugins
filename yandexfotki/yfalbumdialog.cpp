@@ -31,7 +31,7 @@
 #include <QApplication>
 #include <QStyle>
 #include <QLineEdit>
-#include <QtWidgets/QPushButton>
+#include <QPushButton>
 #include <QDebug>
 #include <QMessageBox>
 

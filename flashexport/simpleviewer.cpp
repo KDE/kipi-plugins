@@ -32,7 +32,6 @@
 #include <QPointer>
 #include <QDomText>
 #include <QFile>
-#include <QPointer>
 #include <QTemporaryDir>
 #include <QApplication>
 #include <QMessageBox>

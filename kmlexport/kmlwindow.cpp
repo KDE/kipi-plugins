@@ -36,7 +36,6 @@
 #include <QPushButton>
 #include <QRadioButton>
 #include <QComboBox>
-#include <QLineEdit>
 #include <QCloseEvent>
 #include <QSpinBox>
 

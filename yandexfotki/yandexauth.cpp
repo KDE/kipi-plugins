@@ -29,7 +29,7 @@
 // Qt includes
 
 #include <QString>
-#include <QtCore/QByteArray>
+#include <QByteArray>
 
 /*
 // Qca includes

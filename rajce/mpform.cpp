@@ -31,7 +31,6 @@
 #include <QApplication>
 #include <QMimeDatabase>
 #include <QMimeType>
-#include <QUrl>
 
 // Local includes
 
