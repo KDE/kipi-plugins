@@ -1,7 +1,7 @@
 /* ============================================================
  *
- * This file is a part of digiKam project
- * http://www.digikam.org
+ * This file is a part of KDE project
+ *
  *
  * Date        : 2005-07-07
  * Description : A KIPI Plugin to export albums to rajce.net

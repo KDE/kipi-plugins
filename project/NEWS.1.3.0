@@ -22,7 +22,7 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 007 ==> General           : 233673 : Spelling-error-in-binary kipiplugin_metadataedit.so kipiplugin_printimages.so kipiplugin_rawconverter.so.
 008 ==> PicasaWebExport   : 233728 : digiKam picasawebexport unable to display my picasaweb.
 009 ==> AdvancedSlideShow : 225153 : digiKam advanced slide show crashes everytimes.
-010 ==> JPEGLossLess      : 234021 : digikam crash on loading.
+010 ==> JPEGLossLess      : 234021 : kipi host crash on loading.
 011 ==> GPSSync           : 234073 : digiKam gpssync no altitude.
 012 ==> GPSSync           : 233725 : digiKam gpssync unable to geolocalize a picture or movie.
 013 ==> PicasaWebExport   : 216604 : digiKam crashes on export to picasa.

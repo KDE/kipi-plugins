@@ -1,11 +1,11 @@
 This file's purpose is to guide contributors and developers to help on the
-digiKam project.
+this project.
 
 ========================================================================
 10 golden rules for starting with open source
 ========================================================================
 
-Before to contribute to digiKam project, please take a look to this link:
+Before to contribute, please take a look to this link:
 
 http://schlitt.info/applications/blog/index.php?/archives/541-10-golden-rules-for-starting-with-open-source.html
 
@@ -13,7 +13,7 @@ http://schlitt.info/applications/blog/index.php?/archives/541-10-golden-rules-fo
 Source code formatting:
 ========================================================================
 
-Adhere to this style guide strictly while adding new code to digiKam or 
+Adhere to this style guide strictly while adding new code or 
 working on existing code. 
 
 -------------------------------------------------------------------------
@@ -129,7 +129,7 @@ Class, file and Variable names:
 -------------------------------------------------------------------------
 
 - private member variables must be stored in a d private container to reduce
-  compilation time and improve binary compatibility between digiKam components.
+  compilation time and improve binary compatibility between components.
   See more information how to use a 'd' private class at this url: 
 
   http://developer.kde.org/policies/librarypolicy.html
@@ -154,8 +154,7 @@ a = (b == foobar) ? 1 : -1; // you are asking for trouble by putting comments he
 Header files
 ========================================================================
 
-- Add copyright to top of every file. Use the same header than others digiKam
-  source code.
+- Add copyright to top of every file. Use the same header than others source code.
 - Double inclusion protection defines are all upper case letters and are 
   composed of the classname and a H suffix separated by underscore
 
@@ -182,9 +181,9 @@ General recommendations
 ========================================================================
 
 Please take a look into KDE contrib page tips before to write code/patches for 
-digiKam project : http://techbase.kde.org/Contribute
+this project : http://techbase.kde.org/Contribute
 
-Use the same .cpp/.h header than the rest of digiKam project.
+Use the same .cpp/.h header than the rest of the project.
 
 Use a decent editor which does auto-indentation/syntax-highlighting for you. 
 I personally use Emacs (Renchi) or Kdevelop (Gilles).
@@ -204,8 +203,8 @@ Just to give a taste of what i can do with emacs (and kdesdk):
 GDB Backtrace 
 ========================================================================
 
-If you found a context to crash digiKam, you can provide a backtrace using GDB debugger.
-digiKam need to be compiled with all debug info else the backtrace will not suitable.
+If you found a context to crash, you can provide a backtrace using GDB debugger.
+All need to be compiled with all debug info else the backtrace will not suitable.
 There is a configure option for that:
 
 # make -f Makefile.cvs
@@ -216,7 +215,7 @@ There is a configure option for that:
 
 To make a backtrace with GDB use following command:
 
-# gdb digikam
+# gdb 
 > run
 > ...
 > _crash here_
@@ -235,10 +234,10 @@ http://techbase.kde.org/Development/Tutorials/Debugging/Debugging_on_MS_Windows
 Memory leak 
 ========================================================================
 
-To check any memory leak problem in digiKam, valgrind is your friend (http://valgrind.org)
+To check any memory leak problem, valgrind is your friend (http://valgrind.org)
 Try this command line to use with valgrind :
 
-valgrind --tool=memcheck --leak-check=full --error-limit=no digikam
+valgrind --tool=memcheck --leak-check=full --error-limit=no 
 
 ========================================================================
 Profiling with cachegrind
@@ -246,12 +245,12 @@ Profiling with cachegrind
 
 Valgrind also includes a tool to find out in which parts of your code time is spent.
 
-valgrind --tool=callgrind digikam
+valgrind --tool=callgrind 
 
 Profiling can be disabled at startup to limit the output to the code you are interested in.
 Start with
 
-valgrind --tool=callgrind --instr-atstart=no digikam
+valgrind --tool=callgrind --instr-atstart=no 
 
 and prepare the situation you want to profile. Then, in another console, start profiling with
 "callgrind_control -i on" and, after the situation has passed, request a profile dump with
@@ -297,13 +296,13 @@ Speed up the code-compile-test cycle
 Assuming you have setup your environment in ~/.bashrc as is suggested for KDE4 development,
 you can add something like this to your ~/.bashrc:
 
-function digikam_start {
-LD_LIBRARY_PATH=${KDE_BUILD}/extragear/graphics/lib:${LD_LIBRARY_PATH} ${KDE_BUILD}/extragear/graphics/digikam/digikam/digikam
+function _start {
+LD_LIBRARY_PATH=${KDE_BUILD}/extragear/graphics/lib:${LD_LIBRARY_PATH} ${KDE_BUILD}/extragear/graphics///
 }
 
-function digikam_start_gdb {
-LD_LIBRARY_PATH=${KDE_BUILD}/extragear/graphics/lib:${LD_LIBRARY_PATH}  gdb ${KDE_BUILD}/extragear/graphics/digikam/digikam/digikam
+function _start_gdb {
+LD_LIBRARY_PATH=${KDE_BUILD}/extragear/graphics/lib:${LD_LIBRARY_PATH}  gdb ${KDE_BUILD}/extragear/graphics///
 }
 
-This allows you to run digikam after compiling without the need of a "make install", even
+This allows you to run  after compiling without the need of a "make install", even
 if you changed code in the libraries.

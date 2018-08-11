@@ -1,7 +1,7 @@
 /* ============================================================
 *
 * This file is a part of kipi-plugins project
-* http://www.digikam.org
+*
 *
 * Date        : 2014-09-30
 * Description : a plugin to export to a remote Piwigo server.

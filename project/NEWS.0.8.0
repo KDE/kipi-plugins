@@ -24,12 +24,12 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 008 ==> BatchProcessImages : 195112 : It is not possible to use Module | Batch menu twice.
 009 ==> BatchProcessImages : 126603 : Resize  2-dim. broken (creates just a 2k  file).
 010 ==> DngConverter       : 194736 : Extent dngconvert to set filedate to the dates taken from exif [patch].
-011 ==> AdvancedSlideshow  : 186644 : digiKam crashes when exiting slideshow.
+011 ==> AdvancedSlideshow  : 186644 : kipi host crashes when exiting slideshow.
 012 ==> BatchProcessImages : 158825 : Batch image resizing doesn't use the measures provided.
 013 ==> PrintWizard        : 209165 : Kipi PrintWizard does not print svgz images.
 014 ==> FlickrExport       : 208410 : Patch: Allow custom tags per image.
 015 ==> KioImportExport    : 154183 : Import tool does not recognize Fish KIO Slave.
-016 ==> JPEGLossLess       : 200032 : digiKam, inconsistency data about rotation.
+016 ==> JPEGLossLess       : 200032 : kipi host, inconsistency data about rotation.
 017 ==> GPSSync            : 210611 : Kipi-plugin add gps data crash after write.
 018 ==> BatchProcessImages : 210874 : Wish for new option in resize-tool: fit into given dimensions.
 019 ==> RawConverter       : 211532 : Batch raw converter doesn't clean file list.
@@ -37,7 +37,7 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 021 ==> DNGConverter       : 206747 : DngConverter temp files not properly renamed.
 022 ==> DNGConverter       : 210371 : Converting a CRW file results in an unusable DNG.
 023 ==> DNGConverter       : 203959 : Kipi-plugins fails to compile: plugin_dngconverter.o: file not recognized.
-024 ==> DNGConverter       : 210710 : digiKam error when open a dng image for edit after conversion from NEF.
+024 ==> DNGConverter       : 210710 : kipi host error when open a dng image for edit after conversion from NEF.
 025 ==> BatchProcessImages : 212116 : Rename images: sorting does not work [patch].
 026 ==> AcquireImages      : 212295 : Kipi-plugins does not compile under Mac OS X.
 027 ==> BatchProcessImages : 212328 : Rename images: use host application to render thumbnails [patch].

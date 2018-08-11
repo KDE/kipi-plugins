@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * This file is a part of digiKam project
+ * This file is a part of KDE project
  * http://www.kipi-plugins.org
  *
  * Date        : 2010-02-04

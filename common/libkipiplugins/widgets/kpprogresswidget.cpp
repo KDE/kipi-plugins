@@ -1,7 +1,7 @@
 /* ============================================================
  *
- * This file is a part of digiKam project
- * http://www.digikam.org
+ * This file is a part of KDE project
+ *
  *
  * Date        : 2012-01-26
  * Description : a progress bar with progress information dispatched to kipi host

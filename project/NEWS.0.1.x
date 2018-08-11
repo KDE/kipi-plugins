@@ -169,7 +169,7 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 003 ==> 138880 : TimeAdjust   : digiKam 0.9rc2 - 0.9.1rc1 setting file date to exif doesn't work.
 004 ==> 140890 : TimeAdjust   : The preview does not display date and time properly for Japanese locale.
 005 ==> 144185 : TimeAdjust   : Adjust date-time tool should remember previous fixed date.
-006 ==> 146799 : SlideShow    : digikam 0.9.2 crashes when exiting - slideshow error
+006 ==> 146799 : SlideShow    : kipi host 0.9.2 crashes when exiting - slideshow error
 
 v 0.1.4 beta1 
 ----------------------------------------------------------------------------
@@ -310,7 +310,7 @@ Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
 
 001 ==> 117105 : Calendar      : Calendar tool should use internationalized country setting.
 002 ==> 101656 : CDArchive     : Use irretating filenames foo.jpeg.jpeg for images.
-003 ==> 128125 : CDArchive     : Album title from digikam are not converted into html entities.
+003 ==> 128125 : CDArchive     : Album title from kipi host are not converted into html entities.
 004 ==> 123978 : GalleryExport : "Invalid response" error when exporting images to Gallery 1.5.2.
 005 ==> 96352  : GalleryExport : Can not login into Gallery2.
 006 ==> 123141 : GalleryExport : Gallery Export - manage several cookies.
@@ -364,7 +364,7 @@ Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
 016 ==> 114512 : BatchProcess : The checkbox "Remove original" is left disabled after a preview.
 017 ==> 120868 : Calendar     : Failed to create PDF callendar
 018 ==> 118936 : calendar     : kipi calendar wizard should default to next year.
-019 ==> 109739 : MpegEncoder  : yuvscaler error in digikam.
+019 ==> 109739 : MpegEncoder  : yuvscaler error in kipi host.
 020 ==> 114514 : MpegEncoder  : Do not delete the temporary folder "~/tmp/kde-user/kipi-mpegencoderplugin-PID/" after 
                                 each encoding process.
 021 ==> 114515 : MpegEncoder  : Verify the existence of the MPEG output file path and the existence of the audio input file 

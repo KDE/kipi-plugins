@@ -1,7 +1,7 @@
 /* ============================================================
  *
- * This file is a part of digiKam project
- * http://www.digikam.org
+ * This file is a part of KDE project
+ *
  *
  * Date        : 2012-05-28
  * Description : a KIPI plugin to export pics through jAlbum

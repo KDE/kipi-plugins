@@ -1,7 +1,7 @@
 /* ============================================================
  *
- * This file is a part of digiKam project
- * http://www.digikam.org
+ * This file is a part of KDE project
+ *
  *
  * Date        : 2008-02-21
  * Description : simple viewer export settings container.

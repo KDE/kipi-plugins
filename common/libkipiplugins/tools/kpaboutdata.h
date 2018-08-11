@@ -1,7 +1,7 @@
 /* ============================================================
  *
- * This file is a part of digiKam project
- * http://www.digikam.org
+ * This file is a part of KDE project
+ *
  *
  * Date        : 2006-14-09
  * Description : Kipi-Plugins shared library.
@@ -51,7 +51,7 @@ public:
 
     explicit KPAboutData(const KLocalizedString& tool,
                          const KLocalizedString& description = KLocalizedString(),
-                         const KLocalizedString& copyright = ki18n("Copyright 2003-2016, digiKam developers team"));
+                         const KLocalizedString& copyright = ki18n("Copyright 2003-2016, KDE developers team"));
 
     KPAboutData(const KPAboutData& other);
     virtual ~KPAboutData();

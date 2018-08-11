@@ -27,7 +27,7 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 016 ==> HTMLExport        : 194946 : Simple Fix - extra " ' " in cleanframes/themes/template.xsl.
 017 ==> GPSSync           : 182326 : Remember last position when geotagging images.
 018 ==> GPSSync           : 165613 : Crash when GPS altitude is negative.
-019 ==> GPSSync           : 167286 : GPS tagging fails with message titled "digikam3rdparty.free.fr" and text "unauthorized call of the API" when starting the gps tagger window.
+019 ==> GPSSync           : 167286 : GPS tagging fails with message titled "kipi host3rdparty.free.fr" and text "unauthorized call of the API" when starting the gps tagger window.
 020 ==> GPSSync           : 224205 : Geolocation correlator: GPX date/time format.
 021 ==> GPSSync           : 222067 : GPSSync no more search field to fill with a town.
 022 ==> AdvancedSlideShow : 224379 : digiKam doesn't compile (problem with advanced slideshow).

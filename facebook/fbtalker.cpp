@@ -1,7 +1,7 @@
 /* ============================================================
  *
- * This file is a part of digiKam project
- * http://www.digikam.org
+ * This file is a part of KDE project
+ *
  *
  * Date        : 2008-12-26
  * Description : a kipi plugin to export images to Facebook web service
@@ -390,12 +390,12 @@ void FbTalker::logout()
     }
 
     QMap<QString, QString> args;
-    args[QString::fromLatin1("next")] = QString::fromLatin1("http://www.digikam.org");
+    args[QString::fromLatin1("next")] = QString::fromLatin1("http://www.kde.org");
     args[QString::fromLatin1("access_token")] = m_accessToken;
 
     QUrl url(QString::fromLatin1("https://www.facebook.com/logout.php"));
     QUrlQuery q;
-    q.addQueryItem(QString::fromLatin1("next"), QString::fromLatin1("http://www.digikam.org"));
+    q.addQueryItem(QString::fromLatin1("next"), QString::fromLatin1("http://www.kde.org"));
     q.addQueryItem(QString::fromLatin1("access_token"), m_accessToken);
     url.setQuery(q);
     qCDebug(KIPIPLUGINS_LOG) << "Logout URL: " << url;

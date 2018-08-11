@@ -1,7 +1,7 @@
 /* ============================================================
  *
- * This file is a part of digiKam project
- * http://www.digikam.org
+ * This file is a part of KDE project
+ *
  *
  * Date        : 2006-14-09
  * Description : Kipi-Plugins shared library.
@@ -99,7 +99,7 @@ void KPAboutData::addAuthor(const QString& name, const QString& role, const QStr
 
 void KPAboutData::slotHelp()
 {
-    QUrl url = QUrl(QString::fromUtf8("help:/%1/index.html").arg(QString::fromLatin1("digikam")));
+    QUrl url = QUrl(QString::fromUtf8("help:/%1/index.html").arg(QString::fromLatin1("kipi-plugins")));
 
     if (!m_handbookEntry.isEmpty())
     {

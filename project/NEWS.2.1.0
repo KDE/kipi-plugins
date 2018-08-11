@@ -9,7 +9,7 @@ New tool to stitch photos as panorama.
 BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 270419 : digiKam's plugin Kipi can't import my photo from facebook.
-002 ==> 279078 : kipi plugin Yandex.Fotki causes digikam crash.
+002 ==> 279078 : kipi plugin Yandex.Fotki causes kipi host crash.
 003 ==> 141389 : Unpredictable image ordering in gallery.xml
 004 ==> 171794 : Display keywords by flash export.
 005 ==> 279515 : FlashExport's FirstRunDialog doesn't install simpleviewer's archive.

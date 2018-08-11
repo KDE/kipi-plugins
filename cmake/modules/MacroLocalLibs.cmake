@@ -7,7 +7,7 @@
 
 macro(DETECT_LIBKIPI MIN_VERSION)
 
-    if (NOT DIGIKAMSC_COMPILE_LIBKIPI)
+    if (NOT LOCAL_COMPILE_LIBKIPI)
 
         message(STATUS "libkipi : search system based library")
         find_package(KF5Kipi ${MIN_VERSION})
@@ -78,7 +78,7 @@ endmacro()
 
 macro(DETECT_LIBKVKONTAKTE MIN_VERSION)
 
-    if (NOT DIGIKAMSC_COMPILE_LIBKVKONTAKTE)
+    if (NOT LOCAL_COMPILE_LIBKVKONTAKTE)
 
         message(STATUS "libkvkontakte : search system based library")
         find_package(KF5Vkontakte ${MIN_VERSION} QUIET)
@@ -117,7 +117,7 @@ endmacro()
 
 macro(DETECT_LIBMEDIAWIKI MIN_VERSION)
 
-    if (NOT DIGIKAMSC_COMPILE_LIBMEDIAWIKI)
+    if (NOT LOCAL_COMPILE_LIBMEDIAWIKI)
 
         message(STATUS "libmediawiki : search system based library")
         find_package(KF5MediaWiki ${MIN_VERSION} QUIET)

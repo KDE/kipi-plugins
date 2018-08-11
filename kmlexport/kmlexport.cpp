@@ -1,7 +1,7 @@
 /* ============================================================
  *
- * This file is a part of digiKam project
- * http://www.digikam.org
+ * This file is a part of KDE project
+ *
  *
  * Date        : 2006-05-16
  * Description : a tool to export GPS data to KML file.
@@ -230,7 +230,7 @@ void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum)
 
     // Save images
     /** @todo remove the extension of the file
-     * it's appear with digikam but not with gwenview
+     * it's appear with some kipi host but not with gwenview
      * which already seems to strip the extension
      */
     QString baseFileName = webifyFileName(info.name());
@@ -463,7 +463,7 @@ void KmlExport::generate()
     QDomElement kmlAlbum            = addKmlElement(kmlRoot, QLatin1String("Document"));
     QDomElement kmlName             = addKmlTextElement(kmlAlbum, QLatin1String("name"), m_hostAlbumName);
     QDomElement kmlDescription      = addKmlHtmlElement(kmlAlbum, QLatin1String("description"),
-                                                        QLatin1String("Created with kmlexport <a href=\"http://www.digikam.org/\">kipi-plugin</a>"));
+                                                        QLatin1String("Created with kmlexport kipi-plugin"));
 
     if (m_GPXtracks)
     {

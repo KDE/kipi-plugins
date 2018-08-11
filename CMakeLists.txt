@@ -152,7 +152,7 @@ if(KF5Kipi_FOUND)
 
     message(STATUS "")
     message(STATUS "----------------------------------------------------------------------------------")
-    message(STATUS " ${PROJECT_NAME} ${KIPIPLUGINS_VERSION_STRING} dependencies results   <http://www.digikam.org>")
+    message(STATUS " ${PROJECT_NAME} ${KIPIPLUGINS_VERSION_STRING} dependencies results")
     message(STATUS "")
 
     # Require shared libraries results.

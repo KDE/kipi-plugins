@@ -1,7 +1,7 @@
 /* ===============================================================
  *
- * This file is a part of digiKam project
- * http://www.digikam.org
+ * This file is a part of KDE project
+ *
  *
  * Date        : 2010-10-01
  * Description : Dialog to allow a custom page layout for

@@ -22,7 +22,7 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 001 ==> 149269 : Thumbnails are square (HTML Export plugin) [patch].
 002 ==> 289283 : HTMLExport: add keyboard navigation and image preloading to floating_cards theme [patch].
 003 ==> 153249 : Photo arranging and printing plugin.
-004 ==> 209721 : Search field in digikam's coordinates editor uses black text on black background.
+004 ==> 209721 : Search field in kipi host's coordinates editor uses black text on black background.
 005 ==> 279182 : Batch resize fails possibly due to timestamp in filename.
 006 ==> 290932 : KIPI Plugins - up to date website.
 007 ==> 212785 : Cannot preserve rotation when exporting from raw to Facebook.
@@ -34,7 +34,7 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 013 ==> 292537 : Dng plugin segfaults.
 014 ==> 293301 : digiKam crashes when uploading to PicasaWeb.
 015 ==> 220798 : It is not possible to set the language in create calendar tool.
-016 ==> 293917 : Crash when exiting digikam.
+016 ==> 293917 : Crash when exiting kipi host.
 017 ==> 294133 : Expoblending cannot be compiled.
 018 ==> 233926 : New tool to export to Imageshack.
 019 ==> 294460 : Std namespace issue in kipi-plugins [patch].

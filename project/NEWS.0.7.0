@@ -24,7 +24,7 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 013 ==> FlickrExport       : 172359 : Set content type and safety level on flickr upload [patch].
 014 ==> RawConverter       : 160272 : Raw images converter changes brightness or exposure of photos.
 015 ==> AdvancedSlideshow  : 206976 : Image display time in advanced slideshow.
-016 ==> GPSSync            : 206995 : GPSCorrelator: "Remove" removes from all and does not update digikam-database.
+016 ==> GPSSync            : 206995 : GPSCorrelator: "Remove" removes from all and does not update kipi host-database.
 017 ==> BatchProcessImages : 207108 : Plural used with a in front (wrong English).
 018 ==> JPEGLossLess       : 205602 : Picture can't be display top-bottom, it is always rotated to the left or right.
 019 ==> FlickrExport       : 139537 : Option to export to zooomr [patch for FlickrExport].

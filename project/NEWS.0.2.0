@@ -22,7 +22,7 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 009 ==> 178983 : PrintWizard        : Next/back-buttons in print-assistant should be labeled.
 010 ==> 095404 : PrintWizard        : Printwizard print image with custom size, original size, autoscaled size to paper.
 011 ==> 183661 : General            : Better action icons for export plugins
-012 ==> 187203 : RAWConverter       : Batch raw converter crash digikam.
+012 ==> 187203 : RAWConverter       : Batch raw converter crash kipi host.
 
 Kipi-plugins 0.2.0-rc2 - Release date: 15/02/2009
 ------------------------------------------------------------------------
@@ -134,7 +134,7 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 172283 : SlideShow          : SlideShow crashes host application 
 002 ==> 172337 : SlideShow          : Slideshow enhancements by ken-burns effects.
-003 ==> 173276 : SlideShow	        : digikam crashs after closing 
+003 ==> 173276 : SlideShow	        : kipi host crashs after closing 
 
 Kipi-plugins 0.2.0-beta2 - Release date: 06/10/2008
 ------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 /* ============================================================
  *
- * This file is a part of digiKam project
- * http://www.digikam.org
+ * This file is a part of KDE project
+ *
  *
  * Date        : 2015-06-21
  * Description : a kipi plugin to export images to Google-Drive web service
@@ -201,7 +201,7 @@ void Authorize::getAccessToken()
     emit signalBusy(true);
 }
 
-/** Gets access token from refresh token for handling login of user across digikam sessions
+/** Gets access token from refresh token for handling login of user across kipi host sessions
  */
 void Authorize::getAccessTokenFromRefreshToken(const QString& msg)
 {

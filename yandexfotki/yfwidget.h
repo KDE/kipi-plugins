@@ -1,7 +1,7 @@
 /* ============================================================
 *
 * This file is a part of kipi-plugins project
-* http://www.digikam.org
+*
 *
  * Date        : 2008-09-12
  * Description : a kipi plugin to export to Yandex.Fotki
