@@ -16,7 +16,7 @@ message(STATUS "Starting CMake configuration for: ${PROJECT_NAME}")
 # kipi-plugins version
 set(KIPIPLUGINS_MAJOR_VERSION "5")
 set(KIPIPLUGINS_MINOR_VERSION "9")
-set(KIPIPLUGINS_PATCH_VERSION "0")
+set(KIPIPLUGINS_PATCH_VERSION "1")
 
 # Suffix to add at end of version string. Usual values are:
 # "-git"   : alpha code unstable from git. Do not use in production
@@ -287,9 +287,9 @@ else()
     message(STATUS " ${PROJECT_NAME} ${KIPIPLUGINS_VERSION_STRING} will not be compiled")
 
     PRINT_OPTIONAL_LIBRARY_STATUS("libkipi"
-                                  "https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi"
+                                  "https://cgit.kde.org/libkipi.git"
                                   "(version >= ${KIPI_MIN_VERSION}))"
-                                  "Kipi-plugins needs this library to be compiled."
+                                  "Kipi Plugins needs this library to be compiled."
                                   KF5Kipi_FOUND
     )
 
