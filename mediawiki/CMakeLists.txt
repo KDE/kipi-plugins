@@ -9,8 +9,6 @@ subdirs(icons)
 add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_mediawiki\")
 
 
-include_directories(${LIBMEDIAWIKI_INCLUDES})
-
 set(kipiplugin_wikimedia_PART_SRCS
     plugin_wikimedia.cpp
     wmwidget.cpp
@@ -27,7 +25,7 @@ target_link_libraries(kipiplugin_wikimedia
 
                       KF5kipiplugins
 
-                      ${LIBMEDIAWIKI_LIBRARIES}
+                      KF5::MediaWiki
                      )
 
 configure_file(kipiplugin_wikimedia.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_wikimedia.desktop)

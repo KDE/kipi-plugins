@@ -45,6 +45,7 @@ set(CMAKE_MIN_VERSION    "3.0.0")
 set(KF5_MIN_VERSION      "5.18.0")
 set(QT_MIN_VERSION       "5.6.0")
 set(KIPI_MIN_VERSION     "5.0.0")
+set(MEDIAWIKI_MIN_VERSION "5.0.0")
 cmake_minimum_required(VERSION ${CMAKE_MIN_VERSION})
 
 ############## ECM setup ######################
@@ -158,7 +159,7 @@ message(STATUS "libkipi SO version    : ${KIPI_LIB_SO_CUR_VERSION}")
 
 # -- Optional dependencies detection required by some plugins -------------------------------------
 
-DETECT_LIBMEDIAWIKI(5.0.0)                                                 # For Mediawiki.
+find_package(KF5MediaWiki ${MEDIAWIKI_MIN_VERSION})
 DETECT_LIBKVKONTAKTE(4.70.0)                                               # For VKontakte.
 
 # ==================================================================================================
