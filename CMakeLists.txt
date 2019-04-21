@@ -72,8 +72,6 @@ include(KDEInstallDirs)
 include(KDECMakeSettings)
 include(KDEFrameworkCompilerSettings)
 include(KDECompilerSettings)
-# Local macros
-include(MacroUtils)
 
 ##########################################################################
 
@@ -104,9 +102,11 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
              I18n
 )
 
-find_package(KF5Archive ${KF5_MIN_VERSION}) # for FlashExport
+find_package(KF5Archive ${KF5_MIN_VERSION})
+set_package_properties(KF5Archive PROPERTIES PURPOSE "Required to build the FlashExport plugin")
 
 find_package(KF5KIO ${KF5_MIN_VERSION})
+set_package_properties(KF5IO PROPERTIES PURPOSE "Required to build the RemoteStorage plugin")
 
 if(KF5KIO_FOUND)
     # Some tools rely only on KIO core, others need KIOWidgets too..
@@ -161,34 +161,6 @@ message(STATUS "libkipi SO version    : ${KIPI_LIB_SO_CUR_VERSION}")
 
 find_package(KF5MediaWiki ${MEDIAWIKI_MIN_VERSION})
 find_package(KF5Vkontakte ${VKONTAKTE_MIN_VERSION})
-
-# ==================================================================================================
-# Log messages
-
-message(STATUS "")
-message(STATUS "----------------------------------------------------------------------------------")
-message(STATUS " ${PROJECT_NAME} ${KIPIPLUGINS_VERSION_STRING} dependencies results")
-message(STATUS "")
-
-# Require shared libraries results.
-
-PRINT_LIBRARY_STATUS("libqt"     "http://www.qtsoftware.com"                                        "(version >= ${QT_MIN_VERSION})"     Qt5_FOUND)
-PRINT_LIBRARY_STATUS("libkde"    "http://www.kde.org"                                               "(version >= ${KF5_MIN_VERSION})"    KF5_FOUND)
-PRINT_LIBRARY_STATUS("libkipi"   "https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi"   "(version >= ${KIPI_MIN_VERSION}))"  KF5Kipi_FOUND)
-
-# Optional shared libraries results.
-
-PRINT_OPTIONAL_LIBRARY_STATUS("libkio"          "https://projects.kde.org/projects/frameworks/kio"                "(version >= ${KF5_MIN_VERSION})"      "Kipi-plugins will be compiled without libkio support."          KF5KIO_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("libkarchive"     "https://projects.kde.org/projects/frameworks/karchive"           "(version >= ${KF5_MIN_VERSION})"      "Kipi-plugins will be compiled without libkarchive support."     KF5Archive_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("libmediawiki"    "https://projects.kde.org/projects/extragear/libs/libmediawiki"   "(version >= ${KF5_MIN_VERSION})"      "Kipi-plugins will be compiled without libmediawiki support."    KF5MediaWiki_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte"   "https://projects.kde.org/projects/extragear/libs/libkvkontakte"  "(version >= 4.70.0)"                  "Kipi-plugins will be compiled without libkvkontakte support."   KF5Vkontakte_FOUND)
-
-# Optional plugins results ----------------------------------------------------------------------------
-
-PRINT_COMPONENT_COMPILE_STATUS("Legacy plugins"     ENABLE_LEGACY)
-PRINT_COMPONENT_COMPILE_STATUS("VKontakte"          KF5Vkontakte_FOUND)
-PRINT_COMPONENT_COMPILE_STATUS("Mediawiki"          KF5MediaWiki_FOUND)
-PRINT_COMPONENT_COMPILE_STATUS("FlashExport"        KF5Archive_FOUND)
 
 # ==================================================================================================
 # Create git version header
@@ -276,3 +248,5 @@ endif()
 if(KF5KIO_FOUND AND KF5KIOWidgets_FOUND)
     add_subdirectory(remotestorage)    # kioimportwindow.cpp, kioexportwindow.cpp
 endif()
+
+feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
