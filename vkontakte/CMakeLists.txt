@@ -6,8 +6,6 @@
 
 add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_vkontakte\")
 
-include_directories(${LIBKVKONTAKTE_INCLUDES})
-
 set(kipiplugin_vkontakte_PART_SRCS
     plugin_vkontakte.cpp
     vkwindow.cpp
@@ -26,7 +24,7 @@ target_link_libraries(kipiplugin_vkontakte
 
                       KF5kipiplugins
 
-                      ${LIBKVKONTAKTE_LIBRARIES}
+                      KF5::Vkontakte
 )
 
 configure_file(kipiplugin_vkontakte.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_vkontakte.desktop)
