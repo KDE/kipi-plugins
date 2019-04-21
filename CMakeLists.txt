@@ -74,7 +74,6 @@ include(KDEFrameworkCompilerSettings)
 include(KDECompilerSettings)
 # Local macros
 include(MacroUtils)
-include(MacroLocalLibs)
 
 ##########################################################################
 
