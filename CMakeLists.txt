@@ -76,7 +76,6 @@ include(MacroLocalLibs)
 
 ##########################################################################
 
-option(ENABLE_KIO    "Build Kipi-plugins with KIO support (default=ON)" ON)
 option(ENABLE_LEGACY "Build Kipi-plugins with legacy plugins support (default=ON)" ON)
 
 ############## Find Packages ###################
@@ -94,45 +93,31 @@ find_package(Qt5 ${QT_MIN_VERSION} REQUIRED NO_MODULE COMPONENTS
 )
 
 if(BUILD_TESTING)
-    find_package(Qt5 ${QT_MIN_VERSION} REQUIRED NO_MODULE COMPONENTS
-                 Test)
+    find_package(Qt5Test ${QT_MIN_VERSION} REQUIRED NO_MODULE)
 endif()
 
-find_package(KF5 ${KF5_MIN_VERSION}
-             REQUIRED COMPONENTS
+find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
              Config
              WindowSystem
              XmlGui
              I18n
 )
 
-find_package(KF5 ${KF5_MIN_VERSION} QUIET
-             OPTIONAL_COMPONENTS
-             Archive      # for FlashExport
-)
+find_package(KF5Archive ${KF5_MIN_VERSION}) # for FlashExport
 
-if(ENABLE_KIO)
+find_package(KF5KIO ${KF5_MIN_VERSION})
 
-    find_package(KF5 ${KF5_MIN_VERSION} QUIET
-                 OPTIONAL_COMPONENTS
-                 KIO          # Some kipi-plugins depends of KIO indeep.
-    )
+if(KF5KIO_FOUND)
+    # Some tools rely only on KIO core, others need KIOWidgets too..
+    get_target_property(KIOWidgets_INCLUDE_DIRS KF5::KIOWidgets INTERFACE_INCLUDE_DIRECTORIES)
+    message(STATUS "KF5::KIOWidgets include dirs: ${KIOWidgets_INCLUDE_DIRS}")
 
-    # Check if KIO have been compiled with KIOWidgets. Some tools rely only to KIO core, some other with KIOWidgets too..
-    if(KF5KIO_FOUND)
-
-        get_target_property(KIOWidgets_INCLUDE_DIRS KF5::KIOWidgets INTERFACE_INCLUDE_DIRECTORIES)
-        message(STATUS "KF5::KIOWidgets include dirs: ${KIOWidgets_INCLUDE_DIRS}")
-
-        if(NOT KIOWidgets_INCLUDE_DIRS)
-            message(STATUS "KF5::KIOWidgets not available in shared KIO library. Some tools will not be compiled.")
-            set(KF5KIOWidgets_FOUND FALSE)
-        else()
-            set(KF5KIOWidgets_FOUND TRUE)
-        endif()
-
+    if(NOT KIOWidgets_INCLUDE_DIRS)
+        message(STATUS "KF5::KIOWidgets not available in shared KIO library. Some tools will not be compiled.")
+        set(KF5KIOWidgets_FOUND FALSE)
+    else()
+        set(KF5KIOWidgets_FOUND TRUE)
     endif()
-
 endif()
 
 # Dependencies detection required by all plugins
