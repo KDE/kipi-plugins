@@ -42,15 +42,14 @@ set(KIPIPLUGINS_LIB_SO_VERSION_STRING
 # =======================================================
 
 set(CMAKE_MIN_VERSION    "3.0.0")
-set(ECM_MIN_VERSION      "1.5.0")
-set(KF5_MIN_VERSION      "5.1.0")
+set(KF5_MIN_VERSION      "5.18.0")
 set(QT_MIN_VERSION       "5.6.0")
 set(KIPI_MIN_VERSION     "5.0.0")
 cmake_minimum_required(VERSION ${CMAKE_MIN_VERSION})
 
 ############## ECM setup ######################
 
-find_package(ECM ${ECM_MIN_VERSION} CONFIG REQUIRED)
+find_package(ECM ${KF5_MIN_VERSION} CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${kipi-plugins_SOURCE_DIR}/cmake/modules ${ECM_MODULE_PATH})
 
 # Cmake macros
