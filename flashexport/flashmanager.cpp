@@ -49,10 +49,10 @@ public:
 
     Private()
     {
-        iface               = 0;
-        wizard              = 0;
-        simple              = 0;
-        containerSettings   = 0;
+        iface               = nullptr;
+        wizard              = nullptr;
+        simple              = nullptr;
+        containerSettings   = nullptr;
     }
 
     SimpleViewerSettingsContainer* containerSettings;

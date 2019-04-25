@@ -14,10 +14,10 @@ class O0_EXPORT O0SettingsStore: public O0AbstractStore {
 
 public:
     /// Constructor
-    explicit O0SettingsStore(const QString &encryptionKey, QObject *parent = 0);
+    explicit O0SettingsStore(const QString &encryptionKey, QObject *parent = nullptr);
 
     /// Construct with an explicit QSettings instance
-    explicit O0SettingsStore(QSettings *settings, const QString &encryptionKey, QObject *parent = 0);
+    explicit O0SettingsStore(QSettings *settings, const QString &encryptionKey, QObject *parent = nullptr);
 
     /// Group key prefix
     Q_PROPERTY(QString groupKey READ groupKey WRITE setGroupKey NOTIFY groupKeyChanged)

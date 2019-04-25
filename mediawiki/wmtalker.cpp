@@ -60,8 +60,8 @@ public:
 
     Private()
     {
-        interface = 0;
-        mediawiki = 0;
+        interface = nullptr;
+        mediawiki = nullptr;
     }
 
     QList<QUrl>                              urls;
@@ -103,7 +103,7 @@ void WMTalker::setImageMap(const QMap <QString,QMap <QString,QString> >& imageDe
 
 void WMTalker::uploadHandle(KJob* j)
 {
-    if (j != 0)
+    if (j != nullptr)
     {
         qCDebug(KIPIPLUGINS_LOG) << "Upload error" << j->error() << j->errorString() << j->errorText();
         emit uploadProgress(100);

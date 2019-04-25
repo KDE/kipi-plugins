@@ -46,7 +46,7 @@ class YandexFotkiTalker : public QObject
 
 public:
 
-    YandexFotkiTalker(QObject* const parent = 0);
+    YandexFotkiTalker(QObject* const parent = nullptr);
     ~YandexFotkiTalker();
 
     /*

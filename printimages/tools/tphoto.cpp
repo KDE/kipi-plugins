@@ -42,10 +42,10 @@ namespace KIPIPrintImagesPlugin
 {
 
 TPhoto::TPhoto(int thumbnailSize)
-    : pAddInfo(0),
-      pCaptionInfo(0)
+    : pAddInfo(nullptr),
+      pCaptionInfo(nullptr)
 {
-    m_size                 = 0;
+    m_size                 = nullptr;
     cropRegion             = QRect(-1, -1, -1, -1);
     rotation               = 0;
     first                  = false;
@@ -53,10 +53,10 @@ TPhoto::TPhoto(int thumbnailSize)
     copies                 = 1;
     //TODO mPrintPosition;
     filename               = QUrl();
-    m_meta                 = 0;
-    m_iface                = 0;
+    m_meta                 = nullptr;
+    m_iface                = nullptr;
 
-    m_thumbnail            = 0;
+    m_thumbnail            = nullptr;
 
     this->m_thumbnailSize  = thumbnailSize;
 
@@ -70,8 +70,8 @@ TPhoto::TPhoto(int thumbnailSize)
 
 //to get old photo info
 TPhoto::TPhoto (const TPhoto& photo)
-    : pAddInfo(0),
-      pCaptionInfo(0)
+    : pAddInfo(nullptr),
+      pCaptionInfo(nullptr)
 {
     m_thumbnailSize = photo.m_thumbnailSize;
     cropRegion      = photo.cropRegion;
@@ -90,10 +90,10 @@ TPhoto::TPhoto (const TPhoto& photo)
         pCaptionInfo = new CaptionInfo(*photo.pCaptionInfo);
     }
 
-    m_size      = 0;
-    m_meta      = 0;
-    m_iface     = 0;
-    m_thumbnail = 0;
+    m_size      = nullptr;
+    m_meta      = nullptr;
+    m_iface     = nullptr;
+    m_thumbnail = nullptr;
 
     PluginLoader* const pl = PluginLoader::instance();
 
@@ -156,7 +156,7 @@ QImage TPhoto::loadPhoto()
 
 QSize& TPhoto::size()  // private
 {
-    if (m_size == 0)
+    if (m_size == nullptr)
     {
         loadCache();
     }
@@ -168,7 +168,7 @@ MetadataProcessor* TPhoto::metaIface()
 {
     if (!m_iface)
     {
-        return 0;
+        return nullptr;
     }
 
     if (!m_meta && !filename.url().isEmpty())
@@ -196,7 +196,7 @@ int TPhoto::height()
 
 double TPhoto::scaleWidth(double unitToInches)
 {
-    Q_ASSERT(pAddInfo != 0);
+    Q_ASSERT(pAddInfo != nullptr);
 
     cropRegion = QRect(0, 0,
                        (int)(pAddInfo->mPrintWidth * unitToInches),
@@ -207,7 +207,7 @@ double TPhoto::scaleWidth(double unitToInches)
 
 double TPhoto::scaleHeight(double unitToInches)
 {
-    Q_ASSERT(pAddInfo != 0);
+    Q_ASSERT(pAddInfo != nullptr);
 
     cropRegion = QRect(0,
                        0,

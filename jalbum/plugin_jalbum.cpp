@@ -59,8 +59,8 @@ public:
 
     Private()
     {
-        actionExport = 0;
-        jalbum       = 0;
+        actionExport = nullptr;
+        jalbum       = nullptr;
     }
 
     JAlbum*  jalbum;

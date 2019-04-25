@@ -131,8 +131,8 @@ public:
         User6
     };
 
-    explicit KPImagesListView(KPImagesList* const parent = 0);
-    explicit KPImagesListView(int iconSize, KPImagesList* const parent = 0);
+    explicit KPImagesListView(KPImagesList* const parent = nullptr);
+    explicit KPImagesListView(int iconSize, KPImagesList* const parent = nullptr);
     ~KPImagesListView();
 
     void setColumnLabel(ColumnType column, const QString& label);
@@ -183,7 +183,7 @@ class CtrlButton : public QPushButton
 
 public:
 
-    explicit CtrlButton(const QIcon& icon, QWidget* parent = 0);
+    explicit CtrlButton(const QIcon& icon, QWidget* parent = nullptr);
     virtual ~CtrlButton();
 };
 
@@ -218,7 +218,7 @@ public:
 
 public:
 
-    explicit KPImagesList(QWidget* const parent = 0, int iconSize = -1);
+    explicit KPImagesList(QWidget* const parent = nullptr, int iconSize = -1);
     virtual ~KPImagesList();
 
     void                setAllowRAW(bool allow);

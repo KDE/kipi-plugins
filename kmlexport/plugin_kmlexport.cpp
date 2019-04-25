@@ -54,8 +54,8 @@ K_PLUGIN_FACTORY( KMLExportFactory, registerPlugin<Plugin_KMLExport>(); )
 Plugin_KMLExport::Plugin_KMLExport(QObject* const parent, const QVariantList&)
     : Plugin( /*KMLExportFactory::componentData(),*/ parent, "KMLExport")
 {
-    m_actionKMLExport = 0;
-    m_interface       = 0;
+    m_actionKMLExport = nullptr;
+    m_interface       = nullptr;
 
     qCDebug(KIPIPLUGINS_LOG) << "Plugin_SendImages plugin loaded";
 

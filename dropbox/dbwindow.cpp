@@ -57,7 +57,7 @@ namespace KIPIDropboxPlugin
 {
 
 DBWindow::DBWindow(const QString& tmpFolder, QWidget* const /*parent*/)
-    : KPToolDialog(0)
+    : KPToolDialog(nullptr)
 {
     m_tmp         = tmpFolder;
     m_imagesCount = 0;

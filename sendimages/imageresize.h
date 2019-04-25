@@ -50,7 +50,7 @@ class Task : public KPJob
 
 public:
 
-    explicit Task(int* count = 0);
+    explicit Task(int* count = nullptr);
     ~Task();
 
 public:

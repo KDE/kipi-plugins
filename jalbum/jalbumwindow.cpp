@@ -83,7 +83,7 @@ public:
 
 JAlbumWindow::Private::Private(JAlbumWindow* const parent)
 {
-    jalbum = 0;
+    jalbum = nullptr;
     widget = new QWidget(parent);
 
     parent->setMainWidget(widget);

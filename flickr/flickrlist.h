@@ -78,7 +78,7 @@ public:
 
 public:
 
-    explicit FlickrList(QWidget* const parent = 0, bool = false);
+    explicit FlickrList(QWidget* const parent = nullptr, bool = false);
 
     void setPublic(Qt::CheckState);
     void setFamily(Qt::CheckState);

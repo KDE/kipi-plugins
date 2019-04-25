@@ -57,7 +57,7 @@ Task::Task(int* count)
     : KPJob()
 {
     m_count = count;
-    m_iface = 0;
+    m_iface = nullptr;
 
     PluginLoader* const pl = PluginLoader::instance();
 

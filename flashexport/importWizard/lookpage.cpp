@@ -53,25 +53,25 @@ public:
 
     Private()
     {
-        thumbnailPosition = 0;
-        textColor         = 0;
-        backgroundColor   = 0;
-        frameColor        = 0;
-        frameWidth        = 0;
-        stagePadding      = 0;
-        thumbnailColumns  = 0;
-        thumbnailRows     = 0;
-        displayTime       = 0;
-        imagePadding      = 0;
-        bkgndInnerColor   = 0;
-        bkgndOuterColor   = 0;
-        cellDimension     = 0;
-        zoomInPerc        = 0;
-        zoomOutPerc       = 0;
-        vbox              = 0;
-        showFlipButton    = 0;
-        useReloadButton   = 0;
-        backColor         = 0;
+        thumbnailPosition = nullptr;
+        textColor         = nullptr;
+        backgroundColor   = nullptr;
+        frameColor        = nullptr;
+        frameWidth        = nullptr;
+        stagePadding      = nullptr;
+        thumbnailColumns  = nullptr;
+        thumbnailRows     = nullptr;
+        displayTime       = nullptr;
+        imagePadding      = nullptr;
+        bkgndInnerColor   = nullptr;
+        bkgndOuterColor   = nullptr;
+        cellDimension     = nullptr;
+        zoomInPerc        = nullptr;
+        zoomOutPerc       = nullptr;
+        vbox              = nullptr;
+        showFlipButton    = nullptr;
+        useReloadButton   = nullptr;
+        backColor         = nullptr;
 
     }
 

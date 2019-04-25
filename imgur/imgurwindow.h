@@ -54,7 +54,7 @@ class ImgurWindow : public KPToolDialog
     Q_OBJECT
 
 public:
-    ImgurWindow(QWidget* const parent = 0);
+    ImgurWindow(QWidget* const parent = nullptr);
     ~ImgurWindow();
 
     void reactivate();

@@ -55,7 +55,7 @@ public:
 
     Private()
     {
-        urlRequester = 0;
+        urlRequester = nullptr;
     }
 
     QUrl            url;

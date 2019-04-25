@@ -43,7 +43,7 @@ class KIPIPLUGINS_EXPORT KPImageDialogPreview : public QScrollArea
 
 public:
 
-    explicit KPImageDialogPreview(QWidget* const parent=0);
+    explicit KPImageDialogPreview(QWidget* const parent=nullptr);
     ~KPImageDialogPreview();
 
     QSize sizeHint() const Q_DECL_OVERRIDE;

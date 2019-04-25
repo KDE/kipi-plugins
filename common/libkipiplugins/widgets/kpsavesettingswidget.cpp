@@ -47,13 +47,13 @@ public:
 
     Private()
     {
-        formatLabel         = 0;
-        conflictLabel       = 0;
-        conflictButtonGroup = 0;
-        formatComboBox      = 0;
-        overwriteButton     = 0;
-        promptButton        = 0;
-        grid                = 0;
+        formatLabel         = nullptr;
+        conflictLabel       = nullptr;
+        conflictButtonGroup = nullptr;
+        formatComboBox      = nullptr;
+        overwriteButton     = nullptr;
+        promptButton        = nullptr;
+        grid                = nullptr;
     }
 
     QLabel*       formatLabel;

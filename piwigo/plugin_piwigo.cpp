@@ -58,8 +58,8 @@ K_PLUGIN_FACTORY(Factory, registerPlugin<Plugin_PiwigoExport>();)
 
 Plugin_PiwigoExport::Plugin_PiwigoExport(QObject* const parent, const QVariantList&)
     : Plugin(parent, "Piwigo"),
-      m_action(0),
-      m_pPiwigo(0)
+      m_action(nullptr),
+      m_pPiwigo(nullptr)
 {
     qCDebug(KIPIPLUGINS_LOG) << "Plugin_Piwigo plugin loaded";
 

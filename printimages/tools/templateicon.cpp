@@ -46,9 +46,9 @@ TemplateIcon::TemplateIcon(int height, const QSize &template_size)
     scale_height         = float(m_icon_size.height())                                     / float(m_paper_size.height());
     rotate               = false;
 
-    pixmap               = 0;
-    painter              = 0;
-    icon                 = 0;
+    pixmap               = nullptr;
+    painter              = nullptr;
+    icon                 = nullptr;
 }
 
 TemplateIcon::~TemplateIcon()

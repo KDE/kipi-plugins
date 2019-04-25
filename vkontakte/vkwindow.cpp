@@ -77,7 +77,7 @@ namespace KIPIVkontaktePlugin
 VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
     : KPToolDialog(parent)
 {
-    m_albumsBox = NULL;
+    m_albumsBox = nullptr;
     m_vkapi     = new Vkontakte::VkApi(this);
 
     // read settings from file
@@ -401,7 +401,7 @@ void VkontakteWindow::slotPhotoUploadDone(KJob* kjob)
     Q_ASSERT(job);
     m_jobs.removeAll(job);
 
-    if (job == 0 || job->error())
+    if (job == nullptr || job->error())
     {
         handleVkError(job);
     }

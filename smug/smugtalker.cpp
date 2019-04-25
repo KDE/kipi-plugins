@@ -49,7 +49,7 @@ namespace KIPISmugPlugin
 SmugTalker::SmugTalker(QWidget* const parent)
 {
     m_parent     = parent;
-    m_reply      = 0;
+    m_reply      = nullptr;
     m_state      = SMUG_LOGOUT;
     m_userAgent  = QString::fromLatin1("KIPI-Plugin-Smug/%1 (lure@kubuntu.org)").arg(kipipluginsVersion());
     m_apiVersion = QString::fromLatin1("1.2.2");
@@ -93,7 +93,7 @@ void SmugTalker::cancel()
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     emit signalBusy(false);
@@ -104,7 +104,7 @@ void SmugTalker::login(const QString& email, const QString& password)
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     emit signalBusy(true);
@@ -145,7 +145,7 @@ void SmugTalker::logout()
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     emit signalBusy(true);
@@ -171,7 +171,7 @@ void SmugTalker::listAlbums(const QString& nickName)
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     emit signalBusy(true);
@@ -205,7 +205,7 @@ void SmugTalker::listPhotos(const qint64 albumID,
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     emit signalBusy(true);
@@ -241,7 +241,7 @@ void SmugTalker::listAlbumTmpl()
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     emit signalBusy(true);
@@ -267,7 +267,7 @@ void SmugTalker::listCategories()
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     emit signalBusy(true);
@@ -293,7 +293,7 @@ void SmugTalker::listSubCategories(qint64 categoryID)
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     emit signalBusy(true);
@@ -320,7 +320,7 @@ void SmugTalker::createAlbum(const SmugAlbum& album)
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     emit signalBusy(true);
@@ -377,7 +377,7 @@ bool SmugTalker::addPhoto(const QString& imgPath,
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     emit signalBusy(true);
@@ -434,7 +434,7 @@ void SmugTalker::getPhoto(const QString& imgPath)
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     emit signalBusy(true);
@@ -483,7 +483,7 @@ void SmugTalker::slotFinished(QNetworkReply* reply)
         return;
     }
 
-    m_reply = 0;
+    m_reply = nullptr;
 
     if (reply->error() != QNetworkReply::NoError)
     {

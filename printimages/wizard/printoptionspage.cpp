@@ -399,7 +399,7 @@ void PrintOptionsPage::setAdditionalInfo()
 
 void PrintOptionsPage::showAdditionalInfo()
 {
-    QAbstractButton* button = 0;
+    QAbstractButton* button = nullptr;
     int i                   = d->m_currentPhoto;
     TPhoto* const pPhoto    = d->m_photos->at ( i );
 
@@ -443,7 +443,7 @@ void PrintOptionsPage::showAdditionalInfo()
 
 void PrintOptionsPage::loadConfig()
 {
-    QAbstractButton* button = 0;
+    QAbstractButton* button = nullptr;
     button = d->mPositionGroup.button ( PrintImagesConfig::printPosition() );
 
     if ( button )

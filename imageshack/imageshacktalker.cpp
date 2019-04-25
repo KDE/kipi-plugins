@@ -53,7 +53,7 @@ namespace KIPIImageshackPlugin
 ImageshackTalker::ImageshackTalker(Imageshack* const imghack)
     : m_imageshack(imghack),
       m_loginInProgress(false),
-      m_reply(0),
+      m_reply(nullptr),
       m_state(IMGHCK_DONOTHING)
 {
     m_userAgent   = QString::fromLatin1("KIPI-Plugin-Imageshack/%1").arg(kipipluginsVersion());
@@ -80,7 +80,7 @@ void ImageshackTalker::cancel()
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     emit signalBusy(false);
@@ -112,7 +112,7 @@ void ImageshackTalker::slotFinished(QNetworkReply* reply)
         return;
     }
 
-    m_reply = 0;
+    m_reply = nullptr;
 
     if (reply->error() != QNetworkReply::NoError)
     {
@@ -166,7 +166,7 @@ void ImageshackTalker::authenticate()
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     emit signalBusy(true);
@@ -192,7 +192,7 @@ void ImageshackTalker::getGalleries()
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     emit signalBusy(true);
@@ -325,7 +325,7 @@ void ImageshackTalker::uploadItem(const QString& path, const QMap<QString, QStri
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     emit signalBusy(true);
@@ -376,7 +376,7 @@ void ImageshackTalker::uploadItemToGallery(const QString& path, const QString& /
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     emit signalBusy(true);

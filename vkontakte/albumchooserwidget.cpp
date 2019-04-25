@@ -213,7 +213,7 @@ void AlbumChooserWidget::slotAlbumCreationDone(KJob* kjob)
     Vkontakte::CreateAlbumJob* const job = dynamic_cast<Vkontakte::CreateAlbumJob*>(kjob);
     Q_ASSERT(job);
 
-    if (job == 0 || job->error())
+    if (job == nullptr || job->error())
     {
         handleVkError(job);
         updateBusyStatus(false);
@@ -388,7 +388,7 @@ void AlbumChooserWidget::handleVkError(KJob* kjob)
 {
     QMessageBox::critical(this,
                           i18nc("@title:window", "Request to VKontakte failed"),
-                          kjob == 0 ? i18n("Internal error: Null pointer to KJob instance.") : kjob->errorText());
+                          kjob == nullptr ? i18n("Internal error: Null pointer to KJob instance.") : kjob->errorText());
 }
 
 } // namespace KIPIVkontaktePlugin

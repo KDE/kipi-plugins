@@ -58,7 +58,7 @@ class SimpleViewer : public QObject
 
 public:
 
-    explicit SimpleViewer(Interface* const interface, QObject* const parent=0);
+    explicit SimpleViewer(Interface* const interface, QObject* const parent=nullptr);
     ~SimpleViewer();
 
     void initProgressWdg() const;

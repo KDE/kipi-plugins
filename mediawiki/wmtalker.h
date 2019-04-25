@@ -57,7 +57,7 @@ class WMTalker : public KJob
 
 public:
 
-    WMTalker(Interface* const interface, MediaWiki* const mediawiki, QObject* const parent=0);
+    WMTalker(Interface* const interface, MediaWiki* const mediawiki, QObject* const parent=nullptr);
     ~WMTalker();
 
     QString buildWikiText(const QMap<QString, QString>& info) const;
@@ -73,7 +73,7 @@ Q_SIGNALS:
 public Q_SLOTS:
 
     void begin();
-    void uploadHandle(KJob* j = 0);
+    void uploadHandle(KJob* j = nullptr);
     void slotUploadProgress(KJob* job, unsigned long percent);
 
 private:

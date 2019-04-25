@@ -51,7 +51,7 @@ public:
     /* Initialize the combobox with a parent and a string to indicate the
      * intermediate state.
      */
-    explicit ComboBoxIntermediate(QWidget* const = 0, const QString& = i18n("Various"));
+    explicit ComboBoxIntermediate(QWidget* const = nullptr, const QString& = i18n("Various"));
     ~ComboBoxIntermediate();
 
     /* Set the state of the combobox to intermediate. The intermediate state is

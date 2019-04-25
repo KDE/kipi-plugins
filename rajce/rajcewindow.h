@@ -41,7 +41,7 @@ class RajceWindow : public KPToolDialog
 
 public:
 
-    explicit RajceWindow(const QString& tmpFolder, QWidget* const parent = 0);
+    explicit RajceWindow(const QString& tmpFolder, QWidget* const parent = nullptr);
     ~RajceWindow();
 
     void reactivate();

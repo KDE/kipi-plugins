@@ -69,12 +69,12 @@ namespace KIPIGoogleServicesPlugin
 {
 
 GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QString& serviceName)
-    : KPToolDialog(0),
-      m_widget(0),
-      m_albumDlg(0),
-      m_gphoto_albumdlg(0),
-      m_talker(0),
-      m_gphoto_talker(0)
+    : KPToolDialog(nullptr),
+      m_widget(nullptr),
+      m_albumDlg(nullptr),
+      m_gphoto_albumdlg(nullptr),
+      m_talker(nullptr),
+      m_gphoto_talker(nullptr)
 {
     if (iface())
     {
@@ -107,7 +107,7 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
 
     setMainWidget(m_widget);
     setModal(false);
-    KPAboutData* about = 0;
+    KPAboutData* about = nullptr;
 
     switch (m_name)
     {

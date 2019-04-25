@@ -43,8 +43,8 @@ LayoutNode::LayoutNode(double aspectRatio, double relativeArea, int index)
       m_division(0),
       m_type(TerminalNode),
       m_index(index),
-      m_leftChild(0),
-      m_rightChild(0)
+      m_leftChild(nullptr),
+      m_rightChild(nullptr)
 {
 }
 
@@ -77,8 +77,8 @@ LayoutNode &LayoutNode::operator=(const LayoutNode& other)
     m_division   = other.m_division;
     m_type       = other.m_type;
     m_index      = other.m_index;
-    m_leftChild  = other.m_leftChild  ? new LayoutNode(*other.m_leftChild)  : 0;
-    m_rightChild = other.m_rightChild ? new LayoutNode(*other.m_rightChild) : 0;
+    m_leftChild  = other.m_leftChild  ? new LayoutNode(*other.m_leftChild)  : nullptr;
+    m_rightChild = other.m_rightChild ? new LayoutNode(*other.m_rightChild) : nullptr;
 
     return *this;
 }
@@ -99,7 +99,7 @@ LayoutNode* LayoutNode::nodeForIndex(int index)
         return this;
 
     if (m_type == TerminalNode)
-        return 0;
+        return nullptr;
 
     LayoutNode* const fromLeft = m_leftChild->nodeForIndex(index);
 
@@ -113,7 +113,7 @@ LayoutNode* LayoutNode::nodeForIndex(int index)
 LayoutNode* LayoutNode::parentOf(LayoutNode* child)
 {
     if (m_type == TerminalNode)
-        return 0;
+        return nullptr;
 
     if (m_leftChild == child || m_rightChild == child)
         return this;
@@ -186,7 +186,7 @@ void LayoutNode::computeDivisions()
 // --------------------------------------------- //
 
 LayoutTree::LayoutTree(double aspectRatioPage, double absoluteAreaPage)
-    : m_root(0),
+    : m_root(nullptr),
       m_count(0),
       m_aspectRatioPage(aspectRatioPage),
       m_absoluteAreaPage(absoluteAreaPage)
@@ -226,7 +226,7 @@ int LayoutTree::addImage(double aspectRatio, double relativeArea)
     }
 
     // Section 2.1
-    LayoutNode* bestTree = NULL;
+    LayoutNode* bestTree = nullptr;
     double highScore     = 0;
 
     for (int i=0; i< m_count; ++i)

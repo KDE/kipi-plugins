@@ -54,16 +54,16 @@ public:
 
     Private()
     {
-        title              = 0;
-        resizeExportImages = 0;
-        showComments       = 0;
-        imagesExportSize   = 0;
-        maxImageDimension  = 0;
-        exportPath         = 0;
-        rightClick         = 0;
-        fixOrientation     = 0;
-        openInBrowser      = 0;
-        showKeywords       = 0;
+        title              = nullptr;
+        resizeExportImages = nullptr;
+        showComments       = nullptr;
+        imagesExportSize   = nullptr;
+        maxImageDimension  = nullptr;
+        exportPath         = nullptr;
+        rightClick         = nullptr;
+        fixOrientation     = nullptr;
+        openInBrowser      = nullptr;
+        showKeywords       = nullptr;
     }
 
     QLineEdit*      title;

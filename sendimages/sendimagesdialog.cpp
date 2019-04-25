@@ -60,8 +60,8 @@ public:
 
     Private()
     {
-        imagesList     = 0;
-        settingsWidget = 0;
+        imagesList     = nullptr;
+        settingsWidget = nullptr;
     }
 
     QList<QUrl>      urls;
@@ -73,7 +73,7 @@ public:
 };
 
 SendImagesDialog::SendImagesDialog(QWidget* const /*parent*/, const QList<QUrl>& urls)
-    : KPToolDialog(0),
+    : KPToolDialog(nullptr),
       d(new Private)
 {
     d->urls = urls;

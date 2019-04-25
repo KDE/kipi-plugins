@@ -94,7 +94,7 @@ public:
 
 
 FbWindow::FbWindow(const QString& tmpFolder, QWidget* const /*parent*/)
-    : KPToolDialog(0),
+    : KPToolDialog(nullptr),
       d(new Private(this, iface()))
 {
     m_tmpPath.clear();

@@ -55,7 +55,7 @@ class ImportWizardDlg: public KPWizardDialog
 
 public:
 
-    explicit ImportWizardDlg(FlashManager* const mngr, QWidget* const parent = 0);
+    explicit ImportWizardDlg(FlashManager* const mngr, QWidget* const parent = nullptr);
     ~ImportWizardDlg();
 
     FlashManager* manager() const;

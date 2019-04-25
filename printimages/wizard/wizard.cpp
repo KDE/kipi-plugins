@@ -154,8 +154,8 @@ Wizard::Wizard(QWidget* const parent)
       d(new Private)
 {
     //d->m_printDialog          = 0;
-    d->m_pDlg                 = 0;
-    d->m_printer              = 0;
+    d->m_pDlg                 = nullptr;
+    d->m_printer              = nullptr;
     d->m_infopageCurrentPhoto = 0;
 
     // Caption
@@ -429,7 +429,7 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
 
     file.close();
 
-    TPhotoSize* p = 0;
+    TPhotoSize* p = nullptr;
 
     // print out the element names of all elements that are direct children
     // of the outermost element.
@@ -736,9 +736,9 @@ double getMaxDPI(const QList<TPhoto*>& photos, const QList<QRect*>& layouts, /*u
 
         // iterate to the next position
         ++it;
-        layout = (it == layouts.end()) ? 0 : static_cast<QRect*>(*it);
+        layout = (it == layouts.end()) ? nullptr : static_cast<QRect*>(*it);
 
-        if (layout == 0)
+        if (layout == nullptr)
         {
             break;
         }
@@ -1152,9 +1152,9 @@ bool Wizard::paintOnePage(QPainter& p, const QList<TPhoto*>& photos, const QList
 
         // iterate to the next position
         ++it;
-        layout = it == layouts.end() ? 0 : static_cast<QRect*>(*it);
+        layout = it == layouts.end() ? nullptr : static_cast<QRect*>(*it);
 
-        if (layout == 0)
+        if (layout == nullptr)
         {
             current++;
             break;
@@ -1705,7 +1705,7 @@ void Wizard::pageChanged(int curr)
 
     if (!current) return;
 
-    QWizardPage* const before  = visitedPages().isEmpty() ? 0 : page(visitedPages().last());
+    QWizardPage* const before  = visitedPages().isEmpty() ? nullptr : page(visitedPages().last());
 
     //Change cursor to waitCursor during transition
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
@@ -1841,7 +1841,7 @@ void Wizard::updateCaption(TPhoto* pPhoto)
         else if (pPhoto->pCaptionInfo && d->m_photoUi->m_captions->currentIndex() == CaptionInfo::NoCaptions)
         {
             delete pPhoto->pCaptionInfo;
-            pPhoto->pCaptionInfo = NULL;
+            pPhoto->pCaptionInfo = nullptr;
         }
 
         if (pPhoto->pCaptionInfo)
@@ -2009,7 +2009,7 @@ void Wizard::BtnPrintOrderUp_clicked()
 
 void Wizard::ListPhotoSizes_selected()
 {
-    TPhotoSize* s = NULL;
+    TPhotoSize* s = nullptr;
     QSizeF size, sizeManaged;
 
     // TODO FREE STYLE
@@ -2027,7 +2027,7 @@ void Wizard::ListPhotoSizes_selected()
             s = d->m_photoSizes.at(curr);
             d->m_photoSizes.removeAt(curr);
             delete s;
-            s = NULL;
+            s = nullptr;
         }
 
         CustomLayoutDlg custDlg(this);
@@ -2084,7 +2084,7 @@ void Wizard::ListPhotoSizes_selected()
             {
                 qCDebug(KIPIPLUGINS_LOG) << "photo size " << QSize(width, height) << "> page size " << size;
                 delete s;
-                s = NULL;
+                s = nullptr;
             }
             else
             {
@@ -2142,7 +2142,7 @@ void Wizard::ListPhotoSizes_selected()
                 {
                     qCDebug(KIPIPLUGINS_LOG) << "I can't go on, rows " << nRows << "> columns " << nColumns;
                     delete s;
-                    s = NULL;
+                    s = nullptr;
                 }
             }
         }
@@ -2433,7 +2433,7 @@ QStringList Wizard::printPhotosToFile(const QList<TPhoto*>& photos, const QStrin
         {
             files.append(filename);
 
-            if (!pixmap.save(filename,0,100))
+            if (!pixmap.save(filename,nullptr,100))
             {
                 QMessageBox::information(this, QString(), i18n("Could not save file, please check your output entry."));
                 break;

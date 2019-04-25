@@ -59,7 +59,7 @@ class KIPIPLUGINS_EXPORT KPHBox : public QFrame
 
 public:
 
-    explicit KPHBox(QWidget* const parent=0);
+    explicit KPHBox(QWidget* const parent=nullptr);
     virtual ~KPHBox();
 
     void setSpacing(int space);
@@ -88,7 +88,7 @@ class KIPIPLUGINS_EXPORT KPVBox : public KPHBox
 
   public:
 
-    explicit KPVBox(QWidget* const parent=0);
+    explicit KPVBox(QWidget* const parent=nullptr);
     virtual ~KPVBox();
 };
 
@@ -124,7 +124,7 @@ class KIPIPLUGINS_EXPORT KPFileSelector : public KPHBox
 
 public:
 
-    explicit KPFileSelector(QWidget* const parent=0);
+    explicit KPFileSelector(QWidget* const parent=nullptr);
     virtual ~KPFileSelector();
 
     QLineEdit* lineEdit() const;
@@ -159,7 +159,7 @@ class KIPIPLUGINS_EXPORT KPColorSelector : public QPushButton
 
 public:
 
-    explicit KPColorSelector(QWidget* const parent=0);
+    explicit KPColorSelector(QWidget* const parent=nullptr);
     virtual ~KPColorSelector();
 
     void setColor(const QColor& color);

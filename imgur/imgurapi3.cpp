@@ -72,7 +72,7 @@ ImgurAPI3::ImgurAPI3(const QString& client_id, const QString& client_secret, QOb
 ImgurAPI3::~ImgurAPI3()
 {
     /* Disconnect all signals as cancelAllWork may emit */
-    disconnect(this, 0, 0, 0);
+    disconnect(this, nullptr, nullptr, nullptr);
     cancelAllWork();
 }
 

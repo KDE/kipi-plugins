@@ -57,12 +57,12 @@ public:
 
     Private()
     {
-        jalbum             = 0;
-        albumsInput        = 0;
-        jarInput           = 0;
-        albumsDialog       = 0;
-        jarDialog          = 0;
-        albumsSearchButton = 0;
+        jalbum             = nullptr;
+        albumsInput        = nullptr;
+        jarInput           = nullptr;
+        albumsDialog       = nullptr;
+        jarDialog          = nullptr;
+        albumsSearchButton = nullptr;
     }
 
     JAlbum*      jalbum;
@@ -90,7 +90,7 @@ JAlbumEdit::JAlbumEdit(QWidget* const pParent, JAlbum* const pJAlbum, const QStr
     //---------------------------------------------
 
     d->albumsInput            = new QLineEdit(this);
-    d->albumsDialog           = 0;
+    d->albumsDialog           = nullptr;
 
     d->albumsInput->setEnabled(true);
 
@@ -104,7 +104,7 @@ JAlbumEdit::JAlbumEdit(QWidget* const pParent, JAlbum* const pJAlbum, const QStr
     //---------------------------------------------
 
     d->jarInput               = new QLineEdit(this);
-    d->jarDialog              = 0;
+    d->jarDialog              = nullptr;
 
     d->jarInput->setEnabled(true);
 

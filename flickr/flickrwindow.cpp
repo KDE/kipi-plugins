@@ -65,7 +65,7 @@ namespace KIPIFlickrPlugin
 {
 
 FlickrWindow::FlickrWindow(QWidget* const /*parent*/, const QString& serviceName, SelectUserDlg* const dlg)
-    : KPToolDialog(0)
+    : KPToolDialog(nullptr)
 {
     m_serviceName = serviceName;
     setWindowTitle(i18n("Export to %1 Web Service", m_serviceName));

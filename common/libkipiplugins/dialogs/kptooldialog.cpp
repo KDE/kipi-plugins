@@ -55,9 +55,9 @@ public:
 
     Private()
     {
-        about  = 0;
-        dialog = 0;
-        iface  = 0;
+        about  = nullptr;
+        dialog = nullptr;
+        iface  = nullptr;
 
         PluginLoader* const pl = PluginLoader::instance();
 
@@ -116,7 +116,7 @@ QPushButton* KPDialogBase::getHelpButton() const
         }
     }
 
-    return 0;
+    return nullptr;
 }
 
 void KPDialogBase::setAboutData(KPAboutData* const data, QPushButton* help)
@@ -144,9 +144,9 @@ class KPToolDialog::Private
 {
 public:
     Private()
-        : buttonBox(0),
-          startButton(0),
-          mainWidget(0),
+        : buttonBox(nullptr),
+          startButton(nullptr),
+          mainWidget(nullptr),
          propagateReject(true)
     {
     }

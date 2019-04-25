@@ -47,18 +47,18 @@ public:
 
     Private()
     {
-        labelMailAgent        = 0;
-        mailAgentName         = 0;
-        imagesResize          = 0;
-        addComments           = 0;
-        changeImagesProp      = 0;
-        imageCompression      = 0;
-        labelImagesResize     = 0;
-        imagesFormat          = 0;
-        labelImagesFormat     = 0;
-        attachmentlimit       = 0;
-        labelAttachmentLimit  = 0;
-        labelImageCompression = 0;
+        labelMailAgent        = nullptr;
+        mailAgentName         = nullptr;
+        imagesResize          = nullptr;
+        addComments           = nullptr;
+        changeImagesProp      = nullptr;
+        imageCompression      = nullptr;
+        labelImagesResize     = nullptr;
+        imagesFormat          = nullptr;
+        labelImagesFormat     = nullptr;
+        attachmentlimit       = nullptr;
+        labelAttachmentLimit  = nullptr;
+        labelImageCompression = nullptr;
     }
 
     QLabel*    labelMailAgent;

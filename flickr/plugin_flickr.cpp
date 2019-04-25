@@ -57,14 +57,14 @@ Plugin_Flickr::Plugin_Flickr(QObject* const parent, const QVariantList& /*args*/
     setUiBaseName("kipiplugin_flickrui.rc");
     setupXML();
 
-    m_actionFlickr = 0;
-    m_action23     = 0;
+    m_actionFlickr = nullptr;
+    m_action23     = nullptr;
 
-    m_dlgFlickr    = 0;
-    m_dlg23        = 0;
+    m_dlgFlickr    = nullptr;
+    m_dlg23        = nullptr;
 
-    selectFlickr   = 0;
-    select23       = 0;
+    selectFlickr   = nullptr;
+    select23       = nullptr;
 }
 
 Plugin_Flickr::~Plugin_Flickr()
@@ -78,8 +78,8 @@ Plugin_Flickr::~Plugin_Flickr()
 
 void Plugin_Flickr::setup(QWidget* const widget)
 {
-    m_dlgFlickr = 0;
-    m_dlg23     = 0;
+    m_dlgFlickr = nullptr;
+    m_dlg23     = nullptr;
 
     Plugin::setup(widget);
 
@@ -101,7 +101,7 @@ void Plugin_Flickr::setupActions()
     m_actionFlickr->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi-flickr")));
     actionCollection()->setDefaultShortcut(m_actionFlickr, Qt::ALT + Qt::SHIFT + Qt::Key_R);
 
-    selectFlickr = new SelectUserDlg(0, QString::fromLatin1("Flickr"));
+    selectFlickr = new SelectUserDlg(nullptr, QString::fromLatin1("Flickr"));
 
     connect(m_actionFlickr, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateFlickr()));

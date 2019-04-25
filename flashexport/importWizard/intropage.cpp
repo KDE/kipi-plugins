@@ -49,8 +49,8 @@ public:
 
     Private()
     {
-        plugin_select  = 0;
-        imageGetOption = 0;
+        plugin_select  = nullptr;
+        imageGetOption = nullptr;
     }
 
     QComboBox* plugin_select;

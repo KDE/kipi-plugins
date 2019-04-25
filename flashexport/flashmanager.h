@@ -54,7 +54,7 @@ class FlashManager: public QObject
 
 public:
 
-    explicit FlashManager(QObject* const parent = 0);
+    explicit FlashManager(QObject* const parent = nullptr);
     ~FlashManager();
 
     void setIface(Interface* const iface);

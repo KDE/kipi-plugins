@@ -64,15 +64,15 @@ QString PiwigoTalker::s_authToken = QString::fromLatin1("");
 PiwigoTalker::PiwigoTalker(QWidget* const parent)
     : m_parent(parent),
       m_state(GE_LOGOUT),
-      m_netMngr(0),
-      m_reply(0),
+      m_netMngr(nullptr),
+      m_reply(nullptr),
       m_loggedIn(false),
       m_chunkId(0),
       m_nbOfChunks(0),
       m_version(-1),
       m_albumId(0),
       m_photoId(0),
-      m_iface(0)
+      m_iface(nullptr)
 {
     m_netMngr = new QNetworkAccessManager(this);
 
@@ -99,7 +99,7 @@ void PiwigoTalker::cancel()
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 }
 
@@ -316,7 +316,7 @@ void PiwigoTalker::slotFinished(QNetworkReply* reply)
         return;
     }
 
-    m_reply     = 0;
+    m_reply     = nullptr;
     State state = m_state; // Can change in the treatment itself, so we cache it
 
     if (reply->error() != QNetworkReply::NoError)

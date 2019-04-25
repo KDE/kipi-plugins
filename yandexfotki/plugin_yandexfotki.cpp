@@ -54,8 +54,8 @@ Plugin_YandexFotki::Plugin_YandexFotki(QObject* const parent, const QVariantList
 {
     qCDebug(KIPIPLUGINS_LOG) << "Plugin_YandexFotki plugin loaded";
 
-    m_dlgExport    = 0;
-    m_actionExport = 0;
+    m_dlgExport    = nullptr;
+    m_actionExport = nullptr;
 
     setUiBaseName("kipiplugin_yandexfotkiui.rc");
     setupXML();

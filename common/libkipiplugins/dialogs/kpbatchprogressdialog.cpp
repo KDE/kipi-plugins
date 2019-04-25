@@ -93,8 +93,8 @@ public:
 
     Private()
     {
-        progress    = 0;
-        actionsList = 0;
+        progress    = nullptr;
+        actionsList = nullptr;
     }
 
     QListWidget*      actionsList;
@@ -217,8 +217,8 @@ class KPBatchProgressDialog::Private
 public:
 
     Private()
-        : progressWidget(0),
-          buttonBox(0)
+        : progressWidget(nullptr),
+          buttonBox(nullptr)
     {
     }
 
@@ -227,7 +227,7 @@ public:
 };
 
 KPBatchProgressDialog::KPBatchProgressDialog(QWidget* const /*parent*/, const QString& caption)
-   : QDialog(0),
+   : QDialog(nullptr),
      d(new Private)
 {
     setModal(false);

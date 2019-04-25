@@ -43,7 +43,7 @@ public:
 
     Private()
     {
-        tree = 0;
+        tree = nullptr;
     }
 
     QMap<int, int> indexMap;

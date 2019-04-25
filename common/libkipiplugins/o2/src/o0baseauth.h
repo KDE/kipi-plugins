@@ -17,7 +17,7 @@ class O0_EXPORT O0BaseAuth : public QObject {
     Q_OBJECT
 
 public:
-    explicit O0BaseAuth(QObject *parent = 0, O0AbstractStore *store = 0);
+    explicit O0BaseAuth(QObject *parent = nullptr, O0AbstractStore *store = nullptr);
 
 public:
     /// Are we authenticated?

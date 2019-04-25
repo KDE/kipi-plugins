@@ -56,8 +56,8 @@ public:
 
     Private()
     {
-        actionExport = 0;
-        dlgExport    = 0;
+        actionExport = nullptr;
+        dlgExport    = nullptr;
     }
 
     QAction *  actionExport;
@@ -83,7 +83,7 @@ Plugin_WikiMedia::~Plugin_WikiMedia()
 
 void Plugin_WikiMedia::setup(QWidget* const widget)
 {
-    d->dlgExport = 0;
+    d->dlgExport = nullptr;
 
     Plugin::setup(widget);
     setupActions();

@@ -83,8 +83,8 @@ FbTalker::FbTalker(QWidget* const parent)
     m_apiURL          = QUrl(QString::fromLatin1("https://graph.facebook.com"));
     m_secretKey       = QString::fromLatin1("5b0b5cd096e110cd4f4c72f517e2c544");
     m_appID           = QString::fromLatin1("400589753481372");
-    m_dialog          = 0;
-    m_reply           = 0;
+    m_dialog          = nullptr;
+    m_reply           = nullptr;
 
     m_netMngr         = new QNetworkAccessManager(this);
 
@@ -127,7 +127,7 @@ void FbTalker::cancel()
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     emit signalBusy(false);
@@ -191,7 +191,7 @@ void FbTalker::authenticate(const QString &accessToken, unsigned int sessionExpi
 {
     m_loginInProgress = true;
 
-    if (!accessToken.isEmpty() && ( sessionExpires == 0 || sessionExpires > (unsigned int)(time(0) + 900)))
+    if (!accessToken.isEmpty() && ( sessionExpires == 0 || sessionExpires > (unsigned int)(time(nullptr) + 900)))
     {
         // sessionKey seems to be still valid for at least 15 minutes
         // - check if it still works
@@ -222,7 +222,7 @@ void FbTalker::exchangeSession(const QString& sessionKey)
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     emit signalBusy(true);
@@ -274,7 +274,7 @@ void FbTalker::doOAuth()
 
     emit signalBusy(false);
 
-    m_dialog = new QDialog(QApplication::activeWindow(), 0);
+    m_dialog = new QDialog(QApplication::activeWindow(), nullptr);
     m_dialog->setModal(true);
     m_dialog->setWindowTitle(i18n("Facebook Application Authorization"));
     QLineEdit* const textbox        = new QLineEdit();
@@ -360,7 +360,7 @@ void FbTalker::getLoggedInUser()
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     emit signalBusy(true);
@@ -386,7 +386,7 @@ void FbTalker::logout()
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     QMap<QString, QString> args;
@@ -411,7 +411,7 @@ void FbTalker::listAlbums(long long userID)
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     emit signalBusy(true);
@@ -437,7 +437,7 @@ void FbTalker::createAlbum(const FbAlbum& album)
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     emit signalBusy(true);
@@ -494,7 +494,7 @@ bool FbTalker::addPhoto(const QString& imgPath, const QString& albumID, const QS
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     emit signalBusy(true);
@@ -581,7 +581,7 @@ void FbTalker::slotFinished(QNetworkReply* reply)
         return;
     }
 
-    m_reply = 0;
+    m_reply = nullptr;
 
     if (reply->error() != QNetworkReply::NoError)
     {

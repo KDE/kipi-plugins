@@ -105,7 +105,7 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
     m_adultCheck           = m_widget->m_adultCheck;
     m_policyGroup          = m_widget->m_policyGroup;
     m_albumsBox            = m_widget->getAlbumBox();
-    m_meta                 = 0;
+    m_meta                 = nullptr;
 
     if (iface())
     {

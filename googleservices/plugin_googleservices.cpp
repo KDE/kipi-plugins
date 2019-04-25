@@ -58,13 +58,13 @@ Plugin_GoogleServices::Plugin_GoogleServices(QObject* const parent, const QVaria
     setUiBaseName("kipiplugin_googleservicesui.rc");
     setupXML();
 
-    m_actionGDriveExport = 0;
-    m_actionGPhotoExport = 0;
-    m_actionGPhotoImport = 0;
+    m_actionGDriveExport = nullptr;
+    m_actionGPhotoExport = nullptr;
+    m_actionGPhotoImport = nullptr;
 
-    m_dlgGDriveExport    = 0;
-    m_dlgGPhotoExport    = 0;
-    m_dlgGPhotoImport    = 0;
+    m_dlgGDriveExport    = nullptr;
+    m_dlgGPhotoExport    = nullptr;
+    m_dlgGPhotoImport    = nullptr;
 }
 
 Plugin_GoogleServices::~Plugin_GoogleServices()
@@ -78,9 +78,9 @@ Plugin_GoogleServices::~Plugin_GoogleServices()
 
 void Plugin_GoogleServices::setup(QWidget* const widget)
 {
-    m_dlgGDriveExport = 0;
-    m_dlgGPhotoExport = 0;
-    m_dlgGPhotoImport = 0;
+    m_dlgGDriveExport = nullptr;
+    m_dlgGPhotoExport = nullptr;
+    m_dlgGPhotoImport = nullptr;
 
     Plugin::setup(widget);
 

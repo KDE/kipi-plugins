@@ -564,7 +564,7 @@ AddPhotoCommand::AddPhotoCommand(const QString& tmpDir, const QString& path, uns
       m_maxDimension(0),
       m_tmpDir(tmpDir),
       m_imagePath(path),
-      m_form(0)
+      m_form(nullptr)
 {
     PluginLoader* const pl = PluginLoader::instance();
 
@@ -714,8 +714,8 @@ RajceSession::RajceSession(QWidget* const parent, const QString& tmpDir)
     : QObject(parent),
       m_queueAccess(QMutex::Recursive),
       m_tmpDir(tmpDir),
-      m_netMngr(0),
-      m_reply(0)
+      m_netMngr(nullptr),
+      m_reply(nullptr)
 {
     m_netMngr = new QNetworkAccessManager(this);
 
@@ -777,7 +777,7 @@ void RajceSession::slotFinished(QNetworkReply* reply)
     m_queueAccess.lock();
 
     RajceCommand* const c = m_commandQueue.head();
-    m_reply               = 0;
+    m_reply               = nullptr;
 
     c->processResponse(response, m_state);
 
@@ -883,11 +883,11 @@ void RajceSession::_enqueue(RajceCommand* command)
 
 void RajceSession::cancelCurrentCommand()
 {
-    if (m_reply != 0)
+    if (m_reply != nullptr)
     {
         slotFinished(m_reply);
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 }
 

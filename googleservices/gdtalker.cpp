@@ -72,7 +72,7 @@ GDTalker::GDTalker(QWidget* const parent)
 {
     m_rootid          = QString::fromLatin1("root");
     m_rootfoldername  = QString::fromLatin1("GoogleDrive Root");
-    m_iface           = 0;
+    m_iface           = nullptr;
 
     m_netMngr         = new QNetworkAccessManager(this);
 
@@ -139,7 +139,7 @@ void GDTalker::createFolder(const QString& title, const QString& id)
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     QUrl url(QString::fromLatin1("https://www.googleapis.com/drive/v2/files"));
@@ -175,7 +175,7 @@ bool GDTalker::addPhoto(const QString& imgPath, const GSPhoto& info,
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     emit signalBusy(true);
@@ -263,7 +263,7 @@ void GDTalker::slotFinished(QNetworkReply* reply)
         return;
     }
 
-    m_reply = 0;
+    m_reply = nullptr;
 
     if (reply->error() != QNetworkReply::NoError)
     {
@@ -426,7 +426,7 @@ void GDTalker::cancel()
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     emit signalBusy(false);

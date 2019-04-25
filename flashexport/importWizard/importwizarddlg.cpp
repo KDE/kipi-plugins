@@ -60,15 +60,15 @@ public:
 
     Private()
     {
-        mngr          = 0;
-        simple        = 0;
-        introPage     = 0;
-        firstrunPage  = 0;
-        selectionPage = 0;
-        lookPage      = 0;
-        generalPage   = 0;
-        progressPage  = 0;
-        settings      = 0;
+        mngr          = nullptr;
+        simple        = nullptr;
+        introPage     = nullptr;
+        firstrunPage  = nullptr;
+        selectionPage = nullptr;
+        lookPage      = nullptr;
+        generalPage   = nullptr;
+        progressPage  = nullptr;
+        settings      = nullptr;
         exporting     = false;
     }
 

@@ -38,7 +38,7 @@ class NewAlbumDialog : public KPNewAlbumDialog
 {
 public:
 
-    explicit NewAlbumDialog(QWidget* const parent = 0);
+    explicit NewAlbumDialog(QWidget* const parent = nullptr);
 
     QString albumName()        const;
     QString albumDescription() const;

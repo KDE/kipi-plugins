@@ -67,9 +67,9 @@ public:
     Private()
     {
         cancel                 = false;
-        threadImgResize        = 0;
-        progressDlg            = 0;
-        iface                  = 0;
+        threadImgResize        = nullptr;
+        progressDlg            = nullptr;
+        iface                  = nullptr;
         PluginLoader* const pl = PluginLoader::instance();
 
         if (pl)

@@ -79,9 +79,9 @@ public:
 
     Private()
     {
-        widget       = 0;
-        mediawiki    = 0;
-        uploadTalker = 0;
+        widget       = nullptr;
+        mediawiki    = nullptr;
+        uploadTalker = nullptr;
     }
 
     QString    tmpDir;
@@ -98,13 +98,13 @@ public:
 };
 
 WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
-    : KPToolDialog(0),
+    : KPToolDialog(nullptr),
       d(new Private)
 {
     d->tmpPath.clear();
     d->tmpDir       = tmpFolder;
     d->widget       = new WmWidget(this);
-    d->uploadTalker = 0;
+    d->uploadTalker = nullptr;
     d->login        = QString();
     d->pass         = QString();
 
@@ -385,7 +385,7 @@ int WMWindow::slotLoginHandle(KJob* loginJob)
     {
         d->login.clear();
         d->pass.clear();
-        d->uploadTalker = 0;
+        d->uploadTalker = nullptr;
         QMessageBox::critical(this, i18n("Login Error"), i18n("Please check your credentials and try again."));
     }
     else

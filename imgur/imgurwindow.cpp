@@ -52,7 +52,7 @@ namespace KIPIImgurPlugin
 {
 
 ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
-    : KPToolDialog(0)
+    : KPToolDialog(nullptr)
 {
     api = new ImgurAPI3(QString::fromLatin1(IMGUR_CLIENT_ID),
                         QString::fromLatin1(IMGUR_CLIENT_SECRET), this);

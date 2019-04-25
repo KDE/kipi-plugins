@@ -44,7 +44,7 @@ O2Reply *O2ReplyList::find(QNetworkReply *reply) {
             return timedReply;
         }
     }
-    return 0;
+    return nullptr;
 }
 
 bool O2ReplyList::ignoreSslErrors()

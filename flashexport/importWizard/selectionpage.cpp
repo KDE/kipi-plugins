@@ -51,10 +51,10 @@ public:
 
     Private()
     {
-        imageCollectionSelector = 0;
-        imageList               = 0;
-        vbox                    = 0;
-        manager                 = 0;
+        imageCollectionSelector = nullptr;
+        imageList               = nullptr;
+        vbox                    = nullptr;
+        manager                 = nullptr;
     }
 
     ImageCollectionSelector* imageCollectionSelector;

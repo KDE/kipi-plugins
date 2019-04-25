@@ -15,7 +15,7 @@ class O0_EXPORT O2Reply: public QTimer {
     Q_OBJECT
 
 public:
-    O2Reply(QNetworkReply *reply, int timeOut = 60 * 1000, QObject *parent = 0);
+    O2Reply(QNetworkReply *reply, int timeOut = 60 * 1000, QObject *parent = nullptr);
 
 Q_SIGNALS:
     void error(QNetworkReply::NetworkError);

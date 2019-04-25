@@ -55,7 +55,7 @@ class PrintHelperDialog : public QPrintDialog
 {
 public:
 
-    PrintHelperDialog(QPrinter* const printer, PrintOptionsPage* const optionsPage, QWidget* const parent = 0);
+    PrintHelperDialog(QPrinter* const printer, PrintOptionsPage* const optionsPage, QWidget* const parent = nullptr);
     ~PrintHelperDialog()
     {
     };
@@ -98,7 +98,7 @@ public:
     QSize adjustSize(TPhoto& doc, int printerResolution, const QSize& viewportSize)
     {
         // can't be null here!
-        Q_ASSERT ( doc.pAddInfo != NULL );
+        Q_ASSERT ( doc.pAddInfo != nullptr );
         /*
         int mUnit;
         int mPrintPosition;
@@ -151,7 +151,7 @@ public:
     QPoint adjustPosition(TPhoto &doc, const QSize& imageSize, const QSize & viewportSize)
     {
         // can't be null here!
-        Q_ASSERT ( doc.pAddInfo != NULL );
+        Q_ASSERT ( doc.pAddInfo != nullptr );
 
         Qt::Alignment alignment = Qt::Alignment ( doc.pAddInfo->mPrintPosition );
         int posX, posY;

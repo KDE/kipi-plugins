@@ -70,10 +70,10 @@ static bool gphotoLessThan(const GSFolder& p1, const GSFolder& p2)
 
 GPTalker::GPTalker(QWidget* const parent)
     : Authorize(parent, QString::fromLatin1("https://picasaweb.google.com/data/")),
-      m_netMngr(0),
-      m_reply(0),
+      m_netMngr(nullptr),
+      m_reply(nullptr),
       m_state(FE_LOGOUT),
-      m_iface(0)
+      m_iface(nullptr)
 {
     PluginLoader* const pl = PluginLoader::instance();
 
@@ -112,7 +112,7 @@ void GPTalker::listAlbums()
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     QUrl url(QString::fromLatin1("https://picasaweb.google.com/data/feed/api/user/default"));
@@ -137,7 +137,7 @@ void GPTalker::listPhotos(const QString& albumId, const QString& imgmax)
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     QUrl url(QString::fromLatin1("https://picasaweb.google.com/data/feed/api/user/default/albumid/") + albumId);
@@ -172,7 +172,7 @@ void GPTalker::createAlbum(const GSFolder& album)
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     //Create the Body in atom-xml
@@ -258,7 +258,7 @@ bool GPTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QString& 
    if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     QUrl url(QString::fromLatin1("https://picasaweb.google.com/data/feed/api/user/default/albumid/") + albumId);
@@ -387,7 +387,7 @@ bool GPTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, const QStr
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     MPForm_GPhoto form;
@@ -517,7 +517,7 @@ void GPTalker::getPhoto(const QString& imgPath)
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     emit signalBusy(true);
@@ -549,7 +549,7 @@ void GPTalker::cancel()
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     emit signalBusy(false);
@@ -630,7 +630,7 @@ void GPTalker::slotFinished(QNetworkReply* reply)
         return;
     }
 
-    m_reply = 0;
+    m_reply = nullptr;
 
     if (reply->error() != QNetworkReply::NoError)
     {

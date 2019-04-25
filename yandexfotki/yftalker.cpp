@@ -61,9 +61,9 @@ const QString YandexFotkiTalker::ACCESS_STRINGS[]     = {
 YandexFotkiTalker::YandexFotkiTalker(QObject* const parent)
     : QObject(parent),
       m_state(STATE_UNAUTHENTICATED),
-      m_lastPhoto(0),
-      m_netMngr(0),
-      m_reply(0)
+      m_lastPhoto(nullptr),
+      m_netMngr(nullptr),
+      m_reply(nullptr)
 {
     m_netMngr = new QNetworkAccessManager(this);
 
@@ -398,7 +398,7 @@ void YandexFotkiTalker::reset()
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     m_token.clear();
@@ -410,7 +410,7 @@ void YandexFotkiTalker::cancel()
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     if (isAuthenticated())
@@ -437,7 +437,7 @@ void YandexFotkiTalker::slotFinished(QNetworkReply* reply)
         return;
     }
 
-    m_reply = 0;
+    m_reply = nullptr;
 
     if (reply->error() != QNetworkReply::NoError)
     {
@@ -1038,7 +1038,7 @@ void YandexFotkiTalker::parseResponseUpdatePhotoInfo()
     }*/
 
     m_state     = STATE_UPDATEPHOTO_DONE;
-    m_lastPhoto = 0;
+    m_lastPhoto = nullptr;
     emit signalUpdatePhotoDone(photo);
 }
 
@@ -1047,7 +1047,7 @@ void YandexFotkiTalker::parseResponseUpdateAlbum()
     qCDebug(KIPIPLUGINS_LOG) << "Updated album" << m_buffer;
 
     m_state     = STATE_UPDATEALBUM_DONE;
-    m_lastPhoto = 0;
+    m_lastPhoto = nullptr;
 
     emit signalUpdateAlbumDone();
 }

@@ -54,7 +54,7 @@ const QString KioExportWindow::HISTORY_URL_PROPERTY = QString::fromLatin1("histo
 const QString KioExportWindow::CONFIG_GROUP         = QString::fromLatin1("KioExport");
 
 KioExportWindow::KioExportWindow(QWidget* const /*parent*/)
-    : KPToolDialog(0)
+    : KPToolDialog(nullptr)
 {
     m_exportWidget = new KioExportWidget(this);
     setMainWidget(m_exportWidget);

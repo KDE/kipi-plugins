@@ -51,7 +51,7 @@ KioExportWidget::KioExportWidget(QWidget* const parent)
     KPHBox* const hbox  = new KPHBox(this);
     QLabel* const label = new QLabel(hbox);
     m_targetLabel       = new KUrlComboRequester(hbox);
-    m_targetDialog      = 0;
+    m_targetDialog      = nullptr;
 
     if (m_targetLabel->button())
         m_targetLabel->button()->hide();

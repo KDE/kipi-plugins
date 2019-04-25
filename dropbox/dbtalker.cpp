@@ -66,12 +66,12 @@ DBTalker::DBTalker(QWidget* const parent)
     m_tokenUrl             = QLatin1String("https://api.dropboxapi.com/oauth2/token");
 
     m_state                = DB_USERNAME;
-    m_meta                 = 0;
-    m_iface                = 0;
-    m_netMngr              = 0;
-    m_reply                = 0;
-    m_o2                   = 0;
-    m_store                = 0;
+    m_meta                 = nullptr;
+    m_iface                = nullptr;
+    m_netMngr              = nullptr;
+    m_reply                = nullptr;
+    m_o2                   = nullptr;
+    m_store                = nullptr;
 
     PluginLoader* const pl = PluginLoader::instance();
 
@@ -229,7 +229,7 @@ bool DBTalker::addPhoto(const QString& imgPath, const QString& uploadFolder, boo
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     emit signalBusy(true);
@@ -293,7 +293,7 @@ void DBTalker::cancel()
     if (m_reply)
     {
         m_reply->abort();
-        m_reply = 0;
+        m_reply = nullptr;
     }
 
     emit signalBusy(false);
@@ -306,7 +306,7 @@ void DBTalker::slotFinished(QNetworkReply* reply)
         return;
     }
 
-    m_reply = 0;
+    m_reply = nullptr;
 
     if (reply->error() != QNetworkReply::NoError)
     {

@@ -57,10 +57,10 @@ Plugin_Smug::Plugin_Smug(QObject* const parent, const QVariantList& /*args*/)
 {
     qCDebug(KIPIPLUGINS_LOG) << "Plugin_Smug plugin loaded";
 
-    m_dlgImport    = 0;
-    m_dlgExport    = 0;
-    m_actionExport = 0;
-    m_actionImport = 0;
+    m_dlgImport    = nullptr;
+    m_dlgExport    = nullptr;
+    m_actionExport = nullptr;
+    m_actionImport = nullptr;
 
     setUiBaseName("kipiplugin_smugui.rc");
     setupXML();

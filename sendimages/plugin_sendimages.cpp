@@ -55,9 +55,9 @@ public:
 
     Private()
     {
-        dialog              = 0;
-        action_sendimages   = 0;
-        sendImagesOperation = 0;
+        dialog              = nullptr;
+        action_sendimages   = nullptr;
+        sendImagesOperation = nullptr;
     }
 
     QAction*          action_sendimages;

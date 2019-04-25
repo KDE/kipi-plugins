@@ -43,7 +43,7 @@ class KPProgressWidget::Private
 public:
 
     Private()
-        :iface(0)
+        :iface(nullptr)
     {
         PluginLoader* const pl = PluginLoader::instance();
 

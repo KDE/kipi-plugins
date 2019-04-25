@@ -57,9 +57,9 @@ K_PLUGIN_FACTORY (PrintImagesFactory, registerPlugin<Plugin_PrintImages>();)
 Plugin_PrintImages::Plugin_PrintImages (QObject* const parent, const QVariantList& /*args*/)
     : Plugin(parent, "PrintImages")
 {
-    m_printImagesAction    = 0;
-    m_printAssistantAction = 0;
-    m_interface            = 0;
+    m_printImagesAction    = nullptr;
+    m_printAssistantAction = nullptr;
+    m_interface            = nullptr;
 
     qCDebug(KIPIPLUGINS_LOG) << "Plugin_PrintImages plugin loaded";
 

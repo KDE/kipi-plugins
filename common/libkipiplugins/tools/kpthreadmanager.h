@@ -94,7 +94,7 @@ class KIPIPLUGINS_EXPORT KPThreadManager : public QThread
 
 public:
 
-    KPThreadManager(QObject* const parent=0);
+    KPThreadManager(QObject* const parent=nullptr);
     virtual ~KPThreadManager();
 
     /** Adjust maximum number of threads used to parallelize collection of job processing.

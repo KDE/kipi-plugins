@@ -275,8 +275,8 @@ public:
 
     Private()
     {
-        edit      = 0;
-        btn       = 0;
+        edit      = nullptr;
+        btn       = nullptr;
         fdMode    = QFileDialog::ExistingFile;
         fdOptions = QFileDialog::DontUseNativeDialog;
     }
@@ -446,7 +446,7 @@ void KPColorSelector::paintEvent(QPaintEvent*)
     }
 
     QColor fillCol = isEnabled() ? d->color : palette().color(backgroundRole());
-    qDrawShadePanel(&painter, x, y, w, h, palette(), true, 1, 0);
+    qDrawShadePanel(&painter, x, y, w, h, palette(), true, 1, nullptr);
 
     if (fillCol.isValid())
     {

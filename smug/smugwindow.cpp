@@ -68,7 +68,7 @@ namespace KIPISmugPlugin
 {
 
 SmugWindow::SmugWindow(const QString& tmpFolder, bool import, QWidget* const /*parent*/)
-    : KPToolDialog(0)
+    : KPToolDialog(nullptr)
 {
     m_tmpPath.clear();
     m_tmpDir      = tmpFolder;

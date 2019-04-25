@@ -35,7 +35,7 @@ class PrintImagesConfigHelper
 public:
 
     PrintImagesConfigHelper()
-        : q(0)
+        : q(nullptr)
     {
     }
 
@@ -134,7 +134,7 @@ PrintImagesConfig::PrintImagesConfig()
 
 PrintImagesConfig::~PrintImagesConfig()
 {
-    s_globalPrintImagesConfig()->q = 0;
+    s_globalPrintImagesConfig()->q = nullptr;
 }
 
 } // namespace KIPIPrintImagesPlugin

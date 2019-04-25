@@ -66,10 +66,10 @@ Authorize::Authorize(QWidget* const parent, const QString & scope)
     m_token_uri       = QString::fromLatin1("https://accounts.google.com/o/oauth2/token");
     m_client_secret   = QString::fromLatin1("4MJOS0u1-_AUEKJ0ObA-j22U");
     m_code            = QString::fromLatin1("0");
-    m_reply           = 0;
+    m_reply           = nullptr;
     m_continuePos     = 0;
     m_Authstate       = GD_ACCESSTOKEN;
-    m_window          = 0;
+    m_window          = nullptr;
 
     m_netMngr         = new QNetworkAccessManager(this);
 
@@ -111,7 +111,7 @@ void Authorize::doOAuth()
 
     emit signalBusy(false);
 
-    m_window = new QDialog(QApplication::activeWindow(),0);
+    m_window = new QDialog(QApplication::activeWindow(),nullptr);
     m_window->setModal(true);
     m_window->setWindowTitle(i18n("Google Drive Authorization"));
 
@@ -233,7 +233,7 @@ void Authorize::slotAuthFinished(QNetworkReply* reply)
         return;
     }
 
-    m_reply = 0;
+    m_reply = nullptr;
 
     if (reply->error() != QNetworkReply::NoError)
     {

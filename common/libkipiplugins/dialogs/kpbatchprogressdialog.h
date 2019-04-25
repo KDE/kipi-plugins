@@ -54,7 +54,7 @@ class KIPIPLUGINS_EXPORT KPBatchProgressWidget : public KPVBox
 
 public:
 
-    explicit KPBatchProgressWidget(QWidget* const parent=0);
+    explicit KPBatchProgressWidget(QWidget* const parent=nullptr);
     ~KPBatchProgressWidget();
 
     void addedAction(const QString& text, int type);
@@ -95,7 +95,7 @@ class KIPIPLUGINS_EXPORT KPBatchProgressDialog : public QDialog
 
 public:
 
-    explicit KPBatchProgressDialog(QWidget* const parent=0, const QString& caption=QString());
+    explicit KPBatchProgressDialog(QWidget* const parent=nullptr, const QString& caption=QString());
     ~KPBatchProgressDialog();
 
     KPBatchProgressWidget* progressWidget() const;

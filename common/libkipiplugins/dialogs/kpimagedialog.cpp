@@ -61,10 +61,10 @@ public:
 
     Private()
     {
-        imageLabel   = 0;
-        infoLabel    = 0;
-        iface        = 0;
-        meta         = 0;
+        imageLabel   = nullptr;
+        infoLabel    = nullptr;
+        iface        = nullptr;
+        meta         = nullptr;
 
         PluginLoader* const pl = PluginLoader::instance();
 
@@ -280,7 +280,7 @@ public:
     {
         onlyRaw      = false;
         singleSelect = false;
-        iface        = 0;
+        iface        = nullptr;
 
         PluginLoader* const pl = PluginLoader::instance();
 

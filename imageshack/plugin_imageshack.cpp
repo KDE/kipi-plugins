@@ -54,8 +54,8 @@ class Plugin_Imageshack::Private
 public:
 
     Private() :
-        actionExport(0),
-        imageshack(0)
+        actionExport(nullptr),
+        imageshack(nullptr)
     {
     }
 

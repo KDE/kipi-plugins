@@ -74,10 +74,10 @@ public:
         totalActions = 0;
         action       = 0;
         canceled     = true;
-        tempDir      = 0;
-        interface    = 0;
-        progressWdg  = 0;
-        settings     = 0;
+        tempDir      = nullptr;
+        interface    = nullptr;
+        progressWdg  = nullptr;
+        settings     = nullptr;
         width        = 0;
         height       = 0;
     }
@@ -339,7 +339,7 @@ bool SimpleViewer::createExportDirectories() const
 
 bool SimpleViewer::cmpUrl(const QUrl& url1, const QUrl& url2)
 {
-    QPointer<MetadataProcessor> meta = 0;
+    QPointer<MetadataProcessor> meta = nullptr;
     PluginLoader* const pl           = PluginLoader::instance();
 
     if (pl)
@@ -1179,7 +1179,7 @@ bool SimpleViewer::extractFile(const KArchiveEntry* entry) const
 
     const KArchiveFile* const entryFile = dynamic_cast<const KArchiveFile*>(entry);
 
-    if (entryFile == NULL)
+    if (entryFile == nullptr)
         return false;
 
     QByteArray array = entryFile->data();

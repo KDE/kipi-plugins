@@ -55,7 +55,7 @@ public:
     KPDialogBase(QDialog* const dlg);
     virtual ~KPDialogBase();
 
-    void setAboutData(KPAboutData* const data, QPushButton* help=0);
+    void setAboutData(KPAboutData* const data, QPushButton* help=nullptr);
 
     Interface* iface() const;
 
@@ -77,7 +77,7 @@ class KIPIPLUGINS_EXPORT KPToolDialog : public QDialog, public KPDialogBase
 
 public:
 
-    KPToolDialog(QWidget* const parent = 0);
+    KPToolDialog(QWidget* const parent = nullptr);
     virtual ~KPToolDialog();
 
     void setMainWidget(QWidget* const widget);
@@ -114,7 +114,7 @@ class KIPIPLUGINS_EXPORT KPWizardDialog : public QWizard, public KPDialogBase
 {
 public:
 
-    KPWizardDialog(QWidget* const parent=0);
+    KPWizardDialog(QWidget* const parent=nullptr);
     virtual ~KPWizardDialog();
 
 private:

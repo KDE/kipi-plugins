@@ -40,7 +40,7 @@ class CustomLayoutDlg : public QDialog , public Ui::CustomLayout
 
 public:
 
-    CustomLayoutDlg(QWidget* const parent = 0);
+    CustomLayoutDlg(QWidget* const parent = nullptr);
     ~CustomLayoutDlg();
 
     // retrieve last used data

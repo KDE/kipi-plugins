@@ -68,9 +68,9 @@ KmlExport::KmlExport(bool hostFeatureImagesHasComments, bool hostFeatureImagesHa
     m_LineWidth          = 4;
     m_GPXOpacity         = 64;
     m_GPXAltitudeMode    = 0;
-    m_kmlDocument        = 0;
-    m_iface              = 0;
-    m_meta               = 0;
+    m_kmlDocument        = nullptr;
+    m_iface              = nullptr;
+    m_meta               = nullptr;
 
     PluginLoader* const pl = PluginLoader::instance();
 
@@ -525,7 +525,7 @@ void KmlExport::generate()
     {
         logError(i18n("Cannot open file for writing"));
         delete m_kmlDocument;
-        m_kmlDocument = 0;
+        m_kmlDocument = nullptr;
         return;
     }
 
@@ -534,7 +534,7 @@ void KmlExport::generate()
     file.close();
 
     delete m_kmlDocument;
-    m_kmlDocument = 0;
+    m_kmlDocument = nullptr;
 
     logInfo(i18n("Move to final directory"));
 

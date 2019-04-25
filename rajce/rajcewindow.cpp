@@ -41,7 +41,7 @@ namespace KIPIRajcePlugin
 {
 
 RajceWindow::RajceWindow(const QString& tmpFolder, QWidget* const /*parent*/)
-    : KPToolDialog(0)
+    : KPToolDialog(nullptr)
 {
     m_widget = new RajceWidget(iface(), tmpFolder, this);
     m_widget->readSettings();

@@ -103,12 +103,12 @@ public:
 
 PiwigoWindow::Private::Private(PiwigoWindow* const parent)
 {
-    talker      = 0;
-    pPiwigo     = 0;
-    progressDlg = 0;
+    talker      = nullptr;
+    pPiwigo     = nullptr;
+    progressDlg = nullptr;
     uploadCount = 0;
     uploadTotal = 0;
-    pUploadList = 0;
+    pUploadList = nullptr;
     widget      = new QWidget(parent);
     parent->setMainWidget(widget);
     parent->setModal(false);
@@ -471,7 +471,7 @@ void PiwigoWindow::slotAlbums(const QList<GAlbum>& albumList)
         }
         else
         {
-            QTreeWidgetItem *parentItem = 0;
+            QTreeWidgetItem *parentItem = nullptr;
             bool found                  = false;
             int i                       = 0;
 

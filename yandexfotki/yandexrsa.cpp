@@ -104,7 +104,7 @@ void flex_unit::clear()
 flex_unit::flex_unit()
 {
     z = 0;
-    a = 0;
+    a = nullptr;
     n = 0;
 }
 

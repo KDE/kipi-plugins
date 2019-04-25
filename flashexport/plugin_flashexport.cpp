@@ -54,10 +54,10 @@ K_PLUGIN_FACTORY( FlashExportFactory, registerPlugin<Plugin_FlashExport>(); )
 Plugin_FlashExport::Plugin_FlashExport(QObject* const parent, const QVariantList&)
     : Plugin(parent, "FlashExport")
 {
-    m_interface    = 0;
-    m_action       = 0;
-    m_parentWidget = 0;
-    m_manager      = 0;
+    m_interface    = nullptr;
+    m_action       = nullptr;
+    m_parentWidget = nullptr;
+    m_manager      = nullptr;
 
     setUiBaseName("kipiplugin_flashexportui.rc");
     setupXML();

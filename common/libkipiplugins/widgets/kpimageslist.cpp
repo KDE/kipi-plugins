@@ -79,7 +79,7 @@ public:
     Private()
     {
         rating   = -1;
-        view     = 0;
+        view     = nullptr;
         state    = Waiting;
         hasThumb = false;
     }
@@ -392,7 +392,7 @@ KPImagesListViewItem* KPImagesListView::findItem(const QUrl& url)
         ++it;
     }
 
-    return 0;
+    return nullptr;
 }
 
 QModelIndex KPImagesListView::indexFromItem(KPImagesListViewItem* item, int column) const
@@ -457,7 +457,7 @@ Interface* KPImagesListView::iface() const
         return p->iface();
     }
 
-    return 0;
+    return nullptr;
 }
 
 // ---------------------------------------------------------------------------
@@ -484,21 +484,21 @@ public:
 
     Private()
     {
-        listView               = 0;
-        iface                  = 0;
-        addButton              = 0;
-        removeButton           = 0;
-        moveUpButton           = 0;
-        moveDownButton         = 0;
-        clearButton            = 0;
-        loadButton             = 0;
-        saveButton             = 0;
+        listView               = nullptr;
+        iface                  = nullptr;
+        addButton              = nullptr;
+        removeButton           = nullptr;
+        moveUpButton           = nullptr;
+        moveDownButton         = nullptr;
+        clearButton            = nullptr;
+        loadButton             = nullptr;
+        saveButton             = nullptr;
         iconSize               = DEFAULTSIZE;
         allowRAW               = true;
         controlButtonsEnabled  = true;
         allowDuplicate         = false;
         progressCount          = 0;
-        progressTimer          = 0;
+        progressTimer          = nullptr;
         progressPix            = KPWorkingPixmap();
         PluginLoader* const pl = PluginLoader::instance();
 
@@ -707,7 +707,7 @@ void KPImagesList::setControlButtonsPlacement(ControlButtonPlacement placement)
             delete vBtnLayout;
             delete hBtnLayout;
             // set all buttons invisible
-            setControlButtons(0x0);
+            setControlButtons(nullptr);
             break;
         }
     }
@@ -1304,7 +1304,7 @@ KPImagesListViewItem* KPImagesListView::getCurrentItem() const
 
     if (!currentTreeItem)
     {
-        return 0;
+        return nullptr;
     }
 
     return dynamic_cast<KPImagesListViewItem*>(currentTreeItem);

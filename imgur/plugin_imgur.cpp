@@ -55,8 +55,8 @@ public:
 
     Private()
     {
-        actionExport = 0;
-        winExport    = 0;
+        actionExport = nullptr;
+        winExport    = nullptr;
     }
 
     QAction*     actionExport;
@@ -81,7 +81,7 @@ Plugin_Imgur::~Plugin_Imgur()
 
 void Plugin_Imgur::setup(QWidget* const widget)
 {
-    d->winExport = 0;
+    d->winExport = nullptr;
 
     Plugin::setup(widget);
 

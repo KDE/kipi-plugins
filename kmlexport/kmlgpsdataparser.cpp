@@ -33,7 +33,7 @@ namespace KIPIKMLExportPlugin
 KMLGPSDataParser::KMLGPSDataParser()
     : GPSDataParser()
 {
-    kmlDocument = 0;
+    kmlDocument = nullptr;
 }
 
 KMLGPSDataParser::~KMLGPSDataParser()

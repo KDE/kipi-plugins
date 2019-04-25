@@ -46,8 +46,8 @@ K_PLUGIN_FACTORY( Factory, registerPlugin<Plugin_Vkontakte>(); )
 Plugin_Vkontakte::Plugin_Vkontakte(QObject* const parent, const QVariantList&)
     : Plugin(parent, "VKontakte")
 {
-    m_dlgExport    = 0;
-    m_actionExport = 0;
+    m_dlgExport    = nullptr;
+    m_actionExport = nullptr;
 
     qCDebug(KIPIPLUGINS_LOG) << "Plugin_Vkontakte plugin loaded";
 

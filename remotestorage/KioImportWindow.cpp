@@ -51,7 +51,7 @@ namespace KIPIRemoteStoragePlugin
 {
 
 KioImportWindow::KioImportWindow(QWidget* const /*parent*/)
-    : KPToolDialog(0)
+    : KPToolDialog(nullptr)
 {
     m_importWidget = new KioImportWidget(this, iface());
     setMainWidget(m_importWidget);

@@ -60,8 +60,8 @@ Plugin_Facebook::Plugin_Facebook(QObject* const parent, const QVariantList& /*ar
     setUiBaseName("kipiplugin_facebookui.rc");
     setupXML();
 
-    m_actionExport = 0;
-    m_dlgExport    = 0;
+    m_actionExport = nullptr;
+    m_dlgExport    = nullptr;
 }
 
 Plugin_Facebook::~Plugin_Facebook()
@@ -73,7 +73,7 @@ Plugin_Facebook::~Plugin_Facebook()
 
 void Plugin_Facebook::setup(QWidget* const widget)
 {
-    m_dlgExport = 0;
+    m_dlgExport = nullptr;
 
     Plugin::setup(widget);
 

@@ -51,8 +51,8 @@ K_PLUGIN_FACTORY( RajceFactory, registerPlugin<Plugin_Rajce>(); )
 
 Plugin_Rajce::Plugin_Rajce(QObject* const parent, const QVariantList& /*args*/)
     : Plugin(parent, "Rajce"),
-      m_actionExport(0),
-      m_dlgExport(0)
+      m_actionExport(nullptr),
+      m_dlgExport(nullptr)
 {
     qCDebug(KIPIPLUGINS_LOG) << "Plugin_Rajce plugin loaded";
 

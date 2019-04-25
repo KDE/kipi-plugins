@@ -54,7 +54,7 @@ public:
         DeleteURL       = KPImagesListView::User4
     };
 
-    ImgurImagesList(QWidget* const parent = 0);
+    ImgurImagesList(QWidget* const parent = nullptr);
     ~ImgurImagesList() override {}
 
     QList<const ImgurImageListViewItem*> getPendingItems();
