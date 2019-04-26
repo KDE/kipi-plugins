@@ -26,7 +26,6 @@ Name[sv]=Facebook export
 Name[tr]=Facebook Dışa Aktar
 Name[uk]=Експорт до Facebook
 Name[x-test]=xxFacebook Exportxx
-Name[zh_CN]=Facebook 导出
 Name[zh_TW]=Facebook 匯出
 Comment=A tool to export images to a remote Facebook web service
 Comment[ca]=Una eina per exportar les imatges a un servei web remot Facebook

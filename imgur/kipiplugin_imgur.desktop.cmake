@@ -35,7 +35,6 @@ Name[sv]=Export till Imgur
 Name[tr]=Imgur Aktarımı
 Name[uk]=Експорт до Imgur
 Name[x-test]=xxImgur Exportxx
-Name[zh_CN]=Imgur导出
 Name[zh_TW]=Imgur 匯出
 Comment=A tool to export images to the imgur.com image hosting service
 Comment[bs]=Alat za izvoz slika u imgur.com image hosting servisu
