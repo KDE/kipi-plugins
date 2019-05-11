@@ -26,6 +26,7 @@ Name[sv]=Flickr/23
 Name[tr]=Flickr/23
 Name[uk]=Flickr/23
 Name[x-test]=xxFlickr/23xx
+Name[zh_CN]=Flickr/23
 Name[zh_TW]=Flickr/23
 Comment=A tool to export images to remote Flickr and 23 web services.
 Comment[ca]=Una eina per exportar les imatges als serveis web remots Flickr i 23.

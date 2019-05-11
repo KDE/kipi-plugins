@@ -28,6 +28,7 @@ Name[sv]=Google-tjänster
 Name[tr]=Google Servisleri
 Name[uk]=Служби Google
 Name[x-test]=xxGoogle Servicesxx
+Name[zh_CN]=Google 服务
 Name[zh_TW]=Google 服務
 Comment=A tool to manage images with a remote Google web service
 Comment[ca]=Una eina per a gestionar les imatges amb el servei web remot de Google
