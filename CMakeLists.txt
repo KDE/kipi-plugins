@@ -211,8 +211,6 @@ while(CMAKE_CXX_FLAGS MATCHES "-Wdate-time")
     string(REPLACE "-Wdate-time" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 endwhile()
 
-add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
-
 add_subdirectory(common)
 add_subdirectory(flickr)
 add_subdirectory(dropbox)
