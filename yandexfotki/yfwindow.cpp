@@ -614,7 +614,7 @@ void YandexFotkiWindow::updateNextPhoto()
 
     updateControls(true);
 
-    QMessageBox::information(this, QString(), i18n("Images has been uploaded"));
+    QMessageBox::information(this, QString(), i18n("Images have been uploaded"));
     return;
 }
 
