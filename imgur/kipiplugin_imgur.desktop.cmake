@@ -72,6 +72,7 @@ Comment[sv]=Ett verktyg för att exportera bilder till en imgur.com bildlagrings
 Comment[tr]=Resimleri imgur.com resim barındırma hizmetine aktarmak için bir araç
 Comment[uk]=Інструмент для експорту зображень до сховища зображень imgur.com
 Comment[x-test]=xxA tool to export images to the imgur.com image hosting servicexx
+Comment[zh_CN]=一个将图像导出到 imgur.com 图床的工具
 Comment[zh_TW]=匯出影像到 imgur.com 影像主機服務的工具
 Type=Service
 Icon=kipi-imgur

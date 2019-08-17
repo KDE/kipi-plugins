@@ -58,6 +58,7 @@ Comment[sv]=Ett verktyg för att exportera bilder till webbtjänsterna Flickr el
 Comment[tr]=Resimleri Flickr ve 23 web servisine aktarmak için bir araç.
 Comment[uk]=Інструмент для експорту зображень до віддалених служб Flickr та 23.
 Comment[x-test]=xxA tool to export images to remote Flickr and 23 web services.xx
+Comment[zh_CN]=一个将图像导出到 Flickr、23 或 Zooomr 网络服务的工具。
 Comment[zh_TW]=匯出圖片到遠端 Flickr 和 23 網路服務的工具
 Type=Service
 Icon=kipi-flickr

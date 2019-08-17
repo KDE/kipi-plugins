@@ -58,6 +58,7 @@ Comment[sv]=Ett verktyg för att hantera bilder med en Google webbtjänst
 Comment[tr]=Resimleri uzak bir Google Drive web hizmetine aktarmak için bir araç
 Comment[uk]=Інструмент для керування зображеннями за допомогою віддаленої служби Google
 Comment[x-test]=xxA tool to manage images with a remote Google web servicexx
+Comment[zh_CN]=一个管理图像的工具，使用 Google网络服务
 Comment[zh_TW]=透過 Google 網路服務管理圖片的工具
 Type=Service
 Icon=kipi-googledrive
