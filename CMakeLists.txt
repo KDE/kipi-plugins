@@ -201,6 +201,8 @@ if(WIN32 AND MSVC)
     add_definitions(-D_AFX_SECURE_NO_WARNINGS)
 endif()
 
+add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
+
 # Remove pedantic GCC flag which generate a lots of warnings on the console with qCDebug()
 while(CMAKE_CXX_FLAGS MATCHES "-pedantic")
     string(REPLACE "-pedantic" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
