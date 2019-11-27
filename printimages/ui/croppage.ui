@@ -45,7 +45,7 @@
         <string>Rotate photo to the left</string>
        </property>
        <property name="text">
-        <string>&amp;Rotate left</string>
+        <string>Rotate &amp;left</string>
        </property>
       </widget>
      </item>
@@ -58,7 +58,7 @@
         <string>Rotate photo to the right</string>
        </property>
        <property name="text">
-        <string>&amp;Rotate right</string>
+        <string>Rotate &amp;right</string>
        </property>
       </widget>
      </item>
