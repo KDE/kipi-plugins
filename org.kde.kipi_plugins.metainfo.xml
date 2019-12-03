@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component type="addon">
+  <id>org.kde.kipi_plugins</id>
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>GPL-2.0-or-later</project_license>
+  <name>KIPI Plugins</name>
+  <summary>Plugins for KDE applications to export images</summary>
+  <description>
+    <p>These plugins export image to various services such as Mediawiki or Facebook or a local album.</p>
+    <p>They add export features to Gwenview and Spectacle.</p>
+  </description>
+  <url type="homepage">https://www.kde.org</url>
+  <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=kipiplugins</url>
+  <url type="donation">https://www.kde.org/community/donations/?app=kipi-plugins</url>
+  <screenshots>
+    <screenshot type="default">
+      <caption>KIPI Plugins as used in Gwenview.</caption>
+​      <image type="source" width="496" height="488">https://cdn.kde.org/screenshots/kipi-plugins/kipi-plugins.png</image>
+    </screenshot>
+  </screenshots>
+  <project_group>KDE</project_group>
+  <extends>org.kde.gwenview.desktop</extends>
+  <extends>org.kde.spectacle.desktop</extends>
+</component>
