@@ -249,6 +249,6 @@ if(KF5KIO_FOUND AND KF5KIOWidgets_FOUND)
     add_subdirectory(remotestorage)    # kioimportwindow.cpp, kioexportwindow.cpp
 endif()
 
-install(FILES org.kde.kipi_plguins.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
+install(FILES org.kde.kipi_plugins.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
