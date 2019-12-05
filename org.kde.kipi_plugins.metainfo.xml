@@ -4,17 +4,44 @@
   <metadata_license>FSFAP</metadata_license>
   <project_license>GPL-2.0-or-later</project_license>
   <name>KIPI Plugins</name>
+  <name xml:lang="ca">Connectors KIPI</name>
+  <name xml:lang="es">Complementos KIPI</name>
+  <name xml:lang="nl">KIPI-plug-ins</name>
+  <name xml:lang="pt">'Plugins' do KIPI</name>
+  <name xml:lang="uk">Додатки KIPI</name>
+  <name xml:lang="x-test">xxKIPI Pluginsxx</name>
+  <name xml:lang="zh-TW">KIPI 外掛程式</name>
   <summary>Plugins for KDE applications to export images</summary>
+  <summary xml:lang="ca">Connectors per a les aplicacions KDE per exportar imatges</summary>
+  <summary xml:lang="es">Complementos para exportar imágenes en aplicaciones de KDE</summary>
+  <summary xml:lang="nl">Plug-ins voor KDE toepassingen om afbeeldingen te exporteren</summary>
+  <summary xml:lang="pt">'Plugins' para as aplicações do KDE exportarem imagens</summary>
+  <summary xml:lang="uk">Додатки до програм KDE для експортування зображень</summary>
+  <summary xml:lang="x-test">xxPlugins for KDE applications to export imagesxx</summary>
+  <summary xml:lang="zh-TW">適用於 KDE 應用程式用來匯出影像的外掛程式</summary>
   <description>
     <p>These plugins export image to various services such as Mediawiki or Facebook or a local album.</p>
+    <p xml:lang="ca">Aquests connectors exporten imatge a diversos serveis com el Mediawiki, el Facebook o un àlbum local.</p>
+    <p xml:lang="es">Estos complementos exportan imágenes a diversos servicios, como Mediawiki o Facebook, o a un álbum local.</p>
+    <p xml:lang="nl">Deze plug-ins exporteren afbeeldingen naar verschillende services zoals Mediawiki of Facebook of een lokaal album.</p>
+    <p xml:lang="pt">Estes 'plugins' exportam as imagens para vários serviços, como o Mediawiki, o Facebook ou um álbum local.</p>
+    <p xml:lang="uk">За допомогою цих додатків можна експортувати зображення до різноманітних служб, зокрема Mediawiki та Facebook, або до локального альбому.</p>
+    <p xml:lang="x-test">xxThese plugins export image to various services such as Mediawiki or Facebook or a local album.xx</p>
+    <p xml:lang="zh-TW">這些外掛程式能匯出圖片至各種服務（例如 MediaWiki、Facebook 等）或本機相簿。</p>
     <p>They add export features to Gwenview and Spectacle.</p>
+    <p xml:lang="ca">Afegeixen funcionalitats d'exportació al Gwenview i l'Spectacle.</p>
+    <p xml:lang="es">Añaden funciones de exportación a Gwenview y a Spectacle.</p>
+    <p xml:lang="nl">Ze voegen exportfuncties toe aan Gwenview en Spectacle.</p>
+    <p xml:lang="pt">Eles adicionam as funcionalidades de exportação ao Gwenview e ao Spectacle.</p>
+    <p xml:lang="uk">Додають можливості з експортування до Gwenview та Spectacle.</p>
+    <p xml:lang="x-test">xxThey add export features to Gwenview and Spectacle.xx</p>
+    <p xml:lang="zh-TW">其會對 Gwenview 及 Spectacle 加入匯出功能。</p>
   </description>
   <url type="homepage">https://www.kde.org</url>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=kipiplugins</url>
   <url type="donation">https://www.kde.org/community/donations/?app=kipi-plugins</url>
   <screenshots>
-    <screenshot type="default">
-      <caption>KIPI Plugins as used in Gwenview.</caption>
+    <screenshot type="default"><caption>KIPI Plugins as used in Gwenview.</caption><caption xml:lang="ca">Connectors KIPI com s'usen al Gwenview.</caption><caption xml:lang="es">Complementos KIPI en Gwenview.</caption><caption xml:lang="nl">KIPI-plug-ins zoals gebruikt in Gwenview.</caption><caption xml:lang="pt">Os 'Plugins' do KIPI usados no Gwenview.</caption><caption xml:lang="uk">Додатки KIPI працюють у Gwenview.</caption><caption xml:lang="x-test">xxKIPI Plugins as used in Gwenview.xx</caption><caption xml:lang="zh-TW">當用在 Gwenview 時的 KIPI 外掛程式。</caption>
 ​      <image type="source" width="496" height="488">https://cdn.kde.org/screenshots/kipi-plugins/kipi-plugins.png</image>
     </screenshot>
   </screenshots>
