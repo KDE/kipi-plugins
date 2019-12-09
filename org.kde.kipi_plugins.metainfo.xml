@@ -60,4 +60,5 @@
   <project_group>KDE</project_group>
   <extends>org.kde.gwenview.desktop</extends>
   <extends>org.kde.spectacle.desktop</extends>
+  <extends>org.kde.kphotoalbum</extends>
 </component>
