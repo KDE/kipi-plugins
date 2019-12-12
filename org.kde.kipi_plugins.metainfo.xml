@@ -65,4 +65,7 @@
   <extends>org.kde.gwenview.desktop</extends>
   <extends>org.kde.spectacle.desktop</extends>
   <extends>org.kde.kphotoalbum</extends>
+  <categories>
+    <category>Graphics</category>
+  </categories>
 </component>
