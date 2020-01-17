@@ -41,6 +41,7 @@
 #include <QStyleOptionButton>
 #include <qdrawutil.h>
 #include <QTime>
+#include <QRandomGenerator>
 
 // KDE includes
 
@@ -494,11 +495,11 @@ QString KPRandomGenerator::randomString(const int& length)
        QString::fromLatin1("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"));
 
    QString randomString;
-   qsrand((uint)QTime::currentTime().msec());
 
+   auto *generator = QRandomGenerator::global();
    for(int i=0; i<length; ++i)
    {
-       int index = qrand() % possibleCharacters.length();
+       const int index = generator->bounded(possibleCharacters.length());
        QChar nextChar = possibleCharacters.at(index);
        randomString.append(nextChar);
    }
