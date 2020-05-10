@@ -14,6 +14,7 @@
   <name xml:lang="eu">KIPI pluginak</name>
   <name xml:lang="fi">KIPI-liitännäiset</name>
   <name xml:lang="fr">Modules externes KIPI</name>
+  <name xml:lang="ia">Plugins de Kipi</name>
   <name xml:lang="it">Estensioni KIPI</name>
   <name xml:lang="ko">KIPI 플러그인</name>
   <name xml:lang="nl">KIPI-plug-ins</name>
@@ -36,6 +37,7 @@
   <summary xml:lang="eu">KDE aplikazioek irudiak esportatu ditzaten pluginak</summary>
   <summary xml:lang="fi">Kuvien viemisen liitännäiset KDE-sovelluksille</summary>
   <summary xml:lang="fr">Modules externes d'exportation d'images pour les applications KDE</summary>
+  <summary xml:lang="ia">Plugins per applicationes de KDE de exportar images</summary>
   <summary xml:lang="it">Estensioni per far esportare le immagini alle applicazioni di KDE</summary>
   <summary xml:lang="ko">KDE 프로그램에서 그림을 내보내는 플러그인</summary>
   <summary xml:lang="nl">Plug-ins voor KDE toepassingen om afbeeldingen te exporteren</summary>
