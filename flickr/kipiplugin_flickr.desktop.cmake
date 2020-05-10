@@ -14,6 +14,7 @@ Name[eu]=Flickr/23
 Name[fi]=Flickr/23
 Name[fr]=Flickr/23
 Name[gl]=Flickr/23
+Name[ia]=Flickr/23
 Name[id]=Flickr/23
 Name[is]=Flickr/23
 Name[it]=Flickr/23
