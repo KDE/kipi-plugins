@@ -16,6 +16,7 @@ Name[fi]=Dropbox-vienti
 Name[fr]=Export vers Dropbox
 Name[gl]=Exportación a Dropbox
 Name[hu]=Dropbox exportálás
+Name[ia]=Exporta a Dropbox
 Name[id]=Dropbox Export
 Name[is]=Dropbox útflutningur
 Name[it]=Esportazione a Dropbox

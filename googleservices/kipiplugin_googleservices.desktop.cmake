@@ -14,6 +14,7 @@ Name[eu]=Google-ra esportatzea
 Name[fi]=Google Services
 Name[fr]=Services Google
 Name[gl]=Servizos de Google
+Name[ia]=Google Services (Servicios de Google)
 Name[id]=Google Services
 Name[is]=Google þjónustur
 Name[it]=Servizi di Google
