@@ -14,6 +14,7 @@
   <name xml:lang="eu">KIPI pluginak</name>
   <name xml:lang="fi">KIPI-liitännäiset</name>
   <name xml:lang="fr">Modules externes KIPI</name>
+  <name xml:lang="gl">Complementos de KIPI</name>
   <name xml:lang="ia">Plugins de Kipi</name>
   <name xml:lang="it">Estensioni KIPI</name>
   <name xml:lang="ko">KIPI 플러그인</name>
@@ -37,6 +38,7 @@
   <summary xml:lang="eu">KDE aplikazioek irudiak esportatu ditzaten pluginak</summary>
   <summary xml:lang="fi">Kuvien viemisen liitännäiset KDE-sovelluksille</summary>
   <summary xml:lang="fr">Modules externes d'exportation d'images pour les applications KDE</summary>
+  <summary xml:lang="gl">Complementos para que as aplicacións de KDE exporten imaxes</summary>
   <summary xml:lang="ia">Plugins per applicationes de KDE de exportar images</summary>
   <summary xml:lang="it">Estensioni per far esportare le immagini alle applicazioni di KDE</summary>
   <summary xml:lang="ko">KDE 프로그램에서 그림을 내보내는 플러그인</summary>
@@ -59,6 +61,7 @@
     <p xml:lang="eu">Plugin hauek irudiak hainbat zerbitzutara esportatzen dituzte, Mediawiki-ra, Facebook-era edo album lokaletara esaterako.</p>
     <p xml:lang="fi">Nämä liitännäiset vievät kuvia eri palveluihin kuten MediaWikiin, Facebookiin tai paikalliseen albumiin.</p>
     <p xml:lang="fr">Ces modules externes exportent les images vers différents services comme Mediawiki, Facebook ou un album local.</p>
+    <p xml:lang="gl">Estes complementos exportan imaxes a varios servizos, como Mediawiki ou Facebook, ou un álbum local.</p>
     <p xml:lang="it">Queste estensioni esportano immagini su molti servizi, come Mediawiki o Facebook, oppure un album locale.</p>
     <p xml:lang="ko">이 플러그인은 미디어위키, Facebook, 로컬 앨범 등 다양한 서비스로 그림을 내보냅니다.</p>
     <p xml:lang="nl">Deze plug-ins exporteren afbeeldingen naar verschillende services zoals Mediawiki of Facebook of een lokaal album.</p>
@@ -79,6 +82,7 @@
     <p xml:lang="eu">Esportatzeko eginbideak gehitzen dizkiete Gwenview eta Spectacle-ri.</p>
     <p xml:lang="fi">Ne lisäävät vientiominaisuuden Gwenview’hun ja Spectacleen.</p>
     <p xml:lang="fr">Ils ajoutent des fonctionnalités d'exportation à Gwenview et Spectacle.</p>
+    <p xml:lang="gl">Engaden funcionalidades de exportación a Gwenview e Spectacle.</p>
     <p xml:lang="it">Aggiungono funzionalità di esportazione a Gwenview e Spectacle.</p>
     <p xml:lang="ko">Gwenview 및 Spectacle에 내보내기 기능을 추가합니다.</p>
     <p xml:lang="nl">Ze voegen exportfuncties toe aan Gwenview en Spectacle.</p>
@@ -94,7 +98,7 @@
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=kipiplugins</url>
   <url type="donation">https://www.kde.org/community/donations/?app=kipi-plugins</url>
   <screenshots>
-    <screenshot type="default"><caption>KIPI Plugins as used in Gwenview.</caption><caption xml:lang="ca">Connectors KIPI com s'usen al Gwenview.</caption><caption xml:lang="ca-valencia">Connectors KIPI com s'usen al Gwenview.</caption><caption xml:lang="el">KIPI πρόσθετα όπως χρησιμοποιούνται στο Gwenview.</caption><caption xml:lang="en-GB">KIPI Plugins as used in Gwenview.</caption><caption xml:lang="es">Complementos KIPI en Gwenview.</caption><caption xml:lang="et">KIPI pluginate kasutamine Gwenview's.</caption><caption xml:lang="eu">KIPI pluginak Gwenview-n erabili bezala.</caption><caption xml:lang="fi">KIPI-liitännäiset käytössä Gwenview’ssa.</caption><caption xml:lang="fr">Modules externes de KIPI tels qu'utilisés dans Gwenview.</caption><caption xml:lang="it">Le estensioni di KIPI come usate in Gwenview.</caption><caption xml:lang="ko">Gwenview에서 KIPI 플러그인을 사용하는 방법입니다.</caption><caption xml:lang="nl">KIPI-plug-ins zoals gebruikt in Gwenview.</caption><caption xml:lang="pt">Os 'Plugins' do KIPI usados no Gwenview.</caption><caption xml:lang="pt-BR">Os plugins KIPI usados no Gwenview.</caption><caption xml:lang="ru">Использование модулей KIPI в Gwenview.</caption><caption xml:lang="sv"> KIPI-insticksprogram som de används i Gwenview.</caption><caption xml:lang="uk">Додатки KIPI працюють у Gwenview.</caption><caption xml:lang="x-test">xxKIPI Plugins as used in Gwenview.xx</caption><caption xml:lang="zh-TW">當用在 Gwenview 時的 KIPI 外掛程式。</caption>
+    <screenshot type="default"><caption>KIPI Plugins as used in Gwenview.</caption><caption xml:lang="ca">Connectors KIPI com s'usen al Gwenview.</caption><caption xml:lang="ca-valencia">Connectors KIPI com s'usen al Gwenview.</caption><caption xml:lang="el">KIPI πρόσθετα όπως χρησιμοποιούνται στο Gwenview.</caption><caption xml:lang="en-GB">KIPI Plugins as used in Gwenview.</caption><caption xml:lang="es">Complementos KIPI en Gwenview.</caption><caption xml:lang="et">KIPI pluginate kasutamine Gwenview's.</caption><caption xml:lang="eu">KIPI pluginak Gwenview-n erabili bezala.</caption><caption xml:lang="fi">KIPI-liitännäiset käytössä Gwenview’ssa.</caption><caption xml:lang="fr">Modules externes de KIPI tels qu'utilisés dans Gwenview.</caption><caption xml:lang="gl">Os complementos de KIPI tal e como se usan en Gwenview.</caption><caption xml:lang="it">Le estensioni di KIPI come usate in Gwenview.</caption><caption xml:lang="ko">Gwenview에서 KIPI 플러그인을 사용하는 방법입니다.</caption><caption xml:lang="nl">KIPI-plug-ins zoals gebruikt in Gwenview.</caption><caption xml:lang="pt">Os 'Plugins' do KIPI usados no Gwenview.</caption><caption xml:lang="pt-BR">Os plugins KIPI usados no Gwenview.</caption><caption xml:lang="ru">Использование модулей KIPI в Gwenview.</caption><caption xml:lang="sv"> KIPI-insticksprogram som de används i Gwenview.</caption><caption xml:lang="uk">Додатки KIPI працюють у Gwenview.</caption><caption xml:lang="x-test">xxKIPI Plugins as used in Gwenview.xx</caption><caption xml:lang="zh-TW">當用在 Gwenview 時的 KIPI 外掛程式。</caption>
 ​      <image type="source" width="496" height="488">https://cdn.kde.org/screenshots/kipi-plugins/kipi-plugins.png</image>
     </screenshot>
   </screenshots>
