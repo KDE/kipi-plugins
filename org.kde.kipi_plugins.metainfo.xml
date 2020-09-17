@@ -8,6 +8,7 @@
   <name xml:lang="ca-valencia">Connectors KIPI</name>
   <name xml:lang="cs">Moduly KIPI</name>
   <name xml:lang="da">KIPI-plugins</name>
+  <name xml:lang="de">KIPI-Module</name>
   <name xml:lang="el">KIPI πρόσθετα</name>
   <name xml:lang="en-GB">KIPI Plugins</name>
   <name xml:lang="es">Complementos KIPI</name>
@@ -33,6 +34,7 @@
   <summary>Plugins for KDE applications to export images</summary>
   <summary xml:lang="ca">Connectors per a que les aplicacions KDE exportin imatges</summary>
   <summary xml:lang="ca-valencia">Connectors per a que les aplicacions KDE exportin imatges</summary>
+  <summary xml:lang="de">Module für KDE-Anwendungen zum Export von Bildern</summary>
   <summary xml:lang="el">Πρόσθετα για KDE εφαρμογές εξαγωγής εικόνων</summary>
   <summary xml:lang="en-GB">Plugins for KDE applications to export images</summary>
   <summary xml:lang="es">Complementos para exportar imágenes en aplicaciones de KDE</summary>
@@ -109,6 +111,7 @@
       <caption>KIPI Plugins as used in Gwenview.</caption>
       <caption xml:lang="ca">Connectors KIPI com s'usen al Gwenview.</caption>
       <caption xml:lang="ca-valencia">Connectors KIPI com s'usen al Gwenview.</caption>
+      <caption xml:lang="de">KIPI-Module in Gwenview.</caption>
       <caption xml:lang="el">KIPI πρόσθετα όπως χρησιμοποιούνται στο Gwenview.</caption>
       <caption xml:lang="en-GB">KIPI Plugins as used in Gwenview.</caption>
       <caption xml:lang="es">Complementos KIPI en Gwenview.</caption>
