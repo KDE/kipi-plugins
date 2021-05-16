@@ -22,6 +22,7 @@
   <name xml:lang="ko">KIPI 플러그인</name>
   <name xml:lang="nl">KIPI-plug-ins</name>
   <name xml:lang="nn">KIPI-tillegg</name>
+  <name xml:lang="pl">Wtyczki KIPI</name>
   <name xml:lang="pt">'Plugins' do KIPI</name>
   <name xml:lang="pt-BR">Plugins KIPI</name>
   <name xml:lang="ru">Подключаемые модули KIPI</name>
@@ -47,6 +48,7 @@
   <summary xml:lang="it">Estensioni per far esportare le immagini alle applicazioni di KDE</summary>
   <summary xml:lang="ko">KDE 프로그램에서 그림을 내보내는 플러그인</summary>
   <summary xml:lang="nl">Plug-ins voor KDE toepassingen om afbeeldingen te exporteren</summary>
+  <summary xml:lang="pl">Wtyczki dla aplikacji KDE do eksportowania obrazów</summary>
   <summary xml:lang="pt">'Plugins' para as aplicações do KDE exportarem imagens</summary>
   <summary xml:lang="pt-BR">Plugins de exportação de imagens para aplicativos do KDE</summary>
   <summary xml:lang="ru">Подключаемые модули экспорта изображений для приложений KDE</summary>
@@ -72,6 +74,7 @@
     <p xml:lang="it">Queste estensioni esportano immagini su molti servizi, come Mediawiki o Facebook, oppure un album locale.</p>
     <p xml:lang="ko">이 플러그인은 미디어위키, Facebook, 로컬 앨범 등 다양한 서비스로 그림을 내보냅니다.</p>
     <p xml:lang="nl">Deze plug-ins exporteren afbeeldingen naar verschillende services zoals Mediawiki of Facebook of een lokaal album.</p>
+    <p xml:lang="pl">Te wtyczki eksportują obrazy do różnych usług takich jak Mediawiki, Facebook, czy do lokalnego albumu.</p>
     <p xml:lang="pt">Estes 'plugins' exportam as imagens para vários serviços, como o Mediawiki, o Facebook ou um álbum local.</p>
     <p xml:lang="pt-BR">Estes plugins exportam as imagens para vários serviços, como o Mediawiki ou Facebook ou um álbum local.</p>
     <p xml:lang="ru">Модули позволяют экспортировать изображения в как различные веб-сервисы, такие как, например, MediaWiki или Facebook, так и в локальные альбомы.</p>
@@ -96,6 +99,7 @@
     <p xml:lang="it">Aggiungono funzionalità di esportazione a Gwenview e Spectacle.</p>
     <p xml:lang="ko">Gwenview 및 Spectacle에 내보내기 기능을 추가합니다.</p>
     <p xml:lang="nl">Ze voegen exportfuncties toe aan Gwenview en Spectacle.</p>
+    <p xml:lang="pl">Dodają możliwość eksportu do Gwenview oraz Spectacle.</p>
     <p xml:lang="pt">Eles adicionam as funcionalidades de exportação ao Gwenview e ao Spectacle.</p>
     <p xml:lang="pt-BR">Eles adicionam as funcionalidades de exportação ao Gwenview e Spectacle.</p>
     <p xml:lang="ru">Эти модули используются в приложениях Gwenview и Spectacle.</p>
@@ -126,6 +130,7 @@
       <caption xml:lang="it">Le estensioni di KIPI come usate in Gwenview.</caption>
       <caption xml:lang="ko">Gwenview에서 KIPI 플러그인을 사용하는 방법입니다.</caption>
       <caption xml:lang="nl">KIPI-plug-ins zoals gebruikt in Gwenview.</caption>
+      <caption xml:lang="pl">Wtyczki KIPI używane w Gewnview.</caption>
       <caption xml:lang="pt">Os 'Plugins' do KIPI usados no Gwenview.</caption>
       <caption xml:lang="pt-BR">Os plugins KIPI usados no Gwenview.</caption>
       <caption xml:lang="ru">Использование модулей KIPI в Gwenview.</caption>
