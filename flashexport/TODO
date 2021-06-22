@@ -1,7 +1,0 @@
-FlashExport TODO List:
-
-adding multithreading support
-1. Look into SendImages tool how thread manager is implemented
-2. Implement a similar multithreaded queue to resize image for flash export
-3. Look if code can be factored into libkipi-plugins to reduce code duplication
-

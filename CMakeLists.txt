@@ -102,9 +102,6 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
              I18n
 )
 
-find_package(KF5Archive ${KF5_MIN_VERSION})
-set_package_properties(KF5Archive PROPERTIES PURPOSE "Required to build the FlashExport plugin")
-
 find_package(KF5KIO ${KF5_MIN_VERSION})
 set_package_properties(KF5IO PROPERTIES PURPOSE "Required to build the RemoteStorage plugin")
 
@@ -230,11 +227,6 @@ if(ENABLE_LEGACY)
     add_subdirectory(kmlexport)
     add_subdirectory(sendimages)
     add_subdirectory(jalbum)
-
-    if(KF5Archive_FOUND)
-        add_subdirectory(flashexport)
-    endif()
-
 endif()
 
 if(KF5Vkontakte_FOUND)
