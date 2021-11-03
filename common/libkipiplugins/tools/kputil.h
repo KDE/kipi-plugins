@@ -67,14 +67,14 @@ public:
     void setContentsMargins(int left, int top, int right, int bottom);
     void setStretchFactor(QWidget* const widget, int stretch);
 
-    QSize sizeHint() const Q_DECL_OVERRIDE;
-    QSize minimumSizeHint() const Q_DECL_OVERRIDE;
+    QSize sizeHint() const override;
+    QSize minimumSizeHint() const override;
 
 protected:
 
     KPHBox(bool vertical, QWidget* const parent);
 
-    void childEvent(QChildEvent* e) Q_DECL_OVERRIDE;
+    void childEvent(QChildEvent* e) override;
 };
 
 // ------------------------------------------------------------------------------------
@@ -175,7 +175,7 @@ private Q_SLOTS:
 
 private:
 
-    void paintEvent(QPaintEvent*) Q_DECL_OVERRIDE;
+    void paintEvent(QPaintEvent*) override;
 
 private:
 

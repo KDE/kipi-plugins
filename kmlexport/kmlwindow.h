@@ -124,7 +124,7 @@ protected Q_SLOTS:
     void slotKMLGenerate();
 
 private:
-    void closeEvent(QCloseEvent* e)  Q_DECL_OVERRIDE;
+    void closeEvent(QCloseEvent* e)  override;
 
 protected:
 

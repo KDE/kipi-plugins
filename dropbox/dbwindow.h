@@ -80,7 +80,7 @@ private:
     void uploadNextPhoto();
 
     void buttonStateChange(bool state);
-    void closeEvent(QCloseEvent*) Q_DECL_OVERRIDE;
+    void closeEvent(QCloseEvent*) override;
 
 private Q_SLOTS:
 

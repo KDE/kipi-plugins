@@ -68,7 +68,7 @@ public:
     GoogleServicesWidget(QWidget* const parent, KIPI::Interface* const iface, const PluginName& pluginName, const QString& serviceName);
     ~GoogleServicesWidget();
 
-    void updateLabels(const QString& name = QString(), const QString& url = QString()) Q_DECL_OVERRIDE;
+    void updateLabels(const QString& name = QString(), const QString& url = QString()) override;
 
 private:
 

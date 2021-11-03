@@ -108,7 +108,7 @@ protected:
 
     void handleVkError(KJob* kjob);
 
-    void closeEvent(QCloseEvent* event) Q_DECL_OVERRIDE;
+    void closeEvent(QCloseEvent* event) override;
 
 protected:
 

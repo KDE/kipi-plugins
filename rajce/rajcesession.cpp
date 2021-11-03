@@ -158,8 +158,8 @@ public:
 
 protected:
 
-    void parseResponse(QXmlQuery& response, SessionState& state) Q_DECL_OVERRIDE;
-    void cleanUpOnError(SessionState& state) Q_DECL_OVERRIDE;
+    void parseResponse(QXmlQuery& response, SessionState& state) override;
+    void cleanUpOnError(SessionState& state) override;
 };
 
 // -----------------------------------------------------------------------
@@ -172,8 +172,8 @@ public:
 
 protected:
 
-    void parseResponse(QXmlQuery& response, SessionState& state) Q_DECL_OVERRIDE;
-    void cleanUpOnError(SessionState& state) Q_DECL_OVERRIDE;
+    void parseResponse(QXmlQuery& response, SessionState& state) override;
+    void cleanUpOnError(SessionState& state) override;
 };
 
 // -----------------------------------------------------------------------
@@ -186,8 +186,8 @@ public:
 
 protected:
 
-    void parseResponse(QXmlQuery& response, SessionState& state) Q_DECL_OVERRIDE;
-    void cleanUpOnError(SessionState& state) Q_DECL_OVERRIDE;
+    void parseResponse(QXmlQuery& response, SessionState& state) override;
+    void cleanUpOnError(SessionState& state) override;
 };
 
 // -----------------------------------------------------------------------
@@ -200,8 +200,8 @@ public:
 
 protected:
 
-    void parseResponse(QXmlQuery& response, SessionState& state) Q_DECL_OVERRIDE;
-    void cleanUpOnError(SessionState& state) Q_DECL_OVERRIDE;
+    void parseResponse(QXmlQuery& response, SessionState& state) override;
+    void cleanUpOnError(SessionState& state) override;
 };
 
 // -----------------------------------------------------------------------
@@ -214,8 +214,8 @@ public:
 
 protected:
 
-    void parseResponse(QXmlQuery& response, SessionState& state) Q_DECL_OVERRIDE;
-    void cleanUpOnError(SessionState& state) Q_DECL_OVERRIDE;
+    void parseResponse(QXmlQuery& response, SessionState& state) override;
+    void cleanUpOnError(SessionState& state) override;
 };
 
 // -----------------------------------------------------------------------
@@ -227,14 +227,14 @@ public:
     AddPhotoCommand(const QString& tmpDir, const QString& path, unsigned dimension, int jpgQuality, const SessionState& state);
     virtual ~AddPhotoCommand();
 
-    QByteArray encode() const Q_DECL_OVERRIDE;
-    QString    contentType() const Q_DECL_OVERRIDE;
+    QByteArray encode() const override;
+    QString    contentType() const override;
 
 protected:
 
-    void    cleanUpOnError(KIPIRajcePlugin::SessionState& state) Q_DECL_OVERRIDE;
-    void    parseResponse(QXmlQuery& query, KIPIRajcePlugin::SessionState& state) Q_DECL_OVERRIDE;
-    QString additionalXml() const Q_DECL_OVERRIDE;
+    void    cleanUpOnError(KIPIRajcePlugin::SessionState& state) override;
+    void    parseResponse(QXmlQuery& query, KIPIRajcePlugin::SessionState& state) override;
+    QString additionalXml() const override;
 
 private:
 

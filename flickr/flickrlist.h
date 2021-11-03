@@ -98,7 +98,7 @@ Q_SIGNALS:
 
 public Q_SLOTS:
 
-    void slotAddImages(const QList<QUrl>& list) Q_DECL_OVERRIDE;
+    void slotAddImages(const QList<QUrl>& list) override;
 
 private:
 
@@ -159,7 +159,7 @@ public:
      */
     void toggled();
 
-    void updateItemWidgets() Q_DECL_OVERRIDE;
+    void updateItemWidgets() override;
 
 private:
 

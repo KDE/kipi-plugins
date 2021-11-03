@@ -53,7 +53,7 @@ public:
     Plugin_GoogleServices(QObject* const parent, const QVariantList& args);
     ~Plugin_GoogleServices();
 
-    void setup(QWidget* const) Q_DECL_OVERRIDE;
+    void setup(QWidget* const) override;
 
 public Q_SLOTS:
 

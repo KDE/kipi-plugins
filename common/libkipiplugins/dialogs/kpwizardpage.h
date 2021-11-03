@@ -52,7 +52,7 @@ public:
     void setShowLeftView(bool v);
 
     void setComplete(bool b);
-    bool isComplete() const Q_DECL_OVERRIDE;
+    bool isComplete() const override;
 
     int  id() const;
 

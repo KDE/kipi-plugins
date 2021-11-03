@@ -59,7 +59,7 @@ public:
     DropboxWidget(QWidget* const parent, KIPI::Interface* const iface, const QString& pluginName);
     ~DropboxWidget();
 
-    void updateLabels(const QString& name = QString(), const QString& url = QString()) Q_DECL_OVERRIDE;
+    void updateLabels(const QString& name = QString(), const QString& url = QString()) override;
 
     friend class DBWindow;
 };

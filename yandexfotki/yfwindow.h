@@ -108,7 +108,7 @@ protected Q_SLOTS:
 
 protected:
 
-    void closeEvent(QCloseEvent* event) Q_DECL_OVERRIDE;
+    void closeEvent(QCloseEvent* event) override;
 
     void readSettings();
     void writeSettings();

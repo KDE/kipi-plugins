@@ -46,7 +46,7 @@ public:
     explicit KPImageDialogPreview(QWidget* const parent=nullptr);
     ~KPImageDialogPreview();
 
-    QSize sizeHint() const Q_DECL_OVERRIDE;
+    QSize sizeHint() const override;
 
 private Q_SLOTS:
 
@@ -57,7 +57,7 @@ private Q_SLOTS:
 
 private:
 
-    void resizeEvent(QResizeEvent* e) Q_DECL_OVERRIDE;
+    void resizeEvent(QResizeEvent* e) override;
 
 private:
 

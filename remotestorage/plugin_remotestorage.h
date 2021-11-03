@@ -51,7 +51,7 @@ public:
     Plugin_RemoteStorage(QObject* const parent, const QVariantList& args);
     ~Plugin_RemoteStorage();
 
-    void setup(QWidget* const widget) Q_DECL_OVERRIDE;
+    void setup(QWidget* const widget) override;
 
 private Q_SLOTS:
 

@@ -64,7 +64,7 @@ public:
     FbWidget(QWidget* const parent, KIPI::Interface* const iface, const QString& pluginName);
     ~FbWidget();
 
-    void updateLabels(const QString& name = QString(), const QString& url = QString()) Q_DECL_OVERRIDE;
+    void updateLabels(const QString& name = QString(), const QString& url = QString()) override;
 
 //     QString   getAlbumID()         const;
 //     QString   getDestinationPath() const;

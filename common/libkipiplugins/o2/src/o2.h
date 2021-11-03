@@ -107,10 +107,10 @@ public:
 
 public Q_SLOTS:
     /// Authenticate.
-    Q_INVOKABLE void link() Q_DECL_OVERRIDE;
+    Q_INVOKABLE void link() override;
 
     /// De-authenticate.
-    Q_INVOKABLE void unlink() Q_DECL_OVERRIDE;
+    Q_INVOKABLE void unlink() override;
 
     /// Refresh token.
     Q_INVOKABLE void refresh();

@@ -53,7 +53,7 @@ public:
     Plugin_PiwigoExport(QObject* const parent, const QVariantList& args);
     ~Plugin_PiwigoExport();
 
-    void setup(QWidget* const) Q_DECL_OVERRIDE;
+    void setup(QWidget* const) override;
 
 public Q_SLOTS:
 
