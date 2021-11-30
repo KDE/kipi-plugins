@@ -46,7 +46,6 @@ set(KF5_MIN_VERSION      "5.18.0")
 set(QT_MIN_VERSION       "5.6.0")
 set(KIPI_MIN_VERSION     "5.0.0")
 set(MEDIAWIKI_MIN_VERSION "5.0.0")
-set(VKONTAKTE_MIN_VERSION "4.70.0")
 cmake_minimum_required(VERSION ${CMAKE_MIN_VERSION})
 
 ############## ECM setup ######################
@@ -157,7 +156,6 @@ message(STATUS "libkipi SO version    : ${KIPI_LIB_SO_CUR_VERSION}")
 # -- Optional dependencies detection required by some plugins -------------------------------------
 
 find_package(KF5MediaWiki ${MEDIAWIKI_MIN_VERSION})
-find_package(KF5Vkontakte ${VKONTAKTE_MIN_VERSION})
 
 # ==================================================================================================
 # Create git version header
@@ -227,10 +225,6 @@ if(ENABLE_LEGACY)
     add_subdirectory(kmlexport)
     add_subdirectory(sendimages)
     add_subdirectory(jalbum)
-endif()
-
-if(KF5Vkontakte_FOUND)
-    add_subdirectory(vkontakte)
 endif()
 
 if(KF5MediaWiki_FOUND)
