@@ -925,7 +925,7 @@ void WmWidget::slotApplyTitle()
         // If there is at least one #, replace it the correct number
         if (minLength > 0)
         {
-            parts      = imageTitle.split(QLatin1String("#"), QString::KeepEmptyParts);
+            parts      = imageTitle.split(QLatin1String("#"), Qt::KeepEmptyParts);
             imageTitle = parts.first().append(QLatin1String("#")).append(parts.last());
             number     = QString::number(i + 1);
 

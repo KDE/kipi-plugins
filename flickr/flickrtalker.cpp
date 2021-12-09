@@ -320,7 +320,7 @@ void FlickrTalker::getPhotoProperty(const QString& method, const QStringList& ar
 
     for (QStringList::const_iterator it = argList.constBegin(); it != argList.constEnd(); ++it)
     {
-        QStringList str = (*it).split(QLatin1Char('='), QString::SkipEmptyParts);
+        QStringList str = (*it).split(QLatin1Char('='), Qt::SkipEmptyParts);
         reqParams << O0RequestParameter(str[0].toLatin1(), str[1].toLatin1());
     }
 

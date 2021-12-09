@@ -244,7 +244,7 @@ QString WMTalker::buildWikiText(const QMap<QString, QString>& info) const
 
     if (!info[QLatin1String("categories")].isEmpty())
     {
-        categories = info[QLatin1String("categories")].split(QLatin1String("\n"), QString::SkipEmptyParts);
+        categories = info[QLatin1String("categories")].split(QLatin1String("\n"), Qt::SkipEmptyParts);
 
         for (int i = 0; i < categories.size(); i++)
         {
@@ -254,7 +254,7 @@ QString WMTalker::buildWikiText(const QMap<QString, QString>& info) const
 
     if (!info[QLatin1String("genCategories")].isEmpty())
     {
-        categories = info[QLatin1String("genCategories")].split(QLatin1String("\n"), QString::SkipEmptyParts);
+        categories = info[QLatin1String("genCategories")].split(QLatin1String("\n"), Qt::SkipEmptyParts);
 
         for (int i = 0; i < categories.size(); i++)
         {

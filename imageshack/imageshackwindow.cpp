@@ -364,7 +364,7 @@ void ImageshackWindow::uploadNextItem()
     {
         QString str = m_widget->m_tagsFld->text();
         QStringList tagsList;
-        tagsList = str.split(QRegExp(QString::fromLatin1("\\W+")), QString::SkipEmptyParts);
+        tagsList = str.split(QRegExp(QString::fromLatin1("\\W+")), Qt::SkipEmptyParts);
         opts[QString::fromLatin1("tags")] = tagsList.join(QString::fromLatin1(","));
     }
 
