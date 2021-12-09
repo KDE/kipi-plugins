@@ -111,7 +111,7 @@ void Authorize::doOAuth()
 
     Q_EMIT signalBusy(false);
 
-    m_window = new QDialog(QApplication::activeWindow(),nullptr);
+    m_window = new QDialog(QApplication::activeWindow(), {});
     m_window->setModal(true);
     m_window->setWindowTitle(i18n("Google Drive Authorization"));
 

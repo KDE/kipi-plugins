@@ -707,7 +707,7 @@ void KPImagesList::setControlButtonsPlacement(ControlButtonPlacement placement)
             delete vBtnLayout;
             delete hBtnLayout;
             // set all buttons invisible
-            setControlButtons(nullptr);
+            setControlButtons({});
             break;
         }
     }

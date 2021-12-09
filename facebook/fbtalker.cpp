@@ -274,7 +274,7 @@ void FbTalker::doOAuth()
 
     Q_EMIT signalBusy(false);
 
-    m_dialog = new QDialog(QApplication::activeWindow(), nullptr);
+    m_dialog = new QDialog(QApplication::activeWindow(), {});
     m_dialog->setModal(true);
     m_dialog->setWindowTitle(i18n("Facebook Application Authorization"));
     QLineEdit* const textbox        = new QLineEdit();
