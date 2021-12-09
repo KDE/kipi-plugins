@@ -5,6 +5,8 @@
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 #
 
+cmake_minimum_required(VERSION 3.16.0)
+
 project(kipi-plugins)
 
 message(STATUS "----------------------------------------------------------------------------------")
@@ -41,18 +43,20 @@ set(KIPIPLUGINS_LIB_SO_VERSION_STRING
 
 # =======================================================
 
-set(CMAKE_MIN_VERSION    "3.0.0")
-set(KF5_MIN_VERSION      "5.18.0")
-set(QT_MIN_VERSION       "5.6.0")
+set(K5_MIN_VERSION       "5.85.0")
+set(QT_MIN_VERSION       "5.15.0")
 set(KIPI_MIN_VERSION     "5.0.0")
 set(MEDIAWIKI_MIN_VERSION "5.0.0")
-cmake_minimum_required(VERSION ${CMAKE_MIN_VERSION})
 
 ############## ECM setup ######################
 
-find_package(ECM ${KF5_MIN_VERSION} CONFIG REQUIRED)
+find_package(ECM ${K5_MIN_VERSION} CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 
+# KDE macros
+include(KDEInstallDirs)
+include(KDECMakeSettings)
+include(KDECompilerSettings)
 # Cmake macros
 include(GenerateExportHeader)
 include(CheckFunctionExists)
@@ -66,11 +70,6 @@ include(ECMGeneratePriFile)
 include(ECMSetupVersion)
 include(ECMInstallIcons)
 include(ECMAddAppIcon)
-# KDE macros
-include(KDEInstallDirs)
-include(KDECMakeSettings)
-include(KDEFrameworkCompilerSettings)
-include(KDECompilerSettings)
 
 ##########################################################################
 
@@ -94,14 +93,14 @@ if(BUILD_TESTING)
     find_package(Qt5Test ${QT_MIN_VERSION} REQUIRED NO_MODULE)
 endif()
 
-find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
+find_package(KF5 ${K5_MIN_VERSION} REQUIRED COMPONENTS
              Config
              WindowSystem
              XmlGui
              I18n
 )
 
-find_package(KF5KIO ${KF5_MIN_VERSION})
+find_package(KF5KIO ${K5_MIN_VERSION})
 set_package_properties(KF5IO PROPERTIES PURPOSE "Required to build the RemoteStorage plugin")
 
 if(KF5KIO_FOUND)
@@ -196,7 +195,11 @@ if(WIN32 AND MSVC)
     add_definitions(-D_AFX_SECURE_NO_WARNINGS)
 endif()
 
-add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
+# added with KDE_COMPILERSETTINGS_LEVEL 5.85.0
+remove_definitions(
+    -DQT_NO_KEYWORDS
+    -DQT_NO_FOREACH
+)
 
 # Remove pedantic GCC flag which generate a lots of warnings on the console with qCDebug()
 while(CMAKE_CXX_FLAGS MATCHES "-pedantic")
