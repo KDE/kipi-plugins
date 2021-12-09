@@ -154,7 +154,7 @@ FlickrTalker::~FlickrTalker()
 
 void FlickrTalker::link(const QString& userName)
 {
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
 
     if (userName.isEmpty())
     {
@@ -187,7 +187,7 @@ void FlickrTalker::slotLinkingFailed()
 {
     qCDebug(KIPIPLUGINS_LOG) << "LINK to Flickr fail";
     m_username = QString();
-    emit signalBusy(false);
+    Q_EMIT signalBusy(false);
 }
 
 void FlickrTalker::slotLinkingSucceeded()
@@ -224,7 +224,7 @@ void FlickrTalker::slotLinkingSucceeded()
         removeUserName(m_serviceName);
     }
 
-    emit signalLinkingSucceeded();
+    Q_EMIT signalLinkingSucceeded();
 }
 
 void FlickrTalker::slotOpenBrowser(const QUrl& url)
@@ -266,7 +266,7 @@ void FlickrTalker::maxAllowedFileSize()
     m_authProgressDlg->setMaximum(4);
     m_authProgressDlg->setValue(1);
     m_buffer.resize(0);
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
 }
 
 void FlickrTalker::listPhotoSets()
@@ -296,7 +296,7 @@ void FlickrTalker::listPhotoSets()
 
     m_state = FE_LISTPHOTOSETS;
     m_buffer.resize(0);
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
 }
 
 void FlickrTalker::getPhotoProperty(const QString& method, const QStringList& argList)
@@ -330,7 +330,7 @@ void FlickrTalker::getPhotoProperty(const QString& method, const QStringList& ar
 
     m_state = FE_GETPHOTOPROPERTY;
     m_buffer.resize(0);
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
 }
 
 void FlickrTalker::listPhotos(const QString& /*albumName*/)
@@ -369,7 +369,7 @@ void FlickrTalker::createPhotoSet(const QString& /*albumName*/, const QString& a
 
     m_state = FE_CREATEPHOTOSET;
     m_buffer.resize(0);
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
 }
 
 void FlickrTalker::addPhotoToPhotoSet(const QString& photoId,
@@ -412,7 +412,7 @@ void FlickrTalker::addPhotoToPhotoSet(const QString& photoId,
 
         m_state = FE_ADDPHOTOTOPHOTOSET;
         m_buffer.resize(0);
-        emit signalBusy(true);
+        Q_EMIT signalBusy(true);
     }
 }
 
@@ -547,7 +547,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
 
     if (tempFileInfo.size() > (getMaxAllowedFileSize().toLongLong()))
     {
-        emit signalAddPhotoFailed(i18n("File Size exceeds maximum allowed file size."));
+        Q_EMIT signalAddPhotoFailed(i18n("File Size exceeds maximum allowed file size."));
         return false;
     }
 
@@ -564,7 +564,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
 
     m_state = FE_ADDPHOTO;
     m_buffer.resize(0);
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
     return true;
 }
 
@@ -675,7 +675,7 @@ void FlickrTalker::slotError(const QString& error)
 
 void FlickrTalker::slotFinished(QNetworkReply* reply)
 {
-    emit signalBusy(false);
+    Q_EMIT signalBusy(false);
 
     if (reply != m_reply)
     {
@@ -688,7 +688,7 @@ void FlickrTalker::slotFinished(QNetworkReply* reply)
     {
         if (m_state == FE_ADDPHOTO)
         {
-            emit signalAddPhotoFailed(reply->errorString());
+            Q_EMIT signalAddPhotoFailed(reply->errorString());
         }
         else
         {
@@ -839,7 +839,7 @@ void FlickrTalker::parseResponseCreatePhotoSet(const QByteArray& data)
             m_selectedPhotoSet.id = new_id;
 
             qCDebug(KIPIPLUGINS_LOG) << "PhotoSet created successfully with id" << new_id;
-            emit signalAddPhotoSetSucceeded();
+            Q_EMIT signalAddPhotoSetSucceeded();
         }
 
         if (node.isElement() && node.nodeName() == QLatin1String("err"))
@@ -934,7 +934,7 @@ void FlickrTalker::parseResponseListPhotoSets(const QByteArray& data)
             QString code = node.toElement().attribute(QLatin1String("code"));
             qCDebug(KIPIPLUGINS_LOG) << "Error code=" << code;
             qCDebug(KIPIPLUGINS_LOG) << "Msg=" << node.toElement().attribute(QLatin1String("msg"));
-            emit signalError(code);
+            Q_EMIT signalError(code);
         }
 
         node = node.nextSibling();
@@ -944,11 +944,11 @@ void FlickrTalker::parseResponseListPhotoSets(const QByteArray& data)
 
     if (!success)
     {
-        emit signalListPhotoSetsFailed(i18n("Failed to fetch list of photo sets."));
+        Q_EMIT signalListPhotoSetsFailed(i18n("Failed to fetch list of photo sets."));
     }
     else
     {
-        emit signalListPhotoSetsSucceeded();
+        Q_EMIT signalListPhotoSetsSucceeded();
         maxAllowedFileSize();
     }
 }
@@ -1016,7 +1016,7 @@ void FlickrTalker::parseResponseAddPhoto(const QByteArray& data)
             QString code = node.toElement().attribute(QLatin1String("code"));
             qCDebug(KIPIPLUGINS_LOG) << "Error code=" << code;
             qCDebug(KIPIPLUGINS_LOG) << "Msg=" << node.toElement().attribute(QLatin1String("msg"));
-            emit signalError(code);
+            Q_EMIT signalError(code);
         }
 
         node = node.nextSibling();
@@ -1024,7 +1024,7 @@ void FlickrTalker::parseResponseAddPhoto(const QByteArray& data)
 
     if (!success)
     {
-        emit signalAddPhotoFailed(i18n("Failed to upload photo"));
+        Q_EMIT signalAddPhotoFailed(i18n("Failed to upload photo"));
     }
     else
     {
@@ -1033,7 +1033,7 @@ void FlickrTalker::parseResponseAddPhoto(const QByteArray& data)
         if (photoSetId == QLatin1String("-1"))
         {
             qCDebug(KIPIPLUGINS_LOG) << "PhotoSet Id not set, not adding the photo to any photoset";
-            emit signalAddPhotoSucceeded();
+            Q_EMIT signalAddPhotoSucceeded();
         }
         else
         {
@@ -1073,7 +1073,7 @@ void FlickrTalker::parseResponsePhotoProperty(const QByteArray& data)
             QString code = node.toElement().attribute(QLatin1String("code"));
             qCDebug(KIPIPLUGINS_LOG) << "Error code=" << code;
             qCDebug(KIPIPLUGINS_LOG) << "Msg=" << node.toElement().attribute(QLatin1String("msg"));
-            emit signalError(code);
+            Q_EMIT signalError(code);
         }
 
         node = node.nextSibling();
@@ -1083,18 +1083,18 @@ void FlickrTalker::parseResponsePhotoProperty(const QByteArray& data)
 
     if (!success)
     {
-        emit signalAddPhotoFailed(i18n("Failed to query photo information"));
+        Q_EMIT signalAddPhotoFailed(i18n("Failed to query photo information"));
     }
     else
     {
-        emit signalAddPhotoSucceeded();
+        Q_EMIT signalAddPhotoSucceeded();
     }
 }
 
 void FlickrTalker::parseResponseAddPhotoToPhotoSet(const QByteArray& data)
 {
     qCDebug(KIPIPLUGINS_LOG) << "parseResponseListPhotosets" << data;
-    emit signalAddPhotoSucceeded();
+    Q_EMIT signalAddPhotoSucceeded();
 }
 
 } // namespace KIPIFlickrPlugin

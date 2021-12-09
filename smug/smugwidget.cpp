@@ -328,12 +328,12 @@ void SmugWidget::slotAnonymousToggled(bool checked)
     m_userName->setEnabled(!checked);
     m_changeUserBtn->setEnabled(!checked);
 
-    emit signalUserChangeRequest(checked);
+    Q_EMIT signalUserChangeRequest(checked);
 }
 
 void SmugWidget::slotChangeUserClicked()
 {
-    emit signalUserChangeRequest(false);
+    Q_EMIT signalUserChangeRequest(false);
 }
 
 void SmugWidget::slotResizeChecked()

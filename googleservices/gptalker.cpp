@@ -129,7 +129,7 @@ void GPTalker::listAlbums()
 
     m_state = FE_LISTALBUMS;
     m_buffer.resize(0);
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
 }
 
 void GPTalker::listPhotos(const QString& albumId, const QString& imgmax)
@@ -164,7 +164,7 @@ void GPTalker::listPhotos(const QString& albumId, const QString& imgmax)
 
     m_state = FE_LISTPHOTOS;
     m_buffer.resize(0);
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
 }
 
 void GPTalker::createAlbum(const GSFolder& album)
@@ -249,7 +249,7 @@ void GPTalker::createAlbum(const GSFolder& album)
 
     m_state = FE_CREATEALBUM;
     m_buffer.resize(0);
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
 }
 
 bool GPTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QString& albumId,
@@ -377,7 +377,7 @@ bool GPTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QString& 
 
     m_state = FE_ADDPHOTO;
     m_buffer.resize(0);
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
     return true;
 }
 
@@ -508,7 +508,7 @@ bool GPTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, const QStr
 
     m_state = FE_UPDATEPHOTO;
     m_buffer.resize(0);
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
     return true;
 }
 
@@ -520,7 +520,7 @@ void GPTalker::getPhoto(const QString& imgPath)
         m_reply = nullptr;
     }
 
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
 
     QUrl url(imgPath);
     m_reply = m_netMngr->get(QNetworkRequest(url));
@@ -552,7 +552,7 @@ void GPTalker::cancel()
         m_reply = nullptr;
     }
 
-    emit signalBusy(false);
+    Q_EMIT signalBusy(false);
 }
 
 void GPTalker::slotError(const QString & error)
@@ -623,7 +623,7 @@ void GPTalker::slotError(const QString & error)
 
 void GPTalker::slotFinished(QNetworkReply* reply)
 {
-    emit signalBusy(false);
+    Q_EMIT signalBusy(false);
 
     if (reply != m_reply)
     {
@@ -636,7 +636,7 @@ void GPTalker::slotFinished(QNetworkReply* reply)
     {
         if (m_state == FE_ADDPHOTO)
         {
-            emit signalAddPhotoDone(reply->error(), reply->errorString(), QString::fromLatin1("-1"));
+            Q_EMIT signalAddPhotoDone(reply->error(), reply->errorString(), QString::fromLatin1("-1"));
         }
         else
         {
@@ -667,11 +667,11 @@ void GPTalker::slotFinished(QNetworkReply* reply)
             parseResponseAddPhoto(m_buffer);
             break;
         case (FE_UPDATEPHOTO):
-            emit signalAddPhotoDone(1, QString::fromLatin1(""), QString::fromLatin1(""));
+            Q_EMIT signalAddPhotoDone(1, QString::fromLatin1(""), QString::fromLatin1(""));
             break;
         case (FE_GETPHOTO):
             // all we get is data of the image
-            emit signalGetPhotoDone(1, QString(), m_buffer);
+            Q_EMIT signalGetPhotoDone(1, QString(), m_buffer);
             break;
     }
 
@@ -688,7 +688,7 @@ void GPTalker::parseResponseListAlbums(const QByteArray& data)
     if ( !doc.setContent( data, false, &err, &line, &columns ) )
     {
         qCCritical(KIPIPLUGINS_LOG) << "error is "<< err << " at line " << line << " at columns " << columns;
-        emit signalListAlbumsDone(0, i18n("Failed to fetch photo-set list"), QList<GSFolder>());
+        Q_EMIT signalListAlbumsDone(0, i18n("Failed to fetch photo-set list"), QList<GSFolder>());
         return;
     }
 
@@ -746,7 +746,7 @@ void GPTalker::parseResponseListAlbums(const QByteArray& data)
     }
 
     std::sort(albumList.begin(), albumList.end(), gphotoLessThan);
-    emit signalListAlbumsDone(1, QString::fromLatin1(""), albumList);
+    Q_EMIT signalListAlbumsDone(1, QString::fromLatin1(""), albumList);
 }
 
 void GPTalker::parseResponseListPhotos(const QByteArray& data)
@@ -755,7 +755,7 @@ void GPTalker::parseResponseListPhotos(const QByteArray& data)
 
     if ( !doc.setContent( data ) )
     {
-        emit signalListPhotosDone(0, i18n("Failed to fetch photo-set list"), QList<GSPhoto>());
+        Q_EMIT signalListPhotosDone(0, i18n("Failed to fetch photo-set list"), QList<GSPhoto>());
         return;
     }
 
@@ -880,7 +880,7 @@ void GPTalker::parseResponseListPhotos(const QByteArray& data)
         node = node.nextSibling();
     }
 
-    emit signalListPhotosDone(1, QString::fromLatin1(""), photoList);
+    Q_EMIT signalListPhotosDone(1, QString::fromLatin1(""), photoList);
 }
 
 void GPTalker::parseResponseCreateAlbum(const QByteArray& data)
@@ -934,7 +934,7 @@ void GPTalker::parseResponseAddPhoto(const QByteArray& data)
 
     if ( !doc.setContent( data ) )
     {
-        emit signalAddPhotoDone(0, i18n("Failed to upload photo"), QString::fromLatin1("-1"));
+        Q_EMIT signalAddPhotoDone(0, i18n("Failed to upload photo"), QString::fromLatin1("-1"));
         return;
     }
 
@@ -960,7 +960,7 @@ void GPTalker::parseResponseAddPhoto(const QByteArray& data)
         }
     }
 
-    emit signalAddPhotoDone(1, QString::fromLatin1(""), photoId);
+    Q_EMIT signalAddPhotoDone(1, QString::fromLatin1(""), photoId);
 }
 
 } // KIPIGoogleServicesPlugin

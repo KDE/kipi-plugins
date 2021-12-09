@@ -69,7 +69,7 @@ void Tweeter::doXAuth(const QString &username, const QString &password) {
 void Tweeter::postStatusUpdate(const QString &message) {
     if (!o1Twitter_->linked()) {
         qWarning() << "Application is not linked to Twitter!";
-        emit statusPosted();
+        Q_EMIT statusPosted();
         return;
     }
 
@@ -114,13 +114,13 @@ void Tweeter::onLinkingSucceeded() {
     }
     QVariantMap extraTokens = o1t->extraTokens();
     if (!extraTokens.isEmpty()) {
-        emit extraTokensReady(extraTokens);
+        Q_EMIT extraTokensReady(extraTokens);
         qDebug() << "Extra tokens in response:";
         foreach (QString key, extraTokens.keys()) {
             qDebug() << "\t" << key << ":" << (extraTokens.value(key).toString().left(3) + "...");
         }
     }
-    emit linkingSucceeded();
+    Q_EMIT linkingSucceeded();
 }
 
 void Tweeter::tweetReplyDone() {
@@ -131,5 +131,5 @@ void Tweeter::tweetReplyDone() {
     } else {
         qDebug() << "Tweet posted successfully!";
     }
-    emit statusPosted();
+    Q_EMIT statusPosted();
 }

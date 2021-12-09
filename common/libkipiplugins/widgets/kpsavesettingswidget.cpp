@@ -192,7 +192,7 @@ void KPSaveSettingsWidget::slotPopulateImageFormat(bool sixteenBits)
         d->formatComboBox->insertItem( OUTPUT_PPM,  QString::fromLatin1("PPM") );
     }
 
-    emit signalSaveFormatChanged();
+    Q_EMIT signalSaveFormatChanged();
 }
 
 QString KPSaveSettingsWidget::extension() const

@@ -113,7 +113,7 @@ void RajceWidget::updateLabels(const QString&, const QString&)
     if (loggedIn != m_lastLoggedInState)
     {
         m_lastLoggedInState = loggedIn;
-        emit loginStatusChanged(loggedIn);
+        Q_EMIT loginStatusChanged(loggedIn);
     }
 
     QString username = loggedIn ? m_session->state().username() : QString::fromLatin1("");
@@ -454,7 +454,7 @@ void RajceWidget::_setEnabled(bool enabled)
     m_reloadAlbumsBtn->setEnabled(enabled);
     m_dimensionSpB->setEnabled(enabled);
     m_imageQualitySpB->setEnabled(enabled);
-    emit loginStatusChanged(enabled);
+    Q_EMIT loginStatusChanged(enabled);
 }
 
 void RajceWidget::readSettings()

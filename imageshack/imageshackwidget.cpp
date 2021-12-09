@@ -140,7 +140,7 @@ void ImageshackWidget::slotGetGalleries(const QStringList &gTexts, const QString
 
 void ImageshackWidget::slotReloadGalleries()
 {
-    emit signalReloadGalleries();
+    Q_EMIT signalReloadGalleries();
 }
 
 }  // namespace KIPIImageshackPlugin

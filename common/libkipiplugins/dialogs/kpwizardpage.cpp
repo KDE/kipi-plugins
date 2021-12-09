@@ -128,7 +128,7 @@ KPWizardPage::~KPWizardPage()
 void KPWizardPage::setComplete(bool b)
 {
     d->isComplete = b;
-    emit completeChanged();
+    Q_EMIT completeChanged();
 }
 
 bool KPWizardPage::isComplete() const

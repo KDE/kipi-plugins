@@ -73,11 +73,11 @@ Task::~Task()
 
 void Task::run()
 {
-    emit signalStarted();
+    Q_EMIT signalStarted();
 
     QString errString;
 
-    emit startingResize(m_orgUrl);
+    Q_EMIT startingResize(m_orgUrl);
 
     m_mutex.lock();
     (*m_count)++;
@@ -88,11 +88,11 @@ void Task::run()
     if (imageResize(m_settings, m_orgUrl, m_destName, errString))
     {
         QUrl emailUrl(QUrl::fromLocalFile(m_destName));
-        emit finishedResize(m_orgUrl, emailUrl, percent);
+        Q_EMIT finishedResize(m_orgUrl, emailUrl, percent);
     }
     else
     {
-        emit failedResize(m_orgUrl, errString, percent);
+        Q_EMIT failedResize(m_orgUrl, errString, percent);
     }
 
     if (m_settings.itemsList.count() == *m_count)
@@ -102,7 +102,7 @@ void Task::run()
         m_mutex.unlock();
     }
 
-    emit signalDone();
+    Q_EMIT signalDone();
 }
 
 bool Task::imageResize(const EmailSettings& settings, const QUrl& orgUrl,

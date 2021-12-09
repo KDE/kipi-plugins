@@ -88,7 +88,7 @@ void FbWidget::updateLabels(const QString& name, const QString& url)
 
 void FbWidget::slotReloadAlbumsRequest()
 {
-    emit reloadAlbums(0);
+    Q_EMIT reloadAlbums(0);
 }
 
 } // namespace KIPIFacebookPlugin

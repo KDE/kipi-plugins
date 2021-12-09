@@ -130,7 +130,7 @@ void FbTalker::cancel()
         m_reply = nullptr;
     }
 
-    emit signalBusy(false);
+    Q_EMIT signalBusy(false);
 }
 
 /** Compute MD5 signature using url queries keys and values:
@@ -198,7 +198,7 @@ void FbTalker::authenticate(const QString &accessToken, unsigned int sessionExpi
         m_accessToken    = accessToken;
         m_sessionExpires = sessionExpires;
 
-        emit signalLoginProgress(2, 9, i18n("Validate previous session..."));
+        Q_EMIT signalLoginProgress(2, 9, i18n("Validate previous session..."));
 
         // get logged in user - this will check if session is still valid
         getLoggedInUser();
@@ -225,8 +225,8 @@ void FbTalker::exchangeSession(const QString& sessionKey)
         m_reply = nullptr;
     }
 
-    emit signalBusy(true);
-    emit signalLoginProgress(1, 9, i18n("Upgrading to OAuth..."));
+    Q_EMIT signalBusy(true);
+    Q_EMIT signalLoginProgress(1, 9, i18n("Upgrading to OAuth..."));
 
     QMap<QString, QString> args;
     args[QString::fromLatin1("client_id")]     = m_appID;
@@ -257,7 +257,7 @@ void FbTalker::doOAuth()
 
     // TODO (Dirk):
     // Find out whether this signalBusy is used here appropriately.
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
 
     QUrl url(QString::fromLatin1("https://www.facebook.com/dialog/oauth"));
     QUrlQuery q(url);
@@ -272,7 +272,7 @@ void FbTalker::doOAuth()
     qCDebug(KIPIPLUGINS_LOG) << "OAuth URL: " << url;
     QDesktopServices::openUrl(url);
 
-    emit signalBusy(false);
+    Q_EMIT signalBusy(false);
 
     m_dialog = new QDialog(QApplication::activeWindow(), nullptr);
     m_dialog->setModal(true);
@@ -352,7 +352,7 @@ void FbTalker::doOAuth()
     authenticationDone(-1, i18n("Canceled by user."));
 
     // TODO (Dirk): Correct?
-    emit signalBusy(false);
+    Q_EMIT signalBusy(false);
 }
 
 void FbTalker::getLoggedInUser()
@@ -363,8 +363,8 @@ void FbTalker::getLoggedInUser()
         m_reply = nullptr;
     }
 
-    emit signalBusy(true);
-    emit signalLoginProgress(3);
+    Q_EMIT signalBusy(true);
+    Q_EMIT signalLoginProgress(3);
 
     QUrl url(QString::fromLatin1("https://graph.facebook.com/me"));
     QUrlQuery q;
@@ -401,7 +401,7 @@ void FbTalker::logout()
     qCDebug(KIPIPLUGINS_LOG) << "Logout URL: " << url;
     QDesktopServices::openUrl(url);
 
-    emit signalBusy(false);
+    Q_EMIT signalBusy(false);
 }
 
 void FbTalker::listAlbums(long long userID)
@@ -414,7 +414,7 @@ void FbTalker::listAlbums(long long userID)
         m_reply = nullptr;
     }
 
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
 
     QUrl url(QString::fromLatin1("https://graph.facebook.com/me/albums"));
     QUrlQuery q;
@@ -440,7 +440,7 @@ void FbTalker::createAlbum(const FbAlbum& album)
         m_reply = nullptr;
     }
 
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
 
     QMap<QString, QString> args;
     args[QString::fromLatin1("access_token")] = m_accessToken;
@@ -497,7 +497,7 @@ bool FbTalker::addPhoto(const QString& imgPath, const QString& albumID, const QS
         m_reply = nullptr;
     }
 
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
 
     QMap<QString, QString> args;
     args[QString::fromLatin1("access_token")] = m_accessToken;
@@ -516,7 +516,7 @@ bool FbTalker::addPhoto(const QString& imgPath, const QString& albumID, const QS
 
     if (!form.addFile(QUrl::fromLocalFile(imgPath).fileName(), imgPath))
     {
-        emit signalBusy(false);
+        Q_EMIT signalBusy(false);
         return false;
     }
 
@@ -591,12 +591,12 @@ void FbTalker::slotFinished(QNetworkReply* reply)
         }
         else if (m_state == FB_ADDPHOTO)
         {
-            emit signalBusy(false);
-            emit signalAddPhotoDone(reply->error(), reply->errorString());
+            Q_EMIT signalBusy(false);
+            Q_EMIT signalAddPhotoDone(reply->error(), reply->errorString());
         }
         else
         {
-            emit signalBusy(false);
+            Q_EMIT signalBusy(false);
             QMessageBox::critical(QApplication::activeWindow(),
                                   i18n("Error"), reply->errorString());
         }
@@ -637,8 +637,8 @@ void FbTalker::authenticationDone(int errCode, const QString &errMsg)
         m_user.clear();
     }
 
-    emit signalBusy(false);
-    emit signalLoginDone(errCode, errMsg);
+    Q_EMIT signalBusy(false);
+    Q_EMIT signalLoginDone(errCode, errMsg);
     m_loginInProgress = false;
 }
 
@@ -709,7 +709,7 @@ void FbTalker::parseResponseGetLoggedInUser(const QByteArray& data)
 
     if(err.error != QJsonParseError::NoError)
     {
-        emit signalBusy(false);
+        Q_EMIT signalBusy(false);
         return;
     }
 
@@ -748,7 +748,7 @@ void FbTalker::parseResponseAddPhoto(const QByteArray& data)
 
     if(err.error != QJsonParseError::NoError)
     {
-        emit signalBusy(false);
+        Q_EMIT signalBusy(false);
         return;
     }
 
@@ -767,8 +767,8 @@ void FbTalker::parseResponseAddPhoto(const QByteArray& data)
         errMsg  = obj[QString::fromLatin1("message")].toString();
     }
 
-    emit signalBusy(false);
-    emit signalAddPhotoDone(errCode, errorToText(errCode, errMsg));
+    Q_EMIT signalBusy(false);
+    Q_EMIT signalAddPhotoDone(errCode, errorToText(errCode, errMsg));
 }
 
 void FbTalker::parseResponseCreateAlbum(const QByteArray& data)
@@ -782,7 +782,7 @@ void FbTalker::parseResponseCreateAlbum(const QByteArray& data)
 
     if(err.error != QJsonParseError::NoError)
     {
-        emit signalBusy(false);
+        Q_EMIT signalBusy(false);
         return;
     }
 
@@ -802,8 +802,8 @@ void FbTalker::parseResponseCreateAlbum(const QByteArray& data)
         errMsg  = obj[QString::fromLatin1("message")].toString();
     }
 
-    emit signalBusy(false);
-    emit signalCreateAlbumDone(errCode, errorToText(errCode, errMsg),
+    Q_EMIT signalBusy(false);
+    Q_EMIT signalCreateAlbumDone(errCode, errorToText(errCode, errMsg),
                                newAlbumID);
 }
 
@@ -817,7 +817,7 @@ void FbTalker::parseResponseListAlbums(const QByteArray& data)
 
     if(err.error != QJsonParseError::NoError)
     {
-        emit signalBusy(false);
+        Q_EMIT signalBusy(false);
         return;
     }
 
@@ -865,8 +865,8 @@ void FbTalker::parseResponseListAlbums(const QByteArray& data)
 
     std::sort(albumsList.begin(), albumsList.end());
 
-    emit signalBusy(false);
-    emit signalListAlbumsDone(errCode, errorToText(errCode, errMsg),
+    Q_EMIT signalBusy(false);
+    Q_EMIT signalListAlbumsDone(errCode, errorToText(errCode, errMsg),
                               albumsList);
 }
 

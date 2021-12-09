@@ -96,7 +96,7 @@ void SmugTalker::cancel()
         m_reply = nullptr;
     }
 
-    emit signalBusy(false);
+    Q_EMIT signalBusy(false);
 }
 
 void SmugTalker::login(const QString& email, const QString& password)
@@ -107,8 +107,8 @@ void SmugTalker::login(const QString& email, const QString& password)
         m_reply = nullptr;
     }
 
-    emit signalBusy(true);
-    emit signalLoginProgress(1, 4, i18n("Logging in to SmugMug service..."));
+    Q_EMIT signalBusy(true);
+    Q_EMIT signalLoginProgress(1, 4, i18n("Logging in to SmugMug service..."));
 
     QUrl url(m_apiURL);
     QUrlQuery q;
@@ -148,7 +148,7 @@ void SmugTalker::logout()
         m_reply = nullptr;
     }
 
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
 
     QUrl url(m_apiURL);
     QUrlQuery q;
@@ -174,7 +174,7 @@ void SmugTalker::listAlbums(const QString& nickName)
         m_reply = nullptr;
     }
 
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
 
     QUrl url(m_apiURL);
     QUrlQuery q;
@@ -208,7 +208,7 @@ void SmugTalker::listPhotos(const qint64 albumID,
         m_reply = nullptr;
     }
 
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
 
     QUrl url(m_apiURL);
     QUrlQuery q;
@@ -244,7 +244,7 @@ void SmugTalker::listAlbumTmpl()
         m_reply = nullptr;
     }
 
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
 
     QUrl url(m_apiURL);
     QUrlQuery q;
@@ -270,7 +270,7 @@ void SmugTalker::listCategories()
         m_reply = nullptr;
     }
 
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
 
     QUrl url(m_apiURL);
     QUrlQuery q;
@@ -296,7 +296,7 @@ void SmugTalker::listSubCategories(qint64 categoryID)
         m_reply = nullptr;
     }
 
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
 
     QUrl url(m_apiURL);
     QUrlQuery q;
@@ -323,7 +323,7 @@ void SmugTalker::createAlbum(const SmugAlbum& album)
         m_reply = nullptr;
     }
 
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
 
     QUrl url(m_apiURL);
     QUrlQuery q;
@@ -380,7 +380,7 @@ bool SmugTalker::addPhoto(const QString& imgPath,
         m_reply = nullptr;
     }
 
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
 
     QString imgName = QFileInfo(imgPath).fileName();
     // load temporary image to buffer
@@ -388,7 +388,7 @@ bool SmugTalker::addPhoto(const QString& imgPath,
 
     if (!imgFile.open(QIODevice::ReadOnly))
     {
-        emit signalBusy(false);
+        Q_EMIT signalBusy(false);
         return false;
     }
 
@@ -437,7 +437,7 @@ void SmugTalker::getPhoto(const QString& imgPath)
         m_reply = nullptr;
     }
 
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
 
     QNetworkRequest netRequest(QUrl::fromLocalFile(imgPath));
     netRequest.setHeader(QNetworkRequest::UserAgentHeader, m_userAgent);
@@ -492,22 +492,22 @@ void SmugTalker::slotFinished(QNetworkReply* reply)
             m_sessionID.clear();
             m_user.clear();
 
-            emit signalBusy(false);
-            emit signalLoginDone(reply->error(), reply->errorString());
+            Q_EMIT signalBusy(false);
+            Q_EMIT signalLoginDone(reply->error(), reply->errorString());
         }
         else if (m_state == SMUG_ADDPHOTO)
         {
-            emit signalBusy(false);
-            emit signalAddPhotoDone(reply->error(), reply->errorString());
+            Q_EMIT signalBusy(false);
+            Q_EMIT signalAddPhotoDone(reply->error(), reply->errorString());
         }
         else if (m_state == SMUG_GETPHOTO)
         {
-            emit signalBusy(false);
-            emit signalGetPhotoDone(reply->error(), reply->errorString(), QByteArray());
+            Q_EMIT signalBusy(false);
+            Q_EMIT signalGetPhotoDone(reply->error(), reply->errorString(), QByteArray());
         }
         else
         {
-            emit signalBusy(false);
+            Q_EMIT signalBusy(false);
             QMessageBox::critical(QApplication::activeWindow(),
                                   i18n("Error"), reply->errorString());
         }
@@ -549,8 +549,8 @@ void SmugTalker::slotFinished(QNetworkReply* reply)
             break;
         case (SMUG_GETPHOTO):
             // all we get is data of the image
-            emit signalBusy(false);
-            emit signalGetPhotoDone(0, QString(), m_buffer);
+            Q_EMIT signalBusy(false);
+            Q_EMIT signalGetPhotoDone(0, QString(), m_buffer);
             break;
     }
 
@@ -562,7 +562,7 @@ void SmugTalker::parseResponseLogin(const QByteArray& data)
     int errCode = -1;
     QString errMsg;
 
-    emit signalLoginProgress(3);
+    Q_EMIT signalLoginProgress(3);
 
     QDomDocument doc(QString::fromLatin1("login"));
 
@@ -614,7 +614,7 @@ void SmugTalker::parseResponseLogin(const QByteArray& data)
         }
     }
 
-    emit signalLoginProgress(4);
+    Q_EMIT signalLoginProgress(4);
 
     if (errCode != 0) // if login failed, reset user properties
     {
@@ -622,8 +622,8 @@ void SmugTalker::parseResponseLogin(const QByteArray& data)
         m_user.clear();
     }
 
-    emit signalBusy(false);
-    emit signalLoginDone(errCode, errorToText(errCode, errMsg));
+    Q_EMIT signalBusy(false);
+    Q_EMIT signalLoginDone(errCode, errorToText(errCode, errMsg));
 }
 
 void SmugTalker::parseResponseLogout(const QByteArray& data)
@@ -663,7 +663,7 @@ void SmugTalker::parseResponseLogout(const QByteArray& data)
     m_sessionID.clear();
     m_user.clear();
 
-    emit signalBusy(false);
+    Q_EMIT signalBusy(false);
 }
 
 void SmugTalker::parseResponseAddPhoto(const QByteArray& data)
@@ -721,8 +721,8 @@ void SmugTalker::parseResponseAddPhoto(const QByteArray& data)
         qCDebug(KIPIPLUGINS_LOG) << "Error:" << errCode << errMsg;
     }
 
-    emit signalBusy(false);
-    emit signalAddPhotoDone(errCode, errorToText(errCode, errMsg));
+    Q_EMIT signalBusy(false);
+    Q_EMIT signalAddPhotoDone(errCode, errorToText(errCode, errMsg));
 }
 
 void SmugTalker::parseResponseCreateAlbum(const QByteArray& data)
@@ -763,8 +763,8 @@ void SmugTalker::parseResponseCreateAlbum(const QByteArray& data)
         }
     }
 
-    emit signalBusy(false);
-    emit signalCreateAlbumDone(errCode, errorToText(errCode, errMsg),
+    Q_EMIT signalBusy(false);
+    Q_EMIT signalCreateAlbumDone(errCode, errorToText(errCode, errMsg),
                                newAlbumID, newAlbumKey);
 }
 
@@ -848,8 +848,8 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
 
     std::sort(albumsList.begin(), albumsList.end(), SmugAlbum::lessThan);
 
-    emit signalBusy(false);
-    emit signalListAlbumsDone(errCode, errorToText(errCode, errMsg), albumsList);
+    Q_EMIT signalBusy(false);
+    Q_EMIT signalListAlbumsDone(errCode, errorToText(errCode, errMsg), albumsList);
 }
 
 void SmugTalker::parseResponseListPhotos(const QByteArray& data)
@@ -942,8 +942,8 @@ void SmugTalker::parseResponseListPhotos(const QByteArray& data)
     if (errCode == 15)  // 15: empty list
         errCode = 0;
 
-    emit signalBusy(false);
-    emit signalListPhotosDone(errCode, errorToText(errCode, errMsg), photosList);
+    Q_EMIT signalBusy(false);
+    Q_EMIT signalListPhotosDone(errCode, errorToText(errCode, errMsg), photosList);
 }
 
 void SmugTalker::parseResponseListAlbumTmpl(const QByteArray& data)
@@ -1001,8 +1001,8 @@ void SmugTalker::parseResponseListAlbumTmpl(const QByteArray& data)
     if (errCode == 15)  // 15: empty list
         errCode = 0;
 
-    emit signalBusy(false);
-    emit signalListAlbumTmplDone(errCode, errorToText(errCode, errMsg), albumTList);
+    Q_EMIT signalBusy(false);
+    Q_EMIT signalListAlbumTmplDone(errCode, errorToText(errCode, errMsg), albumTList);
 }
 
 void SmugTalker::parseResponseListCategories(const QByteArray& data)
@@ -1057,8 +1057,8 @@ void SmugTalker::parseResponseListCategories(const QByteArray& data)
     if (errCode == 15)  // 15: empty list
         errCode = 0;
 
-    emit signalBusy(false);
-    emit signalListCategoriesDone(errCode, errorToText(errCode, errMsg), categoriesList);
+    Q_EMIT signalBusy(false);
+    Q_EMIT signalListCategoriesDone(errCode, errorToText(errCode, errMsg), categoriesList);
 }
 
 void SmugTalker::parseResponseListSubCategories(const QByteArray& data)
@@ -1113,8 +1113,8 @@ void SmugTalker::parseResponseListSubCategories(const QByteArray& data)
     if (errCode == 15)  // 15: empty list
         errCode = 0;
 
-    emit signalBusy(false);
-    emit signalListSubCategoriesDone(errCode, errorToText(errCode, errMsg), categoriesList);
+    Q_EMIT signalBusy(false);
+    Q_EMIT signalListSubCategoriesDone(errCode, errorToText(errCode, errMsg), categoriesList);
 }
 
 

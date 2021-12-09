@@ -28,7 +28,7 @@ void TwitterApi::setAuthenticator(O1Twitter *v) {
 void TwitterApi::requestTweets() {
     if (!authenticator_ || !authenticator_->linked()) {
         tweetModel_->clearTweets();
-        emit tweetModelChanged();
+        Q_EMIT tweetModelChanged();
         return;
     }
     O1Requestor *requestor = new O1Requestor(manager_, authenticator_, this);
@@ -48,7 +48,7 @@ void TwitterApi::tweetsReceived() {
         QVariantMap item = v.toObject().toVariantMap();
         tweetModel_->addTweet(item);
     }
-    emit tweetModelChanged();
+    Q_EMIT tweetModelChanged();
 }
 
 void TwitterApi::requestFailed(QNetworkReply::NetworkError error) {

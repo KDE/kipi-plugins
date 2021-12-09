@@ -352,7 +352,7 @@ void KPFileSelector::slotBtnClicked()
     if (!d->fdTitle.isNull())
         fileDlg->setWindowTitle(d->fdTitle);
 
-    emit signalOpenFileDialog();
+    Q_EMIT signalOpenFileDialog();
 
     if (fileDlg->exec() == QDialog::Accepted)
     {
@@ -361,7 +361,7 @@ void KPFileSelector::slotBtnClicked()
         if (!sel.isEmpty())
         {
             d->edit->setText(sel.first());
-            emit signalUrlSelected(QUrl::fromLocalFile(sel.first()));
+            Q_EMIT signalUrlSelected(QUrl::fromLocalFile(sel.first()));
         }
     }
 
@@ -415,7 +415,7 @@ void KPColorSelector::slotBtnClicked()
     if (color.isValid())
     {
         setColor(color);
-        emit signalColorSelected(color);
+        Q_EMIT signalColorSelected(color);
     }
 }
 

@@ -129,7 +129,7 @@ void KPProgressWidget::progressScheduled(const QString& title, bool canBeCancele
 void KPProgressWidget::slotProgressCanceled(const QString& id)
 {
     if (d->progressId == id)
-        emit signalProgressCanceled();
+        Q_EMIT signalProgressCanceled();
 }
 
 } // namespace KIPIPlugins

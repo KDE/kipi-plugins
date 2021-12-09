@@ -427,7 +427,7 @@ void YandexFotkiTalker::cancel()
 void YandexFotkiTalker::setErrorState(State state)
 {
     m_state = state;
-    emit signalError();
+    Q_EMIT signalError();
 }
 
 void YandexFotkiTalker::slotFinished(QNetworkReply* reply)
@@ -598,7 +598,7 @@ void YandexFotkiTalker::parseResponseGetService()
     qCDebug(KIPIPLUGINS_LOG) << "Tags" << m_apiTagsUrl;
 
     m_state = STATE_GETSERVICE_DONE;
-    emit signalGetServiceDone();
+    Q_EMIT signalGetServiceDone();
 }
 
 /*
@@ -606,7 +606,7 @@ void YandexFotkiTalker::parseResponseCheckToken()
 {
     // token still valid, skip getSession and getToken
     m_state = STATE_GETTOKEN_DONE;
-    emit signalGetTokenDone();
+    Q_EMIT signalGetTokenDone();
 }
 */
 
@@ -638,7 +638,7 @@ void YandexFotkiTalker::parseResponseGetSession()
     qCDebug(KIPIPLUGINS_LOG) << "Session started" << m_sessionKey << m_sessionId;
 
     m_state = STATE_GETSESSION_DONE;
-    emit signalGetSessionDone();
+    Q_EMIT signalGetSessionDone();
 }
 
 void YandexFotkiTalker::parseResponseGetToken()
@@ -681,7 +681,7 @@ void YandexFotkiTalker::parseResponseGetToken()
 
     qCDebug(KIPIPLUGINS_LOG) << "Token got" << m_token;
     m_state = STATE_GETTOKEN_DONE;
-    emit signalGetTokenDone();
+    Q_EMIT signalGetTokenDone();
 }
 
 
@@ -797,7 +797,7 @@ void YandexFotkiTalker::parseResponseListAlbums()
     {
         qCDebug(KIPIPLUGINS_LOG) << "List albums done: " << m_albums.size();
         m_state = STATE_LISTALBUMS_DONE;
-        emit signalListAlbumsDone(m_albums);
+        Q_EMIT signalListAlbumsDone(m_albums);
     }
 }
 
@@ -979,7 +979,7 @@ void YandexFotkiTalker::parseResponseListPhotos()
     {
         qCDebug(KIPIPLUGINS_LOG) << "List photos done: " << m_photos.size();
         m_state = STATE_LISTPHOTOS_DONE;
-        emit signalListPhotosDone(m_photos);
+        Q_EMIT signalListPhotosDone(m_photos);
     }
 }
 
@@ -1039,7 +1039,7 @@ void YandexFotkiTalker::parseResponseUpdatePhotoInfo()
 
     m_state     = STATE_UPDATEPHOTO_DONE;
     m_lastPhoto = nullptr;
-    emit signalUpdatePhotoDone(photo);
+    Q_EMIT signalUpdatePhotoDone(photo);
 }
 
 void YandexFotkiTalker::parseResponseUpdateAlbum()
@@ -1049,7 +1049,7 @@ void YandexFotkiTalker::parseResponseUpdateAlbum()
     m_state     = STATE_UPDATEALBUM_DONE;
     m_lastPhoto = nullptr;
 
-    emit signalUpdateAlbumDone();
+    Q_EMIT signalUpdateAlbumDone();
 }
 
 } // namespace KIPIYandexFotkiPlugin

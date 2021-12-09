@@ -742,7 +742,7 @@ void RajceSession::_startJob(RajceCommand* command)
     connect(m_reply, SIGNAL(uploadProgress(qint64,qint64)),
             SLOT(slotUploadProgress(qint64,qint64)));
 
-    emit busyStarted(command->commandType());
+    Q_EMIT busyStarted(command->commandType());
 }
 
 void RajceSession::login(const QString& username, const QString& password)
@@ -792,7 +792,7 @@ void RajceSession::slotFinished(QNetworkReply* reply)
     // This enables the connected slots to read in
     // reliable values from the state and/or
     // clear the error state once it's handled.
-    emit busyFinished(type);
+    Q_EMIT busyFinished(type);
 
     reply->deleteLater();
 
@@ -833,7 +833,7 @@ void RajceSession::closeAlbum()
     }
     else
     {
-        emit busyFinished(CloseAlbum);
+        Q_EMIT busyFinished(CloseAlbum);
     }
 }
 
@@ -860,7 +860,7 @@ void RajceSession::slotUploadProgress(qint64 bytesSent, qint64 bytesTotal)
 
     qCDebug(KIPIPLUGINS_LOG) << "Percent signalled: " << percent;
 
-    emit busyProgress(m_commandQueue.head()->commandType(), percent);
+    Q_EMIT busyProgress(m_commandQueue.head()->commandType(), percent);
 }
 
 void RajceSession::_enqueue(RajceCommand* command)

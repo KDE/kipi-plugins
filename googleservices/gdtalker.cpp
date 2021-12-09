@@ -110,7 +110,7 @@ void GDTalker::getUserName()
 
     m_state = GD_USERNAME;
     m_buffer.resize(0);
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
 }
 
 /**
@@ -128,7 +128,7 @@ void GDTalker::listFolders()
 
     m_state = GD_LISTFOLDERS;
     m_buffer.resize(0);
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
 }
 
 /**
@@ -166,7 +166,7 @@ void GDTalker::createFolder(const QString& title, const QString& id)
 
     m_state = GD_CREATEFOLDER;
     m_buffer.resize(0);
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
 }
 
 bool GDTalker::addPhoto(const QString& imgPath, const GSPhoto& info,
@@ -178,7 +178,7 @@ bool GDTalker::addPhoto(const QString& imgPath, const GSPhoto& info,
         m_reply = nullptr;
     }
 
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
     MPForm_GDrive form;
     form.addPair(QUrl::fromLocalFile(imgPath).fileName(),info.description,imgPath,id);
     QString path = imgPath;
@@ -234,7 +234,7 @@ bool GDTalker::addPhoto(const QString& imgPath, const GSPhoto& info,
 
     if (!form.addFile(path))
     {
-        emit signalBusy(false);
+        Q_EMIT signalBusy(false);
         return false;
     }
 
@@ -252,7 +252,7 @@ bool GDTalker::addPhoto(const QString& imgPath, const GSPhoto& info,
     qCDebug(KIPIPLUGINS_LOG) << "In add photo";
     m_state = GD_ADDPHOTO;
     m_buffer.resize(0);
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
     return true;
 }
 
@@ -267,7 +267,7 @@ void GDTalker::slotFinished(QNetworkReply* reply)
 
     if (reply->error() != QNetworkReply::NoError)
     {
-        emit signalBusy(false);
+        Q_EMIT signalBusy(false);
         QMessageBox::critical(QApplication::activeWindow(),
                               i18n("Error"), reply->errorString());
 
@@ -311,7 +311,7 @@ void GDTalker::parseResponseUserName(const QByteArray& data)
 
     if (err.error != QJsonParseError::NoError)
     {
-        emit signalBusy(false);
+        Q_EMIT signalBusy(false);
         return;
     }
 
@@ -321,8 +321,8 @@ void GDTalker::parseResponseUserName(const QByteArray& data)
 
     qCDebug(KIPIPLUGINS_LOG) << "in parseResponseUserName";
 
-    emit signalBusy(false);
-    emit signalSetUserName(temp);
+    Q_EMIT signalBusy(false);
+    Q_EMIT signalSetUserName(temp);
 }
 
 void GDTalker::parseResponseListFolders(const QByteArray& data)
@@ -333,8 +333,8 @@ void GDTalker::parseResponseListFolders(const QByteArray& data)
 
     if (err.error != QJsonParseError::NoError)
     {
-        emit signalBusy(false);
-        emit signalListAlbumsDone(0,i18n("Failed to list folders"),QList<GSFolder>());
+        Q_EMIT signalBusy(false);
+        Q_EMIT signalListAlbumsDone(0,i18n("Failed to list folders"),QList<GSFolder>());
         return;
     }
 
@@ -356,8 +356,8 @@ void GDTalker::parseResponseListFolders(const QByteArray& data)
     }
 
     std::sort(albumList.begin(), albumList.end(), gdriveLessThan);
-    emit signalBusy(false);
-    emit signalListAlbumsDone(1,QString(),albumList);
+    Q_EMIT signalBusy(false);
+    Q_EMIT signalListAlbumsDone(1,QString(),albumList);
 }
 
 void GDTalker::parseResponseCreateFolder(const QByteArray& data)
@@ -367,7 +367,7 @@ void GDTalker::parseResponseCreateFolder(const QByteArray& data)
 
     if (err.error != QJsonParseError::NoError)
     {
-        emit signalBusy(false);
+        Q_EMIT signalBusy(false);
         return;
     }
 
@@ -378,15 +378,15 @@ void GDTalker::parseResponseCreateFolder(const QByteArray& data)
     if (!(QString::compare(temp, QString::fromLatin1(""), Qt::CaseInsensitive) == 0))
         success = true;
 
-    emit signalBusy(false);
+    Q_EMIT signalBusy(false);
 
     if (!success)
     {
-        emit signalCreateFolderDone(0,i18n("Failed to create folder"));
+        Q_EMIT signalCreateFolderDone(0,i18n("Failed to create folder"));
     }
     else
     {
-        emit signalCreateFolderDone(1,QString());
+        Q_EMIT signalCreateFolderDone(1,QString());
     }
 }
 
@@ -397,7 +397,7 @@ void GDTalker::parseResponseAddPhoto(const QByteArray& data)
 
     if (err.error != QJsonParseError::NoError)
     {
-        emit signalBusy(false);
+        Q_EMIT signalBusy(false);
         return;
     }
 
@@ -409,15 +409,15 @@ void GDTalker::parseResponseAddPhoto(const QByteArray& data)
     if (!(QString::compare(altLink, QString::fromLatin1(""), Qt::CaseInsensitive) == 0))
         success = true;
 
-    emit signalBusy(false);
+    Q_EMIT signalBusy(false);
 
     if (!success)
     {
-        emit signalAddPhotoDone(0, i18n("Failed to upload photo"), QString::fromLatin1("-1"));
+        Q_EMIT signalAddPhotoDone(0, i18n("Failed to upload photo"), QString::fromLatin1("-1"));
     }
     else
     {
-        emit signalAddPhotoDone(1, QString(), photoId);
+        Q_EMIT signalAddPhotoDone(1, QString(), photoId);
     }
 }
 
@@ -429,7 +429,7 @@ void GDTalker::cancel()
         m_reply = nullptr;
     }
 
-    emit signalBusy(false);
+    Q_EMIT signalBusy(false);
 }
 
 } // namespace KIPIGoogleServicesPlugin

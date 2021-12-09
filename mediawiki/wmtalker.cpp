@@ -106,7 +106,7 @@ void WMTalker::uploadHandle(KJob* j)
     if (j != nullptr)
     {
         qCDebug(KIPIPLUGINS_LOG) << "Upload error" << j->error() << j->errorString() << j->errorText();
-        emit uploadProgress(100);
+        Q_EMIT uploadProgress(100);
 
         disconnect(j, SIGNAL(result(KJob*)),
                    this, SLOT(uploadHandle(KJob*)));
@@ -150,7 +150,7 @@ void WMTalker::uploadHandle(KJob* j)
             return;
         }
 
-        //emit fileUploadProgress(done = 0, total file.size());
+        //Q_EMIT fileUploadProgress(done = 0, total file.size());
 
         e1->setFile(file);
         d->currentFile = file->fileName();
@@ -176,7 +176,7 @@ void WMTalker::uploadHandle(KJob* j)
         connect(e1, SIGNAL(percent(KJob*, ulong)),
                 this, SLOT(slotUploadProgress(KJob*, ulong)));
 
-        emit uploadProgress(0);
+        Q_EMIT uploadProgress(0);
         e1->start();
     }
     else
@@ -189,7 +189,7 @@ void WMTalker::uploadHandle(KJob* j)
         }
         else
         {
-            emit endUpload();
+            Q_EMIT endUpload();
         }
 
         d->error.clear();
@@ -268,7 +268,7 @@ QString WMTalker::buildWikiText(const QMap<QString, QString>& info) const
 void WMTalker::slotUploadProgress(KJob* job, unsigned long percent)
 {
     Q_UNUSED(job)
-    emit uploadProgress((int)percent);
+    Q_EMIT uploadProgress((int)percent);
 }
 
 } // namespace KIPIWikiMediaPlugin

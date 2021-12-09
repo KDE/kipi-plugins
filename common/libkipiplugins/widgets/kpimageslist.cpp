@@ -350,7 +350,7 @@ void KPImagesListView::slotItemClicked(QTreeWidgetItem* item, int column)
         return;
     }
 
-    emit signalItemClicked(item);
+    Q_EMIT signalItemClicked(item);
 }
 
 void KPImagesListView::setColumnLabel(ColumnType column, const QString& label)
@@ -403,7 +403,7 @@ QModelIndex KPImagesListView::indexFromItem(KPImagesListViewItem* item, int colu
 void KPImagesListView::contextMenuEvent(QContextMenuEvent* e)
 {
     QTreeWidget::contextMenuEvent(e);
-    emit signalContextMenuRequested();
+    Q_EMIT signalContextMenuRequested();
 }
 
 void KPImagesListView::dragEnterEvent(QDragEnterEvent* e)
@@ -444,7 +444,7 @@ void KPImagesListView::dropEvent(QDropEvent* e)
 
     if (!urls.isEmpty())
     {
-        emit signalAddedDropedItems(urls);
+        Q_EMIT signalAddedDropedItems(urls);
     }
 }
 
@@ -624,7 +624,7 @@ KPImagesList::KPImagesList(QWidget* const parent, int iconSize)
 
     // --------------------------------------------------------
 
-    emit signalImageListChanged();
+    Q_EMIT signalImageListChanged();
 }
 
 void KPImagesList::enableControlButtons(bool enable)
@@ -852,9 +852,9 @@ void KPImagesList::slotAddImages(const QList<QUrl>& list)
         }
     }
 
-    emit signalAddItems(urls);
-    emit signalImageListChanged();
-    emit signalFoundRAWImages(raw);
+    Q_EMIT signalAddItems(urls);
+    Q_EMIT signalImageListChanged();
+    Q_EMIT signalFoundRAWImages(raw);
 }
 
 void KPImagesList::slotAddItems()
@@ -867,7 +867,7 @@ void KPImagesList::slotAddItems()
         slotAddImages(urls);
     }
 
-//     emit signalImageListChanged();
+//     Q_EMIT signalImageListChanged();
 }
 
 void KPImagesList::slotRemoveItems()
@@ -882,7 +882,7 @@ void KPImagesList::slotRemoveItems()
 
         if (item)
         {
-            emit signalRemovingItem(item);
+            Q_EMIT signalRemovingItem(item);
             urls.append(item->url());
 
             if (d->processItems.contains(item->url()))
@@ -895,8 +895,8 @@ void KPImagesList::slotRemoveItems()
         }
     }
 
-    emit signalRemovedItems(urls);
-    emit signalImageListChanged();
+    Q_EMIT signalRemovedItems(urls);
+    Q_EMIT signalImageListChanged();
 }
 
 void KPImagesList::slotMoveUpItems()
@@ -924,8 +924,8 @@ void KPImagesList::slotMoveUpItems()
     if (uw)
         uw->updateItemWidgets();
 
-    emit signalImageListChanged();
-    emit signalMoveUpItem();
+    Q_EMIT signalImageListChanged();
+    Q_EMIT signalMoveUpItem();
 }
 
 void KPImagesList::slotMoveDownItems()
@@ -954,8 +954,8 @@ void KPImagesList::slotMoveDownItems()
     if (uw)
         uw->updateItemWidgets();
 
-    emit signalImageListChanged();
-    emit signalMoveDownItem();
+    Q_EMIT signalImageListChanged();
+    Q_EMIT signalMoveDownItem();
 }
 
 void KPImagesList::slotClearItems()
@@ -1015,13 +1015,13 @@ void KPImagesList::slotLoadItems()
                 //allow plugins to append a new file
                 slotAddImages(urls);
                 // read plugin Image custom attributes and children element
-                emit signalXMLLoadImageElement(xmlReader);
+                Q_EMIT signalXMLLoadImageElement(xmlReader);
             }
         }
         else if (xmlReader.isStartElement() && xmlReader.name() != QString::fromLatin1("Images"))
         {
             // unmanaged start element (it should be plugins one)
-            emit signalXMLCustomElements(xmlReader);
+            Q_EMIT signalXMLCustomElements(xmlReader);
         }
         else if (xmlReader.isEndElement() && xmlReader.name() == QString::fromLatin1("Images"))
         {
@@ -1076,8 +1076,8 @@ void KPImagesList::slotSaveItems()
 
             xmlWriter.writeAttribute(QString::fromLatin1("url"), lvItem->url().toDisplayString());
 
-            // emit xmlWriter, item?
-            emit signalXMLSaveItem(xmlWriter, lvItem);
+            // Q_EMIT xmlWriter, item?
+            Q_EMIT signalXMLSaveItem(xmlWriter, lvItem);
 
             xmlWriter.writeEndElement(); // Image
         }
@@ -1085,7 +1085,7 @@ void KPImagesList::slotSaveItems()
         ++it;
     }
 
-    emit signalXMLCustomElements(xmlWriter);
+    Q_EMIT signalXMLCustomElements(xmlWriter);
 
     xmlWriter.writeEndElement();  // Images
 
@@ -1107,7 +1107,7 @@ void KPImagesList::removeItemByUrl(const QUrl& url)
 
             if (item && item->url() == url)
             {
-                emit signalRemovingItem(item);
+                Q_EMIT signalRemovingItem(item);
 
                 if (d->processItems.contains(item->url()))
                 {
@@ -1124,7 +1124,7 @@ void KPImagesList::removeItemByUrl(const QUrl& url)
     }
     while (found);
 
-    emit signalImageListChanged();
+    Q_EMIT signalImageListChanged();
 }
 
 QList<QUrl> KPImagesList::imageUrls(bool onlyUnprocessed) const

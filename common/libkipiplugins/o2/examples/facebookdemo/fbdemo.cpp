@@ -51,7 +51,7 @@ void FBDemo::doOAuth(O2::GrantFlow grantFlowType) {
 void FBDemo::validateToken() {
     if (!o2Facebook_->linked()) {
         qWarning() << "ERROR: Application is not linked!";
-        emit linkingFailed();
+        Q_EMIT linkingFailed();
         return;
     }
 
@@ -82,20 +82,20 @@ void FBDemo::onLinkingSucceeded() {
     }
     QVariantMap extraTokens = o1t->extraTokens();
     if (!extraTokens.isEmpty()) {
-        emit extraTokensReady(extraTokens);
+        Q_EMIT extraTokensReady(extraTokens);
         qDebug() << "Extra tokens in response:";
         foreach (QString key, extraTokens.keys()) {
             qDebug() << "\t" << key << ":" << (extraTokens.value(key).toString().left(3) + "...");
         }
     }
-    emit linkingSucceeded();
+    Q_EMIT linkingSucceeded();
 }
 
 void FBDemo::onFinished() {
     QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
     if (!reply) {
         qWarning() << "NULL reply!";
-        emit linkingFailed();
+        Q_EMIT linkingFailed();
         return;
     }
 
@@ -103,7 +103,7 @@ void FBDemo::onFinished() {
     if (reply->error() != QNetworkReply::NoError) {
         qWarning() << "Reply error:" << reply->error();
         qWarning() << "Reason:" << reply->errorString();
-        emit linkingFailed();
+        Q_EMIT linkingFailed();
         return;
     }
 
@@ -111,9 +111,9 @@ void FBDemo::onFinished() {
     bool valid = !replyData.contains("error");
     if (valid) {
         qDebug() << "Token is valid";
-        emit linkingSucceeded();
+        Q_EMIT linkingSucceeded();
     } else {
         qDebug() << "Token is invalid";
-        emit linkingFailed();
+        Q_EMIT linkingFailed();
     }
 }

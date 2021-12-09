@@ -225,19 +225,19 @@ void FlickrList::singlePermissionChanged(QTreeWidgetItem* item, int column)
             if ((column == PUBLIC) && (state != m_public))
             {
                 setPublic(state);
-                emit signalPermissionChanged(PUBLIC, state);
+                Q_EMIT signalPermissionChanged(PUBLIC, state);
             }
 
             if ((column == FAMILY) && (state != m_family))
             {
                 setFamily(state);
-                emit signalPermissionChanged(FAMILY, state);
+                Q_EMIT signalPermissionChanged(FAMILY, state);
             }
 
             if ((column == FRIENDS) && (state != m_friends))
             {
                 setFriends(state);
-                emit signalPermissionChanged(FRIENDS, state);
+                Q_EMIT signalPermissionChanged(FRIENDS, state);
             }
         }
     }
@@ -305,13 +305,13 @@ void FlickrList::singleComboBoxChanged(QTreeWidgetItem* item, int column)
                 {
                     SafetyLevel safetyLevel = static_cast<SafetyLevel>(i.key());
                     setSafetyLevels(safetyLevel);
-                    emit signalSafetyLevelChanged(safetyLevel);
+                    Q_EMIT signalSafetyLevelChanged(safetyLevel);
                 }
                 else if (column == CONTENTTYPE)
                 {
                     ContentType contentType = static_cast<ContentType>(i.key());
                     setContentTypes(contentType);
-                    emit signalContentTypeChanged(contentType);
+                    Q_EMIT signalContentTypeChanged(contentType);
                 }
             }
             // If there are different Safety Levels/Content Types among the photos,
@@ -321,12 +321,12 @@ void FlickrList::singleComboBoxChanged(QTreeWidgetItem* item, int column)
                 if (column == SAFETYLEVEL)
                 {
                     setSafetyLevels(MIXEDLEVELS);
-                    emit signalSafetyLevelChanged(MIXEDLEVELS);
+                    Q_EMIT signalSafetyLevelChanged(MIXEDLEVELS);
                 }
                 else if (column == CONTENTTYPE)
                 {
                     setContentTypes(MIXEDTYPES);
-                    emit signalContentTypeChanged(MIXEDTYPES);
+                    Q_EMIT signalContentTypeChanged(MIXEDTYPES);
                 }
             }
         }
@@ -386,7 +386,7 @@ void FlickrList::slotAddImages(const QList<QUrl>& list)
 
     // Duplicate the signalImageListChanged of the ImageWindow, to enable the
     // upload button again.
-    emit signalImageListChanged();
+    Q_EMIT signalImageListChanged();
 }
 
 // ------------------------------------------------------------------------------------------------

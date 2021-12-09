@@ -116,26 +116,26 @@ void ImgurAPI3::oauthAuthorized()
     if (success)
         startWorkTimer();
     else
-        emit busy(false);
+        Q_EMIT busy(false);
 
-    emit authorized(success, m_auth.extraTokens()[QLatin1String("account_username")].toString());
+    Q_EMIT authorized(success, m_auth.extraTokens()[QLatin1String("account_username")].toString());
 }
 
 void ImgurAPI3::oauthRequestPin(const QUrl& url)
 {
-    emit busy(false);
-    emit requestPin(url);
+    Q_EMIT busy(false);
+    Q_EMIT requestPin(url);
 }
 
 void ImgurAPI3::oauthFailed()
 {
-    emit authError(i18n("Could not authorize"));
+    Q_EMIT authError(i18n("Could not authorize"));
 }
 
 void ImgurAPI3::uploadProgress(qint64 sent, qint64 total)
 {
     if (total > 0) /* Don't divide by 0 */
-        emit progress((sent * 100) / total, m_work_queue.front());
+        Q_EMIT progress((sent * 100) / total, m_work_queue.front());
 }
 
 void ImgurAPI3::replyFinished()
@@ -196,7 +196,7 @@ void ImgurAPI3::replyFinished()
                 break;
         }
 
-        emit success(result);
+        Q_EMIT success(result);
     }
     else
     {
@@ -216,7 +216,7 @@ void ImgurAPI3::replyFinished()
                        .toObject()[QLatin1String("error")]
                        .toString(QLatin1String("Could not read response."));
 
-            emit error(msg, m_work_queue.front());
+            Q_EMIT error(msg, m_work_queue.front());
         }
     }
 
@@ -244,10 +244,10 @@ void ImgurAPI3::startWorkTimer()
     if (!m_work_queue.empty() && m_work_timer == 0)
     {
         m_work_timer = QObject::startTimer(0);
-        emit busy(true);
+        Q_EMIT busy(true);
     }
     else
-        emit busy(false);
+        Q_EMIT busy(false);
 }
 
 void ImgurAPI3::stopWorkTimer()
@@ -306,7 +306,7 @@ void ImgurAPI3::doWork()
                 this->m_image = nullptr;
 
                 /* Failed. */
-                emit error(i18n("Could not open file"), m_work_queue.front());
+                Q_EMIT error(i18n("Could not open file"), m_work_queue.front());
 
                 m_work_queue.pop();
                 return doWork();

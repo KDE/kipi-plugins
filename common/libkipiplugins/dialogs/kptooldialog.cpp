@@ -248,7 +248,7 @@ void KPToolDialog::slotCloseClicked()
     }
     else
     {
-        emit cancelClicked();
+        Q_EMIT cancelClicked();
     }
 }
 

@@ -254,7 +254,7 @@ void ImageshackWindow::slotChangeRegistrantionCode()
 
 void ImageshackWindow::authenticate()
 {
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
     m_widget->progressBar()->show();
     m_widget->m_progressBar->setValue(0);
     m_widget->m_progressBar->setMaximum(4);

@@ -109,7 +109,7 @@ void Authorize::doOAuth()
     qCDebug(KIPIPLUGINS_LOG) << "OAuth URL: " << url;
     QDesktopServices::openUrl(url);
 
-    emit signalBusy(false);
+    Q_EMIT signalBusy(false);
 
     m_window = new QDialog(QApplication::activeWindow(),nullptr);
     m_window->setModal(true);
@@ -148,7 +148,7 @@ void Authorize::doOAuth()
     if (textbox->text().isEmpty())
     {
         qCDebug(KIPIPLUGINS_LOG) << "3";
-        emit signalTextBoxEmpty();
+        Q_EMIT signalTextBoxEmpty();
     }
 
     if (m_code != QString::fromLatin1("0"))
@@ -198,7 +198,7 @@ void Authorize::getAccessToken()
 
     m_Authstate = GD_ACCESSTOKEN;
     m_buffer.resize(0);
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
 }
 
 /** Gets access token from refresh token for handling login of user across kipi host sessions
@@ -223,7 +223,7 @@ void Authorize::getAccessTokenFromRefreshToken(const QString& msg)
 
     m_Authstate = GD_REFRESHTOKEN;
     m_buffer.resize(0);
-    emit signalBusy(true);
+    Q_EMIT signalBusy(true);
 }
 
 void Authorize::slotAuthFinished(QNetworkReply* reply)
@@ -239,12 +239,12 @@ void Authorize::slotAuthFinished(QNetworkReply* reply)
     {
         if (m_Authstate == GD_ACCESSTOKEN)
         {
-            emit signalBusy(false);
-            emit signalAccessTokenFailed(reply->error(), reply->errorString());
+            Q_EMIT signalBusy(false);
+            Q_EMIT signalAccessTokenFailed(reply->error(), reply->errorString());
         }
         else
         {
-            emit signalBusy(false);
+            Q_EMIT signalBusy(false);
             QMessageBox::critical(QApplication::activeWindow(),
                                   i18n("Error"), reply->errorString());
         }
@@ -286,8 +286,8 @@ void Authorize::parseResponseAccessToken(const QByteArray& data)
 
     m_bearer_access_token = QString::fromLatin1("Bearer ") + m_access_token;
     qCDebug(KIPIPLUGINS_LOG) << "In parse GD_ACCESSTOKEN" << m_bearer_access_token << "  " << data;
-    //emit signalAccessTokenObtained();
-    emit signalRefreshTokenObtained(m_refresh_token);
+    //Q_EMIT signalAccessTokenObtained();
+    Q_EMIT signalRefreshTokenObtained(m_refresh_token);
 }
 
 void Authorize::parseResponseRefreshToken(const QByteArray& data)
@@ -303,7 +303,7 @@ void Authorize::parseResponseRefreshToken(const QByteArray& data)
 
     m_bearer_access_token = QString::fromLatin1("Bearer ") + m_access_token;
     qCDebug(KIPIPLUGINS_LOG) << "In parse GD_ACCESSTOKEN" << m_bearer_access_token << "  " << data;
-    emit signalAccessTokenObtained();
+    Q_EMIT signalAccessTokenObtained();
 }
 
 QString Authorize::getValue(const QString& jsonStr, const QString& key)

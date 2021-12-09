@@ -403,7 +403,7 @@ void Wizard::print(const QList<QUrl>& fileList, const QString& tempPath)
     if (d->m_photos.count() == 1)
         d->m_cropUi->BtnCropNext->setEnabled(false);
 
-    emit currentIdChanged(d->m_photoPage->id());
+    Q_EMIT currentIdChanged(d->m_photoPage->id());
 }
 
 void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)

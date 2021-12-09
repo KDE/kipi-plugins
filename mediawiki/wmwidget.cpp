@@ -710,12 +710,12 @@ void WmWidget::slotRemoveMetaChecked()
 
 void WmWidget::slotChangeUserClicked()
 {
-    emit signalChangeUserRequest();
+    Q_EMIT signalChangeUserRequest();
 }
 
 void WmWidget::slotLoginClicked()
 {
-     emit signalLoginRequest(d->nameEdit->text(), d->passwdEdit->text(),
+     Q_EMIT signalLoginRequest(d->nameEdit->text(), d->passwdEdit->text(),
                              d->wikiSelect->itemText(d->wikiSelect->currentIndex()),
                              d->wikiSelect->itemData(d->wikiSelect->currentIndex()).toUrl());
 }

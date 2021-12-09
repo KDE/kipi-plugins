@@ -140,7 +140,7 @@ void KioExportWidget::slotShowTargetDialogClicked(bool checked)
     {
         m_targetUrl = m_targetDialog->selectedUrls().isEmpty() ? QUrl() : m_targetDialog->selectedUrls().at(0);
         updateTargetLabel();
-        emit signalTargetUrlChanged(m_targetUrl);
+        Q_EMIT signalTargetUrlChanged(m_targetUrl);
     }
 
     delete m_targetDialog;
@@ -169,7 +169,7 @@ KPImagesList* KioExportWidget::imagesList() const
 void KioExportWidget::slotLabelUrlChanged()
 {
     m_targetUrl = m_targetLabel->url();
-    emit signalTargetUrlChanged(m_targetUrl);
+    Q_EMIT signalTargetUrlChanged(m_targetUrl);
 }
 
 } // namespace KIPIRemoteStoragePlugin
