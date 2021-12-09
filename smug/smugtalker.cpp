@@ -569,7 +569,7 @@ void SmugTalker::parseResponseLogin(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    qCDebug(KIPIPLUGINS_LOG) << "Parse Login response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse Login response:" << Qt::endl << data;
 
     QDomElement e = doc.documentElement();
 
@@ -636,7 +636,7 @@ void SmugTalker::parseResponseLogout(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    qCDebug(KIPIPLUGINS_LOG) << "Parse Logout response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse Logout response:" << Qt::endl << data;
 
     QDomElement e = doc.documentElement();
 
@@ -694,7 +694,7 @@ void SmugTalker::parseResponseAddPhoto(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    qCDebug(KIPIPLUGINS_LOG) << "Parse Add Photo response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse Add Photo response:" << Qt::endl << data;
 
     QDomElement document = doc.documentElement();
 
@@ -711,7 +711,7 @@ void SmugTalker::parseResponseAddPhoto(const QByteArray& data)
             QDomElement error = document.firstChildElement(QString::fromLatin1("err"));
             errCode           = error.attribute(QString::fromLatin1("code")).toInt();
             errMsg            = error.attribute(QString::fromLatin1("msg"));
-            qCDebug(KIPIPLUGINS_LOG) << "error" << errCode << ":" << errMsg << endl;
+            qCDebug(KIPIPLUGINS_LOG) << "error" << errCode << ":" << errMsg << Qt::endl;
         }
     }
     else
@@ -734,7 +734,7 @@ void SmugTalker::parseResponseCreateAlbum(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    qCDebug(KIPIPLUGINS_LOG) << "Parse Create Album response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse Create Album response:" << Qt::endl << data;
 
     int newAlbumID = -1;
     QString newAlbumKey;
@@ -777,7 +777,7 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    qCDebug(KIPIPLUGINS_LOG) << "Parse Albums response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse Albums response:" << Qt::endl << data;
 
     QList <SmugAlbum> albumsList;
     QDomElement e = doc.documentElement();
@@ -861,7 +861,7 @@ void SmugTalker::parseResponseListPhotos(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    qCDebug(KIPIPLUGINS_LOG) << "Parse Photos response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse Photos response:" << Qt::endl << data;
 
     QList <SmugPhoto> photosList;
     QDomElement e = doc.documentElement();
@@ -955,7 +955,7 @@ void SmugTalker::parseResponseListAlbumTmpl(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    qCDebug(KIPIPLUGINS_LOG) << "Parse AlbumTemplates response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse AlbumTemplates response:" << Qt::endl << data;
 
     QList<SmugAlbumTmpl> albumTList;
     QDomElement e = doc.documentElement();
@@ -1014,7 +1014,7 @@ void SmugTalker::parseResponseListCategories(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    qCDebug(KIPIPLUGINS_LOG) << "Parse Categories response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse Categories response:" << Qt::endl << data;
 
     QList <SmugCategory> categoriesList;
     QDomElement e = doc.documentElement();
@@ -1070,7 +1070,7 @@ void SmugTalker::parseResponseListSubCategories(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    qCDebug(KIPIPLUGINS_LOG) << "Parse SubCategories response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse SubCategories response:" << Qt::endl << data;
 
     QList <SmugCategory> categoriesList;
     QDomElement e = doc.documentElement();

@@ -522,7 +522,7 @@ bool FbTalker::addPhoto(const QString& imgPath, const QString& albumID, const QS
 
     form.finish();
 
-    qCDebug(KIPIPLUGINS_LOG) << "FORM: " << endl << form.formData();
+    qCDebug(KIPIPLUGINS_LOG) << "FORM: " << Qt::endl << form.formData();
 
     QNetworkRequest netRequest(QUrl(QLatin1String("https://graph.facebook.com/v2.4/") +
                                     albumID + QLatin1String("/photos")));
@@ -670,7 +670,7 @@ int FbTalker::parseErrorResponse(const QDomElement& e, QString& errMsg)
 
 void FbTalker::parseExchangeSession(const QByteArray& data)
 {
-    qCDebug(KIPIPLUGINS_LOG) << "Parse exchange_session response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse exchange_session response:" << Qt::endl << data;
     QJsonParseError err;
     QJsonDocument doc = QJsonDocument::fromJson(data, &err);
 
