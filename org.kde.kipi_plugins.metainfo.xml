@@ -94,7 +94,7 @@
     <p xml:lang="zh-TW">這些外掛程式能匯出圖片至各種服務（例如 MediaWiki、Facebook 等）或本機相簿。</p>
     <p>They add export features to Gwenview and Spectacle.</p>
     <p xml:lang="ca">Afegeixen funcionalitats d'exportació al Gwenview i l'Spectacle.</p>
-    <p xml:lang="ca-valencia">Afigen funcionalitats d'exportació al Gwenview i l'Spectacle.</p>
+    <p xml:lang="ca-valencia">Afigen funcionalitats d'exportació a Gwenview i l'Spectacle.</p>
     <p xml:lang="de">Mit den Modulen erhalten Gwenview und Spectacle Funktionen zum Export.</p>
     <p xml:lang="el">Προσθέτουν λειτουργίες εξαγωγής σε Gwenview και Spectacle.</p>
     <p xml:lang="en-GB">They add export features to Gwenview and Spectacle.</p>
@@ -128,7 +128,7 @@
     <screenshot type="default">
       <caption>KIPI Plugins as used in Gwenview.</caption>
       <caption xml:lang="ca">Connectors KIPI com s'usen al Gwenview.</caption>
-      <caption xml:lang="ca-valencia">Connectors KIPI com s'usen al Gwenview.</caption>
+      <caption xml:lang="ca-valencia">Connectors KIPI com s'usen a Gwenview.</caption>
       <caption xml:lang="de">KIPI-Module in Gwenview.</caption>
       <caption xml:lang="el">KIPI πρόσθετα όπως χρησιμοποιούνται στο Gwenview.</caption>
       <caption xml:lang="en-GB">KIPI Plugins as used in Gwenview.</caption>
