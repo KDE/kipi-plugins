@@ -2,7 +2,7 @@
 UntranslatedGenericName=Facebook Export
 Name=Facebook Export
 Name[ca]=Exportador al Facebook
-Name[ca@valencia]=Exportador al Facebook
+Name[ca@valencia]=Exportador a Facebook
 Name[cs]=Export do Facebooku
 Name[da]=Eksport til Facebook
 Name[de]=Facebook-Export
