@@ -66,7 +66,7 @@
   <description>
     <p>These plugins export image to various services such as Mediawiki or Facebook or a local album.</p>
     <p xml:lang="ca">Aquests connectors exporten imatges a diversos serveis com el Mediawiki, el Facebook o un àlbum local.</p>
-    <p xml:lang="ca-valencia">Estos connectors exporten imatges a diversos serveis com el Mediawiki, el Facebook o un àlbum local.</p>
+    <p xml:lang="ca-valencia">Estos connectors exporten imatges a diversos serveis com el Mediawiki, Facebook o un àlbum local.</p>
     <p xml:lang="de">Mit diesen Modulen können Sie Bilder zu verschiedenen Diensten wie Mediawiki oder Facebook oder in ein lokales Album exportieren.</p>
     <p xml:lang="el">Αυτά τα πρόσθετα εξάγουν εικόνες σε διάφορες υπηρεσίες όπως το Mediawiki ή το Facebook ή ένα τοπικό άλμπουμ.</p>
     <p xml:lang="en-GB">These plugins export image to various services such as Mediawiki or Facebook or a local album.</p>
@@ -94,7 +94,7 @@
     <p xml:lang="zh-TW">這些外掛程式能匯出圖片至各種服務（例如 MediaWiki、Facebook 等）或本機相簿。</p>
     <p>They add export features to Gwenview and Spectacle.</p>
     <p xml:lang="ca">Afegeixen funcionalitats d'exportació al Gwenview i l'Spectacle.</p>
-    <p xml:lang="ca-valencia">Afigen funcionalitats d'exportació a Gwenview i l'Spectacle.</p>
+    <p xml:lang="ca-valencia">Afigen funcionalitats d'exportació a Gwenview i Spectacle.</p>
     <p xml:lang="de">Mit den Modulen erhalten Gwenview und Spectacle Funktionen zum Export.</p>
     <p xml:lang="el">Προσθέτουν λειτουργίες εξαγωγής σε Gwenview και Spectacle.</p>
     <p xml:lang="en-GB">They add export features to Gwenview and Spectacle.</p>
