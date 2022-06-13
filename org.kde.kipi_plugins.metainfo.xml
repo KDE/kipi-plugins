@@ -5,7 +5,7 @@
   <project_license>GPL-2.0-or-later</project_license>
   <name>KIPI Plugins</name>
   <name xml:lang="ca">Connectors KIPI</name>
-  <name xml:lang="ca-valencia">Conectors KIPI</name>
+  <name xml:lang="ca-valencia">Connectors KIPI</name>
   <name xml:lang="cs">Moduly KIPI</name>
   <name xml:lang="da">KIPI-plugins</name>
   <name xml:lang="de">KIPI-Module</name>
@@ -38,7 +38,7 @@
   <name xml:lang="zh-TW">KIPI 外掛程式</name>
   <summary>Plugins for KDE applications to export images</summary>
   <summary xml:lang="ca">Connectors perquè les aplicacions KDE exportin imatges</summary>
-  <summary xml:lang="ca-valencia">Conectors perquè les aplicacions KDE exportin imàgens</summary>
+  <summary xml:lang="ca-valencia">Connectors perquè les aplicacions KDE exportin imatges</summary>
   <summary xml:lang="de">Module für KDE-Anwendungen zum Export von Bildern</summary>
   <summary xml:lang="el">Πρόσθετα για KDE εφαρμογές εξαγωγής εικόνων</summary>
   <summary xml:lang="en-GB">Plugins for KDE applications to export images</summary>
@@ -68,7 +68,7 @@
   <description>
     <p>These plugins export image to various services such as Mediawiki or Facebook or a local album.</p>
     <p xml:lang="ca">Aquests connectors exporten imatges a diversos serveis com el Mediawiki, el Facebook o un àlbum local.</p>
-    <p xml:lang="ca-valencia">Estos conectors exporten imàgens a diversos serveis com el Mediawiki, Facebook o un àlbum local.</p>
+    <p xml:lang="ca-valencia">Estos connectors exporten imatges a diversos serveis com el Mediawiki, Facebook o un àlbum local.</p>
     <p xml:lang="de">Mit diesen Modulen können Sie Bilder zu verschiedenen Diensten wie Mediawiki oder Facebook oder in ein lokales Album exportieren.</p>
     <p xml:lang="el">Αυτά τα πρόσθετα εξάγουν εικόνες σε διάφορες υπηρεσίες όπως το Mediawiki ή το Facebook ή ένα τοπικό άλμπουμ.</p>
     <p xml:lang="en-GB">These plugins export image to various services such as Mediawiki or Facebook or a local album.</p>
@@ -132,7 +132,7 @@
     <screenshot type="default">
       <caption>KIPI Plugins as used in Gwenview.</caption>
       <caption xml:lang="ca">Connectors KIPI com s'usen al Gwenview.</caption>
-      <caption xml:lang="ca-valencia">Conectors KIPI com s'utilisen a Gwenview.</caption>
+      <caption xml:lang="ca-valencia">Connectors KIPI com s'utilitzen a Gwenview.</caption>
       <caption xml:lang="de">KIPI-Module in Gwenview.</caption>
       <caption xml:lang="el">KIPI πρόσθετα όπως χρησιμοποιούνται στο Gwenview.</caption>
       <caption xml:lang="en-GB">KIPI Plugins as used in Gwenview.</caption>
