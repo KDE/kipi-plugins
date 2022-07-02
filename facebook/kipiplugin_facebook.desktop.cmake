@@ -1,6 +1,7 @@
 [Desktop Entry]
 UntranslatedGenericName=Facebook Export
 Name=Facebook Export
+Name[bg]=Изнасяне към Facebook
 Name[ca]=Exportador al Facebook
 Name[ca@valencia]=Exportador a Facebook
 Name[cs]=Export do Facebooku
@@ -35,6 +36,7 @@ Name[x-test]=xxFacebook Exportxx
 Name[zh_CN]=Facebook 导出
 Name[zh_TW]=Facebook 匯出
 Comment=A tool to export images to a remote Facebook web service
+Comment[bg]=Инструмент за внасяне и изнасяне на изображения към и от отдалечена уеб-услуга Facebook
 Comment[ca]=Una eina per a exportar les imatges a un servei web remot Facebook
 Comment[ca@valencia]=Una eina per a exportar les imatges a un servei web remot Facebook
 Comment[cs]=Nástroj pro export obrázků do vzdálené webové služby Facebook

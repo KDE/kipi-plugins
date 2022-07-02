@@ -1,6 +1,7 @@
 [Desktop Entry]
 UntranslatedGenericName=Flickr/23
 Name=Flickr/23
+Name[bg]=Flickr/23
 Name[ca]=Flickr/23
 Name[ca@valencia]=Flickr/23
 Name[cs]=Flickr/23
@@ -36,6 +37,7 @@ Name[x-test]=xxFlickr/23xx
 Name[zh_CN]=Flickr/23
 Name[zh_TW]=Flickr/23
 Comment=A tool to export images to remote Flickr and 23 web services.
+Comment[bg]=Инструмент за изнасяне на изображения към отдалечена уеб-услуга Flickr, 23.
 Comment[ca]=Una eina per a exportar les imatges als serveis web remots Flickr i 23.
 Comment[ca@valencia]=Una eina per a exportar les imatges als serveis web remots Flickr i 23.
 Comment[cs]=Nástroj pro export obrázků do vzdálené webové služby Flickr a 23.

@@ -1,6 +1,7 @@
 [Desktop Entry]
 UntranslatedGenericName=Google Services
 Name=Google Services
+Name[bg]=Услуги на Google
 Name[ca]=Google Services
 Name[ca@valencia]=Google Services
 Name[cs]=Služby Google
@@ -36,6 +37,7 @@ Name[x-test]=xxGoogle Servicesxx
 Name[zh_CN]=Google 服务
 Name[zh_TW]=Google 服務
 Comment=A tool to manage images with a remote Google web service
+Comment[bg]=Инструмент за изнасяне на изображения към отдалечена уеб-услуга Google
 Comment[ca]=Una eina per a gestionar les imatges amb un servei web remot de Google
 Comment[ca@valencia]=Una eina per a gestionar les imatges amb un servei web remot de Google
 Comment[cs]=Nástroj pro správu obrázků vzdálené webové služby Google
