@@ -100,5 +100,5 @@ set_target_properties(KF5kipiplugins PROPERTIES
 )
 
 install(TARGETS KF5kipiplugins
-        EXPORT  KF5kipipluginsTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS}
+        EXPORT  KF5kipipluginsTargets ${KDE_INSTALL_TARGETS_DEFAULT_ARGS}
 )
