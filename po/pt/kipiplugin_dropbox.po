@@ -1,0 +1,168 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_dropbox\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2016-08-26 12:10+0100\n"
+"Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
+"Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-POFile-SpellExtra: Dropbox Patel Kipi Saurabh Shourya Gupta Singh\n"
+
+#: dbtalker.cpp:317
+#, kde-format
+msgid "Error"
+msgstr "Erro"
+
+#: dbtalker.cpp:360
+#, kde-format
+msgid "Failed to upload photo"
+msgstr "Não foi possível enviar a fotografia"
+
+#: dbtalker.cpp:387
+#, kde-format
+msgid "Failed to list folders"
+msgstr "Não foi possível apresentar as pastas"
+
+#: dbwindow.cpp:70
+#, kde-format
+msgid "Export to Dropbox"
+msgstr "Exportar para o Dropbox"
+
+#: dbwindow.cpp:72
+#, kde-format
+msgid "Start Upload"
+msgstr "Iniciar o Envio"
+
+#: dbwindow.cpp:73
+#, kde-format
+msgid "Start upload to Dropbox"
+msgstr "Iniciar o envio para o Dropbox"
+
+#: dbwindow.cpp:92
+#, kde-format
+msgid "Dropbox Export"
+msgstr "Exportação para o Dropbox"
+
+#: dbwindow.cpp:93
+#, kde-format
+msgid "A tool to export images to Dropbox"
+msgstr "Uma ferramenta para exportar as imagens para o Dropbox"
+
+#: dbwindow.cpp:95
+#, kde-format
+msgid "(c) 2013, Saurabh Patel"
+msgstr "(c) 2013, Saurabh Patel"
+
+#: dbwindow.cpp:97
+#, kde-format
+msgid "Saurabh Patel"
+msgstr "Saurabh Patel"
+
+#: dbwindow.cpp:98
+#, kde-format
+msgid "Author"
+msgstr "Autoria"
+
+#: dbwindow.cpp:259
+#, kde-format
+msgctxt "@title:window"
+msgid "Error"
+msgstr "Erro"
+
+#: dbwindow.cpp:260
+#, kde-format
+msgid "No image selected. Please select which images should be uploaded."
+msgstr ""
+"Não está seleccionada nenhuma imagem. Seleccione por favor as imagens que "
+"deverão ser enviadas."
+
+#: dbwindow.cpp:266 dbwindow.cpp:386
+#, kde-format
+msgid "Login Failed"
+msgstr "Autenticação sem Sucesso"
+
+#: dbwindow.cpp:267 dbwindow.cpp:387
+#, kde-format
+msgid "Authentication failed. Do you want to try again?"
+msgstr "A autenticação foi mal-sucedida. Deseja tentar de novo?"
+
+#: dbwindow.cpp:291
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: dbwindow.cpp:295
+#, kde-format
+msgid "Dropbox export"
+msgstr "Exportação para o Dropbox"
+
+#: dbwindow.cpp:328
+#, kde-format
+msgid "Uploading Failed"
+msgstr "O Envio Foi Mal-Sucedido"
+
+#: dbwindow.cpp:329
+#, kde-format
+msgid ""
+"Failed to upload photo to Dropbox.\n"
+"%1\n"
+"Do you want to continue?"
+msgstr ""
+"Não foi possível enviar a fotografia para o Dropbox.\n"
+"%1\n"
+"Deseja continuar?"
+
+#: dbwindow.cpp:401 dbwindow.cpp:406
+#, kde-format
+msgid ""
+"Dropbox call failed:\n"
+"%1"
+msgstr ""
+"A chamada do Dropbox foi mal-sucedida:\n"
+"%1"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_dropboxui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Exportar"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_dropboxui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Barra Principal"
+
+#: plugin_dropbox.cpp:90
+#, kde-format
+msgid "Export to &Dropbox..."
+msgstr "Exportar para o &Dropbox..."
+
+#~ msgid "Authorize Dropbox"
+#~ msgstr "Autorizar o Dropbox"
+
+#~ msgid ""
+#~ "Please follow the instructions in the browser. After logging in and "
+#~ "authorizing the application, press OK."
+#~ msgstr ""
+#~ "Siga por favor as instruções no navegador. Depois de se autenticar e "
+#~ "autorizar a aplicação, carregue em OK."
+
+#~ msgid ""
+#~ "The textbox is empty, please enter the code from the browser in the "
+#~ "textbox. To complete the authentication click \"Change Account\", or "
+#~ "\"Start Upload\" to authenticate again."
+#~ msgstr ""
+#~ "O campo de texto está vazio; introduza por favor o código no campo de "
+#~ "texto do navegador. Para terminar a autenticação, carregue em \"Mudar de "
+#~ "Conta\" ou em \"Iniciar o Envio\" para se autenticar de novo."

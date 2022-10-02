@@ -1,0 +1,406 @@
+# translation of kipiplugin_yandexfotki.po to Français
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Joëlle Cornavin <jcorn@free.fr>, 2011, 2012, 2013.
+# xavier <xavier.besnard@neuf.fr>, 2013.
+# Peter Potrowl <peter.potrowl@gmail.com>, 2015, 2016.
+# Simon Depiets <sdepiets@gmail.com>, 2018, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_yandexfotki\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-08-08 02:53+0200\n"
+"PO-Revision-Date: 2019-08-10 13:46+0800\n"
+"Last-Translator: Simon Depiets <sdepiets@gmail.com>\n"
+"Language-Team: French <kde-francophone@kde.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 19.07.70\n"
+"X-Environment: kde\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_yandexfotkiui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Exporter"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_yandexfotkiui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Barre principale d'outils"
+
+#: plugin_yandexfotki.cpp:91
+#, kde-format
+msgid "Export to &Yandex.Fotki..."
+msgstr "Exporter vers « &Yandex.Fotki »..."
+
+#: yfalbumdialog.cpp:60
+#, kde-format
+msgid "Password for the album (optional)."
+msgstr "Mot de passe pour l'album (optionnel)."
+
+#: yfalbumdialog.cpp:63
+#, kde-format
+msgid "Password:"
+msgstr "Mot de passe :"
+
+#: yfalbumdialog.cpp:80
+#, kde-format
+msgid "Error"
+msgstr "Erreur"
+
+#: yfalbumdialog.cpp:80
+#, kde-format
+msgid "Title cannot be empty."
+msgstr "Il est impossible que le titre soit vide."
+
+#: yfwidget.cpp:61
+#, kde-format
+msgid "Update policy:"
+msgstr "Politique de mise à jour :"
+
+#: yfwidget.cpp:63
+#, kde-format
+msgid "Update metadata"
+msgstr "Mettre à jour les métadonnées"
+
+#: yfwidget.cpp:64
+#, kde-format
+msgid "Update metadata of remote file and merge remote tags with local"
+msgstr ""
+"Mettre à jour les métadonnées d'un fichier distant et fusionner les "
+"étiquettes distantes avec les étiquettes locales"
+
+#: yfwidget.cpp:66
+#, kde-format
+msgid "Skip photo"
+msgstr "Ignorer une photo"
+
+#: yfwidget.cpp:67
+#, kde-format
+msgid "Simple skip photo"
+msgstr "Ignorer simplement une photo"
+
+#: yfwidget.cpp:68
+#, kde-format
+msgid "Upload as new"
+msgstr "Envoyer comme nouvelle"
+
+#: yfwidget.cpp:69
+#, kde-format
+msgid "Add photo as new"
+msgstr "Ajouter une photo comme nouvelle"
+
+#: yfwidget.cpp:71
+#, kde-format
+msgid "Privacy settings:"
+msgstr "Paramètres de respect de la vie privée :"
+
+#: yfwidget.cpp:74
+#, kde-format
+msgid "Public access"
+msgstr "Accès public"
+
+#: yfwidget.cpp:76
+#, kde-format
+msgid "Friends access"
+msgstr "Accès pour les amis"
+
+#: yfwidget.cpp:78
+#, kde-format
+msgid "Private access"
+msgstr "Accès privé"
+
+#: yfwidget.cpp:80
+#, kde-format
+msgid "Hide original photo"
+msgstr "Masquer une photo originale"
+
+#: yfwidget.cpp:81
+#, kde-format
+msgid "Disable comments"
+msgstr "Désactiver les commentaires"
+
+#: yfwidget.cpp:82
+#, kde-format
+msgid "Adult content"
+msgstr "Contenu pour adultes"
+
+#: yfwindow.cpp:128
+#, kde-format
+msgid "Yandex.Fotki Plugin"
+msgstr "Module externe « Yandex.Fotki »"
+
+#: yfwindow.cpp:129
+#, kde-format
+msgid "A tool to export image collections to Yandex.Fotki web service."
+msgstr ""
+"Un outil pour exporter des collections d'images vers le service Web « Yandex."
+"Fotki »."
+
+#: yfwindow.cpp:131
+#, kde-format
+msgid ""
+"(c) 2007-2009, Vardhman Jain\n"
+"(c) 2008-2015, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2010, Roman Tsisyk"
+msgstr ""
+"(c) 2007-2009, Vardhman Jain\n"
+"(c) 2008-2015, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2010, Roman Tsisyk"
+
+#: yfwindow.cpp:136
+#, kde-format
+msgid "Roman Tsisyk"
+msgstr "Roman Tsisyk"
+
+#: yfwindow.cpp:137
+#, kde-format
+msgid "Author"
+msgstr "Auteur"
+
+#: yfwindow.cpp:249
+#, kde-format
+msgid "Unauthorized"
+msgstr "Non autorisé(e)"
+
+#: yfwindow.cpp:262
+#, kde-format
+msgctxt "Yandex.Fotki"
+msgid "Y"
+msgstr "Y"
+
+#: yfwindow.cpp:263
+#, kde-format
+msgctxt "Yandex.Fotki"
+msgid "andex."
+msgstr "andex."
+
+#: yfwindow.cpp:264
+#, kde-format
+msgctxt "Yandex.Fotki"
+msgid "Fotki"
+msgstr "Fotki"
+
+#: yfwindow.cpp:589
+#, kde-format
+msgid "Processing Failed"
+msgstr "Le processus a échoué"
+
+#: yfwindow.cpp:590
+#, kde-format
+msgid ""
+"Failed to prepare image %1\n"
+"Do you want to continue?"
+msgstr ""
+"Impossible de préparer l'image %1\n"
+"Voulez-vous continuer ?"
+
+#: yfwindow.cpp:617
+#, kde-format
+msgid "Images have been uploaded"
+msgstr "Les images ont été envoyées"
+
+#: yfwindow.cpp:647
+#, kde-format
+msgid "Please select album first"
+msgstr "Veuillez d'abord sélectionner un album"
+
+#: yfwindow.cpp:669
+#, kde-format
+msgid "Session error"
+msgstr "Erreur de session"
+
+#: yfwindow.cpp:672
+#, kde-format
+msgid "Token error"
+msgstr "Erreur de jeton"
+
+#: yfwindow.cpp:675
+#, kde-format
+msgid "Invalid credentials"
+msgstr "Identifiants non valables"
+
+#: yfwindow.cpp:679
+#, kde-format
+msgid "Cannot get service document"
+msgstr "Impossible d'obtenir le document du service"
+
+#: yfwindow.cpp:692
+#, kde-format
+msgid "Cannot list albums"
+msgstr "Impossible de lister les albums"
+
+#: yfwindow.cpp:695
+#, kde-format
+msgid "Cannot list photos"
+msgstr "Impossible de lister les photos"
+
+#: yfwindow.cpp:698
+#, kde-format
+msgid "Cannot update album info"
+msgstr "Impossible de mettre à jour les informations sur les photos"
+
+#: yfwindow.cpp:704
+#, kde-format
+msgid "Uploading Failed"
+msgstr "L'envoi a échoué"
+
+#: yfwindow.cpp:705
+#, kde-format
+msgid ""
+"Failed to upload image %1\n"
+"Do you want to continue?"
+msgstr ""
+"Impossible d'envoyer l'image %1\n"
+"Voulez-vous continuer ?"
+
+#: yfwindow.cpp:726
+#, kde-format
+msgid "Unknown error"
+msgstr "Erreur inconnue"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Joëlle Cornavin"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "jcorn@free.fr"
+
+#~ msgid "Login:"
+#~ msgstr "Identifiant de connexion :"
+
+#~ msgid "Forgot your password?"
+#~ msgstr "Mot de passe oublié ?"
+
+#~ msgid "&Login"
+#~ msgstr "&Identifiant de connexion"
+
+#~ msgid "&Skip"
+#~ msgstr "&Ignorer"
+
+#~ msgid "Yandex User Agreement"
+#~ msgstr "Contrat d'utilisation de « Yandex »"
+
+#~ msgid "Password cannot be empty."
+#~ msgstr "Il est impossible que le mot de passe soit vide."
+
+#~ msgid "New album"
+#~ msgstr "Nouvel album"
+
+#~ msgid "Album"
+#~ msgstr "Album"
+
+#~ msgid "These are basic settings for the new Yandex album."
+#~ msgstr "Il s'agit des paramètres de base du nouvel album « Yandex »."
+
+#~ msgid "Title of the album that will be created (required)."
+#~ msgstr "Titre de l'album à créer (requis)."
+
+#~ msgid "Description of the album that will be created (optional)."
+#~ msgstr "Description de l'album à créer (optionnel)."
+
+#~ msgid "Title:"
+#~ msgstr "Titre :"
+
+#~ msgid "Summary:"
+#~ msgstr "Résumé :"
+
+#~ msgid "This is the list of images to upload to your Yandex album."
+#~ msgstr ""
+#~ "Il s'agit de la liste des images à envoyer vers votre album « Yandex »."
+
+#~ msgid ""
+#~ "This is a clickable link to open the Yandex.Fotki service in a web "
+#~ "browser."
+#~ msgstr ""
+#~ "Il s'agit d'un lien cliquable pour ouvrir le service « Yandex.Fotki » "
+#~ "dans un navigateur Web."
+
+#~ msgid "Account"
+#~ msgstr "Compte"
+
+#~ msgid "This account is used for authentication."
+#~ msgstr "Ce compte est utilisé pour l'authentification."
+
+#~ msgid "Name:"
+#~ msgstr "Nom :"
+
+#~ msgid "Your Yandex login"
+#~ msgstr "Votre identifiant de connexion « Yandex »"
+
+#~ msgid "Change Account"
+#~ msgstr "Changer de compte"
+
+#~ msgid "Change Yandex account used to authenticate"
+#~ msgstr "Changer le compte « Yandex » utilisé pour s'authentifier"
+
+#~ msgid "This is the Yandex.Fotki album that will be used for the transfer."
+#~ msgstr "Il s'agit de l'album « Yandex.Fotki » à utiliser pour le transfert."
+
+#~ msgid "New Album"
+#~ msgstr "Nouvel album"
+
+#~ msgid "Create new Yandex.Fotki album"
+#~ msgstr "Créer un nouvel album « Yandex.Fotki »"
+
+#~ msgctxt "reload albums list"
+#~ msgid "Reload"
+#~ msgstr "Recharger"
+
+#~ msgid "Reload albums list"
+#~ msgstr "Recharger la liste des albums"
+
+#~ msgid "Destination"
+#~ msgstr "Destination"
+
+#~ msgid "This is the location where Yandex.Fotki images will be downloaded."
+#~ msgstr ""
+#~ "Il s'agit de l'emplacement où les images « Yandex.Fotki » seront "
+#~ "téléchargés."
+
+#~ msgid "Options"
+#~ msgstr "Options"
+
+#~ msgid "These are options that will be applied to images before upload."
+#~ msgstr "Il s'agit des options à appliquer aux images avant envoi."
+
+#~ msgid "Resize photos before uploading"
+#~ msgstr "Re-dimensionner les photos avant envoi"
+
+#~ msgid "Maximum dimension:"
+#~ msgstr "Dimension maximale :"
+
+#~ msgid "JPEG quality:"
+#~ msgstr "Qualité JPEG :"
+
+#~ msgid "Export to Yandex.Fotki Web Service"
+#~ msgstr "Exporter vers le service Web « Yandex.Fotki »"
+
+#~ msgid "Start Upload"
+#~ msgstr "Démarrer l'envoi"
+
+#~ msgid "Start upload to Yandex.Fotki service"
+#~ msgstr "Démarrer l'envoi vers le service « Yandex.Fotki »"
+
+#~ msgid "Close"
+#~ msgstr "Fermer"
+
+#~ msgid "Close window"
+#~ msgstr "Fermer la fenêtre"
+
+#~ msgid "Cancel"
+#~ msgstr "Annuler"
+
+#~ msgid "Cancel current operation"
+#~ msgstr "Annuler l'opération en cours"

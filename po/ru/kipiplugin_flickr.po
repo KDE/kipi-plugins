@@ -1,0 +1,725 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Шмелёв Артемий Геннадьевич <sgartjom@mail.ru>, 2008.
+# Nick Shaforostoff <shaforostoff@kde.ru>, 2008.
+# Alexander Potashev <aspotashev@gmail.com>, 2010, 2011, 2014, 2015, 2017.
+# Yuri Efremov <yur.arh@gmail.com>, 2011.
+# Olesya Gerasimenko <gammaray@basealt.ru>, 2019.
+# Alexander Yavorsky <kekcuha@gmail.com>, 2019.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_flickrexport\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2019-05-04 18:52+0300\n"
+"Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
+"Language-Team: Russian <kde-russian@lists.kde.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 19.04.0\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Environment: kde\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#: comboboxintermediate.h:54
+#, kde-format
+msgid "Various"
+msgstr "Различ."
+
+#: flickrlist.cpp:420
+#, kde-format
+msgid ""
+"Check if photo should be publicly visible or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"Включите, если фотография должна быть видна всем (или установите этот "
+"параметр для всех изображений на вкладке параметров загрузки)"
+
+#: flickrlist.cpp:423
+#, kde-format
+msgid ""
+"Check if photo should be visible to family or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"Включите, если фотография должна быть видна семье (или установите этот "
+"параметр для всех изображений на вкладке параметров загрузки)"
+
+#: flickrlist.cpp:426
+#, kde-format
+msgid ""
+"Check if photo should be visible to friends or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"Включите, если фотография должна быть видна друзьям (или установите этот "
+"параметр для всех изображений на вкладке параметров загрузки)"
+
+#: flickrlist.cpp:429
+#, kde-format
+msgid ""
+"Indicate the safety level for the photo or use Upload Options tab to specify "
+"this for all images"
+msgstr ""
+"Укажите уровень безопасности для фотографии (или установите этот параметр "
+"для всех изображений на вкладке параметров загрузки)"
+
+#: flickrlist.cpp:432
+#, kde-format
+msgid ""
+"Indicate what kind of image this is or use Upload Options tab to specify "
+"this for all images"
+msgstr ""
+"Укажите тип содержимого фотографии (или установите этот параметр для всех "
+"изображений на вкладке параметров загрузки)"
+
+#: flickrlist.cpp:445
+#, kde-format
+msgid ""
+"Add extra tags per image or use Upload Options tab to add tags for all images"
+msgstr ""
+"Добавьте дополнительные метки для каждого изображения (или добавьте метки "
+"для всех изображений на вкладке параметров загрузки)"
+
+#: flickrlist.cpp:462
+#, kde-format
+msgid "Enter extra tags, separated by commas."
+msgstr "Введите дополнительные метки, разделяя их запятыми"
+
+#: flickrtalker.cpp:265
+#, kde-format
+msgid "Getting the maximum allowed file size."
+msgstr "Получение максимально допустимого размера файла"
+
+#: flickrtalker.cpp:550
+#, kde-format
+msgid "File Size exceeds maximum allowed file size."
+msgstr "Размер файла превышает максимально допустимый размер файла"
+
+#: flickrtalker.cpp:603
+#, kde-format
+msgid "No photo specified"
+msgstr "Не указан снимок"
+
+#: flickrtalker.cpp:607
+#, kde-format
+msgid "General upload failure"
+msgstr "Общая ошибка загрузки"
+
+#: flickrtalker.cpp:611
+#, kde-format
+msgid "Filesize was zero"
+msgstr "Нулевой размер файла"
+
+#: flickrtalker.cpp:615
+#, kde-format
+msgid "Filetype was not recognized"
+msgstr "Неподдерживаемый тип файла"
+
+#: flickrtalker.cpp:619
+#, kde-format
+msgid "User exceeded upload limit"
+msgstr "Пользователь достиг лимита загрузок"
+
+#: flickrtalker.cpp:623
+#, kde-format
+msgid "Invalid signature"
+msgstr "Недействительная подпись"
+
+#: flickrtalker.cpp:627
+#, kde-format
+msgid "Missing signature"
+msgstr "Подпись отсутствует"
+
+#: flickrtalker.cpp:631
+#, kde-format
+msgid "Login Failed / Invalid auth token"
+msgstr "Не удалось выполнить вход / недействительный маркер аутентификации"
+
+#: flickrtalker.cpp:635
+#, kde-format
+msgid "Invalid API Key"
+msgstr "Недействительный ключ API"
+
+#: flickrtalker.cpp:639
+#, kde-format
+msgid "Service currently unavailable"
+msgstr "В данный момент служба недоступна"
+
+#: flickrtalker.cpp:643
+#, kde-format
+msgid "Invalid Frob"
+msgstr "Недействительный Frob"
+
+#: flickrtalker.cpp:647
+#, kde-format
+msgid "Format \"xxx\" not found"
+msgstr "Формат «ххх» не найден"
+
+#: flickrtalker.cpp:651
+#, kde-format
+msgid "Method \"xxx\" not found"
+msgstr "Метод «ххх» не найден"
+
+#: flickrtalker.cpp:655
+#, kde-format
+msgid "Invalid SOAP envelope"
+msgstr "Неверное окружение SOAP"
+
+#: flickrtalker.cpp:659
+#, kde-format
+msgid "Invalid XML-RPC Method Call"
+msgstr "Недействительный вызов метода XML-RPC"
+
+#: flickrtalker.cpp:663
+#, kde-format
+msgid "The POST method is now required for all setters"
+msgstr "Метод POST теперь обязателен для всех"
+
+#: flickrtalker.cpp:667
+#, kde-format
+msgid "Unknown error"
+msgstr "Неизвестная ошибка"
+
+#: flickrtalker.cpp:672 flickrtalker.cpp:696 flickrtalker.cpp:852
+#: flickrwindow.cpp:416
+#, kde-format
+msgid "Error"
+msgstr "Ошибка"
+
+#: flickrtalker.cpp:673
+#, kde-format
+msgid ""
+"Error Occurred: %1\n"
+"Cannot proceed any further."
+msgstr ""
+"Произошла ошибка: %1\n"
+"Продолжение работы невозможно."
+
+#: flickrtalker.cpp:852
+#, kde-format
+msgid "PhotoSet creation failed: "
+msgstr "Не удалось создать набор фотографий: "
+
+#: flickrtalker.cpp:947
+#, kde-format
+msgid "Failed to fetch list of photo sets."
+msgstr "Не удалось получить список наборов фотографий"
+
+#: flickrtalker.cpp:1027
+#, kde-format
+msgid "Failed to upload photo"
+msgstr "Ошибка загрузки фотографии"
+
+#: flickrtalker.cpp:1086
+#, kde-format
+msgid "Failed to query photo information"
+msgstr "Ошибка запроса информации о фотографии"
+
+#: flickrwidget.cpp:63
+#, kde-format
+msgid "Remove Account"
+msgstr "Удалить учётную запись"
+
+#: flickrwidget.cpp:73 flickrwidget.cpp:77
+#, kde-format
+msgctxt "photo permissions"
+msgid "Public"
+msgstr "Общедоступный"
+
+#: flickrwidget.cpp:76
+#, kde-format
+msgid "This is the list of images to upload to your Flickr account."
+msgstr "Список изображений, которые надо загрузить на Flickr"
+
+#: flickrwidget.cpp:81
+#, kde-format
+msgid "Extra tags"
+msgstr "Дополнительные метки"
+
+#: flickrwidget.cpp:87 flickrwidget.cpp:98
+#, kde-format
+msgctxt "photo permissions"
+msgid "Family"
+msgstr "Семья"
+
+#: flickrwidget.cpp:92 flickrwidget.cpp:100
+#, kde-format
+msgctxt "photo permissions"
+msgid "Friends"
+msgstr "Друзья"
+
+#: flickrwidget.cpp:107
+#, kde-format
+msgid "Safety level"
+msgstr "Уровень безопасности"
+
+#: flickrwidget.cpp:109
+#, kde-format
+msgid "Content type"
+msgstr "Тип содержимого"
+
+#: flickrwidget.cpp:112
+#, kde-format
+msgctxt "photo safety level"
+msgid "Safe"
+msgstr "Безопасный"
+
+#: flickrwidget.cpp:113
+#, kde-format
+msgctxt "photo safety level"
+msgid "Moderate"
+msgstr "Средний"
+
+#: flickrwidget.cpp:114
+#, kde-format
+msgctxt "photo safety level"
+msgid "Restricted"
+msgstr "Для ограниченного пользования"
+
+#: flickrwidget.cpp:115 flickrwidget.cpp:211
+#, kde-format
+msgctxt "photo content type"
+msgid "Photo"
+msgstr "Фотография"
+
+#: flickrwidget.cpp:116 flickrwidget.cpp:212
+#, kde-format
+msgctxt "photo content type"
+msgid "Screenshot"
+msgstr "Снимок экрана"
+
+#: flickrwidget.cpp:117 flickrwidget.cpp:213
+#, kde-format
+msgctxt "photo content type"
+msgid "Other"
+msgstr "Другое"
+
+#: flickrwidget.cpp:134
+#, kde-format
+msgid "Tag options"
+msgstr "Параметры меток"
+
+#: flickrwidget.cpp:138
+#, kde-format
+msgid "Use Host Application Tags"
+msgstr "Использовать метки базового приложения"
+
+#: flickrwidget.cpp:140 flickrwidget.cpp:501
+#, kde-format
+msgid "More tag options"
+msgstr "Показать дополнительные параметры"
+
+#: flickrwidget.cpp:154
+#, kde-format
+msgid "Added Tags: "
+msgstr "Добавленные метки:"
+
+#: flickrwidget.cpp:156
+#, kde-format
+msgid "Enter new tags here, separated by commas."
+msgstr "Введите новые метки, разделяя их запятыми"
+
+#: flickrwidget.cpp:158
+#, kde-format
+msgid "Add tags per image"
+msgstr "Добавлять метки к каждому изображению"
+
+#: flickrwidget.cpp:159
+#, kde-format
+msgid "If checked, you can set extra tags for each image in the File List tab"
+msgstr ""
+"Если параметр включён, на вкладке со списком файлов можно установить "
+"дополнительные метки для каждого изображения"
+
+#: flickrwidget.cpp:163
+#, kde-format
+msgid "Strip Spaces From Tags"
+msgstr "Удалять пробелы в метках"
+
+#: flickrwidget.cpp:176
+#, kde-format
+msgid "Publication Options"
+msgstr "Параметры публикации"
+
+#: flickrwidget.cpp:181
+#, kde-format
+msgctxt "As in accessible for people"
+msgid "Public (anyone can see them)"
+msgstr "Публичное (все могут это видеть)"
+
+#: flickrwidget.cpp:184
+#, kde-format
+msgid "Visible to Family"
+msgstr "Видно только семье"
+
+#: flickrwidget.cpp:187
+#, kde-format
+msgid "Visible to Friends"
+msgstr "Видно только друзьям"
+
+#: flickrwidget.cpp:190 flickrwidget.cpp:488
+#, kde-format
+msgid "More publication options"
+msgstr "Показать дополнительные параметры"
+
+#: flickrwidget.cpp:203
+#, kde-format
+msgid "Safety level:"
+msgstr "Уровень безопасности:"
+
+#: flickrwidget.cpp:205
+#, kde-format
+msgid "Safe"
+msgstr "Безопасный"
+
+#: flickrwidget.cpp:206
+#, kde-format
+msgid "Moderate"
+msgstr "Средний"
+
+#: flickrwidget.cpp:207
+#, kde-format
+msgid "Restricted"
+msgstr "Для ограниченного пользования"
+
+#: flickrwidget.cpp:209
+#, kde-format
+msgid "Content type:"
+msgstr "Тип содержимого:"
+
+#: flickrwidget.cpp:304
+#, kde-format
+msgid ""
+"<b><h2><a href='http://www.23hq.com'><font color=\"#7CD164\">23</font></a> "
+"Export</h2></b>"
+msgstr ""
+"<b><h2>Экспорт в <a href='http://www.23hq.com'><font color=\"#7CD164\">23</"
+"font></a></h2></b>"
+
+#: flickrwidget.cpp:311
+#, kde-format
+msgid ""
+"<b><h2><a href='http://www.flickr.com'><font color=\"#0065DE\">flick</"
+"font><font color=\"#FF0084\">r</font></a> Export</h2></b>"
+msgstr ""
+"<b><h2>Экспорт в <a href='http://www.flickr.com'><font color=\"#0065DE"
+"\">Flick</font><font color=\"#FF0084\">r</font></a></h2></b>"
+
+#: flickrwidget.cpp:484
+#, kde-format
+msgid "Fewer publication options"
+msgstr "Скрыть дополнительные параметры"
+
+#: flickrwidget.cpp:506
+#, kde-format
+msgid "Fewer tag options"
+msgstr "Скрыть дополнительные параметры"
+
+#: flickrwindow.cpp:71
+#, kde-format
+msgid "Export to %1 Web Service"
+msgstr "Экспорт в веб-службу %1"
+
+#: flickrwindow.cpp:119
+#, kde-format
+msgid "Start Uploading"
+msgstr "Начать загрузку"
+
+#: flickrwindow.cpp:131
+#, kde-format
+msgid "Flickr/23 Export"
+msgstr "Экспорт в Flickr/23"
+
+#: flickrwindow.cpp:132
+#, kde-format
+msgid "A tool to export an image collection to a Flickr / 23 web service."
+msgstr ""
+"Инструмент для экспорта коллекций изображений в веб-службы Flickr и 23."
+
+#: flickrwindow.cpp:134
+#, kde-format
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2015, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2015, Shourya Singh Gupta"
+msgstr ""
+"© Vardhman Jain, 2005–2008\n"
+"© Gilles Caulier, 2008–2015\n"
+"© Luka Renko, 2009\n"
+"© Shourya Singh Gupta, 2015"
+
+#: flickrwindow.cpp:139
+#, kde-format
+msgid "Vardhman Jain"
+msgstr "Vardhman Jain"
+
+#: flickrwindow.cpp:139
+#, kde-format
+msgid "Author and maintainer"
+msgstr "Разработчик и поддержка"
+
+#: flickrwindow.cpp:142
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: flickrwindow.cpp:142 flickrwindow.cpp:145
+#, kde-format
+msgid "Developer"
+msgstr "Разработчик"
+
+#: flickrwindow.cpp:145
+#, kde-format
+msgid "Shourya Singh Gupta"
+msgstr "Shourya Singh Gupta"
+
+#: flickrwindow.cpp:557
+#, kde-format
+msgid "Photostream Only"
+msgstr "Только фотогалерея"
+
+#: flickrwindow.cpp:741
+#, kde-format
+msgid "Flickr Export"
+msgstr "Экспорт в Flickr"
+
+#: flickrwindow.cpp:759
+#, kde-format
+msgid "Failed to Fetch Photoset information from %1. %2\n"
+msgstr "Ошибка получения информации о наборе фотографий от %1. %2\n"
+
+#: flickrwindow.cpp:765
+#, kde-format
+msgid "Warning"
+msgstr "Предупреждение"
+
+#: flickrwindow.cpp:766
+#, kde-format
+msgid ""
+"Failed to upload photo into %1. %2\n"
+"Do you want to continue?"
+msgstr ""
+"Не удалось загрузить фотографию в %1. %2\n"
+"Продолжить?"
+
+#: flickrwindow.cpp:769
+#, kde-format
+msgid "Continue"
+msgstr "Далее"
+
+#: flickrwindow.cpp:770
+#, kde-format
+msgid "Cancel"
+msgstr "Отмена"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_flickrui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Экспорт"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_flickrui.rc:14
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Основная панель инструментов"
+
+#: plugin_flickr.cpp:100
+#, kde-format
+msgid "Export to Flick&r..."
+msgstr "Экспорт в Flick&r..."
+
+#: selectuserdlg.cpp:47
+#, kde-format
+msgid "Flickr Account Selector"
+msgstr "Выбор учётной записи Flickr"
+
+#: selectuserdlg.cpp:52
+#, kde-format
+msgid "Add another account"
+msgstr "Добавить другую учётную запись"
+
+#: selectuserdlg.cpp:75
+#, kde-format
+msgid "Choose the %1 account to use for exporting images:"
+msgstr "Выбор учётной записи %1 для экспорта изображений:"
+
+#~ msgid ""
+#~ "<b><h2><a href='http://www.zooomr.com'><font color=\"#7CD164\">zooomr</"
+#~ "font></a> Export</h2></b>"
+#~ msgstr ""
+#~ "<b><h2>Экспорт в <a href='http://www.zooomr.com'><font color="
+#~ "\"#7CD164\">zooomr</font></a></h2></b>"
+
+#~ msgctxt "flickr login"
+#~ msgid "Username:"
+#~ msgstr "Имя пользователя:"
+
+#~ msgid "Password:"
+#~ msgstr "Пароль:"
+
+#~ msgid "Getting the Frob"
+#~ msgstr "Получение Frob"
+
+#~ msgid "Checking if previous token is still valid"
+#~ msgstr "Проверка, является ли предыдущий маркер всё ещё действительным"
+
+#~ msgid "%1 Service Web Authorization"
+#~ msgstr "Вход в веб-службу %1"
+
+#~ msgid ""
+#~ "Please follow the instructions in the browser window, then return to "
+#~ "press corresponding button."
+#~ msgstr ""
+#~ "Следуйте инструкциям в браузере, затем нажмите соответствующую кнопку."
+
+#~ msgid "I am authenticated"
+#~ msgstr "Я выполнил вход"
+
+#~ msgid "I am not authenticated"
+#~ msgstr "Я не выполнил вход"
+
+#~ msgid "Authenticating the User on web"
+#~ msgstr "Аутентификация пользователя в сети"
+
+#~ msgid "Getting the Token from the server"
+#~ msgstr "Получение маркера от сервера"
+
+#~ msgctxt "As in the permission to"
+#~ msgid "write"
+#~ msgstr "запись"
+
+#~ msgctxt "As in the permission to"
+#~ msgid "read"
+#~ msgstr "чтение"
+
+#~ msgctxt "As in the permission to"
+#~ msgid "delete"
+#~ msgstr "удаление"
+
+#, fuzzy
+#~| msgid "Invalid Frob"
+#~ msgid "Invalid Token"
+#~ msgstr "Недействительный Frob"
+
+#, fuzzy
+#~| msgid ""
+#~| "Your token is invalid. Would you like to get a new token to proceed ?\n"
+#~ msgid ""
+#~ "Your token is invalid. Would you like to get a new token to proceed?\n"
+#~ msgstr "Ваш маркер недействителен. Вы хотите получить новый?\n"
+
+#~ msgid "Flickr/23/Zooomr Export"
+#~ msgstr "Экспорт в Flickr/23/Zooomr"
+
+#~ msgid "Export to &23..."
+#~ msgstr "Экспорт в &23..."
+
+#~ msgid "Export to &Zooomr..."
+#~ msgstr "Экспорт в &Zooomr..."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Шмелев Артемий"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "sgartjom@mail.ru"
+
+#~ msgid "New PhotoSet"
+#~ msgstr "Новый набор фотографий"
+
+#~ msgid "<h3>Create New PhotoSet </h3>"
+#~ msgstr "<h3>Создать новый набор фотографий</h3>"
+
+#~ msgid "&OK"
+#~ msgstr "&ОК"
+
+#~ msgid "Title (required):"
+#~ msgstr "Заголовок (обязательно):"
+
+#~ msgid "Description (optional)"
+#~ msgstr "Описание (необязательно):"
+
+#~ msgid "Account"
+#~ msgstr "Учётная запись"
+
+#~ msgctxt "account settings"
+#~ msgid "Username: "
+#~ msgstr "Имя пользователя: "
+
+#~ msgid "Use a different account"
+#~ msgstr "Другая учётная запись"
+
+#, fuzzy
+#~| msgid "New PhotoSet"
+#~ msgid "PhotoSet:"
+#~ msgstr "Новый набор фотографий"
+
+#, fuzzy
+#~| msgid "New PhotoSet"
+#~ msgid "&New PhotoSet"
+#~ msgstr "Новый набор фотографий"
+
+#~ msgid "Resizing Options"
+#~ msgstr "Параметры масштабирования"
+
+#~ msgid "Resize photos before uploading"
+#~ msgstr "Изменять размер фотографий перед загрузкой"
+
+#~ msgid "Maximum dimension (pixels):"
+#~ msgstr "Максимальный размер (в пикселах):"
+
+#~ msgid "JPEG Image Quality (higher is better):"
+#~ msgstr "Качество JPEG (чем больше, тем лучше):"
+
+#~ msgid "File List"
+#~ msgstr "Список файлов"
+
+#~ msgid "Upload Options"
+#~ msgstr "Параметры загрузки"
+
+#~ msgid "Handbook"
+#~ msgstr "Руководство пользователя"
+
+#~ msgid "Uploading file %1"
+#~ msgstr "Загрузка файла %1"
+
+#, fuzzy
+#~| msgid "Upload Options"
+#~ msgid "Less tag options"
+#~ msgstr "Опции загрузки"
+
+#, fuzzy
+#~| msgid "Upload Options"
+#~ msgid "Less publication options"
+#~ msgstr "Опции загрузки"
+
+#~ msgid "Override Default Options"
+#~ msgstr "Перекрыть опции по умолчанию"
+
+#~ msgid "Name (optional):"
+#~ msgstr "Имя (опционально):"
+
+#~ msgid "User Name: "
+#~ msgstr "Имя пользователя:"
+
+#~ msgid "Title (optional):"
+#~ msgstr "Заголовок (опционально):"
+
+#~ msgid "Thumbnail"
+#~ msgstr "Эскиз"
+
+#~ msgid "File Name"
+#~ msgstr "Имя файла"
+
+#~ msgid "&Add"
+#~ msgstr "&Добавить"
+
+#~ msgid "&Remove"
+#~ msgstr "&Удалить"

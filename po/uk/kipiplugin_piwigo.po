@@ -1,0 +1,353 @@
+# Translation of kipiplugin_piwigo.po to Ukrainian
+# Copyright (C) 2010-2017 This_file_is_part_of_KDE
+# This file is distributed under the license LGPL version 2.1 or
+# version 3 or later versions approved by the membership of KDE e.V.
+#
+# Yuri Chornoivan <yurchor@ukr.net>, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_piwigo\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2017-01-21 08:10+0200\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.5\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_piwigoui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Експорт"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_piwigoui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Головна панель"
+
+#: piwigoconfig.cpp:76
+#, kde-format
+msgctxt "piwigo login settings"
+msgid "URL:"
+msgstr "Адреса:"
+
+#: piwigoconfig.cpp:80
+#, kde-format
+msgctxt "piwigo login settings"
+msgid "Username:"
+msgstr "Користувач:"
+
+#: piwigoconfig.cpp:84
+#, kde-format
+msgctxt "piwigo login settings"
+msgid "Password:"
+msgstr "Пароль:"
+
+#: piwigotalker.cpp:305
+#, kde-format
+msgid "Check if %1 already exists"
+msgstr "Перевірка, чи вже існує %1"
+
+#: piwigotalker.cpp:346
+#, kde-format
+msgid "Error"
+msgstr "Помилка"
+
+#: piwigotalker.cpp:440
+#, kde-format
+msgid "Piwigo URL probably incorrect"
+msgstr "Ймовірно, URL-адресу Piwigo вказано неправильно"
+
+#: piwigotalker.cpp:446
+#, kde-format
+msgid "Incorrect username or password specified"
+msgstr "Вказано неправильні значення користувача і пароля"
+
+#: piwigotalker.cpp:489 piwigotalker.cpp:663
+#, kde-format
+msgid "Upload to Piwigo version < 2.4 is no longer supported"
+msgstr ""
+"Підтримки вивантаження на сервери Piwigo версії < 2.4 вже не передбачено"
+
+#: piwigotalker.cpp:561 piwigotalker.cpp:639 piwigotalker.cpp:708
+#: piwigotalker.cpp:779
+#, kde-format
+msgid "Invalid response received from remote Piwigo"
+msgstr "Від віддаленого ресурсу Piwigo отримано некоректну відповідь"
+
+#: piwigotalker.cpp:567
+#, kde-format
+msgid "Failed to list albums"
+msgstr "Спроба створення списку альбомів зазнала невдачі"
+
+#: piwigotalker.cpp:613
+#, kde-format
+msgid "Photo '%1' already exists."
+msgstr "Фотографія з назвою «%1» вже існує."
+
+#: piwigotalker.cpp:645 piwigotalker.cpp:785 piwigotalker.cpp:945
+#, kde-format
+msgid "Failed to upload photo"
+msgstr "Спроба вивантаження фотографії зазнала невдачі"
+
+#: piwigotalker.cpp:714
+#, kde-format
+msgid "Photo '%1' already exists in this album."
+msgstr "Фотографія з назвою «%1» у цьому альбомі вже є."
+
+#: piwigotalker.cpp:800
+#, kde-format
+msgid "Error : Cannot open photo: %1"
+msgstr "Помилка: не вдалося відкрити фотографію %1"
+
+#: piwigotalker.cpp:827
+#, kde-format
+msgid "Upload the chunk %1/%2 of %3"
+msgstr "Вивантаження фрагмента %1 з %2 %3"
+
+#: piwigotalker.cpp:860
+#, kde-format
+msgid "Warning : The full size photo cannot be uploaded."
+msgstr ""
+"Попередження: вивантаження фотографії з початковими розмірами неможливе."
+
+#: piwigotalker.cpp:906
+#, kde-format
+msgid "Upload the metadata of %1"
+msgstr "Вивантаження метаданих %1"
+
+#: piwigotalker.cpp:939
+#, kde-format
+msgid "Invalid response received from remote Piwigo (%1)"
+msgstr "Від віддаленого сервера Piwigo отримано некоректну відповідь (%1)"
+
+#: piwigowindow.cpp:128
+#, kde-format
+msgid "Visit Piwigo website"
+msgstr "Відвідати сайт Piwigo"
+
+#: piwigowindow.cpp:145
+#, kde-format
+msgid "Albums"
+msgstr "Альбоми"
+
+#: piwigowindow.cpp:156
+#, kde-format
+msgid "Change Account"
+msgstr "Змінити обліковий запис"
+
+#: piwigowindow.cpp:160
+#, kde-format
+msgid "Options"
+msgstr "Параметри"
+
+#: piwigowindow.cpp:164
+#, kde-format
+msgid "Resize photos before uploading"
+msgstr "Змінити розмір фотографій перед вивантаженням"
+
+#: piwigowindow.cpp:167
+#, kde-format
+msgid "Maximum width:"
+msgstr "Максимальна ширина:"
+
+#: piwigowindow.cpp:173
+#, kde-format
+msgid "Maximum height:"
+msgstr "Максимальна висота:"
+
+#: piwigowindow.cpp:179
+#, kde-format
+msgid "Resized JPEG quality:"
+msgstr "Якість масштабованого JPEG:"
+
+#: piwigowindow.cpp:231 piwigowindow.cpp:235
+#, kde-format
+msgid "Piwigo Export"
+msgstr "Експорт до ресурсу Piwigo"
+
+#: piwigowindow.cpp:236
+#, kde-format
+msgid "A tool to export image collections to a remote Piwigo server."
+msgstr "Засіб для експортування збірок зображень на віддалений сервер Piwigo."
+
+#: piwigowindow.cpp:237
+#, kde-format
+msgid ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2007, Colin Guthrie\n"
+"(c) 2006-2015, Gilles Caulier\n"
+"(c) 2008, Andrea Diamantini\n"
+"(c) 2010-2014, Frédéric Coiffier\n"
+msgstr ""
+"© Renchi Raju, 2003–2005,\n"
+"© Colin Guthrie, 2006–2007,\n"
+"© Gilles Caulier, 2006–2015,\n"
+"© Andrea Diamantini, 2008,\n"
+"© Frédéric Coiffier, 2010–2014\n"
+
+#: piwigowindow.cpp:243
+#, kde-format
+msgid "Renchi Raju"
+msgstr "Renchi Raju"
+
+#: piwigowindow.cpp:244 piwigowindow.cpp:248 piwigowindow.cpp:252
+#: piwigowindow.cpp:256 piwigowindow.cpp:260
+#, kde-format
+msgid "Developer"
+msgstr "Розробник"
+
+#: piwigowindow.cpp:247
+#, kde-format
+msgid "Colin Guthrie"
+msgstr "Colin Guthrie"
+
+#: piwigowindow.cpp:251
+#, kde-format
+msgid "Andrea Diamantini"
+msgstr "Andrea Diamantini"
+
+#: piwigowindow.cpp:255
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: piwigowindow.cpp:259
+#, kde-format
+msgid "Frédéric Coiffier"
+msgstr "Frédéric Coiffier"
+
+#: piwigowindow.cpp:267
+#, kde-format
+msgid "Start Upload"
+msgstr "Почати вивантаження"
+
+#: piwigowindow.cpp:395
+#, kde-format
+msgid "Login Failed"
+msgstr "Невдала спроба увійти"
+
+#: piwigowindow.cpp:396
+#, kde-format
+msgid "Failed to login into remote piwigo. "
+msgstr "Не вдалося увійти до віддаленого ресурсу piwigo. "
+
+#: piwigowindow.cpp:397
+#, kde-format
+msgid ""
+"\n"
+"Do you want to check your settings and try again?"
+msgstr ""
+"\n"
+"Бажаєте змінити налаштування і спробувати ще раз?"
+
+#: piwigowindow.cpp:404 piwigowindow.cpp:644 plugin_piwigo.cpp:117
+#, kde-format
+msgid "Edit Piwigo Data"
+msgstr "Редагувати дані Piwigo"
+
+#: piwigowindow.cpp:464 piwigowindow.cpp:488
+#, kde-format
+msgid "Album"
+msgstr "Альбом"
+
+#: piwigowindow.cpp:507
+#, kde-format
+msgid "Image"
+msgstr "Зображення"
+
+#: piwigowindow.cpp:538
+#, kde-format
+msgid "Nothing to upload - please select photos to upload."
+msgstr ""
+"Нічого вивантажувати, — будь ласка, виберіть фотографії для вивантаження."
+
+#: piwigowindow.cpp:576
+#, kde-format
+msgid "The file %1 is not a supported image or video format"
+msgstr "Файл %1 не містить даних у підтримуваному форматі зображень або відео"
+
+#: piwigowindow.cpp:580
+#, kde-format
+msgid "Uploading file %1"
+msgstr "Вивантаження файла %1"
+
+#: piwigowindow.cpp:598
+#, kde-format
+msgid "Uploading Failed"
+msgstr "Невдала спроба вивантаження"
+
+#: piwigowindow.cpp:599
+#, kde-format
+msgid "Failed to upload media into remote Piwigo. "
+msgstr ""
+"Не вдалося вивантажити мультимедійні дані на віддалений сервер Piwigo. "
+
+#: piwigowindow.cpp:600
+#, kde-format
+msgid ""
+"\n"
+"Do you want to continue?"
+msgstr ""
+"\n"
+"Бажаєте продовжити?"
+
+#: plugin_piwigo.cpp:97
+#, kde-format
+msgid "Export to &Piwigo..."
+msgstr "Експорт&увати до Piwigo..."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Юрій Чорноіван"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "yurchor@ukr.net"
+
+#~ msgid "Author"
+#~ msgstr "Автор"
+
+#~ msgid "Maintainer"
+#~ msgstr "Супровідник"
+
+#~ msgid "Upload resized version of %1"
+#~ msgstr "Вивантаження версії %1 зі зміненими розмірами"
+
+#~ msgid "Upload the thumbnail of %1"
+#~ msgstr "Вивантаження мініатюри %1"
+
+#~ msgid "Maximum thumbnail dimension:"
+#~ msgstr "Максимальна розмірність мініатюр:"
+
+#~ msgid "Thumbnail size is ignored with Piwigo > 2.4"
+#~ msgstr ""
+#~ "Розмір мініатюри буде проігноровано, якщо використовується Piwigo > 2.4"
+
+#~ msgid "&Add Selected Photos"
+#~ msgstr "&Додати позначені фотографії"
+
+#~ msgid "Override Default Options"
+#~ msgstr "Замінити типові параметри"
+
+#~ msgid "EXIF Comment (instead of file name) sets Title"
+#~ msgstr "Коментар EXIF (а не назва файла) визначає значення «Заголовок»"
+
+#~ msgid "EXIF Comment (instead of file name) sets Comment"
+#~ msgstr "Коментар EXIF (а не назва файла) визначає значення «Коментар»"
+
+#~ msgid "Also download the full size version"
+#~ msgstr "Отримати також версію з початковими розмірами"
+
+#~ msgid "Handbook"
+#~ msgstr "Підручник"
+
+#~ msgid "Settings"
+#~ msgstr "Параметри"

@@ -1,0 +1,197 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Ozan Çağlayan <ozan@pardus.org.tr>, 2010.
+# obsoleteman <tulliana@gmail.com>, 2009.
+# Volkan Gezer <volkangezer@gmail.com>, 2013.
+# Emir SARI <emir_sari@icloud.com>, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: extragear-graphics-kde4\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2022-04-11 11:13+0300\n"
+"Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
+"Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 21.12.3\n"
+
+#: KioExportWidget.cpp:61
+#, kde-format
+msgid "Target location: "
+msgstr "Hedef konum: "
+
+#: KioExportWidget.cpp:62
+#, kde-format
+msgid ""
+"Sets the target address to upload the images to. This can be any address as "
+"used in Dolphin or Konqueror, e.g. ftp://my.server.org/sub/folder."
+msgstr ""
+"Görsellerin gönderileceği hedef adresi ayarlar. Bu adres Dolphin veya "
+"Konqueror için kullanılan adreslerden herhangi biri olabilir, ftp://sunucum."
+"org/alt/dizin gibi."
+
+#: KioExportWidget.cpp:66
+#, kde-format
+msgid "Select target location..."
+msgstr "Hedef konumu seçin..."
+
+#: KioExportWidget.cpp:72
+#, kde-format
+msgid "This is the list of images to upload to the specified target."
+msgstr "Bu liste belirtilen hedefe gönderilecek görsellerin listesidir."
+
+#: KioExportWidget.cpp:134
+#, kde-format
+msgid "Select target..."
+msgstr "Hedefi seçin..."
+
+#: KioExportWidget.cpp:135
+#, kde-format
+msgid "All Files (*)"
+msgstr "Tüm Dosyalar (*)"
+
+#: KioExportWidget.cpp:155
+#, kde-format
+msgid "<not selected>"
+msgstr "<not selected>"
+
+#: KioExportWindow.cpp:64
+#, kde-format
+msgid "Export to Remote Storage"
+msgstr "Uzak Depoya Aktar"
+
+#: KioExportWindow.cpp:67
+#, kde-format
+msgid "Start export"
+msgstr "Dışa aktarma işlemini başlat"
+
+#: KioExportWindow.cpp:68
+#, kde-format
+msgid "Start export to the specified target"
+msgstr "Belirtilen hedefe aktarma işlemini başlat"
+
+#: KioExportWindow.cpp:84
+#, kde-format
+msgid "Export to remote storage"
+msgstr "Uzak depoya aktar"
+
+#: KioExportWindow.cpp:85
+#, kde-format
+msgid "A tool to export images over network using KIO-Slave"
+msgstr ""
+"Görselleri ağ üzerinden KIO-Slave kullanarak dışa aktarmaya yarayan bir araç"
+
+#: KioExportWindow.cpp:86 KioImportWindow.cpp:83
+#, kde-format
+msgid "(c) 2009, Johannes Wienke"
+msgstr "(c) 2009, Johannes Wienke"
+
+#: KioExportWindow.cpp:88 KioImportWindow.cpp:85
+#, kde-format
+msgid "Johannes Wienke"
+msgstr "Johannes Wienke"
+
+#: KioExportWindow.cpp:89 KioImportWindow.cpp:86
+#, kde-format
+msgid "Developer and maintainer"
+msgstr "Geliştirici ve projeyi yürüten"
+
+#: KioExportWindow.cpp:198
+#, kde-format
+msgid "Upload not completed"
+msgstr "Gönderme işlemi tamamlanmadı"
+
+#: KioExportWindow.cpp:199
+#, kde-format
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to export these images now."
+msgstr ""
+"Bazı görseller henüz aktarılmadıkları halde hâlâ listede bulunuyorlar. Bu "
+"görselleri aktarmayı şimdi yeniden deneyebilirsiniz."
+
+#: KioImportWidget.cpp:52
+#, kde-format
+msgid "This is the list of images to import into the current album."
+msgstr "Bu liste geçerli albüm içine aktarılacak görsellerin listesidir."
+
+#: KioImportWindow.cpp:60
+#, kde-format
+msgid "Import from Remote Storage"
+msgstr "Uzak Depodan İçe Aktar"
+
+#: KioImportWindow.cpp:64
+#, kde-format
+msgid "Start import"
+msgstr "İçe aktarma işlemini başlat"
+
+#: KioImportWindow.cpp:65
+#, kde-format
+msgid "Start importing the specified images into the currently selected album."
+msgstr "Belirtilen görselleri seçili albüm içine aktarma işlemini başlat."
+
+#: KioImportWindow.cpp:81
+#, kde-format
+msgid "Import from remote storage"
+msgstr "Uzak depodan içe aktar"
+
+#: KioImportWindow.cpp:82
+#, kde-format
+msgid "A tool to import images over network"
+msgstr "Görselleri ağ üzerinden aktarmaya yarayan bir araç"
+
+#: KioImportWindow.cpp:137
+#, kde-format
+msgid "Import not completed"
+msgstr "İçe aktarım tamamlanmadı"
+
+#: KioImportWindow.cpp:138
+#, kde-format
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to import these images now."
+msgstr ""
+"Bazı  henüz aktarılmadıkları halde hâlâ listede bulunuyorlar. Bu görselleri "
+"içe aktarmayı şimdi yeniden deneyebilirsiniz."
+
+#. i18n: ectx: Menu (Import)
+#: kipiplugin_remotestorageui.rc:7
+#, kde-format
+msgid "&Import"
+msgstr "&İçe Aktar"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_remotestorageui.rc:11
+#, kde-format
+msgid "&Export"
+msgstr "&Dışa Aktar"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_remotestorageui.rc:17
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Ana Araç Çubuğu"
+
+#: plugin_remotestorage.cpp:93
+#, kde-format
+msgid "Export to remote storage..."
+msgstr "Uzak depoya aktar..."
+
+#: plugin_remotestorage.cpp:105
+#, kde-format
+msgid "Import from remote storage..."
+msgstr "Uzak depodan içe aktar..."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Serdar Soytetir"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "tulliana@gmail.com"

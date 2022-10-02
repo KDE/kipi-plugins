@@ -1,0 +1,266 @@
+# Translation of kipiplugin_yandexfotki.po to Catalan
+# Copyright (C) 2011-2021 This_file_is_part_of_KDE
+# This file is distributed under the license LGPL version 2.1 or
+# version 3 or later versions approved by the membership of KDE e.V.
+#
+# Josep M. Ferrer <txemaq@gmail.com>, 2011, 2012, 2015, 2016, 2021.
+# Antoni Bella Pérez <antonibella5@yahoo.com>, 2012, 2015, 2017, 2019, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipi-plugins\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-08-08 02:53+0200\n"
+"PO-Revision-Date: 2021-09-13 11:35+0200\n"
+"Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
+"Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 20.12.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Accelerator-Marker: &\n"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_yandexfotkiui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Exporta"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_yandexfotkiui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Barra d'eines principal"
+
+#: plugin_yandexfotki.cpp:91
+#, kde-format
+msgid "Export to &Yandex.Fotki..."
+msgstr "Exporta a &Yandex.Fotki..."
+
+#: yfalbumdialog.cpp:60
+#, kde-format
+msgid "Password for the album (optional)."
+msgstr "Contrasenya per a l'àlbum (opcional)."
+
+#: yfalbumdialog.cpp:63
+#, kde-format
+msgid "Password:"
+msgstr "Contrasenya:"
+
+#: yfalbumdialog.cpp:80
+#, kde-format
+msgid "Error"
+msgstr "Error"
+
+#: yfalbumdialog.cpp:80
+#, kde-format
+msgid "Title cannot be empty."
+msgstr "El títol no pot estar buit."
+
+#: yfwidget.cpp:61
+#, kde-format
+msgid "Update policy:"
+msgstr "Política d'actualització:"
+
+#: yfwidget.cpp:63
+#, kde-format
+msgid "Update metadata"
+msgstr "Actualitza les metadades"
+
+#: yfwidget.cpp:64
+#, kde-format
+msgid "Update metadata of remote file and merge remote tags with local"
+msgstr ""
+"Actualitza les metadades del fitxer remot i fusiona les etiquetes remotes "
+"amb les locals"
+
+#: yfwidget.cpp:66
+#, kde-format
+msgid "Skip photo"
+msgstr "Omet la fotografia"
+
+#: yfwidget.cpp:67
+#, kde-format
+msgid "Simple skip photo"
+msgstr "Omet senzillament la fotografia"
+
+#: yfwidget.cpp:68
+#, kde-format
+msgid "Upload as new"
+msgstr "Puja com a nova"
+
+#: yfwidget.cpp:69
+#, kde-format
+msgid "Add photo as new"
+msgstr "Afegeix una fotografia com a nova"
+
+#: yfwidget.cpp:71
+#, kde-format
+msgid "Privacy settings:"
+msgstr "Arranjament de la privadesa:"
+
+#: yfwidget.cpp:74
+#, kde-format
+msgid "Public access"
+msgstr "Accés públic"
+
+#: yfwidget.cpp:76
+#, kde-format
+msgid "Friends access"
+msgstr "Accés als amics"
+
+#: yfwidget.cpp:78
+#, kde-format
+msgid "Private access"
+msgstr "Accés privat"
+
+#: yfwidget.cpp:80
+#, kde-format
+msgid "Hide original photo"
+msgstr "Oculta la fotografia original"
+
+#: yfwidget.cpp:81
+#, kde-format
+msgid "Disable comments"
+msgstr "Desactiva els comentaris"
+
+#: yfwidget.cpp:82
+#, kde-format
+msgid "Adult content"
+msgstr "Contingut per a adults"
+
+#: yfwindow.cpp:128
+#, kde-format
+msgid "Yandex.Fotki Plugin"
+msgstr "Connector del Yandex.Fotki"
+
+#: yfwindow.cpp:129
+#, kde-format
+msgid "A tool to export image collections to Yandex.Fotki web service."
+msgstr ""
+"Una eina per a exportar col·leccions d'imatges al servei web Yandex.Fotki."
+
+#: yfwindow.cpp:131
+#, kde-format
+msgid ""
+"(c) 2007-2009, Vardhman Jain\n"
+"(c) 2008-2015, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2010, Roman Tsisyk"
+msgstr ""
+"(c) 2007-2009, Vardhman Jain\n"
+"(c) 2008-2015, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2010, Roman Tsisyk"
+
+#: yfwindow.cpp:136
+#, kde-format
+msgid "Roman Tsisyk"
+msgstr "Roman Tsisyk"
+
+#: yfwindow.cpp:137
+#, kde-format
+msgid "Author"
+msgstr "Autor"
+
+#: yfwindow.cpp:249
+#, kde-format
+msgid "Unauthorized"
+msgstr "No autoritzat"
+
+#: yfwindow.cpp:262
+#, kde-format
+msgctxt "Yandex.Fotki"
+msgid "Y"
+msgstr "Y"
+
+#: yfwindow.cpp:263
+#, kde-format
+msgctxt "Yandex.Fotki"
+msgid "andex."
+msgstr "andex."
+
+#: yfwindow.cpp:264
+#, kde-format
+msgctxt "Yandex.Fotki"
+msgid "Fotki"
+msgstr "Fotki"
+
+#: yfwindow.cpp:589
+#, kde-format
+msgid "Processing Failed"
+msgstr "Ha fallat el processament"
+
+#: yfwindow.cpp:590
+#, kde-format
+msgid ""
+"Failed to prepare image %1\n"
+"Do you want to continue?"
+msgstr ""
+"Ha fallat en preparar la imatge %1\n"
+"Voleu continuar?"
+
+#: yfwindow.cpp:617
+#, kde-format
+msgid "Images have been uploaded"
+msgstr "Les imatges s'han pujat"
+
+#: yfwindow.cpp:647
+#, kde-format
+msgid "Please select album first"
+msgstr "Primer seleccioneu l'àlbum"
+
+#: yfwindow.cpp:669
+#, kde-format
+msgid "Session error"
+msgstr "Error de sessió"
+
+#: yfwindow.cpp:672
+#, kde-format
+msgid "Token error"
+msgstr "Error de testimoni"
+
+#: yfwindow.cpp:675
+#, kde-format
+msgid "Invalid credentials"
+msgstr "Credencials no vàlides"
+
+#: yfwindow.cpp:679
+#, kde-format
+msgid "Cannot get service document"
+msgstr "No s'ha pogut obtenir el document de servei"
+
+#: yfwindow.cpp:692
+#, kde-format
+msgid "Cannot list albums"
+msgstr "No s'han pogut llistar els àlbums"
+
+#: yfwindow.cpp:695
+#, kde-format
+msgid "Cannot list photos"
+msgstr "No s'han pogut llistar les fotografies"
+
+#: yfwindow.cpp:698
+#, kde-format
+msgid "Cannot update album info"
+msgstr "No s'ha pogut actualitzar la informació de l'àlbum"
+
+#: yfwindow.cpp:704
+#, kde-format
+msgid "Uploading Failed"
+msgstr "Ha fallat la pujada"
+
+#: yfwindow.cpp:705
+#, kde-format
+msgid ""
+"Failed to upload image %1\n"
+"Do you want to continue?"
+msgstr ""
+"Ha fallat en pujar la imatge %1\n"
+"Voleu continuar?"
+
+#: yfwindow.cpp:726
+#, kde-format
+msgid "Unknown error"
+msgstr "Error desconegut"

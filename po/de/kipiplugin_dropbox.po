@@ -1,0 +1,268 @@
+# Burkhard Lück <lueck@hube-lueck.de>, 2013, 2014, 2015.
+# Frederik Schwarzer <schwarzer@kde.org>, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2016-09-10 15:00+0100\n"
+"Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
+"Language-Team: German <kde-i18n-de@kde.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: dbtalker.cpp:317
+#, kde-format
+msgid "Error"
+msgstr "Fehler"
+
+#: dbtalker.cpp:360
+#, kde-format
+msgid "Failed to upload photo"
+msgstr "Das Hochladen des Fotos ist fehlgeschlagen."
+
+#: dbtalker.cpp:387
+#, kde-format
+msgid "Failed to list folders"
+msgstr "Die Liste der Ordner lässt sich nicht lesen."
+
+#: dbwindow.cpp:70
+#, kde-format
+msgid "Export to Dropbox"
+msgstr "Export zu Dropbox"
+
+#: dbwindow.cpp:72
+#, kde-format
+msgid "Start Upload"
+msgstr "Hochladen beginnen"
+
+#: dbwindow.cpp:73
+#, kde-format
+msgid "Start upload to Dropbox"
+msgstr "Hochladen zu Dropbox beginnen"
+
+#: dbwindow.cpp:92
+#, kde-format
+msgid "Dropbox Export"
+msgstr "Dropbox-Export"
+
+#: dbwindow.cpp:93
+#, kde-format
+msgid "A tool to export images to Dropbox"
+msgstr "Ein Werkzeug zum Export von Bildern zu Dropbox"
+
+#: dbwindow.cpp:95
+#, kde-format
+msgid "(c) 2013, Saurabh Patel"
+msgstr "(c) 2013, Saurabh Patel"
+
+#: dbwindow.cpp:97
+#, kde-format
+msgid "Saurabh Patel"
+msgstr "Saurabh Patel"
+
+#: dbwindow.cpp:98
+#, kde-format
+msgid "Author"
+msgstr "Autor"
+
+#: dbwindow.cpp:259
+#, kde-format
+msgctxt "@title:window"
+msgid "Error"
+msgstr "Fehler"
+
+#: dbwindow.cpp:260
+#, kde-format
+msgid "No image selected. Please select which images should be uploaded."
+msgstr ""
+"Es ist kein Bild ausgewählt. Bitte wählen Sie aus, welche Bilder hochgeladen "
+"werden sollen."
+
+#: dbwindow.cpp:266 dbwindow.cpp:386
+#, kde-format
+msgid "Login Failed"
+msgstr "Anmeldung fehlgeschlagen"
+
+#: dbwindow.cpp:267 dbwindow.cpp:387
+#, kde-format
+msgid "Authentication failed. Do you want to try again?"
+msgstr ""
+"Die Authentifizierung ist fehlgeschlagen. Möchten Sie es erneut versuchen?"
+
+#: dbwindow.cpp:291
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: dbwindow.cpp:295
+#, kde-format
+msgid "Dropbox export"
+msgstr "Dropbox-Export"
+
+#: dbwindow.cpp:328
+#, kde-format
+msgid "Uploading Failed"
+msgstr "Hochladen fehlgeschlagen"
+
+#: dbwindow.cpp:329
+#, kde-format
+msgid ""
+"Failed to upload photo to Dropbox.\n"
+"%1\n"
+"Do you want to continue?"
+msgstr ""
+"Fehler bei Hochladen der Fotos zu Dropbox: \n"
+"%1\n"
+"Möchten Sie fortfahren?"
+
+#: dbwindow.cpp:401 dbwindow.cpp:406
+#, kde-format
+msgid ""
+"Dropbox call failed:\n"
+"%1"
+msgstr ""
+"Der Aufruf von Dropbox ist fehlgeschlagen: \n"
+"%1"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_dropboxui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Export"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_dropboxui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Haupt-Werkzeugleiste"
+
+#: plugin_dropbox.cpp:90
+#, kde-format
+msgid "Export to &Dropbox..."
+msgstr "Export zu &Dropbox ..."
+
+#~ msgid "Authorize Dropbox"
+#~ msgstr "Dropbox autorisieren"
+
+#~ msgid ""
+#~ "Please follow the instructions in the browser. After logging in and "
+#~ "authorizing the application, press OK."
+#~ msgstr ""
+#~ "Bitte folgen Sie den Anweisungen im Fenster Ihres Webbrowsers. Nach der "
+#~ "Anmeldung und Autorisierung des Programms drücken Sie auf „OK“."
+
+#~ msgid ""
+#~ "The textbox is empty, please enter the code from the browser in the "
+#~ "textbox. To complete the authentication click \"Change Account\", or "
+#~ "\"Start Upload\" to authenticate again."
+#~ msgstr ""
+#~ "Das Textfeld ist leer. Bitte geben Sie die Daten aus dem Browser in das "
+#~ "Textfeld ein. Um die Authentifizierung fertigzustellen, klicken Sie auf "
+#~ "„Benutzerkonto wechseln“ oder auf „Hochladen beginnen“ und melden sich "
+#~ "erneut an."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Burkhard Lück"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "lueck@hube-lueck.de"
+
+#~ msgid "Dropbox New Folder"
+#~ msgstr "Neuer Ordner für Dropbox"
+
+#~ msgid "The name of the folder that will be created"
+#~ msgstr "Der Name des Ordners, der erstellt wird"
+
+#~ msgctxt "album edit"
+#~ msgid "Title:"
+#~ msgstr "Name:"
+
+#~ msgid "This is the list of images to upload to your Dropbox account."
+#~ msgstr ""
+#~ "Das ist die Liste von Bildern, die auf Ihr Dropbox-Benutzerkonto "
+#~ "hochgeladen werden."
+
+#~ msgid "This is a clickable link to open Dropbox in a browser."
+#~ msgstr ""
+#~ "Das ist eine anklickbare Verknüpfung, um Dropbox in einem Webbrowser zu "
+#~ "öffnen."
+
+#~ msgid "Account"
+#~ msgstr "Benutzerkonto"
+
+#~ msgid "This is the Dropbox account that is currently logged in."
+#~ msgstr ""
+#~ "Dies ist das Dropbox-Benutzerkonto, an dem Sie zurzeit angemeldet sind."
+
+#~ msgctxt "account settings"
+#~ msgid "Name:"
+#~ msgstr "Name:"
+
+#~ msgid "Change Account"
+#~ msgstr "Benutzerkonto wechseln"
+
+#~ msgid "Change Dropbox account for transfer"
+#~ msgstr "Dropbox-Benutzerkonto für die Übertragung wechseln"
+
+#~ msgid "Destination"
+#~ msgstr "Ziel"
+
+#~ msgid ""
+#~ "This is the Dropbox folder to which selected photos will be uploaded."
+#~ msgstr ""
+#~ "Das ist der Dropbox-Ordner, in den die ausgewählten Fotos hochgeladen "
+#~ "werden."
+
+#~ msgid "Folder:"
+#~ msgstr "Ordner:"
+
+#~ msgid "New Folder"
+#~ msgstr "Neuer Ordner"
+
+#~ msgid "Create new Dropbox folder"
+#~ msgstr "Neuen Dropbox-Ordner erstellen"
+
+#~ msgctxt "album list"
+#~ msgid "Reload"
+#~ msgstr "Neu laden"
+
+#~ msgid "Reload album list"
+#~ msgstr "Albenliste neu laden"
+
+#~ msgid "Options"
+#~ msgstr "Einstellungen"
+
+#~ msgid "These are the options that would be applied to photos before upload."
+#~ msgstr ""
+#~ "Diese Einstellungen werden vor dem Hochladen auf Ihre Fotos angewendet."
+
+#~ msgid "Resize photos before uploading"
+#~ msgstr "Größe der Fotos vor dem Hochladen ändern"
+
+#~ msgid "Maximum Dimension:"
+#~ msgstr "Maximalgröße:"
+
+#~ msgid "JPEG Quality:"
+#~ msgstr "JPEG-Qualität:"
+
+#~ msgid ""
+#~ "(c) 2013, Saurabh Patel\n"
+#~ "(c) 2015, Shourya Singh Gupta"
+#~ msgstr ""
+#~ "(c) 2013, Saurabh Patel\n"
+#~ "(c) 2015, Shourya Singh Gupta"
+
+#~ msgid "Author and maintainer"
+#~ msgstr "Autor und Betreuer"
+
+#~ msgid "Shourya Singh Gupta"
+#~ msgstr "Shourya Singh Gupta"
+
+#~ msgid "Developer"
+#~ msgstr "Entwickler"

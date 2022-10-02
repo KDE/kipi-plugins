@@ -1,0 +1,472 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Balázs Úr <urbalazs@gmail.com>, 2013, 2014.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2014-12-09 20:46+0100\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
+"Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: imageresize.cpp:116
+#, kde-format
+msgid "Error opening input file"
+msgstr "Hiba a bemeneti fájl megnyitásakor"
+
+#: imageresize.cpp:127
+#, kde-format
+msgid "Error opening temporary folder"
+msgstr "Hiba az átmeneti fájl megnyitásakor"
+
+#: imageresize.cpp:175
+#, kde-format
+msgid "Cannot resize image. Aborting."
+msgstr "Nem sikerült a kép átméretezése. Megszakítás."
+
+#: imageresize.cpp:186
+#, kde-format
+msgid "Cannot save resized image (JPEG). Aborting."
+msgstr "Nem sikerült az átméretezett kép mentése (JPEG). Megszakítás."
+
+#: imageresize.cpp:194
+#, kde-format
+msgid "Cannot save resized image (PNG). Aborting."
+msgstr "Nem sikerült az átméretezett kép mentése (PNG). Megszakítás."
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_sendimagesui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Exportálás"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_sendimagesui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Fő eszköztár"
+
+#: plugin_sendimages.cpp:115
+#, kde-format
+msgid "Email Images..."
+msgstr "Képek küldése e-mailben…"
+
+#: sendimages.cpp:133
+#, kde-format
+msgid "Email images"
+msgstr "Képek küldése e-mailben"
+
+#: sendimages.cpp:176
+#, kde-format
+msgid "Operation canceled by user"
+msgstr "A felhasználó megszakította a műveletet"
+
+#: sendimages.cpp:190
+#, kde-format
+msgid "Resizing %1"
+msgstr "%1 átméretezése"
+
+#: sendimages.cpp:203
+#, kde-format
+msgid "%1 resized successfully"
+msgstr "%1 sikeresen átméretezve"
+
+#: sendimages.cpp:212
+#, kde-format
+msgid "Failed to resize %1: %2"
+msgstr "%1 átméretezése nem sikerült: %2"
+
+#: sendimages.cpp:240
+#, kde-format
+msgid "There are no files to send"
+msgstr ""
+
+#: sendimages.cpp:258
+#, kde-format
+msgid "Build images properties file"
+msgstr "Képek tulajdonságai fájl készítése"
+
+#: sendimages.cpp:271
+#, kde-format
+msgid "no caption"
+msgstr "nincs felirat"
+
+#: sendimages.cpp:274
+#, kde-format
+msgid "no keywords"
+msgstr "nincsenek kulcsszavak"
+
+#: sendimages.cpp:276
+#, kde-format
+msgid ""
+"file \"%1\":\n"
+"Original images: %2\n"
+msgstr ""
+"file „%1”:\n"
+"Eredeti képek: %2\n"
+
+#: sendimages.cpp:279
+#, kde-format
+msgid "Comments: %1\n"
+msgstr "Megjegyzések: %1\n"
+
+#: sendimages.cpp:282
+#, kde-format
+msgid "Tags: %1\n"
+msgstr "Címkék: %1\n"
+
+#: sendimages.cpp:285
+#, kde-format
+msgid "Rating: %1\n"
+msgstr "Értékelés: %1\n"
+
+#: sendimages.cpp:290 sendimages.cpp:298
+#, kde-format
+msgid "properties.txt"
+msgstr "properties.txt"
+
+#: sendimages.cpp:297
+#, fuzzy, kde-format
+#| msgid "Image properties file done"
+msgid "Image properties file cannot be opened"
+msgstr "A képtulajdonságok fájl kész"
+
+#: sendimages.cpp:306
+#, kde-format
+msgid "Image properties file done"
+msgstr "A képtulajdonságok fájl kész"
+
+#: sendimages.cpp:324
+#, kde-format
+msgid "Processing Failed"
+msgstr ""
+
+#: sendimages.cpp:325
+#, fuzzy, kde-format
+#| msgid ""
+#| "The images listed below cannot be resized.\n"
+#| "Do you want them to be added as attachments (without resizing)?"
+msgid ""
+"Some images cannot be resized.\n"
+"Do you want them to be added as attachments without resizing?"
+msgstr ""
+"A lent listázott képeket nem sikerült átméretezni.\n"
+"Szeretné hozzáadni őket mellékletként (átméretezés nélkül)?"
+
+#: sendimages.cpp:390
+#, kde-format
+msgid ""
+"The file \"%1\" is too big to be sent, please reduce its size or change your "
+"settings"
+msgstr ""
+"A(z) „%1” fájl túl nagy a küldéshez, kérjük csökkentse a méretét vagy "
+"változtassa meg a beállításokat"
+
+#: sendimages.cpp:442
+#, fuzzy, kde-format
+#| msgid "Starting default KDE email program..."
+msgid "Starting default desktop email program..."
+msgstr "A KDE alapértelmezett e-mail programjának indítása…"
+
+#: sendimages.cpp:674
+#, kde-format
+msgid "Failed to start \"%1\" program. Check your system."
+msgstr "Nem sikerült elindítani a(z) „%1” programot. Ellenőrizze a rendszerét."
+
+#: sendimages.cpp:687
+#, kde-format
+msgid "Starting \"%1\" program..."
+msgstr "A(z) „%1” program indítása…"
+
+#: sendimages.cpp:697
+#, kde-format
+msgid "After having sent your images by email..."
+msgstr "A képek e-mailben való küldése után…"
+
+#: sendimages.cpp:698
+#, kde-format
+msgid "Press 'Close' button to clean up temporary files"
+msgstr "Nyomja meg a „Bezárás” gombot az átmeneti fájlok törléséhez"
+
+#: sendimagesdialog.cpp:81
+#, kde-format
+msgid "Email Images Options"
+msgstr "Képek küldése e-mailben beállítások"
+
+#: sendimagesdialog.cpp:84
+#, kde-format
+msgctxt "@action:button"
+msgid "&Send"
+msgstr ""
+
+#: sendimagesdialog.cpp:103
+#, kde-format
+msgid "Send Images"
+msgstr "Képek küldése"
+
+#: sendimagesdialog.cpp:104
+#, fuzzy, kde-format
+#| msgid "A plugin to e-mail items"
+msgid "A tool to e-mail items"
+msgstr "Egy bővítmény elemek küldéséhez e-mailben"
+
+#: sendimagesdialog.cpp:105
+#, fuzzy, kde-format
+#| msgid "(c) 2003-2013, Gilles Caulier"
+msgid "(c) 2003-2016, Gilles Caulier"
+msgstr "© Gilles Caulier, 2003-2013."
+
+#: sendimagesdialog.cpp:107
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: sendimagesdialog.cpp:107
+#, kde-format
+msgid "Author and Maintainer"
+msgstr "Szerző és karbantartó"
+
+#: sendimagesdialog.cpp:110
+#, kde-format
+msgid "Michael Hoechstetter"
+msgstr "Michael Hoechstetter"
+
+#: sendimagesdialog.cpp:110 sendimagesdialog.cpp:113
+#, kde-format
+msgid "Developer"
+msgstr "Fejlesztő"
+
+#: sendimagesdialog.cpp:113
+#, kde-format
+msgid "Tom Albers"
+msgstr "Tom Albers"
+
+#: settingswidget.cpp:91
+#, kde-format
+msgid "Mail program:"
+msgstr "Levelezőprogram:"
+
+#: settingswidget.cpp:94
+#, fuzzy, kde-format
+#| msgctxt "default mail agent"
+#| msgid "Default"
+msgctxt "default desktop mail agent"
+msgid "Default"
+msgstr "Alapértelmezett"
+
+#: settingswidget.cpp:106
+#, fuzzy, kde-format
+#| msgid ""
+#| "Select your preferred external email program here. <b>Default</b> is the "
+#| "current email program set in KDE System Settings."
+msgid ""
+"Select your preferred external email program here. <b>Default</b> is the "
+"current email program set in desktop system settings."
+msgstr ""
+"Itt válassza ki az előnyben részesített külső levelezőprogramot. Az "
+"<b>alapértelmezett</b> a KDE rendszerbeállításaiban beállított jelenlegi "
+"levelezőprogram."
+
+#: settingswidget.cpp:112
+#, kde-format
+msgid "Attach a file with image properties from %1"
+msgstr "Fájl csatolása képtulajdonságokkal innen: %1"
+
+#: settingswidget.cpp:115
+#, kde-format
+msgid ""
+"If you enable this option, all image properties set by %1 as Comments, "
+"Rating, or Tags, will be added as an attached file."
+msgstr ""
+"Ha engedélyezi ezt a lehetőséget, minden %1 által beállított képtulajdonság "
+"(megjegyzések, értékelés vagy címkék) hozzá lesznek adva csatolt fájlként."
+
+#: settingswidget.cpp:125
+#, kde-format
+msgid " MB"
+msgstr " MB"
+
+#: settingswidget.cpp:127
+#, kde-format
+msgid "Maximum email size limit:"
+msgstr "Maximális e-mail méretkorlát:"
+
+#: settingswidget.cpp:132
+#, kde-format
+msgid "Adjust image properties"
+msgstr "Képtulajdonságok módosítása"
+
+#: settingswidget.cpp:134
+#, kde-format
+msgid ""
+"If you enable this option, all images to be sent can be resized and "
+"recompressed."
+msgstr ""
+"Ha engedélyezi ezt a lehetőséget, minden elküldendő kép átméretezhető és "
+"újratömöríthető lesz."
+
+#: settingswidget.cpp:137
+#, kde-format
+msgid "Image Properties"
+msgstr "Képtulajdonságok"
+
+#: settingswidget.cpp:141 settingswidget.cpp:167
+#, kde-format
+msgid "Very Small (320 pixels)"
+msgstr "Nagyon kicsi (320 képpont)"
+
+#: settingswidget.cpp:142 settingswidget.cpp:168
+#, kde-format
+msgid "Small (640 pixels)"
+msgstr "Kicsi (640 képpont)"
+
+#: settingswidget.cpp:143 settingswidget.cpp:169
+#, kde-format
+msgid "Medium (800 pixels)"
+msgstr "Közepes (800 képpont)"
+
+#: settingswidget.cpp:144 settingswidget.cpp:170
+#, kde-format
+msgid "Big (1024 pixels)"
+msgstr "Nagy (1024 képpont)"
+
+#: settingswidget.cpp:145 settingswidget.cpp:171
+#, kde-format
+msgid "Very Big (1280 pixels)"
+msgstr "Nagyon nagy (1280 képpont)"
+
+#: settingswidget.cpp:146 settingswidget.cpp:172
+#, kde-format
+msgid "Large - for printing (1600 pixels)"
+msgstr "Óriási - nyomtatáshoz (1600 képpont)"
+
+#: settingswidget.cpp:147 settingswidget.cpp:173
+#, fuzzy, kde-format
+#| msgid "Small (640 pixels)"
+msgid "Full HD (1920 pixels)"
+msgstr "Kicsi (640 képpont)"
+
+#: settingswidget.cpp:148 settingswidget.cpp:174
+#, fuzzy, kde-format
+#| msgid "Small (640 pixels)"
+msgid "Ultra HD (3840 pixels)"
+msgstr "Kicsi (640 képpont)"
+
+#: settingswidget.cpp:150
+#, fuzzy, kde-format
+#| msgid ""
+#| "<p>Select the size of the images that are to be sent:</p><p><b>%1</b>: "
+#| "use this if you have a very slow Internet connection or the target "
+#| "mailbox size is very limited.</p><p><b>%2</b>: use this if you have a "
+#| "slow Internet connection and the target mailbox size is limited.</p><p><b>"
+#| "%3</b>: this is the default value for medium Internet connection speed "
+#| "and target mailbox size.</p><p><b>%4</b>: use this if you have a high-"
+#| "speed Internet connection and the target mailbox size is not limited.</"
+#| "p><p><b>%5</b>: use this if you have no size or speed restrictions.</"
+#| "p><p><b>%6</b>: use this only for printing purposes.</p>"
+msgid ""
+"<p>Select the size of the images that are to be sent:</p><p><b>%1</b>: use "
+"this if you have a very slow Internet connection or the target mailbox size "
+"is very limited.</p><p><b>%2</b>: use this if you have a slow Internet "
+"connection and the target mailbox size is limited.</p><p><b>%3</b>: this is "
+"the default value for medium Internet connection speed and target mailbox "
+"size.</p><p><b>%4</b>: use this if you have a high-speed Internet connection "
+"and the target mailbox size is not limited.</p><p><b>%5</b>: use this if you "
+"have no size or speed restrictions.</p><p><b>%6</b>: use this only for "
+"printing purposes.</p><p><b>%7</b>: use this for optimal viewing on Full HD "
+"displays. Only if you have a high-speed Internet connection and the target "
+"mailbox size is not limited.</p><p><b>%8</b>: use this for optimal viewing "
+"on Ultra HD displays. Only if you have a high-speed Internet connection and "
+"the target mailbox size is not limited.</p>"
+msgstr ""
+"<p>Válassza ki az elküldendő képek méretét:</p><p><b>%1</b>: akkor használja "
+"ezt, ha nagyon lassú internetkapcsolata van vagy ha a cél postafiók mérete "
+"erősen korlátolt.</p><p><b>%2</b>: akkor használja ezt, ha lassú "
+"internetkapcsolata van és a cél postafiók mérete korlátolt.</p><p><b>%3</b>: "
+"ez az alapértelmezett érték közepes internetkapcsolat sebességhez és cél "
+"postafiókmérethez.</p><p><b>%4</b>: akkor használja ezt, ha gyors "
+"internetkapcsolata van és a cél postafiók mérete nem korlátolt.</p><p><b>%5</"
+"b>: akkor használja ezt, ha nincs méret vagy sebesség korlátozása.</p><p><b>"
+"%6</b>: ezt csak nyomtatási célokra használja.</p>"
+
+#: settingswidget.cpp:177
+#, kde-format
+msgid "Image size:"
+msgstr "Képméret:"
+
+#: settingswidget.cpp:186
+#, kde-format
+msgid "<p>Select the file format of the image files to be sent.</p>"
+msgstr "<p>Az elküldendő képfájlok fájlformátumának kiválasztása.</p>"
+
+#: settingswidget.cpp:187
+#, kde-format
+msgid ""
+"<p><b>JPEG</b>: The Joint Photographic Experts Group file format is a good "
+"web file format but it uses lossy compression.</p><p><b>PNG</b>: the "
+"Portable Network Graphics format is an extensible file format for the "
+"lossless, portable, well-compressed storage of raster images. PNG provides a "
+"patent-free replacement for GIF and can also replace many common uses of "
+"TIFF. PNG is designed to work well in online viewing applications, such as "
+"the World Wide Web, so it is fully streamable with a progressive display "
+"option. Also, PNG can store gamma and chromaticity data for improved color-"
+"matching on heterogeneous platforms.</p>"
+msgstr ""
+"<p><b>JPEG</b>: A Joint Photographic Experts Group fájlformátum egy jó web "
+"fájlformátum, de veszteséges tömörítést használ.</p><p><b>PNG</b>: a "
+"Portable Network Graphics formátum egy bővíthető fájlformátum a bittérképes "
+"képek veszteségmentes, hordozható, jól tömörített tárolásához. A PNG "
+"szabadalmaktól mentes alternatívát nyújt a GIF-fel szemben és leváltható "
+"vele a TIFF számos gyakori használata. A PNG-t arra tervezték, hogy az "
+"online megjelenítő alkalmazásokban - mint a World Wide Web - jól működjön, "
+"így teljesen streamelhető progresszív megjelenítési lehetőséggel. A PNG "
+"képes továbbá gamma és színességi adatok tárolására is a javított "
+"színillesztéshez a különféle platformokon.</p>"
+
+#: settingswidget.cpp:197
+#, kde-format
+msgid "Image format:"
+msgstr "Képformátum:"
+
+#: settingswidget.cpp:206
+#, kde-format
+msgid "<p>The new compression value of JPEG images to be sent:</p>"
+msgstr "<p>Az elküldendő JPEG képek tömörítésének új értéke:</p>"
+
+#: settingswidget.cpp:207
+#, kde-format
+msgid ""
+"<p><b>1</b>: very high compression<br/><b>25</b>: high compression<br/"
+"><b>50</b>: medium compression<br/><b>75</b>: low compression (default "
+"value)<br/><b>100</b>: no compression</p>"
+msgstr ""
+"<p><b>1</b>: nagyon magas tömörítés<br/><b>25</b>: magas tömörítés<br/"
+"><b>50</b>: közepes tömörítés<br/><b>75</b>: alacsony tömörítés "
+"(alapértelmezett érték)<br/><b>100</b>: nincs tömörítés</p>"
+
+#: settingswidget.cpp:215
+#, kde-format
+msgid "Image quality:"
+msgstr "Képminőség:"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Úr Balázs"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "urbalazs@gmail.com"
+
+#~ msgid "Failed to resize images"
+#~ msgstr "Nem sikerült a képek átméretezése"
+
+#~ msgid "Huge - for printing (1600 pixels)"
+#~ msgstr "Óriási - nyomtatáshoz (1600 képpont)"

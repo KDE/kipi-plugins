@@ -1,0 +1,291 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Volkan Gezer <volkangezer@gmail.com>, 2013.
+# Emir SARI <emir_sari@icloud.com>, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: extragear-graphics-kde4\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2022-04-11 11:13+0300\n"
+"Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
+"Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 21.12.3\n"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_rajceui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Dışa Aktar"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_rajceui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Ana Araç Çubuğu"
+
+#: newalbumdialog.cpp:47
+#, kde-format
+msgid "Visibility"
+msgstr "Görünürlük"
+
+#: newalbumdialog.cpp:48
+#, kde-format
+msgid "Set the visibility of the album"
+msgstr "Albümün görünürlüğünü ayarla"
+
+#: newalbumdialog.cpp:50
+#, kde-format
+msgid "Public"
+msgstr "Genel"
+
+#: plugin_rajce.cpp:90
+#, kde-format
+msgid "Export to &Rajce.net..."
+msgstr "&Rajce.net'e Aktar..."
+
+#: rajcewidget.cpp:120
+#, kde-format
+msgid "Not logged in"
+msgstr "Girilmedi"
+
+#: rajcewidget.cpp:184
+#, kde-format
+msgid "Unknown error"
+msgstr "Bilinmeyen hata"
+
+#: rajcewidget.cpp:185
+#, kde-format
+msgid "Invalid command"
+msgstr "Geçersiz komut"
+
+#: rajcewidget.cpp:186
+#, kde-format
+msgid "Invalid login name or password"
+msgstr "Geçersiz kullanıcı adı veya parola"
+
+#: rajcewidget.cpp:187
+#, kde-format
+msgid "Session expired"
+msgstr "Oturum süresi doldu"
+
+#: rajcewidget.cpp:189 rajcewidget.cpp:190
+#, kde-format
+msgid "Unknown album"
+msgstr "Bilinmeyen albüm"
+
+#: rajcewidget.cpp:191
+#, kde-format
+msgid "Failed to open album"
+msgstr "Albüm açılamadı"
+
+#: rajcewidget.cpp:192
+#, kde-format
+msgid "The album name cannot be empty"
+msgstr "Albüm ismi boş bırakılamaz"
+
+#: rajcewidget.cpp:193
+#, kde-format
+msgid "Failed to create album"
+msgstr "Albüm oluşturma başarısız"
+
+#: rajcewidget.cpp:194
+#, kde-format
+msgid "Album does not exist"
+msgstr "Albüm mevcut değil"
+
+#: rajcewidget.cpp:197 rajcewidget.cpp:199
+#, kde-format
+msgid "File upload failed"
+msgstr "Dosya yükleme başarısız"
+
+#: rajcewidget.cpp:200
+#, kde-format
+msgid "Unsupported file extension"
+msgstr "Desteklenmeyen dosya uzantısı"
+
+#: rajcewidget.cpp:269
+#, kde-format
+msgid "Logging in %v%"
+msgstr "Oturum açılıyor %%v"
+
+#: rajcewidget.cpp:270
+#, kde-format
+msgid "Logging out %v%"
+msgstr "Çıkış yapılıyor %%v"
+
+#: rajcewidget.cpp:271
+#, kde-format
+msgid "Loading albums %v%"
+msgstr "Albümler yükleniyor %%v"
+
+#: rajcewidget.cpp:272
+#, kde-format
+msgid "Creating album %v%"
+msgstr "Albüm oluşturuluyor %%v"
+
+#: rajcewidget.cpp:273
+#, kde-format
+msgid "Opening album %v%"
+msgstr "Albüm açılıyor %%v"
+
+#: rajcewidget.cpp:274
+#, kde-format
+msgid "Closing album %v%"
+msgstr "Albüm kapatılıyor %%v"
+
+#: rajcewidget.cpp:275
+#, kde-format
+msgid "Adding photos %v%"
+msgstr "Fotoğraflar ekleniyor %%v"
+
+#: rajcewindow.cpp:53
+#, kde-format
+msgid "Export to Rajce.net"
+msgstr "Rajce.net'e Aktar"
+
+#: rajcewindow.cpp:55
+#, kde-format
+msgid "Start Upload"
+msgstr "Gönderimi Başlat"
+
+#: rajcewindow.cpp:56
+#, kde-format
+msgid "Start upload to Rajce.net"
+msgstr "Rajce.net'e gönderimi başlat"
+
+#: rajcewindow.cpp:71
+#, kde-format
+msgid "Rajce.net Export"
+msgstr "Rajce.net Dışa Aktarımı"
+
+#: rajcewindow.cpp:72
+#, kde-format
+msgid "A tool to export image collections to Rajce.net."
+msgstr "Resim koleksiyonlarını Rajce.net'e göndermeye yarayan bir araç."
+
+#: rajcewindow.cpp:74
+#, kde-format
+msgid "(c) 2011-2013, Lukas Krejci"
+msgstr "(c) 2011-2013, Lukas Krejci"
+
+#: rajcewindow.cpp:76
+#, kde-format
+msgid "Lukas Krejci"
+msgstr "Lukas Krejci"
+
+#: rajcewindow.cpp:77
+#, kde-format
+msgid "Author"
+msgstr "Yazar"
+
+#~ msgid "Login:"
+#~ msgstr "Kullanıcı adı:"
+
+#~ msgid "Password:"
+#~ msgstr "Parola:"
+
+#~ msgid "&OK"
+#~ msgstr "&Tamam"
+
+#~ msgid "&Cancel"
+#~ msgstr "İ&ptal"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Volkan Gezer"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "volkangezer@gmail.com"
+
+#~ msgid "New Album"
+#~ msgstr "Yeni Albüm"
+
+#~ msgid "Name"
+#~ msgstr "İsim"
+
+#~ msgid "Description"
+#~ msgstr "Açıklama"
+
+#~ msgid "This is the list of images to upload to your Rajce.net account."
+#~ msgstr "Bu, Rajce.net hesabınıza yükleyeceğiniz resimlerin listesidir."
+
+#~ msgid ""
+#~ "This is a clickable link to open the Rajce.net home page in a web browser."
+#~ msgstr ""
+#~ "Bu Rajce.net ana sayfasını bir web tarayıcısında açmak için tıklanabilir "
+#~ "bir bağlantıdır."
+
+#~ msgid "Account"
+#~ msgstr "Hesap"
+
+#~ msgid "This is the Rajce.net account that will be used to authenticate."
+#~ msgstr "Bu, oturum açmakta kullanılan Rajce.net hesabıdır."
+
+#~ msgctxt "Rajce.net account login"
+#~ msgid "Anonymous"
+#~ msgstr "Anonim"
+
+#~ msgid "Login as anonymous to Rajce.net web service."
+#~ msgstr "Rajce.net web hizmetine anonim olarak oturum aç."
+
+#~ msgid "Rajce.net Account"
+#~ msgstr "Rajce.net Hesabı"
+
+#~ msgid "Login to Rajce.net using username and password."
+#~ msgstr "Rajce.net'e kullanıcı adı ve parola girerek oturum aç."
+
+#~ msgctxt "Rajce.net account settings"
+#~ msgid "Name:"
+#~ msgstr "İsim:"
+
+#~ msgid "Change Account"
+#~ msgstr "Hesabı Değiştir"
+
+#~ msgid "Change Rajce.net Account used to authenticate"
+#~ msgstr "Oturum açmakta kullanılan Rajce.net hesabını değiştir"
+
+#~ msgid "Album"
+#~ msgstr "Albüm"
+
+#~ msgid "This is the Rajce.net album that will be used for transfer."
+#~ msgstr "Bu, aktarım için kullanılacak Rajce.net albümüdür."
+
+#~ msgid "Create new Rajce.net album"
+#~ msgstr "Yeni Rajce.net albümü oluştur"
+
+#~ msgctxt "reload album list"
+#~ msgid "Reload"
+#~ msgstr "Yeniden Yükle"
+
+#~ msgid "Reload album list"
+#~ msgstr "Albüm listesini yeniden yükle"
+
+#~ msgid "Destination"
+#~ msgstr "Hedef"
+
+#~ msgid "This is the location where Rajce.net images will be downloaded."
+#~ msgstr "Bu, Rajce.net resimlerinin indirileceği konumdur."
+
+#~ msgid "Options"
+#~ msgstr "Seçenekler"
+
+#~ msgid "These are options that will be applied to images before upload."
+#~ msgstr "Yüklemeden önce fotoğraflara uygulanacak seçenekler."
+
+#~ msgid "Maximum dimension:"
+#~ msgstr "En büyük boyut:"
+
+#~ msgid "JPEG quality:"
+#~ msgstr "JPEG kalitesi:"
+
+#~ msgid "Author and maintainer"
+#~ msgstr "Geliştirici ve projeyi yürüten"

@@ -1,0 +1,294 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Martin Schlander <mschlander@opensuse.org>, 2011, 2012, 2013, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2016-06-14 18:23+0100\n"
+"Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
+"Language-Team: Danish <kde-i18n-doc@kde.org>\n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 2.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_rajceui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Eksportér"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_rajceui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Hovedværktøjslinje"
+
+#: newalbumdialog.cpp:47
+#, kde-format
+msgid "Visibility"
+msgstr "Synlighed"
+
+#: newalbumdialog.cpp:48
+#, kde-format
+msgid "Set the visibility of the album"
+msgstr "Angiv albummets synlighed"
+
+#: newalbumdialog.cpp:50
+#, kde-format
+msgid "Public"
+msgstr "Offentlig"
+
+#: plugin_rajce.cpp:90
+#, kde-format
+msgid "Export to &Rajce.net..."
+msgstr "Eksportér til &Rajce.net..."
+
+#: rajcewidget.cpp:120
+#, kde-format
+msgid "Not logged in"
+msgstr "Ikke logget på"
+
+#: rajcewidget.cpp:184
+#, kde-format
+msgid "Unknown error"
+msgstr "Ukendt fejl"
+
+#: rajcewidget.cpp:185
+#, kde-format
+msgid "Invalid command"
+msgstr "Ugyldig kommando"
+
+#: rajcewidget.cpp:186
+#, kde-format
+msgid "Invalid login name or password"
+msgstr "Ugyldigt login-navn eller adgangskode"
+
+#: rajcewidget.cpp:187
+#, kde-format
+msgid "Session expired"
+msgstr "Session udløbet"
+
+#: rajcewidget.cpp:189 rajcewidget.cpp:190
+#, kde-format
+msgid "Unknown album"
+msgstr "Ukendt album"
+
+#: rajcewidget.cpp:191
+#, kde-format
+msgid "Failed to open album"
+msgstr "Kunne ikke åbne album"
+
+#: rajcewidget.cpp:192
+#, kde-format
+msgid "The album name cannot be empty"
+msgstr "Albummets navnet må ikke være tomt"
+
+#: rajcewidget.cpp:193
+#, kde-format
+msgid "Failed to create album"
+msgstr "Kunne ikke oprette album"
+
+#: rajcewidget.cpp:194
+#, kde-format
+msgid "Album does not exist"
+msgstr "Albummet findes ikke"
+
+#: rajcewidget.cpp:197 rajcewidget.cpp:199
+#, kde-format
+msgid "File upload failed"
+msgstr "Fil-upload mislykkedes"
+
+#: rajcewidget.cpp:200
+#, kde-format
+msgid "Unsupported file extension"
+msgstr "Ikke understøttet filendelse"
+
+#: rajcewidget.cpp:269
+#, kde-format
+msgid "Logging in %v%"
+msgstr "Logger ind %v%"
+
+#: rajcewidget.cpp:270
+#, kde-format
+msgid "Logging out %v%"
+msgstr "Logger ud %v%"
+
+#: rajcewidget.cpp:271
+#, kde-format
+msgid "Loading albums %v%"
+msgstr "Indlæser albummer %v%"
+
+#: rajcewidget.cpp:272
+#, kde-format
+msgid "Creating album %v%"
+msgstr "Opretter album %v%"
+
+#: rajcewidget.cpp:273
+#, kde-format
+msgid "Opening album %v%"
+msgstr "Åbner album %v%"
+
+#: rajcewidget.cpp:274
+#, kde-format
+msgid "Closing album %v%"
+msgstr "Lukker album %v%"
+
+#: rajcewidget.cpp:275
+#, kde-format
+msgid "Adding photos %v%"
+msgstr "Tilføjer fotos %v%"
+
+#: rajcewindow.cpp:53
+#, kde-format
+msgid "Export to Rajce.net"
+msgstr "Eksportér til Rajce.net"
+
+#: rajcewindow.cpp:55
+#, kde-format
+msgid "Start Upload"
+msgstr "Start upload"
+
+#: rajcewindow.cpp:56
+#, kde-format
+msgid "Start upload to Rajce.net"
+msgstr "Start upload til Rajce.net"
+
+#: rajcewindow.cpp:71
+#, kde-format
+msgid "Rajce.net Export"
+msgstr "Eksport til Rajce.net"
+
+#: rajcewindow.cpp:72
+#, fuzzy, kde-format
+#| msgid "A Kipi plugin to export image collections to Rajce.net."
+msgid "A tool to export image collections to Rajce.net."
+msgstr "Et KIPI-plugin til eksport af billedsamlinger til Rajce.net."
+
+#: rajcewindow.cpp:74
+#, kde-format
+msgid "(c) 2011-2013, Lukas Krejci"
+msgstr "(c) 2011-2013, Lukas Krejci"
+
+#: rajcewindow.cpp:76
+#, kde-format
+msgid "Lukas Krejci"
+msgstr "Lukas Krejci"
+
+#: rajcewindow.cpp:77
+#, kde-format
+msgid "Author"
+msgstr "Ophavsmand"
+
+#~ msgid "Login:"
+#~ msgstr "Login:"
+
+#~ msgid "Password:"
+#~ msgstr "Adgangskode:"
+
+#~ msgid "&OK"
+#~ msgstr "&O.k."
+
+#~ msgid "&Cancel"
+#~ msgstr "&Annullér"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Martin Schlander"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "mschlander@opensuse.org"
+
+#~ msgid "New Album"
+#~ msgstr "Nyt album"
+
+#~ msgid "Name"
+#~ msgstr "Navn"
+
+#~ msgid "Description"
+#~ msgstr "Beskrivelse"
+
+#~ msgid "This is the list of images to upload to your Rajce.net account."
+#~ msgstr ""
+#~ "Dette er listen over billeder der skal uploades til din Rajce.net-konto."
+
+#~ msgid ""
+#~ "This is a clickable link to open the Rajce.net home page in a web browser."
+#~ msgstr ""
+#~ "Dette er et klikbart link til at åbne Rajce.net-hjemmesiden i en "
+#~ "webbrowser."
+
+#~ msgid "Account"
+#~ msgstr "Konto"
+
+#~ msgid "This is the Rajce.net account that will be used to authenticate."
+#~ msgstr "Dette er den Rajce.net-konto der vil blive brugt til godkendelse."
+
+#~ msgctxt "Rajce.net account login"
+#~ msgid "Anonymous"
+#~ msgstr "Anonym"
+
+#~ msgid "Login as anonymous to Rajce.net web service."
+#~ msgstr "Log ind på Rajce.net-tjenesten som anonym."
+
+#~ msgid "Rajce.net Account"
+#~ msgstr "Rajce.net-konto"
+
+#~ msgid "Login to Rajce.net using username and password."
+#~ msgstr "Log ind på Rajce.net med brugernavn og adgangskode."
+
+#~ msgctxt "Rajce.net account settings"
+#~ msgid "Name:"
+#~ msgstr "Navn:"
+
+#~ msgid "Change Account"
+#~ msgstr "Skift konto"
+
+#~ msgid "Change Rajce.net Account used to authenticate"
+#~ msgstr "Vælg en anden Rajce.net-konto til brug ved godkendelse"
+
+#~ msgid "Album"
+#~ msgstr "Album"
+
+#~ msgid "This is the Rajce.net album that will be used for transfer."
+#~ msgstr "Dette er den Rajce.net-konto der vil blive brugt ved overførsel."
+
+#~ msgid "Create new Rajce.net album"
+#~ msgstr "Opret nyt Rajce.net-album"
+
+#~ msgctxt "reload album list"
+#~ msgid "Reload"
+#~ msgstr "Genindlæs"
+
+#~ msgid "Reload album list"
+#~ msgstr "Genindlæs albumliste"
+
+#~ msgid "Destination"
+#~ msgstr "Destination"
+
+#~ msgid "This is the location where Rajce.net images will be downloaded."
+#~ msgstr "Dette er den placering Rajce.net-billeder vil blive downloadet til."
+
+#~ msgid "Options"
+#~ msgstr "Indstillinger"
+
+#~ msgid "These are options that will be applied to images before upload."
+#~ msgstr "Disse indstillinger vil blive anvendt til billeder før upload."
+
+#~ msgid "Maximum dimension:"
+#~ msgstr "Maksimal dimension:"
+
+#~ msgid "JPEG quality:"
+#~ msgstr "JPEG-kvalitet:"
+
+#~ msgid "Author and maintainer"
+#~ msgstr "Ophavsmand og vedligeholder"
+
+#~ msgid "Handbook"
+#~ msgstr "Håndbog"

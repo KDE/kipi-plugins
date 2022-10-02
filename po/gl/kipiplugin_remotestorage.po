@@ -1,0 +1,197 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Xosé <xosecalvo@gmail.com>, 2009.
+# Adrian Chaves Fernandez <adriyetichaves@gmail.com>, 2012, 2015, 2018.
+# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2019.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2019-01-01 13:35+0100\n"
+"Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
+"Language-Team: Galician <kde-i18n-doc@kde.org>\n"
+"Language: gl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: KioExportWidget.cpp:61
+#, kde-format
+msgid "Target location: "
+msgstr "Localización do destino: "
+
+#: KioExportWidget.cpp:62
+#, kde-format
+msgid ""
+"Sets the target address to upload the images to. This can be any address as "
+"used in Dolphin or Konqueror, e.g. ftp://my.server.org/sub/folder."
+msgstr ""
+"Configura o enderezo de destino ao que enviar as imaxes. Isto pode ser "
+"calquera enderezo, tal e como se utilizan en Dolphin ou Konqueror, p.ex. "
+"ftp://meu.servidor.org/sub/cartafol."
+
+#: KioExportWidget.cpp:66
+#, kde-format
+msgid "Select target location..."
+msgstr "Seleccionar a localización do destino…"
+
+#: KioExportWidget.cpp:72
+#, kde-format
+msgid "This is the list of images to upload to the specified target."
+msgstr "Esta é a lista das imaxes que quere enviar ao destino indicado."
+
+#: KioExportWidget.cpp:134
+#, kde-format
+msgid "Select target..."
+msgstr "Seleccionar o destino…"
+
+#: KioExportWidget.cpp:135
+#, kde-format
+msgid "All Files (*)"
+msgstr "Todos os ficheiros (*)"
+
+#: KioExportWidget.cpp:155
+#, kde-format
+msgid "<not selected>"
+msgstr "<sen seleccionar>"
+
+#: KioExportWindow.cpp:64
+#, kde-format
+msgid "Export to Remote Storage"
+msgstr "Exportar a un almacenamento remoto"
+
+#: KioExportWindow.cpp:67
+#, kde-format
+msgid "Start export"
+msgstr "Iniciar a exportación"
+
+#: KioExportWindow.cpp:68
+#, kde-format
+msgid "Start export to the specified target"
+msgstr "Iniciar a exportación ao destino indicado"
+
+#: KioExportWindow.cpp:84
+#, kde-format
+msgid "Export to remote storage"
+msgstr "Exportar a un almacenamento remoto"
+
+#: KioExportWindow.cpp:85
+#, kde-format
+msgid "A tool to export images over network using KIO-Slave"
+msgstr ""
+"Unha ferramenta para exportar imaxes a través dunha rede empregando KIO-Slave"
+
+#: KioExportWindow.cpp:86 KioImportWindow.cpp:83
+#, kde-format
+msgid "(c) 2009, Johannes Wienke"
+msgstr "© 2009, Johannes Wienke"
+
+#: KioExportWindow.cpp:88 KioImportWindow.cpp:85
+#, kde-format
+msgid "Johannes Wienke"
+msgstr "Johannes Wienke"
+
+#: KioExportWindow.cpp:89 KioImportWindow.cpp:86
+#, kde-format
+msgid "Developer and maintainer"
+msgstr "Desenvolvedor e mantedor"
+
+#: KioExportWindow.cpp:198
+#, kde-format
+msgid "Upload not completed"
+msgstr "Non rematou o envío"
+
+#: KioExportWindow.cpp:199
+#, kde-format
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to export these images now."
+msgstr ""
+"Algunhas das imaxes non se transferiron e están aínda na lista. Pode "
+"intentar exportar de novo estas imaxes agora."
+
+#: KioImportWidget.cpp:52
+#, kde-format
+msgid "This is the list of images to import into the current album."
+msgstr "Esta é a lista de imaxes que importar para o álbum actual."
+
+#: KioImportWindow.cpp:60
+#, kde-format
+msgid "Import from Remote Storage"
+msgstr "Importar dun almacenamento remoto"
+
+#: KioImportWindow.cpp:64
+#, kde-format
+msgid "Start import"
+msgstr "Iniciar a importación"
+
+#: KioImportWindow.cpp:65
+#, kde-format
+msgid "Start importing the specified images into the currently selected album."
+msgstr "Iniciar a importación das imaxes indicadas para o álbum seleccionado."
+
+#: KioImportWindow.cpp:81
+#, kde-format
+msgid "Import from remote storage"
+msgstr "Importar dun almacenamento remoto"
+
+#: KioImportWindow.cpp:82
+#, kde-format
+msgid "A tool to import images over network"
+msgstr "Unha ferramenta para importar imaxes a través dunha rede."
+
+#: KioImportWindow.cpp:137
+#, kde-format
+msgid "Import not completed"
+msgstr "Non rematou a importación"
+
+#: KioImportWindow.cpp:138
+#, kde-format
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to import these images now."
+msgstr ""
+"Algunhas das imaxes non se transferiron e están aínda na lista. Pode "
+"intentar importar de novo estas imaxes agora."
+
+#. i18n: ectx: Menu (Import)
+#: kipiplugin_remotestorageui.rc:7
+#, kde-format
+msgid "&Import"
+msgstr "&Importar"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_remotestorageui.rc:11
+#, kde-format
+msgid "&Export"
+msgstr "&Exportar"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_remotestorageui.rc:17
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Barra de ferramentas principal"
+
+#: plugin_remotestorage.cpp:93
+#, kde-format
+msgid "Export to remote storage..."
+msgstr "Exportar a un almacenamento remoto…"
+
+#: plugin_remotestorage.cpp:105
+#, kde-format
+msgid "Import from remote storage..."
+msgstr "Importar dun almacenamento remoto…"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Xosé Calvo"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "proxecto@trasno.net"
+
+#~ msgid "Handbook"
+#~ msgstr "Manual"

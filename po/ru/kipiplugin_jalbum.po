@@ -1,0 +1,191 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Alexander Potashev <aspotashev@gmail.com>, 2014, 2017.
+# Alexander Yavorsky <kekcuha@gmail.com>, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2020-01-29 14:02+0300\n"
+"Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
+"Language-Team: Russian <kde-russian@lists.kde.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Lokalize 19.12.1\n"
+"X-Environment: kde\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+# BUGME: button should end with ellipsis (...) --aspotashev
+#: jalbumconfig.cpp:97 jalbumconfig.cpp:160
+#, kde-format
+msgid "Select Albums Location"
+msgstr "Выбрать расположение альбомов..."
+
+# BUGME: button should end with ellipsis (...) --aspotashev
+#: jalbumconfig.cpp:111
+#, kde-format
+msgid "Select jAlbum jar File Location"
+msgstr "Выбрать файл JAR для jAlbum..."
+
+#: jalbumconfig.cpp:118
+#, kde-format
+msgid "OK"
+msgstr "ОК"
+
+#: jalbumconfig.cpp:119
+#, kde-format
+msgid "Cancel"
+msgstr "Отмена"
+
+#: jalbumconfig.cpp:180
+#, kde-format
+msgid "Select jar File Location"
+msgstr "Выбор файла JAR для jAlbum"
+
+#: jalbumconfig.cpp:234
+#, kde-format
+msgid "Not a directory"
+msgstr "Путь не является каталогом"
+
+#: jalbumconfig.cpp:234
+#, kde-format
+msgid "Chosen path is not a directory"
+msgstr "Выбранный путь не указывает на каталог."
+
+#: jalbumconfig.cpp:238
+#, kde-format
+msgid "Missing directory"
+msgstr "Каталог не существует"
+
+#: jalbumconfig.cpp:239
+#, kde-format
+msgid "Directory %1 does not exist, do you wish to create it?"
+msgstr "Каталог %1 не существует. Создать его?"
+
+#: jalbumconfig.cpp:250 jalbumconfig.cpp:251
+#, kde-format
+msgid "Failed to create directory"
+msgstr "Не удалось создать каталог."
+
+#: jalbumwindow.cpp:95
+#, kde-format
+msgid "jAlbum Album name to export to:"
+msgstr "Название альбома на jAlbum, в который будет выполнен экспорт:"
+
+# BUGME: change to "Configure..." --aspotashev
+#: jalbumwindow.cpp:113
+#, kde-format
+msgid "Settings"
+msgstr "Настроить..."
+
+#: jalbumwindow.cpp:124 jalbumwindow.cpp:127
+#, kde-format
+msgid "jAlbum Export"
+msgstr "Экспорт в альбом jAlbum"
+
+#: jalbumwindow.cpp:128
+#, kde-format
+msgid "A Kipi plugin to launch jAlbum using selected images."
+msgstr ""
+"Модуль расширения KIPI для запуска клиента jAlbum для выбранных изображений."
+
+#: jalbumwindow.cpp:129
+#, kde-format
+msgid "(c) 2013-2017, Andrew Goodbody\n"
+msgstr "© Andrew Goodbody, 2013–2017\n"
+
+#: jalbumwindow.cpp:160
+#, kde-format
+msgid "Error"
+msgstr "Ошибка"
+
+#: jalbumwindow.cpp:175
+#, kde-format
+msgid "Overwrite?"
+msgstr "Подтверждение замены"
+
+#: jalbumwindow.cpp:176
+#, kde-format
+msgid "Album %1 already exists, do you wish to overwrite it?"
+msgstr "Альбом «%1» уже существует. Заменить его?"
+
+#: jalbumwindow.cpp:186
+#, kde-format
+msgid "Create dir Failed"
+msgstr "Ошибка создания каталога"
+
+#: jalbumwindow.cpp:187
+#, kde-format
+msgid "Failed to create album directory"
+msgstr "Не удалось создать каталог альбома."
+
+#: jalbumwindow.cpp:200 jalbumwindow.cpp:218
+#, kde-format
+msgid "Writing Failed"
+msgstr "Ошибка записи"
+
+#: jalbumwindow.cpp:201
+#, kde-format
+msgid "Could not open 'albumfiles.txt' for writing"
+msgstr "Не удалось открыть «albumfiles.txt» для записи."
+
+#: jalbumwindow.cpp:219
+#, kde-format
+msgid "Could not open 'jalbum-settings.jap' for writing"
+msgstr "Не удалось открыть «jalbum-settings.jap» для записи."
+
+#: jalbumwindow.cpp:255 plugin_jalbum.cpp:123
+#, kde-format
+msgid "Edit jAlbum Data"
+msgstr "Настройка модуля экспорта в jAlbum"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_jalbumui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Экспорт"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_jalbumui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Основная панель инструментов"
+
+# BUGME: need ellipsis --aspotashev
+#: plugin_jalbum.cpp:105
+#, kde-format
+msgid "Export to &jAlbum"
+msgstr "Экспорт в альбом &jAlbum..."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Александр Поташев"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "aspotashev@gmail.com"
+
+#~ msgid "jAlbum albums location:"
+#~ msgstr "Расположение альбомов jAlbum:"
+
+#~ msgid "Sets the path where the jAlbum albums are stored."
+#~ msgstr "Укажите путь к каталогу, в котором хранятся альбомы jAlbum."
+
+#~ msgid "jAlbum jar file:"
+#~ msgstr "Файл JAR для jAlbum:"
+
+#~ msgid "Sets the path of the jAlbum jar file."
+#~ msgstr "Укажите путь к файлу JAR с программным обеспечением jAlbum."
+
+#~ msgid "Andrew Goodbody"
+#~ msgstr "Andrew Goodbody"
+
+#~ msgid "Author"
+#~ msgstr "Автор"

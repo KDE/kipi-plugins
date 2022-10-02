@@ -1,0 +1,1078 @@
+# translation of kipiplugins.po to Galician
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# mvillarino <mvillarino@users.sourceforge.net>, 2007, 2008, 2009.
+# Xosé <xosecalvo@gmail.com>, 2008, 2009, 2010, 2011.
+# Marce Villarino <mvillarino@users.sourceforge.net>, 2009, 2013.
+# marce villarino <mvillarino@users.sourceforge.net>, 2009.
+# Xosé <xosecalvo@gmail.com>, 2009, 2012.
+# Adrián Chaves Fernández <adriyetichaves@gmail.com>, 2015, 2017.
+# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2017, 2018.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugins\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2020-01-18 03:13+0100\n"
+"PO-Revision-Date: 2018-10-27 22:22+0100\n"
+"Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
+"Language-Team: Galician <kde-i18n-doc@kde.org>\n"
+"Language: gl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: libkipiplugins/dialogs/kpbatchprogressdialog.cpp:113
+#, kde-format
+msgid "<p>This is the current processing status.</p>"
+msgstr "<p>Este é o estado de procesamento actual.</p>"
+
+#: libkipiplugins/dialogs/kpbatchprogressdialog.cpp:120
+#, kde-format
+msgid "<p>This is the batch job progress as a percentage.</p>"
+msgstr "<p>Este é o progreso do lote de tarefas en porcentaxe.</p>"
+
+#: libkipiplugins/dialogs/kpbatchprogressdialog.cpp:189
+#, kde-format
+msgid "Copy to Clipboard"
+msgstr "Copiar no portapapeis"
+
+#: libkipiplugins/dialogs/kpbatchprogressdialog.cpp:271
+#: libkipiplugins/dialogs/kptooldialog.cpp:210
+#, kde-format
+msgid "Close"
+msgstr "Pechar"
+
+#: libkipiplugins/dialogs/kpimagedialog.cpp:149
+#, kde-format
+msgid "<i>unavailable</i>"
+msgstr "<i>non dispoñíbel</i>"
+
+#: libkipiplugins/dialogs/kpimagedialog.cpp:228
+#, kde-format
+msgid "%1 ISO"
+msgstr "ISO %1"
+
+#: libkipiplugins/dialogs/kpimagedialog.cpp:236
+#, kde-format
+msgid "<i>Make:</i>"
+msgstr "<i>Fabricante:</i>"
+
+#: libkipiplugins/dialogs/kpimagedialog.cpp:237
+#, kde-format
+msgid "<i>Model:</i>"
+msgstr "<i>Modelo:</i>"
+
+#: libkipiplugins/dialogs/kpimagedialog.cpp:238
+#, kde-format
+msgid "<i>Created:</i>"
+msgstr "<i>Creada:</i>"
+
+#: libkipiplugins/dialogs/kpimagedialog.cpp:239
+#, kde-format
+msgid "<i>Aperture:</i>"
+msgstr "<i>Abertura:</i>"
+
+#: libkipiplugins/dialogs/kpimagedialog.cpp:240
+#, kde-format
+msgid "<i>Focal:</i>"
+msgstr "<i>Focal:</i>"
+
+#: libkipiplugins/dialogs/kpimagedialog.cpp:241
+#, kde-format
+msgid "<i>Exposure:</i>"
+msgstr "<i>Exposición:</i>"
+
+#: libkipiplugins/dialogs/kpimagedialog.cpp:242
+#, kde-format
+msgid "<i>Sensitivity:</i>"
+msgstr "<i>Sensibilidade:</i>"
+
+#: libkipiplugins/dialogs/kpimagedialog.cpp:339
+#, kde-format
+msgid ""
+"\n"
+"%1|Camera RAW files"
+msgstr ""
+"\n"
+"%1|Ficheiros RAW de cámara"
+
+#: libkipiplugins/dialogs/kpimagedialog.cpp:358
+#, kde-format
+msgid "Select an Image"
+msgstr "Escolla unha imaxe"
+
+#: libkipiplugins/dialogs/kpimagedialog.cpp:365
+#, kde-format
+msgid "Select Images"
+msgstr "Escoller imaxes"
+
+#: libkipiplugins/dialogs/kplogindialog.cpp:76
+#, kde-format
+msgid "Login:"
+msgstr "Nome de usuario:"
+
+#: libkipiplugins/dialogs/kplogindialog.cpp:79
+#, kde-format
+msgid "Password:"
+msgstr "Contrasinal:"
+
+#: libkipiplugins/dialogs/kplogindialog.cpp:90
+#, kde-format
+msgid "&Login"
+msgstr "&Acceder"
+
+#: libkipiplugins/dialogs/kplogindialog.cpp:93
+#, kde-format
+msgid "&Skip"
+msgstr "&Omitir"
+
+#: libkipiplugins/dialogs/kplogindialog.cpp:153
+#, kde-format
+msgctxt "@title:window"
+msgid "Error"
+msgstr "Erro"
+
+#: libkipiplugins/dialogs/kplogindialog.cpp:154
+#, kde-format
+msgid "Password cannot be empty."
+msgstr "O contrasinal non pode estar baleiro."
+
+#: libkipiplugins/dialogs/kpnewalbumdialog.cpp:57
+#: libkipiplugins/widgets/kpsettingswidget.cpp:72
+#, kde-format
+msgid "Album"
+msgstr "Álbum"
+
+#: libkipiplugins/dialogs/kpnewalbumdialog.cpp:60
+#, kde-format
+msgid "Title: "
+msgstr "Título: "
+
+#: libkipiplugins/dialogs/kpnewalbumdialog.cpp:61
+#, kde-format
+msgid "Time Stamp: "
+msgstr "Marca temporal: "
+
+#: libkipiplugins/dialogs/kpnewalbumdialog.cpp:62
+#, kde-format
+msgid "Description: "
+msgstr "Descrición: "
+
+#: libkipiplugins/dialogs/kpnewalbumdialog.cpp:63
+#, kde-format
+msgid "Location: "
+msgstr "Lugar: "
+
+#: libkipiplugins/dialogs/kpnewalbumdialog.cpp:116
+#, kde-format
+msgid "These are basic settings for the new %1 album."
+msgstr "Estas son opcións básicas para o novo álbum de %1."
+
+#: libkipiplugins/dialogs/kpnewalbumdialog.cpp:118
+#, kde-format
+msgid "Title of the album that will be created (required)."
+msgstr "O título do álbum que se vai crear (requirido)."
+
+#: libkipiplugins/dialogs/kpnewalbumdialog.cpp:121
+#, kde-format
+msgid "Date and Time of the album that will be created (optional)."
+msgstr "A data e hora do álbum que se vai crear (requirido)."
+
+#: libkipiplugins/dialogs/kpnewalbumdialog.cpp:123
+#, kde-format
+msgid "Description of the album that will be created (optional)."
+msgstr "A descrición do álbum que se vai crear (opcional)."
+
+#: libkipiplugins/dialogs/kpnewalbumdialog.cpp:125
+#, kde-format
+msgid "Location of the album that will be created (optional)."
+msgstr "A localización do álbum que se vai crear (requirido)."
+
+#: libkipiplugins/dialogs/kptooldialog.cpp:167
+#, kde-format
+msgctxt "@action:button"
+msgid "&Start"
+msgstr "&Iniciar"
+
+#: libkipiplugins/dialogs/kptooldialog.cpp:212
+#, kde-format
+msgid "Close window"
+msgstr "Pechar a xanela"
+
+#: libkipiplugins/dialogs/kptooldialog.cpp:217
+#, kde-format
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: libkipiplugins/dialogs/kptooldialog.cpp:219
+#, kde-format
+msgid "Cancel current operation"
+msgstr "Cancelar esta operación"
+
+#: libkipiplugins/tools/kpaboutdata.cpp:79
+#, kde-format
+msgid "Handbook"
+msgstr "Manual"
+
+#: libkipiplugins/tools/kpaboutdata.cpp:84
+#, kde-format
+msgid "About..."
+msgstr "Sobre…"
+
+#: libkipiplugins/tools/kpaboutdata.cpp:120
+#, kde-format
+msgid "Version: %1"
+msgstr "Versión: %1"
+
+#: libkipiplugins/tools/kpaboutdata.cpp:133
+#, kde-format
+msgid "About %1"
+msgstr "Sobre %1"
+
+#: libkipiplugins/tools/kpaboutdata.h:54
+#, kde-format
+msgid "Copyright 2003-2016, KDE developers team"
+msgstr "© 2003-2016 Equipo de desenvolvedores de KDE"
+
+#: libkipiplugins/tools/kputil.cpp:299
+#, kde-format
+msgid "Browse..."
+msgstr "Examinar…"
+
+#: libkipiplugins/widgets/kpimageslist.cpp:292
+#, kde-format
+msgid "Thumbnail"
+msgstr "Miniatura"
+
+#: libkipiplugins/widgets/kpimageslist.cpp:293
+#, kde-format
+msgid "File Name"
+msgstr "Nome do ficheiro"
+
+#: libkipiplugins/widgets/kpimageslist.cpp:294
+#, kde-format
+msgid "User1"
+msgstr "Usuario1"
+
+#: libkipiplugins/widgets/kpimageslist.cpp:295
+#, kde-format
+msgid "User2"
+msgstr "Usuario2"
+
+#: libkipiplugins/widgets/kpimageslist.cpp:296
+#, kde-format
+msgid "User3"
+msgstr "Usuario3"
+
+#: libkipiplugins/widgets/kpimageslist.cpp:297
+#, kde-format
+msgid "User4"
+msgstr "Usuario4"
+
+#: libkipiplugins/widgets/kpimageslist.cpp:298
+#, kde-format
+msgid "User5"
+msgstr "Usuario5"
+
+#: libkipiplugins/widgets/kpimageslist.cpp:299
+#, kde-format
+msgid "User6"
+msgstr "Usuario6"
+
+#: libkipiplugins/widgets/kpimageslist.cpp:557
+#, kde-format
+msgid "Add new images to the list"
+msgstr "Engadir novas imaxes á lista"
+
+#: libkipiplugins/widgets/kpimageslist.cpp:558
+#, kde-format
+msgid "Remove selected images from the list"
+msgstr "Retirar da lista as imaxes seleccionadas"
+
+#: libkipiplugins/widgets/kpimageslist.cpp:559
+#, kde-format
+msgid "Move current selected image up in the list"
+msgstr "Subir esta imaxe na lista"
+
+#: libkipiplugins/widgets/kpimageslist.cpp:560
+#, kde-format
+msgid "Move current selected image down in the list"
+msgstr "Baixar esta imaxe na lista"
+
+#: libkipiplugins/widgets/kpimageslist.cpp:561
+#, kde-format
+msgid "Clear the list."
+msgstr "Limpar a lista."
+
+#: libkipiplugins/widgets/kpimageslist.cpp:562
+#, kde-format
+msgid "Load a saved list."
+msgstr "Cargar unha lista gardada."
+
+#: libkipiplugins/widgets/kpimageslist.cpp:563
+#, kde-format
+msgid "Save the list."
+msgstr "Gardar a lista."
+
+#: libkipiplugins/widgets/kpimageslist.cpp:972
+#, kde-format
+msgid "Select the image file list to load"
+msgstr "Escolla a lista de ficheiros de imaxe que cargar"
+
+#: libkipiplugins/widgets/kpimageslist.cpp:974
+#: libkipiplugins/widgets/kpimageslist.cpp:1041
+#, kde-format
+msgid "All Files (*)"
+msgstr "Todos os ficheiros (*)"
+
+#: libkipiplugins/widgets/kpimageslist.cpp:1039
+#, kde-format
+msgid "Select the image file list to save"
+msgstr "Escolla a lista de ficheiros de imaxe para gardar"
+
+#: libkipiplugins/widgets/kpsavesettingswidget.cpp:81
+#, kde-format
+msgid "Output file format:"
+msgstr "Formato de ficheiro de saída:"
+
+#: libkipiplugins/widgets/kpsavesettingswidget.cpp:83
+#, kde-format
+msgid ""
+"<p>Set the output file format to use here:</p><p><b>JPEG</b>: output the "
+"processed image in JPEG format. This format will give smaller-sized files.</"
+"p><p><b>Warning: Due to the destructive compression algorithm, JPEG is a "
+"lossy quality format.</b></p><p><b>TIFF</b>: output the processed image in "
+"TIFF format. This generates large files, without losing quality. Image is "
+"compressed.</p><p><b>PNG</b>: output the processed image in PNG format. This "
+"generates large files, without losing quality. Image is compressed.</"
+"p><p><b>PPM</b>: output the processed image in PPM format. This generates "
+"the largest files, without losing quality. Image is not compressed.</p>"
+msgstr ""
+"<p>Configue aquí o formato de saída do ficheiro:</p><p><b>JPEG</b>: producir "
+"a imaxe procesada no formato JPEG. Este formato dá ficheiros de menor tamaño."
+"</p><p><b>Aviso: Debido ao algoritmo de compresión destrutivo, JPEG é un "
+"formato de calidade con perdas.</b></p><p><b>TIFF</b>: producir a imaxe "
+"procesada no formato TIFF. Isto xera imaxes máis grandes sen perder "
+"calidade. A imaxe está comprimida.</p><p><b>PNG</b>: producir a imaxe "
+"procesada no formato PNG. Isto xera ficheiros grandes sen perder calidade. A "
+"imaxe está comprimida.</p><p><b>PPM</b>: producir a imaxe procesada no "
+"formato PPM. Isto xera as imaxes máis grandes sen perder calidade. A imaxe "
+"non está comprimida.</p>"
+
+#: libkipiplugins/widgets/kpsavesettingswidget.cpp:99
+#, kde-format
+msgid "If Target File Exists:"
+msgstr "Se o ficheiro de destino existe:"
+
+#: libkipiplugins/widgets/kpsavesettingswidget.cpp:103
+#, kde-format
+msgid "Overwrite automatically"
+msgstr "Subsituílo automaticamente"
+
+#: libkipiplugins/widgets/kpsavesettingswidget.cpp:104
+#, kde-format
+msgid "Open rename-file dialog"
+msgstr "Abrir un diálogo para renomear o ficheiro"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:68
+#, kde-format
+msgid "Account"
+msgstr "Conta"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:77
+#, kde-format
+msgid "Max Dimension"
+msgstr "Tamaño máximo"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:80
+#, kde-format
+msgid "Destination"
+msgstr "Destino"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:83
+#, kde-format
+msgid "Options"
+msgstr "Opcións"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:148
+#, kde-format
+msgid "This is the list of images to upload to your %1 account."
+msgstr "Esta é a lista de imaxes que se van enviar á súa conta de %1."
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:156
+#, kde-format
+msgid "This is a clickable link to open %1 in a browser."
+msgstr "Esta é unha ligazón premíbel para abrir %1 nun navegador."
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:162
+#, kde-format
+msgid "This is the %1 account that is currently logged in."
+msgstr "Esta é a conta de %1 na que está rexistrado."
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:164
+#, kde-format
+msgctxt "account settings"
+msgid "Name:"
+msgstr "Nome:"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:165
+#, kde-format
+msgid "Change Account"
+msgstr "Cambiar de conta"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:167
+#, kde-format
+msgid "Change %1 account for transfer"
+msgstr "Cambia de conta en %1 para transferir"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:177
+#, kde-format
+msgid ""
+"This is the %1 folder to/from which selected photos will be uploaded/"
+"downloaded."
+msgstr ""
+"Este é o cartafol de %1 co que se realizarán os envíos e descargar das fotos "
+"seleccionadas."
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:179
+#, kde-format
+msgid "Album:"
+msgstr "Álbum:"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:183
+#, kde-format
+msgid "New Album"
+msgstr "Novo álbum"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:185
+#, kde-format
+msgid "Create new %1 folder"
+msgstr "Crear un cartafol novo de %1"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:187
+#, kde-format
+msgctxt "album list"
+msgid "Reload"
+msgstr "Cargar de novo"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:189
+#, kde-format
+msgid "Reload album list"
+msgstr "Cargar de novo a lista de álbums"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:198
+#, kde-format
+msgid ""
+"This is the maximum dimension of the images. Images larger than this will be "
+"scaled down."
+msgstr ""
+"Estas son as dimensións máximas das imaxes. Reducirase o tamaño das imaxes "
+"que as superen."
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:199
+#, kde-format
+msgid "Original Size"
+msgstr "Tamaño orixinal"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:200
+#, kde-format
+msgid "1600 px"
+msgstr "1600 px"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:201
+#, kde-format
+msgid "1440 px"
+msgstr "1440 px"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:202
+#, kde-format
+msgid "1280 px"
+msgstr "1280 px"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:203
+#, kde-format
+msgid "1152 px"
+msgstr "1152 px"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:204
+#, kde-format
+msgid "1024 px"
+msgstr "1024 px"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:210
+#, kde-format
+msgid "This is the location where %1 images will be downloaded."
+msgstr "Este é o lugar no que se descargarán as imaxes desde %1."
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:215
+#, kde-format
+msgid "These are the options that would be applied to photos before upload."
+msgstr "Estas son as opcións que se aplicarán ás fotos antes de as enviar."
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:217
+#, kde-format
+msgid "Upload original image file"
+msgstr "Enviar o ficheiro orixinal da imaxe"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:221
+#, kde-format
+msgid "Resize photos before uploading"
+msgstr "Cambiar o tamaño das fotos antes de envialas"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:231
+#, kde-format
+msgid "Maximum Dimension:"
+msgstr "Tamaño máximo:"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:239
+#, kde-format
+msgid "JPEG Quality:"
+msgstr "Calidade de JPEG:"
+
+#~ msgid "Copy to Clip&board"
+#~ msgstr "Copiar no &portapapeis"
+
+#~ msgid "Navigate to %1"
+#~ msgstr "Navegar até %1"
+
+#~ msgid "Binary"
+#~ msgstr "Binario"
+
+#~ msgid "Binary not found."
+#~ msgstr "Non se atopou o binario."
+
+#~ msgid "Minimal version number required for this binary is %1"
+#~ msgstr "O número de versión mínimo requirido por este binario é o %1"
+
+#~ msgid "Find"
+#~ msgstr "Atopar"
+
+#~ msgid " or <a href=\"%1\">download</a>"
+#~ msgstr "ou <a href=\"%1\">descargar</a>"
+
+#~ msgid ""
+#~ "<qt><p><font color=\"red\"><b>Warning:</b> Some necessary binaries have "
+#~ "not been found on your system. If you have these binaries installed, "
+#~ "please click the 'Find' button to locate them on your system, otherwise "
+#~ "please download and install them to proceed.</font></p></qt>"
+#~ msgstr ""
+#~ "<qt><p><font color=\"red\"><b>Aviso:</b>Non se atoparon determinados "
+#~ "necesarios precisos neste sistema. De estaren instalados, prema o botón "
+#~ "«Atopar» e localíceos no sistema ou descárgueos e instáleos para "
+#~ "proseguir.</font></p></qt>"
+
+#~ msgid ""
+#~ "A development version has been detect. There is no guarantee on the "
+#~ "behavior of this binary."
+#~ msgstr ""
+#~ "Detectouse unha versión en desenvolvemento. Non hai garantías sobre o "
+#~ "comportamento deste binario."
+
+#~ msgid "Change"
+#~ msgstr "Mudar"
+
+#~ msgid "Zoom In"
+#~ msgstr "Achegar"
+
+#~ msgid "Zoom Out"
+#~ msgstr "Afastar"
+
+#~ msgid "Zoom to Fit"
+#~ msgstr "Axustar para encaixar"
+
+#~ msgid "Failed to load image"
+#~ msgstr "Fallou a carga da imaxe"
+
+#~ msgid ""
+#~ "<p>\n"
+#~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" align=\"center"
+#~ "\">\n"
+#~ "<tr>\n"
+#~ "<td>\n"
+#~ "<img src=\"hicolor/32x32/apps/kipi.png\">\n"
+#~ "</td>\n"
+#~ "<td>\n"
+#~ "Did you know that you can brighten up your images using the Batch Color "
+#~ "Images plugin for increased contrast?\n"
+#~ "</td>\n"
+#~ "</tr>\n"
+#~ "</table>\n"
+#~ "</p>\n"
+#~ msgstr ""
+#~ "<p>\n"
+#~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" align=\"center"
+#~ "\">\n"
+#~ "<tr>\n"
+#~ "<td>\n"
+#~ "<img src=\"hicolor/32x32/apps/kipi.png\">\n"
+#~ "</td>\n"
+#~ "<td>\n"
+#~ "Sabía que pode iluminar as súas imaxes mediante engadido Cor de lotes de "
+#~ "imaxes para aumentar o contraste?\n"
+#~ "</td>\n"
+#~ "</tr>\n"
+#~ "</table>\n"
+#~ "</p>\n"
+
+#~ msgid ""
+#~ "<p>\n"
+#~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" align=\"center"
+#~ "\">\n"
+#~ "<tr>\n"
+#~ "<td>\n"
+#~ "<img src=\"hicolor/32x32/apps/kipi.png\">\n"
+#~ "</td>\n"
+#~ "<td>\n"
+#~ "Did you know that you can abort a slideshow using <b>ESC</b>?\n"
+#~ "</td>\n"
+#~ "</tr>\n"
+#~ "</table>\n"
+#~ "</p>\n"
+#~ msgstr ""
+#~ "<p>\n"
+#~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" align=\"center"
+#~ "\">\n"
+#~ "<tr>\n"
+#~ "<td>\n"
+#~ "<img src=\"hicolor/32x32/apps/kipi.png\">\n"
+#~ "</td>\n"
+#~ "<td>\n"
+#~ "Sabía que pode cancelar unha presentación coa tecla <b>ESC</b>?\n"
+#~ "</td>\n"
+#~ "</tr>\n"
+#~ "</table>\n"
+#~ "</p>\n"
+
+#~ msgid ""
+#~ "<p>\n"
+#~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" align=\"center"
+#~ "\">\n"
+#~ "<tr>\n"
+#~ "<td>\n"
+#~ "<img src=\"hicolor/32x32/apps/kipi.png\">\n"
+#~ "</td>\n"
+#~ "<td>\n"
+#~ "Did you know that the Kipi library provides a scanner plugin that gives "
+#~ "you direct access to your scanner?\n"
+#~ "</td>\n"
+#~ "</tr>\n"
+#~ "</table>\n"
+#~ "</p>\n"
+#~ msgstr ""
+#~ "<p>\n"
+#~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" align=\"center"
+#~ "\">\n"
+#~ "<tr>\n"
+#~ "<td>\n"
+#~ "<img src=\"hicolor/32x32/apps/kipi.png\">\n"
+#~ "</td>\n"
+#~ "<td>\n"
+#~ "Sabía que a biblioteca Kipi fornece un engadido para escáner que lle dá "
+#~ "acceso directo ao escáner?\n"
+#~ "</td>\n"
+#~ "</tr>\n"
+#~ "</table>\n"
+#~ "</p>\n"
+
+#~ msgid ""
+#~ "<p>\n"
+#~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" align=\"center"
+#~ "\">\n"
+#~ "<tr>\n"
+#~ "<td>\n"
+#~ "<img src=\"hicolor/32x32/apps/kipi.png\">\n"
+#~ "</td>\n"
+#~ "<td>\n"
+#~ "Did you know that you can take a screenshot with the Kipi library and "
+#~ "save the result to an Album with some comments?\n"
+#~ "</td>\n"
+#~ "</tr>\n"
+#~ "</table>\n"
+#~ "</p>\n"
+#~ msgstr ""
+#~ "<p>\n"
+#~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" align=\"center"
+#~ "\">\n"
+#~ "<tr>\n"
+#~ "<td>\n"
+#~ "<img src=\"hicolor/32x32/apps/kipi.png\">\n"
+#~ "</td>\n"
+#~ "<td>\n"
+#~ "Sabía que pode facer unha captura de pantalla coa biblioteca Kipi e "
+#~ "gardar o resultado nun álbum con algúns comentarios?\n"
+#~ "</td>\n"
+#~ "</tr>\n"
+#~ "</table>\n"
+#~ "</p>\n"
+
+#~ msgid ""
+#~ "<p>\n"
+#~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" align=\"center"
+#~ "\">\n"
+#~ "<tr>\n"
+#~ "<td>\n"
+#~ "<img src=\"hicolor/32x32/apps/kipi.png\">\n"
+#~ "</td>\n"
+#~ "<td>\n"
+#~ "Did you know that you can use the <b>LZW</b> compression to reduce the "
+#~ "size of the <b>TIFF</b> image files in the Convert Images plugin?\n"
+#~ "</td>\n"
+#~ "</tr>\n"
+#~ "</table>\n"
+#~ "</p>\n"
+#~ msgstr ""
+#~ "<p>\n"
+#~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" align=\"center"
+#~ "\">\n"
+#~ "<tr>\n"
+#~ "<td>\n"
+#~ "<img src=\"hicolor/32x32/apps/kipi.png\">\n"
+#~ "</td>\n"
+#~ "<td>\n"
+#~ "Sabía que pode usar a compresión <b>LZW</b> para reducir o tamaño dos "
+#~ "ficheiros de imaxe <b>TIFF</b> na extensión de Conversión de imaxes?\n"
+#~ "</td>\n"
+#~ "</tr>\n"
+#~ "</table>\n"
+#~ "</p>\n"
+
+#~ msgid ""
+#~ "<p>\n"
+#~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" align=\"center"
+#~ "\">\n"
+#~ "<tr>\n"
+#~ "<td>\n"
+#~ "<img src=\"hicolor/32x32/apps/kipi.png\">\n"
+#~ "</td>\n"
+#~ "<td>\n"
+#~ "Did you know that all image operations in the batch processing image "
+#~ "plugins run without losing the <b>Exif</b> information in the <b>JPEG</b> "
+#~ "files?\n"
+#~ "</td>\n"
+#~ "</tr>\n"
+#~ "</table>\n"
+#~ "</p>\n"
+#~ msgstr ""
+#~ "<p>\n"
+#~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" align=\"center"
+#~ "\">\n"
+#~ "<tr>\n"
+#~ "<td>\n"
+#~ "<img src=\"hicolor/32x32/apps/kipi.png\">\n"
+#~ "</td>\n"
+#~ "<td>\n"
+#~ "Sabía que todas as operacións de imaxes nas extensións de procesamento de "
+#~ "imaxes son realizadas sen perder a información <b>Exif</b> dos ficheiros "
+#~ "<b>JPEG</b>?\n"
+#~ "</td>\n"
+#~ "</tr>\n"
+#~ "</table>\n"
+#~ "</p>\n"
+
+#~ msgid ""
+#~ "<p>\n"
+#~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" align=\"center"
+#~ "\">\n"
+#~ "<tr>\n"
+#~ "<td>\n"
+#~ "<img src=\"hicolor/32x32/apps/kipi.png\">\n"
+#~ "</td>\n"
+#~ "<td>\n"
+#~ "Did you know that the <b>Noise Reduction</b> option in the <b>Filter "
+#~ "Images</b> plugin can be used to improve the rendering of images taken "
+#~ "with an analog camera?\n"
+#~ "</td>\n"
+#~ "</tr>\n"
+#~ "</table>\n"
+#~ "</p>\n"
+#~ msgstr ""
+#~ "<p>\n"
+#~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" align=\"center"
+#~ "\">\n"
+#~ "<tr>\n"
+#~ "<td>\n"
+#~ "<img src=\"hicolor/32x32/apps/kipi.png\">\n"
+#~ "</td>\n"
+#~ "<td>\n"
+#~ "Sabía que a opción de <b>Redución de ruído</b> da extensión de "
+#~ "<b>Filtrado de imaxes</b> pode ser usada para mellorar o debuxado das "
+#~ "imaxes tomadas cunha cámara analóxica?\n"
+#~ "</td>\n"
+#~ "</tr>\n"
+#~ "</table>\n"
+#~ "</p>\n"
+
+#~ msgid ""
+#~ "<p>\n"
+#~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" align=\"center"
+#~ "\">\n"
+#~ "<tr>\n"
+#~ "<td>\n"
+#~ "<img src=\"hicolor/32x32/apps/kipi.png\">\n"
+#~ "</td>\n"
+#~ "<td>\n"
+#~ "Did you know that you can use the drag and drop feature with email images "
+#~ "to add some items to the list?\n"
+#~ "</td>\n"
+#~ "</tr>\n"
+#~ "</table>\n"
+#~ "</p>\n"
+#~ msgstr ""
+#~ "<p>\n"
+#~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" align=\"center"
+#~ "\">\n"
+#~ "<tr>\n"
+#~ "<td>\n"
+#~ "<img src=\"hicolor/32x32/apps/kipi.png\">\n"
+#~ "</td>\n"
+#~ "<td>\n"
+#~ "Sabía que pode arrastrar e deitar as imaxes nos correos electrónicos para "
+#~ "engadilas á lista?\n"
+#~ "</td>\n"
+#~ "</tr>\n"
+#~ "</table>\n"
+#~ "</p>\n"
+
+#~ msgid ""
+#~ "<p>\n"
+#~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" align=\"center"
+#~ "\">\n"
+#~ "<tr>\n"
+#~ "<td>\n"
+#~ "<img src=\"hicolor/32x32/apps/kipi.png\">\n"
+#~ "</td>\n"
+#~ "<td>\n"
+#~ "Did you know that if you want to reduce the disk space used by your "
+#~ "images in the Albums database, you can try using the Recompress Images "
+#~ "plugin?\n"
+#~ "</td>\n"
+#~ "</tr>\n"
+#~ "</table>\n"
+#~ "</p>\n"
+#~ msgstr ""
+#~ "<p>\n"
+#~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" align=\"center"
+#~ "\">\n"
+#~ "<tr>\n"
+#~ "<td>\n"
+#~ "<img src=\"hicolor/32x32/apps/kipi.png\">\n"
+#~ "</td>\n"
+#~ "<td>\n"
+#~ "Sabía que se quer reducir o espazo de disco usado polas imaxes na base de "
+#~ "datos de álbums, pode probar a usar a extensión de recomprimir as "
+#~ "imaxes?\n"
+#~ "</td>\n"
+#~ "</tr>\n"
+#~ "</table>\n"
+#~ "</p>\n"
+
+#~ msgid ""
+#~ "<p>\n"
+#~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" align=\"center"
+#~ "\">\n"
+#~ "<tr>\n"
+#~ "<td>\n"
+#~ "<img src=\"hicolor/32x32/apps/kipi.png\">\n"
+#~ "</td>\n"
+#~ "<td>\n"
+#~ "Did you know that if you want to resize images to prepare them for "
+#~ "printing on photographic paper sizes, you can use the Resize Images "
+#~ "plugin?\n"
+#~ "</td>\n"
+#~ "</tr>\n"
+#~ "</table>\n"
+#~ "</p>\n"
+#~ msgstr ""
+#~ "<p>\n"
+#~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" align=\"center"
+#~ "\">\n"
+#~ "<tr>\n"
+#~ "<td>\n"
+#~ "<img src=\"hicolor/32x32/apps/kipi.png\">\n"
+#~ "</td>\n"
+#~ "<td>\n"
+#~ "Sabía que se quer mudar o tamaño das imaxe para preparalas para imprimir "
+#~ "en tamaños fotográficos, pode usar a extensión de Mudar o tamaño das "
+#~ "imaxes?\n"
+#~ "</td>\n"
+#~ "</tr>\n"
+#~ "</table>\n"
+#~ "</p>\n"
+
+#~ msgid ""
+#~ "<p>\n"
+#~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" align=\"center"
+#~ "\">\n"
+#~ "<tr>\n"
+#~ "<td>\n"
+#~ "<img src=\"hicolor/32x32/apps/kipi.png\">\n"
+#~ "</td>\n"
+#~ "<td>\n"
+#~ "Did you know that you can use image files from different Albums in the "
+#~ "'batch-process images' \n"
+#~ "plugin? The processed results will then be merged into the selected "
+#~ "target Album.\n"
+#~ "</td>\n"
+#~ "</tr>\n"
+#~ "</table>\n"
+#~ "</p>\n"
+#~ msgstr ""
+#~ "<p>\n"
+#~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" align=\"center"
+#~ "\">\n"
+#~ "<tr>\n"
+#~ "<td>\n"
+#~ "<img src=\"hicolor/32x32/apps/kipi.png\">\n"
+#~ "</td>\n"
+#~ "<td>\n"
+#~ "Sabía que pode usar imaxes de diferentes álbums na extensión de "
+#~ "procesamento\n"
+#~ "de imaxes en lotes? Os resultados procesados xúntanse no álbum\n"
+#~ "escollido como destino.\n"
+#~ "</td>\n"
+#~ "</tr>\n"
+#~ "</table>\n"
+#~ "</p>\n"
+
+#~ msgid ""
+#~ "<p>\n"
+#~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" align=\"center"
+#~ "\">\n"
+#~ "<tr>\n"
+#~ "<td>\n"
+#~ "<img src=\"hicolor/32x32/apps/kipi.png\">\n"
+#~ "</td>\n"
+#~ "<td>\n"
+#~ "Did you know that you can change the timestamp of the target image files "
+#~ "in the batch-rename images plugin?\n"
+#~ "</td>\n"
+#~ "</tr>\n"
+#~ "</table>\n"
+#~ "</p>\n"
+#~ msgstr ""
+#~ "<p>\n"
+#~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" align=\"center"
+#~ "\">\n"
+#~ "<tr>\n"
+#~ "<td>\n"
+#~ "<img src=\"hicolor/32x32/apps/kipi.png\">\n"
+#~ "</td>\n"
+#~ "<td>\n"
+#~ "Sabía que pode mudar o selo temporal dos ficheiros de destino co engadido "
+#~ "de mudar o nome de lotes de imaxes?\n"
+#~ "</td>\n"
+#~ "</tr>\n"
+#~ "</table>\n"
+#~ "</p>\n"
+
+#~ msgid ""
+#~ "<p>\n"
+#~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" align=\"center"
+#~ "\">\n"
+#~ "<tr>\n"
+#~ "<td>\n"
+#~ "<img src=\"hicolor/32x32/apps/kipi.png\">\n"
+#~ "</td>\n"
+#~ "<td>\n"
+#~ "Did you know that you can navigate during the slideshow using the left "
+#~ "and right mouse buttons?\n"
+#~ "</td>\n"
+#~ "</tr>\n"
+#~ "</table>\n"
+#~ "</p>\n"
+#~ msgstr ""
+#~ "<p>\n"
+#~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" align=\"center"
+#~ "\">\n"
+#~ "<tr>\n"
+#~ "<td>\n"
+#~ "<img src=\"hicolor/32x32/apps/kipi.png\">\n"
+#~ "</td>\n"
+#~ "<td>\n"
+#~ "Sabía que pode navegar durante a presentación cos botóns esquerdo e "
+#~ "dereito do rato?\n"
+#~ "</td>\n"
+#~ "</tr>\n"
+#~ "</table>\n"
+#~ "</p>\n"
+
+#~ msgid ""
+#~ "<p>\n"
+#~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" align=\"center"
+#~ "\">\n"
+#~ "<tr>\n"
+#~ "<td>\n"
+#~ "<img src=\"hicolor/32x32/apps/kipi.png\">\n"
+#~ "</td>\n"
+#~ "<td>\n"
+#~ "Did you know that Kipi plugins can also be used in Digikam, KPhotoAlbum, "
+#~ "Showfoto, and Gwenview programs?\n"
+#~ "</td>\n"
+#~ "</tr>\n"
+#~ "</table>\n"
+#~ "</p>\n"
+#~ msgstr ""
+#~ "<p>\n"
+#~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" align=\"center"
+#~ "\">\n"
+#~ "<tr>\n"
+#~ "<td>\n"
+#~ "<img src=\"hicolor/32x32/apps/kipi.png\">\n"
+#~ "</td>\n"
+#~ "<td>\n"
+#~ "Sabía que os engadidos de Kipi tamén poden se poden utilizar en Digikam, "
+#~ "KPhotoAlbum, Showfoto e Gwenview?\n"
+#~ "</td>\n"
+#~ "</tr>\n"
+#~ "</table>\n"
+#~ "</p>\n"
+
+#~ msgid ""
+#~ "IRC:\n"
+#~ "irc.freenode.net - #kde-imaging\n"
+#~ "\n"
+#~ "Feedback:\n"
+#~ "kde-imaging@kde.org\n"
+#~ "\n"
+#~ "Build date: %1 (target: %2)"
+#~ msgstr ""
+#~ "IRC:\n"
+#~ "irc.freenode.net - #kde-imaging\n"
+#~ "\n"
+#~ "Opinións:\n"
+#~ "kde-imaging@kde.org\n"
+#~ "\n"
+#~ "Data de construción: %1 (obxectivo: %2)"
+
+#~ msgid ""
+#~ "IRC:\n"
+#~ "irc.freenode.net - #kde-imaging\n"
+#~ "\n"
+#~ "Feedback:\n"
+#~ "kde-imaging@kde.org\n"
+#~ "\n"
+#~ "Build date: %1 (target: %2)\n"
+#~ "Rev.: %3"
+#~ msgstr ""
+#~ "IRC:\n"
+#~ "irc.freenode.net - #kde-imaging\n"
+#~ "\n"
+#~ "Opinións:\n"
+#~ "kde-imaging@kde.org\n"
+#~ "\n"
+#~ "Data de construción: %1 (obxectivo: %2)\n"
+#~ "Rev.: %3"
+
+#~ msgid ""
+#~ "<qt><p>Unable to find <i>%1</i> executable.</p><p>This program is "
+#~ "required to continue.<br/>Please install it from <b>%2</b> package "
+#~ "provided by your distributor<br/>or download and install <a href="
+#~ "\"%3\">the source</a>.</p><p>Note: at least, <i>%4</i> version <b>%5</b> "
+#~ "is required.</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Non foi posíbel atopar o executábel <i>%1</i>.</p><p>Este programa "
+#~ "é preciso para continuar. Instáleo co paquete <b>%2</b> fornecido poloseu "
+#~ "distribuidor ou descargue e instale <a href=\"%3\">a fonte</a>.</"
+#~ "p><p>Nota: requírese ao menos a versión <i>%5</i> de <b>%4</b>.</p></qt>"

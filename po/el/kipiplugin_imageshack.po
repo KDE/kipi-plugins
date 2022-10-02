@@ -1,0 +1,276 @@
+# kipiplugin_imageshackexport.po translation el
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Stelios <sstavra@gmail.com>, 2013, 2017.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_imageshackexport\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2017-10-08 19:00+0200\n"
+"Last-Translator: Stelios <sstavra@gmail.com>\n"
+"Language-Team: Greek <kde-i18n-el@kde.org>\n"
+"Language: el\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: imageshacktalker.cpp:173
+#, kde-format
+msgid "Authenticating the user"
+msgstr "Γίνεται ταυτοποίηση του χρήστη"
+
+#: imageshacktalker.cpp:199
+#, kde-format
+msgid "Getting galleries from server"
+msgstr "Ανάκτηση συλλογών από τον εξυπηρετητή"
+
+#: imageshacktalker.cpp:289
+#, kde-format
+msgid "Successfully retrieved galleries"
+msgstr "Οι συλλογές ανακτήθηκαν με επιτυχία"
+
+#: imageshackwidget.cpp:82
+#, kde-format
+msgid "Make private"
+msgstr "Να γίνει ιδιωτικό"
+
+#: imageshackwidget.cpp:86
+#, kde-format
+msgid "Tags (optional):"
+msgstr "Ετικέτες (προαιρετικά):"
+
+#: imageshackwidget.cpp:88
+#, kde-format
+msgid "Remove information bar on thumbnails"
+msgstr "Αφαίρεση γραμμής πληροφοριών στις εικόνες προεπισκόπησης"
+
+#: imageshackwidget.cpp:125
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Add to root folder"
+msgstr "Προσθήκη στο φάκελο root"
+
+#: imageshackwidget.cpp:128
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Create new gallery"
+msgstr "Δημιουργία νέας συλλογής"
+
+#: imageshackwindow.cpp:81
+#, kde-format
+msgid "Export to Imageshack"
+msgstr "Εξαγωγή στο Imageshack"
+
+#: imageshackwindow.cpp:89
+#, kde-format
+msgid "Upload"
+msgstr "Αποστολή"
+
+#: imageshackwindow.cpp:90
+#, kde-format
+msgid "Start upload to Imageshack web service"
+msgstr "Έναρξη αποστολής στην υπηρεσία ιστού Imageshack"
+
+#: imageshackwindow.cpp:98
+#, kde-format
+msgid "Imageshack Export"
+msgstr "Εξαγωγή στο Imageshack"
+
+#: imageshackwindow.cpp:99
+#, kde-format
+msgid "A tool to export images to Imageshack web service."
+msgstr "Ένα εργαλείο εξαγωγής εικόνων στην υπηρεσία ιστού Imageshack."
+
+#: imageshackwindow.cpp:100
+#, kde-format
+msgid "(c) 2012, Dodon Victor\n"
+msgstr "(c) 2012, Dodon Victor\n"
+
+#: imageshackwindow.cpp:102
+#, kde-format
+msgid "Dodon Victor"
+msgstr "Dodon Victor"
+
+#: imageshackwindow.cpp:103
+#, kde-format
+msgid "Author"
+msgstr "Συγγραφέας"
+
+#: imageshackwindow.cpp:230
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: imageshackwindow.cpp:234
+#, kde-format
+msgid "Image Shack Export"
+msgstr "Εξαγωγή Image Shack"
+
+#: imageshackwindow.cpp:261
+#, kde-format
+msgid "Authenticating..."
+msgstr "Ταυτοποίηση..."
+
+#: imageshackwindow.cpp:318
+#, kde-format
+msgid "Login failed: %1\n"
+msgstr "Η σύνδεση απέτυχε: %1\n"
+
+#: imageshackwindow.cpp:332
+#, kde-format
+msgid "Failed to get galleries list: %1\n"
+msgstr "Αποτυχία ανάκτησης της λίστας με τις συλλογές: %1\n"
+
+#: imageshackwindow.cpp:404
+#, kde-format
+msgid "Uploading Failed"
+msgstr "Αποτυχία αποστολής"
+
+#: imageshackwindow.cpp:405
+#, kde-format
+msgid ""
+"Failed to upload photo into Imageshack: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Αποτυχία αποστολής φωτογραφίας στο Imageshack: %1\n"
+"Θέλετε να συνεχίσετε;"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_imageshackui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Εξαγωγή"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_imageshackui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Κύρια γραμμή εργαλείων"
+
+#: plugin_imageshack.cpp:103
+#, kde-format
+msgid "Export to &Imageshack..."
+msgstr "Εξαγωγή στο &Ιmageshack..."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Stelios"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "sstavra@gmail.com"
+
+#~ msgid "Checking the registration code"
+#~ msgstr "Γίνεται έλεγχος του κώδικα εγγραφής"
+
+#~ msgid "Checking the web server"
+#~ msgstr "Γίνεται έλεγχος του εξυπηρετητή ιστού"
+
+#~ msgid "Server does not respond. Please check you internet connection!"
+#~ msgstr ""
+#~ "Ο εξυπηρετητής δεν ανταποκρίνεται. Ελέγξτε τη σύνδεσή σας στο διαδίκτυο!"
+
+#~ msgid "Registration code successfully verified"
+#~ msgstr "Επιτυχής επαλήθευση του κώδικα εγγραφής"
+
+#~ msgid "Registration code not valid!"
+#~ msgstr "Ο κώδικας εγγραφής δεν είναι έγκυρος!"
+
+#, fuzzy
+#~| msgid "Start upload to Imageshack web service"
+#~ msgid "Images to upload to Imageshack web service"
+#~ msgstr "Έναρξη αποστολής στην υπηρεσία ιστού Imageshack"
+
+#~ msgid ""
+#~ "This is a clickable link to open the Imageshack home page in a web browser"
+#~ msgstr ""
+#~ "Αυτός είναι ένας σύνδεσμος με κλικ στον οποίο ανοίγει η ιστοσελίδα του "
+#~ "Imageshack σε έναν περιηγητή ιστού"
+
+#, fuzzy
+#~| msgid "Image Shack Export"
+#~ msgid "ImageShack"
+#~ msgstr "Εξαγωγή Image Shack"
+
+#~ msgid "Account"
+#~ msgstr "Λογαριασμός"
+
+#~ msgid "Imageshack account info"
+#~ msgstr "Πληροφορίες λογαριασμού Imageshack"
+
+#~ msgctxt "Account info"
+#~ msgid "Name:"
+#~ msgstr "Όνομα:"
+
+#~ msgctxt "Account info"
+#~ msgid "Email:"
+#~ msgstr "Διεύθ. ηλ. αλληλογραφίας"
+
+#~ msgid "Change account"
+#~ msgstr "Αλλαγή λογαριασμού"
+
+#~ msgid ""
+#~ "Change the registration code for the Imageshack account used to upload "
+#~ "images"
+#~ msgstr ""
+#~ "Αλλαγή του κώδικα εγγραφής για το λογαριασμό στο Imageshack που "
+#~ "χρησιμεύει για την αποστολή εικόνων"
+
+#~ msgid "Destination"
+#~ msgstr "Προορισμός"
+
+#~ msgid ""
+#~ "This is the ImageShack gallery to which selected items will be uploaded"
+#~ msgstr ""
+#~ "Αυτή είναι η πινακοθήκη Imageshack στην οποία επιλεγμένα αντικείμενα θα "
+#~ "αποσταλούν"
+
+#~ msgid "Gallery:"
+#~ msgstr "Πινακοθήκη:"
+
+#, fuzzy
+#~| msgctxt "Account info"
+#~| msgid "Name:"
+#~ msgid "Name:"
+#~ msgstr "Όνομα:"
+
+#~ msgctxt "ImageShack galleries list"
+#~ msgid "Reload"
+#~ msgstr "Επαναφόρτωση"
+
+#~ msgid "Reload ImageShack galleries list"
+#~ msgstr "Επαναφόρτωση λίστας με τις πινακοθήκες Imageshack"
+
+#~ msgid "Options"
+#~ msgstr "Επιλογές"
+
+#~ msgid "Resize options"
+#~ msgstr "Επιλογές αλλαγής μεγέθους"
+
+#~ msgid "Do not resize photos"
+#~ msgstr "Να μη γίνει αλλαγή μεγέθους σε φωτογραφίες"
+
+#~ msgid "Predefined templates"
+#~ msgstr "Προκαθορισμένα πρότυπα"
+
+#~ msgid "Width:"
+#~ msgstr "Πλάτος:"
+
+#, fuzzy
+#~| msgid "Height"
+#~ msgid "Height:"
+#~ msgstr "Ύψος"
+
+#~ msgid "Imageshack authorization"
+#~ msgstr "Εξουσιοδότηση Imageshack"
+
+#~ msgid ""
+#~ "Please paste the registration code for your ImageShack account into the "
+#~ "textbox below and press \"OK\"."
+#~ msgstr ""
+#~ "Επικολλήστε τον κωδικό εγγραφής για το λογαριασμό σας στο Imageshack στο "
+#~ "παρακάτω πλαίσιο κειμένου και πατήστε «Εντάξει»."

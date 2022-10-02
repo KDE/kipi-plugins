@@ -1,0 +1,303 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Andrej Mernik <andrejm@ubuntu.si>, 2013, 2014, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2016-08-29 20:38+0200\n"
+"Last-Translator: Andrej Mernik <andrejm@ubuntu.si>\n"
+"Language-Team: Slovenian <lugos-slo@lugos.si>\n"
+"Language: sl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
+"%100==4 ? 3 : 0);\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: imageshacktalker.cpp:173
+#, kde-format
+msgid "Authenticating the user"
+msgstr "Overjanje uporabnika"
+
+#: imageshacktalker.cpp:199
+#, kde-format
+msgid "Getting galleries from server"
+msgstr "Pridobivanje galerij iz strežnika"
+
+#: imageshacktalker.cpp:289
+#, kde-format
+msgid "Successfully retrieved galleries"
+msgstr "Uspešno pridobljene galerije"
+
+#: imageshackwidget.cpp:82
+#, kde-format
+msgid "Make private"
+msgstr "Napravi zasebno"
+
+#: imageshackwidget.cpp:86
+#, kde-format
+msgid "Tags (optional):"
+msgstr "Oznake (izbirno):"
+
+#: imageshackwidget.cpp:88
+#, kde-format
+msgid "Remove information bar on thumbnails"
+msgstr "Odstrani vrstico s podrobnostmi iz sličic"
+
+#: imageshackwidget.cpp:125
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Add to root folder"
+msgstr "Dodaj v korensko mapo"
+
+#: imageshackwidget.cpp:128
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Create new gallery"
+msgstr "Ustvari novo galerijo"
+
+#: imageshackwindow.cpp:81
+#, kde-format
+msgid "Export to Imageshack"
+msgstr "Izvozi v Imageshack"
+
+#: imageshackwindow.cpp:89
+#, kde-format
+msgid "Upload"
+msgstr "Pošlji"
+
+#: imageshackwindow.cpp:90
+#, kde-format
+msgid "Start upload to Imageshack web service"
+msgstr "Začni pošiljanje na spletno storitev Imageshack"
+
+#: imageshackwindow.cpp:98
+#, kde-format
+msgid "Imageshack Export"
+msgstr "Izvoz v Imageshack"
+
+#: imageshackwindow.cpp:99
+#, kde-format
+msgid "A tool to export images to Imageshack web service."
+msgstr "Orodje za izvoz slik v oddaljeno spletno storitev Imageshack."
+
+#: imageshackwindow.cpp:100
+#, kde-format
+msgid "(c) 2012, Dodon Victor\n"
+msgstr "(c) 2012, Dodon Victor\n"
+
+#: imageshackwindow.cpp:102
+#, kde-format
+msgid "Dodon Victor"
+msgstr "Dodon Victor"
+
+#: imageshackwindow.cpp:103
+#, kde-format
+msgid "Author"
+msgstr "Avtor"
+
+#: imageshackwindow.cpp:230
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: imageshackwindow.cpp:234
+#, kde-format
+msgid "Image Shack Export"
+msgstr "Izvoz v ImageShack"
+
+#: imageshackwindow.cpp:261
+#, kde-format
+msgid "Authenticating..."
+msgstr "Overjanje ..."
+
+#: imageshackwindow.cpp:318
+#, kde-format
+msgid "Login failed: %1\n"
+msgstr "Prijava je spodletela: %1\n"
+
+#: imageshackwindow.cpp:332
+#, kde-format
+msgid "Failed to get galleries list: %1\n"
+msgstr "Pridobivanje seznama galerij je spodletelo: %1\n"
+
+#: imageshackwindow.cpp:404
+#, kde-format
+msgid "Uploading Failed"
+msgstr "Pošiljanje ni uspelo"
+
+#: imageshackwindow.cpp:405
+#, kde-format
+msgid ""
+"Failed to upload photo into Imageshack: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Fotografije ni bilo mogoče poslati v Imageshack: %1\n"
+"Ali želite nadaljevati?"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_imageshackui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Izvozi"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_imageshackui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Glavna orodna vrstica"
+
+#: plugin_imageshack.cpp:103
+#, kde-format
+msgid "Export to &Imageshack..."
+msgstr "Izvozi v &Imageshack ..."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Andrej Mernik"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "andrejm@ubuntu.si"
+
+#~ msgid "Checking the registration code"
+#~ msgstr "Preverjanje registracijske kode"
+
+#~ msgid "Checking the web server"
+#~ msgstr "Preverjanje spletnega strežnika"
+
+#~ msgid "Server does not respond. Please check you internet connection!"
+#~ msgstr "Strežnik se ne odziva. Preverite vašo internetno povezavo!"
+
+#~ msgid "Registration code successfully verified"
+#~ msgstr "Registracijska koda je bila uspešno preverjena"
+
+#~ msgid "Registration code not valid!"
+#~ msgstr "Registracijska koda ni veljavna!"
+
+#~ msgid "Images to upload to Imageshack web service"
+#~ msgstr "Slike, ki bodo poslane na spletno storitev Imageshack"
+
+#~ msgid ""
+#~ "This is a clickable link to open the Imageshack home page in a web browser"
+#~ msgstr ""
+#~ "To je povezava, ki jo lahko kliknete. Odpre domačo stran Imageshack v "
+#~ "spletnem brskalniku"
+
+#~ msgid "ImageShack"
+#~ msgstr "ImageShack"
+
+#~ msgid "Account"
+#~ msgstr "Račun"
+
+#~ msgid "Imageshack account info"
+#~ msgstr "Podrobnosti o računu Imageshack"
+
+#~ msgctxt "Account info"
+#~ msgid "Name:"
+#~ msgstr "Ime:"
+
+#~ msgctxt "Account info"
+#~ msgid "Email:"
+#~ msgstr "E-pošta:"
+
+#~ msgid "Change account"
+#~ msgstr "Spremeni račun"
+
+#~ msgid ""
+#~ "Change the registration code for the Imageshack account used to upload "
+#~ "images"
+#~ msgstr ""
+#~ "Spremenite registracijsko kodo za račun Imageshack, ki je uporabljen za "
+#~ "pošiljanje slik"
+
+#~ msgid "Destination"
+#~ msgstr "Cilj"
+
+#~ msgid ""
+#~ "This is the ImageShack gallery to which selected items will be uploaded"
+#~ msgstr "To je galerija ImageShack v katerega bodo poslani izbrani predmeti"
+
+#~ msgid "Upload to galleries"
+#~ msgstr "Pošlji v galerije"
+
+#~ msgid "Gallery:"
+#~ msgstr "Galerija:"
+
+#~ msgid "Name:"
+#~ msgstr "Ime:"
+
+#~ msgctxt "ImageShack galleries list"
+#~ msgid "Reload"
+#~ msgstr "Znova naloži"
+
+#~ msgid "Reload ImageShack galleries list"
+#~ msgstr "Znova naloži seznam galerij ImageShack"
+
+#~ msgid "Options"
+#~ msgstr "Možnosti"
+
+#~ msgid "These are the options that will be applied to photos"
+#~ msgstr "To so možnosti, ki bodo uveljavljene za fotografije"
+
+#~ msgid "Resize options"
+#~ msgstr "Možnosti spremembe velikosti"
+
+#~ msgid "Do not resize photos"
+#~ msgstr "Ne spreminjaj velikosti fotografij"
+
+#~ msgid "Predefined templates"
+#~ msgstr "Vnaprej določene predloge"
+
+#~ msgid "Custom resize dimensions"
+#~ msgstr "Sprememba velikosti po meri"
+
+#~ msgid "Width:"
+#~ msgstr "Širina:"
+
+#~ msgid "Height:"
+#~ msgstr "Višina:"
+
+#~ msgid "100x75 (avatar)"
+#~ msgstr "100x75 (podoba)"
+
+#~ msgid "150x122 (thumbnail)"
+#~ msgstr "150x122 (sličica)"
+
+#~ msgid "320x240 (for websites and email)"
+#~ msgstr "320x240 (za spletne strani in e-pošto)"
+
+#~ msgid "640x480 (for message boards)"
+#~ msgstr "640x480 (za forume)"
+
+#~ msgid "800x600 (15-inch monitor)"
+#~ msgstr "800x600 (15-palčni monitor)"
+
+#~ msgid "1024x768 (17-inch monitor)"
+#~ msgstr "1024x768 (17-palčni monitor)"
+
+#~ msgid "1280x1024 (19-inch monitor)"
+#~ msgstr "1280x1024 (19-palčni monitor)"
+
+#~ msgid "1600x1200 (21-inch monitor)"
+#~ msgstr "1600x1200 (21-palčni monitor)"
+
+#~ msgid "optimize without resizing"
+#~ msgstr "optimiraj brez spremembe velikosti"
+
+#~ msgid "Create new gallery."
+#~ msgstr "Ustvari novo galerijo."
+
+#~ msgid "Imageshack authorization"
+#~ msgstr "Pooblastitev Imageshack"
+
+#~ msgid ""
+#~ "Please paste the registration code for your ImageShack account into the "
+#~ "textbox below and press \"OK\"."
+#~ msgstr ""
+#~ "Prilepite registracijsko kodo za vaš račun ImageShack v spodnje besedilno "
+#~ "polje in pritisnite \"V redu\"."

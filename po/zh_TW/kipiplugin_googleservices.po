@@ -1,0 +1,601 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Franklin Weng <franklin at goodhorse dot idv dot tw>, 2014.
+# pan93412 <pan93412@gmail.com>, 2019.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2019-11-30 17:56+0800\n"
+"Last-Translator: pan93412 <pan93412@gmail.com>\n"
+"Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 19.11.80\n"
+
+#: authorize.cpp:116
+#, kde-format
+msgid "Google Drive Authorization"
+msgstr "Google 雲端硬碟認證"
+
+#: authorize.cpp:129
+#, kde-format
+msgid ""
+"Please follow the instructions in the browser. After logging in and "
+"authorizing the application, copy the code from the browser, paste it in the "
+"textbox below, and click OK."
+msgstr ""
+"請依循瀏覽器的指示。登入並授權應用程式後，複製瀏覽器所顯示的認證碼，貼到底下"
+"的文字列中，並按下「確定」。"
+
+#: authorize.cpp:249 gdtalker.cpp:272 gptalker.cpp:644
+#, kde-format
+msgid "Error"
+msgstr "錯誤"
+
+#: gdtalker.cpp:337
+#, kde-format
+msgid "Failed to list folders"
+msgstr "列出資料夾失敗"
+
+#: gdtalker.cpp:385
+#, kde-format
+msgid "Failed to create folder"
+msgstr "無法建立資料夾。"
+
+#: gdtalker.cpp:416 gptalker.cpp:937
+#, kde-format
+msgid "Failed to upload photo"
+msgstr "上傳照片失敗"
+
+#: gptalker.cpp:569
+#, kde-format
+msgid "No photo specified"
+msgstr "沒有指定的照片"
+
+#: gptalker.cpp:572
+#, kde-format
+msgid "General upload failure"
+msgstr "一般上傳失敗"
+
+#: gptalker.cpp:575
+#, kde-format
+msgid "File-size was zero"
+msgstr "檔案大小為零"
+
+#: gptalker.cpp:578
+#, kde-format
+msgid "File-type was not recognized"
+msgstr "無法辨識檔案類型"
+
+#: gptalker.cpp:581
+#, kde-format
+msgid "User exceeded upload limit"
+msgstr "使用者已超過上傳限制"
+
+#: gptalker.cpp:584
+#, kde-format
+msgid "Invalid signature"
+msgstr "無效的簽章"
+
+#: gptalker.cpp:587
+#, kde-format
+msgid "Missing signature"
+msgstr "缺少簽章"
+
+#: gptalker.cpp:590
+#, kde-format
+msgid "Login failed / Invalid auth token"
+msgstr "登入失敗/無效的認證碼"
+
+#: gptalker.cpp:593
+#, kde-format
+msgid "Invalid API Key"
+msgstr "無效的 API 鑰匙"
+
+#: gptalker.cpp:596
+#, kde-format
+msgid "Service currently unavailable"
+msgstr "目前無法使用服務"
+
+#: gptalker.cpp:599
+#, kde-format
+msgid "Invalid Frob"
+msgstr "無效的 Frob"
+
+#: gptalker.cpp:602
+#, kde-format
+msgid "Format \"xxx\" not found"
+msgstr "沒有找到格式「xxx」"
+
+#: gptalker.cpp:605
+#, kde-format
+msgid "Method \"xxx\" not found"
+msgstr "沒有找到方式「xxx」"
+
+#: gptalker.cpp:608
+#, kde-format
+msgid "Invalid SOAP envelope"
+msgstr "無效的 SOAP 信封"
+
+#: gptalker.cpp:611
+#, kde-format
+msgid "Invalid XML-RPC Method Call"
+msgstr "無效的 XML-RPC 方式呼叫"
+
+#: gptalker.cpp:614
+#, kde-format
+msgid "The POST method is now required for all setters."
+msgstr "此 POST 方法現在需要所有設定值函數。"
+
+#: gptalker.cpp:617
+#, kde-format
+msgid "Unknown error"
+msgstr "不明的錯誤"
+
+#: gptalker.cpp:620 gswindow.cpp:427 gswindow.cpp:466 gswindow.cpp:548
+#: gswindow.cpp:576 gswindow.cpp:652 gswindow.cpp:668 gswindow.cpp:1078
+#: gswindow.cpp:1198 gswindow.cpp:1241 gswindow.cpp:1249
+#, kde-format
+msgctxt "@title:window"
+msgid "Error"
+msgstr "錯誤"
+
+#: gptalker.cpp:621
+#, kde-format
+msgid ""
+"Error occurred: %1\n"
+"Unable to proceed further."
+msgstr ""
+"發生錯誤：%1\n"
+"無法更進一步繼續。"
+
+#: gptalker.cpp:691 gptalker.cpp:758
+#, kde-format
+msgid "Failed to fetch photo-set list"
+msgstr "無法取得圖片收藏清單"
+
+#: gptalker.cpp:894 gptalker.cpp:927
+#, kde-format
+msgid "Failed to create album"
+msgstr "無法建立相簿"
+
+#: gswidget.cpp:60
+#, kde-format
+msgid "Tag path behavior :"
+msgstr "標籤路徑行為："
+
+#: gswidget.cpp:62
+#, kde-format
+msgid "Leaf tags only"
+msgstr "只匯出葉片標籤 (leaf tag)"
+
+#: gswidget.cpp:63
+#, kde-format
+msgid "Export only the leaf tags of tag hierarchies"
+msgstr "只匯出標籤層級的葉片標籤 (leaf tag)"
+
+#: gswidget.cpp:64
+#, kde-format
+msgid "Split tags"
+msgstr "分割標籤"
+
+#: gswidget.cpp:65
+#, kde-format
+msgid "Export the leaf tag and all ancestors as single tags."
+msgstr "匯出葉片標籤 (leaf tag) 和所有原標籤作為單一標籤。"
+
+#: gswidget.cpp:66
+#, kde-format
+msgid "Combined String"
+msgstr "組合式字串"
+
+#: gswidget.cpp:67
+#, kde-format
+msgid "Build a combined tag string."
+msgstr "建立組合式標籤字串。"
+
+#: gswindow.cpp:116
+#, kde-format
+msgid "Google Drive Export"
+msgstr "Google 雲端硬碟匯出"
+
+#: gswindow.cpp:117
+#, kde-format
+msgid "A tool to export images to Google Drive"
+msgstr "匯出相片至 Google 雲端硬碟的工具"
+
+#: gswindow.cpp:119
+#, kde-format
+msgid ""
+"(c) 2013, Saurabh Patel\n"
+"(c) 2015, Shourya Singh Gupta"
+msgstr ""
+"(c) 2013, Saurabh Patel\n"
+"(c) 2015, Shourya Singh Gupta"
+
+#: gswindow.cpp:122
+#, kde-format
+msgid "Saurabh Patel"
+msgstr "Saurabh Patel"
+
+#: gswindow.cpp:122 gswindow.cpp:195
+#, kde-format
+msgid "Author and maintainer"
+msgstr "作者與維護者"
+
+#: gswindow.cpp:125 gswindow.cpp:207
+#, kde-format
+msgid "Shourya Singh Gupta"
+msgstr "Shourya Singh Gupta"
+
+#: gswindow.cpp:125 gswindow.cpp:198 gswindow.cpp:201 gswindow.cpp:204
+#: gswindow.cpp:207
+#, kde-format
+msgid "Developer"
+msgstr "開發者"
+
+#: gswindow.cpp:132
+#, kde-format
+msgid "Export to Google Drive"
+msgstr "匯出到 Google 雲端硬碟"
+
+#: gswindow.cpp:134 gswindow.cpp:219
+#, kde-format
+msgid "Start Upload"
+msgstr "開始上傳"
+
+#: gswindow.cpp:135
+#, kde-format
+msgid "Start upload to Google Drive"
+msgstr "開始上傳到 Google 雲端硬碟"
+
+#: gswindow.cpp:186
+#, kde-format
+msgid "Google Photos/PicasaWeb Export"
+msgstr "Google Photos/PicasaWeb 匯出"
+
+#: gswindow.cpp:187
+#, kde-format
+msgid "A tool to export image collections to Google Photos/Picasa web service."
+msgstr "匯出相片收藏到 Google Photos/Picasa 網路服務的工具。"
+
+#: gswindow.cpp:189
+#, kde-format
+msgid ""
+"(c) 2007-2009, Vardhman Jain\n"
+"(c) 2008-2016, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2010, Jens Mueller\n"
+"(c) 2015, Shourya Singh Gupta"
+msgstr ""
+"(c) 2007-2009, Vardhman Jain\n"
+"(c) 2008-2016, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2010, Jens Mueller\n"
+"(c) 2015, Shourya Singh Gupta"
+
+#: gswindow.cpp:195
+#, kde-format
+msgid "Vardhman Jain"
+msgstr "Vardhman Jain"
+
+#: gswindow.cpp:198
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: gswindow.cpp:201
+#, kde-format
+msgid "Luka Renko"
+msgstr "Luka Renko"
+
+#: gswindow.cpp:204
+#, kde-format
+msgid "Jens Mueller"
+msgstr "Jens Mueller"
+
+#: gswindow.cpp:217
+#, kde-format
+msgid "Export to Google Photos/PicasaWeb Service"
+msgstr "匯出至 Google Photos/PicasaWeb 服務"
+
+#: gswindow.cpp:220
+#, kde-format
+msgid "Start upload to Google Photos/PicasaWeb Service"
+msgstr "開始上傳至 Google Photos/PicasaWeb 服務"
+
+#: gswindow.cpp:226
+#, kde-format
+msgid "Import from Google Photos/PicasaWeb Service"
+msgstr "從 Google Photos/PicasaWeb 匯入"
+
+#: gswindow.cpp:228
+#, kde-format
+msgid "Start Download"
+msgstr "開始下載"
+
+#: gswindow.cpp:229
+#, kde-format
+msgid "Start download from Google Photos/PicasaWeb service"
+msgstr "開始從 Google Photos/PicasaWeb 服務下載"
+
+#: gswindow.cpp:428 gswindow.cpp:467 gswindow.cpp:577
+#, kde-format
+msgid "Google Photos/PicasaWeb Call Failed: %1\n"
+msgstr "Google Photos/PicasaWeb 呼叫失敗：%1\n"
+
+#: gswindow.cpp:448 gswindow.cpp:527 gswindow.cpp:758
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: gswindow.cpp:531
+#, kde-format
+msgid "Google Photo Export"
+msgstr "Google Photo 匯出"
+
+#: gswindow.cpp:549
+#, kde-format
+msgid "Google Drive Call Failed: %1\n"
+msgstr "Google 雲端硬碟呼叫失敗：%1\n"
+
+#: gswindow.cpp:653
+#, kde-format
+msgid ""
+"The textbox is empty, please enter the code from the browser in the textbox. "
+"To complete the authentication click \"Change Account\", or \"Start Upload\" "
+"to authenticate again."
+msgstr ""
+"文字為空白。請輸入瀏覽器中取得的代碼。要完成認證，請點擊「變更帳號」或「開始"
+"上傳」並重新認證。"
+
+#: gswindow.cpp:669
+#, kde-format
+msgid "No image selected. Please select which images should be uploaded."
+msgstr "沒有選取影像。請選擇要上傳的影像。"
+
+#: gswindow.cpp:683 gswindow.cpp:706 gswindow.cpp:1014 gswindow.cpp:1032
+#: gswindow.cpp:1105
+#, kde-format
+msgid "Warning"
+msgstr "警告"
+
+#: gswindow.cpp:684 gswindow.cpp:707
+#, kde-format
+msgid "Authentication failed. Click \"Continue\" to authenticate."
+msgstr "認證失敗。點擊「繼續」以認證。"
+
+#: gswindow.cpp:687 gswindow.cpp:710 gswindow.cpp:1019 gswindow.cpp:1037
+#: gswindow.cpp:1109 gswindow.cpp:1288
+#, kde-format
+msgid "Continue"
+msgstr "繼續"
+
+#: gswindow.cpp:688 gswindow.cpp:711 gswindow.cpp:1020 gswindow.cpp:1038
+#: gswindow.cpp:1110 gswindow.cpp:1289
+#, kde-format
+msgid "Cancel"
+msgstr "取消"
+
+#: gswindow.cpp:762
+#, kde-format
+msgid "Google Drive export"
+msgstr "Google 雲端硬碟匯出"
+
+#: gswindow.cpp:1015
+#, kde-format
+msgid ""
+"Failed to save photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"無法儲存圖片：%1\n"
+"確定要繼續嗎？"
+
+#: gswindow.cpp:1033
+#, kde-format
+msgid ""
+"Failed to download photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"無法下載相片：%1\n"
+"確定要繼續嗎？"
+
+#: gswindow.cpp:1079
+#, kde-format
+msgid "Failed to save image to %1"
+msgstr "無法儲存圖片至 %1"
+
+#: gswindow.cpp:1106
+#, kde-format
+msgid ""
+"Failed to upload photo to %1.\n"
+"%2\n"
+"Do you want to continue?"
+msgstr ""
+"無法上傳圖片到 %1。\n"
+"%2\n"
+"確定要繼續嗎？"
+
+#: gswindow.cpp:1200
+#, kde-format
+msgctxt "%1 is the error string, %2 is the error code"
+msgid "An authentication error occurred: %1 (%2)"
+msgstr "發生認證錯誤：%1（%2）"
+
+#: gswindow.cpp:1242
+#, kde-format
+msgid ""
+"Google Drive call failed:\n"
+"%1"
+msgstr ""
+"Google 雲端硬碟呼叫失敗：\n"
+"%1"
+
+#: gswindow.cpp:1250
+#, kde-format
+msgid ""
+"Google Photos/PicasaWeb call failed:\n"
+"%1"
+msgstr ""
+"Google Photos/PicasaWeb 呼叫失敗：\n"
+"%1"
+
+#: gswindow.cpp:1283
+#, kde-format
+msgctxt "@title:window"
+msgid "Warning"
+msgstr "警告"
+
+#: gswindow.cpp:1284
+#, kde-format
+msgid ""
+"After you have been logged out in the browser, click \"Continue\" to "
+"authenticate for another account"
+msgstr "您從瀏覽器登出後，點擊「繼續」來使用其他帳號認證"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_googleservicesui.rc:7 kipiplugin_googleservicesui.rc:15
+#, kde-format
+msgid "&Export"
+msgstr "匯出(&E)"
+
+#. i18n: ectx: Menu (Import)
+#: kipiplugin_googleservicesui.rc:11
+#, kde-format
+msgid "&Import"
+msgstr "匯出(&I)"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_googleservicesui.rc:21
+#, kde-format
+msgid "Main Toolbar"
+msgstr "主工具列"
+
+#: newalbumdlg.cpp:54
+#, kde-format
+msgid "Access Level"
+msgstr "權限等級"
+
+#: newalbumdlg.cpp:55
+#, kde-format
+msgid ""
+"These are security and privacy settings for the new Google Photos/PicasaWeb "
+"album."
+msgstr "此為新 Google Photos/PicasaWeb 相簿的安全性及隱私權設定。"
+
+#: newalbumdlg.cpp:57
+#, kde-format
+msgctxt "google photos/picasaweb album privacy"
+msgid "Public"
+msgstr "公開"
+
+#: newalbumdlg.cpp:59
+#, kde-format
+msgid "Public album is listed on your public Google Photos/PicasaWeb page."
+msgstr "公開相簿會列在您的公開 Google Photos/PicasaWeb 頁面。"
+
+#: newalbumdlg.cpp:60
+#, kde-format
+msgctxt "google photos/picasaweb album privacy"
+msgid "Unlisted / Private"
+msgstr "不列出 / 私人"
+
+#: newalbumdlg.cpp:61
+#, kde-format
+msgid "Unlisted album is only accessible via URL."
+msgstr "未列出的相簿只能經由網址存取。"
+
+#: newalbumdlg.cpp:62
+#, kde-format
+msgctxt "google photos/picasaweb album privacy"
+msgid "Sign-In Required to View"
+msgstr "需要登入才能檢視"
+
+#: newalbumdlg.cpp:63
+#, kde-format
+msgid "Unlisted album require Sign-In to View"
+msgstr "未列出的相簿需要登入才能檢視"
+
+#: newalbumdlg.cpp:71
+#, kde-format
+msgid "Privacy:"
+msgstr "隱私："
+
+#: plugin_googleservices.cpp:100
+#, kde-format
+msgid "Export to &Google Drive..."
+msgstr "匯出到 Google 雲端硬碟(&G)..."
+
+#: plugin_googleservices.cpp:110
+#, kde-format
+msgid "Export to &Google Photos/PicasaWeb..."
+msgstr "匯出到 &Google Photos/PicasaWeb…"
+
+#: plugin_googleservices.cpp:120
+#, kde-format
+msgid "Import from &Google Photos/PicasaWeb..."
+msgstr "從 &Google Photos/PicasaWeb 匯入…"
+
+#: replacedialog.cpp:112
+#, kde-format
+msgid "Add As New"
+msgstr "新增項目"
+
+#: replacedialog.cpp:113
+#, kde-format
+msgid "Item will be added alongside the linked version."
+msgstr "項目將會與連結的版本同時加入。"
+
+#: replacedialog.cpp:119
+#, kde-format
+msgid "Add All"
+msgstr "全部加入"
+
+#: replacedialog.cpp:120
+#, kde-format
+msgid ""
+"Items will be added alongside the linked version. You will not be prompted "
+"again."
+msgstr "項目將會與連結的版本同時加入。將不會再次提醒您。"
+
+#: replacedialog.cpp:126
+#, kde-format
+msgid "Replace"
+msgstr "取代"
+
+#: replacedialog.cpp:127
+#, kde-format
+msgid "Item will be replacing the linked version."
+msgstr "項目將會取代此連結的版本。"
+
+#: replacedialog.cpp:133
+#, kde-format
+msgid "Replace All"
+msgstr "全部取代"
+
+#: replacedialog.cpp:134
+#, kde-format
+msgid ""
+"Items will be replacing the linked version. You will not be prompted again."
+msgstr "項目將會取代此連結的版本。將不會再次提醒您。"
+
+#: replacedialog.cpp:157
+#, kde-format
+msgid "A linked item already exists."
+msgstr "連結的項目已經存在。"
+
+#: replacedialog.cpp:177
+#, kde-format
+msgid "Destination"
+msgstr "目的地"
+
+#: replacedialog.cpp:182
+#, kde-format
+msgid "Source"
+msgstr "來源"

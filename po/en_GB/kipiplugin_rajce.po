@@ -1,0 +1,292 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Andrew Coles <andrew_coles@yahoo.co.uk>, 2011.
+# Steve Allewell <steve.allewell@gmail.com>, 2014, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2016-08-28 19:09+0000\n"
+"Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
+"Language-Team: British English <kde-l10n-en_gb@kde.org>\n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 2.0\n"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_rajceui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Export"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_rajceui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Main Toolbar"
+
+#: newalbumdialog.cpp:47
+#, kde-format
+msgid "Visibility"
+msgstr "Visibility"
+
+#: newalbumdialog.cpp:48
+#, kde-format
+msgid "Set the visibility of the album"
+msgstr "Set the visibility of the album"
+
+#: newalbumdialog.cpp:50
+#, kde-format
+msgid "Public"
+msgstr "Public"
+
+#: plugin_rajce.cpp:90
+#, kde-format
+msgid "Export to &Rajce.net..."
+msgstr "Export to &Rajce.net..."
+
+#: rajcewidget.cpp:120
+#, kde-format
+msgid "Not logged in"
+msgstr "Not logged in"
+
+#: rajcewidget.cpp:184
+#, kde-format
+msgid "Unknown error"
+msgstr "Unknown error"
+
+#: rajcewidget.cpp:185
+#, kde-format
+msgid "Invalid command"
+msgstr "Invalid command"
+
+#: rajcewidget.cpp:186
+#, kde-format
+msgid "Invalid login name or password"
+msgstr "Invalid login name or password"
+
+#: rajcewidget.cpp:187
+#, kde-format
+msgid "Session expired"
+msgstr "Session expired"
+
+#: rajcewidget.cpp:189 rajcewidget.cpp:190
+#, kde-format
+msgid "Unknown album"
+msgstr "Unknown album"
+
+#: rajcewidget.cpp:191
+#, kde-format
+msgid "Failed to open album"
+msgstr "Failed to open album"
+
+#: rajcewidget.cpp:192
+#, kde-format
+msgid "The album name cannot be empty"
+msgstr "The album name cannot be empty"
+
+#: rajcewidget.cpp:193
+#, kde-format
+msgid "Failed to create album"
+msgstr "Failed to create album"
+
+#: rajcewidget.cpp:194
+#, kde-format
+msgid "Album does not exist"
+msgstr "Album does not exist"
+
+#: rajcewidget.cpp:197 rajcewidget.cpp:199
+#, kde-format
+msgid "File upload failed"
+msgstr "File upload failed"
+
+#: rajcewidget.cpp:200
+#, kde-format
+msgid "Unsupported file extension"
+msgstr "Unsupported file extension"
+
+#: rajcewidget.cpp:269
+#, kde-format
+msgid "Logging in %v%"
+msgstr "Logging in %v%"
+
+#: rajcewidget.cpp:270
+#, kde-format
+msgid "Logging out %v%"
+msgstr "Logging out %v%"
+
+#: rajcewidget.cpp:271
+#, kde-format
+msgid "Loading albums %v%"
+msgstr "Loading albums %v%"
+
+#: rajcewidget.cpp:272
+#, kde-format
+msgid "Creating album %v%"
+msgstr "Creating album %v%"
+
+#: rajcewidget.cpp:273
+#, kde-format
+msgid "Opening album %v%"
+msgstr "Opening album %v%"
+
+#: rajcewidget.cpp:274
+#, kde-format
+msgid "Closing album %v%"
+msgstr "Closing album %v%"
+
+#: rajcewidget.cpp:275
+#, kde-format
+msgid "Adding photos %v%"
+msgstr "Adding photos %v%"
+
+#: rajcewindow.cpp:53
+#, kde-format
+msgid "Export to Rajce.net"
+msgstr "Export to Rajce.net"
+
+#: rajcewindow.cpp:55
+#, kde-format
+msgid "Start Upload"
+msgstr "Start Upload"
+
+#: rajcewindow.cpp:56
+#, kde-format
+msgid "Start upload to Rajce.net"
+msgstr "Start upload to Rajce.net"
+
+#: rajcewindow.cpp:71
+#, kde-format
+msgid "Rajce.net Export"
+msgstr "Rajce.net Export"
+
+#: rajcewindow.cpp:72
+#, kde-format
+msgid "A tool to export image collections to Rajce.net."
+msgstr "A tool to export image collections to Rajce.net."
+
+#: rajcewindow.cpp:74
+#, kde-format
+msgid "(c) 2011-2013, Lukas Krejci"
+msgstr "(c) 2011-2013, Lukas Krejci"
+
+#: rajcewindow.cpp:76
+#, kde-format
+msgid "Lukas Krejci"
+msgstr "Lukas Krejci"
+
+#: rajcewindow.cpp:77
+#, kde-format
+msgid "Author"
+msgstr "Author"
+
+#~ msgid "Login:"
+#~ msgstr "Login:"
+
+#~ msgid "Password:"
+#~ msgstr "Password:"
+
+#~ msgid "&OK"
+#~ msgstr "&OK"
+
+#~ msgid "&Cancel"
+#~ msgstr "&Cancel"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Andrew Coles, Steve Allewell"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "andrew_coles@yahoo.co.uk, steve.allewell@gmail.com"
+
+#~ msgid "New Album"
+#~ msgstr "New Album"
+
+#~ msgid "Name"
+#~ msgstr "Name"
+
+#~ msgid "Description"
+#~ msgstr "Description"
+
+#~ msgid "This is the list of images to upload to your Rajce.net account."
+#~ msgstr "This is the list of images to upload to your Rajce.net account."
+
+#~ msgid ""
+#~ "This is a clickable link to open the Rajce.net home page in a web browser."
+#~ msgstr ""
+#~ "This is a clickable link to open the Rajce.net home page in a web browser."
+
+#~ msgid "Account"
+#~ msgstr "Account"
+
+#~ msgid "This is the Rajce.net account that will be used to authenticate."
+#~ msgstr "This is the Rajce.net account that will be used to authenticate."
+
+#~ msgctxt "Rajce.net account login"
+#~ msgid "Anonymous"
+#~ msgstr "Anonymous"
+
+#~ msgid "Login as anonymous to Rajce.net web service."
+#~ msgstr "Login as anonymous to Rajce.net web service."
+
+#~ msgid "Rajce.net Account"
+#~ msgstr "Rajce.net Account"
+
+#~ msgid "Login to Rajce.net using username and password."
+#~ msgstr "Login to Rajce.net using username and password."
+
+#~ msgctxt "Rajce.net account settings"
+#~ msgid "Name:"
+#~ msgstr "Name:"
+
+#~ msgid "Change Account"
+#~ msgstr "Change Account"
+
+#~ msgid "Change Rajce.net Account used to authenticate"
+#~ msgstr "Change Rajce.net Account used to authenticate"
+
+#~ msgid "Album"
+#~ msgstr "Album"
+
+#~ msgid "This is the Rajce.net album that will be used for transfer."
+#~ msgstr "This is the Rajce.net album that will be used for transfer."
+
+#~ msgid "Create new Rajce.net album"
+#~ msgstr "Create new Rajce.net album"
+
+#~ msgctxt "reload album list"
+#~ msgid "Reload"
+#~ msgstr "Reload"
+
+#~ msgid "Reload album list"
+#~ msgstr "Reload album list"
+
+#~ msgid "Destination"
+#~ msgstr "Destination"
+
+#~ msgid "This is the location where Rajce.net images will be downloaded."
+#~ msgstr "This is the location where Rajce.net images will be downloaded."
+
+#~ msgid "Options"
+#~ msgstr "Options"
+
+#~ msgid "These are options that will be applied to images before upload."
+#~ msgstr "These are options that will be applied to images before upload."
+
+#~ msgid "Maximum dimension:"
+#~ msgstr "Maximum dimension:"
+
+#~ msgid "JPEG quality:"
+#~ msgstr "JPEG quality:"
+
+#~ msgid "Author and maintainer"
+#~ msgstr "Author and maintainer"
+
+#~ msgid "Handbook"
+#~ msgstr "Handbook"

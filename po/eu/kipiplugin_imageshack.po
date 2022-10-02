@@ -1,0 +1,159 @@
+# Translation of kipiplugin_imageshack.po to Euskara/Basque (eu).
+# Copyright (C) 2019, This file is copyright:
+# This file is distributed under the same license as the kipi-plugins package.
+# KDE euskaratzeko proiektuaren arduraduna <xalba@euskalnet.net>.
+#
+# Translators:
+# Iñigo Salvador Azurmendi <xalba@euskalnet.net>, 2019.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipi-plugins\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2019-08-19 18:02+0200\n"
+"Last-Translator: Iñigo Salvador Azurmendi <xalba@euskalnet.net>\n"
+"Language-Team: Basque <kde-i18n-eu@kde.org>\n"
+"Language: eu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 19.08.0\n"
+
+#: imageshacktalker.cpp:173
+#, kde-format
+msgid "Authenticating the user"
+msgstr "Erabiltzailea autentifikatzea"
+
+#: imageshacktalker.cpp:199
+#, kde-format
+msgid "Getting galleries from server"
+msgstr "Zerbitzaritik galeriak lortzea"
+
+#: imageshacktalker.cpp:289
+#, kde-format
+msgid "Successfully retrieved galleries"
+msgstr "Galeria eskuratze arrakastatsua"
+
+#: imageshackwidget.cpp:82
+#, kde-format
+msgid "Make private"
+msgstr "Egin pribatu"
+
+#: imageshackwidget.cpp:86
+#, kde-format
+msgid "Tags (optional):"
+msgstr "Etiketak (aukerakoa):"
+
+#: imageshackwidget.cpp:88
+#, kde-format
+msgid "Remove information bar on thumbnails"
+msgstr "Kendu koadro txikien gaineko informazio-barra"
+
+#: imageshackwidget.cpp:125
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Add to root folder"
+msgstr "Gehitu erro karpetan"
+
+#: imageshackwidget.cpp:128
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Create new gallery"
+msgstr "Sortu galeria berria"
+
+#: imageshackwindow.cpp:81
+#, kde-format
+msgid "Export to Imageshack"
+msgstr "Esportatu Imageshack-era"
+
+#: imageshackwindow.cpp:89
+#, kde-format
+msgid "Upload"
+msgstr "Zama-igo"
+
+#: imageshackwindow.cpp:90
+#, kde-format
+msgid "Start upload to Imageshack web service"
+msgstr "Hasi zama-igotzea Imageshack web zerbitzuetara"
+
+#: imageshackwindow.cpp:98
+#, kde-format
+msgid "Imageshack Export"
+msgstr "Imageshack Esportatu"
+
+#: imageshackwindow.cpp:99
+#, kde-format
+msgid "A tool to export images to Imageshack web service."
+msgstr "Imageshack web zerbitzuetara irudiak esportatzeko tresna bat."
+
+#: imageshackwindow.cpp:100
+#, kde-format
+msgid "(c) 2012, Dodon Victor\n"
+msgstr "(c) 2012, Dodon Victor\n"
+
+#: imageshackwindow.cpp:102
+#, kde-format
+msgid "Dodon Victor"
+msgstr "Dodon Victor"
+
+#: imageshackwindow.cpp:103
+#, kde-format
+msgid "Author"
+msgstr "Egilea"
+
+#: imageshackwindow.cpp:230
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: imageshackwindow.cpp:234
+#, kde-format
+msgid "Image Shack Export"
+msgstr "«Image Shack» Esportatu"
+
+#: imageshackwindow.cpp:261
+#, kde-format
+msgid "Authenticating..."
+msgstr "Autentifikatzen..."
+
+#: imageshackwindow.cpp:318
+#, kde-format
+msgid "Login failed: %1\n"
+msgstr "Saio-hastea huts egin du: %1\n"
+
+#: imageshackwindow.cpp:332
+#, kde-format
+msgid "Failed to get galleries list: %1\n"
+msgstr "Galerien zerrenda lortzea huts egin du: %1\n"
+
+#: imageshackwindow.cpp:404
+#, kde-format
+msgid "Uploading Failed"
+msgstr "Zama-igotzea huts egin du"
+
+#: imageshackwindow.cpp:405
+#, kde-format
+msgid ""
+"Failed to upload photo into Imageshack: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Huts egin du Imageshack-era argazkia zama-igotzea: %1\n"
+"Jarraitu nahi duzu?"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_imageshackui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Esportatu"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_imageshackui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Tresna-barra nagusia"
+
+#: plugin_imageshack.cpp:103
+#, kde-format
+msgid "Export to &Imageshack..."
+msgstr "Esportatu &Imageshack-era..."

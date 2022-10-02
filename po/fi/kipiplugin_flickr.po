@@ -1,0 +1,660 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Tommi Nieminen <translator@legisign.org>, 2014, 2015, 2018, 2021.
+# Lasse Liehu <lasse.liehu@gmail.com>, 2015, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2021-06-29 10:26+0300\n"
+"Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
+"Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 20.04.2\n"
+
+#: comboboxintermediate.h:54
+#, kde-format
+msgid "Various"
+msgstr "Sekalaiset"
+
+#: flickrlist.cpp:420
+#, kde-format
+msgid ""
+"Check if photo should be publicly visible or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"Valitse, tulisiko kuvan olla julkisesti näkyvillä, tai käytä "
+"Lähetysasetukset-välilehteä määrittämään asetus kaikille kuville"
+
+#: flickrlist.cpp:423
+#, kde-format
+msgid ""
+"Check if photo should be visible to family or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"Valitse, tulisiko kuvan näkyä perheelle, tai käytä Lähetysasetukset-"
+"välilehteä määrittämään asetus kaikille kuville"
+
+#: flickrlist.cpp:426
+#, kde-format
+msgid ""
+"Check if photo should be visible to friends or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"Valitse, tulisiko kuvan näkyä kavereille, tai käytä Lähetysasetukset-"
+"välilehteä määrittämään asetus kaikille kuville"
+
+#: flickrlist.cpp:429
+#, kde-format
+msgid ""
+"Indicate the safety level for the photo or use Upload Options tab to specify "
+"this for all images"
+msgstr ""
+"Määritä kuvan turvataso tai käytä Lähetysasetukset-välilehteä määrittämään "
+"asetus kaikille kuville"
+
+#: flickrlist.cpp:432
+#, kde-format
+msgid ""
+"Indicate what kind of image this is or use Upload Options tab to specify "
+"this for all images"
+msgstr ""
+"Määritä kuvan tyyppi tai käytä Lähetysasetukset-välilehteä määrittämään "
+"asetus kaikille kuville"
+
+#: flickrlist.cpp:445
+#, kde-format
+msgid ""
+"Add extra tags per image or use Upload Options tab to add tags for all images"
+msgstr ""
+"Lisää kuvakohtaisia lisätunnisteita tai käytä Lähetysasetukset-välilehteä "
+"määrittämään kaikkien kuvien tunnisteet"
+
+#: flickrlist.cpp:462
+#, kde-format
+msgid "Enter extra tags, separated by commas."
+msgstr "Syötä lisätunnisteet pilkuin erotettuina."
+
+#: flickrtalker.cpp:265
+#, kde-format
+msgid "Getting the maximum allowed file size."
+msgstr "Noudetaan kuvan sallittua enimmäiskokoa."
+
+#: flickrtalker.cpp:550
+#, kde-format
+msgid "File Size exceeds maximum allowed file size."
+msgstr "Tiedostokoko ylittää sallitun enimmäiskoon."
+
+#: flickrtalker.cpp:603
+#, kde-format
+msgid "No photo specified"
+msgstr "Kuvaa ei valittu"
+
+#: flickrtalker.cpp:607
+#, kde-format
+msgid "General upload failure"
+msgstr "Yleinen lähetysvirhe"
+
+#: flickrtalker.cpp:611
+#, kde-format
+msgid "Filesize was zero"
+msgstr "Tiedostokoko oli nolla"
+
+#: flickrtalker.cpp:615
+#, kde-format
+msgid "Filetype was not recognized"
+msgstr "Tiedostotyyppiä ei tunnistettu"
+
+#: flickrtalker.cpp:619
+#, kde-format
+msgid "User exceeded upload limit"
+msgstr "Käyttäjä ylitti lähetysrajan"
+
+#: flickrtalker.cpp:623
+#, kde-format
+msgid "Invalid signature"
+msgstr "Virheellinen allekirjoitus"
+
+#: flickrtalker.cpp:627
+#, kde-format
+msgid "Missing signature"
+msgstr "Puuttuva allekirjoitus"
+
+#: flickrtalker.cpp:631
+#, kde-format
+msgid "Login Failed / Invalid auth token"
+msgstr "Kirjautuminen epäonnistui / virheellinen todennusmerkki"
+
+#: flickrtalker.cpp:635
+#, kde-format
+msgid "Invalid API Key"
+msgstr "Virheellinen API-avain"
+
+#: flickrtalker.cpp:639
+#, kde-format
+msgid "Service currently unavailable"
+msgstr "Palvelu ei juuri nyt käytettävissä"
+
+#: flickrtalker.cpp:643
+#, kde-format
+msgid "Invalid Frob"
+msgstr "Virheellinen olio"
+
+#: flickrtalker.cpp:647
+#, kde-format
+msgid "Format \"xxx\" not found"
+msgstr "Muotoa ”xxx” ei löydy"
+
+#: flickrtalker.cpp:651
+#, kde-format
+msgid "Method \"xxx\" not found"
+msgstr "Menetelmää ”xxx” ei löydy"
+
+#: flickrtalker.cpp:655
+#, kde-format
+msgid "Invalid SOAP envelope"
+msgstr "Virheellinen SOAP-kuori"
+
+#: flickrtalker.cpp:659
+#, kde-format
+msgid "Invalid XML-RPC Method Call"
+msgstr "Kelvoton XML-RPC-metodikutsu"
+
+#: flickrtalker.cpp:663
+#, kde-format
+msgid "The POST method is now required for all setters"
+msgstr "POST-menetelmä vaaditaan nyt kaikkeen asettamiseen"
+
+#: flickrtalker.cpp:667
+#, kde-format
+msgid "Unknown error"
+msgstr "Tuntematon virhe"
+
+#: flickrtalker.cpp:672 flickrtalker.cpp:696 flickrtalker.cpp:852
+#: flickrwindow.cpp:416
+#, kde-format
+msgid "Error"
+msgstr "Virhe"
+
+#: flickrtalker.cpp:673
+#, kde-format
+msgid ""
+"Error Occurred: %1\n"
+"Cannot proceed any further."
+msgstr ""
+"Sattui virhe: %1\n"
+"Ei voida jatkaa edemmäs."
+
+#: flickrtalker.cpp:852
+#, kde-format
+msgid "PhotoSet creation failed: "
+msgstr "Kuvajoukon luonti epäonnistui: "
+
+#: flickrtalker.cpp:947
+#, kde-format
+msgid "Failed to fetch list of photo sets."
+msgstr "Kuvajoukkoluettelon nouto epäonnistui."
+
+#: flickrtalker.cpp:1027
+#, kde-format
+msgid "Failed to upload photo"
+msgstr "Kuvan lähetys epäonnistui"
+
+#: flickrtalker.cpp:1086
+#, kde-format
+msgid "Failed to query photo information"
+msgstr "Kuvatietojen kysely epäonnistui"
+
+#: flickrwidget.cpp:63
+#, kde-format
+msgid "Remove Account"
+msgstr "Poista tili"
+
+#: flickrwidget.cpp:73 flickrwidget.cpp:77
+#, kde-format
+msgctxt "photo permissions"
+msgid "Public"
+msgstr "Julkinen"
+
+#: flickrwidget.cpp:76
+#, kde-format
+msgid "This is the list of images to upload to your Flickr account."
+msgstr "Tämä on luettelo Flickr-tilillesi lähetettävistä kuvista."
+
+#: flickrwidget.cpp:81
+#, kde-format
+msgid "Extra tags"
+msgstr "Lisätunnisteet"
+
+#: flickrwidget.cpp:87 flickrwidget.cpp:98
+#, kde-format
+msgctxt "photo permissions"
+msgid "Family"
+msgstr "Perhe"
+
+#: flickrwidget.cpp:92 flickrwidget.cpp:100
+#, kde-format
+msgctxt "photo permissions"
+msgid "Friends"
+msgstr "Kaverit"
+
+#: flickrwidget.cpp:107
+#, kde-format
+msgid "Safety level"
+msgstr "Turvataso"
+
+#: flickrwidget.cpp:109
+#, kde-format
+msgid "Content type"
+msgstr "Sisällön tyyppi"
+
+#: flickrwidget.cpp:112
+#, kde-format
+msgctxt "photo safety level"
+msgid "Safe"
+msgstr "Turvallinen"
+
+#: flickrwidget.cpp:113
+#, kde-format
+msgctxt "photo safety level"
+msgid "Moderate"
+msgstr "Kohtalainen"
+
+#: flickrwidget.cpp:114
+#, kde-format
+msgctxt "photo safety level"
+msgid "Restricted"
+msgstr "Rajoitettu"
+
+#: flickrwidget.cpp:115 flickrwidget.cpp:211
+#, kde-format
+msgctxt "photo content type"
+msgid "Photo"
+msgstr "Valokuva"
+
+#: flickrwidget.cpp:116 flickrwidget.cpp:212
+#, kde-format
+msgctxt "photo content type"
+msgid "Screenshot"
+msgstr "Kuvakaappaus"
+
+#: flickrwidget.cpp:117 flickrwidget.cpp:213
+#, kde-format
+msgctxt "photo content type"
+msgid "Other"
+msgstr "Muu"
+
+#: flickrwidget.cpp:134
+#, kde-format
+msgid "Tag options"
+msgstr "Tunnisteen asetukset"
+
+#: flickrwidget.cpp:138
+#, kde-format
+msgid "Use Host Application Tags"
+msgstr "Käytä isäntäsovelluksen tunnisteita"
+
+#: flickrwidget.cpp:140 flickrwidget.cpp:501
+#, kde-format
+msgid "More tag options"
+msgstr "Lisää tunnisteasetuksia"
+
+#: flickrwidget.cpp:154
+#, kde-format
+msgid "Added Tags: "
+msgstr "Lisätyt tunnisteet: "
+
+#: flickrwidget.cpp:156
+#, kde-format
+msgid "Enter new tags here, separated by commas."
+msgstr "Lisää uudet tunnisteet tähän pilkuin erotettuna."
+
+#: flickrwidget.cpp:158
+#, kde-format
+msgid "Add tags per image"
+msgstr "Lisää kuvakohtaisia tunnisteita"
+
+#: flickrwidget.cpp:159
+#, kde-format
+msgid "If checked, you can set extra tags for each image in the File List tab"
+msgstr ""
+"Jos asetettu, voit asettaa kuhunkin kuvaan lisätunnisteita tiedostoluettelon "
+"välilehdellä"
+
+#: flickrwidget.cpp:163
+#, kde-format
+msgid "Strip Spaces From Tags"
+msgstr "Poista tunnisteista välilyönnit"
+
+#: flickrwidget.cpp:176
+#, kde-format
+msgid "Publication Options"
+msgstr "Julkaisuasetukset"
+
+#: flickrwidget.cpp:181
+#, kde-format
+msgctxt "As in accessible for people"
+msgid "Public (anyone can see them)"
+msgstr "Julkinen (kuka tahansa voi nähdä)"
+
+#: flickrwidget.cpp:184
+#, kde-format
+msgid "Visible to Family"
+msgstr "Näkyy perheelle"
+
+#: flickrwidget.cpp:187
+#, kde-format
+msgid "Visible to Friends"
+msgstr "Näkyy kavereille"
+
+#: flickrwidget.cpp:190 flickrwidget.cpp:488
+#, kde-format
+msgid "More publication options"
+msgstr "Lisää julkaisuasetuksia"
+
+#: flickrwidget.cpp:203
+#, kde-format
+msgid "Safety level:"
+msgstr "Turvataso:"
+
+#: flickrwidget.cpp:205
+#, kde-format
+msgid "Safe"
+msgstr "Turvallinen"
+
+#: flickrwidget.cpp:206
+#, kde-format
+msgid "Moderate"
+msgstr "Kohtalainen"
+
+#: flickrwidget.cpp:207
+#, kde-format
+msgid "Restricted"
+msgstr "Rajoitettu"
+
+#: flickrwidget.cpp:209
+#, kde-format
+msgid "Content type:"
+msgstr "Sisällön tyyppi:"
+
+#: flickrwidget.cpp:304
+#, kde-format
+msgid ""
+"<b><h2><a href='http://www.23hq.com'><font color=\"#7CD164\">23</font></a> "
+"Export</h2></b>"
+msgstr ""
+"<b><h2><a href='http://www.23hq.com'><font color=\"#7CD164\">23</font></a>-"
+"vienti</h2></b>"
+
+#: flickrwidget.cpp:311
+#, kde-format
+msgid ""
+"<b><h2><a href='http://www.flickr.com'><font color=\"#0065DE\">flick</"
+"font><font color=\"#FF0084\">r</font></a> Export</h2></b>"
+msgstr ""
+"<b><h2><a href='http://www.flickr.com'><font color=\"#0065DE\">Flickr</"
+"font><font color=\"#FF0084\">r</font></a>-vienti</h2></b>"
+
+#: flickrwidget.cpp:484
+#, kde-format
+msgid "Fewer publication options"
+msgstr "Vähemmän julkaisuasetuksia"
+
+#: flickrwidget.cpp:506
+#, kde-format
+msgid "Fewer tag options"
+msgstr "Vähemmän tunnisteasetuksia"
+
+#: flickrwindow.cpp:71
+#, kde-format
+msgid "Export to %1 Web Service"
+msgstr "Vie %1-verkkopalveluun"
+
+#: flickrwindow.cpp:119
+#, kde-format
+msgid "Start Uploading"
+msgstr "Aloita lähetys"
+
+#: flickrwindow.cpp:131
+#, kde-format
+msgid "Flickr/23 Export"
+msgstr "Flickr/23-vienti"
+
+#: flickrwindow.cpp:132
+#, kde-format
+msgid "A tool to export an image collection to a Flickr / 23 web service."
+msgstr "Työkalu kuvakokoelman viemiseksi Flickr- tai 23-verkkopalveluun."
+
+#: flickrwindow.cpp:134
+#, kde-format
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2015, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2015, Shourya Singh Gupta"
+msgstr ""
+"© 2005–2008 Vardhman Jain\n"
+"© 2008–2015 Gilles Caulier\n"
+"© 2009 Luka Renko\n"
+"© 2015 Shourya Singh Gupta"
+
+#: flickrwindow.cpp:139
+#, kde-format
+msgid "Vardhman Jain"
+msgstr "Vardhman Jain"
+
+#: flickrwindow.cpp:139
+#, kde-format
+msgid "Author and maintainer"
+msgstr "Tekijä ja ylläpitäjä"
+
+#: flickrwindow.cpp:142
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: flickrwindow.cpp:142 flickrwindow.cpp:145
+#, kde-format
+msgid "Developer"
+msgstr "Kehittäjä"
+
+#: flickrwindow.cpp:145
+#, kde-format
+msgid "Shourya Singh Gupta"
+msgstr "Shourya Singh Gupta"
+
+#: flickrwindow.cpp:557
+#, kde-format
+msgid "Photostream Only"
+msgstr "Vain Photostream"
+
+#: flickrwindow.cpp:741
+#, kde-format
+msgid "Flickr Export"
+msgstr "Flickr-vienti"
+
+#: flickrwindow.cpp:759
+#, kde-format
+msgid "Failed to Fetch Photoset information from %1. %2\n"
+msgstr "Kuvajoukkotiedon nouto kohteesta %1 epäonnistui. %2\n"
+
+#: flickrwindow.cpp:765
+#, kde-format
+msgid "Warning"
+msgstr "Varoitus"
+
+#: flickrwindow.cpp:766
+#, kde-format
+msgid ""
+"Failed to upload photo into %1. %2\n"
+"Do you want to continue?"
+msgstr ""
+"Kuvatiedon lähetys kohteeseen %1 epäonnistui. %2\n"
+"Haluatko jatkaa?"
+
+#: flickrwindow.cpp:769
+#, kde-format
+msgid "Continue"
+msgstr "Jatka"
+
+#: flickrwindow.cpp:770
+#, kde-format
+msgid "Cancel"
+msgstr "Peru"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_flickrui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Vie"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_flickrui.rc:14
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Päätyökalurivi"
+
+#: plugin_flickr.cpp:100
+#, kde-format
+msgid "Export to Flick&r..."
+msgstr "Vie &Flickriin…"
+
+#: selectuserdlg.cpp:47
+#, kde-format
+msgid "Flickr Account Selector"
+msgstr "Flickr-tilin valinta"
+
+#: selectuserdlg.cpp:52
+#, kde-format
+msgid "Add another account"
+msgstr "Lisää toinen tili"
+
+#: selectuserdlg.cpp:75
+#, kde-format
+msgid "Choose the %1 account to use for exporting images:"
+msgstr "Valitse käytettävä %1-tili kuvien viemiseksi:"
+
+#~ msgid ""
+#~ "<b><h2><a href='http://www.zooomr.com'><font color=\"#7CD164\">zooomr</"
+#~ "font></a> Export</h2></b>"
+#~ msgstr ""
+#~ "<b><h2><a href='http://www.zooomr.com'><font color=\"#7CD164\">Zooomr</"
+#~ "font></a>-vienti</h2></b>"
+
+#~ msgctxt "flickr login"
+#~ msgid "Username:"
+#~ msgstr "Käyttäjätunnus:"
+
+#~ msgid "Password:"
+#~ msgstr "Salasana:"
+
+#~ msgid "Checking if previous token is still valid"
+#~ msgstr "Tarkistetaan, onko aiempi merkki yhä kelvollinen"
+
+#~ msgid "%1 Service Web Authorization"
+#~ msgstr "%1-verkkopalvelun valtuutus"
+
+#~ msgid ""
+#~ "Please follow the instructions in the browser window, then return to "
+#~ "press corresponding button."
+#~ msgstr ""
+#~ "Seuraa selainikkunan ohjeita ja palaa painamaan niiden mukaista "
+#~ "painiketta."
+
+#~ msgid "I am authenticated"
+#~ msgstr "Minut on valtuutettu"
+
+#~ msgid "I am not authenticated"
+#~ msgstr "Minua ei ole valtuutettu"
+
+#~ msgid "Authenticating the User on web"
+#~ msgstr "Valtuutetaan käyttäjä verkossa"
+
+#~ msgid "Getting the Token from the server"
+#~ msgstr "Noudetaan merkkiä palvelimelta"
+
+#~ msgctxt "As in the permission to"
+#~ msgid "write"
+#~ msgstr "kirjoitus"
+
+#~ msgctxt "As in the permission to"
+#~ msgid "read"
+#~ msgstr "luku"
+
+#~ msgctxt "As in the permission to"
+#~ msgid "delete"
+#~ msgstr "poista"
+
+#~ msgid "Invalid Token"
+#~ msgstr "Virheellinen merkki"
+
+#~ msgid ""
+#~ "Your token is invalid. Would you like to get a new token to proceed?\n"
+#~ msgstr ""
+#~ "Merkkisi on virheellinen. Haluatko hakea uuden merkin jatkaaksesi?\n"
+
+#~ msgid "Flickr/23/Zooomr Export"
+#~ msgstr "Flickr-, 23- tai Zooomr-vienti"
+
+#~ msgid "Export to &23..."
+#~ msgstr "Vie &23:een…"
+
+#~ msgid "Export to &Zooomr..."
+#~ msgstr "Vie &Zooomriin…"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Tommi Nieminen"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "translator@legisign.org"
+
+#~ msgid "&OK"
+#~ msgstr "&OK"
+
+#~ msgid "Title (required):"
+#~ msgstr "Otsikko (vaaditaan):"
+
+#~ msgid "Description (optional)"
+#~ msgstr "Kuvaus (valinnainen)"
+
+#~ msgid "Account"
+#~ msgstr "Tili"
+
+#~ msgctxt "account settings"
+#~ msgid "Username: "
+#~ msgstr "Käyttäjätunnus:"
+
+#~ msgid "Use a different account"
+#~ msgstr "Käytä eri tiliä"
+
+#~ msgid "&Reload"
+#~ msgstr "&Päivitä"
+
+#~ msgid "Resizing Options"
+#~ msgstr "Koonmuutosasetukset"
+
+#~ msgid "Send original file (no resizing)"
+#~ msgstr "Lähetä alkuperäinen tiedosto (ei koon muutosta)"
+
+#~ msgid "Resize photos before uploading"
+#~ msgstr "Muuta kuvien kokoa ennen lähetystä"
+
+#~ msgid "Maximum dimension (pixels):"
+#~ msgstr "Enimmäiskoko (kuvapisteinä):"
+
+#~ msgid "JPEG Image Quality (higher is better):"
+#~ msgstr "JPEG-kuvanlaatu (suurempi on parempi):"
+
+#~ msgid "File List"
+#~ msgstr "Tiedostoluettelo"
+
+#~ msgid "Upload Options"
+#~ msgstr "Lähetysasetukset"

@@ -1,0 +1,763 @@
+# translation of kipiplugin_printimages.po to Khmer
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2010.
+# Sophea <sophea@khmeros.info>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_printimages\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-03-28 16:08+0000\n"
+"PO-Revision-Date: 2012-06-25 13:54+0700\n"
+"Last-Translator: Sophea <sophea@khmeros.info>\n"
+"Language-Team: Khmer <>\n"
+"Language: km\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: WordForge 0.8 RC1\n"
+"X-Language: km-CM\n"
+
+#. i18n: ectx: Menu (Image)
+#: plugin/kipiplugin_printimagesui.rc:7
+#, kde-format
+msgid "&Image"
+msgstr ""
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: plugin/kipiplugin_printimagesui.rc:14
+#, kde-format
+msgid "Main Toolbar"
+msgstr ""
+
+#: plugin/plugin_printimages.cpp:105
+#, kde-format
+msgid "Print images"
+msgstr "បោះពុម្ព​រូបភាព​"
+
+#: plugin/plugin_printimages.cpp:115
+#, kde-format
+msgid "Print Assistant..."
+msgstr "អ្នក​ជំនួញ​ការ​បោះពុម្ព​..."
+
+#: plugin/plugin_printimages.cpp:136
+#, fuzzy, kde-format
+#| msgid "Print Image"
+msgid "Print Images"
+msgstr "បោះពុម្ព​រូបភាព​"
+
+#: plugin/plugin_printimages.cpp:136 plugin/plugin_printimages.cpp:156
+#, kde-format
+msgid "Please select one or more photos to print."
+msgstr "សូម​ជ្រើស​រូប​ថត​មួយ ឬ​ច្រើន​ដើម្បី​បោះពុម្ព ។​"
+
+#: plugin/plugin_printimages.cpp:156
+#, fuzzy, kde-format
+#| msgid "Print assistant"
+msgid "Print Assistant"
+msgstr "អ្នក​ជំនួយ​ការ​បោះពុម្ព​"
+
+#: tools/utils.cpp:71
+#, kde-format
+msgid ""
+"Unable to create a temporary folder. Please make sure you have proper "
+"permissions to this folder and try again."
+msgstr ""
+"មិន​អាច​បង្កើត​ថត​បណ្ដោះអាសន្ន​បាន​ឡើយ ។ ​សូម​ប្រាកដ​ថា​អ្នក​​មាន​សិទ្ធិ​​ចំពោះ​​ថត​នេះ​ ហើយ​សូម​​សាកល្បង​ម្ដងទៀត "
+"។"
+
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, m_disableCrop)
+#: ui/croppage.ui:19
+#, kde-format
+msgid "Do not crop photos, just scale them."
+msgstr "កុំ​ច្រឹប​រូបថត​ គ្រាន់​តែ​​ធ្វើ​មាត្រដ្ឋាន​វា​បាន​ហើយ ។"
+
+#. i18n: ectx: property (text), widget (QCheckBox, m_disableCrop)
+#: ui/croppage.ui:22
+#, kde-format
+msgid "Do not crop"
+msgstr "កុំ​ច្រឹប​"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, BtnCropRotateLeft)
+#. i18n: ectx: property (whatsThis), widget (QPushButton, BtnCropRotateLeft)
+#: ui/croppage.ui:42 ui/croppage.ui:45
+#, kde-format
+msgid "Rotate photo to the left"
+msgstr "បង្វិល​រូបថត​​ទៅ​ឆ្វេង"
+
+#. i18n: ectx: property (text), widget (QPushButton, BtnCropRotateLeft)
+#: ui/croppage.ui:48
+#, fuzzy, kde-format
+#| msgid "&Rotate left"
+msgid "Rotate &left"
+msgstr "បង្វិល​ឆ្វេង"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, BtnCropRotateRight)
+#. i18n: ectx: property (whatsThis), widget (QPushButton, BtnCropRotateRight)
+#: ui/croppage.ui:55 ui/croppage.ui:58
+#, kde-format
+msgid "Rotate photo to the right"
+msgstr "បង្វិល​រូបថត​ទៅ​ស្ដាំ"
+
+#. i18n: ectx: property (text), widget (QPushButton, BtnCropRotateRight)
+#: ui/croppage.ui:61
+#, fuzzy, kde-format
+#| msgid "&Rotate right"
+msgid "Rotate &right"
+msgstr "បង្វិល​ស្ដាំ"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, BtnCropPrev)
+#. i18n: ectx: property (whatsThis), widget (QPushButton, BtnCropPrev)
+#. i18n: ectx: property (toolTip), widget (QToolButton, BtnPreviewPageDown)
+#. i18n: ectx: property (whatsThis), widget (QToolButton, BtnPreviewPageDown)
+#: ui/croppage.ui:84 ui/croppage.ui:87 ui/photopage.ui:287 ui/photopage.ui:290
+#, kde-format
+msgid "Previous photo"
+msgstr "រូបថត​មុន​"
+
+#. i18n: ectx: property (text), widget (QPushButton, BtnCropPrev)
+#: ui/croppage.ui:90
+#, kde-format
+msgid "<< Pr&evious"
+msgstr "<< មុន​"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, BtnCropNext)
+#. i18n: ectx: property (whatsThis), widget (QPushButton, BtnCropNext)
+#: ui/croppage.ui:97 ui/croppage.ui:100
+#, kde-format
+msgid "Next photo"
+msgstr "រូបថត​បន្ទាប់​"
+
+#. i18n: ectx: property (text), widget (QPushButton, BtnCropNext)
+#: ui/croppage.ui:103
+#, kde-format
+msgid "Ne&xt >>"
+msgstr "បន្ទាប់​ >>"
+
+#. i18n: ectx: property (text), widget (QLabel, LblCropPhoto)
+#: ui/croppage.ui:132
+#, kde-format
+msgid "Photo 0 of 0"
+msgstr "រូប​ថត​ ០ នៃ ០"
+
+#. i18n: ectx: property (whatsThis), widget (KIPIPrintImagesPlugin::CropFrame, cropFrame)
+#: ui/croppage.ui:155
+#, kde-format
+msgid ""
+"Move the box in order to crop photos so that they fit inside the photo sizes "
+"you have given.  \n"
+"You can crop each image differently, or just click the 'Next' button to use "
+"the default crop \n"
+"setting for each photo.\n"
+"Enable \"Do not crop\" to avoid cropping all of the photos."
+msgstr ""
+"ផ្លាស់​ទី​ប្រអប់​ដើម្បី​​ច្រឹប​រូប​ថត​ ដើម្បី​ឲ្យ​ពួក​វា​សម​នឹង​ទំហំ​រូប​ថត​ដែល​អ្នក​បាន​ផ្ដល់​ឲ្យ​ ។  \n"
+"​ អ្នក​អាច​ច្រឹប​រូបថត​នីមួយ​ៗ​ក្នុង​លក្ខណៈ​ផ្សេង​ៗ​គ្នា ឬ​ដោយ​គ្រាន់​តែ​ចុច​លើ​ប៊ូតុង​ 'បន្ទាប់​' ដើម្បី​ប្រើ​ការ​កំណត់​ \n"
+"ការ​ច្រឹប​លំនាំ​ដើម​សម្រាប់​រូប​ថត​ ។\n"
+"បើក​ \"កុំ​ច្រឹប​\" ដើម្បី​ជៀស​វាង​ការ​ច្រឹប​រូប​ថត​ទាំង​អស់ ។"
+
+#. i18n: ectx: property (text), widget (QPushButton, BtnSaveAs)
+#: ui/croppage.ui:167
+#, kde-format
+msgid "Save As"
+msgstr ""
+
+#. i18n: ectx: property (shortcut), widget (QPushButton, BtnSaveAs)
+#: ui/croppage.ui:170
+#, kde-format
+msgid "Ctrl+S"
+msgstr ""
+
+#. i18n: ectx: property (windowTitle), widget (QDialog, CustomLayout)
+#: ui/customlayout.ui:26 wizard/wizard.cpp:711
+#, kde-format
+msgid "Custom layout"
+msgstr "ប្លង់​ផ្ទាល់ខ្លួន​"
+
+#. i18n: ectx: property (text), widget (QRadioButton, m_photoGridCheck)
+#: ui/customlayout.ui:48
+#, kde-format
+msgid "Photo grid"
+msgstr "ក្រឡាចត្រង្គ​រូបថត​"
+
+#. i18n: ectx: property (text), widget (QRadioButton, m_fitAsManyCheck)
+#: ui/customlayout.ui:73
+#, kde-format
+msgid "Fit as many as possible"
+msgstr "សម​ដូច​ដែល​អាច​ធ្វើ​ទៅ​បាន​​"
+
+#. i18n: ectx: property (text), widget (QRadioButton, m_photosXPageCheck)
+#: ui/customlayout.ui:95
+#, kde-format
+msgid "Photos per page"
+msgstr "រូបថត​ក្នុង​មួយ​ទំព័រ"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: ui/customlayout.ui:122
+#, kde-format
+msgid "Rows"
+msgstr "ជួរដេក​"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: ui/customlayout.ui:164
+#, kde-format
+msgid "Columns"
+msgstr "ជួរឈរ​"
+
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: ui/customlayout.ui:227
+#, kde-format
+msgid "Photo size"
+msgstr "ទំហំ​រូបថត​"
+
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: ui/customlayout.ui:267 ui/printoptionspage.ui:439
+#, kde-format
+msgid "x"
+msgstr "x"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, m_photoUnits)
+#: ui/customlayout.ui:309 wizard/wizard.cpp:2048
+#, kde-format
+msgid "cm"
+msgstr "សង់ទីម៉ែត្រ"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, m_photoUnits)
+#: ui/customlayout.ui:314
+#, kde-format
+msgid "mm"
+msgstr "មិល្លីម៉ែត្រ​"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, m_photoUnits)
+#: ui/customlayout.ui:319 wizard/wizard.cpp:2043
+#, kde-format
+msgid "inches"
+msgstr "អ៊ិន្ឈន៍"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_PrintAutoRotate)
+#. i18n: ectx: property (text), widget (QCheckBox, m_autorotate)
+#: ui/customlayout.ui:433 ui/printoptionspage.ui:73
+#, kde-format
+msgid "Auto rotate"
+msgstr "បង្វិល​ស្វ័យ​ប្រវត្តិ"
+
+#. i18n: ectx: property (text), widget (QPushButton, m_doneButton)
+#: ui/customlayout.ui:453
+#, kde-format
+msgid "Done"
+msgstr "ធ្វើ​រួច"
+
+#. i18n: ectx: property (text), widget (QLabel, TextLabel4_2)
+#: ui/photopage.ui:47
+#, kde-format
+msgid "Photos:"
+msgstr "រូបថត ៖"
+
+#. i18n: ectx: property (text), widget (QLabel, LblPhotoCount)
+#. i18n: ectx: property (text), widget (QLabel, LblSheetsPrinted)
+#. i18n: ectx: property (text), widget (QLabel, LblEmptySlots)
+#: ui/photopage.ui:54 ui/photopage.ui:84 ui/photopage.ui:114
+#, kde-format
+msgid "<p align=\"right\">0</p>"
+msgstr "<p align=\"right\">0</p>"
+
+#. i18n: ectx: property (text), widget (QLabel, TextLabel4)
+#: ui/photopage.ui:77
+#, kde-format
+msgid "Sheets:"
+msgstr "សន្លឹក ៖"
+
+#. i18n: ectx: property (text), widget (QLabel, TextLabel6)
+#: ui/photopage.ui:107
+#, kde-format
+msgid "Empty slots:"
+msgstr "រន្ធ​ទទេ ៖"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, m_printer_choice)
+#: ui/photopage.ui:185 wizard/wizard.cpp:1800 wizard/wizard.cpp:2284
+#, kde-format
+msgid "Print to PDF"
+msgstr "បោះពុម្ព​ជា​ PDF"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, m_printer_choice)
+#: ui/photopage.ui:190 wizard/wizard.cpp:1801 wizard/wizard.cpp:2242
+#: wizard/wizard.cpp:2312 wizard/wizard.cpp:2515 wizard/wizard.cpp:2587
+#, kde-format
+msgid "Print to JPG"
+msgstr "បោះពុម្ព​ជា​ JPG"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, m_printer_choice)
+#: ui/photopage.ui:195 wizard/wizard.cpp:1802 wizard/wizard.cpp:2516
+#: wizard/wizard.cpp:2560
+#, kde-format
+msgid "Print to gimp"
+msgstr "បោះពុម្ព​ជា​ gimp"
+
+#. i18n: ectx: property (text), widget (QPushButton, m_pagesetup)
+#: ui/photopage.ui:209
+#, kde-format
+msgid "Page settings"
+msgstr "ការ​កំណត់​ទំព័រ"
+
+#. i18n: ectx: property (text), widget (QPushButton, mLeftButton)
+#. i18n: ectx: property (text), widget (QToolButton, BtnPreviewPageDown)
+#: ui/photopage.ui:293 ui/printoptionspage.ui:57
+#, kde-format
+msgid "<"
+msgstr "<"
+
+#. i18n: ectx: property (text), widget (QLabel, LblPreview)
+#: ui/photopage.ui:315
+#, kde-format
+msgid "Preview"
+msgstr "មើល​ជា​មុន​"
+
+#. i18n: ectx: property (toolTip), widget (QToolButton, BtnPreviewPageUp)
+#. i18n: ectx: property (whatsThis), widget (QToolButton, BtnPreviewPageUp)
+#: ui/photopage.ui:331 ui/photopage.ui:334
+#, kde-format
+msgid "Next page"
+msgstr "ទំព័រ​បន្ទាប់"
+
+#. i18n: ectx: property (text), widget (QPushButton, mRightButton)
+#. i18n: ectx: property (text), widget (QToolButton, BtnPreviewPageUp)
+#: ui/photopage.ui:337 ui/printoptionspage.ui:64
+#, kde-format
+msgid ">"
+msgstr ">"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: ui/photopage.ui:436
+#, kde-format
+msgid "Captions:"
+msgstr "ចំណងជើង ៖"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, m_captions)
+#: ui/photopage.ui:447 wizard/wizard.cpp:1898
+#, kde-format
+msgid "No captions"
+msgstr "គ្មាន​ចំណង​ជើង​"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, m_captions)
+#: ui/photopage.ui:452
+#, kde-format
+msgid "Image file names"
+msgstr "ឈ្មោះ​ឯកសារ​រូបភាព​"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, m_captions)
+#: ui/photopage.ui:457
+#, kde-format
+msgid "Exif date-time"
+msgstr "ពេលវេលា​កាលបរិច្ឆេទ Exif​"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, m_captions)
+#: ui/photopage.ui:462
+#, kde-format
+msgid "Comments"
+msgstr "សេចក្ដី​អធិប្បាយ​"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, m_captions)
+#: ui/photopage.ui:467 wizard/wizard.cpp:1904
+#, kde-format
+msgid "Free"
+msgstr "សេរី"
+
+#. i18n: ectx: property (text), widget (QLabel, m_free_label)
+#: ui/photopage.ui:501
+#, no-c-format, kde-format
+msgid ""
+"%f  filename, %t exposure time, %c comment, %i ISO, %d date-time, %r "
+"resolution, %a aperture, %l focal length, \\n newline"
+msgstr ""
+"%f  ឈ្មោះ​ឯកសារ​ %t ពេល​វេលា​បង្ហាញ %c មតិយោបល់​ %i ISO %d កាលបរិច្ឆេទ-ពេល​វេលា​ %r គុណភាព​"
+"បង្ហាញ​ %a រង្វះ %l ចម្ងាយ​ប្រសព្វ \\n បន្ទាត់​ថ្មី"
+
+#. i18n: ectx: property (text), widget (QCheckBox, m_sameCaption)
+#: ui/photopage.ui:532
+#, kde-format
+msgid "same to all"
+msgstr "ដូច​គ្នា​ទាំងអស់​"
+
+#. i18n: ectx: property (text), widget (QPushButton, mSaveSettings)
+#. i18n: ectx: property (text), widget (QPushButton, m_setDefault)
+#: ui/photopage.ui:542 ui/printoptionspage.ui:348
+#, kde-format
+msgid "Use as default"
+msgstr "ប្រើ​ជា​លំនាំដើម​"
+
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: ui/photopage.ui:555
+#, kde-format
+msgid "Family:"
+msgstr "គ្រួសារ ៖​"
+
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: ui/photopage.ui:572
+#, kde-format
+msgid "Color:"
+msgstr "ពណ៌"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
+#: ui/photopage.ui:596
+#, kde-format
+msgid "Size:"
+msgstr "ទំហំ ៖"
+
+#. i18n: ectx: property (windowTitle), widget (QWidget, PrintOptionsPage)
+#: ui/printoptionspage.ui:14
+#, kde-format
+msgid "Image Settings"
+msgstr "ការ​កំណត់​រូបភាព​"
+
+#. i18n: ectx: property (title), widget (QGroupBox, mGroupImage)
+#: ui/printoptionspage.ui:83
+#, kde-format
+msgid "Position"
+msgstr "ទីតាំង"
+
+#. i18n: ectx: property (title), widget (QGroupBox, mGroupScaling)
+#: ui/printoptionspage.ui:108
+#, kde-format
+msgid "Scaling"
+msgstr "ធ្វើ​​មាត្រដ្ឋាន"
+
+#. i18n: ectx: property (text), widget (QRadioButton, mNoScale)
+#: ui/printoptionspage.ui:114
+#, kde-format
+msgid "&No scaling"
+msgstr "មិន​ធ្វើ​មាត្រដ្ឋាន​ឡើយ"
+
+#. i18n: ectx: property (text), widget (QRadioButton, mScaleToPage)
+#: ui/printoptionspage.ui:124
+#, kde-format
+msgid "&Fit image to page"
+msgstr "សម​រូបភាព​ត្រូវ​​នឹង​ទំព័រ"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_PrintEnlargeSmallerImages)
+#: ui/printoptionspage.ui:155
+#, kde-format
+msgid "Enlarge smaller images"
+msgstr "ពង្រីក​រូបភាព​តួច​ជាង​"
+
+#. i18n: ectx: property (text), widget (QRadioButton, mScaleTo)
+#: ui/printoptionspage.ui:180
+#, kde-format
+msgid "&Scale to:"
+msgstr "ធ្វើ​មាត្រដ្ឋាន​ទៅ ៖​"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel2)
+#: ui/printoptionspage.ui:219
+#, kde-format
+msgctxt "Dimension separator, as in: '15 x 10 centimeters'"
+msgid "x"
+msgstr "x"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintUnit)
+#: ui/printoptionspage.ui:246
+#, kde-format
+msgid "Millimeters"
+msgstr "មិល្លីម៉ែត្រ​"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintUnit)
+#: ui/printoptionspage.ui:251
+#, kde-format
+msgid "Centimeters"
+msgstr "សង់ទីម៉ែត្រ​"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintUnit)
+#: ui/printoptionspage.ui:256
+#, kde-format
+msgid "Inches"
+msgstr "អ៊ិន្ឈន៍"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_PrintKeepRatio)
+#: ui/printoptionspage.ui:300
+#, kde-format
+msgid "Keep ratio"
+msgstr "រក្សាទុក​សមាមាត្រ​"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, mSaveSettings)
+#: ui/printoptionspage.ui:345
+#, kde-format
+msgid "Use these scaling options as default. "
+msgstr "ប្រើ​ជម្រើស​ធ្វើ​មាត្រដ្ឋាន​​ទាំងនេះ​ជា​លំនាំដើម ។"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: ui/printoptionspage.ui:366
+#, kde-format
+msgid "Photos per page:"
+msgstr "រូបថត​ក្នុង​មួយ​ទំព័រ ៖"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: ui/printoptionspage.ui:376
+#, kde-format
+msgid "Multiple pages:"
+msgstr "ទំព័រ​ច្រើន ៖"
+
+#: wizard/customdlg.cpp:51 wizard/customdlg.cpp:52
+#, kde-format
+msgid "Choose your grid size"
+msgstr "ជ្រើស​ទំហំ​ក្រឡាចត្រង្គ​របស់​អ្នក​​"
+
+#: wizard/customdlg.cpp:53
+#, kde-format
+msgid "Number of rows"
+msgstr "ចំនួន​ជួរ​ដេក"
+
+#: wizard/customdlg.cpp:54
+#, kde-format
+msgid "Insert number of rows"
+msgstr "បញ្ចូល​ចំនួន​ជួរ​ដេក​"
+
+#: wizard/customdlg.cpp:55
+#, kde-format
+msgid "Number of columns"
+msgstr "ចំនួន​ជួរ​ឈរ​"
+
+#: wizard/customdlg.cpp:56
+#, kde-format
+msgid "Insert number of columns"
+msgstr "បញ្ចូល​ចំនួន​ជួរ​ឈរ​"
+
+#: wizard/customdlg.cpp:58 wizard/customdlg.cpp:59
+#, kde-format
+msgid "Choose to have a custom photo size album"
+msgstr "ជ្រើស​​អាល់ប៊ុម​ទំហំ​រូបថត​ផ្ទាល់​ខ្លួន​"
+
+#: wizard/customdlg.cpp:60
+#, kde-format
+msgid "Photo height"
+msgstr "កម្ពស់​រូបថត"
+
+#: wizard/customdlg.cpp:61
+#, kde-format
+msgid "Insert photo height"
+msgstr "បញ្ចូល​កម្ពស់​រូបថត"
+
+#: wizard/customdlg.cpp:62
+#, kde-format
+msgid "Photo width"
+msgstr "ទទឹង​រូបថត​"
+
+#: wizard/customdlg.cpp:63
+#, kde-format
+msgid "Insert photo width"
+msgstr "បញ្ចូល​ទទឹង​រូបថត​"
+
+#: wizard/customdlg.cpp:65
+#, kde-format
+msgid "Auto rotate photo"
+msgstr "បង្វិល​រូបថត​ដោយ​ស្វ័យ​ប្រវត្តិ​"
+
+#: wizard/printhelper.cpp:241
+#, kde-format
+msgid "Kipi-plugins image printing"
+msgstr "បោះពុម្ព​រូបភាព​កម្មវិធី​ជំនួយ​​ Kipi"
+
+#: wizard/printoptionspage.cpp:149 wizard/printoptionspage.cpp:150
+#: wizard/printoptionspage.cpp:151
+#, kde-format
+msgid "disabled"
+msgstr "បាន​បិទ"
+
+#: wizard/wizard.cpp:117
+#, kde-format
+msgid "Select page layout"
+msgstr "ជ្រើស​ប្លង់​ទំព័រ"
+
+#: wizard/wizard.cpp:118
+#, kde-format
+msgid "Crop photos"
+msgstr "ច្រឹប​រូបថត"
+
+#: wizard/wizard.cpp:120
+#, kde-format
+msgid "Custom"
+msgstr "ផ្ទាល់ខ្លួន"
+
+#: wizard/wizard.cpp:162 wizard/wizard.cpp:165 wizard/wizard.cpp:2531
+#, kde-format
+msgid "Print assistant"
+msgstr "អ្នក​ជំនួយ​ការ​បោះពុម្ព​"
+
+#: wizard/wizard.cpp:166
+#, fuzzy, kde-format
+#| msgid "A KIPI plugin to print images"
+msgid "A tool to print images"
+msgstr " KIPI កម្មវិធី​ជំនួយ​​ដើម្បី​បោះពុម្ព​រូបភាព"
+
+#: wizard/wizard.cpp:167
+#, fuzzy, kde-format
+#| msgid ""
+#| "(c) 2003-2004, Todd Shoemaker\n"
+#| "(c) 2007-2012, Angelo Naselli"
+msgid ""
+"(c) 2003-2004, Todd Shoemaker\n"
+"(c) 2007-2013, Angelo Naselli"
+msgstr ""
+"រក្សា​សិទ្ធិ​ឆ្នាំ ២០០៣-២០០៤ ដោយ Todd Shoemaker\n"
+"រក្សា​សិទ្ធិ​ឆ្នាំ ២០០៧-២០១២ ដោយ​ Angelo Naselli"
+
+#: wizard/wizard.cpp:170
+#, kde-format
+msgid "Todd Shoemaker"
+msgstr "Todd Shoemaker"
+
+#: wizard/wizard.cpp:171
+#, kde-format
+msgid "Author"
+msgstr "អ្នក​និពន្ធ"
+
+#: wizard/wizard.cpp:174
+#, kde-format
+msgid "Angelo Naselli"
+msgstr "Angelo Naselli"
+
+#: wizard/wizard.cpp:175
+#, kde-format
+msgid "Developer"
+msgstr ""
+
+#: wizard/wizard.cpp:178
+#, kde-format
+msgid "Andreas Trink"
+msgstr "Andreas Trink"
+
+#: wizard/wizard.cpp:179
+#, kde-format
+msgid "Contributor"
+msgstr "អ្នក​ចូល​រួម​"
+
+#: wizard/wizard.cpp:678
+#, kde-format
+msgid "Unsupported Paper Size"
+msgstr "ទំហំ​​ក្រដាស​ដែល​មិន​បាន​ផ្គត់ផ្គង់​"
+
+#: wizard/wizard.cpp:1172
+#, kde-format
+msgid "Photo %1 of %2"
+msgstr "រូបថត %1 នៃ %2"
+
+#: wizard/wizard.cpp:1256 wizard/wizard.cpp:1263
+#, kde-format
+msgid "Page %1 of %2"
+msgstr "ទំព័រ %1 នៃ %2"
+
+#: wizard/wizard.cpp:1504
+#, kde-format
+msgid "Add again"
+msgstr "បន្ថែម​ម្ដងទៀត"
+
+#: wizard/wizard.cpp:1514
+#, kde-format
+msgid "Remove"
+msgstr "យកចេញ"
+
+#: wizard/wizard.cpp:2218
+#, fuzzy, kde-format
+#| msgid "Empty output path."
+msgid "Output Path"
+msgstr "ផ្លូវ​ទិន្នផល​ទទេ ។"
+
+#: wizard/wizard.cpp:2413
+#, kde-format
+msgid "Overwrite File"
+msgstr ""
+
+#: wizard/wizard.cpp:2414
+#, kde-format
+msgid ""
+"The following file will be overwritten. Are you sure you want to overwrite "
+"it?"
+msgstr "ឯកសារ​បន្ទាប់​នឹង​ត្រូវ​បាន​សរសេរ​ជាន់​លើ​ ។ ​តើ​អ្នក​ប្រាកដ​ជា​ចង់​សរសេរ​ជាន់​លើ​វា​ឬ​ ?​"
+
+#: wizard/wizard.cpp:2438
+#, kde-format
+msgid "Could not save file, please check your output entry."
+msgstr "មិន​អាច​រក្សាទុក​ឯកសារ​​បាន​ឡើយ​ សូម​ពិនិត្យ​មើល​ធាតុ​ទិន្នផល​របស់​​អ្នក ។"
+
+#: wizard/wizard.cpp:2462
+#, kde-format
+msgid "Could not remove the GIMP's temporary files."
+msgstr "មិន​អាច​យក​ឯកសារ​​បណ្ដោះអាសន្ន​របស់​ GIMP ចេញ​បាន​ទេ ។"
+
+#: wizard/wizard.cpp:2583
+#, kde-format
+msgid ""
+"There was an error launching the GIMP. Please make sure it is properly "
+"installed."
+msgstr "មាន​កំហុស​នៅ​ពេល​ដំណើរការ​ GIMP ។ សូម​ប្រាកដ​ថា វា​ត្រូវ​បាន​ដំឡើង​យ៉ាង​ត្រឹម​ត្រូវ ។"
+
+#: wizard/wizard.cpp:2595
+#, kde-format
+msgid "Empty output path."
+msgstr "ផ្លូវ​ទិន្នផល​ទទេ ។"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "ខឹម សុខែម, ម៉ន ម៉េត, សេង សុត្ថា, ចាន់ សម្បត្តិរតនៈ, សុខ សុភា"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr ""
+#~ "khoemsokhem@khmeros.info,​​mornmet@khmeros.info,sutha@khmeros.info,"
+#~ "ratanak@khmeros.info,sophea@khmeros.info"
+
+#~ msgid "Print to PS"
+#~ msgstr "បោះពុម្ព​ជា​ PS"
+
+#~ msgid "PushButton"
+#~ msgstr "PushButton"
+
+#~ msgid "Developer and maintainer"
+#~ msgstr "អ្នក​អភិវឌ្ឍន៍ និង​អ្នក​ថែទាំ"
+
+#~ msgid "KIPI"
+#~ msgstr "KIPI"
+
+#~ msgid "Handbook"
+#~ msgstr "សៀវភៅ​ដៃ"
+
+#~ msgid "Select printing information"
+#~ msgstr "ជ្រើស​ព័ត៌មាន​អំពី​ការ​បោះពុម្ព"
+
+#~ msgid "Complete. Click Finish to exit the Print Wizard."
+#~ msgstr "បញ្ចប់ ។ ចុច​បញ្ចប់​ដើម្បី​បិទ​​អ្នក​ជំនួយ​ការ​បោះពុម្ព ។"
+
+#~ msgid "Printing Canceled."
+#~ msgstr "បាន​បោះបង់​ការ​បោះពុម្ព ។"
+
+#~ msgid "1"
+#~ msgstr "១"
+
+#~ msgid "+"
+#~ msgstr "+"
+
+#~ msgid "-"
+#~ msgstr "-"
+
+#~ msgid "Filename"
+#~ msgstr "ឈ្មោះ​ឯកសារ​"
+
+#~ msgid "Copies"
+#~ msgstr "ចម្លង​"
+
+#~ msgid "Layouts:"
+#~ msgstr "ប្លង់ ៖"
+
+#~ msgid "Print order:"
+#~ msgstr "លំដាប់​បោះពុម្ព ៖"
+
+#~ msgid "Move selected photo Up"
+#~ msgstr "ផ្លាស់​ទី​រូបថត​ដែល​បាន​ជ្រើស​ឡើង​លើ"
+
+#~ msgctxt "Move Up"
+#~ msgid "Up"
+#~ msgstr "ឡើង​លើ"
+
+#~ msgid "Move selected photo Down"
+#~ msgstr "ផ្លាស់ទី​រូបថត​ដែល​បាន​ជ្រើស​ចុះក្រោម"
+
+#~ msgid "Down"
+#~ msgstr "ចុះក្រោម"

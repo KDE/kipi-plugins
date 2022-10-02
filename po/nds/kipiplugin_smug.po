@@ -1,0 +1,548 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Sönke Dibbern <s_dibbern@web.de>, 2008.
+# Manfred Wiese <m.j.wiese@web.de>, 2009, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_smugmug\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2010-02-08 06:54+0100\n"
+"Last-Translator: Manfred Wiese <m.j.wiese@web.de>\n"
+"Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
+"Language: nds\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. i18n: ectx: Menu (Import)
+#: kipiplugin_smugui.rc:7
+#, fuzzy, kde-format
+#| msgid "Smug Import/Export"
+msgid "&Import"
+msgstr "Smug im- un exporteren"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_smugui.rc:11
+#, fuzzy, kde-format
+#| msgid "Smug Import/Export"
+msgid "&Export"
+msgstr "Smug im- un exporteren"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_smugui.rc:17
+#, kde-format
+msgid "Main Toolbar"
+msgstr ""
+
+#: plugin_smug.cpp:98
+#, kde-format
+msgid "Export to &SmugMug..."
+msgstr "Na &SmugMug exporteren..."
+
+#: plugin_smug.cpp:109
+#, kde-format
+msgid "Import from &SmugMug..."
+msgstr "Vun &SmugMug importeren..."
+
+#: smugalbum.cpp:54
+#, kde-format
+msgid "SmugMug New Album"
+msgstr "Nieg SmugMug-Album"
+
+#: smugalbum.cpp:64 smugwidget.cpp:117
+#, kde-format
+msgid "Album"
+msgstr "Album"
+
+#: smugalbum.cpp:65
+#, kde-format
+msgid "These are basic settings for the new SmugMug album."
+msgstr "Dit sünd de eenfachen Instellen för't niege SmugMug-Album."
+
+#: smugalbum.cpp:68
+#, kde-format
+msgid "Title of the album that will be created (required)."
+msgstr "De Titel vun't Album, dat Du opstellen wullt (deit noot)"
+
+#: smugalbum.cpp:72
+#, kde-format
+msgid "Category of the album that will be created (required)."
+msgstr "De Kategorie för't Album, dat Du opstellen wullt (deit noot)"
+
+#: smugalbum.cpp:76
+#, kde-format
+msgid "Subcategory of the album that will be created (optional)."
+msgstr "De Ünnerkategorie för't Album, dat Du opstellen wullt (köörwies)"
+
+#: smugalbum.cpp:79
+#, kde-format
+msgid "Description of the album that will be created (optional)."
+msgstr "De Beschrieven för't Album, dat Du opstellen wullt (köörwies)"
+
+#: smugalbum.cpp:83
+#, kde-format
+msgid "Album template for the new album (optional)."
+msgstr "Albumvörlaag för nieg Album (köörwies)"
+
+#: smugalbum.cpp:86
+#, kde-format
+msgctxt "new smug album dialog"
+msgid "Title:"
+msgstr "Titel:"
+
+#: smugalbum.cpp:87
+#, kde-format
+msgctxt "new smug album dialog"
+msgid "Category:"
+msgstr "Kategorie:"
+
+#: smugalbum.cpp:88
+#, kde-format
+msgctxt "new smug album dialog"
+msgid "Subcategory:"
+msgstr "Ünnerkategorie:"
+
+#: smugalbum.cpp:89
+#, kde-format
+msgctxt "new smug album dialog"
+msgid "Description:"
+msgstr "Beschrieven:"
+
+#: smugalbum.cpp:90
+#, kde-format
+msgctxt "new smug album dialog"
+msgid "Template:"
+msgstr "Vörlaag:"
+
+#: smugalbum.cpp:98
+#, kde-format
+msgid "Security && Privacy"
+msgstr "Sekerheit un Privaatrebeet"
+
+#: smugalbum.cpp:99
+#, kde-format
+msgid "These are security and privacy settings for the new SmugMug album."
+msgstr ""
+"Dit sünd Sekerheit- un Privaatrebeet-Instellen för't niege SmugMug-Album."
+
+#: smugalbum.cpp:101
+#, kde-format
+msgctxt "smug album privacy"
+msgid "Public"
+msgstr "Apen"
+
+#: smugalbum.cpp:103
+#, kde-format
+msgid "Public album is listed on your public SmugMug page."
+msgstr "En apen Album warrt op Dien apen SmugMug-Siet oplist."
+
+#: smugalbum.cpp:104
+#, kde-format
+msgctxt "smug album privacy"
+msgid "Unlisted"
+msgstr "Nich oplist"
+
+#: smugalbum.cpp:105
+#, kde-format
+msgid "Unlisted album is only accessible via URL."
+msgstr "Op en nich oplist kenn Een bloots över sien URL togriepen."
+
+#: smugalbum.cpp:112
+#, kde-format
+msgid "Require password to access the album (optional)."
+msgstr "Passwoort för't Togriepen op't Album nödig maken (köörwies)"
+
+#: smugalbum.cpp:115
+#, kde-format
+msgid "Password hint to present to users in the password prompt (optional)."
+msgstr ""
+"Passwoort-Tipp, de Brukers bi de Passwoort-Ingaav wiest warrt (köörwies)"
+
+#: smugalbum.cpp:118
+#, kde-format
+msgid "Privacy:"
+msgstr "Privaat:"
+
+#: smugalbum.cpp:119
+#, kde-format
+msgid "Password:"
+msgstr "Passwoort:"
+
+#: smugalbum.cpp:120
+#, kde-format
+msgid "Password Hint:"
+msgstr "Passwoort-Tipp:"
+
+#: smugtalker.cpp:111
+#, kde-format
+msgid "Logging in to SmugMug service..."
+msgstr "An't Anmellen na den SmugMug-Deenst..."
+
+#: smugtalker.cpp:464
+#, kde-format
+msgid "Login failed"
+msgstr "Anmellen fehlslaan"
+
+#: smugtalker.cpp:467
+#, kde-format
+msgid "Invalid user/nick/password"
+msgstr "Leeg Bruker/Ökelnaam/Passwoort"
+
+#: smugtalker.cpp:470
+#, kde-format
+msgid "Invalid API key"
+msgstr "Leeg Api-Slötel"
+
+#: smugtalker.cpp:512 smugwindow.cpp:412 smugwindow.cpp:421 smugwindow.cpp:451
+#: smugwindow.cpp:484 smugwindow.cpp:516 smugwindow.cpp:546 smugwindow.cpp:920
+#, kde-format
+msgid "Error"
+msgstr ""
+
+#: smugwidget.cpp:73
+#, kde-format
+msgid "This is the list of images to upload to your SmugMug account."
+msgstr ""
+"Dit is de List mit Biller, de Du na Dien SmugMug-Konto hoochladen wullt."
+
+#: smugwidget.cpp:79
+#, kde-format
+msgid ""
+"This is a clickable link to open the SmugMug home page in a web browser."
+msgstr ""
+"Mit dissen Link kannst Du de SmugMug-Tohuussiet mit Dien Nettkieker opmaken."
+
+#: smugwidget.cpp:85
+#, kde-format
+msgid "Account"
+msgstr "Konto"
+
+#: smugwidget.cpp:86
+#, kde-format
+msgid "This is the SmugMug account that will be used to authenticate."
+msgstr "Dit is dat SmugMug-Konto, dat för de Identiteetprööv bruukt warrt."
+
+#: smugwidget.cpp:89
+#, kde-format
+msgctxt "smug account login"
+msgid "Anonymous"
+msgstr "Anonüm"
+
+#: smugwidget.cpp:90
+#, kde-format
+msgid "Login as anonymous to SmugMug web service."
+msgstr "Anomüm na den SmugMug-Deenst anmellen"
+
+#: smugwidget.cpp:92
+#, kde-format
+msgid "SmugMug Account"
+msgstr "SmugMug-Konto"
+
+#: smugwidget.cpp:93
+#, kde-format
+msgid "Login to SmugMug web service using email and password."
+msgstr "Mit Nettpostadress un Passwoort na den SmugMug-Deenst anmellen"
+
+#: smugwidget.cpp:95
+#, kde-format
+msgctxt "smug account settings"
+msgid "Name:"
+msgstr "Naam:"
+
+#: smugwidget.cpp:97
+#, kde-format
+msgctxt "smug account settings"
+msgid "Email:"
+msgstr "Nettpostadress:"
+
+#: smugwidget.cpp:101
+#, kde-format
+msgid "Change Account"
+msgstr "Konto ännern"
+
+#: smugwidget.cpp:103
+#, kde-format
+msgid "Change SmugMug Account used to authenticate"
+msgstr "SmugMug-Konto för de Identiteetprööv ännern"
+
+#: smugwidget.cpp:118
+#, kde-format
+msgid "This is the SmugMug album that will be used for transfer."
+msgstr "Dit is dat SmugMug-Konto, dat för de Överdregen bruukt warrt."
+
+#: smugwidget.cpp:123
+#, kde-format
+msgid "Nickname:"
+msgstr "Ökelnaam:"
+
+#: smugwidget.cpp:125
+#, kde-format
+msgid "Nickname of SmugMug user to list albums."
+msgstr "Den SmugMug-Bruker sien Ökelnaam för't Oplisten vun Alben"
+
+#: smugwidget.cpp:126
+#, kde-format
+msgid "Site Password:"
+msgstr "Siet-Passwoort:"
+
+#: smugwidget.cpp:128
+#, kde-format
+msgid "Site-wide password for specified SmugMug nick/user."
+msgstr "Siet-Passwoort för angeven SmugMug-Ökelnaam/-Bruker"
+
+#: smugwidget.cpp:129
+#, kde-format
+msgid "Album Password:"
+msgstr "Album-Passwoort:"
+
+#: smugwidget.cpp:131
+#, kde-format
+msgid "Password for SmugMug album."
+msgstr "Passwoort vun't SmugMug-Album"
+
+#: smugwidget.cpp:134
+#, kde-format
+msgid "New Album"
+msgstr "Nieg Album"
+
+#: smugwidget.cpp:136
+#, kde-format
+msgid "Create new SmugMug album"
+msgstr "Nieg SmugMug-Album opstellen"
+
+#: smugwidget.cpp:139
+#, kde-format
+msgctxt "reload album list"
+msgid "Reload"
+msgstr "Nieg laden"
+
+#: smugwidget.cpp:141
+#, kde-format
+msgid "Reload album list"
+msgstr "Albumlist nieg laden"
+
+#: smugwidget.cpp:155
+#, kde-format
+msgid "Destination"
+msgstr "Teel"
+
+#: smugwidget.cpp:156
+#, kde-format
+msgid "This is the location where SmugMug images will be downloaded."
+msgstr "Dit is de Oort, na den de SmugMug-Biller daallaadt warrt."
+
+#: smugwidget.cpp:163
+#, kde-format
+msgid "Options"
+msgstr "Optschonen"
+
+#: smugwidget.cpp:164
+#, kde-format
+msgid "These are options that will be applied to images before upload."
+msgstr "Disse Optschonen warrt för de Biller bruukt, ehr se hoochlaadt warrt."
+
+#: smugwidget.cpp:168
+#, kde-format
+msgid "Resize photos before uploading"
+msgstr "Fotogrött ehr't Hoochladen ännern"
+
+#: smugwidget.cpp:178
+#, kde-format
+msgid "Maximum dimension:"
+msgstr "Hööchstafmeten:"
+
+#: smugwidget.cpp:186
+#, kde-format
+msgid "JPEG quality:"
+msgstr "JPEG-Gööd:"
+
+#: smugwindow.cpp:86
+#, kde-format
+msgid "Import from SmugMug Web Service"
+msgstr "Vun SmugMug-Nettdeenst importeren"
+
+#: smugwindow.cpp:88
+#, kde-format
+msgid "Start Download"
+msgstr "Daalladen starten"
+
+#: smugwindow.cpp:89
+#, kde-format
+msgid "Start download from SmugMug web service"
+msgstr "Daalladen vun SmugMug-Nettdeenst starten"
+
+#: smugwindow.cpp:95
+#, kde-format
+msgid "Export to SmugMug Web Service"
+msgstr "Na SmugMug-Nettdeenst exporteren"
+
+#: smugwindow.cpp:97
+#, kde-format
+msgid "Start Upload"
+msgstr "Hoochladen starten"
+
+#: smugwindow.cpp:98
+#, kde-format
+msgid "Start upload to SmugMug web service"
+msgstr "Hoochladen na SmugMug-Nettdeenst starten"
+
+#: smugwindow.cpp:127
+#, kde-format
+msgid "Smug Import/Export"
+msgstr "Smug im- un exporteren"
+
+#: smugwindow.cpp:128
+#, fuzzy, kde-format
+#| msgid ""
+#| "A Kipi plugin to import/export image collections from/to the SmugMug web "
+#| "service."
+msgid ""
+"A tool to import/export image collections from/to the SmugMug web service."
+msgstr ""
+"En KIPI-Moduul, dat Billersammeln vun/na den SmugMug-Nettdeenst im- un "
+"exporteren deit."
+
+#: smugwindow.cpp:130
+#, fuzzy, kde-format
+#| msgid ""
+#| "(c) 2005-2008, Vardhman Jain\n"
+#| "(c) 2008-2009, Gilles Caulier\n"
+#| "(c) 2008-2009, Luka Renko"
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2012, Gilles Caulier\n"
+"(c) 2008-2009, Luka Renko"
+msgstr ""
+"© 2005-2008: Vardhman Jain\n"
+"© 2008-2009: Gilles Caulier\n"
+"© 2008-2009: Luka Renko"
+
+#: smugwindow.cpp:134
+#, kde-format
+msgid "Luka Renko"
+msgstr "Luka Renko"
+
+#: smugwindow.cpp:135
+#, kde-format
+msgid "Author and maintainer"
+msgstr "Autor un Pleger"
+
+#: smugwindow.cpp:144
+#, kde-format
+msgid ""
+"<qt>Enter the <b>email address</b> and <b>password</b> for your <a href="
+"\"http://www.smugmug.com\">SmugMug</a> account</qt>"
+msgstr ""
+"<qt>De <b>Nettpostadress</b> un dat <b>Passwoort</b> för Dien <a href="
+"\"http://www.smugmug.com\">SmugMug</a>-Konto ingeven</qt>"
+
+#: smugwindow.cpp:412 smugwindow.cpp:421 smugwindow.cpp:451 smugwindow.cpp:484
+#: smugwindow.cpp:516 smugwindow.cpp:546 smugwindow.cpp:920
+#, kde-format
+msgid "SmugMug Call Failed: %1\n"
+msgstr "SmugMug-Anfraag fehlslaan: %1\n"
+
+#: smugwindow.cpp:480 smugwindow.cpp:542
+#, kde-format
+msgid "&lt;none&gt;"
+msgstr "&lt;keen&gt;"
+
+#: smugwindow.cpp:668 smugwindow.cpp:701
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: smugwindow.cpp:671
+#, fuzzy, kde-format
+#| msgid "Smug Import/Export"
+msgid "Smug Import"
+msgstr "Smug im- un exporteren"
+
+#: smugwindow.cpp:704
+#, fuzzy, kde-format
+#| msgid "Smug Import/Export"
+msgid "Smug Export"
+msgstr "Smug im- un exporteren"
+
+#: smugwindow.cpp:789 smugwindow.cpp:803
+#, kde-format
+msgid "Cannot open file"
+msgstr "Datei lett sik nich opmaken"
+
+#: smugwindow.cpp:826
+#, fuzzy, kde-format
+msgid "Uploading Failed"
+msgstr "Datei \"%1\" warrt hoochlaadt"
+
+#: smugwindow.cpp:827
+#, fuzzy, kde-format
+#| msgid ""
+#| "Failed to upload photo into SmugMug: %1\n"
+#| "Do you want to continue?"
+msgid ""
+"Failed to upload photo to SmugMug.\n"
+"%1\n"
+"Do you want to continue?"
+msgstr ""
+"Hoochladen vun't Foto na SmufMug fehlslaan: %1\n"
+"Wullt Du wiedermaken?"
+
+#: smugwindow.cpp:888 smugwindow.cpp:901
+#, fuzzy, kde-format
+#| msgid "Login failed"
+msgid "Processing Failed"
+msgstr "Anmellen fehlslaan"
+
+#: smugwindow.cpp:889
+#, kde-format
+msgid ""
+"Failed to save photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Foto lett sik nich sekern: %1\n"
+"Wullt Du wiedermaken?"
+
+#: smugwindow.cpp:902
+#, kde-format
+msgid ""
+"Failed to download photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Foto lett sik nich daalladen: %1\n"
+"Wullt Du wiedermaken?"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Sönke Dibbern, Manfred Wiese"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "s_dibbern@web.de, m.j.wiese@web.de"
+
+#~ msgid "Handbook"
+#~ msgstr "Handbook"
+
+#, fuzzy
+#~ msgid "Authentication"
+#~ msgstr "Identiteetprööv"
+
+#, fuzzy
+#~ msgid "Transfer Progress"
+#~ msgstr "Överdregen-Vörankamen"
+
+#, fuzzy
+#~ msgid "Downloading file %1"
+#~ msgstr "Datei \"%1\" warrt daallaadt"
+
+#~ msgid "<none>"
+#~ msgstr "<keen>"
+
+#~ msgid "Login with e-mail and password to SmugMug web service."
+#~ msgstr "Mit Nettpostadress un Passwoort na den SmugMug-Deenst anmellen."
+
+#~ msgid "This is the SmugMug album where selected photos will be uploaded."
+#~ msgstr "Dit is dat SmugMug-Album, na dat Du hoochladen wullt."

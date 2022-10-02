@@ -1,0 +1,505 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Franklin Weng <franklin@goodhorse.idv.tw>, 2011, 2012, 2013.
+# pan93412 <pan93412@gmail.com>, 2018.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2018-12-02 17:00+0800\n"
+"Last-Translator: pan93412 <pan93412@gmail.com>\n"
+"Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 2.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_wikimediaui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "匯出(&E)"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_wikimediaui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "主工具列"
+
+#: plugin_wikimedia.cpp:105
+#, kde-format
+msgid "Export to MediaWiki..."
+msgstr "匯出到 MediaWiki..."
+
+#: wmtalker.cpp:125
+#, kde-format
+msgid "Error on file '%1'\n"
+msgstr "檔案 '%1' 發生錯誤\n"
+
+#: wmtalker.cpp:129
+#, kde-format
+msgid "Error on file '%1': %2\n"
+msgstr "檔案 '%1' 發生錯誤：%2\n"
+
+#: wmtalker.cpp:167
+#, kde-format
+msgid "Uploaded via KIPI uploader"
+msgstr "使用 KIPI 上傳器上傳"
+
+#: wmtalker.cpp:188
+#, kde-format
+msgid "Error"
+msgstr "錯誤"
+
+#: wmwidget.cpp:112
+#, kde-format
+msgid "Select an image"
+msgstr "選擇一張影像"
+
+#: wmwidget.cpp:181
+#, kde-format
+msgid ""
+"This is a clickable link to open the MediaWiki home page in a web browser."
+msgstr "這是讓您可以在瀏覽器中開啟 MediaWiki 首頁的連結。"
+
+#: wmwidget.cpp:189
+#, kde-format
+msgid "This is the list of images to upload to the wiki."
+msgstr "這是您上傳到維基的影像清單。"
+
+#: wmwidget.cpp:214 wmwidget.cpp:387
+#, kde-format
+msgid "This is the login form to your account on the chosen wiki."
+msgstr "這是您選取的維基帳號的登入表單。"
+
+#: wmwidget.cpp:235
+#, kde-format
+msgid "Title:"
+msgstr "標題："
+
+#: wmwidget.cpp:237
+#, kde-format
+msgid "Date:"
+msgstr "日期："
+
+#: wmwidget.cpp:239
+#, kde-format
+msgid "Description:"
+msgstr "描述："
+
+#: wmwidget.cpp:241
+#, kde-format
+msgid "Categories:"
+msgstr "類別："
+
+#: wmwidget.cpp:243
+#, kde-format
+msgid "Latitude:"
+msgstr "緯度："
+
+#: wmwidget.cpp:245
+#, kde-format
+msgid "Longitude:"
+msgstr "經度："
+
+#: wmwidget.cpp:273
+#, kde-format
+msgid "Account"
+msgstr "帳號"
+
+#: wmwidget.cpp:274
+#, kde-format
+msgid "This is the login form to your MediaWiki account."
+msgstr "這是您 MediaWiki 帳號的登入表單。"
+
+#: wmwidget.cpp:281
+#, kde-format
+msgid "New"
+msgstr "新增"
+
+#: wmwidget.cpp:282
+#, kde-format
+msgid "Add a wiki to this list"
+msgstr "新增維基站台到此清單中"
+
+#: wmwidget.cpp:287
+#, kde-format
+msgid "Wikimedia Commons"
+msgstr "Wikimedia Commons"
+
+#: wmwidget.cpp:288
+#, kde-format
+msgid "Wikimedia Meta"
+msgstr "Wikimedia Meta"
+
+#: wmwidget.cpp:289
+#, kde-format
+msgid "Wikipedia"
+msgstr "維基百科"
+
+#: wmwidget.cpp:290
+#, kde-format
+msgid "Wikibooks"
+msgstr "Wikibooks"
+
+#: wmwidget.cpp:291
+#, kde-format
+msgid "Wikinews"
+msgstr "Wikinews"
+
+#: wmwidget.cpp:292
+#, kde-format
+msgid "Wikiquote"
+msgstr "Wikiquote"
+
+#: wmwidget.cpp:293
+#, kde-format
+msgid "Wikisource"
+msgstr "Wikisource"
+
+#: wmwidget.cpp:294
+#, kde-format
+msgid "Wiktionary"
+msgstr "Wiktionary"
+
+#: wmwidget.cpp:295
+#, kde-format
+msgid "MediaWiki"
+msgstr "MediaWiki"
+
+#: wmwidget.cpp:296
+#, kde-format
+msgid "Wikia Foto"
+msgstr "Wikia Foto"
+
+#: wmwidget.cpp:297
+#, kde-format
+msgid "Wikia Uncyclopedia"
+msgstr "Wikia Uncyclopedia"
+
+#: wmwidget.cpp:302
+#, kde-format
+msgid "Wiki:"
+msgstr "Wiki："
+
+#: wmwidget.cpp:313
+#, kde-format
+msgid "These are options for adding a Wiki."
+msgstr "這些是要新增一個 Wiki 的選項。"
+
+#: wmwidget.cpp:318
+#, kde-format
+msgid "Name:"
+msgstr "名稱："
+
+#: wmwidget.cpp:321
+#, kde-format
+msgid "API URL:"
+msgstr "API 網址："
+
+#: wmwidget.cpp:326
+#, kde-format
+msgid "Add"
+msgstr "新增"
+
+#: wmwidget.cpp:327
+#, kde-format
+msgid "Add a new wiki"
+msgstr "新增 Wiki"
+
+#: wmwidget.cpp:336
+#, kde-format
+msgid "Login:"
+msgstr "使用者名稱："
+
+#: wmwidget.cpp:339
+#, kde-format
+msgid "Password:"
+msgstr "密碼："
+
+#: wmwidget.cpp:344
+#, kde-format
+msgid "&Log in"
+msgstr "登入(&L)"
+
+#: wmwidget.cpp:360
+#, kde-format
+msgid "Login Information"
+msgstr "登入資訊"
+
+#: wmwidget.cpp:366
+#, kde-format
+msgctxt "Name of the wiki the user is currently logged on"
+msgid "Logged on: "
+msgstr "登入為："
+
+#: wmwidget.cpp:370
+#, kde-format
+msgctxt "Username which is used to connect to the wiki"
+msgid "Logged as: "
+msgstr "登入為："
+
+#: wmwidget.cpp:373
+#, kde-format
+msgid "Change Account"
+msgstr "變更帳號"
+
+#: wmwidget.cpp:374
+#, kde-format
+msgid "Logout and change the account used for transfer"
+msgstr "登出並更換傳輸用的帳號"
+
+#: wmwidget.cpp:386
+#, kde-format
+msgid "Information"
+msgstr "資訊"
+
+#: wmwidget.cpp:392
+#, kde-format
+msgid "Author:"
+msgstr "作者："
+
+#: wmwidget.cpp:395
+#, kde-format
+msgid "Source:"
+msgstr "來源："
+
+#: wmwidget.cpp:398
+#, kde-format
+msgid "License:"
+msgstr "授權："
+
+#: wmwidget.cpp:402
+#, kde-format
+msgid "Own work, Creative Commons Attribution-Share Alike 4.0"
+msgstr "自創作品，創用 CC 姓名標示-相同方式分享 4.0 (CC BY-SA 4.0)"
+
+#: wmwidget.cpp:404
+#, kde-format
+msgid "Own work, multi-license with CC-BY-SA-3.0 and GFDL"
+msgstr ""
+"自己的作品，以創用 CC-姓名標示-相同方式分享-3.0 (CC-BY-SA-3.0) 與 GFDL 多重授"
+"權"
+
+#: wmwidget.cpp:406
+#, kde-format
+msgid "Own work, multi-license with CC-BY-SA-3.0 and older"
+msgstr ""
+"自己的作品，以 CC-姓名標示-相同方式分享-3.0 (CC-BY-SA-3.0) 與更早的版本多重授"
+"權"
+
+#: wmwidget.cpp:408
+#, kde-format
+msgid "Own work, Creative Commons Attribution-Share Alike 3.0"
+msgstr ""
+"自創作品，創用 CC 姓名標示-相同方式分享 3.0 (CC Attribution-Share Alike 3.0)"
+
+#: wmwidget.cpp:410
+#, kde-format
+msgid "Own work, Creative Commons Attribution 3.0"
+msgstr "自己的作品，創用 CC 姓名標示 3.0 (CC Attribution 3.0)"
+
+#: wmwidget.cpp:412
+#, kde-format
+msgid "Own work, release into public domain under the CC-Zero license"
+msgstr "自己的作品，以 CC-Zero 授權發布在公共領域"
+
+#: wmwidget.cpp:414
+#, kde-format
+msgid "Author died more than 100 years ago"
+msgstr "作者已逝世超過一百年"
+
+#: wmwidget.cpp:416
+#, kde-format
+msgid ""
+"Photo of a two-dimensional work whose author died more than 100 years ago"
+msgstr "平面作品的相片，作者已逝世超過一百年"
+
+#: wmwidget.cpp:418
+#, kde-format
+msgid "First published in the United States before 1923"
+msgstr "首次發布於美國，於 1923 年前"
+
+#: wmwidget.cpp:420
+#, kde-format
+msgid "Work of a U.S. government agency"
+msgstr "美國政府機構的作品"
+
+#: wmwidget.cpp:422
+#, kde-format
+msgid "Simple typefaces, individual words or geometric shapes"
+msgstr "簡單鉛字體，個別單字或地理形狀"
+
+#: wmwidget.cpp:424
+#, kde-format
+msgid "Logos with only simple typefaces, individual words or geometric shapes"
+msgstr "簡單鉛字體，個別單字或地理形狀的圖標"
+
+#: wmwidget.cpp:426
+#, kde-format
+msgid "No license specified (not recommended for public wiki sites)"
+msgstr "未指定授權（建議在公開 Wiki 站台指定授權）"
+
+#: wmwidget.cpp:429
+#, kde-format
+msgid "Generic categories:"
+msgstr "一般類別："
+
+#: wmwidget.cpp:432
+#, kde-format
+msgid ""
+"This is a place to enter categories that will be added to all the files."
+msgstr "在此輸入要加到所有檔案的類別。"
+
+#: wmwidget.cpp:435
+#, kde-format
+msgid "Generic text:"
+msgstr "一般文字："
+
+#: wmwidget.cpp:438
+#, kde-format
+msgid ""
+"This is a place to enter text that will be added to all the files, below the "
+"Information template."
+msgstr "在此輸入要加到所有檔案的文字，在「資訊」樣本之下。"
+
+#: wmwidget.cpp:442
+#, kde-format
+msgid "Upload comments:"
+msgstr "上傳備註："
+
+#: wmwidget.cpp:445
+#, kde-format
+msgid ""
+"This is a place to enter text that will be used as upload comments. The "
+"default of 'Uploaded via KIPI uploader' will be used if empty."
+msgstr ""
+"這是個輸入上傳備註的位置。如果不輸入則使用預設值「使用 KIPI 上傳器上傳」。"
+
+#: wmwidget.cpp:467
+#, kde-format
+msgid "Options"
+msgstr "選項"
+
+#: wmwidget.cpp:468
+#, kde-format
+msgid "These are options that will be applied to photos before upload."
+msgstr "這些選項將在上傳前套用在相片。"
+
+#: wmwidget.cpp:474
+#, kde-format
+msgid "Resize photos before uploading"
+msgstr "上傳前重新調整相片。"
+
+#: wmwidget.cpp:484
+#, kde-format
+msgid "Maximum size:"
+msgstr "最大大小："
+
+#: wmwidget.cpp:492
+#, kde-format
+msgid "JPEG quality:"
+msgstr "JPEG 品質："
+
+#: wmwidget.cpp:495
+#, kde-format
+msgid "Remove metadata from file"
+msgstr "從檔案移除中繼資料"
+
+#: wmwidget.cpp:499
+#, kde-format
+msgid "Remove coordinates from file"
+msgstr "從檔案移除座標"
+
+#: wmwidget.cpp:516
+#, kde-format
+msgid "Items Properties"
+msgstr "項目屬性"
+
+#: wmwidget.cpp:517
+#, kde-format
+msgid "Upload Settings"
+msgstr "上傳設定"
+
+#: wmwindow.cpp:114
+#, kde-format
+msgid "Export to MediaWiki"
+msgstr "匯出到 MediaWiki"
+
+#: wmwindow.cpp:116
+#, kde-format
+msgid "Start Upload"
+msgstr "開始上傳"
+
+#: wmwindow.cpp:117
+#, kde-format
+msgid "Start upload to MediaWiki"
+msgstr "開始上傳到 MediaWiki"
+
+#: wmwindow.cpp:124 wmwindow.cpp:354
+#, kde-format
+msgid "MediaWiki export"
+msgstr "MediaWiki 匯出"
+
+#: wmwindow.cpp:125
+#, kde-format
+msgid ""
+"A tool to export image collection to a MediaWiki installation.\n"
+"Using libmediawiki version %1"
+msgstr ""
+"匯出圖片集合到 MediaWiki 安裝的工具。\n"
+"使用 libmediawiki 版本 %1"
+
+#: wmwindow.cpp:128
+#, kde-format
+msgid "(c) 2011, Alexandre Mendes"
+msgstr "(c) 2011, Alexandre Mendes"
+
+#: wmwindow.cpp:130
+#, kde-format
+msgid "Alexandre Mendes"
+msgstr "Alexandre Mendes"
+
+#: wmwindow.cpp:131
+#, kde-format
+msgid "Author"
+msgstr "作者"
+
+#: wmwindow.cpp:134
+#, kde-format
+msgid "Guillaume Hormiere"
+msgstr "Guillaume Hormiere"
+
+#: wmwindow.cpp:135 wmwindow.cpp:139 wmwindow.cpp:143
+#, kde-format
+msgid "Developer"
+msgstr "開發者"
+
+#: wmwindow.cpp:138
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: wmwindow.cpp:142
+#, kde-format
+msgid "Peter Potrowl"
+msgstr "Peter Potrowl"
+
+#: wmwindow.cpp:389
+#, kde-format
+msgid "Login Error"
+msgstr "登入錯誤"
+
+#: wmwindow.cpp:389
+#, kde-format
+msgid "Please check your credentials and try again."
+msgstr "請檢查您的登入資訊並再試一次。"
+
+#: wmwindow.cpp:410
+#, kde-format
+msgid "Upload finished with no errors."
+msgstr "上傳已成功完成，沒有發生錯誤。"

@@ -1,0 +1,471 @@
+# Lithuanian translations for kipiplugins_facebook package.
+#
+# Andrius Štikonas <andrius@stikonas.eu>, 2009.
+# Liudas Ališauskas <liudas.alisauskas@gmail.com>, 2011.
+# Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>, 2015.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_facebook\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2015-12-29 21:15+0200\n"
+"Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
+"Language-Team: lt <kde-i18n-lt@kde.org>\n"
+"Language: lt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n%10>=2 && (n%100<10 || n"
+"%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3);\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: fbalbum.cpp:52
+#, kde-format
+msgid "Privacy setting of the album that will be created (required)."
+msgstr "Privatumo nustatymai albumo, kuris bus sukurtas (privaloma)."
+
+#: fbalbum.cpp:54
+#, fuzzy, kde-format
+#| msgid "Only Friends"
+msgid "Only Me"
+msgstr "Tik draugams"
+
+#: fbalbum.cpp:56
+#, kde-format
+msgid "Only Friends"
+msgstr "Tik draugams"
+
+#: fbalbum.cpp:58
+#, kde-format
+msgid "Friends of Friends"
+msgstr "Draugų draugams"
+
+#: fbalbum.cpp:60
+#, kde-format
+msgid "My Networks and Friends"
+msgstr "Mano tinklams ir draugams"
+
+#: fbalbum.cpp:62
+#, kde-format
+msgid "Everyone"
+msgstr "Visiems"
+
+#: fbtalker.cpp:201
+#, kde-format
+msgid "Validate previous session..."
+msgstr "Patikrinti ankstesnę sesiją..."
+
+#: fbtalker.cpp:229
+#, kde-format
+msgid "Upgrading to OAuth..."
+msgstr "Atnaujinama į OAuth..."
+
+#: fbtalker.cpp:279
+#, kde-format
+msgid "Facebook Application Authorization"
+msgstr "Facebook programos autorizacija"
+
+#: fbtalker.cpp:290
+#, kde-format
+msgid ""
+"Please follow the instructions in the browser window. When done, copy the "
+"Internet address from your browser into the textbox below and press \"OK\"."
+msgstr ""
+"Prašome sekti instrukcijas naršyklės lange. Kai baigsite, nukopijuokite "
+"interneto adresą iš jūsų naršyklės į teksto lauką žemiau ir spauskite „OK“."
+
+#: fbtalker.cpp:352
+#, kde-format
+msgid "Canceled by user."
+msgstr "Naudotojas atšaukė užduotį."
+
+#: fbtalker.cpp:549
+#, kde-format
+msgid "The service is not available at this time."
+msgstr "Tarnyba ne pasiekiama šiuo metu."
+
+#: fbtalker.cpp:552
+#, kde-format
+msgid "The application has reached the maximum number of requests allowed."
+msgstr "Programa pasiekė didžiausią leistiną užklausų skaičių,"
+
+#: fbtalker.cpp:555
+#, kde-format
+msgid "Invalid session key or session expired. Try to log in again."
+msgstr ""
+"Netinkamas sesijos raktas arba sesija baigėsi. Pamėginkite prisijungti iš "
+"naujo."
+
+#: fbtalker.cpp:558
+#, kde-format
+msgid "Invalid album ID."
+msgstr "Netinkamas albumo ID."
+
+#: fbtalker.cpp:561
+#, kde-format
+msgid "Album is full."
+msgstr "Albumas yra pilnas."
+
+#: fbtalker.cpp:564
+#, kde-format
+msgid "Missing or invalid file."
+msgstr "Trūksta ar netinkamas failas."
+
+#: fbtalker.cpp:567
+#, kde-format
+msgid "Too many unapproved photos pending."
+msgstr "Per daug nepatvirtintų paveikslėlių laukia."
+
+#: fbtalker.cpp:601
+#, kde-format
+msgid "Error"
+msgstr ""
+
+#: fbwindow.cpp:109
+#, kde-format
+msgid "Export to Facebook Web Service"
+msgstr "Eksportuoti į Facebook žiniatinklio tarnybą"
+
+#: fbwindow.cpp:111
+#, kde-format
+msgid "Start Upload"
+msgstr "Pradėti išsiuntimą"
+
+#: fbwindow.cpp:112
+#, kde-format
+msgid "Start upload to Facebook web service"
+msgstr "Pradėti išsiuntimą iš Facebook žiniatinklio tarnybos"
+
+#: fbwindow.cpp:140
+#, fuzzy, kde-format
+#| msgid "Facebook Import/Export"
+msgid "Facebook Export"
+msgstr "Facebook Importas/Eksportas"
+
+#: fbwindow.cpp:141
+#, fuzzy, kde-format
+#| msgid ""
+#| "A Kipi plugin to import/export image collection to/from Facebook web "
+#| "service."
+msgid "A tool to export image collection to/from Facebook web service."
+msgstr ""
+"Kipi papildinys importuoti/eksportuoti paveikslėlių kolekcijas į/iš Facebook "
+"žiniatinklio tarnybos."
+
+#: fbwindow.cpp:143
+#, fuzzy, kde-format
+#| msgid ""
+#| "(c) 2005-2008, Vardhman Jain\n"
+#| "(c) 2008-2009, Gilles Caulier\n"
+#| "(c) 2008-2009, Luka Renko"
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2012, Gilles Caulier\n"
+"(c) 2008-2009, Luka Renko"
+msgstr ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2009, Gilles Caulier\n"
+"(c) 2008-2009, Luka Renko"
+
+#: fbwindow.cpp:147
+#, kde-format
+msgid "Luka Renko"
+msgstr "Luka Renko"
+
+#: fbwindow.cpp:148
+#, kde-format
+msgid "Author and maintainer"
+msgstr "Autorius ir prižiūrėtojas"
+
+#: fbwindow.cpp:361 fbwindow.cpp:395
+#, fuzzy, kde-format
+#| msgid "&lt;auto create&gt;"
+msgid "<auto create>"
+msgstr "&lt;auto kūrimas&gt;"
+
+#: fbwindow.cpp:372 fbwindow.cpp:390
+#, kde-format
+msgid "Facebook Call Failed: %1\n"
+msgstr "Facebook skambutis nepavyko: %1\n"
+
+#: fbwindow.cpp:471
+#, kde-format
+msgid "Warning"
+msgstr ""
+
+#: fbwindow.cpp:472
+#, kde-format
+msgid ""
+"After you have been logged out in the browser, click \"Continue\" to "
+"authenticate for another account"
+msgstr ""
+
+#: fbwindow.cpp:476
+#, kde-format
+msgid "Continue"
+msgstr ""
+
+#: fbwindow.cpp:477
+#, kde-format
+msgid "Cancel"
+msgstr ""
+
+#: fbwindow.cpp:539
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: fbwindow.cpp:543
+#, fuzzy, kde-format
+#| msgid "Facebook Import/Export"
+msgid "Facebook export"
+msgstr "Facebook Importas/Eksportas"
+
+#: fbwindow.cpp:648 fbwindow.cpp:663
+#, kde-format
+msgid "Cannot open file"
+msgstr "Nepavyksta atverti failo"
+
+#: fbwindow.cpp:686
+#, kde-format
+msgid "Uploading Failed"
+msgstr ""
+
+#: fbwindow.cpp:687
+#, kde-format
+msgid ""
+"Failed to upload photo into Facebook: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Nepavyko įkelti paveikslėlio į Facebook: %1\n"
+"Ar norite tęsti?"
+
+#: fbwindow.cpp:706
+#, kde-format
+msgid "Facebook Call Failed: %1"
+msgstr "Facebook skambutis nepavyko: %1"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_facebookui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr ""
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_facebookui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr ""
+
+#: plugin_facebook.cpp:94
+#, kde-format
+msgid "Export to &Facebook..."
+msgstr "Eksportuoti į &Facebook..."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Liudas Ališauskas"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "liudas@akmc.lt"
+
+#~ msgid "Facebook New Album"
+#~ msgstr "Facebook naujas albumas"
+
+#~ msgid "Title of the album that will be created (required)."
+#~ msgstr "Pavadinimas albumo, kuris bus sukurtas (privaloma)."
+
+#~ msgid "Location of the album that will be created (optional)."
+#~ msgstr "Vieta albumo, kuris bus sukurtas (privaloma)."
+
+#~ msgid "Description of the album that will be created (optional)."
+#~ msgstr "Aprašymas albumo, kuris bus sukurtas (privaloma)."
+
+#~ msgctxt "new facebook album"
+#~ msgid "Title:"
+#~ msgstr "Pavadinimas:"
+
+#~ msgctxt "new facebook album"
+#~ msgid "Location:"
+#~ msgstr "Vieta:"
+
+#~ msgctxt "new facebook album"
+#~ msgid "Description:"
+#~ msgstr "Aprašymas:"
+
+#~ msgctxt "new facebook album"
+#~ msgid "Privacy:"
+#~ msgstr "Privatumas:"
+
+#~ msgid "This is the list of images to upload to your Facebook account."
+#~ msgstr "Sąrašas paveikslėlių įkėlimui į jūsų Facebook paskyrą."
+
+#~ msgid ""
+#~ "This is a clickable link to open the Facebook home page in a web browser."
+#~ msgstr ""
+#~ "Tai paspaudžiama nuoroda atverti Facebook namų puslapį žiniatinklio "
+#~ "naršyklėje."
+
+#~ msgid "Account"
+#~ msgstr "Paskyra"
+
+#~ msgid "This is the Facebook account that is currently logged in."
+#~ msgstr "Tai yra Facebook paskyra, prie kurios dabar esate prisijungę."
+
+#~ msgctxt "facebook account settings"
+#~ msgid "Name:"
+#~ msgstr "Vardas:"
+
+#~ msgid "Permission:"
+#~ msgstr "Leidimas:"
+
+#~ msgid ""
+#~ "Permission of KIPI Plugin application to upload photos directly. If not, "
+#~ "user will need to manually approve uploaded photos in Facebook."
+#~ msgstr ""
+#~ "Leidimas KIPI priedui įkelti paveikslėlius tiesiogiai. Jei ne, naudotojas "
+#~ "turės rankiniu būdu patvirtinti įkeltas nuotraukas Facebook'e."
+
+#~ msgid "Change Account"
+#~ msgstr "Keisti paskyrą"
+
+#~ msgid "Logout and change Facebook Account used for transfer"
+#~ msgstr "Atsijungti ir pakeisti Facebook paskyrą naudotiną perdavimui"
+
+#~ msgid "Download Selection"
+#~ msgstr "Atsiusti pažymėjimą"
+
+#~ msgid "This is the selection of Facebook albums/photos to download."
+#~ msgstr "Tai pažymėjimas Facebook albumų/paveikslėlių atsisiųsti."
+
+#~ msgid "Destination"
+#~ msgstr "Tikslas"
+
+#~ msgid ""
+#~ "This is the Facebook album to which selected photos will be uploaded."
+#~ msgstr "Tai Facebook albumas, į kurį pažymėti paveikslėliai bus įkelti."
+
+#~ msgid "My &Album"
+#~ msgstr "Mano &albumas"
+
+#~ msgid "Download complete album of currently logged in user."
+#~ msgstr "Atsiųsti pilną šiuo metu prisijungusio naudotojo albumą."
+
+#~ msgid "Album &of My Friend"
+#~ msgstr "Mano &draugo albumas"
+
+#~ msgid "Download complete album of selected friend."
+#~ msgstr "Atsiųsti pilną pažymėto draugo albumą."
+
+#~ msgid "Photos of &Me"
+#~ msgstr "&Mano paveikslėliai"
+
+#~ msgid "Download all photos of currently logged in user."
+#~ msgstr "Atsiųsti visus šiuo metu prisijungusio naudotojo paveikslėlius."
+
+#~ msgid "Photos of My &Friend"
+#~ msgstr "Mano &draugo paveikslėliai"
+
+#~ msgid "Download all photos of selected friend."
+#~ msgstr "Atsiųsti visus pažymėto draugo paveikslėlius."
+
+#~ msgid "Friend:"
+#~ msgstr "Draugas:"
+
+#~ msgid "Album:"
+#~ msgstr "Albumas:"
+
+#~ msgid "New Album"
+#~ msgstr "Naujas albumas"
+
+#~ msgid "Create new Facebook album"
+#~ msgstr "Sukurti Facebook naują albumą"
+
+#~ msgctxt "facebook album list"
+#~ msgid "Reload"
+#~ msgstr "Įkelti iš naujo"
+
+#~ msgid "Reload album list"
+#~ msgstr "Įkelti iš naujo albumo sąrašą"
+
+#~ msgid "This is the location to which Facebook images will be downloaded."
+#~ msgstr "Tai vieta, į kurią Facebook paveikslėliai bus įkelti."
+
+#~ msgid "Options"
+#~ msgstr "Parinktys"
+
+#~ msgid "These are options that will be applied to photos before upload."
+#~ msgstr "Šios pasirinktys bus pritaikytos paveikslėliams prie įkėlimą."
+
+#~ msgid "Resize photos before uploading"
+#~ msgstr "Pakeisti paveikslėlių dydį prieš įkeliant"
+
+#~ msgid "Maximum dimension:"
+#~ msgstr "Didžiausi išmatavimai:"
+
+#~ msgid "JPEG quality:"
+#~ msgstr "JPEG kokybė:"
+
+#~ msgid "Direct upload"
+#~ msgstr "Tiesioginis siuntimas"
+
+#~ msgid "Uploaded photos will not need manual approval by user."
+#~ msgstr "Įkelti paveikslėliai nereikalaus rankinio naudotojo patvirtinimo."
+
+#~ msgid "Manual upload approval"
+#~ msgstr "Rankinis siuntimo patvirtinimas"
+
+#~ msgid ""
+#~ "Uploaded photos will wait in pending state until manually approved by "
+#~ "user."
+#~ msgstr ""
+#~ "Įkelti paveikslėliai lauks laukimo būsenoje kol bus naudotojo patvirtinti "
+#~ "rankiniu būdu."
+
+#~ msgid "Import from Facebook Web Service"
+#~ msgstr "Importuoti iš &Facebook žiniatinklio tarnybos"
+
+#~ msgid "Start Download"
+#~ msgstr "Pradėti atsiuntimą"
+
+#~ msgid "Start download from Facebook web service"
+#~ msgstr "Pradėti atsiuntimą iš Facebook žiniatinklio tarnybos"
+
+#~ msgid "Facebook Import/Export"
+#~ msgstr "Facebook Importas/Eksportas"
+
+#~ msgctxt "name of special Facebook album for profile pictures"
+#~ msgid "Profile Pictures"
+#~ msgstr "Profilio paveikslėliai"
+
+#, fuzzy
+#~| msgid "Facebook Import/Export"
+#~ msgid "Facebook import"
+#~ msgstr "Facebook Importas/Eksportas"
+
+#~ msgid ""
+#~ "Failed to save photo: %1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Nepavyko išsaugoti paveikslėlio: %1\n"
+#~ "Ar norite tęsti?"
+
+#~ msgid ""
+#~ "Failed to download photo: %1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Nepavyko atsiųsti paveikslėlio: %1\n"
+#~ "Ar norite tęsti?"
+
+#~ msgid "Import from &Facebook..."
+#~ msgstr "Importuoti iš &Facebook..."
+
+#~ msgid ""
+#~ "Please follow the instructions in the browser window. Press \"OK\" when "
+#~ "done."
+#~ msgstr ""
+#~ "Prašome sekti instrukcijas naršyklės lange. Spauskite „OK“ kai baigsite."
+
+#~ msgid "Photos taken with KDE"
+#~ msgstr "Nuotraukos padarytos su KDE"

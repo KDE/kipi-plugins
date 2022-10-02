@@ -1,0 +1,526 @@
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Lukáš Tinkl <ltinkl@redhat.com>, 2010.
+# Vít Pelčák <vit@pelcak.org>, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2020.
+# Tomáš Chvátal <tomas.chvatal@gmail.com>, 2012, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugins\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2020-01-18 03:13+0100\n"
+"PO-Revision-Date: 2020-06-03 09:44+0200\n"
+"Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
+"Language-Team: Czech <kde-i18n-doc@kde.org>\n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Lokalize 20.04.1\n"
+
+#: libkipiplugins/dialogs/kpbatchprogressdialog.cpp:113
+#, kde-format
+msgid "<p>This is the current processing status.</p>"
+msgstr "<p>Toto je aktuální stav.</p>"
+
+#: libkipiplugins/dialogs/kpbatchprogressdialog.cpp:120
+#, kde-format
+msgid "<p>This is the batch job progress as a percentage.</p>"
+msgstr "<p>Toto je aktuální stav průběhu dávky v procentech.</p>"
+
+#: libkipiplugins/dialogs/kpbatchprogressdialog.cpp:189
+#, kde-format
+msgid "Copy to Clipboard"
+msgstr "Zkopírovat do schránky"
+
+#: libkipiplugins/dialogs/kpbatchprogressdialog.cpp:271
+#: libkipiplugins/dialogs/kptooldialog.cpp:210
+#, kde-format
+msgid "Close"
+msgstr "Zavřít"
+
+#: libkipiplugins/dialogs/kpimagedialog.cpp:149
+#, kde-format
+msgid "<i>unavailable</i>"
+msgstr "<i>nedostupné</i>"
+
+#: libkipiplugins/dialogs/kpimagedialog.cpp:228
+#, kde-format
+msgid "%1 ISO"
+msgstr "%1 ISO"
+
+#: libkipiplugins/dialogs/kpimagedialog.cpp:236
+#, kde-format
+msgid "<i>Make:</i>"
+msgstr "<i>Vytvořit:</i>"
+
+#: libkipiplugins/dialogs/kpimagedialog.cpp:237
+#, kde-format
+msgid "<i>Model:</i>"
+msgstr "<i>Model:</i>"
+
+#: libkipiplugins/dialogs/kpimagedialog.cpp:238
+#, kde-format
+msgid "<i>Created:</i>"
+msgstr "<i>Vytvořeno:</i>"
+
+#: libkipiplugins/dialogs/kpimagedialog.cpp:239
+#, kde-format
+msgid "<i>Aperture:</i>"
+msgstr "<i>Clona:</i>"
+
+#: libkipiplugins/dialogs/kpimagedialog.cpp:240
+#, kde-format
+msgid "<i>Focal:</i>"
+msgstr "<i>Ohnisko:</i>"
+
+#: libkipiplugins/dialogs/kpimagedialog.cpp:241
+#, kde-format
+msgid "<i>Exposure:</i>"
+msgstr "<i>Expozice:</i>"
+
+#: libkipiplugins/dialogs/kpimagedialog.cpp:242
+#, kde-format
+msgid "<i>Sensitivity:</i>"
+msgstr "<i>Citlivost:</i>"
+
+#: libkipiplugins/dialogs/kpimagedialog.cpp:339
+#, kde-format
+msgid ""
+"\n"
+"%1|Camera RAW files"
+msgstr ""
+"\n"
+"%1|Fotografické soubory RAW"
+
+#: libkipiplugins/dialogs/kpimagedialog.cpp:358
+#, kde-format
+msgid "Select an Image"
+msgstr "Vybrat obrázek"
+
+#: libkipiplugins/dialogs/kpimagedialog.cpp:365
+#, kde-format
+msgid "Select Images"
+msgstr "Vybrat obrázky"
+
+#: libkipiplugins/dialogs/kplogindialog.cpp:76
+#, kde-format
+msgid "Login:"
+msgstr "Přihlášení:"
+
+#: libkipiplugins/dialogs/kplogindialog.cpp:79
+#, kde-format
+msgid "Password:"
+msgstr "Heslo:"
+
+#: libkipiplugins/dialogs/kplogindialog.cpp:90
+#, kde-format
+msgid "&Login"
+msgstr "&Přihlášení"
+
+#: libkipiplugins/dialogs/kplogindialog.cpp:93
+#, kde-format
+msgid "&Skip"
+msgstr "Pře&skočit"
+
+#: libkipiplugins/dialogs/kplogindialog.cpp:153
+#, kde-format
+msgctxt "@title:window"
+msgid "Error"
+msgstr "Chyba"
+
+#: libkipiplugins/dialogs/kplogindialog.cpp:154
+#, kde-format
+msgid "Password cannot be empty."
+msgstr "Heslo nesmí být prázdné."
+
+#: libkipiplugins/dialogs/kpnewalbumdialog.cpp:57
+#: libkipiplugins/widgets/kpsettingswidget.cpp:72
+#, kde-format
+msgid "Album"
+msgstr "Album"
+
+#: libkipiplugins/dialogs/kpnewalbumdialog.cpp:60
+#, kde-format
+msgid "Title: "
+msgstr "Název: "
+
+#: libkipiplugins/dialogs/kpnewalbumdialog.cpp:61
+#, kde-format
+msgid "Time Stamp: "
+msgstr "Časové razítko:"
+
+#: libkipiplugins/dialogs/kpnewalbumdialog.cpp:62
+#, kde-format
+msgid "Description: "
+msgstr "Popis: "
+
+#: libkipiplugins/dialogs/kpnewalbumdialog.cpp:63
+#, kde-format
+msgid "Location: "
+msgstr "Umístění: "
+
+#: libkipiplugins/dialogs/kpnewalbumdialog.cpp:116
+#, kde-format
+msgid "These are basic settings for the new %1 album."
+msgstr "Toto jsou základní nastavení nového alba %1."
+
+#: libkipiplugins/dialogs/kpnewalbumdialog.cpp:118
+#, kde-format
+msgid "Title of the album that will be created (required)."
+msgstr "Název nově vytvořeného alba (povinné)."
+
+#: libkipiplugins/dialogs/kpnewalbumdialog.cpp:121
+#, kde-format
+msgid "Date and Time of the album that will be created (optional)."
+msgstr "Datum a čas nově vytvářeného alba (nepovinné)."
+
+#: libkipiplugins/dialogs/kpnewalbumdialog.cpp:123
+#, kde-format
+msgid "Description of the album that will be created (optional)."
+msgstr "Popis nově vytvořeného alba (nepovinné)."
+
+#: libkipiplugins/dialogs/kpnewalbumdialog.cpp:125
+#, kde-format
+msgid "Location of the album that will be created (optional)."
+msgstr "Umístění nově vytvářeného alba (nepovinné)."
+
+#: libkipiplugins/dialogs/kptooldialog.cpp:167
+#, kde-format
+msgctxt "@action:button"
+msgid "&Start"
+msgstr "&Spustit"
+
+#: libkipiplugins/dialogs/kptooldialog.cpp:212
+#, kde-format
+msgid "Close window"
+msgstr "Zavřít okno"
+
+#: libkipiplugins/dialogs/kptooldialog.cpp:217
+#, kde-format
+msgid "Cancel"
+msgstr "Zrušit"
+
+#: libkipiplugins/dialogs/kptooldialog.cpp:219
+#, kde-format
+msgid "Cancel current operation"
+msgstr "Zrušit aktuální operaci"
+
+#: libkipiplugins/tools/kpaboutdata.cpp:79
+#, kde-format
+msgid "Handbook"
+msgstr "Příručka"
+
+#: libkipiplugins/tools/kpaboutdata.cpp:84
+#, kde-format
+msgid "About..."
+msgstr "O aplikaci..."
+
+#: libkipiplugins/tools/kpaboutdata.cpp:120
+#, kde-format
+msgid "Version: %1"
+msgstr "Verze: %1"
+
+#: libkipiplugins/tools/kpaboutdata.cpp:133
+#, kde-format
+msgid "About %1"
+msgstr "O aplikaci %1"
+
+#: libkipiplugins/tools/kpaboutdata.h:54
+#, kde-format
+msgid "Copyright 2003-2016, KDE developers team"
+msgstr "Copyright 2003-2016, Tým vývojářů KDE"
+
+#: libkipiplugins/tools/kputil.cpp:299
+#, kde-format
+msgid "Browse..."
+msgstr "Procházet..."
+
+#: libkipiplugins/widgets/kpimageslist.cpp:292
+#, kde-format
+msgid "Thumbnail"
+msgstr "Náhled"
+
+#: libkipiplugins/widgets/kpimageslist.cpp:293
+#, kde-format
+msgid "File Name"
+msgstr "Název souboru"
+
+#: libkipiplugins/widgets/kpimageslist.cpp:294
+#, kde-format
+msgid "User1"
+msgstr "Uživatel1"
+
+#: libkipiplugins/widgets/kpimageslist.cpp:295
+#, kde-format
+msgid "User2"
+msgstr "Uživatel2"
+
+#: libkipiplugins/widgets/kpimageslist.cpp:296
+#, kde-format
+msgid "User3"
+msgstr "Uživatel3"
+
+#: libkipiplugins/widgets/kpimageslist.cpp:297
+#, kde-format
+msgid "User4"
+msgstr "Uživatel4"
+
+#: libkipiplugins/widgets/kpimageslist.cpp:298
+#, kde-format
+msgid "User5"
+msgstr "Uživatel5"
+
+#: libkipiplugins/widgets/kpimageslist.cpp:299
+#, kde-format
+msgid "User6"
+msgstr "Uživatel6"
+
+#: libkipiplugins/widgets/kpimageslist.cpp:557
+#, kde-format
+msgid "Add new images to the list"
+msgstr "Přidat do seznamu nové obrázky"
+
+#: libkipiplugins/widgets/kpimageslist.cpp:558
+#, kde-format
+msgid "Remove selected images from the list"
+msgstr "Odstranit vybrané obrázky ze seznamu"
+
+#: libkipiplugins/widgets/kpimageslist.cpp:559
+#, kde-format
+msgid "Move current selected image up in the list"
+msgstr "Přesunout aktuální obrázek v seznamu nahoru"
+
+#: libkipiplugins/widgets/kpimageslist.cpp:560
+#, kde-format
+msgid "Move current selected image down in the list"
+msgstr "Přesunout aktuální obrázek v seznamu dolů"
+
+#: libkipiplugins/widgets/kpimageslist.cpp:561
+#, kde-format
+msgid "Clear the list."
+msgstr "Smazat seznam."
+
+#: libkipiplugins/widgets/kpimageslist.cpp:562
+#, kde-format
+msgid "Load a saved list."
+msgstr "Načíst uložený seznam."
+
+#: libkipiplugins/widgets/kpimageslist.cpp:563
+#, kde-format
+msgid "Save the list."
+msgstr "Uložit seznam."
+
+#: libkipiplugins/widgets/kpimageslist.cpp:972
+#, kde-format
+msgid "Select the image file list to load"
+msgstr "Vyberte seznam souborů s obrázky pro načtení"
+
+#: libkipiplugins/widgets/kpimageslist.cpp:974
+#: libkipiplugins/widgets/kpimageslist.cpp:1041
+#, kde-format
+msgid "All Files (*)"
+msgstr "Všechny soubory (*)"
+
+#: libkipiplugins/widgets/kpimageslist.cpp:1039
+#, kde-format
+msgid "Select the image file list to save"
+msgstr "Vyberte seznam souborů s obrázky pro uložení"
+
+#: libkipiplugins/widgets/kpsavesettingswidget.cpp:81
+#, kde-format
+msgid "Output file format:"
+msgstr "Výstupní formát souboru:"
+
+#: libkipiplugins/widgets/kpsavesettingswidget.cpp:83
+#, kde-format
+msgid ""
+"<p>Set the output file format to use here:</p><p><b>JPEG</b>: output the "
+"processed image in JPEG format. This format will give smaller-sized files.</"
+"p><p><b>Warning: Due to the destructive compression algorithm, JPEG is a "
+"lossy quality format.</b></p><p><b>TIFF</b>: output the processed image in "
+"TIFF format. This generates large files, without losing quality. Image is "
+"compressed.</p><p><b>PNG</b>: output the processed image in PNG format. This "
+"generates large files, without losing quality. Image is compressed.</"
+"p><p><b>PPM</b>: output the processed image in PPM format. This generates "
+"the largest files, without losing quality. Image is not compressed.</p>"
+msgstr ""
+"<p>Nastavení formátu výstupního souboru:</p><p><b>JPEG</b>: výstup "
+"zpracovaného obrázku do formátu JPEG. Tento formát poskytuje menší soubory.</"
+"p><p><b>Varování: kvůli destruktivnímu komprimačnímu algoritmu ztrácí JPEG "
+"část kvality.</b></p><p><b>TIFF</b>:  výstup zpracovaného obrázku do formátu "
+"TIFF. Vytváří se velké soubory bez ztráty kvality. Obrázek je komprimován.</"
+"p><p><b>PNG</b>: výstup zpracovaného obrázku do formátu PNG .Budou vytvořeny "
+"velké soubory bez ztráty kvality. Obrázek je komprimován.</p><p><b>PPM</b>: "
+"výstup zpracovaného obrázku do formátu PPM .Budou vytvořeny největší soubory "
+"bez ztráty kvality. Obrázek není komprimován.</p>"
+
+#: libkipiplugins/widgets/kpsavesettingswidget.cpp:99
+#, kde-format
+msgid "If Target File Exists:"
+msgstr "Pokud cílový soubor existuje:"
+
+#: libkipiplugins/widgets/kpsavesettingswidget.cpp:103
+#, kde-format
+msgid "Overwrite automatically"
+msgstr "Automaticky přepsat"
+
+#: libkipiplugins/widgets/kpsavesettingswidget.cpp:104
+#, kde-format
+msgid "Open rename-file dialog"
+msgstr "Otevřít dialog pro přejmenování souborů"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:68
+#, kde-format
+msgid "Account"
+msgstr "Účet"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:77
+#, kde-format
+msgid "Max Dimension"
+msgstr "Max. rozměr"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:80
+#, kde-format
+msgid "Destination"
+msgstr "Cíl"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:83
+#, kde-format
+msgid "Options"
+msgstr "Možnosti"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:148
+#, kde-format
+msgid "This is the list of images to upload to your %1 account."
+msgstr "Toto je seznam obrázků k odeslání na váš účet %1."
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:156
+#, kde-format
+msgid "This is a clickable link to open %1 in a browser."
+msgstr "Toto je odkaz k otevření stránky %1 ve webovém prohlížeči."
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:162
+#, kde-format
+msgid "This is the %1 account that is currently logged in."
+msgstr "Toto je momentálně přihlášený %1 účet."
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:164
+#, kde-format
+msgctxt "account settings"
+msgid "Name:"
+msgstr "Název:"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:165
+#, kde-format
+msgid "Change Account"
+msgstr "Změnit účet"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:167
+#, kde-format
+msgid "Change %1 account for transfer"
+msgstr "Změnit %1 účet pro přenos"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:177
+#, kde-format
+msgid ""
+"This is the %1 folder to/from which selected photos will be uploaded/"
+"downloaded."
+msgstr ""
+"Toto je složka %1, ze které budou nahrávány, resp. do které budou stahovány "
+"vybrané fotografie."
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:179
+#, kde-format
+msgid "Album:"
+msgstr "Album:"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:183
+#, kde-format
+msgid "New Album"
+msgstr "Nové album"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:185
+#, kde-format
+msgid "Create new %1 folder"
+msgstr "Vytvořit novou složku %1"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:187
+#, kde-format
+msgctxt "album list"
+msgid "Reload"
+msgstr "Znovu načíst"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:189
+#, kde-format
+msgid "Reload album list"
+msgstr "Obnovit seznam alba"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:198
+#, kde-format
+msgid ""
+"This is the maximum dimension of the images. Images larger than this will be "
+"scaled down."
+msgstr ""
+"Toto je maximální rozměr obrázků. U větších obrázků bude velikost zmenšena."
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:199
+#, kde-format
+msgid "Original Size"
+msgstr "Původní velikost"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:200
+#, kde-format
+msgid "1600 px"
+msgstr "1600 px"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:201
+#, kde-format
+msgid "1440 px"
+msgstr "1440 px"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:202
+#, kde-format
+msgid "1280 px"
+msgstr "1280 px"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:203
+#, kde-format
+msgid "1152 px"
+msgstr "1152 px"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:204
+#, kde-format
+msgid "1024 px"
+msgstr "1024 px"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:210
+#, kde-format
+msgid "This is the location where %1 images will be downloaded."
+msgstr "Umístění pro stažení obrázků %1."
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:215
+#, kde-format
+msgid "These are the options that would be applied to photos before upload."
+msgstr "Volby, které budou použity pro fotografie před odesláním."
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:217
+#, kde-format
+msgid "Upload original image file"
+msgstr "Odeslat původní soubor obrázku"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:221
+#, kde-format
+msgid "Resize photos before uploading"
+msgstr "Před odesláním změnit velikost fotografií"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:231
+#, kde-format
+msgid "Maximum Dimension:"
+msgstr "Max. velikost:"
+
+#: libkipiplugins/widgets/kpsettingswidget.cpp:239
+#, kde-format
+msgid "JPEG Quality:"
+msgstr "Kvalita JPEG:"

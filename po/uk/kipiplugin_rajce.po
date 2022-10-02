@@ -1,0 +1,301 @@
+# Translation of kipiplugin_rajce.po to Ukrainian
+# Copyright (C) 2011-2016 This_file_is_part_of_KDE
+# This file is distributed under the license LGPL version 2.1 or
+# version 3 or later versions approved by the membership of KDE e.V.
+#
+# Yuri Chornoivan <yurchor@ukr.net>, 2011, 2012, 2013, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_rajce\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2016-08-26 14:22+0300\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Lokalize 1.5\n"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_rajceui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Експорт"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_rajceui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Головна панель"
+
+#: newalbumdialog.cpp:47
+#, kde-format
+msgid "Visibility"
+msgstr "Видимість"
+
+#: newalbumdialog.cpp:48
+#, kde-format
+msgid "Set the visibility of the album"
+msgstr "Встановити параметр видимості альбому"
+
+#: newalbumdialog.cpp:50
+#, kde-format
+msgid "Public"
+msgstr "Відкритий"
+
+#: plugin_rajce.cpp:90
+#, kde-format
+msgid "Export to &Rajce.net..."
+msgstr "Експортув&ати до Rajce.net…"
+
+#: rajcewidget.cpp:120
+#, kde-format
+msgid "Not logged in"
+msgstr "Не зареєстровані"
+
+#: rajcewidget.cpp:184
+#, kde-format
+msgid "Unknown error"
+msgstr "Невідома помилка"
+
+#: rajcewidget.cpp:185
+#, kde-format
+msgid "Invalid command"
+msgstr "Некоректна команда"
+
+#: rajcewidget.cpp:186
+#, kde-format
+msgid "Invalid login name or password"
+msgstr "Некоректне ім’я користувача або пароль"
+
+#: rajcewidget.cpp:187
+#, kde-format
+msgid "Session expired"
+msgstr "Строк роботи у сеансі вичерпано"
+
+#: rajcewidget.cpp:189 rajcewidget.cpp:190
+#, kde-format
+msgid "Unknown album"
+msgstr "Невідомий альбом"
+
+#: rajcewidget.cpp:191
+#, kde-format
+msgid "Failed to open album"
+msgstr "Не вдалося відкрити альбом"
+
+#: rajcewidget.cpp:192
+#, kde-format
+msgid "The album name cannot be empty"
+msgstr "Назва альбому не може бути порожньою"
+
+#: rajcewidget.cpp:193
+#, kde-format
+msgid "Failed to create album"
+msgstr "Не вдалося створити альбом"
+
+#: rajcewidget.cpp:194
+#, kde-format
+msgid "Album does not exist"
+msgstr "Альбому не існує"
+
+#: rajcewidget.cpp:197 rajcewidget.cpp:199
+#, kde-format
+msgid "File upload failed"
+msgstr "Помилка під час спроби вивантаження файлів"
+
+#: rajcewidget.cpp:200
+#, kde-format
+msgid "Unsupported file extension"
+msgstr "Непідтримуваний тип файлів"
+
+#: rajcewidget.cpp:269
+#, kde-format
+msgid "Logging in %v%"
+msgstr "Вхід до %v%"
+
+#: rajcewidget.cpp:270
+#, kde-format
+msgid "Logging out %v%"
+msgstr "Вихід з %v%"
+
+#: rajcewidget.cpp:271
+#, kde-format
+msgid "Loading albums %v%"
+msgstr "Завантаження списку альбомів %v%"
+
+#: rajcewidget.cpp:272
+#, kde-format
+msgid "Creating album %v%"
+msgstr "Створення альбому %v%"
+
+#: rajcewidget.cpp:273
+#, kde-format
+msgid "Opening album %v%"
+msgstr "Відкриття альбому %v%"
+
+#: rajcewidget.cpp:274
+#, kde-format
+msgid "Closing album %v%"
+msgstr "Закриття альбому %v%"
+
+#: rajcewidget.cpp:275
+#, kde-format
+msgid "Adding photos %v%"
+msgstr "Додавання фотографій %v%"
+
+#: rajcewindow.cpp:53
+#, kde-format
+msgid "Export to Rajce.net"
+msgstr "Експорт до Rajce.net"
+
+#: rajcewindow.cpp:55
+#, kde-format
+msgid "Start Upload"
+msgstr "Почати вивантаження"
+
+#: rajcewindow.cpp:56
+#, kde-format
+msgid "Start upload to Rajce.net"
+msgstr "Почати вивантаження на Rajce.net"
+
+#: rajcewindow.cpp:71
+#, kde-format
+msgid "Rajce.net Export"
+msgstr "Експорт до Rajce.net"
+
+#: rajcewindow.cpp:72
+#, kde-format
+msgid "A tool to export image collections to Rajce.net."
+msgstr "Засіб для експортування збірок зображень до Rajce.net."
+
+#: rajcewindow.cpp:74
+#, kde-format
+msgid "(c) 2011-2013, Lukas Krejci"
+msgstr "© Lukas Krejci, 2011–2013"
+
+#: rajcewindow.cpp:76
+#, kde-format
+msgid "Lukas Krejci"
+msgstr "Lukas Krejci"
+
+#: rajcewindow.cpp:77
+#, kde-format
+msgid "Author"
+msgstr "Автор"
+
+#~ msgid "Login:"
+#~ msgstr "Користувач:"
+
+#~ msgid "Password:"
+#~ msgstr "Пароль:"
+
+#~ msgid "&OK"
+#~ msgstr "&Гаразд"
+
+#~ msgid "&Cancel"
+#~ msgstr "&Скасувати"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Юрій Чорноіван"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "yurchor@ukr.net"
+
+#~ msgid "New Album"
+#~ msgstr "Новий альбом"
+
+#~ msgid "Name"
+#~ msgstr "Назва"
+
+#~ msgid "Description"
+#~ msgstr "Опис"
+
+#~ msgid "This is the list of images to upload to your Rajce.net account."
+#~ msgstr ""
+#~ "Це список зображень, які буде вивантажено на ваш обліковий запис Rajce."
+#~ "net."
+
+#~ msgid ""
+#~ "This is a clickable link to open the Rajce.net home page in a web browser."
+#~ msgstr ""
+#~ "Це придатне для натискання посилання для відкриття вашої домашньої "
+#~ "сторінки Rajce.net у переглядачі інтернету."
+
+#~ msgid "Account"
+#~ msgstr "Обліковий запис"
+
+#~ msgid "This is the Rajce.net account that will be used to authenticate."
+#~ msgstr ""
+#~ "Це обліковий запис Rajce.net, який буде використано для розпізнавання."
+
+#~ msgctxt "Rajce.net account login"
+#~ msgid "Anonymous"
+#~ msgstr "Анонімний"
+
+#~ msgid "Login as anonymous to Rajce.net web service."
+#~ msgstr "Увійти до вебслужби Rajce.net як анонімний користувач."
+
+#~ msgid "Rajce.net Account"
+#~ msgstr "Обліковий запис Rajce.net"
+
+#~ msgid "Login to Rajce.net using username and password."
+#~ msgstr ""
+#~ "Увійти до вебслужби Rajce.net за допомогою імені користувача і пароля."
+
+#~ msgctxt "Rajce.net account settings"
+#~ msgid "Name:"
+#~ msgstr "Назва:"
+
+#~ msgid "Change Account"
+#~ msgstr "Змінити обліковий запис"
+
+#~ msgid "Change Rajce.net Account used to authenticate"
+#~ msgstr ""
+#~ "Змінити обліковий запис Rajce.net, який буде використано для розпізнавання"
+
+#~ msgid "Album"
+#~ msgstr "Альбом"
+
+#~ msgid "This is the Rajce.net album that will be used for transfer."
+#~ msgstr "Це альбом Rajce.net, який буде використано для передавання."
+
+#~ msgid "Create new Rajce.net album"
+#~ msgstr "Створити альбом Rajce.net"
+
+#~ msgctxt "reload album list"
+#~ msgid "Reload"
+#~ msgstr "Перезавантажити"
+
+#~ msgid "Reload album list"
+#~ msgstr "Перезавантажити список альбомів"
+
+#~ msgid "Destination"
+#~ msgstr "Призначення"
+
+#~ msgid "This is the location where Rajce.net images will be downloaded."
+#~ msgstr "Це адреса, куди буде отримано зображення Rajce.net."
+
+#~ msgid "Options"
+#~ msgstr "Параметри"
+
+#~ msgid "These are options that will be applied to images before upload."
+#~ msgstr ""
+#~ "Це параметри, які буде застосовано до зображення перед вивантаженням."
+
+#~ msgid "Maximum dimension:"
+#~ msgstr "Максимальний розмір:"
+
+#~ msgid "JPEG quality:"
+#~ msgstr "Якість JPEG:"
+
+#~ msgid "Author and maintainer"
+#~ msgstr "Автор і супровідник"
+
+#~ msgid "Handbook"
+#~ msgstr "Підручник"

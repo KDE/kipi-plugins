@@ -1,0 +1,204 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Sönke Dibbern <s_dibbern@web.de>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2014-05-28 18:20+0200\n"
+"Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
+"Language-Team: Low Saxon <kde-i18n-doc@kde.org>\n"
+"Language: nds\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: imageshacktalker.cpp:173
+#, fuzzy, kde-format
+#| msgid "Authenticating..."
+msgid "Authenticating the user"
+msgstr "Identiteetprööv..."
+
+#: imageshacktalker.cpp:199
+#, kde-format
+msgid "Getting galleries from server"
+msgstr ""
+
+#: imageshacktalker.cpp:289
+#, kde-format
+msgid "Successfully retrieved galleries"
+msgstr ""
+
+#: imageshackwidget.cpp:82
+#, kde-format
+msgid "Make private"
+msgstr ""
+
+#: imageshackwidget.cpp:86
+#, kde-format
+msgid "Tags (optional):"
+msgstr ""
+
+#: imageshackwidget.cpp:88
+#, kde-format
+msgid "Remove information bar on thumbnails"
+msgstr ""
+
+#: imageshackwidget.cpp:125
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Add to root folder"
+msgstr ""
+
+#: imageshackwidget.cpp:128
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Create new gallery"
+msgstr ""
+
+#: imageshackwindow.cpp:81
+#, kde-format
+msgid "Export to Imageshack"
+msgstr ""
+
+#: imageshackwindow.cpp:89
+#, kde-format
+msgid "Upload"
+msgstr "Hoochladen"
+
+#: imageshackwindow.cpp:90
+#, kde-format
+msgid "Start upload to Imageshack web service"
+msgstr ""
+
+#: imageshackwindow.cpp:98
+#, kde-format
+msgid "Imageshack Export"
+msgstr ""
+
+#: imageshackwindow.cpp:99
+#, kde-format
+msgid "A tool to export images to Imageshack web service."
+msgstr ""
+
+#: imageshackwindow.cpp:100
+#, kde-format
+msgid "(c) 2012, Dodon Victor\n"
+msgstr ""
+
+#: imageshackwindow.cpp:102
+#, kde-format
+msgid "Dodon Victor"
+msgstr ""
+
+#: imageshackwindow.cpp:103
+#, kde-format
+msgid "Author"
+msgstr "Autor"
+
+#: imageshackwindow.cpp:230
+#, kde-format
+msgid "%v / %m"
+msgstr ""
+
+#: imageshackwindow.cpp:234
+#, kde-format
+msgid "Image Shack Export"
+msgstr ""
+
+#: imageshackwindow.cpp:261
+#, kde-format
+msgid "Authenticating..."
+msgstr "Identiteetprööv..."
+
+#: imageshackwindow.cpp:318
+#, kde-format
+msgid "Login failed: %1\n"
+msgstr ""
+
+#: imageshackwindow.cpp:332
+#, kde-format
+msgid "Failed to get galleries list: %1\n"
+msgstr ""
+
+#: imageshackwindow.cpp:404
+#, kde-format
+msgid "Uploading Failed"
+msgstr ""
+
+#: imageshackwindow.cpp:405
+#, kde-format
+msgid ""
+"Failed to upload photo into Imageshack: %1\n"
+"Do you want to continue?"
+msgstr ""
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_imageshackui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Exporteren"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_imageshackui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Hööft-Warktüüchbalken"
+
+#: plugin_imageshack.cpp:103
+#, kde-format
+msgid "Export to &Imageshack..."
+msgstr ""
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Sönke Dibbern"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "s_dibbern@web.de"
+
+#~ msgid "ImageShack"
+#~ msgstr "ImageShack"
+
+#~ msgid "Account"
+#~ msgstr "Konto"
+
+#~ msgctxt "Account info"
+#~ msgid "Name:"
+#~ msgstr "Naam:"
+
+#~ msgctxt "Account info"
+#~ msgid "Email:"
+#~ msgstr "Nettpostadress:"
+
+#~ msgid "Change account"
+#~ msgstr "Konto ännern"
+
+#~ msgid "Destination"
+#~ msgstr "Teel"
+
+#~ msgid "Gallery:"
+#~ msgstr "Sammeln:"
+
+#~ msgid "Name:"
+#~ msgstr "Naam:"
+
+#~ msgctxt "ImageShack galleries list"
+#~ msgid "Reload"
+#~ msgstr "Nieg laden"
+
+#~ msgid "Options"
+#~ msgstr "Optschonen"
+
+#~ msgid "Width:"
+#~ msgstr "Breed:"
+
+#, fuzzy
+#~| msgid "Height"
+#~ msgid "Height:"
+#~ msgstr "Hööchde"

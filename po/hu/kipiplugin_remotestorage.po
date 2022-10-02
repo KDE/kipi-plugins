@@ -1,0 +1,205 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Balázs Úr <urbalazs@gmail.com>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2012-11-18 23:57+0100\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
+"Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: KioExportWidget.cpp:61
+#, kde-format
+msgid "Target location: "
+msgstr "A cél helye:"
+
+#: KioExportWidget.cpp:62
+#, kde-format
+msgid ""
+"Sets the target address to upload the images to. This can be any address as "
+"used in Dolphin or Konqueror, e.g. ftp://my.server.org/sub/folder."
+msgstr ""
+"Beállítja a cél címét, ahova a képeket feltölti. Ez lehet bármilyen cím, "
+"amit a Dolphin vagy a Konqueror használ, például ftp://sajat.kiszolgalo.org/"
+"al/mappa."
+
+#: KioExportWidget.cpp:66
+#, kde-format
+msgid "Select target location..."
+msgstr "A cél helyének kiválasztása…"
+
+#: KioExportWidget.cpp:72
+#, kde-format
+msgid "This is the list of images to upload to the specified target."
+msgstr "Ez a megadott célra feltöltendő képek listája."
+
+#: KioExportWidget.cpp:134
+#, kde-format
+msgid "Select target..."
+msgstr "Cél kiválasztása…"
+
+#: KioExportWidget.cpp:135
+#, kde-format
+msgid "All Files (*)"
+msgstr ""
+
+#: KioExportWidget.cpp:155
+#, fuzzy, kde-format
+#| msgid "not selected"
+msgid "<not selected>"
+msgstr "nincs kiválasztva"
+
+#: KioExportWindow.cpp:64
+#, fuzzy, kde-format
+#| msgid "Export to Remote Computer"
+msgid "Export to Remote Storage"
+msgstr "Exportálás a távoli számítógépre"
+
+#: KioExportWindow.cpp:67
+#, kde-format
+msgid "Start export"
+msgstr "Exportálás indítása"
+
+#: KioExportWindow.cpp:68
+#, kde-format
+msgid "Start export to the specified target"
+msgstr "Exportálás indítása a megadott célra"
+
+#: KioExportWindow.cpp:84
+#, fuzzy, kde-format
+#| msgid "Export to remote computer"
+msgid "Export to remote storage"
+msgstr "Exportálás a távoli számítógépre"
+
+#: KioExportWindow.cpp:85
+#, fuzzy, kde-format
+#| msgid "A Kipi plugin to export images over network using KIO-Slave"
+msgid "A tool to export images over network using KIO-Slave"
+msgstr ""
+"Egy Kipi bővítmény képek exportálásához a hálózaton keresztül a KIO-Slave "
+"használatával"
+
+#: KioExportWindow.cpp:86 KioImportWindow.cpp:83
+#, kde-format
+msgid "(c) 2009, Johannes Wienke"
+msgstr "© Johannes Wienke, 2009."
+
+#: KioExportWindow.cpp:88 KioImportWindow.cpp:85
+#, kde-format
+msgid "Johannes Wienke"
+msgstr "Johannes Wienke"
+
+#: KioExportWindow.cpp:89 KioImportWindow.cpp:86
+#, kde-format
+msgid "Developer and maintainer"
+msgstr "Fejlesztő és karbantartó"
+
+#: KioExportWindow.cpp:198
+#, kde-format
+msgid "Upload not completed"
+msgstr "A feltöltés nincs befejezve"
+
+#: KioExportWindow.cpp:199
+#, kde-format
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to export these images now."
+msgstr ""
+"Néhány kép nem lett feltöltve és még mindig a listában van. Megpróbálhatja "
+"most újra exportálni ezeket a képeket."
+
+#: KioImportWidget.cpp:52
+#, kde-format
+msgid "This is the list of images to import into the current album."
+msgstr "Ez a jelenlegi albumba importálandó képek listája."
+
+#: KioImportWindow.cpp:60
+#, fuzzy, kde-format
+#| msgid "Import from Remote Computer"
+msgid "Import from Remote Storage"
+msgstr "Importálás a távoli számítógépről"
+
+#: KioImportWindow.cpp:64
+#, kde-format
+msgid "Start import"
+msgstr "Importálás indítása"
+
+#: KioImportWindow.cpp:65
+#, kde-format
+msgid "Start importing the specified images into the currently selected album."
+msgstr "A megadott képek importálásának indítása a jelenleg kijelölt albumba."
+
+#: KioImportWindow.cpp:81
+#, fuzzy, kde-format
+#| msgid "Import from remote computer"
+msgid "Import from remote storage"
+msgstr "Importálás a távoli számítógépről"
+
+#: KioImportWindow.cpp:82
+#, fuzzy, kde-format
+#| msgid "A Kipi plugin to import images over network using KIO-Slave"
+msgid "A tool to import images over network"
+msgstr ""
+"Egy Kipi bővítmény képek importálásához a hálózaton keresztül a KIO-Slave "
+"használatával"
+
+#: KioImportWindow.cpp:137
+#, kde-format
+msgid "Import not completed"
+msgstr "Az importálás nincs befejezve"
+
+#: KioImportWindow.cpp:138
+#, kde-format
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to import these images now."
+msgstr ""
+"Néhány kép nem lett letöltve és még mindig a listában van. Megpróbálhatja "
+"most újra importálni ezeket a képeket."
+
+#. i18n: ectx: Menu (Import)
+#: kipiplugin_remotestorageui.rc:7
+#, kde-format
+msgid "&Import"
+msgstr "&Importálás"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_remotestorageui.rc:11
+#, kde-format
+msgid "&Export"
+msgstr "&Exportálás"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_remotestorageui.rc:17
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Fő eszköztár"
+
+#: plugin_remotestorage.cpp:93
+#, fuzzy, kde-format
+#| msgid "Export to remote computer..."
+msgid "Export to remote storage..."
+msgstr "Exportálás a távoli számítógépre…"
+
+#: plugin_remotestorage.cpp:105
+#, fuzzy, kde-format
+#| msgid "Import from remote computer..."
+msgid "Import from remote storage..."
+msgstr "Importálás a távoli számítógépről…"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Úr Balázs"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "urbalazs@gmail.com"

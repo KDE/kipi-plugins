@@ -1,0 +1,259 @@
+# Translation of kipiplugin_yandexfotki to Norwegian Bokmål
+#
+# Bjørn Steensrud <bjornst@skogkatt.homelinux.org>, 2011, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-08-08 02:53+0200\n"
+"PO-Revision-Date: 2012-03-08 14:43+0100\n"
+"Last-Translator: Bjørn Steensrud <bjornst@skogkatt.homelinux.org>\n"
+"Language-Team: Norwegian Bokmål <l10n-no@lister.huftis.org>\n"
+"Language: nb\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Environment: kde\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_yandexfotkiui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Eksporter"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_yandexfotkiui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Hovedverktøylinje"
+
+#: plugin_yandexfotki.cpp:91
+#, kde-format
+msgid "Export to &Yandex.Fotki..."
+msgstr "Eksporter til &Yandex.Fotki …"
+
+#: yfalbumdialog.cpp:60
+#, kde-format
+msgid "Password for the album (optional)."
+msgstr "Passord for albumet (valgfritt)."
+
+#: yfalbumdialog.cpp:63
+#, kde-format
+msgid "Password:"
+msgstr "Passord:"
+
+#: yfalbumdialog.cpp:80
+#, kde-format
+msgid "Error"
+msgstr "Feil"
+
+#: yfalbumdialog.cpp:80
+#, kde-format
+msgid "Title cannot be empty."
+msgstr "Tittelen kan ikke være tom."
+
+#: yfwidget.cpp:61
+#, kde-format
+msgid "Update policy:"
+msgstr "Oppdateringspraksis:"
+
+#: yfwidget.cpp:63
+#, kde-format
+msgid "Update metadata"
+msgstr "Oppdater metadata"
+
+#: yfwidget.cpp:64
+#, kde-format
+msgid "Update metadata of remote file and merge remote tags with local"
+msgstr ""
+"Oppdater metadata for fila på nettverket og flett sammen nettverkstaggene "
+"med de lokale"
+
+#: yfwidget.cpp:66
+#, kde-format
+msgid "Skip photo"
+msgstr "Hopp over foto"
+
+#: yfwidget.cpp:67
+#, kde-format
+msgid "Simple skip photo"
+msgstr "Enkelt hopp over foto"
+
+#: yfwidget.cpp:68
+#, kde-format
+msgid "Upload as new"
+msgstr "Last opp som nytt"
+
+#: yfwidget.cpp:69
+#, kde-format
+msgid "Add photo as new"
+msgstr "Legg til foto som nytt"
+
+#: yfwidget.cpp:71
+#, kde-format
+msgid "Privacy settings:"
+msgstr "Personverninnstillinger:"
+
+#: yfwidget.cpp:74
+#, kde-format
+msgid "Public access"
+msgstr "Offentlig tilgang"
+
+#: yfwidget.cpp:76
+#, kde-format
+msgid "Friends access"
+msgstr "Venner har tilgang"
+
+#: yfwidget.cpp:78
+#, kde-format
+msgid "Private access"
+msgstr "Privat tilgang"
+
+#: yfwidget.cpp:80
+#, kde-format
+msgid "Hide original photo"
+msgstr "Skjul originalbildet"
+
+#: yfwidget.cpp:81
+#, kde-format
+msgid "Disable comments"
+msgstr "Ikke tillat kommentarer"
+
+#: yfwidget.cpp:82
+#, kde-format
+msgid "Adult content"
+msgstr "Vokseninnhold"
+
+#: yfwindow.cpp:128
+#, kde-format
+msgid "Yandex.Fotki Plugin"
+msgstr "Programtillegg for Yandex.Fotki"
+
+#: yfwindow.cpp:129
+#, kde-format
+msgid "A tool to export image collections to Yandex.Fotki web service."
+msgstr ""
+
+#: yfwindow.cpp:131
+#, kde-format
+msgid ""
+"(c) 2007-2009, Vardhman Jain\n"
+"(c) 2008-2015, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2010, Roman Tsisyk"
+msgstr ""
+
+#: yfwindow.cpp:136
+#, kde-format
+msgid "Roman Tsisyk"
+msgstr "Roman Tsisyk"
+
+#: yfwindow.cpp:137
+#, kde-format
+msgid "Author"
+msgstr "Forfatter"
+
+#: yfwindow.cpp:249
+#, kde-format
+msgid "Unauthorized"
+msgstr "Uautorisert"
+
+#: yfwindow.cpp:262
+#, kde-format
+msgctxt "Yandex.Fotki"
+msgid "Y"
+msgstr "Y"
+
+#: yfwindow.cpp:263
+#, kde-format
+msgctxt "Yandex.Fotki"
+msgid "andex."
+msgstr "andex."
+
+#: yfwindow.cpp:264
+#, kde-format
+msgctxt "Yandex.Fotki"
+msgid "Fotki"
+msgstr "Fotki"
+
+#: yfwindow.cpp:589
+#, kde-format
+msgid "Processing Failed"
+msgstr ""
+
+#: yfwindow.cpp:590
+#, kde-format
+msgid ""
+"Failed to prepare image %1\n"
+"Do you want to continue?"
+msgstr ""
+"Klarte ikke å klargjøre bilde %1 \n"
+"Vil du gå videre?"
+
+#: yfwindow.cpp:617
+#, kde-format
+msgid "Images have been uploaded"
+msgstr ""
+
+#: yfwindow.cpp:647
+#, kde-format
+msgid "Please select album first"
+msgstr "Velg et album først"
+
+#: yfwindow.cpp:669
+#, kde-format
+msgid "Session error"
+msgstr "Øktfeil"
+
+#: yfwindow.cpp:672
+#, kde-format
+msgid "Token error"
+msgstr "Symbolfeil"
+
+#: yfwindow.cpp:675
+#, kde-format
+msgid "Invalid credentials"
+msgstr "Ugyldige innloggingsdata"
+
+#: yfwindow.cpp:679
+#, kde-format
+msgid "Cannot get service document"
+msgstr "Klarer ikke å hente tjenestedokument"
+
+#: yfwindow.cpp:692
+#, kde-format
+msgid "Cannot list albums"
+msgstr "Kan ikke liste opp albumer"
+
+#: yfwindow.cpp:695
+#, kde-format
+msgid "Cannot list photos"
+msgstr "Kan ikke liste opp bilder"
+
+#: yfwindow.cpp:698
+#, kde-format
+msgid "Cannot update album info"
+msgstr "Kan ikke oppdatere album-informasjon"
+
+#: yfwindow.cpp:704
+#, kde-format
+msgid "Uploading Failed"
+msgstr "Opplasting mislyktes"
+
+#: yfwindow.cpp:705
+#, kde-format
+msgid ""
+"Failed to upload image %1\n"
+"Do you want to continue?"
+msgstr ""
+"Klarte ikke å laste opp bilde %1 \n"
+"Vil du gå videre?"
+
+#: yfwindow.cpp:726
+#, kde-format
+msgid "Unknown error"
+msgstr "Ukjent feil"

@@ -1,0 +1,171 @@
+# Translation of kipiplugin_dropbox.po to Catalan
+# Copyright (C) 2013-2020 This_file_is_part_of_KDE
+# This file is distributed under the license LGPL version 2.1 or
+# version 3 or later versions approved by the membership of KDE e.V.
+#
+# Josep M. Ferrer <txemaq@gmail.com>, 2013, 2014, 2015, 2016.
+# Antoni Bella Pérez <antonibella5@yahoo.com>, 2015, 2017, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipi-plugins\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2020-07-21 14:18+0200\n"
+"Last-Translator: Antoni Bella Pérez <antonibella5@yahoo.com>\n"
+"Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Accelerator-Marker: &\n"
+"X-Generator: Lokalize 20.04.3\n"
+
+#: dbtalker.cpp:317
+#, kde-format
+msgid "Error"
+msgstr "Error"
+
+#: dbtalker.cpp:360
+#, kde-format
+msgid "Failed to upload photo"
+msgstr "Ha fallat en pujar la fotografia"
+
+#: dbtalker.cpp:387
+#, kde-format
+msgid "Failed to list folders"
+msgstr "Ha fallat en llistar les carpetes"
+
+#: dbwindow.cpp:70
+#, kde-format
+msgid "Export to Dropbox"
+msgstr "Exporta al Dropbox"
+
+#: dbwindow.cpp:72
+#, kde-format
+msgid "Start Upload"
+msgstr "Comença la pujada"
+
+#: dbwindow.cpp:73
+#, kde-format
+msgid "Start upload to Dropbox"
+msgstr "Comença la pujada al Dropbox"
+
+#: dbwindow.cpp:92
+#, kde-format
+msgid "Dropbox Export"
+msgstr "Exportació al Dropbox"
+
+#: dbwindow.cpp:93
+#, kde-format
+msgid "A tool to export images to Dropbox"
+msgstr "Una eina per a exportar imatges al Dropbox"
+
+#: dbwindow.cpp:95
+#, kde-format
+msgid "(c) 2013, Saurabh Patel"
+msgstr "(c) 2013, Saurabh Patel"
+
+#: dbwindow.cpp:97
+#, kde-format
+msgid "Saurabh Patel"
+msgstr "Saurabh Patel"
+
+#: dbwindow.cpp:98
+#, kde-format
+msgid "Author"
+msgstr "Autor"
+
+#: dbwindow.cpp:259
+#, kde-format
+msgctxt "@title:window"
+msgid "Error"
+msgstr "Error"
+
+#: dbwindow.cpp:260
+#, kde-format
+msgid "No image selected. Please select which images should be uploaded."
+msgstr ""
+"No s'ha seleccionat cap imatge. Si us plau, seleccioneu les imatges que "
+"s'haurien de pujar."
+
+#: dbwindow.cpp:266 dbwindow.cpp:386
+#, kde-format
+msgid "Login Failed"
+msgstr "Ha fallat l'inici de la sessió"
+
+#: dbwindow.cpp:267 dbwindow.cpp:387
+#, kde-format
+msgid "Authentication failed. Do you want to try again?"
+msgstr "Ha fallat en l'autenticació. Ho voleu tornar a provar?"
+
+#: dbwindow.cpp:291
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: dbwindow.cpp:295
+#, kde-format
+msgid "Dropbox export"
+msgstr "Exportació al Dropbox"
+
+#: dbwindow.cpp:328
+#, kde-format
+msgid "Uploading Failed"
+msgstr "Ha fallat la pujada"
+
+#: dbwindow.cpp:329
+#, kde-format
+msgid ""
+"Failed to upload photo to Dropbox.\n"
+"%1\n"
+"Do you want to continue?"
+msgstr ""
+"Ha fallat en pujar la fotografia al Dropbox.\n"
+"%1\n"
+"Voleu continuar?"
+
+#: dbwindow.cpp:401 dbwindow.cpp:406
+#, kde-format
+msgid ""
+"Dropbox call failed:\n"
+"%1"
+msgstr ""
+"La crida al Dropbox ha fallat:\n"
+"%1"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_dropboxui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Exporta"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_dropboxui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Barra d'eines principal"
+
+#: plugin_dropbox.cpp:90
+#, kde-format
+msgid "Export to &Dropbox..."
+msgstr "Exporta al &Dropbox..."
+
+#~ msgid "Authorize Dropbox"
+#~ msgstr "Autoritza al Dropbox"
+
+#~ msgid ""
+#~ "Please follow the instructions in the browser. After logging in and "
+#~ "authorizing the application, press OK."
+#~ msgstr ""
+#~ "Si us plau, seguiu les instruccions del navegador. Després d'iniciar la "
+#~ "sessió i autoritzar l'aplicació, premeu «Bé»."
+
+#~ msgid ""
+#~ "The textbox is empty, please enter the code from the browser in the "
+#~ "textbox. To complete the authentication click \"Change Account\", or "
+#~ "\"Start Upload\" to authenticate again."
+#~ msgstr ""
+#~ "El quadre de text està buit, introduïu-hi el codi des del navegador. Per "
+#~ "a completar l'autenticació cliqueu «Canvia el compte», o «Comença la "
+#~ "pujada» per tornar a autenticar-se."

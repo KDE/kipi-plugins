@@ -1,0 +1,156 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the kipi-plugins package.
+#
+# Emir SARI <emir_sari@icloud.com>, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipi-plugins\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2022-04-11 11:35+0300\n"
+"Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
+"Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 21.12.3\n"
+
+#: jalbumconfig.cpp:97 jalbumconfig.cpp:160
+#, kde-format
+msgid "Select Albums Location"
+msgstr "Albüm Konumunu Seç"
+
+#: jalbumconfig.cpp:111
+#, kde-format
+msgid "Select jAlbum jar File Location"
+msgstr "jAlbum jar Dosya Konumunu Seç"
+
+#: jalbumconfig.cpp:118
+#, kde-format
+msgid "OK"
+msgstr "Tamam"
+
+#: jalbumconfig.cpp:119
+#, kde-format
+msgid "Cancel"
+msgstr "İptal"
+
+#: jalbumconfig.cpp:180
+#, kde-format
+msgid "Select jar File Location"
+msgstr "jar Dosya Konumunu Seç"
+
+#: jalbumconfig.cpp:234
+#, kde-format
+msgid "Not a directory"
+msgstr "Bir dizin değil"
+
+#: jalbumconfig.cpp:234
+#, kde-format
+msgid "Chosen path is not a directory"
+msgstr "Seçili yol bir dizin değil"
+
+#: jalbumconfig.cpp:238
+#, kde-format
+msgid "Missing directory"
+msgstr "Dizin eksik"
+
+#: jalbumconfig.cpp:239
+#, kde-format
+msgid "Directory %1 does not exist, do you wish to create it?"
+msgstr "%1 dizini mevcut değil, oluşturulsun mu?"
+
+#: jalbumconfig.cpp:250 jalbumconfig.cpp:251
+#, kde-format
+msgid "Failed to create directory"
+msgstr "Dizin oluşturulamadı"
+
+#: jalbumwindow.cpp:95
+#, kde-format
+msgid "jAlbum Album name to export to:"
+msgstr "Dışa aktarılacak jAlbum albüm adı:"
+
+#: jalbumwindow.cpp:113
+#, kde-format
+msgid "Settings"
+msgstr "Ayarlar"
+
+#: jalbumwindow.cpp:124 jalbumwindow.cpp:127
+#, kde-format
+msgid "jAlbum Export"
+msgstr "jAlbum Dışa Aktar"
+
+#: jalbumwindow.cpp:128
+#, kde-format
+msgid "A Kipi plugin to launch jAlbum using selected images."
+msgstr ""
+"Seçili görselleri kullanarak jAlbum'u çalıştırmak için bir Kipi eklentisi."
+
+#: jalbumwindow.cpp:129
+#, kde-format
+msgid "(c) 2013-2017, Andrew Goodbody\n"
+msgstr "(c) 2013-2017, Andrew Goodbody\n"
+
+#: jalbumwindow.cpp:160
+#, kde-format
+msgid "Error"
+msgstr "Hata"
+
+#: jalbumwindow.cpp:175
+#, kde-format
+msgid "Overwrite?"
+msgstr "Üzerine yazılsın mı?"
+
+#: jalbumwindow.cpp:176
+#, kde-format
+msgid "Album %1 already exists, do you wish to overwrite it?"
+msgstr "%1 albümü halihazırda mevcut, üzerine yazmak istiyor musunuz?"
+
+#: jalbumwindow.cpp:186
+#, kde-format
+msgid "Create dir Failed"
+msgstr "Dizin Oluşturma Başarısız"
+
+#: jalbumwindow.cpp:187
+#, kde-format
+msgid "Failed to create album directory"
+msgstr "Albüm dizini oluşturulamadı"
+
+#: jalbumwindow.cpp:200 jalbumwindow.cpp:218
+#, kde-format
+msgid "Writing Failed"
+msgstr "Yazma Başarısız"
+
+#: jalbumwindow.cpp:201
+#, kde-format
+msgid "Could not open 'albumfiles.txt' for writing"
+msgstr "'albumfiles.txt', yazma için açılamadı"
+
+#: jalbumwindow.cpp:219
+#, kde-format
+msgid "Could not open 'jalbum-settings.jap' for writing"
+msgstr "'jalbum-settings.jap', yazma için açılamadı"
+
+#: jalbumwindow.cpp:255 plugin_jalbum.cpp:123
+#, kde-format
+msgid "Edit jAlbum Data"
+msgstr "jAlbum Verisini Düzenle"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_jalbumui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Dışa Aktar"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_jalbumui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Ana Araç Çubuğu"
+
+#: plugin_jalbum.cpp:105
+#, kde-format
+msgid "Export to &jAlbum"
+msgstr "&jAlbum'e Dışa Aktar"

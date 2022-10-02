@@ -1,0 +1,156 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>, 2017, 2019, 2020, 2021, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2022-04-10 08:57+0200\n"
+"Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
+"Language-Team: Polish <kde-i18n-doc@kde.org>\n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 22.03.70\n"
+
+#: jalbumconfig.cpp:97 jalbumconfig.cpp:160
+#, kde-format
+msgid "Select Albums Location"
+msgstr "Wskaż położenie albumu"
+
+#: jalbumconfig.cpp:111
+#, kde-format
+msgid "Select jAlbum jar File Location"
+msgstr "Wskaż  położenie pliku jar jAlbumu"
+
+#: jalbumconfig.cpp:118
+#, kde-format
+msgid "OK"
+msgstr "OK"
+
+#: jalbumconfig.cpp:119
+#, kde-format
+msgid "Cancel"
+msgstr "Anuluj"
+
+#: jalbumconfig.cpp:180
+#, kde-format
+msgid "Select jar File Location"
+msgstr "Wskaż położenie pliku"
+
+#: jalbumconfig.cpp:234
+#, kde-format
+msgid "Not a directory"
+msgstr "To nie jest katalog"
+
+#: jalbumconfig.cpp:234
+#, kde-format
+msgid "Chosen path is not a directory"
+msgstr "Wskazana ścieżka nie jest katalogiem"
+
+#: jalbumconfig.cpp:238
+#, kde-format
+msgid "Missing directory"
+msgstr "Brak katalogu"
+
+#: jalbumconfig.cpp:239
+#, kde-format
+msgid "Directory %1 does not exist, do you wish to create it?"
+msgstr "Katalog %1 nie istnieje, czy chcesz go utworzyć?"
+
+#: jalbumconfig.cpp:250 jalbumconfig.cpp:251
+#, kde-format
+msgid "Failed to create directory"
+msgstr "Nie udało się utworzenie katalogu"
+
+#: jalbumwindow.cpp:95
+#, kde-format
+msgid "jAlbum Album name to export to:"
+msgstr "Nazwa albumu jAlbum do wyeksportowania:"
+
+#: jalbumwindow.cpp:113
+#, kde-format
+msgid "Settings"
+msgstr "Ustawienia"
+
+#: jalbumwindow.cpp:124 jalbumwindow.cpp:127
+#, kde-format
+msgid "jAlbum Export"
+msgstr "Ekport jAlbum"
+
+#: jalbumwindow.cpp:128
+#, kde-format
+msgid "A Kipi plugin to launch jAlbum using selected images."
+msgstr "Wtyczka Kipi do uruchomienia jAlbum przy użyciu zaznaczonych obrazów."
+
+#: jalbumwindow.cpp:129
+#, kde-format
+msgid "(c) 2013-2017, Andrew Goodbody\n"
+msgstr "(c) 2013-2017, Andrew Goodbody\n"
+
+#: jalbumwindow.cpp:160
+#, kde-format
+msgid "Error"
+msgstr "Błąd"
+
+#: jalbumwindow.cpp:175
+#, kde-format
+msgid "Overwrite?"
+msgstr "Zastąpić?"
+
+#: jalbumwindow.cpp:176
+#, kde-format
+msgid "Album %1 already exists, do you wish to overwrite it?"
+msgstr "Album %1 już istnieje, czy chcesz go zastąpić?"
+
+#: jalbumwindow.cpp:186
+#, kde-format
+msgid "Create dir Failed"
+msgstr "Nie udało się tworzenie katalogu"
+
+#: jalbumwindow.cpp:187
+#, kde-format
+msgid "Failed to create album directory"
+msgstr "Nie udało się tworzenie katalogu albumu"
+
+#: jalbumwindow.cpp:200 jalbumwindow.cpp:218
+#, kde-format
+msgid "Writing Failed"
+msgstr "Nie udało się zapisywanie"
+
+#: jalbumwindow.cpp:201
+#, kde-format
+msgid "Could not open 'albumfiles.txt' for writing"
+msgstr "Nie można otworzyć 'albumfiles.txt' do zapisu"
+
+#: jalbumwindow.cpp:219
+#, kde-format
+msgid "Could not open 'jalbum-settings.jap' for writing"
+msgstr "Nie można otworzyć 'jalbum-settings.jap' do zapisu"
+
+#: jalbumwindow.cpp:255 plugin_jalbum.cpp:123
+#, kde-format
+msgid "Edit jAlbum Data"
+msgstr "Edytuj dane jAlbum"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_jalbumui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "Wy&eksportuj"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_jalbumui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Główny pasek narzędzi"
+
+#: plugin_jalbum.cpp:105
+#, kde-format
+msgid "Export to &jAlbum"
+msgstr "Wyeksportuj do &jAlbum"

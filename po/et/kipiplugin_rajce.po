@@ -1,0 +1,291 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Marek Laane <bald@smail.ee>, 2011, 2012, 2019.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2019-11-09 19:46+0200\n"
+"Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
+"Language-Team: Estonian <kde-et@lists.linux.ee>\n"
+"Language: et\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 19.08.1\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_rajceui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Eksport"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_rajceui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Peamine tööriistariba"
+
+#: newalbumdialog.cpp:47
+#, kde-format
+msgid "Visibility"
+msgstr "Nähtavus"
+
+#: newalbumdialog.cpp:48
+#, kde-format
+msgid "Set the visibility of the album"
+msgstr "Albumi nähtavuse määramine"
+
+#: newalbumdialog.cpp:50
+#, kde-format
+msgid "Public"
+msgstr "Avalik"
+
+#: plugin_rajce.cpp:90
+#, kde-format
+msgid "Export to &Rajce.net..."
+msgstr "Eksport &Rajce.net-i..."
+
+#: rajcewidget.cpp:120
+#, kde-format
+msgid "Not logged in"
+msgstr "Pole sisse logitud"
+
+#: rajcewidget.cpp:184
+#, kde-format
+msgid "Unknown error"
+msgstr "Tundmatu tõrge"
+
+#: rajcewidget.cpp:185
+#, kde-format
+msgid "Invalid command"
+msgstr "Vigane käsk"
+
+#: rajcewidget.cpp:186
+#, kde-format
+msgid "Invalid login name or password"
+msgstr "Vigane kasutajanimi või parool"
+
+#: rajcewidget.cpp:187
+#, kde-format
+msgid "Session expired"
+msgstr "Seanss aegus"
+
+#: rajcewidget.cpp:189 rajcewidget.cpp:190
+#, kde-format
+msgid "Unknown album"
+msgstr "Tundmatu album"
+
+#: rajcewidget.cpp:191
+#, kde-format
+msgid "Failed to open album"
+msgstr "Albumi avamine nurjus"
+
+#: rajcewidget.cpp:192
+#, kde-format
+msgid "The album name cannot be empty"
+msgstr "Albumil peab olema nimi"
+
+#: rajcewidget.cpp:193
+#, kde-format
+msgid "Failed to create album"
+msgstr "Albumi loomine nurjus"
+
+#: rajcewidget.cpp:194
+#, kde-format
+msgid "Album does not exist"
+msgstr "Albumit ei ole olemas"
+
+#: rajcewidget.cpp:197 rajcewidget.cpp:199
+#, kde-format
+msgid "File upload failed"
+msgstr "Faili üleslaadimine nurjus"
+
+#: rajcewidget.cpp:200
+#, kde-format
+msgid "Unsupported file extension"
+msgstr "Toetamata faililaiend"
+
+#: rajcewidget.cpp:269
+#, kde-format
+msgid "Logging in %v%"
+msgstr "Sisselogimine %v%"
+
+#: rajcewidget.cpp:270
+#, kde-format
+msgid "Logging out %v%"
+msgstr "Väljalogimine %v%"
+
+#: rajcewidget.cpp:271
+#, kde-format
+msgid "Loading albums %v%"
+msgstr "Albumite laadimine %v%"
+
+#: rajcewidget.cpp:272
+#, kde-format
+msgid "Creating album %v%"
+msgstr "Albumi loomine %v%"
+
+#: rajcewidget.cpp:273
+#, kde-format
+msgid "Opening album %v%"
+msgstr "Albumi avamine %v%"
+
+#: rajcewidget.cpp:274
+#, kde-format
+msgid "Closing album %v%"
+msgstr "Albumi sulgemine %v%"
+
+#: rajcewidget.cpp:275
+#, kde-format
+msgid "Adding photos %v%"
+msgstr "Fotode lisamine %v%"
+
+#: rajcewindow.cpp:53
+#, kde-format
+msgid "Export to Rajce.net"
+msgstr "Eksport Rajce.net-i"
+
+#: rajcewindow.cpp:55
+#, kde-format
+msgid "Start Upload"
+msgstr "Alusta üleslaadimist"
+
+#: rajcewindow.cpp:56
+#, kde-format
+msgid "Start upload to Rajce.net"
+msgstr "Alusta üleslaadimist Rajce.net-i"
+
+#: rajcewindow.cpp:71
+#, kde-format
+msgid "Rajce.net Export"
+msgstr "Rajce.net-i eksport"
+
+#: rajcewindow.cpp:72
+#, kde-format
+msgid "A tool to export image collections to Rajce.net."
+msgstr "Tööriist pildikogude eksportimiseks Rajce.net-i."
+
+#: rajcewindow.cpp:74
+#, kde-format
+msgid "(c) 2011-2013, Lukas Krejci"
+msgstr "(c) 2011-2013: Lukas Krejci"
+
+#: rajcewindow.cpp:76
+#, kde-format
+msgid "Lukas Krejci"
+msgstr "Lukas Krejci"
+
+#: rajcewindow.cpp:77
+#, kde-format
+msgid "Author"
+msgstr "Autor"
+
+#~ msgid "Login:"
+#~ msgstr "Kasutajanimi:"
+
+#~ msgid "Password:"
+#~ msgstr "Parool:"
+
+#~ msgid "&OK"
+#~ msgstr "&OK"
+
+#~ msgid "&Cancel"
+#~ msgstr "&Loobu"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Marek Laane"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "bald@smail.ee"
+
+#~ msgid "New Album"
+#~ msgstr "Uus album"
+
+#~ msgid "Name"
+#~ msgstr "Nimi"
+
+#~ msgid "Description"
+#~ msgstr "Kirjeldus"
+
+#~ msgid "This is the list of images to upload to your Rajce.net account."
+#~ msgstr "See on piltide nimekiri, mis laaditakse sinu Rajce.net-i kontosse."
+
+#~ msgid ""
+#~ "This is a clickable link to open the Rajce.net home page in a web browser."
+#~ msgstr "Klõpsatav link Rajce.net-i kodulehekülje avamiseks veebibrauseris."
+
+#~ msgid "Account"
+#~ msgstr "Konto"
+
+#~ msgid "This is the Rajce.net account that will be used to authenticate."
+#~ msgstr "Autentimiseks kasutatav Rajce.net-i konto."
+
+#~ msgctxt "Rajce.net account login"
+#~ msgid "Anonymous"
+#~ msgstr "Anonüümne"
+
+#~ msgid "Login as anonymous to Rajce.net web service."
+#~ msgstr "Anonüümne sisselogimine Rajce.net-i veebiteenusesse."
+
+#~ msgid "Rajce.net Account"
+#~ msgstr "Rajce.net-i konto"
+
+#~ msgid "Login to Rajce.net using username and password."
+#~ msgstr ""
+#~ "Sisselogimine Rajce.net-i veebiteenusesse kasutajanime ja parooliga."
+
+#~ msgctxt "Rajce.net account settings"
+#~ msgid "Name:"
+#~ msgstr "Nimi:"
+
+#~ msgid "Change Account"
+#~ msgstr "Muuda kontot"
+
+#~ msgid "Change Rajce.net Account used to authenticate"
+#~ msgstr "Muuda autentimisel kasutatavat Rajce.net-i kontot"
+
+#~ msgid "Album"
+#~ msgstr "Album"
+
+#~ msgid "This is the Rajce.net album that will be used for transfer."
+#~ msgstr "Ülekandel kasutatav Rajce.net-i album."
+
+#~ msgid "Create new Rajce.net album"
+#~ msgstr "Uue Rajce.net-i albumi loomine"
+
+#~ msgctxt "reload album list"
+#~ msgid "Reload"
+#~ msgstr "Laadi uuesti"
+
+#~ msgid "Reload album list"
+#~ msgstr "Albumite nimekirja taaslaadimine"
+
+#~ msgid "Destination"
+#~ msgstr "Sihtkoht"
+
+#~ msgid "This is the location where Rajce.net images will be downloaded."
+#~ msgstr "Asukoht, kuhu allalaaditud Rajce.net-i pildid salvestatakse."
+
+#~ msgid "Options"
+#~ msgstr "Valikud"
+
+#~ msgid "These are options that will be applied to images before upload."
+#~ msgstr "Piltidele enne üleslaadimist rakendatavad valikud."
+
+#~ msgid "Maximum dimension:"
+#~ msgstr "Maksimummõõtmed:"
+
+#~ msgid "JPEG quality:"
+#~ msgstr "JPEG kvaliteet:"
+
+#~ msgid "Author and maintainer"
+#~ msgstr "Autor ja hooldaja"
+
+#~ msgid "Handbook"
+#~ msgstr "Käsiraamat"

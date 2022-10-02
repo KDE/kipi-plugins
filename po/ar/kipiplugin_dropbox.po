@@ -1,0 +1,166 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Safa Alfulaij <safa1996alfulaij@gmail.com>, ٢٠١٦.
+# Zayed Al-Saidi <zayed.alsaidi@gmail.com>, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2022-02-01 17:19+0400\n"
+"Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
+"Language-Team: ar\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"X-Generator: Lokalize 21.07.70\n"
+
+#: dbtalker.cpp:317
+#, kde-format
+msgid "Error"
+msgstr "خطأ"
+
+#: dbtalker.cpp:360
+#, kde-format
+msgid "Failed to upload photo"
+msgstr "فشل رفع الصّورة"
+
+#: dbtalker.cpp:387
+#, kde-format
+msgid "Failed to list folders"
+msgstr "فشل سرد المجلّدات"
+
+#: dbwindow.cpp:70
+#, kde-format
+msgid "Export to Dropbox"
+msgstr "صدّر إلى دروب‌بوكس"
+
+#: dbwindow.cpp:72
+#, kde-format
+msgid "Start Upload"
+msgstr "ابدأ الرّفع"
+
+#: dbwindow.cpp:73
+#, kde-format
+msgid "Start upload to Dropbox"
+msgstr "ابدأ الرّفع إلى دروب‌بوكس"
+
+#: dbwindow.cpp:92
+#, kde-format
+msgid "Dropbox Export"
+msgstr "مصدّر دروب‌بوكس"
+
+#: dbwindow.cpp:93
+#, kde-format
+msgid "A tool to export images to Dropbox"
+msgstr "أداة لتصدير الصّور إلى دروب‌بوكس"
+
+#: dbwindow.cpp:95
+#, kde-format
+msgid "(c) 2013, Saurabh Patel"
+msgstr "الحقوق محفوظة © 2013، Saurabh Patel"
+
+#: dbwindow.cpp:97
+#, kde-format
+msgid "Saurabh Patel"
+msgstr "Saurabh Patel"
+
+#: dbwindow.cpp:98
+#, kde-format
+msgid "Author"
+msgstr "المؤلّف"
+
+#: dbwindow.cpp:259
+#, kde-format
+msgctxt "@title:window"
+msgid "Error"
+msgstr "خطأ"
+
+#: dbwindow.cpp:260
+#, kde-format
+msgid "No image selected. Please select which images should be uploaded."
+msgstr "لا صور محدّدة. فضلًا اختر أيّ الصّور التي تريد رفعها."
+
+#: dbwindow.cpp:266 dbwindow.cpp:386
+#, kde-format
+msgid "Login Failed"
+msgstr "فشل الولوج"
+
+#: dbwindow.cpp:267 dbwindow.cpp:387
+#, kde-format
+msgid "Authentication failed. Do you want to try again?"
+msgstr "فشل الاستيثاق. أتريد المحاولة مجدّدًا؟"
+
+#: dbwindow.cpp:291
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: dbwindow.cpp:295
+#, kde-format
+msgid "Dropbox export"
+msgstr "مصدّر دروب‌بوكس"
+
+#: dbwindow.cpp:328
+#, kde-format
+msgid "Uploading Failed"
+msgstr "فشل الرّفع"
+
+#: dbwindow.cpp:329
+#, kde-format
+msgid ""
+"Failed to upload photo to Dropbox.\n"
+"%1\n"
+"Do you want to continue?"
+msgstr ""
+"فشل رفع الصّورة إلى دروب‌بوكس.\n"
+"%1\n"
+"أتريد المتابعة؟"
+
+#: dbwindow.cpp:401 dbwindow.cpp:406
+#, kde-format
+msgid ""
+"Dropbox call failed:\n"
+"%1"
+msgstr ""
+"فشل نداء دروب‌بوكس:\n"
+"%1"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_dropboxui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&صدّر"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_dropboxui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "شريط الأدوات الرّئيسيّ"
+
+#: plugin_dropbox.cpp:90
+#, kde-format
+msgid "Export to &Dropbox..."
+msgstr "صدّر إلى &دروب‌بوكس..."
+
+#~ msgid "Authorize Dropbox"
+#~ msgstr "استوثق دروب‌بوكس"
+
+#~ msgid ""
+#~ "Please follow the instructions in the browser. After logging in and "
+#~ "authorizing the application, press OK."
+#~ msgstr ""
+#~ "فضلًا اتبع الإرشادات في المتصفّح. بعد الولوج واستيثاق التّطبيق، انقر \"حسنًا"
+#~ "\"."
+
+#~ msgid ""
+#~ "The textbox is empty, please enter the code from the browser in the "
+#~ "textbox. To complete the authentication click \"Change Account\", or "
+#~ "\"Start Upload\" to authenticate again."
+#~ msgstr ""
+#~ "مربّع النّصّ فارغ، فضلًا أدخل الرّمز من المتصفّح في مربّع النّصّ. لإكمال الاستيثاق "
+#~ "انقر \"غيّر الحساب\" أو \"ابدأ الرّفع\" للاستيثاق مجدّدًا."

@@ -1,0 +1,306 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Volkan Gezer <volkangezer@gmail.com>, 2013-2014.
+# Emir SARI <emir_sari@icloud.com>, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: extragear-graphics-kde4\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2022-04-11 11:25+0300\n"
+"Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
+"Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 21.12.3\n"
+
+#: imageshacktalker.cpp:173
+#, kde-format
+msgid "Authenticating the user"
+msgstr "Kimlik doğrulaması yapılıyor"
+
+#: imageshacktalker.cpp:199
+#, kde-format
+msgid "Getting galleries from server"
+msgstr "Sunucudan galeriler alınıyor"
+
+#: imageshacktalker.cpp:289
+#, kde-format
+msgid "Successfully retrieved galleries"
+msgstr "Galeriler başarıyla getirildi"
+
+#: imageshackwidget.cpp:82
+#, kde-format
+msgid "Make private"
+msgstr "Özel yap"
+
+#: imageshackwidget.cpp:86
+#, kde-format
+msgid "Tags (optional):"
+msgstr "Etiketler (isteğe bağlı):"
+
+#: imageshackwidget.cpp:88
+#, kde-format
+msgid "Remove information bar on thumbnails"
+msgstr "Küçük görsellerde bilgi çubuğunu kaldır"
+
+#: imageshackwidget.cpp:125
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Add to root folder"
+msgstr "Kök klasöre ekle"
+
+#: imageshackwidget.cpp:128
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Create new gallery"
+msgstr "Yeni galeri oluştur"
+
+#: imageshackwindow.cpp:81
+#, kde-format
+msgid "Export to Imageshack"
+msgstr "ImageShack'e Aktar"
+
+#: imageshackwindow.cpp:89
+#, kde-format
+msgid "Upload"
+msgstr "Yükle"
+
+#: imageshackwindow.cpp:90
+#, kde-format
+msgid "Start upload to Imageshack web service"
+msgstr "ImageShack web hizmetine yüklemeyi başlat"
+
+#: imageshackwindow.cpp:98
+#, kde-format
+msgid "Imageshack Export"
+msgstr "Imageshack Aktarımı"
+
+#: imageshackwindow.cpp:99
+#, kde-format
+msgid "A tool to export images to Imageshack web service."
+msgstr "Görselleri ImageShack web hizmetine aktarmak için bir araç."
+
+#: imageshackwindow.cpp:100
+#, kde-format
+msgid "(c) 2012, Dodon Victor\n"
+msgstr "(c) 2012, Dodon Victor\n"
+
+#: imageshackwindow.cpp:102
+#, kde-format
+msgid "Dodon Victor"
+msgstr "Dodon Victor"
+
+#: imageshackwindow.cpp:103
+#, kde-format
+msgid "Author"
+msgstr "Yazar"
+
+#: imageshackwindow.cpp:230
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: imageshackwindow.cpp:234
+#, kde-format
+msgid "Image Shack Export"
+msgstr "Image Shack Aktarımı"
+
+#: imageshackwindow.cpp:261
+#, kde-format
+msgid "Authenticating..."
+msgstr "Kimlik doğrulaması yapılıyor..."
+
+#: imageshackwindow.cpp:318
+#, kde-format
+msgid "Login failed: %1\n"
+msgstr "Giriş başarısız: %1\n"
+
+#: imageshackwindow.cpp:332
+#, kde-format
+msgid "Failed to get galleries list: %1\n"
+msgstr "Galeri listesi alınamadı: %1\n"
+
+#: imageshackwindow.cpp:404
+#, kde-format
+msgid "Uploading Failed"
+msgstr "Yükleme Başarısız"
+
+#: imageshackwindow.cpp:405
+#, kde-format
+msgid ""
+"Failed to upload photo into Imageshack: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Fotoğraflar Imageshack'e gönderilemedi: %1\n"
+"Sürdürmek istiyor musunuz?"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_imageshackui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Dışa Aktar"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_imageshackui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Ana Araç Çubuğu"
+
+#: plugin_imageshack.cpp:103
+#, kde-format
+msgid "Export to &Imageshack..."
+msgstr "&ImageShack'e Aktar..."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Volkan Gezer"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "volkangezer@gmail.com"
+
+#~ msgid "Checking the registration code"
+#~ msgstr "Kayıt kodu denetleniyor"
+
+#~ msgid "Checking the web server"
+#~ msgstr "Web sunucusu denetleniyor"
+
+#~ msgid "Server does not respond. Please check you internet connection!"
+#~ msgstr "Sunucu yanıt vermiyor. Lütfen internet bağlantınızı kontrol edin!"
+
+#~ msgid "Registration code successfully verified"
+#~ msgstr "Kayıt kodu başarıyla doğrulandı"
+
+#~ msgid "Registration code not valid!"
+#~ msgstr "Kayıt kodu geçerli değil!"
+
+#~ msgid "Images to upload to Imageshack web service"
+#~ msgstr "ImageShack web hizmetine yüklenecek resimler"
+
+#~ msgid ""
+#~ "This is a clickable link to open the Imageshack home page in a web browser"
+#~ msgstr ""
+#~ "Bu, Imageshack ana sayfasını bir web tarayıcısında açmak için "
+#~ "tıklanılabilir bir bağlantı"
+
+#~ msgid "ImageShack"
+#~ msgstr "ImageShack"
+
+#~ msgid "Account"
+#~ msgstr "Hesap"
+
+#~ msgid "Imageshack account info"
+#~ msgstr "Imageshack hesap bilgisi"
+
+#~ msgctxt "Account info"
+#~ msgid "Name:"
+#~ msgstr "İsim:"
+
+#~ msgctxt "Account info"
+#~ msgid "Email:"
+#~ msgstr "E-posta:"
+
+#~ msgid "Change account"
+#~ msgstr "Hesabı değiştir"
+
+#~ msgid ""
+#~ "Change the registration code for the Imageshack account used to upload "
+#~ "images"
+#~ msgstr ""
+#~ "Resimleri yüklemek üzere kullanılacak Imageshack hesabının kayıt kodunu "
+#~ "değiştir"
+
+#~ msgid "Destination"
+#~ msgstr "Hedef"
+
+#~ msgid ""
+#~ "This is the ImageShack gallery to which selected items will be uploaded"
+#~ msgstr "Bu, seçilen ögelerin yükleneceği ImageShack galerisidir"
+
+#~ msgid "Upload to galleries"
+#~ msgstr "Galerilere yükle"
+
+#~ msgid "Gallery:"
+#~ msgstr "Galeri:"
+
+#~ msgid "Name:"
+#~ msgstr "İsim:"
+
+#~ msgctxt "ImageShack galleries list"
+#~ msgid "Reload"
+#~ msgstr "Yeniden Yükle"
+
+#~ msgid "Reload ImageShack galleries list"
+#~ msgstr "ImageShack galeri listesini yeniden yükle"
+
+#~ msgid "Options"
+#~ msgstr "Seçenekler"
+
+#~ msgid "These are the options that will be applied to photos"
+#~ msgstr "Bu seçenekler resimlere uygulanacaktır"
+
+#~ msgid "Resize options"
+#~ msgstr "Yeniden Boyutlandırma Seçenekleri"
+
+#~ msgid "Do not resize photos"
+#~ msgstr "Resimleri boyutlandırma"
+
+#~ msgid "Predefined templates"
+#~ msgstr "Öntanımlı şablonlar"
+
+#~ msgid "Custom resize dimensions"
+#~ msgstr "Özel boyutlandırma ölçüleri"
+
+#~ msgid "Width:"
+#~ msgstr "Genişlik:"
+
+#, fuzzy
+#~| msgid "Height"
+#~ msgid "Height:"
+#~ msgstr "Yükseklik"
+
+#~ msgid "100x75 (avatar)"
+#~ msgstr "100x75 (avatar)"
+
+#~ msgid "150x122 (thumbnail)"
+#~ msgstr "150x122 (küçük resim)"
+
+#~ msgid "320x240 (for websites and email)"
+#~ msgstr "320x240 (web site ve e-postalar için)"
+
+#~ msgid "640x480 (for message boards)"
+#~ msgstr "640x480 (mesaj panoları için)"
+
+#~ msgid "800x600 (15-inch monitor)"
+#~ msgstr "800x600 (15-inç monitör)"
+
+#~ msgid "1024x768 (17-inch monitor)"
+#~ msgstr "1024x768 (17-inç monitör)"
+
+#~ msgid "1280x1024 (19-inch monitor)"
+#~ msgstr "1280x1024 (19-inç monitör)"
+
+#~ msgid "1600x1200 (21-inch monitor)"
+#~ msgstr "1600x1200 (21-inç monitör)"
+
+#~ msgid "optimize without resizing"
+#~ msgstr "ölçeklendirmeden iyileştir"
+
+#~ msgid "Create new gallery."
+#~ msgstr "Yeni galeri oluştur."
+
+#~ msgid "Imageshack authorization"
+#~ msgstr "Imageshack yetkilendirmesi"
+
+#~ msgid ""
+#~ "Please paste the registration code for your ImageShack account into the "
+#~ "textbox below and press \"OK\"."
+#~ msgstr ""
+#~ "ImageShack hesabınızın kayıt kodunu aşağıdaki metin alanına yapıştırın ve "
+#~ "\"Tamam\" tıklayın."

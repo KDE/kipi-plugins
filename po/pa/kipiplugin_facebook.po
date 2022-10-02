@@ -1,0 +1,423 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Amanpreet Singh Alam <aalam@users.sf.net>, 2009.
+# A S Alam <aalam@users.sf.net>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_fbexport\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2010-12-24 07:54+0530\n"
+"Last-Translator: A S Alam <aalam@users.sf.net>\n"
+"Language-Team: Punjabi/Panjabi <punjab-l10n@list.sf.net>\n"
+"Language: pa\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.1\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: fbalbum.cpp:52
+#, kde-format
+msgid "Privacy setting of the album that will be created (required)."
+msgstr ""
+
+#: fbalbum.cpp:54
+#, fuzzy, kde-format
+#| msgid "Only Friends"
+msgid "Only Me"
+msgstr "ਕੇਵਲ ਦੋਸਤ"
+
+#: fbalbum.cpp:56
+#, kde-format
+msgid "Only Friends"
+msgstr "ਕੇਵਲ ਦੋਸਤ"
+
+#: fbalbum.cpp:58
+#, kde-format
+msgid "Friends of Friends"
+msgstr "ਦੋਸਤਾਂ ਦੇ ਦੋਸਤ"
+
+#: fbalbum.cpp:60
+#, kde-format
+msgid "My Networks and Friends"
+msgstr "ਮੇਰਾ ਨੈੱਟਵਰਕ ਅਤੇ ਦੋਸਤ"
+
+#: fbalbum.cpp:62
+#, kde-format
+msgid "Everyone"
+msgstr "ਕੋਈ ਵੀ"
+
+#: fbtalker.cpp:201
+#, kde-format
+msgid "Validate previous session..."
+msgstr ""
+
+#: fbtalker.cpp:229
+#, kde-format
+msgid "Upgrading to OAuth..."
+msgstr ""
+
+#: fbtalker.cpp:279
+#, kde-format
+msgid "Facebook Application Authorization"
+msgstr "ਫੇਸਬੁੱਕ ਐਪਲੀਕੇਸ਼ਨ ਪਰਮਾਣਕਿਤਾ"
+
+#: fbtalker.cpp:290
+#, kde-format
+msgid ""
+"Please follow the instructions in the browser window. When done, copy the "
+"Internet address from your browser into the textbox below and press \"OK\"."
+msgstr ""
+
+#: fbtalker.cpp:352
+#, kde-format
+msgid "Canceled by user."
+msgstr ""
+
+#: fbtalker.cpp:549
+#, kde-format
+msgid "The service is not available at this time."
+msgstr ""
+
+#: fbtalker.cpp:552
+#, kde-format
+msgid "The application has reached the maximum number of requests allowed."
+msgstr ""
+
+#: fbtalker.cpp:555
+#, kde-format
+msgid "Invalid session key or session expired. Try to log in again."
+msgstr ""
+
+#: fbtalker.cpp:558
+#, kde-format
+msgid "Invalid album ID."
+msgstr ""
+
+#: fbtalker.cpp:561
+#, kde-format
+msgid "Album is full."
+msgstr "ਐਲਬਮ ਪੂਰੀ ਹੈ।"
+
+#: fbtalker.cpp:564
+#, kde-format
+msgid "Missing or invalid file."
+msgstr ""
+
+#: fbtalker.cpp:567
+#, kde-format
+msgid "Too many unapproved photos pending."
+msgstr ""
+
+#: fbtalker.cpp:601
+#, kde-format
+msgid "Error"
+msgstr ""
+
+#: fbwindow.cpp:109
+#, kde-format
+msgid "Export to Facebook Web Service"
+msgstr "ਫੇਸਬੁੱਕ ਵੈੱਬ ਸਰਵਿਸ ਲਈ ਐਕਸਪੋਰਟ"
+
+#: fbwindow.cpp:111
+#, kde-format
+msgid "Start Upload"
+msgstr "ਅੱਪਲੋਡ ਸ਼ੁਰੂ ਕਰੋ"
+
+#: fbwindow.cpp:112
+#, kde-format
+msgid "Start upload to Facebook web service"
+msgstr "ਫੇਸਬੁੱਕ ਵੈੱਬ ਸਰਵਿਸ ਲਈ ਅੱਪਲੋਡ ਸ਼ੁਰੂ"
+
+#: fbwindow.cpp:140
+#, fuzzy, kde-format
+#| msgid "Facebook Import/Export"
+msgid "Facebook Export"
+msgstr "ਫੇਸਬੁੱਕ ਇੰਪੋਰਟ/ਐਕਸਪੋਰਟ"
+
+#: fbwindow.cpp:141
+#, fuzzy, kde-format
+#| msgid "Start download from Facebook web service"
+msgid "A tool to export image collection to/from Facebook web service."
+msgstr "ਫੇਸਬੁੱਕ ਵੈੱਬ ਸਰਵਿਸ ਤੋਂ ਡਾਊਨਲੋਡ ਸ਼ੁਰੂ ਕਰੋ"
+
+#: fbwindow.cpp:143
+#, fuzzy, kde-format
+#| msgid ""
+#| "(c) 2005-2008, Vardhman Jain\n"
+#| "(c) 2008-2009, Gilles Caulier\n"
+#| "(c) 2008-2009, Luka Renko"
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2012, Gilles Caulier\n"
+"(c) 2008-2009, Luka Renko"
+msgstr ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2009, Gilles Caulier\n"
+"(c) 2008-2009, Luka Renko"
+
+#: fbwindow.cpp:147
+#, kde-format
+msgid "Luka Renko"
+msgstr ""
+
+#: fbwindow.cpp:148
+#, kde-format
+msgid "Author and maintainer"
+msgstr "ਲੇਖਕ ਅਤੇ ਪਰਬੰਧਕ"
+
+#: fbwindow.cpp:361 fbwindow.cpp:395
+#, fuzzy, kde-format
+#| msgid "&lt;auto create&gt;"
+msgid "<auto create>"
+msgstr "&lt;ਆਪੇ ਬਣਾਓ&gt;"
+
+#: fbwindow.cpp:372 fbwindow.cpp:390
+#, kde-format
+msgid "Facebook Call Failed: %1\n"
+msgstr ""
+
+#: fbwindow.cpp:471
+#, kde-format
+msgid "Warning"
+msgstr ""
+
+#: fbwindow.cpp:472
+#, kde-format
+msgid ""
+"After you have been logged out in the browser, click \"Continue\" to "
+"authenticate for another account"
+msgstr ""
+
+#: fbwindow.cpp:476
+#, kde-format
+msgid "Continue"
+msgstr ""
+
+#: fbwindow.cpp:477
+#, kde-format
+msgid "Cancel"
+msgstr ""
+
+#: fbwindow.cpp:539
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: fbwindow.cpp:543
+#, fuzzy, kde-format
+#| msgid "Facebook Import/Export"
+msgid "Facebook export"
+msgstr "ਫੇਸਬੁੱਕ ਇੰਪੋਰਟ/ਐਕਸਪੋਰਟ"
+
+#: fbwindow.cpp:648 fbwindow.cpp:663
+#, kde-format
+msgid "Cannot open file"
+msgstr "ਫਾਇਲ ਖੋਲ੍ਹੀ ਨਹੀਂ ਜਾ ਸਕਦੀ"
+
+#: fbwindow.cpp:686
+#, fuzzy, kde-format
+#| msgid "Uploading file %1"
+msgid "Uploading Failed"
+msgstr "ਫਾਇਲ %1 ਅੱਪਲੋਡ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ"
+
+#: fbwindow.cpp:687
+#, kde-format
+msgid ""
+"Failed to upload photo into Facebook: %1\n"
+"Do you want to continue?"
+msgstr ""
+"ਫੋਟੋ ਫੇਸਬੁੱਕ ਵਿੱਚ ਲੋਡ ਕਰਨ ਲਈ ਫੇਲ੍ਹ: %1\n"
+"ਕੀ ਤੁਸੀਂ ਜਾਰੀ ਰੱਖਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
+
+#: fbwindow.cpp:706
+#, kde-format
+msgid "Facebook Call Failed: %1"
+msgstr "ਫੇਸਬੁੱਕ ਕਾਲ ਫੇਲ੍ਹ: %1"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_facebookui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr ""
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_facebookui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr ""
+
+#: plugin_facebook.cpp:94
+#, kde-format
+msgid "Export to &Facebook..."
+msgstr "ਫੇਸਬੁੱਕ ਲਈ ਐਕਸਪੋਰਟ ਕਰੋ(&F)..."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "ਅਮਨਪਰੀਤ ਸਿੰਘ ਆਲਮ (A S Alam)"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "aalam@users.sf.net"
+
+#~ msgid "Facebook New Album"
+#~ msgstr "ਫੇਸਬੁੱਕ ਨਵੀਂ ਐਲਬਮ"
+
+#~ msgctxt "new facebook album"
+#~ msgid "Title:"
+#~ msgstr "ਟਾਇਟਲ:"
+
+#~ msgctxt "new facebook album"
+#~ msgid "Location:"
+#~ msgstr "ਟਿਕਾਣਾ:"
+
+#~ msgctxt "new facebook album"
+#~ msgid "Description:"
+#~ msgstr "ਵੇਰਵਾ:"
+
+#~ msgctxt "new facebook album"
+#~ msgid "Privacy:"
+#~ msgstr "ਪਰਾਈਵੇਸੀ:"
+
+#~ msgid "Account"
+#~ msgstr "ਅਕਾਊਂਟ"
+
+#, fuzzy
+#~| msgid "This is the Facebook album where selected photos will be uploaded."
+#~ msgid "This is the Facebook account that is currently logged in."
+#~ msgstr "ਇਹ ਫੇਸਬੁੱਕ ਐਲਬਮ ਹੈ, ਜਿੱਥੇ ਕਿ ਚੁਣੀਆਂ ਫੋਟੋ ਅੱਪਲੋਡ ਕੀਤੀਆਂ ਜਾਣਗੀਆਂ।"
+
+#~ msgctxt "facebook account settings"
+#~ msgid "Name:"
+#~ msgstr "ਨਾਂ:"
+
+#~ msgid "Permission:"
+#~ msgstr "ਅਧਿਕਾਰ:"
+
+#~ msgid "Change Account"
+#~ msgstr "ਅਕਾਊਂਟ ਬਦਲੋ"
+
+#, fuzzy
+#~| msgid "This is the Facebook album where selected photos will be uploaded."
+#~ msgid "This is the selection of Facebook albums/photos to download."
+#~ msgstr "ਇਹ ਫੇਸਬੁੱਕ ਐਲਬਮ ਹੈ, ਜਿੱਥੇ ਕਿ ਚੁਣੀਆਂ ਫੋਟੋ ਅੱਪਲੋਡ ਕੀਤੀਆਂ ਜਾਣਗੀਆਂ।"
+
+#~ msgid "Destination"
+#~ msgstr "ਟਿਕਾਣਾ"
+
+#, fuzzy
+#~| msgid "This is the Facebook album where selected photos will be uploaded."
+#~ msgid ""
+#~ "This is the Facebook album to which selected photos will be uploaded."
+#~ msgstr "ਇਹ ਫੇਸਬੁੱਕ ਐਲਬਮ ਹੈ, ਜਿੱਥੇ ਕਿ ਚੁਣੀਆਂ ਫੋਟੋ ਅੱਪਲੋਡ ਕੀਤੀਆਂ ਜਾਣਗੀਆਂ।"
+
+#~ msgid "My &Album"
+#~ msgstr "ਮੇਰੀ ਐਲਬਮ(&A)"
+
+#~ msgid "Photos of &Me"
+#~ msgstr "ਮੇਰੀਆਂ ਫੋਟੋ(&M)"
+
+#~ msgid "Photos of My &Friend"
+#~ msgstr "ਮੇਰੇ ਦੋਸਤ ਦੀਆਂ ਫੋਟੋ(&F)"
+
+#~ msgid "Friend:"
+#~ msgstr "ਦੋਸਤ:"
+
+#~ msgid "Album:"
+#~ msgstr "ਐਲਬਮ:"
+
+#~ msgid "New Album"
+#~ msgstr "ਨਵੀਂ ਐਲਬਮ"
+
+#~ msgid "Create new Facebook album"
+#~ msgstr "ਨਵੀਂ ਫੇਸਬੁੱਕ ਐਲਬਮ ਬਣਾਓ"
+
+#~ msgctxt "facebook album list"
+#~ msgid "Reload"
+#~ msgstr "ਮੁੜ-ਲੋਡ"
+
+#, fuzzy
+#~| msgid "This is the Facebook album where selected photos will be uploaded."
+#~ msgid "This is the location to which Facebook images will be downloaded."
+#~ msgstr "ਇਹ ਫੇਸਬੁੱਕ ਐਲਬਮ ਹੈ, ਜਿੱਥੇ ਕਿ ਚੁਣੀਆਂ ਫੋਟੋ ਅੱਪਲੋਡ ਕੀਤੀਆਂ ਜਾਣਗੀਆਂ।"
+
+#~ msgid "Options"
+#~ msgstr "ਚੋਣਾਂ"
+
+#~ msgid "Maximum dimension:"
+#~ msgstr "ਵੱਧੋ-ਵੱਧ ਮਾਪ:"
+
+#~ msgid "JPEG quality:"
+#~ msgstr "JPEG ਕੁਆਲਟੀ:"
+
+#~ msgid "Direct upload"
+#~ msgstr "ਸਿੱਧਾ ਅੱਪਲੋਡ"
+
+#~ msgid "Import from Facebook Web Service"
+#~ msgstr "ਫੇਸਬੁੱਕ ਵੈੱਬ ਸਰਵਿਸ ਤੋਂ ਇੰਪੋਰਟ"
+
+#~ msgid "Start Download"
+#~ msgstr "ਡਾਊਨਲੋਡ ਸ਼ੁਰੂ"
+
+#~ msgid "Facebook Import/Export"
+#~ msgstr "ਫੇਸਬੁੱਕ ਇੰਪੋਰਟ/ਐਕਸਪੋਰਟ"
+
+#~ msgctxt "name of special Facebook album for profile pictures"
+#~ msgid "Profile Pictures"
+#~ msgstr "ਪਰੋਫਾਇਲ ਤਸਵੀਰਾਂ"
+
+#, fuzzy
+#~| msgid "Facebook Import/Export"
+#~ msgid "Facebook import"
+#~ msgstr "ਫੇਸਬੁੱਕ ਇੰਪੋਰਟ/ਐਕਸਪੋਰਟ"
+
+#~ msgid ""
+#~ "Failed to save photo: %1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "ਫੋਟੋ ਵਿੱਚ ਲੋਡ ਕਰਨ ਲਈ ਫੇਲ੍ਹ: %1\n"
+#~ "ਕੀ ਤੁਸੀਂ ਜਾਰੀ ਰੱਖਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
+
+#, fuzzy
+#~| msgid ""
+#~| "Failed to upload photo into Facebook: %1\n"
+#~| "Do you want to continue?"
+#~ msgid ""
+#~ "Failed to download photo: %1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "ਫੋਟੋ ਫੇਸਬੁੱਕ ਵਿੱਚ ਲੋਡ ਕਰਨ ਲਈ ਫੇਲ੍ਹ: %1\n"
+#~ "ਕੀ ਤੁਸੀਂ ਜਾਰੀ ਰੱਖਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
+
+#~ msgid "Import from &Facebook..."
+#~ msgstr "ਫੇਸਬੁੱਕ ਤੋਂ ਇੰਪੋਰਟ ਕਰੋ(&F).."
+
+#~ msgid "Photos taken with KDE"
+#~ msgstr "KDE ਲਈ ਲਈਆਂ ਫੋਟੋ"
+
+#~ msgid "Handbook"
+#~ msgstr "ਹੈੱਡਬੁੱਕ"
+
+#~ msgid "Logging in to Facebook service..."
+#~ msgstr "...ਫੇਸਬੁੱਕ ਸਰਵਿਸ ਲਈ ਲਾਗਇਨ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
+
+#~ msgid "Facebook Service Web Authorization"
+#~ msgstr "ਫੇਸਬੁੱਕ ਸਰਵਿਸ ਵੈੱਬ ਪਰਮਾਣਕਿਤਾ"
+
+#, fuzzy
+#~| msgid "Description:"
+#~ msgid "Authentication"
+#~ msgstr "ਵੇਰਵਾ:"
+
+#, fuzzy
+#~| msgid "Uploading file %1"
+#~ msgid "Downloading file %1"
+#~ msgstr "ਫਾਇਲ %1 ਅੱਪਲੋਡ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ"
+
+#~ msgid "<none>"
+#~ msgstr "<ਕੋਈ ਨਹੀਂ>"
+
+#~ msgid "Login failed"
+#~ msgstr "ਲਾਗਇਨ ਫੇਲ੍ਹ ਹੈ"

@@ -1,0 +1,175 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Franklin Weng <franklin at goodhorse dot idv dot tw>, 2013.
+# pan93412 <pan93412@gmail.com>, 2018.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2018-12-02 16:53+0800\n"
+"Last-Translator: pan93412 <pan93412@gmail.com>\n"
+"Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: imgurapi3.cpp:132
+#, kde-format
+msgid "Could not authorize"
+msgstr "無法授權"
+
+#: imgurapi3.cpp:309
+#, kde-format
+msgid "Could not open file"
+msgstr "無法開啟檔案"
+
+#: imgurimageslist.cpp:59
+#, kde-format
+msgid "Thumbnail"
+msgstr "縮圖"
+
+#: imgurimageslist.cpp:62
+#, kde-format
+msgid "Submission title"
+msgstr "提交標題"
+
+#: imgurimageslist.cpp:65
+#, kde-format
+msgid "Submission description"
+msgstr "提交描述"
+
+#: imgurimageslist.cpp:68
+#, kde-format
+msgid "Imgur URL"
+msgstr "Imgur 網址"
+
+#: imgurimageslist.cpp:71
+#, kde-format
+msgid "Imgur Delete URL"
+msgstr "Imgur 刪除網址"
+
+#: imgurwindow.cpp:82
+#, kde-format
+msgid "Logged in as:"
+msgstr "已登入為："
+
+#: imgurwindow.cpp:90
+#, kde-format
+msgid "Forget"
+msgstr "遺忘"
+
+#: imgurwindow.cpp:100
+#, kde-format
+msgid "Upload Anonymously"
+msgstr "匿名上傳"
+
+#: imgurwindow.cpp:116
+#, kde-format
+msgid "Export to imgur.com"
+msgstr "匯出到 imgur.com"
+
+#: imgurwindow.cpp:119
+#, kde-format
+msgid "Upload"
+msgstr "上傳"
+
+#: imgurwindow.cpp:120
+#, kde-format
+msgid "Start upload to Imgur"
+msgstr "開始上傳到 Imgur"
+
+#: imgurwindow.cpp:125
+#, kde-format
+msgid "Imgur Export"
+msgstr "Imgur 匯出"
+
+#: imgurwindow.cpp:126
+#, kde-format
+msgid "A tool to export images to Imgur web service"
+msgstr "將影像匯出到 Imgur 網頁服務的工具"
+
+#: imgurwindow.cpp:127
+#, kde-format
+msgid "(c) 2012-2013, Marius Orcsik"
+msgstr "(c) 2012-2013, Marius Orcsik"
+
+#: imgurwindow.cpp:129
+#, kde-format
+msgid "Marius Orcsik"
+msgstr "Marius Orcsik"
+
+#: imgurwindow.cpp:130
+#, kde-format
+msgid "Author"
+msgstr "作者"
+
+#: imgurwindow.cpp:133
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: imgurwindow.cpp:134 imgurwindow.cpp:138
+#, kde-format
+msgid "Developer"
+msgstr "開發者"
+
+#: imgurwindow.cpp:137
+#, kde-format
+msgid "Fabian Vogt"
+msgstr "Fabian Vogt"
+
+#: imgurwindow.cpp:220
+#, kde-format
+msgid "<Not logged in>"
+msgstr "<未登入>"
+
+#: imgurwindow.cpp:227
+#, kde-format
+msgid "Authorization Failed"
+msgstr "授權失敗"
+
+#: imgurwindow.cpp:228
+#, kde-format
+msgid "Failed to log into Imgur: %1\n"
+msgstr "無法記錄到 Imgur：%1\n"
+
+#: imgurwindow.cpp:254 imgurwindow.cpp:261
+#, kde-format
+msgid "Uploading Failed"
+msgstr "上傳失敗"
+
+#: imgurwindow.cpp:255
+#, kde-format
+msgid "Failed to upload photo to Imgur: %1\n"
+msgstr "上傳影像到 Imgur 失敗：%1\n"
+
+#: imgurwindow.cpp:262
+#, kde-format
+msgid ""
+"Failed to upload photo to Imgur: %1\n"
+"Do you want to continue?"
+msgstr ""
+"上傳影像到 Imgur 失敗：%1\n"
+"您要繼續嗎？"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_imgurui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "匯出(&E)"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_imgurui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "主工具列"
+
+#: plugin_imgur.cpp:102
+#, kde-format
+msgid "Export to &Imgur..."
+msgstr "匯出到 Imgur(&I)..."

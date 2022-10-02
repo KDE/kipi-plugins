@@ -1,0 +1,337 @@
+# Irish translation of kipiplugin_facebook
+# Copyright (C) 2009 This_file_is_part_of_KDE
+# This file is distributed under the same license as the kipiplugin_facebook package.
+# Kevin Scannell <kscanne@gmail.com>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: extragear-graphics/kipiplugin_fbexport.po\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2009-01-20 10:11-0500\n"
+"Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
+"Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
+"Language: ga\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n < 11 ? "
+"3 : 4\n"
+
+#: fbalbum.cpp:52
+#, kde-format
+msgid "Privacy setting of the album that will be created (required)."
+msgstr ""
+
+#: fbalbum.cpp:54
+#, kde-format
+msgid "Only Me"
+msgstr ""
+
+#: fbalbum.cpp:56
+#, kde-format
+msgid "Only Friends"
+msgstr ""
+
+#: fbalbum.cpp:58
+#, kde-format
+msgid "Friends of Friends"
+msgstr ""
+
+#: fbalbum.cpp:60
+#, kde-format
+msgid "My Networks and Friends"
+msgstr ""
+
+#: fbalbum.cpp:62
+#, kde-format
+msgid "Everyone"
+msgstr ""
+
+#: fbtalker.cpp:201
+#, kde-format
+msgid "Validate previous session..."
+msgstr ""
+
+#: fbtalker.cpp:229
+#, kde-format
+msgid "Upgrading to OAuth..."
+msgstr ""
+
+#: fbtalker.cpp:279
+#, kde-format
+msgid "Facebook Application Authorization"
+msgstr ""
+
+#: fbtalker.cpp:290
+#, kde-format
+msgid ""
+"Please follow the instructions in the browser window. When done, copy the "
+"Internet address from your browser into the textbox below and press \"OK\"."
+msgstr ""
+
+#: fbtalker.cpp:352
+#, kde-format
+msgid "Canceled by user."
+msgstr "Cealaithe ag an úsáideoir."
+
+#: fbtalker.cpp:549
+#, kde-format
+msgid "The service is not available at this time."
+msgstr "Níl an tseirbhís ar fáil faoi láthair."
+
+#: fbtalker.cpp:552
+#, kde-format
+msgid "The application has reached the maximum number of requests allowed."
+msgstr ""
+
+#: fbtalker.cpp:555
+#, kde-format
+msgid "Invalid session key or session expired. Try to log in again."
+msgstr ""
+
+#: fbtalker.cpp:558
+#, kde-format
+msgid "Invalid album ID."
+msgstr ""
+
+#: fbtalker.cpp:561
+#, kde-format
+msgid "Album is full."
+msgstr ""
+
+#: fbtalker.cpp:564
+#, kde-format
+msgid "Missing or invalid file."
+msgstr ""
+
+#: fbtalker.cpp:567
+#, kde-format
+msgid "Too many unapproved photos pending."
+msgstr ""
+
+#: fbtalker.cpp:601
+#, kde-format
+msgid "Error"
+msgstr ""
+
+#: fbwindow.cpp:109
+#, kde-format
+msgid "Export to Facebook Web Service"
+msgstr ""
+
+#: fbwindow.cpp:111
+#, kde-format
+msgid "Start Upload"
+msgstr "Tosaigh an tUasluchtú"
+
+#: fbwindow.cpp:112
+#, kde-format
+msgid "Start upload to Facebook web service"
+msgstr ""
+
+#: fbwindow.cpp:140
+#, kde-format
+msgid "Facebook Export"
+msgstr ""
+
+#: fbwindow.cpp:141
+#, kde-format
+msgid "A tool to export image collection to/from Facebook web service."
+msgstr ""
+
+#: fbwindow.cpp:143
+#, fuzzy, kde-format
+#| msgid ""
+#| "(c) 2005-2008, Vardhman Jain\n"
+#| "(c) 2008-2012, Gilles Caulier\n"
+#| "(c) 2008-2009, Luka Renko"
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2012, Gilles Caulier\n"
+"(c) 2008-2009, Luka Renko"
+msgstr ""
+"© 2005-2008, Vardhman Jain\n"
+"© 2008-2012, Gilles Caulier\n"
+"© 2008-2009, Luka Renko"
+
+#: fbwindow.cpp:147
+#, kde-format
+msgid "Luka Renko"
+msgstr "Luka Renko"
+
+#: fbwindow.cpp:148
+#, kde-format
+msgid "Author and maintainer"
+msgstr "Údar agus cothaitheoir"
+
+#: fbwindow.cpp:361 fbwindow.cpp:395
+#, fuzzy, kde-format
+#| msgid "&lt;auto create&gt;"
+msgid "<auto create>"
+msgstr "&lt;uathchruthaigh&gt;"
+
+#: fbwindow.cpp:372 fbwindow.cpp:390
+#, kde-format
+msgid "Facebook Call Failed: %1\n"
+msgstr ""
+
+#: fbwindow.cpp:471
+#, kde-format
+msgid "Warning"
+msgstr ""
+
+#: fbwindow.cpp:472
+#, kde-format
+msgid ""
+"After you have been logged out in the browser, click \"Continue\" to "
+"authenticate for another account"
+msgstr ""
+
+#: fbwindow.cpp:476
+#, kde-format
+msgid "Continue"
+msgstr ""
+
+#: fbwindow.cpp:477
+#, kde-format
+msgid "Cancel"
+msgstr ""
+
+#: fbwindow.cpp:539
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: fbwindow.cpp:543
+#, kde-format
+msgid "Facebook export"
+msgstr ""
+
+#: fbwindow.cpp:648 fbwindow.cpp:663
+#, kde-format
+msgid "Cannot open file"
+msgstr "Ní féidir an comhad a oscailt"
+
+#: fbwindow.cpp:686
+#, fuzzy, kde-format
+#| msgid "Uploading file %1"
+msgid "Uploading Failed"
+msgstr "Comhad %1 á uasluchtú"
+
+#: fbwindow.cpp:687
+#, kde-format
+msgid ""
+"Failed to upload photo into Facebook: %1\n"
+"Do you want to continue?"
+msgstr ""
+
+#: fbwindow.cpp:706
+#, kde-format
+msgid "Facebook Call Failed: %1"
+msgstr ""
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_facebookui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Easpórtáil"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_facebookui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Príomhbharra Uirlisí"
+
+#: plugin_facebook.cpp:94
+#, kde-format
+msgid "Export to &Facebook..."
+msgstr "Easpórtáil go &Facebook..."
+
+#~ msgid "&Import"
+#~ msgstr "&Iompórtáil"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Kevin Scannell"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "kscanne@gmail.com"
+
+#~ msgctxt "new facebook album"
+#~ msgid "Title:"
+#~ msgstr "Teideal:"
+
+#~ msgctxt "new facebook album"
+#~ msgid "Location:"
+#~ msgstr "Suíomh:"
+
+#~ msgctxt "new facebook album"
+#~ msgid "Description:"
+#~ msgstr "Cur Síos:"
+
+#~ msgid "Account"
+#~ msgstr "Cuntas"
+
+#~ msgctxt "facebook account settings"
+#~ msgid "Name:"
+#~ msgstr "Ainm:"
+
+#~ msgid "Permission:"
+#~ msgstr "Cead:"
+
+#~ msgid "Change Account"
+#~ msgstr "Athraigh an Cuntas"
+
+#~ msgid "Destination"
+#~ msgstr "Sprioc"
+
+#~ msgid ""
+#~ "This is the Facebook album to which selected photos will be uploaded."
+#~ msgstr ""
+#~ "Seo é an t-albam Facebook a n-uasluchtófar na grianghraif roghnaithe "
+#~ "chuige."
+
+#~ msgid "My &Album"
+#~ msgstr "M'&Albam"
+
+#~ msgid "Friend:"
+#~ msgstr "Cara:"
+
+#~ msgid "Album:"
+#~ msgstr "Albam:"
+
+#~ msgid "New Album"
+#~ msgstr "Albam Nua"
+
+#~ msgctxt "facebook album list"
+#~ msgid "Reload"
+#~ msgstr "Athluchtaigh"
+
+#~ msgid "This is the location to which Facebook images will be downloaded."
+#~ msgstr "Seo é an suíomh a n-íosluchtófar grianghraif Facebook chuige."
+
+#~ msgid "Options"
+#~ msgstr "Roghanna"
+
+#~ msgid "JPEG quality:"
+#~ msgstr "Cáilíocht JPEG:"
+
+#~ msgctxt "name of special Facebook album for profile pictures"
+#~ msgid "Profile Pictures"
+#~ msgstr "Grianghraif Phróifíle"
+
+#~ msgid "Import from &Facebook..."
+#~ msgstr "Iompórtáil ó &Facebook..."
+
+#~ msgid "Handbook"
+#~ msgstr "Lámhleabhar"
+
+#~ msgid "Authentication"
+#~ msgstr "Fíordheimhniú"
+
+#~ msgid "Transfer Progress"
+#~ msgstr "Dul chun cinn an aistrithe"
+
+#~ msgid "Downloading file %1"
+#~ msgstr "Comhad %1 á íosluchtú"

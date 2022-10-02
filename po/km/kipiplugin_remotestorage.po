@@ -1,0 +1,205 @@
+# translation of kipiplugin_kioexportimport.po to Khmer
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2010.
+#  Seng Sutha <Sutha@khmeros.info>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_kioexportimport\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2010-11-16 21:06+0700\n"
+"Last-Translator: Seng Sutha <Sutha@khmeros.info>\n"
+"Language-Team: Khmer [km] <Support@khmeros.info>\n"
+"Language: km\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: WordForge 0.8 beta1\n"
+"X-Language: km-KH\n"
+
+#: KioExportWidget.cpp:61
+#, kde-format
+msgid "Target location: "
+msgstr "ទីតាំង​គោលដៅ​ ៖​​"
+
+#: KioExportWidget.cpp:62
+#, kde-format
+msgid ""
+"Sets the target address to upload the images to. This can be any address as "
+"used in Dolphin or Konqueror, e.g. ftp://my.server.org/sub/folder."
+msgstr ""
+"កំណត់​អាសយដ្ឋាន​គោលដៅ​​ត្រូវ​ផ្ទុក​រូបភាព​ទៅកាន់​ ។​ វា​អាច​ប្រើ​​អាសយដ្ឋាន​មួយ​ចំនួន​ដូច​ជា​ Dolphin ឬ "
+"Konqueror ឧ.ទា. ftp://my.server.org/sub/folder ។"
+
+#: KioExportWidget.cpp:66
+#, kde-format
+msgid "Select target location..."
+msgstr "ជ្រើស​ទីតាំង​គោលដៅ​​...​"
+
+#: KioExportWidget.cpp:72
+#, kde-format
+msgid "This is the list of images to upload to the specified target."
+msgstr "វា​ជា​បញ្ជី​រូបភាព​ត្រូវ​ផ្ទុក​ទៅកាន់​គោលដៅ​ដែល​បាន​បញ្ជាក់​ ។​​"
+
+#: KioExportWidget.cpp:134
+#, kde-format
+msgid "Select target..."
+msgstr "ជ្រើស​គោល​ដៅ​​...​"
+
+#: KioExportWidget.cpp:135
+#, kde-format
+msgid "All Files (*)"
+msgstr ""
+
+#: KioExportWidget.cpp:155
+#, fuzzy, kde-format
+#| msgid "not selected"
+msgid "<not selected>"
+msgstr "មិន​បាន​ជ្រើស​"
+
+#: KioExportWindow.cpp:64
+#, fuzzy, kde-format
+#| msgid "Export to Remote Computer"
+msgid "Export to Remote Storage"
+msgstr "នាំចេញ​​ទៅកាន់​កុំព្យូទ័រ​ពី​ចម្ងាយ​​"
+
+#: KioExportWindow.cpp:67
+#, kde-format
+msgid "Start export"
+msgstr "ចាប់ផ្ដើម​នាំចេញ"
+
+#: KioExportWindow.cpp:68
+#, kde-format
+msgid "Start export to the specified target"
+msgstr "ចាប់ផ្ដើម​នាំចេញ​ទៅកាន់​គោលដៅ​ដែល​បាន​បញ្ជាក់​"
+
+#: KioExportWindow.cpp:84
+#, fuzzy, kde-format
+#| msgid "Export to remote computer"
+msgid "Export to remote storage"
+msgstr "នាំចេញ​ទៅកាន់​កុំព្យូទ័រ​ពី​ចម្ងាយ​​"
+
+#: KioExportWindow.cpp:85
+#, fuzzy, kde-format
+#| msgid "A Kipi plugin to export images over network using KIO-Slave"
+msgid "A tool to export images over network using KIO-Slave"
+msgstr "កម្មវិធី​ជំនួយ​ Kipi សម្រាប់​នាំ​ចេញ​រូបភាព​តាម​បណ្ដាញ​ដោយ​ប្រើ​ KIO-Slave"
+
+#: KioExportWindow.cpp:86 KioImportWindow.cpp:83
+#, kde-format
+msgid "(c) 2009, Johannes Wienke"
+msgstr "រក្សាសិទ្ធិ​ឆ្នាំ​ ២០០៩ ​ដោយ Johannes Wienke"
+
+#: KioExportWindow.cpp:88 KioImportWindow.cpp:85
+#, kde-format
+msgid "Johannes Wienke"
+msgstr "Johannes Wienke"
+
+#: KioExportWindow.cpp:89 KioImportWindow.cpp:86
+#, kde-format
+msgid "Developer and maintainer"
+msgstr "អ្នក​អភិវឌ្ឍន៍​ និង​អ្នក​ថែទាំ​"
+
+#: KioExportWindow.cpp:198
+#, kde-format
+msgid "Upload not completed"
+msgstr "ផ្ទុក​មិន​ពេញ​លេញ​​"
+
+#: KioExportWindow.cpp:199
+#, kde-format
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to export these images now."
+msgstr ""
+"រូបភាព​មួយ​ចំនួន​មិន​ត្រូវ​បាន​​ផ្ទេរ​ឡើយ​​​ ហើយ​នៅតែ​មាន​ក្នុង​បញ្ជី​ ។ ឥឡូវ​ អ្នក​អាច​ព្យាយាម​ម្ដងទៀត​ ដើម្បី​នាំ​"
+"រូបភាព​ទាំងនេះ​ចេញ​ ។"
+
+#: KioImportWidget.cpp:52
+#, kde-format
+msgid "This is the list of images to import into the current album."
+msgstr "នេះ​ជា​បញ្ជី​រូបភាព​ត្រូវ​នាំចូល​ទៅ​ក្នុង​អាល់ប៊ុម​បច្ចុប្បន្ន​ ។ ​"
+
+#: KioImportWindow.cpp:60
+#, fuzzy, kde-format
+#| msgid "Import from Remote Computer"
+msgid "Import from Remote Storage"
+msgstr "នាំចូល​ពី​កុំព្យូទ័រ​ពី​ចម្ងាយ​​"
+
+#: KioImportWindow.cpp:64
+#, kde-format
+msgid "Start import"
+msgstr "ចាប់ផ្ដើម​នាំចូល​"
+
+#: KioImportWindow.cpp:65
+#, kde-format
+msgid "Start importing the specified images into the currently selected album."
+msgstr "ចាប់ផ្ដើម​នាំចូល​រូបភាព​ដែល​បាន​បញ្ជាក់​ក្នុង​អាល់ប៊ុម​ដែល​បាន​ជ្រើស​បច្ចុប្បន្ន​ ។​​"
+
+#: KioImportWindow.cpp:81
+#, fuzzy, kde-format
+#| msgid "Import from remote computer"
+msgid "Import from remote storage"
+msgstr "នាំចូល​ពី​កុំព្យូទ័រ​ពី​ចម្ងាយ​​"
+
+#: KioImportWindow.cpp:82
+#, fuzzy, kde-format
+#| msgid "A Kipi plugin to import images over network using KIO-Slave"
+msgid "A tool to import images over network"
+msgstr "កម្មវិធី​ជំនួយ Kipi សម្រាប់​នាំ​ចូល​រូបភាព​តាម​បណ្ដាញ​ដោយ​ប្រើ​ KIO-Slave"
+
+#: KioImportWindow.cpp:137
+#, kde-format
+msgid "Import not completed"
+msgstr "នាំចូល​​មិន​ពេញ​លេញ​​"
+
+#: KioImportWindow.cpp:138
+#, kde-format
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to import these images now."
+msgstr ""
+"រូបភាព​មួយ​ចំនួន​​មិន​ត្រូវ​បាន​ផ្ទេរ​ឡើយ​ ហើយ​នៅតែ​មាន​ក្នុង​បញ្ជី​ ។ ឥឡូវ​ អ្នក​អាច​ព្យាយាម​ម្ដងទៀត​ ដើម្បី​នាំចូល​"
+"រូបភាព​ទាំងនេះ​ ។"
+
+#. i18n: ectx: Menu (Import)
+#: kipiplugin_remotestorageui.rc:7
+#, kde-format
+msgid "&Import"
+msgstr ""
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_remotestorageui.rc:11
+#, kde-format
+msgid "&Export"
+msgstr ""
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_remotestorageui.rc:17
+#, kde-format
+msgid "Main Toolbar"
+msgstr ""
+
+#: plugin_remotestorage.cpp:93
+#, fuzzy, kde-format
+#| msgid "Export to remote computer..."
+msgid "Export to remote storage..."
+msgstr "នាំចេញ​ទៅកាន់​កុំព្យូទ័រ​ពី​ចម្ងាយ​...​"
+
+#: plugin_remotestorage.cpp:105
+#, fuzzy, kde-format
+#| msgid "Import from remote computer..."
+msgid "Import from remote storage..."
+msgstr "នាំចូល​ពី​កុំព្យូទ័រ​ពី​ចម្ងាយ​...​"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "ខឹម សុខែម, ម៉ន ម៉េត, សេង សុត្ថា"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "khoemsokhem@khmeros.info,​​mornmet@khmeros.info,sutha@khmeros.info"
+
+#~ msgid "Handbook"
+#~ msgstr "សៀវភៅ​ដៃ​"

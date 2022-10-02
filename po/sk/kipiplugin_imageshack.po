@@ -1,0 +1,299 @@
+# translation of kipiplugin_imageshackexport.po to Slovak
+# Roman Paholik <wizzardsk@gmail.com>, 2013, 2014, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_imageshackexport\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2016-08-26 21:33+0100\n"
+"Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
+"Language-Team: Slovak <kde-sk@linux.sk>\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 2.0\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: imageshacktalker.cpp:173
+#, kde-format
+msgid "Authenticating the user"
+msgstr "Overovanie používateľa"
+
+#: imageshacktalker.cpp:199
+#, kde-format
+msgid "Getting galleries from server"
+msgstr "Získavam galérie zo servera"
+
+#: imageshacktalker.cpp:289
+#, kde-format
+msgid "Successfully retrieved galleries"
+msgstr "Úspešne obnovené galérie"
+
+#: imageshackwidget.cpp:82
+#, kde-format
+msgid "Make private"
+msgstr "Urobiť súkromné"
+
+#: imageshackwidget.cpp:86
+#, kde-format
+msgid "Tags (optional):"
+msgstr "Značky (voliteľné):"
+
+#: imageshackwidget.cpp:88
+#, kde-format
+msgid "Remove information bar on thumbnails"
+msgstr "Odstrániť informačný panel na miniatúrach"
+
+#: imageshackwidget.cpp:125
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Add to root folder"
+msgstr "Pridať do koreňového adresára"
+
+#: imageshackwidget.cpp:128
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Create new gallery"
+msgstr "Vytvoriť novú galériu"
+
+#: imageshackwindow.cpp:81
+#, kde-format
+msgid "Export to Imageshack"
+msgstr "Exportovať do Imageshack"
+
+#: imageshackwindow.cpp:89
+#, kde-format
+msgid "Upload"
+msgstr "Odoslať"
+
+#: imageshackwindow.cpp:90
+#, kde-format
+msgid "Start upload to Imageshack web service"
+msgstr "Spustiť nahrávanie na webovú službu Imageshack"
+
+#: imageshackwindow.cpp:98
+#, kde-format
+msgid "Imageshack Export"
+msgstr "Imageshack Export"
+
+#: imageshackwindow.cpp:99
+#, kde-format
+msgid "A tool to export images to Imageshack web service."
+msgstr "Nástroj na export obrázkov na webovú službu Imageshack."
+
+#: imageshackwindow.cpp:100
+#, kde-format
+msgid "(c) 2012, Dodon Victor\n"
+msgstr "(c) 2012, Dodon Victor\n"
+
+#: imageshackwindow.cpp:102
+#, kde-format
+msgid "Dodon Victor"
+msgstr "Dodon Victor"
+
+#: imageshackwindow.cpp:103
+#, kde-format
+msgid "Author"
+msgstr "Autor"
+
+#: imageshackwindow.cpp:230
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: imageshackwindow.cpp:234
+#, kde-format
+msgid "Image Shack Export"
+msgstr "Image Shack Export"
+
+#: imageshackwindow.cpp:261
+#, kde-format
+msgid "Authenticating..."
+msgstr "Overovanie..."
+
+#: imageshackwindow.cpp:318
+#, kde-format
+msgid "Login failed: %1\n"
+msgstr "Prihlásenie zlyhalo: %1\n"
+
+#: imageshackwindow.cpp:332
+#, kde-format
+msgid "Failed to get galleries list: %1\n"
+msgstr "Zlyhalo získanie zoznamu galérií: %1\n"
+
+#: imageshackwindow.cpp:404
+#, kde-format
+msgid "Uploading Failed"
+msgstr "Odoslanie zlyhalo"
+
+#: imageshackwindow.cpp:405
+#, kde-format
+msgid ""
+"Failed to upload photo into Imageshack: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Zlyhalo nahrávanie fotky na Imageshack: %1\n"
+"Chcete pokračovať?"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_imageshackui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Exportovať"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_imageshackui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Hlavný panel nástrojov"
+
+#: plugin_imageshack.cpp:103
+#, kde-format
+msgid "Export to &Imageshack..."
+msgstr "Export Do &Imageshack..."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Roman Paholík"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "wizzardsk@gmail.com"
+
+#~ msgid "Checking the registration code"
+#~ msgstr "Kontrolujem registračný kód"
+
+#~ msgid "Checking the web server"
+#~ msgstr "Kontrolujem webový server"
+
+#~ msgid "Server does not respond. Please check you internet connection!"
+#~ msgstr "Server neodpovedá. Prosím skontrolujte internetové pripojenie!"
+
+#~ msgid "Registration code successfully verified"
+#~ msgstr "Registračný kód úspešne overený"
+
+#~ msgid "Registration code not valid!"
+#~ msgstr "Registračný kód neplatný!"
+
+#~ msgid "Images to upload to Imageshack web service"
+#~ msgstr "Obrázky na nahranie na webovú službu Imageshack"
+
+#~ msgid ""
+#~ "This is a clickable link to open the Imageshack home page in a web browser"
+#~ msgstr ""
+#~ "Toto je klikateľný odkaz na otvorenie domovskej stránky Imageshack vo "
+#~ "webovom prehliadači"
+
+#~ msgid "ImageShack"
+#~ msgstr "ImageShack"
+
+#~ msgid "Account"
+#~ msgstr "Účet"
+
+#~ msgid "Imageshack account info"
+#~ msgstr "Informácie o účte Imageshack"
+
+#~ msgctxt "Account info"
+#~ msgid "Name:"
+#~ msgstr "Názov:"
+
+#~ msgctxt "Account info"
+#~ msgid "Email:"
+#~ msgstr "E-mail:"
+
+#~ msgid "Change account"
+#~ msgstr "Zmeniť účet"
+
+#~ msgid ""
+#~ "Change the registration code for the Imageshack account used to upload "
+#~ "images"
+#~ msgstr ""
+#~ "Zmeniť registračný kód pre účet Imageshack použitý na nahranie obrázkov"
+
+#~ msgid "Destination"
+#~ msgstr "Cieľ"
+
+#~ msgid ""
+#~ "This is the ImageShack gallery to which selected items will be uploaded"
+#~ msgstr "Toto je galéria Imageshack, do ktorej sa nahrajú vybrané položky"
+
+#~ msgid "Upload to galleries"
+#~ msgstr "Nahrať do galérií"
+
+#~ msgid "Gallery:"
+#~ msgstr "Galéria:"
+
+#~ msgid "Name:"
+#~ msgstr "Názov:"
+
+#~ msgctxt "ImageShack galleries list"
+#~ msgid "Reload"
+#~ msgstr "Znovu načítať"
+
+#~ msgid "Reload ImageShack galleries list"
+#~ msgstr "Obnoviť zoznam galérií Imageshack"
+
+#~ msgid "Options"
+#~ msgstr "Voľby"
+
+#~ msgid "These are the options that will be applied to photos"
+#~ msgstr "Toto sú voľby, ktoré sa použijú na fotky"
+
+#~ msgid "Resize options"
+#~ msgstr "Voľby zmeny veľkosti"
+
+#~ msgid "Do not resize photos"
+#~ msgstr "Nemeniť veľkosť fotografií"
+
+#~ msgid "Predefined templates"
+#~ msgstr "Preddefinované šablóny"
+
+#~ msgid "Custom resize dimensions"
+#~ msgstr "Vlastné rozmery zmeny veľkosti"
+
+#~ msgid "Width:"
+#~ msgstr "Šírka:"
+
+#~ msgid "Height:"
+#~ msgstr "Výška:"
+
+#~ msgid "100x75 (avatar)"
+#~ msgstr "100x75 (avatar)"
+
+#~ msgid "150x122 (thumbnail)"
+#~ msgstr "150x122 (miniatúra)"
+
+#~ msgid "320x240 (for websites and email)"
+#~ msgstr "320x240 (pre webové stránky a e-mail)"
+
+#~ msgid "640x480 (for message boards)"
+#~ msgstr "640x480 (pre diskusné skupiny)"
+
+#~ msgid "800x600 (15-inch monitor)"
+#~ msgstr "800x600 (15 palcový monitor)"
+
+#~ msgid "1024x768 (17-inch monitor)"
+#~ msgstr "1024x768 (17 palcový monitor)"
+
+#~ msgid "1280x1024 (19-inch monitor)"
+#~ msgstr "1280x1024 (19 palcový monitor)"
+
+#~ msgid "1600x1200 (21-inch monitor)"
+#~ msgstr "1600x1200 (21 palcový monitor)"
+
+#~ msgid "optimize without resizing"
+#~ msgstr "optimalizovať bez zmeny veľkosti"
+
+#~ msgid "Create new gallery."
+#~ msgstr "Vytvoriť novú galériu."
+
+#~ msgid "Imageshack authorization"
+#~ msgstr "Overenie Imageshack"
+
+#~ msgid ""
+#~ "Please paste the registration code for your ImageShack account into the "
+#~ "textbox below and press \"OK\"."
+#~ msgstr ""
+#~ "Prosím vložte registračný kód pre váš účet Imageshack do textového poľa a "
+#~ "stlačte \"OK\"."

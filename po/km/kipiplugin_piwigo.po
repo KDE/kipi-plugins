@@ -1,0 +1,362 @@
+# translation of kipiplugin_piwigoexport.po to Khmer
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2010, 2011.
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Sophea <sophea@khmeros.info>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_piwigoexport\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2012-06-25 12:02+0700\n"
+"Last-Translator: Sophea <sophea@khmeros.info>\n"
+"Language-Team: Khmer <>\n"
+"Language: km\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: WordForge 0.8 RC1\n"
+"X-Language: km-CM\n"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_piwigoui.rc:7
+#, fuzzy, kde-format
+#| msgid "Piwigo Export"
+msgid "&Export"
+msgstr "ការ​នាំចេញ Piwigo​"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_piwigoui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr ""
+
+#: piwigoconfig.cpp:76
+#, kde-format
+msgctxt "piwigo login settings"
+msgid "URL:"
+msgstr "URL:"
+
+#: piwigoconfig.cpp:80
+#, kde-format
+msgctxt "piwigo login settings"
+msgid "Username:"
+msgstr "ឈ្មោះ​អ្នកប្រើ ៖"
+
+#: piwigoconfig.cpp:84
+#, kde-format
+msgctxt "piwigo login settings"
+msgid "Password:"
+msgstr "ពាក្យសម្ងាត់ ៖"
+
+#: piwigotalker.cpp:305
+#, kde-format
+msgid "Check if %1 already exists"
+msgstr "ធីក​បើ​ %1 មាន​រួច​ហើយ"
+
+#: piwigotalker.cpp:346
+#, kde-format
+msgid "Error"
+msgstr ""
+
+#: piwigotalker.cpp:440
+#, kde-format
+msgid "Piwigo URL probably incorrect"
+msgstr "ប្រហែល​ជា​ Piwigo URL ​មិន​ត្រឹមត្រូវ​​"
+
+#: piwigotalker.cpp:446
+#, kde-format
+msgid "Incorrect username or password specified"
+msgstr "បាន​បញ្ជាក់​ពាក្យ​សម្ងាត់​ ឬ​ឈ្មោះ​អ្នក​ប្រើ​មិន​ត្រឹមត្រូវ​"
+
+#: piwigotalker.cpp:489 piwigotalker.cpp:663
+#, kde-format
+msgid "Upload to Piwigo version < 2.4 is no longer supported"
+msgstr ""
+
+#: piwigotalker.cpp:561 piwigotalker.cpp:639 piwigotalker.cpp:708
+#: piwigotalker.cpp:779
+#, kde-format
+msgid "Invalid response received from remote Piwigo"
+msgstr "បាន​ទទួល​ចម្លើយ​តប​មិន​ត្រឹមត្រូវ​ពី​ Piwigo ពី​ចម្ងាយ​"
+
+#: piwigotalker.cpp:567
+#, kde-format
+msgid "Failed to list albums"
+msgstr "បាន​បរាជ័យ​រាយ​បញ្ជី​អាល់ប៊ុម​"
+
+#: piwigotalker.cpp:613
+#, kde-format
+msgid "Photo '%1' already exists."
+msgstr "រូបថត​ %1 មាន​រួច​ហើយ ។"
+
+#: piwigotalker.cpp:645 piwigotalker.cpp:785 piwigotalker.cpp:945
+#, kde-format
+msgid "Failed to upload photo"
+msgstr "បាន​បរាជ័យ​ដើម្បី​ផ្ទុក​រូបថត​"
+
+#: piwigotalker.cpp:714
+#, kde-format
+msgid "Photo '%1' already exists in this album."
+msgstr "រូបថត​ %1 មាន​រួច​ហើយ​នៅ​ក្នុង​អាល់ប៊ុម​នេះ ។"
+
+#: piwigotalker.cpp:800
+#, kde-format
+msgid "Error : Cannot open photo: %1"
+msgstr ""
+
+#: piwigotalker.cpp:827
+#, fuzzy, kde-format
+#| msgid "Upload the chunk %1 of %2"
+msgid "Upload the chunk %1/%2 of %3"
+msgstr "ផ្ទុក​សង្ខេប​មេរៀន​ %1 នៃ %2"
+
+#: piwigotalker.cpp:860
+#, kde-format
+msgid "Warning : The full size photo cannot be uploaded."
+msgstr "ការ​ព្រមាន ៖ រូបថត​ទំហំ​ពេញ​មិន​ត្រូវ​បាន​ផ្ទុក​ឡើយ ។​"
+
+#: piwigotalker.cpp:906
+#, kde-format
+msgid "Upload the metadata of %1"
+msgstr "ផ្ទុក​ទិន្នន័យ​មេតា​នៃ %1"
+
+#: piwigotalker.cpp:939
+#, fuzzy, kde-format
+#| msgid "Invalid response received from remote Piwigo"
+msgid "Invalid response received from remote Piwigo (%1)"
+msgstr "បាន​ទទួល​ចម្លើយ​តប​មិន​ត្រឹមត្រូវ​ពី​ Piwigo ពី​ចម្ងាយ​"
+
+#: piwigowindow.cpp:128
+#, fuzzy, kde-format
+#| msgid "Edit Piwigo Data"
+msgid "Visit Piwigo website"
+msgstr "កែសម្រួល​ទិន្នន័យ​ Piwigo​"
+
+#: piwigowindow.cpp:145
+#, kde-format
+msgid "Albums"
+msgstr "អាល់ប៊ុម​"
+
+#: piwigowindow.cpp:156
+#, kde-format
+msgid "Change Account"
+msgstr "ផ្លាស់ប្ដូរ​គណនី"
+
+#: piwigowindow.cpp:160
+#, kde-format
+msgid "Options"
+msgstr "ជម្រើស"
+
+#: piwigowindow.cpp:164
+#, kde-format
+msgid "Resize photos before uploading"
+msgstr "ប្ដូរ​ទំហំ​រូបថត​មុន​ពេល​ផ្ទុក​ឡើង"
+
+#: piwigowindow.cpp:167
+#, kde-format
+msgid "Maximum width:"
+msgstr "ទទឹង​អតិបរមា ៖"
+
+#: piwigowindow.cpp:173
+#, kde-format
+msgid "Maximum height:"
+msgstr "កម្ពស់​អតិបរមា ៖"
+
+#: piwigowindow.cpp:179
+#, kde-format
+msgid "Resized JPEG quality:"
+msgstr ""
+
+#: piwigowindow.cpp:231 piwigowindow.cpp:235
+#, kde-format
+msgid "Piwigo Export"
+msgstr "ការ​នាំចេញ Piwigo​"
+
+#: piwigowindow.cpp:236
+#, fuzzy, kde-format
+#| msgid "A Kipi plugin to export image collections to a remote Piwigo server."
+msgid "A tool to export image collections to a remote Piwigo server."
+msgstr "កម្មវិធី​ជំនួយ Kipi ​ដើម្បី​នាំចេញ​រូបភាព​សម្រាំង​ទៅកាន់​ម៉ាស៊ីន​បម្រើ​ Piwigo ពី​ចម្ងាយ ។​"
+
+#: piwigowindow.cpp:237
+#, fuzzy, kde-format
+#| msgid ""
+#| "(c) 2003-2005, Renchi Raju\n"
+#| "(c) 2006-2007, Colin Guthrie\n"
+#| "(c) 2006-2012, Gilles Caulier\n"
+#| "(c) 2008, Andrea Diamantini\n"
+#| "(c) 2012, Frédéric Coiffier\n"
+msgid ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2007, Colin Guthrie\n"
+"(c) 2006-2015, Gilles Caulier\n"
+"(c) 2008, Andrea Diamantini\n"
+"(c) 2010-2014, Frédéric Coiffier\n"
+msgstr ""
+"រក្សាសិទ្ធិ​ឆ្នាំ ២០០៣-២០០៥ ដោយ​ Renchi Raju\n"
+"រក្សា​សិទ្ធិ​ឆ្នាំ ២០០៦-២០០៧ ដោយ Colin Guthrie\n"
+"រក្សា​សិទ្ធិ​ឆ្នាំ ២០០៦-២០១២ ដោយ Gilles Caulier\n"
+"រក្សា​សិទ្ធិ​ឆ្នាំ ២០០៨ ដោយ Andrea Diamantini\n"
+"រក្សា​សិទ្ធិ​ឆ្នាំ ២០១២ ដោយ Frédéric Coiffier\n"
+
+#: piwigowindow.cpp:243
+#, kde-format
+msgid "Renchi Raju"
+msgstr "Renchi Raju"
+
+#: piwigowindow.cpp:244 piwigowindow.cpp:248 piwigowindow.cpp:252
+#: piwigowindow.cpp:256 piwigowindow.cpp:260
+#, kde-format
+msgid "Developer"
+msgstr "អ្នក​អភវឌ្ឍន៍​"
+
+#: piwigowindow.cpp:247
+#, kde-format
+msgid "Colin Guthrie"
+msgstr "Colin Guthrie"
+
+#: piwigowindow.cpp:251
+#, kde-format
+msgid "Andrea Diamantini"
+msgstr "Andrea Diamantini"
+
+#: piwigowindow.cpp:255
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: piwigowindow.cpp:259
+#, kde-format
+msgid "Frédéric Coiffier"
+msgstr "Frédéric Coiffier"
+
+#: piwigowindow.cpp:267
+#, kde-format
+msgid "Start Upload"
+msgstr "ចាប់ផ្ដើម​ផ្ទុក​ឡើង"
+
+#: piwigowindow.cpp:395
+#, kde-format
+msgid "Login Failed"
+msgstr ""
+
+#: piwigowindow.cpp:396
+#, kde-format
+msgid "Failed to login into remote piwigo. "
+msgstr "បាន​បរាជ័យ​ដើម្បី​ចូល​ទៅកាន់​​ piwigo ពី​ចម្ងាយ ។ "
+
+#: piwigowindow.cpp:397
+#, kde-format
+msgid ""
+"\n"
+"Do you want to check your settings and try again?"
+msgstr ""
+"\n"
+"តើ​អ្នក​ចង់​ពិនិត្យ​មើល​ការ​កំណត់​របស់​អ្នក​ ហើយ​សាកល្បង​ម្ដងទៀត​ដែល​ឬ​ទេ ?"
+
+#: piwigowindow.cpp:404 piwigowindow.cpp:644 plugin_piwigo.cpp:117
+#, kde-format
+msgid "Edit Piwigo Data"
+msgstr "កែសម្រួល​ទិន្នន័យ​ Piwigo​"
+
+#: piwigowindow.cpp:464 piwigowindow.cpp:488
+#, kde-format
+msgid "Album"
+msgstr "អាល់ប៊ុម"
+
+#: piwigowindow.cpp:507
+#, kde-format
+msgid "Image"
+msgstr "រូបភាព​"
+
+#: piwigowindow.cpp:538
+#, kde-format
+msgid "Nothing to upload - please select photos to upload."
+msgstr "គ្មាន​ផ្ទុក​អ្វី​ឡើយ​ - សូម​ជ្រើស​រូបថត​ត្រូវ​ផ្ទុក ។"
+
+#: piwigowindow.cpp:576
+#, kde-format
+msgid "The file %1 is not a supported image or video format"
+msgstr ""
+
+#: piwigowindow.cpp:580
+#, kde-format
+msgid "Uploading file %1"
+msgstr "ឯកសារ​ដែល​ផ្ទុក​ %1"
+
+#: piwigowindow.cpp:598
+#, fuzzy, kde-format
+#| msgid "Uploading file %1"
+msgid "Uploading Failed"
+msgstr "ឯកសារ​ដែល​ផ្ទុក​ %1"
+
+#: piwigowindow.cpp:599
+#, fuzzy, kde-format
+#| msgid "Failed to upload photo into remote piwigo. "
+msgid "Failed to upload media into remote Piwigo. "
+msgstr "បាន​បរាជ័យ​ដើម្បី​​ផ្ទុក​រូបថត​ទៅកាន់​​ piwigo ពី​ចម្ងាយ ។ "
+
+#: piwigowindow.cpp:600
+#, kde-format
+msgid ""
+"\n"
+"Do you want to continue?"
+msgstr ""
+"\n"
+"តើ​អ្នក​ចង់​បន្ត​ទៀត​ដែរ​ឬ​ទេ​ ?"
+
+#: plugin_piwigo.cpp:97
+#, kde-format
+msgid "Export to &Piwigo..."
+msgstr "នាំចេញ​ទៅកាន់​ &Piwigo..."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "ខឹម សុខែម, ម៉ន ម៉េត, សេង សុត្ថា, ចាន់ សម្បត្តិរតនៈ, សុខ សុភា"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr ""
+#~ "khoemsokhem@khmeros.info,​​mornmet@khmeros.info,sutha@khmeros.info,"
+#~ "ratanak@khmeros.info,sophea@khmeros.info"
+
+#~ msgid "Author"
+#~ msgstr "អ្នក​និពន្ធ​"
+
+#~ msgid "Maintainer"
+#~ msgstr "អ្នក​ថែទាំ​"
+
+#~ msgid "Upload resized version of %1"
+#~ msgstr "ផ្ទុក​កំណែ​ដែល​បាន​ប្ដូរ​ទំហំ​ឡើយ​​នៃ​ %1​"
+
+#~ msgid "Upload the thumbnail of %1"
+#~ msgstr "ផ្ទុក​រូបភាព​តូច​នៃ​​ %1"
+
+#~ msgid "Maximum thumbnail dimension:"
+#~ msgstr "វិមាត្រ​រូបភាព​តូច​អតិបរមា ៖​"
+
+#~ msgid "Thumbnail size is ignored with Piwigo > 2.4"
+#~ msgstr "ទំហំ​រូបភាព​តូច​ត្រូវ​បាន​មិន​អើពើ​ជាមួយ Piwigo > 2.4"
+
+#~ msgid "&Add Selected Photos"
+#~ msgstr "បន្ថែម​រូបថត​ដែល​បាន​​ជ្រើស​"
+
+#~ msgid "Override Default Options"
+#~ msgstr "បដិសេធ​ជម្រើស​លំនាំដើម​"
+
+#~ msgid "EXIF Comment (instead of file name) sets Title"
+#~ msgstr "សេចក្ដី​អធិប្បាយ​អំពី​​ EXIF (ជំនួស​នៃ​ឈ្មោះ​ឯកសារ​​) កំណត់​ចំណង​ជើង​​"
+
+#~ msgid "EXIF Comment (instead of file name) sets Comment"
+#~ msgstr "សេចក្ដី​អធិប្បាយ​អំពី​ EXIF (ជំនួស​នៃ​ឈ្មោះ​​ឯកសារ​​) កំណត់​សេចក្ដី​អធិប្បាយ​"
+
+#~ msgid "Also download the full size version"
+#~ msgstr "ទាញ​យក​កំណែ​ទំហំ​ពេញ​ផង​ដែរ"
+
+#~ msgid "Handbook"
+#~ msgstr "សៀវភៅ​ដៃ​"
+
+#~ msgid "Settings"
+#~ msgstr "ការ​កំណត់​"

@@ -1,0 +1,507 @@
+# Oliver Dörr <kde@doerr-privat.de>, 2009.
+# Burkhard Lück <lueck@hube-lueck.de>, 2009, 2012, 2013, 2015.
+# Panagiotis Papadopoulos <pano_90@gmx.net>, 2009, 2010.
+# Markus Slopianka <markus.s@kdemail.net>, 2010.
+# Frederik Schwarzer <schwarzer@kde.org>, 2010, 2011, 2012, 2016.
+# Torbjörn Klatt <opensource@torbjoern-klatt.de>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_facebook\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2016-09-10 14:59+0100\n"
+"Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
+"Language-Team: German <kde-i18n-de@kde.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: fbalbum.cpp:52
+#, kde-format
+msgid "Privacy setting of the album that will be created (required)."
+msgstr ""
+"Einstellungen zur Privatsphäre des zu erstellenden Albums (erforderlich)."
+
+#: fbalbum.cpp:54
+#, kde-format
+msgid "Only Me"
+msgstr "Nur für mich"
+
+#: fbalbum.cpp:56
+#, kde-format
+msgid "Only Friends"
+msgstr "Nur Freunde"
+
+#: fbalbum.cpp:58
+#, kde-format
+msgid "Friends of Friends"
+msgstr "Freunde von Freunden"
+
+#: fbalbum.cpp:60
+#, kde-format
+msgid "My Networks and Friends"
+msgstr "Mein Netzwerk und Freunde"
+
+#: fbalbum.cpp:62
+#, kde-format
+msgid "Everyone"
+msgstr "Jeder"
+
+#: fbtalker.cpp:201
+#, kde-format
+msgid "Validate previous session..."
+msgstr "Vorangegangene Sitzung wird überprüft ..."
+
+#: fbtalker.cpp:229
+#, kde-format
+msgid "Upgrading to OAuth..."
+msgstr "Wird zu OAuth aktualisiert ..."
+
+#: fbtalker.cpp:279
+#, kde-format
+msgid "Facebook Application Authorization"
+msgstr "Facebook-Anwendungsautorisation"
+
+#: fbtalker.cpp:290
+#, kde-format
+msgid ""
+"Please follow the instructions in the browser window. When done, copy the "
+"Internet address from your browser into the textbox below and press \"OK\"."
+msgstr ""
+"Bitte folgen Sie den Anweisungen im Fenster Ihres Webbrowsers. Anschließend "
+"kopieren Sie die Internetadresse aus Ihrem Webbrowser in das unten stehende "
+"Textfeld und klicken auf „OK“."
+
+#: fbtalker.cpp:352
+#, kde-format
+msgid "Canceled by user."
+msgstr "Abbruch durch den Benutzer."
+
+#: fbtalker.cpp:549
+#, kde-format
+msgid "The service is not available at this time."
+msgstr "Der Dienst ist zurzeit nicht verfügbar."
+
+#: fbtalker.cpp:552
+#, kde-format
+msgid "The application has reached the maximum number of requests allowed."
+msgstr "Dei Anwendung hat die maximal erlaubte Anzahl von Anfragen erreicht."
+
+#: fbtalker.cpp:555
+#, kde-format
+msgid "Invalid session key or session expired. Try to log in again."
+msgstr ""
+"Ungültiger Sitzungsschlüssel oder abgelaufene Sitzung. Versuchen Sie sich "
+"bitte neu anzumelden."
+
+#: fbtalker.cpp:558
+#, kde-format
+msgid "Invalid album ID."
+msgstr "Die Album-ID ist ungültig."
+
+#: fbtalker.cpp:561
+#, kde-format
+msgid "Album is full."
+msgstr "Das Album ist voll."
+
+#: fbtalker.cpp:564
+#, kde-format
+msgid "Missing or invalid file."
+msgstr "Fehlende oder ungültige Datei."
+
+#: fbtalker.cpp:567
+#, kde-format
+msgid "Too many unapproved photos pending."
+msgstr "Zu viele ungenehmigte Fotos anstehend."
+
+#: fbtalker.cpp:601
+#, kde-format
+msgid "Error"
+msgstr "Fehler"
+
+#: fbwindow.cpp:109
+#, kde-format
+msgid "Export to Facebook Web Service"
+msgstr "Auf Facebook exportieren"
+
+#: fbwindow.cpp:111
+#, kde-format
+msgid "Start Upload"
+msgstr "Hochladen beginnen"
+
+#: fbwindow.cpp:112
+#, kde-format
+msgid "Start upload to Facebook web service"
+msgstr "Hochladen auf Facebook starten"
+
+#: fbwindow.cpp:140
+#, kde-format
+msgid "Facebook Export"
+msgstr "Facebook-Export"
+
+#: fbwindow.cpp:141
+#, kde-format
+msgid "A tool to export image collection to/from Facebook web service."
+msgstr "Ein Werkzeug zum Exportieren einer Bildersammlung auf/von Facebook."
+
+#: fbwindow.cpp:143
+#, kde-format
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2012, Gilles Caulier\n"
+"(c) 2008-2009, Luka Renko"
+msgstr ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2012, Gilles Caulier\n"
+"(c) 2008-2009, Luka Renko"
+
+#: fbwindow.cpp:147
+#, kde-format
+msgid "Luka Renko"
+msgstr "Luka Renko"
+
+#: fbwindow.cpp:148
+#, kde-format
+msgid "Author and maintainer"
+msgstr "Autor und Betreuer"
+
+#: fbwindow.cpp:361 fbwindow.cpp:395
+#, kde-format
+msgid "<auto create>"
+msgstr "<Automatisch erstellen>"
+
+#: fbwindow.cpp:372 fbwindow.cpp:390
+#, kde-format
+msgid "Facebook Call Failed: %1\n"
+msgstr "Facebook-Aufruf fehlgeschlagen: %1\n"
+
+#: fbwindow.cpp:471
+#, kde-format
+msgid "Warning"
+msgstr "Warnung"
+
+#: fbwindow.cpp:472
+#, kde-format
+msgid ""
+"After you have been logged out in the browser, click \"Continue\" to "
+"authenticate for another account"
+msgstr ""
+"Nachdem Sie sich im Browser abgemeldet haben, klicken Sie auf „Fortsetzen“, "
+"um sich für ein anderes Benutzerkonto anzumelden."
+
+#: fbwindow.cpp:476
+#, kde-format
+msgid "Continue"
+msgstr "Fortsetzen"
+
+#: fbwindow.cpp:477
+#, kde-format
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: fbwindow.cpp:539
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: fbwindow.cpp:543
+#, kde-format
+msgid "Facebook export"
+msgstr "Facebook-Export"
+
+#: fbwindow.cpp:648 fbwindow.cpp:663
+#, kde-format
+msgid "Cannot open file"
+msgstr "Die Datei kann nicht geöffnet werden."
+
+#: fbwindow.cpp:686
+#, kde-format
+msgid "Uploading Failed"
+msgstr "Hochladen fehlgeschlagen"
+
+#: fbwindow.cpp:687
+#, kde-format
+msgid ""
+"Failed to upload photo into Facebook: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Das Hochladen des Fotos auf Facebook ist fehlgeschlagen: %1\n"
+"Möchten Sie fortfahren?"
+
+#: fbwindow.cpp:706
+#, kde-format
+msgid "Facebook Call Failed: %1"
+msgstr "Facebook-Aufruf fehlgeschlagen: %1"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_facebookui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Exportieren"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_facebookui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Haupt-Werkzeugleiste"
+
+#: plugin_facebook.cpp:94
+#, kde-format
+msgid "Export to &Facebook..."
+msgstr "Zu &Facebook ..."
+
+#~ msgid "&Import"
+#~ msgstr "&Importieren"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Oliver Dörr"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "kde@doerr-privat.de"
+
+#~ msgid "Facebook New Album"
+#~ msgstr "Neues Facebook-Album"
+
+#~ msgid "Title of the album that will be created (required)."
+#~ msgstr "Titel des zu erstellenden Albums (erforderlich)."
+
+#~ msgid "Location of the album that will be created (optional)."
+#~ msgstr "Ort an dem das Album erstellt wird (optional)."
+
+#~ msgid "Description of the album that will be created (optional)."
+#~ msgstr "Beschreibung des zu erstellenden Albums (optional)."
+
+#~ msgctxt "new facebook album"
+#~ msgid "Title:"
+#~ msgstr "Titel:"
+
+#~ msgctxt "new facebook album"
+#~ msgid "Location:"
+#~ msgstr "Ort:"
+
+#~ msgctxt "new facebook album"
+#~ msgid "Description:"
+#~ msgstr "Beschreibung:"
+
+#~ msgctxt "new facebook album"
+#~ msgid "Privacy:"
+#~ msgstr "Privatsphäre:"
+
+#~ msgid "This is the list of images to upload to your Facebook account."
+#~ msgstr ""
+#~ "Das ist die Liste der Bilder, die auf Ihr Facebook-Benutzerkonto "
+#~ "hochgeladen werden."
+
+#~ msgid ""
+#~ "This is a clickable link to open the Facebook home page in a web browser."
+#~ msgstr ""
+#~ "Das ist eine anklickbare Verknüpfung, um die Facebook-Webseite in einem "
+#~ "Webbrowser zu öffnen."
+
+#~ msgid "Account"
+#~ msgstr "Benutzerkonto"
+
+#~ msgid "This is the Facebook account that is currently logged in."
+#~ msgstr ""
+#~ "Dies ist das Facebook-Benutzerkonto, mit dem Sie zurzeit angemeldet sind."
+
+#~ msgctxt "facebook account settings"
+#~ msgid "Name:"
+#~ msgstr "Name:"
+
+#~ msgid "Permission:"
+#~ msgstr "Berechtigung:"
+
+#~ msgid ""
+#~ "Permission of KIPI Plugin application to upload photos directly. If not, "
+#~ "user will need to manually approve uploaded photos in Facebook."
+#~ msgstr ""
+#~ "KIPI-Modul direkt zum Hochladen von Fotos berechtigen. Wenn diese "
+#~ "Berechtigung nicht erteilt wird, dann müssen Sie die auf Facebook "
+#~ "hochgeladene Fotos manuell genehmigen."
+
+#~ msgid "Change Account"
+#~ msgstr "Benutzerkonto wechseln"
+
+#~ msgid "Logout and change Facebook Account used for transfer"
+#~ msgstr "Klicken Sie hier, um das Facebook-Benutzerkonto zu wechseln."
+
+#~ msgid "Download Selection"
+#~ msgstr "Auswahl zum Herunterladen"
+
+#~ msgid "This is the selection of Facebook albums/photos to download."
+#~ msgstr ""
+#~ "Das ist die Auswahl der Facebook-Alben/Fotos, die heruntergeladen werden "
+#~ "sollen."
+
+#~ msgid "Destination"
+#~ msgstr "Ziel"
+
+#~ msgid ""
+#~ "This is the Facebook album to which selected photos will be uploaded."
+#~ msgstr ""
+#~ "Das ist das Facebook-Album, in das die ausgewählten Fotos hochgeladen "
+#~ "werden."
+
+#~ msgid "My &Album"
+#~ msgstr "Mein &Album"
+
+#~ msgid "Download complete album of currently logged in user."
+#~ msgstr ""
+#~ "Das komplette Album des aktuell angemeldeten Benutzers herunterladen."
+
+#~ msgid "Album &of My Friend"
+#~ msgstr "Alb&um eines Freundes"
+
+#~ msgid "Download complete album of selected friend."
+#~ msgstr "Das komplette Album des ausgewählten Freundes herunterladen."
+
+#~ msgid "Photos of &Me"
+#~ msgstr "Fotos von &mir"
+
+#~ msgid "Download all photos of currently logged in user."
+#~ msgstr "Alle Fotos des aktuell angemeldeten Benutzers herunterladen."
+
+#~ msgid "Photos of My &Friend"
+#~ msgstr "Fotos von meinem &Freund"
+
+#~ msgid "Download all photos of selected friend."
+#~ msgstr "Alle Fotos des ausgewählten Freundes herunterladen."
+
+#~ msgid "Friend:"
+#~ msgstr "Freund:"
+
+#~ msgid "Album:"
+#~ msgstr "Album:"
+
+#~ msgid "New Album"
+#~ msgstr "Neues Album"
+
+#~ msgid "Create new Facebook album"
+#~ msgstr "Neues Facebook-Album erstellen"
+
+#~ msgctxt "facebook album list"
+#~ msgid "Reload"
+#~ msgstr "Neu laden"
+
+#~ msgid "Reload album list"
+#~ msgstr "Albenliste neu laden"
+
+#~ msgid "This is the location to which Facebook images will be downloaded."
+#~ msgstr ""
+#~ "Das ist der Speicherort, in den die Facebook-Bilder heruntergeladen "
+#~ "werden."
+
+#~ msgid "Options"
+#~ msgstr "Einstellungen"
+
+#~ msgid "These are options that will be applied to photos before upload."
+#~ msgstr ""
+#~ "Diese Einstellungen werden vor dem Hochladen auf Ihre Fotos angewendet."
+
+#~ msgid "Resize photos before uploading"
+#~ msgstr "Größe der Fotos vor dem Hochladen ändern"
+
+#~ msgid "Maximum dimension:"
+#~ msgstr "Maximalgröße:"
+
+#~ msgid "JPEG quality:"
+#~ msgstr "JPEG-Qualität:"
+
+#~ msgid "Direct upload"
+#~ msgstr "Direktes Hochladen"
+
+#~ msgid "Uploaded photos will not need manual approval by user."
+#~ msgstr ""
+#~ "Die hochgeladenen Fotos müssen nicht manuell vom Benutzer genehmigt "
+#~ "werden."
+
+#~ msgid "Manual upload approval"
+#~ msgstr "Manuelles Genehmigen des Hochladens"
+
+#~ msgid ""
+#~ "Uploaded photos will wait in pending state until manually approved by "
+#~ "user."
+#~ msgstr ""
+#~ "Die hochgeladenen Fotos werden im Status „Wartend“ bleiben, bis der "
+#~ "Benutzer sie manuell genehmigt hat."
+
+#~ msgid "Import from Facebook Web Service"
+#~ msgstr "Von Facebook importieren"
+
+#~ msgid "Start Download"
+#~ msgstr "Herunterladen starten"
+
+#~ msgid "Start download from Facebook web service"
+#~ msgstr "Herunterladen von Facebook starten"
+
+#~ msgid "Facebook Import/Export"
+#~ msgstr "Facebook-Import/Export"
+
+#~ msgid "Shourya Singh Gupta"
+#~ msgstr "Shourya Singh Gupta"
+
+#~ msgid "Developer"
+#~ msgstr "Entwickler"
+
+#~ msgctxt "name of special Facebook album for profile pictures"
+#~ msgid "Profile Pictures"
+#~ msgstr "Profilbilder"
+
+#~ msgid "Facebook import"
+#~ msgstr "Facebook-Import"
+
+#~ msgid ""
+#~ "Failed to save photo: %1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Das Speichern des Fotos ist fehlgeschlagen: %1\n"
+#~ "Möchten Sie fortfahren?"
+
+#~ msgid ""
+#~ "Failed to download photo: %1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Das Herunterladen des Fotos ist fehlgeschlagen: %1\n"
+#~ "Möchten Sie fortfahren?"
+
+#~ msgid "Import from &Facebook..."
+#~ msgstr "Von &Facebook ..."
+
+#~ msgid ""
+#~ "Please follow the instructions in the browser window. Press \"OK\" when "
+#~ "done."
+#~ msgstr ""
+#~ "Bitte folgen Sie den Anweisungen im Fenster Ihres Webbrowsers und klicken "
+#~ "Sie auf „Ok“, wenn Sie fertig sind."
+
+#~ msgid "Photos taken with KDE"
+#~ msgstr "Mit KDE aufgenommene Fotos"
+
+#~ msgid "Handbook"
+#~ msgstr "Handbuch"
+
+#~ msgid "Change Permission"
+#~ msgstr "Berechtigung ändern"
+
+#~ msgid "Change permission for KIPI application for photo upload"
+#~ msgstr "Berechtigung der KIPI-Anwendung zum Hochladen von Fotos ändern."
+
+#~ msgid "Logging in to Facebook service..."
+#~ msgstr "Anmeldung am Facebook-Dienst wird durchgeführt ..."
+
+#~ msgid "Facebook Service Web Authorization"
+#~ msgstr "Web-Autorisierung des Facebook-Dienstes"
+
+#~ msgid "Authentication"
+#~ msgstr "Authentifizierung"
+
+#~ msgid "Transfer Progress"
+#~ msgstr "Übertragungsfortschritt"
+
+#~ msgid "Downloading file %1"
+#~ msgstr "Datei %1 wird heruntergeladen"

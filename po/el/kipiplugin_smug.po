@@ -1,0 +1,541 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Toussis Manolis <manolis@koppermind.homelinux.org>, 2008, 2009.
+# Dimitrios Glentadakis <dglent@gmail.com>, 2010, 2011.
+# Stelios <sstavra@gmail.com>, 2011, 2017.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_smugexport\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2017-10-13 16:29+0200\n"
+"Last-Translator: Stelios <sstavra@gmail.com>\n"
+"Language-Team: Greek <kde-i18n-el@kde.org>\n"
+"Language: el\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 2.0\n"
+
+#. i18n: ectx: Menu (Import)
+#: kipiplugin_smugui.rc:7
+#, kde-format
+msgid "&Import"
+msgstr "Ε&ισαγωγή"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_smugui.rc:11
+#, kde-format
+msgid "&Export"
+msgstr "&Εξαγωγή"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_smugui.rc:17
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Κύρια γραμμή εργαλείων"
+
+#: plugin_smug.cpp:98
+#, kde-format
+msgid "Export to &SmugMug..."
+msgstr "Εξαγωγή σε &SmugMug..."
+
+#: plugin_smug.cpp:109
+#, kde-format
+msgid "Import from &SmugMug..."
+msgstr "Εισαγωγή από &SmugMug..."
+
+#: smugalbum.cpp:54
+#, kde-format
+msgid "SmugMug New Album"
+msgstr "Νέο λεύκωμα SmugMug"
+
+#: smugalbum.cpp:64 smugwidget.cpp:117
+#, kde-format
+msgid "Album"
+msgstr "Λεύκωμα"
+
+#: smugalbum.cpp:65
+#, kde-format
+msgid "These are basic settings for the new SmugMug album."
+msgstr "Αυτές είναι οι βασικές ρυθμίσεις για το νέο λεύκωμα SmugMug."
+
+#: smugalbum.cpp:68
+#, kde-format
+msgid "Title of the album that will be created (required)."
+msgstr "Τίτλος του λευκώματος που θα δημιουργηθεί (απαιτείται)."
+
+#: smugalbum.cpp:72
+#, kde-format
+msgid "Category of the album that will be created (required)."
+msgstr "Κατηγορία του λευκώματος που θα δημιουργηθεί (απαιτείται)."
+
+#: smugalbum.cpp:76
+#, kde-format
+msgid "Subcategory of the album that will be created (optional)."
+msgstr "Υποκατηγορία του λευκώματος που θα δημιουργηθεί (προαιρετικό)."
+
+#: smugalbum.cpp:79
+#, kde-format
+msgid "Description of the album that will be created (optional)."
+msgstr "Περιγραφή του λευκώματος που θα δημιουργηθεί (προαιρετικό)."
+
+#: smugalbum.cpp:83
+#, kde-format
+msgid "Album template for the new album (optional)."
+msgstr "Πρότυπο λεύκωμα για το νέο λεύκωμα (προαιρετικό)."
+
+#: smugalbum.cpp:86
+#, kde-format
+msgctxt "new smug album dialog"
+msgid "Title:"
+msgstr "Τίτλος:"
+
+#: smugalbum.cpp:87
+#, kde-format
+msgctxt "new smug album dialog"
+msgid "Category:"
+msgstr "Κατηγορία:"
+
+#: smugalbum.cpp:88
+#, kde-format
+msgctxt "new smug album dialog"
+msgid "Subcategory:"
+msgstr "Υποκατηγορία:"
+
+#: smugalbum.cpp:89
+#, kde-format
+msgctxt "new smug album dialog"
+msgid "Description:"
+msgstr "Περιγραφή:"
+
+#: smugalbum.cpp:90
+#, kde-format
+msgctxt "new smug album dialog"
+msgid "Template:"
+msgstr "Φόρμα:"
+
+#: smugalbum.cpp:98
+#, kde-format
+msgid "Security && Privacy"
+msgstr "Ασφάλεια && προσωπικό απόρρητο"
+
+#: smugalbum.cpp:99
+#, kde-format
+msgid "These are security and privacy settings for the new SmugMug album."
+msgstr ""
+"Αυτές είναι οι ρυθμίσεις ασφαλείας και προσωπικού απορρήτου για το νέο "
+"λεύκωμα SmugMug."
+
+#: smugalbum.cpp:101
+#, kde-format
+msgctxt "smug album privacy"
+msgid "Public"
+msgstr "Δημόσιο"
+
+#: smugalbum.cpp:103
+#, kde-format
+msgid "Public album is listed on your public SmugMug page."
+msgstr "Το δημόσιο λεύκωμα εμφανίζεται στη δημόσια σελίδα σας SmugMug."
+
+#: smugalbum.cpp:104
+#, kde-format
+msgctxt "smug album privacy"
+msgid "Unlisted"
+msgstr "Μη καταγεγραμμένο"
+
+#: smugalbum.cpp:105
+#, kde-format
+msgid "Unlisted album is only accessible via URL."
+msgstr "Το μη εμφανιζόμενο λεύκωμα είναι προσπελάσιμο μόνο μέσω του URL."
+
+#: smugalbum.cpp:112
+#, kde-format
+msgid "Require password to access the album (optional)."
+msgstr "Απαίτηση κωδικού για την πρόσβαση στο λεύκωμα (προαιρετικό)."
+
+#: smugalbum.cpp:115
+#, kde-format
+msgid "Password hint to present to users in the password prompt (optional)."
+msgstr ""
+"Υπόδειξη κωδικού για τους χρήστες κατά την προτροπή κωδικού πρόσβασης "
+"(προαιρετικό)."
+
+#: smugalbum.cpp:118
+#, kde-format
+msgid "Privacy:"
+msgstr "Ιδιωτικό απόρρητο:"
+
+#: smugalbum.cpp:119
+#, kde-format
+msgid "Password:"
+msgstr "Κωδικός πρόσβασης:"
+
+#: smugalbum.cpp:120
+#, kde-format
+msgid "Password Hint:"
+msgstr "Υπόδειξη κωδικού:"
+
+#: smugtalker.cpp:111
+#, kde-format
+msgid "Logging in to SmugMug service..."
+msgstr "Σύνδεση στην υπηρεσία SmugMug..."
+
+#: smugtalker.cpp:464
+#, kde-format
+msgid "Login failed"
+msgstr "Αποτυχία σύνδεσης"
+
+#: smugtalker.cpp:467
+#, kde-format
+msgid "Invalid user/nick/password"
+msgstr "Μή έγκυρος χρήστης/ψευδώνυμο/κωδικός"
+
+#: smugtalker.cpp:470
+#, kde-format
+msgid "Invalid API key"
+msgstr "Μη έγκυρο κλειδί API"
+
+#: smugtalker.cpp:512 smugwindow.cpp:412 smugwindow.cpp:421 smugwindow.cpp:451
+#: smugwindow.cpp:484 smugwindow.cpp:516 smugwindow.cpp:546 smugwindow.cpp:920
+#, kde-format
+msgid "Error"
+msgstr "Σφάλμα"
+
+#: smugwidget.cpp:73
+#, kde-format
+msgid "This is the list of images to upload to your SmugMug account."
+msgstr "Αυτή είναι η λίστα εικόνων για αποστολή στο λογαριασμό σας SmugMug."
+
+#: smugwidget.cpp:79
+#, kde-format
+msgid ""
+"This is a clickable link to open the SmugMug home page in a web browser."
+msgstr ""
+"Αυτός είναι ο δεσμός για το άνοιγμα της αρχικής σελίδας SmugMug στον "
+"περιηγητή ιστού."
+
+#: smugwidget.cpp:85
+#, kde-format
+msgid "Account"
+msgstr "Λογαριασμός"
+
+#: smugwidget.cpp:86
+#, kde-format
+msgid "This is the SmugMug account that will be used to authenticate."
+msgstr ""
+"Αυτός είναι ο λογαριασμός SmugMug που θα χρησιμοποιηθεί για την ταυτοποίηση."
+
+#: smugwidget.cpp:89
+#, kde-format
+msgctxt "smug account login"
+msgid "Anonymous"
+msgstr "Ανώνυμη είσοδος"
+
+#: smugwidget.cpp:90
+#, kde-format
+msgid "Login as anonymous to SmugMug web service."
+msgstr "Ανώνυμη σύνδεση στην υπηρεσία ιστού SmugMug."
+
+#: smugwidget.cpp:92
+#, kde-format
+msgid "SmugMug Account"
+msgstr "Λογαριασμός SmugMug"
+
+#: smugwidget.cpp:93
+#, kde-format
+msgid "Login to SmugMug web service using email and password."
+msgstr ""
+"Σύνδεση στην υπηρεσία ιστού SmugMug με χρήση της διεύθυνσης ηλ. "
+"αλληλογραφίας και κωδικού πρόσβασης."
+
+#: smugwidget.cpp:95
+#, kde-format
+msgctxt "smug account settings"
+msgid "Name:"
+msgstr "Όνομα:"
+
+#: smugwidget.cpp:97
+#, kde-format
+msgctxt "smug account settings"
+msgid "Email:"
+msgstr "Ηλ. αλληλογραφία:"
+
+#: smugwidget.cpp:101
+#, kde-format
+msgid "Change Account"
+msgstr "Αλλαγή λογαριασμού"
+
+#: smugwidget.cpp:103
+#, kde-format
+msgid "Change SmugMug Account used to authenticate"
+msgstr ""
+"Αλλαγή του λογαριασμού SmugMug που θα χρησιμοποιηθεί για την ταυτοποίηση"
+
+#: smugwidget.cpp:118
+#, kde-format
+msgid "This is the SmugMug album that will be used for transfer."
+msgstr "Αυτό είναι το λεύκωμα SmugMug που θα χρησιμοποιηθεί για τη μεταφορά."
+
+#: smugwidget.cpp:123
+#, kde-format
+msgid "Nickname:"
+msgstr "Ψευδώνυμο:"
+
+#: smugwidget.cpp:125
+#, kde-format
+msgid "Nickname of SmugMug user to list albums."
+msgstr "Ψευδώνυμο του χρήστη SmugMug για την εμφάνιση των λεύκωμα."
+
+#: smugwidget.cpp:126
+#, kde-format
+msgid "Site Password:"
+msgstr "Κωδικός ιστοσελίδας:"
+
+#: smugwidget.cpp:128
+#, kde-format
+msgid "Site-wide password for specified SmugMug nick/user."
+msgstr ""
+"Κωδικός πρόσβασης ιστοσελίδας για τον καθορισμένο χρήστη/ψευδώνυμο SmugMug."
+
+#: smugwidget.cpp:129
+#, kde-format
+msgid "Album Password:"
+msgstr "Κωδικός λεύκωμα:"
+
+#: smugwidget.cpp:131
+#, kde-format
+msgid "Password for SmugMug album."
+msgstr "Κωδικός πρόσβασης για το λεύκωμα SmugMug."
+
+#: smugwidget.cpp:134
+#, kde-format
+msgid "New Album"
+msgstr "Νέο λεύκωμα"
+
+#: smugwidget.cpp:136
+#, kde-format
+msgid "Create new SmugMug album"
+msgstr "Δημιουργία νέου λεύκωμα SmugMug"
+
+#: smugwidget.cpp:139
+#, kde-format
+msgctxt "reload album list"
+msgid "Reload"
+msgstr "Επαναφόρτωση"
+
+#: smugwidget.cpp:141
+#, kde-format
+msgid "Reload album list"
+msgstr "Επαναφόρτωση λίστας λευκωμάτων"
+
+#: smugwidget.cpp:155
+#, kde-format
+msgid "Destination"
+msgstr "Προορισμός"
+
+#: smugwidget.cpp:156
+#, kde-format
+msgid "This is the location where SmugMug images will be downloaded."
+msgstr "Αυτή είναι η τοποθεσία όπου γίνεται η λήψη των εικόνων SmugMug."
+
+#: smugwidget.cpp:163
+#, kde-format
+msgid "Options"
+msgstr "Επιλογές"
+
+#: smugwidget.cpp:164
+#, kde-format
+msgid "These are options that will be applied to images before upload."
+msgstr "Αυτές οι επιλογές θα εφαρμοστούν στις εικόνες πριν την αποστολή."
+
+#: smugwidget.cpp:168
+#, kde-format
+msgid "Resize photos before uploading"
+msgstr "Αλλαγή μεγέθους φωτογραφιών πριν την αποστολή"
+
+#: smugwidget.cpp:178
+#, kde-format
+msgid "Maximum dimension:"
+msgstr "Μέγιστη διάσταση:"
+
+#: smugwidget.cpp:186
+#, kde-format
+msgid "JPEG quality:"
+msgstr "Ποιότητα JPEG:"
+
+#: smugwindow.cpp:86
+#, kde-format
+msgid "Import from SmugMug Web Service"
+msgstr "Εισαγωγή από την υπηρεσία ιστού SmugMug"
+
+#: smugwindow.cpp:88
+#, kde-format
+msgid "Start Download"
+msgstr "Έναρξη λήψης"
+
+#: smugwindow.cpp:89
+#, kde-format
+msgid "Start download from SmugMug web service"
+msgstr "Έναρξη λήψης από την υπηρεσία ιστού SmugMug"
+
+#: smugwindow.cpp:95
+#, kde-format
+msgid "Export to SmugMug Web Service"
+msgstr "Εξαγωγή στην υπηρεσία ιστού SmugMug"
+
+#: smugwindow.cpp:97
+#, kde-format
+msgid "Start Upload"
+msgstr "Έναρξη αποστολής"
+
+#: smugwindow.cpp:98
+#, kde-format
+msgid "Start upload to SmugMug web service"
+msgstr "Έναρξη αποστολής στην υπηρεσία ιστού SmugMug"
+
+#: smugwindow.cpp:127
+#, kde-format
+msgid "Smug Import/Export"
+msgstr "Εισαγωγή/εξαγωγή Smug"
+
+#: smugwindow.cpp:128
+#, kde-format
+msgid ""
+"A tool to import/export image collections from/to the SmugMug web service."
+msgstr ""
+"Ένα εργαλείο εισαγωγής/εξαγωγής συλλογής εικόνων σε/προς μια υπηρεσία ιστού "
+"SmugMug."
+
+#: smugwindow.cpp:130
+#, kde-format
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2012, Gilles Caulier\n"
+"(c) 2008-2009, Luka Renko"
+msgstr ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2012, Gilles Caulier\n"
+"(c) 2008-2009, Luka Renko"
+
+#: smugwindow.cpp:134
+#, kde-format
+msgid "Luka Renko"
+msgstr "Luka Renko"
+
+#: smugwindow.cpp:135
+#, kde-format
+msgid "Author and maintainer"
+msgstr "Συγγραφέας και συντηρητής"
+
+#: smugwindow.cpp:144
+#, kde-format
+msgid ""
+"<qt>Enter the <b>email address</b> and <b>password</b> for your <a href="
+"\"http://www.smugmug.com\">SmugMug</a> account</qt>"
+msgstr ""
+"<qt>Εισάγετε το <b>email</b> και τον <b>κωδικό πρόσβασης</b> του λογαριασμού "
+"σας <a href=\"http://www.smugmug.com\">SmugMug</a></qt>"
+
+#: smugwindow.cpp:412 smugwindow.cpp:421 smugwindow.cpp:451 smugwindow.cpp:484
+#: smugwindow.cpp:516 smugwindow.cpp:546 smugwindow.cpp:920
+#, kde-format
+msgid "SmugMug Call Failed: %1\n"
+msgstr "Αποτυχία κλήσης SmugMug: %1\n"
+
+#: smugwindow.cpp:480 smugwindow.cpp:542
+#, kde-format
+msgid "&lt;none&gt;"
+msgstr "&lt;κανένα&gt;"
+
+#: smugwindow.cpp:668 smugwindow.cpp:701
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: smugwindow.cpp:671
+#, kde-format
+msgid "Smug Import"
+msgstr "Εισαγωγή Smug"
+
+#: smugwindow.cpp:704
+#, kde-format
+msgid "Smug Export"
+msgstr "Εξαγωγή Smug"
+
+#: smugwindow.cpp:789 smugwindow.cpp:803
+#, kde-format
+msgid "Cannot open file"
+msgstr "Αδυναμία ανοίγματος αρχείου"
+
+#: smugwindow.cpp:826
+#, kde-format
+msgid "Uploading Failed"
+msgstr "Αποτυχία αποστολής"
+
+#: smugwindow.cpp:827
+#, kde-format
+msgid ""
+"Failed to upload photo to SmugMug.\n"
+"%1\n"
+"Do you want to continue?"
+msgstr ""
+"Αποτυχία αποστολής φωτογραφίας στο SmugMug.\n"
+"%1\n"
+"Επιθυμείτε να συνεχίσετε;"
+
+#: smugwindow.cpp:888 smugwindow.cpp:901
+#, kde-format
+msgid "Processing Failed"
+msgstr "Αποτυχία επεξεργασίας"
+
+#: smugwindow.cpp:889
+#, kde-format
+msgid ""
+"Failed to save photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Αποτυχία αποθήκευσης της φωτογραφίας: %1\n"
+"Επιθυμείτε τη συνέχεια;"
+
+#: smugwindow.cpp:902
+#, kde-format
+msgid ""
+"Failed to download photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Αποτυχία λήψης της φωτογραφίας: %1\n"
+"Επιθυμείτε τη συνέχεια;"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Τούσης Μανώλης,Stelios"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "manolis@koppermind.homelinux.org,sstavra@gmail.com"
+
+#~ msgid "Handbook"
+#~ msgstr "Εγχειρίδιο"
+
+#~ msgid "Authentication"
+#~ msgstr "Ταυτοποίηση"
+
+#~ msgid "Transfer Progress"
+#~ msgstr "Πρόοδος μεταφοράς"
+
+#~ msgid "Downloading file %1"
+#~ msgstr "Λήψη αρχείου %1"
+
+#~ msgid "<none>"
+#~ msgstr "<κανένα>"
+
+#~ msgid "Login with e-mail and password to SmugMug web service."
+#~ msgstr "Σύνδεση με email και κωδικό πρόσβασης στην υπηρεσία ιστού SmugMug."
+
+#~ msgid "This is the SmugMug album where selected photos will be uploaded."
+#~ msgstr ""
+#~ "Αυτό είναι το άλμπουμ SmugMug όπου θα αποσταλούν οι επιλεγμένες "
+#~ "φωτογραφίες."

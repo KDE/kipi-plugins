@@ -1,0 +1,855 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Vincent PINON <vpinon@kde.org>, 2013.
+# Peter Potrowl <peter.potrowl@gmail.com>, 2014, 2015, 2017.
+# Xavier Besnard <xavier.besnard@neuf.fr>, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2021-01-12 14:06+0100\n"
+"Last-Translator: Xavier Besnard <xavier.besnard@neuf.fr>\n"
+"Language-Team: French <kde-francophone@kde.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 20.12.0\n"
+"X-Environment: kde\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#: authorize.cpp:116
+#, kde-format
+msgid "Google Drive Authorization"
+msgstr "Autorisation Google Drive"
+
+#: authorize.cpp:129
+#, kde-format
+msgid ""
+"Please follow the instructions in the browser. After logging in and "
+"authorizing the application, copy the code from the browser, paste it in the "
+"textbox below, and click OK."
+msgstr ""
+"Veuillez suivre les instructions dans le navigateur. Après la connexion et "
+"l'autorisation de l'application, copiez le code depuis le navigateur dans la "
+"boîte de texte ci-dessous, et cliquez sur « Ok »."
+
+#: authorize.cpp:249 gdtalker.cpp:272 gptalker.cpp:644
+#, kde-format
+msgid "Error"
+msgstr "Erreur"
+
+#: gdtalker.cpp:337
+#, kde-format
+msgid "Failed to list folders"
+msgstr "Le listage des dossiers a échoué"
+
+#: gdtalker.cpp:385
+#, kde-format
+msgid "Failed to create folder"
+msgstr "La création du dossier a échoué"
+
+#: gdtalker.cpp:416 gptalker.cpp:937
+#, kde-format
+msgid "Failed to upload photo"
+msgstr "L'envoi de la photo a échoué"
+
+#: gptalker.cpp:569
+#, kde-format
+msgid "No photo specified"
+msgstr "No photo specified"
+
+#: gptalker.cpp:572
+#, kde-format
+msgid "General upload failure"
+msgstr "General upload failure"
+
+#: gptalker.cpp:575
+#, kde-format
+msgid "File-size was zero"
+msgstr "La taille du fichier était nulle"
+
+#: gptalker.cpp:578
+#, kde-format
+msgid "File-type was not recognized"
+msgstr "Impossible de déterminer le type de fichier"
+
+#: gptalker.cpp:581
+#, kde-format
+msgid "User exceeded upload limit"
+msgstr "L'utilisateur a dépassé sa limite d'envoi"
+
+#: gptalker.cpp:584
+#, kde-format
+msgid "Invalid signature"
+msgstr "Signature non valable"
+
+#: gptalker.cpp:587
+#, kde-format
+msgid "Missing signature"
+msgstr "Signature manquante"
+
+#: gptalker.cpp:590
+#, kde-format
+msgid "Login failed / Invalid auth token"
+msgstr "Échec de la connexion / Jeton d'authentification non valable"
+
+#: gptalker.cpp:593
+#, kde-format
+msgid "Invalid API Key"
+msgstr "Clé API non valable"
+
+#: gptalker.cpp:596
+#, kde-format
+msgid "Service currently unavailable"
+msgstr "Service actuellement indisponible"
+
+#: gptalker.cpp:599
+#, kde-format
+msgid "Invalid Frob"
+msgstr "Frob non valable"
+
+#: gptalker.cpp:602
+#, kde-format
+msgid "Format \"xxx\" not found"
+msgstr "Format « xxx » introuvable"
+
+#: gptalker.cpp:605
+#, kde-format
+msgid "Method \"xxx\" not found"
+msgstr "Méthode « xxx » introuvable"
+
+#: gptalker.cpp:608
+#, kde-format
+msgid "Invalid SOAP envelope"
+msgstr "Enveloppe SOAP non valable"
+
+#: gptalker.cpp:611
+#, kde-format
+msgid "Invalid XML-RPC Method Call"
+msgstr "Appel de méthode XML-RPC non valable"
+
+#: gptalker.cpp:614
+#, kde-format
+msgid "The POST method is now required for all setters."
+msgstr "La méthode POST est maintenant requise pour tous les mutateurs."
+
+#: gptalker.cpp:617
+#, kde-format
+msgid "Unknown error"
+msgstr "Erreur inconnue"
+
+#: gptalker.cpp:620 gswindow.cpp:427 gswindow.cpp:466 gswindow.cpp:548
+#: gswindow.cpp:576 gswindow.cpp:652 gswindow.cpp:668 gswindow.cpp:1078
+#: gswindow.cpp:1198 gswindow.cpp:1241 gswindow.cpp:1249
+#, kde-format
+msgctxt "@title:window"
+msgid "Error"
+msgstr "Erreur"
+
+#: gptalker.cpp:621
+#, kde-format
+msgid ""
+"Error occurred: %1\n"
+"Unable to proceed further."
+msgstr ""
+"Une erreur est survenue : %1\n"
+"Impossible de continuer."
+
+#: gptalker.cpp:691 gptalker.cpp:758
+#, kde-format
+msgid "Failed to fetch photo-set list"
+msgstr "Impossible d'obtenir la liste des ensembles de photos"
+
+#: gptalker.cpp:894 gptalker.cpp:927
+#, kde-format
+msgid "Failed to create album"
+msgstr "La création de l'album a échoué"
+
+#: gswidget.cpp:60
+#, kde-format
+msgid "Tag path behavior :"
+msgstr "Comportement du parcours des étiquettes :"
+
+#: gswidget.cpp:62
+#, kde-format
+msgid "Leaf tags only"
+msgstr "Feuilles seulement"
+
+#: gswidget.cpp:63
+#, kde-format
+msgid "Export only the leaf tags of tag hierarchies"
+msgstr "N'exporte que les étiquettes feuilles (fin d'emplacement)"
+
+#: gswidget.cpp:64
+#, kde-format
+msgid "Split tags"
+msgstr "Séparer les étiquettes"
+
+#: gswidget.cpp:65
+#, kde-format
+msgid "Export the leaf tag and all ancestors as single tags."
+msgstr ""
+"Exporte les étiquettes feuilles et leurs ascendants comme des étiquettes "
+"séparées. "
+
+#: gswidget.cpp:66
+#, kde-format
+msgid "Combined String"
+msgstr "Chaînes combinées"
+
+#: gswidget.cpp:67
+#, kde-format
+msgid "Build a combined tag string."
+msgstr "Construit une étiquette en concaténant les chaînes."
+
+#: gswindow.cpp:116
+#, kde-format
+msgid "Google Drive Export"
+msgstr "Export vers Google Drive"
+
+#: gswindow.cpp:117
+#, kde-format
+msgid "A tool to export images to Google Drive"
+msgstr "Un outil pour exporter les images vers Google Drive"
+
+#: gswindow.cpp:119
+#, kde-format
+msgid ""
+"(c) 2013, Saurabh Patel\n"
+"(c) 2015, Shourya Singh Gupta"
+msgstr ""
+"(c) 2013, Saurabh Patel\n"
+"(c) 2015, Shourya Singh Gupta"
+
+#: gswindow.cpp:122
+#, kde-format
+msgid "Saurabh Patel"
+msgstr "Saurabh Patel"
+
+#: gswindow.cpp:122 gswindow.cpp:195
+#, kde-format
+msgid "Author and maintainer"
+msgstr "Auteur et mainteneur"
+
+#: gswindow.cpp:125 gswindow.cpp:207
+#, kde-format
+msgid "Shourya Singh Gupta"
+msgstr "Shourya Singh Gupta"
+
+#: gswindow.cpp:125 gswindow.cpp:198 gswindow.cpp:201 gswindow.cpp:204
+#: gswindow.cpp:207
+#, kde-format
+msgid "Developer"
+msgstr "Développeur"
+
+#: gswindow.cpp:132
+#, kde-format
+msgid "Export to Google Drive"
+msgstr "Exporter vers Google Drive"
+
+#: gswindow.cpp:134 gswindow.cpp:219
+#, kde-format
+msgid "Start Upload"
+msgstr "Lancer la transmission"
+
+#: gswindow.cpp:135
+#, kde-format
+msgid "Start upload to Google Drive"
+msgstr "Lancer la transmission vers Google Drive"
+
+#: gswindow.cpp:186
+#, kde-format
+msgid "Google Photos/PicasaWeb Export"
+msgstr "Export vers Google Photos/PicasaWeb"
+
+#: gswindow.cpp:187
+#, kde-format
+msgid "A tool to export image collections to Google Photos/Picasa web service."
+msgstr ""
+"Un outil pour exporter les images vers le service Google Photos / PicasaWeb."
+
+#: gswindow.cpp:189
+#, kde-format
+msgid ""
+"(c) 2007-2009, Vardhman Jain\n"
+"(c) 2008-2016, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2010, Jens Mueller\n"
+"(c) 2015, Shourya Singh Gupta"
+msgstr ""
+"(c) 2007-2009, Vardhman Jain\n"
+"(c) 2008-2016, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2010, Jens Mueller\n"
+"(c) 2015, Shourya Singh Gupta"
+
+#: gswindow.cpp:195
+#, kde-format
+msgid "Vardhman Jain"
+msgstr "Vardhman Jain"
+
+#: gswindow.cpp:198
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: gswindow.cpp:201
+#, kde-format
+msgid "Luka Renko"
+msgstr "Luka Renko"
+
+#: gswindow.cpp:204
+#, kde-format
+msgid "Jens Mueller"
+msgstr "Jens Mueller"
+
+#: gswindow.cpp:217
+#, kde-format
+msgid "Export to Google Photos/PicasaWeb Service"
+msgstr "Exporter vers Google Photos/PicasaWeb"
+
+#: gswindow.cpp:220
+#, kde-format
+msgid "Start upload to Google Photos/PicasaWeb Service"
+msgstr "Lancer la transmission vers le service Google Photos/PicasaWeb"
+
+#: gswindow.cpp:226
+#, kde-format
+msgid "Import from Google Photos/PicasaWeb Service"
+msgstr "Importer depuis le service Google Photos/PicasaWeb"
+
+#: gswindow.cpp:228
+#, kde-format
+msgid "Start Download"
+msgstr "Démarrer le téléchargement"
+
+#: gswindow.cpp:229
+#, kde-format
+msgid "Start download from Google Photos/PicasaWeb service"
+msgstr "Lancer le téléchargement depuis le service Google Photos/PicasaWeb"
+
+#: gswindow.cpp:428 gswindow.cpp:467 gswindow.cpp:577
+#, kde-format
+msgid "Google Photos/PicasaWeb Call Failed: %1\n"
+msgstr "L'appel de Google Photos/PicasaWeb a échoué : %1\n"
+
+#: gswindow.cpp:448 gswindow.cpp:527 gswindow.cpp:758
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: gswindow.cpp:531
+#, kde-format
+msgid "Google Photo Export"
+msgstr "Export vers Google Photo"
+
+#: gswindow.cpp:549
+#, kde-format
+msgid "Google Drive Call Failed: %1\n"
+msgstr "L'appel de Google Drive a échoué : %1\n"
+
+#: gswindow.cpp:653
+#, kde-format
+msgid ""
+"The textbox is empty, please enter the code from the browser in the textbox. "
+"To complete the authentication click \"Change Account\", or \"Start Upload\" "
+"to authenticate again."
+msgstr ""
+"Cette boîte de texte est vide, veuillez saisir le code indiqué dans le "
+"navigateur. Pour compléter l'authentification cliquez sur « changer de "
+"compte » ou « lancer la transmission » pour vous authentifier à nouveau."
+
+#: gswindow.cpp:669
+#, kde-format
+msgid "No image selected. Please select which images should be uploaded."
+msgstr ""
+"Aucune image sélectionné. Veuillez sélectionner quelles images devraient "
+"être transférées."
+
+#: gswindow.cpp:683 gswindow.cpp:706 gswindow.cpp:1014 gswindow.cpp:1032
+#: gswindow.cpp:1105
+#, kde-format
+msgid "Warning"
+msgstr "Avertissement"
+
+#: gswindow.cpp:684 gswindow.cpp:707
+#, kde-format
+msgid "Authentication failed. Click \"Continue\" to authenticate."
+msgstr ""
+"L'authentification a échoué. Cliquez sur « Continuer » pour vous "
+"authentifier."
+
+#: gswindow.cpp:687 gswindow.cpp:710 gswindow.cpp:1019 gswindow.cpp:1037
+#: gswindow.cpp:1109 gswindow.cpp:1288
+#, kde-format
+msgid "Continue"
+msgstr "Continuer"
+
+#: gswindow.cpp:688 gswindow.cpp:711 gswindow.cpp:1020 gswindow.cpp:1038
+#: gswindow.cpp:1110 gswindow.cpp:1289
+#, kde-format
+msgid "Cancel"
+msgstr "Annuler"
+
+#: gswindow.cpp:762
+#, kde-format
+msgid "Google Drive export"
+msgstr "Export vers Google Drive"
+
+#: gswindow.cpp:1015
+#, kde-format
+msgid ""
+"Failed to save photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"La transmission de la photo vers Google Drive a échoué : %1\n"
+"Voulez-vous continuer ?"
+
+#: gswindow.cpp:1033
+#, kde-format
+msgid ""
+"Failed to download photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Le téléchargement de la photo a échoué : %1\n"
+"Voulez-vous continuer ?"
+
+#: gswindow.cpp:1079
+#, kde-format
+msgid "Failed to save image to %1"
+msgstr "Il est impossible d'enregistrer une image dans %1"
+
+#: gswindow.cpp:1106
+#, kde-format
+msgid ""
+"Failed to upload photo to %1.\n"
+"%2\n"
+"Do you want to continue?"
+msgstr ""
+"La transmission de la photo vers %1 a échoué.\n"
+"%2\n"
+"Voulez-vous continuer ?"
+
+#: gswindow.cpp:1200
+#, kde-format
+msgctxt "%1 is the error string, %2 is the error code"
+msgid "An authentication error occurred: %1 (%2)"
+msgstr "Une erreur est survenue à l'authentification : %1 (%2)"
+
+#: gswindow.cpp:1242
+#, kde-format
+msgid ""
+"Google Drive call failed:\n"
+"%1"
+msgstr ""
+"L'appel de Google Drive a échoué :\n"
+"%1"
+
+#: gswindow.cpp:1250
+#, kde-format
+msgid ""
+"Google Photos/PicasaWeb call failed:\n"
+"%1"
+msgstr ""
+"L'appel de Google Photos/PicasaWeb a échoué :\n"
+"%1"
+
+#: gswindow.cpp:1283
+#, kde-format
+msgctxt "@title:window"
+msgid "Warning"
+msgstr "Avertissement"
+
+#: gswindow.cpp:1284
+#, kde-format
+msgid ""
+"After you have been logged out in the browser, click \"Continue\" to "
+"authenticate for another account"
+msgstr ""
+"Après vous être déconnecté dans le navigateur, cliquez sur « Continuer » "
+"pour vous connecter à un autre compte"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_googleservicesui.rc:7 kipiplugin_googleservicesui.rc:15
+#, kde-format
+msgid "&Export"
+msgstr "&Exporter"
+
+#. i18n: ectx: Menu (Import)
+#: kipiplugin_googleservicesui.rc:11
+#, kde-format
+msgid "&Import"
+msgstr "&Importer"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_googleservicesui.rc:21
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Barre principale"
+
+#: newalbumdlg.cpp:54
+#, kde-format
+msgid "Access Level"
+msgstr "Niveau d'accès"
+
+#: newalbumdlg.cpp:55
+#, kde-format
+msgid ""
+"These are security and privacy settings for the new Google Photos/PicasaWeb "
+"album."
+msgstr ""
+"Voici les paramètres de sécurité et de confidentialité pour le nouvel album "
+"Google Photos/PicasaWeb."
+
+#: newalbumdlg.cpp:57
+#, kde-format
+msgctxt "google photos/picasaweb album privacy"
+msgid "Public"
+msgstr "Public"
+
+#: newalbumdlg.cpp:59
+#, kde-format
+msgid "Public album is listed on your public Google Photos/PicasaWeb page."
+msgstr ""
+"Un album public apparaît dans votre page publique Google Photos/PicasaWeb."
+
+#: newalbumdlg.cpp:60
+#, kde-format
+msgctxt "google photos/picasaweb album privacy"
+msgid "Unlisted / Private"
+msgstr "Non-listé / Privé"
+
+#: newalbumdlg.cpp:61
+#, kde-format
+msgid "Unlisted album is only accessible via URL."
+msgstr "Les albums non-listés ne sont accessibles que par leur URL."
+
+#: newalbumdlg.cpp:62
+#, kde-format
+msgctxt "google photos/picasaweb album privacy"
+msgid "Sign-In Required to View"
+msgstr "Identification requise pour la consultation"
+
+#: newalbumdlg.cpp:63
+#, kde-format
+msgid "Unlisted album require Sign-In to View"
+msgstr "Album non-listé nécessitant une authentification pour l'affichage"
+
+#: newalbumdlg.cpp:71
+#, kde-format
+msgid "Privacy:"
+msgstr "Confidentialité :"
+
+#: plugin_googleservices.cpp:100
+#, kde-format
+msgid "Export to &Google Drive..."
+msgstr "Exporter vers &Google Drive..."
+
+#: plugin_googleservices.cpp:110
+#, kde-format
+msgid "Export to &Google Photos/PicasaWeb..."
+msgstr "Exporter vers &Google Photos/PicasaWeb..."
+
+#: plugin_googleservices.cpp:120
+#, kde-format
+msgid "Import from &Google Photos/PicasaWeb..."
+msgstr "Importer depuis Google Photos/PicasaWeb..."
+
+#: replacedialog.cpp:112
+#, kde-format
+msgid "Add As New"
+msgstr "Ajouter comme nouveau"
+
+#: replacedialog.cpp:113
+#, kde-format
+msgid "Item will be added alongside the linked version."
+msgstr "L'élément sera ajouté à côté de la version liée."
+
+#: replacedialog.cpp:119
+#, kde-format
+msgid "Add All"
+msgstr "Ajouter tous"
+
+#: replacedialog.cpp:120
+#, kde-format
+msgid ""
+"Items will be added alongside the linked version. You will not be prompted "
+"again."
+msgstr ""
+"Les éléments seront ajoutés à côté de la version liée. La question ne vous "
+"sera plus posée."
+
+#: replacedialog.cpp:126
+#, kde-format
+msgid "Replace"
+msgstr "Remplacer"
+
+#: replacedialog.cpp:127
+#, kde-format
+msgid "Item will be replacing the linked version."
+msgstr "L'élément remplacera la version liée."
+
+#: replacedialog.cpp:133
+#, kde-format
+msgid "Replace All"
+msgstr "Remplacer tous"
+
+#: replacedialog.cpp:134
+#, kde-format
+msgid ""
+"Items will be replacing the linked version. You will not be prompted again."
+msgstr ""
+"Les éléments remplaceront la version liée. La question ne vous sera plus "
+"posée."
+
+#: replacedialog.cpp:157
+#, kde-format
+msgid "A linked item already exists."
+msgstr "Un élément lié existe déjà."
+
+#: replacedialog.cpp:177
+#, kde-format
+msgid "Destination"
+msgstr "Destination"
+
+#: replacedialog.cpp:182
+#, kde-format
+msgid "Source"
+msgstr "Source"
+
+#~ msgid ""
+#~ "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+#~ msgstr ""
+#~ "Un fichier nommé « %1 » existe déjà. Voulez-vous vraiment l'écraser ?"
+
+#~ msgid "Picasa Export"
+#~ msgstr "Export Picasa"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Vincent Pinon, Peter Potrowl"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "vpinon@kde.org, peter.potrowl@gmail.com"
+
+#~ msgid "This is the list of images to upload to your Google Drive account."
+#~ msgstr "Ceci est la liste des images à envoyer à votre compte Google Drive."
+
+#~ msgid ""
+#~ "This is the list of images to upload to your Google Photos/PicasaWeb "
+#~ "account."
+#~ msgstr ""
+#~ "Ceci est la liste des images à envoyer à votre compte Google Photos/"
+#~ "PicasaWeb."
+
+#~ msgid "This is a clickable link to open Google Drive in a browser."
+#~ msgstr ""
+#~ "Ceci est un lien cliquable pour ouvrir Google Drive dans un navigateur."
+
+#~ msgid ""
+#~ "This is a clickable link to open Google Photos/PicasaWeb in a browser."
+#~ msgstr ""
+#~ "Ceci est un lien cliquable pour ouvrir Google Photos/PicasaWeb dans un "
+#~ "navigateur."
+
+#~ msgid "Account"
+#~ msgstr "Compte"
+
+#~ msgid "This is the Google Drive account that is currently logged in."
+#~ msgstr "Ceci est le compte Google Drive qui est actuellement connecté."
+
+#~ msgid ""
+#~ "This is the Google Photos/PicasaWeb account that is currently logged in."
+#~ msgstr ""
+#~ "Ceci est le compte Google Photos/PicasaWeb qui est actuellement connecté."
+
+#~ msgctxt "account settings"
+#~ msgid "Name:"
+#~ msgstr "Nom :"
+
+#~ msgid "Change Account"
+#~ msgstr "Changer de compte"
+
+#~ msgid "Change Google Drive account for transfer"
+#~ msgstr "Changer de compte Google Drive pour le transfert"
+
+#~ msgid "Change Google Photos/PicasaWeb account for transfer"
+#~ msgstr "Changer de compte Google Photos/PicasaWeb pour le transfert"
+
+#~ msgid "Album"
+#~ msgstr "Album"
+
+#~ msgid ""
+#~ "This is the Google Drive folder to which selected photos will be uploaded."
+#~ msgstr ""
+#~ "Ceci est le dossier Google Drive dans lequel les photos sélectionnées "
+#~ "seront transférées."
+
+#~ msgid ""
+#~ "This is the Google Photos/PicasaWeb folder to which selected photos will "
+#~ "be uploaded."
+#~ msgstr ""
+#~ "Ceci est le dossier Google Photos/PicasaWeb dans lequel les photos "
+#~ "sélectionnées seront transférées."
+
+#~ msgid ""
+#~ "This is the Google Photos/PicasaWeb folder from which selected photos "
+#~ "will be downloaded."
+#~ msgstr ""
+#~ "Ceci est le dossier Google Photos/PicasaWeb dans lequel les photos "
+#~ "sélectionnées seront transférées."
+
+#~ msgid "Album:"
+#~ msgstr "Album :"
+
+#~ msgid "New Album"
+#~ msgstr "Nouvel album"
+
+#~ msgid "Create new Google Drive folder"
+#~ msgstr "Créer un nouveau dossier Google Drive"
+
+#~ msgid "Create new Google Photos/PicasaWeb folder"
+#~ msgstr "Créer un nouveau dossier Google Photos/PicasaWeb"
+
+#~ msgctxt "album list"
+#~ msgid "Reload"
+#~ msgstr "Recharger"
+
+#~ msgid "Reload album list"
+#~ msgstr "Recharger la liste de l'album"
+
+#~ msgid "Max Dimension"
+#~ msgstr "Dimension maximale"
+
+#~ msgid ""
+#~ "This is the maximum dimension of the images. Images larger than this will "
+#~ "be scaled down."
+#~ msgstr ""
+#~ "Ceci est la dimension maximale des images. Les images plus grandes seront "
+#~ "réduites."
+
+#~ msgid "Original Size"
+#~ msgstr "Taille originale"
+
+#~ msgid "1600 px"
+#~ msgstr "1600 px"
+
+#~ msgid "1440 px"
+#~ msgstr "1440 px"
+
+#~ msgid "1280 px"
+#~ msgstr "1280 px"
+
+#~ msgid "1152 px"
+#~ msgstr "1152 px"
+
+#~ msgid "1024 px"
+#~ msgstr "1024 px"
+
+#~ msgid ""
+#~ "This is the location where Google Photos/PicasaWeb images will be "
+#~ "downloaded."
+#~ msgstr ""
+#~ "Ceci est le dossier Google Photos/PicasaWeb dans lequel les photos "
+#~ "sélectionnées seront transférées."
+
+#~ msgid "Options"
+#~ msgstr "Options"
+
+#~ msgid "These are the options that would be applied to photos before upload."
+#~ msgstr ""
+#~ "Voici les options qui seraient appliquées aux photos avant la "
+#~ "transmission."
+
+#~ msgid "Resize photos before uploading"
+#~ msgstr "Redimensionner les photos avant la transmission"
+
+#~ msgid "Maximum Dimension:"
+#~ msgstr "Dimension maximum :"
+
+#~ msgid "JPEG Quality:"
+#~ msgstr "Qualité JPEG :"
+
+#~ msgid "Title of the album that will be created (required)."
+#~ msgstr "Titre de l'album à créer (requis)."
+
+#~ msgid "These are basic settings for the new Google Photos/Picasaweb album."
+#~ msgstr ""
+#~ "Voici les paramètres essentiels pour le nouvel album Google Photos/"
+#~ "PicasaWeb."
+
+#~ msgid "Date and Time of the album that will be created (optional)."
+#~ msgstr "Date et heure de l'album à créer (optionnel)."
+
+#~ msgid "Description of the album that will be created (optional)."
+#~ msgstr "Description de l'album à créer (optionnel)."
+
+#~ msgid "Location of the album that will be created (optional)."
+#~ msgstr "Emplacement de l'album à créer (optionnel)."
+
+#~ msgid "This is the title of the folder that will be created."
+#~ msgstr "Nom du dossier à créer."
+
+#~ msgctxt "folder edit"
+#~ msgid "Title:"
+#~ msgstr "Titre :"
+
+#~ msgctxt "new google photos/picasaweb album dialog"
+#~ msgid "Title:"
+#~ msgstr "Titre :"
+
+#~ msgctxt "new google photos/picasaweb album dialog"
+#~ msgid "Date & Time:"
+#~ msgstr "Date et heure :"
+
+#~ msgctxt "new google photos/picasaweb album dialog"
+#~ msgid "Description:"
+#~ msgstr "Description :"
+
+#~ msgctxt "new google photos/picasaweb album dialog"
+#~ msgid "Location:"
+#~ msgstr "Emplacement :"
+
+#~ msgid ""
+#~ "Failed to upload photo to Google Drive.\n"
+#~ "%1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "La transmission de la photo vers Google Drive a échoué\n"
+#~ "%1\n"
+#~ "Voulez-vous continuer ?"
+
+#, fuzzy
+#~| msgid ""
+#~| "Failed to upload photo to Google Drive.\n"
+#~| "%1\n"
+#~| "Do you want to continue?"
+#~ msgid ""
+#~ "Failed to upload photo to Google Photos/PicasaWeb.\n"
+#~ "%1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "La transmission de la photo vers Google Drive a échoué\n"
+#~ "%1\n"
+#~ "Voulez-vous continuer ?"
+
+#, fuzzy
+#~| msgctxt "folder edit"
+#~| msgid "Title:"
+#~ msgctxt "new picasaweb album dialog"
+#~ msgid "Title:"
+#~ msgstr "Titre :"
+
+#~ msgid "Google Drive New Album"
+#~ msgstr "Nouvel album Google Drive"
+
+#, fuzzy
+#~| msgid "New Album"
+#~ msgid "Picasaweb New Album"
+#~ msgstr "Nouvel album"

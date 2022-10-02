@@ -1,0 +1,350 @@
+# translation of kipiplugin_piwigoexport.po to Icelandic
+# Copyright (C) 2010 This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Sveinn í Felli <sveinki@nett.is>, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_piwigoexport\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2018-01-04 12:16+0000\n"
+"Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
+"Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
+"Language: is\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.5\n"
+"Plural-Forms: Plural-Forms: nplurals=2; plural=n != 1;\n"
+"\n"
+"\n"
+"\n"
+"\n"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_piwigoui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Flytja annað"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_piwigoui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Aðalverkfæraslá"
+
+#: piwigoconfig.cpp:76
+#, kde-format
+msgctxt "piwigo login settings"
+msgid "URL:"
+msgstr "Slóð (URL):"
+
+#: piwigoconfig.cpp:80
+#, kde-format
+msgctxt "piwigo login settings"
+msgid "Username:"
+msgstr "Notandanafn:"
+
+#: piwigoconfig.cpp:84
+#, kde-format
+msgctxt "piwigo login settings"
+msgid "Password:"
+msgstr "Lykilorð:"
+
+#: piwigotalker.cpp:305
+#, kde-format
+msgid "Check if %1 already exists"
+msgstr "Athuga hvort %1 er þegar til staðar"
+
+#: piwigotalker.cpp:346
+#, kde-format
+msgid "Error"
+msgstr "Villa"
+
+#: piwigotalker.cpp:440
+#, kde-format
+msgid "Piwigo URL probably incorrect"
+msgstr "Slóðin á Piwigo myndasafnið er líklegast ekki rétt"
+
+#: piwigotalker.cpp:446
+#, kde-format
+msgid "Incorrect username or password specified"
+msgstr "Rangt notandanafn eða lykilorð"
+
+#: piwigotalker.cpp:489 piwigotalker.cpp:663
+#, kde-format
+msgid "Upload to Piwigo version < 2.4 is no longer supported"
+msgstr "Sending mynda á Piwigo útgáfu < 2.4 er ekki lengur stutt"
+
+#: piwigotalker.cpp:561 piwigotalker.cpp:639 piwigotalker.cpp:708
+#: piwigotalker.cpp:779
+#, kde-format
+msgid "Invalid response received from remote Piwigo"
+msgstr "Ógild svörun fékkst frá Piwigo myndasafnsþjóni"
+
+#: piwigotalker.cpp:567
+#, kde-format
+msgid "Failed to list albums"
+msgstr "Mistókst að gera albúmalista"
+
+#: piwigotalker.cpp:613
+#, kde-format
+msgid "Photo '%1' already exists."
+msgstr "Myndin '%1' er þegar til staðar."
+
+#: piwigotalker.cpp:645 piwigotalker.cpp:785 piwigotalker.cpp:945
+#, kde-format
+msgid "Failed to upload photo"
+msgstr "Mistókst að senda ljósmynd"
+
+#: piwigotalker.cpp:714
+#, kde-format
+msgid "Photo '%1' already exists in this album."
+msgstr "Myndin '%1' er þegar til staðar í þessu albúmi."
+
+#: piwigotalker.cpp:800
+#, kde-format
+msgid "Error : Cannot open photo: %1"
+msgstr "Villa: get ekki opnað ljósmynd: %1"
+
+#: piwigotalker.cpp:827
+#, kde-format
+msgid "Upload the chunk %1/%2 of %3"
+msgstr "Senda gagnaböggulinn (chunk) %1/%2 af %3"
+
+#: piwigotalker.cpp:860
+#, kde-format
+msgid "Warning : The full size photo cannot be uploaded."
+msgstr "Aðvörun: Ekki er hægt að senda mynd í fullri stærð."
+
+#: piwigotalker.cpp:906
+#, kde-format
+msgid "Upload the metadata of %1"
+msgstr "Senda lýsigögn fyrir %1"
+
+#: piwigotalker.cpp:939
+#, kde-format
+msgid "Invalid response received from remote Piwigo (%1)"
+msgstr "Ógild svörun fékkst frá fjartengdum Piwigo myndasafnsþjóni (%1)"
+
+#: piwigowindow.cpp:128
+#, kde-format
+msgid "Visit Piwigo website"
+msgstr "Fara á heimasíðu Piwigo"
+
+#: piwigowindow.cpp:145
+#, kde-format
+msgid "Albums"
+msgstr "Albúm"
+
+#: piwigowindow.cpp:156
+#, kde-format
+msgid "Change Account"
+msgstr "Skipta um aðgang"
+
+#: piwigowindow.cpp:160
+#, kde-format
+msgid "Options"
+msgstr "Valkostir"
+
+#: piwigowindow.cpp:164
+#, kde-format
+msgid "Resize photos before uploading"
+msgstr "Breyta stærð mynda fyrir sendingu"
+
+#: piwigowindow.cpp:167
+#, kde-format
+msgid "Maximum width:"
+msgstr "Hámarksbreidd:"
+
+#: piwigowindow.cpp:173
+#, kde-format
+msgid "Maximum height:"
+msgstr "Hámarkshæð:"
+
+#: piwigowindow.cpp:179
+#, kde-format
+msgid "Resized JPEG quality:"
+msgstr "Gæði stærðarbreyttrar JPEG:"
+
+#: piwigowindow.cpp:231 piwigowindow.cpp:235
+#, kde-format
+msgid "Piwigo Export"
+msgstr "Piwigo útflutningur"
+
+#: piwigowindow.cpp:236
+#, kde-format
+msgid "A tool to export image collections to a remote Piwigo server."
+msgstr "Verkfæri til að senda myndir í fjarlæg Piwigo myndasöfn."
+
+#: piwigowindow.cpp:237
+#, kde-format
+msgid ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2007, Colin Guthrie\n"
+"(c) 2006-2015, Gilles Caulier\n"
+"(c) 2008, Andrea Diamantini\n"
+"(c) 2010-2014, Frédéric Coiffier\n"
+msgstr ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2007, Colin Guthrie\n"
+"(c) 2006-2015, Gilles Caulier\n"
+"(c) 2008, Andrea Diamantini\n"
+"(c) 2010-2014, Frédéric Coiffier\n"
+
+#: piwigowindow.cpp:243
+#, kde-format
+msgid "Renchi Raju"
+msgstr "Renchi Raju"
+
+#: piwigowindow.cpp:244 piwigowindow.cpp:248 piwigowindow.cpp:252
+#: piwigowindow.cpp:256 piwigowindow.cpp:260
+#, kde-format
+msgid "Developer"
+msgstr "Forritari"
+
+#: piwigowindow.cpp:247
+#, kde-format
+msgid "Colin Guthrie"
+msgstr "Colin Guthrie"
+
+#: piwigowindow.cpp:251
+#, kde-format
+msgid "Andrea Diamantini"
+msgstr "Andrea Diamantini"
+
+#: piwigowindow.cpp:255
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: piwigowindow.cpp:259
+#, kde-format
+msgid "Frédéric Coiffier"
+msgstr "Frédéric Coiffier"
+
+#: piwigowindow.cpp:267
+#, kde-format
+msgid "Start Upload"
+msgstr "Hefja sendingu"
+
+#: piwigowindow.cpp:395
+#, kde-format
+msgid "Login Failed"
+msgstr "Innskráning mistókst"
+
+#: piwigowindow.cpp:396
+#, kde-format
+msgid "Failed to login into remote piwigo. "
+msgstr "Tókst ekki að skrá inn í Piwigo myndasafn. "
+
+#: piwigowindow.cpp:397
+#, kde-format
+msgid ""
+"\n"
+"Do you want to check your settings and try again?"
+msgstr ""
+"\n"
+"Viltu skoða stillingarnar þínar og reyna svo aftur?"
+
+#: piwigowindow.cpp:404 piwigowindow.cpp:644 plugin_piwigo.cpp:117
+#, kde-format
+msgid "Edit Piwigo Data"
+msgstr "Breyta Piwigo-gögnum"
+
+#: piwigowindow.cpp:464 piwigowindow.cpp:488
+#, kde-format
+msgid "Album"
+msgstr "Albúm"
+
+#: piwigowindow.cpp:507
+#, kde-format
+msgid "Image"
+msgstr "Mynd"
+
+#: piwigowindow.cpp:538
+#, kde-format
+msgid "Nothing to upload - please select photos to upload."
+msgstr "Ekkert til að senda - veldu myndir til sendingar."
+
+#: piwigowindow.cpp:576
+#, kde-format
+msgid "The file %1 is not a supported image or video format"
+msgstr "%1-skráin er ekki stutt mynd eða myndskeiðssnið"
+
+#: piwigowindow.cpp:580
+#, kde-format
+msgid "Uploading file %1"
+msgstr "Sendi skrá %1"
+
+#: piwigowindow.cpp:598
+#, kde-format
+msgid "Uploading Failed"
+msgstr "Upphleðsla mistókst"
+
+#: piwigowindow.cpp:599
+#, kde-format
+msgid "Failed to upload media into remote Piwigo. "
+msgstr "Tókst ekki að senda efni í fjartengt Piwigo-safn. "
+
+#: piwigowindow.cpp:600
+#, kde-format
+msgid ""
+"\n"
+"Do you want to continue?"
+msgstr ""
+"\n"
+"Viltu halda áfram?"
+
+#: plugin_piwigo.cpp:97
+#, kde-format
+msgid "Export to &Piwigo..."
+msgstr "Flytja út til &Piwigo..."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Sveinn í Felli"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "sv1@fellsnet.is"
+
+#~ msgid "Author"
+#~ msgstr "Höfundur"
+
+#~ msgid "Maintainer"
+#~ msgstr "Umsjónarmaður"
+
+#~ msgid "Upload resized version of %1"
+#~ msgstr "Senda breytta stærð af %1"
+
+#~ msgid "Upload the thumbnail of %1"
+#~ msgstr "Senda smámynd af %1"
+
+#~ msgid "Maximum thumbnail dimension:"
+#~ msgstr "Mesta stærð smámynda:"
+
+#~ msgid "Thumbnail size is ignored with Piwigo > 2.4"
+#~ msgstr "Stærð smámynda er hunsuð í Piwigo > 2.4"
+
+#~ msgid "&Add Selected Photos"
+#~ msgstr "Bæt&a við völdum myndum"
+
+#~ msgid "Override Default Options"
+#~ msgstr "Fara framhjá sjálfgefnum stillingum"
+
+#~ msgid "EXIF Comment (instead of file name) sets Title"
+#~ msgstr "EXIF athugasemd (í stað skráarheitis) er sett sem titill"
+
+#~ msgid "EXIF Comment (instead of file name) sets Comment"
+#~ msgstr "EXIF athugasemd (í stað skráarheitis) er sett sem athugasemdartexti"
+
+#~ msgid "Also download the full size version"
+#~ msgstr "Ná einnig í útgáfu í fullri stærð"
+
+#~ msgid "Handbook"
+#~ msgstr "Handbók"
+
+#~ msgid "Settings"
+#~ msgstr "Stillingar"

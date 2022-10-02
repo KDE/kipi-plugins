@@ -1,0 +1,521 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Thanomsub Noppaburana <donga.nb@gmail.com>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2010-03-03 22:21+0700\n"
+"Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
+"Language-Team: Thai <thai-l10n@googlegroups.com>\n"
+"Language: th\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. i18n: ectx: Menu (Import)
+#: kipiplugin_smugui.rc:7
+#, fuzzy, kde-format
+#| msgid "Smug Import/Export"
+msgid "&Import"
+msgstr "นำเข้า/ส่งออก ไปยังบริการ SmugMug"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_smugui.rc:11
+#, fuzzy, kde-format
+#| msgid "Smug Import/Export"
+msgid "&Export"
+msgstr "นำเข้า/ส่งออก ไปยังบริการ SmugMug"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_smugui.rc:17
+#, kde-format
+msgid "Main Toolbar"
+msgstr ""
+
+#: plugin_smug.cpp:98
+#, kde-format
+msgid "Export to &SmugMug..."
+msgstr "ส่งออกไปยัง &SmugMug..."
+
+#: plugin_smug.cpp:109
+#, kde-format
+msgid "Import from &SmugMug..."
+msgstr "นำเข้าจาก &SmugMug..."
+
+#: smugalbum.cpp:54
+#, kde-format
+msgid "SmugMug New Album"
+msgstr "อัลบั้มใหม่ของ SmugMug"
+
+#: smugalbum.cpp:64 smugwidget.cpp:117
+#, kde-format
+msgid "Album"
+msgstr "อัลบั้ม"
+
+#: smugalbum.cpp:65
+#, kde-format
+msgid "These are basic settings for the new SmugMug album."
+msgstr "นี่เป็นการตั้งค่าพื้นฐานต่าง ๆ สำหรับอัลบั้มใหม่ของ SmugMug"
+
+#: smugalbum.cpp:68
+#, kde-format
+msgid "Title of the album that will be created (required)."
+msgstr "ชื่อของอัลบั้มที่จะถูกสร้าง (จำเป็นต้องป้อนชื่อ)"
+
+#: smugalbum.cpp:72
+#, kde-format
+msgid "Category of the album that will be created (required)."
+msgstr "หมวดหมู่ของอัลบั้มที่จะถูกสร้าง (จำเป็นต้องป้อนค่า)"
+
+#: smugalbum.cpp:76
+#, kde-format
+msgid "Subcategory of the album that will be created (optional)."
+msgstr "หมวดหมู่ย่อยของอัลบั้มที่จะถูกสร้าง (ตัวเลือกเพิ่มเติม)"
+
+#: smugalbum.cpp:79
+#, kde-format
+msgid "Description of the album that will be created (optional)."
+msgstr "คำอธิบายของอัลบั้มที่จะถูกสร้าง (ตัวเลือกเพิ่มเติม)"
+
+#: smugalbum.cpp:83
+#, kde-format
+msgid "Album template for the new album (optional)."
+msgstr "แม่แบบของอัลบั้มใหม่ (ตัวเลือกเพิ่มเติม)"
+
+#: smugalbum.cpp:86
+#, kde-format
+msgctxt "new smug album dialog"
+msgid "Title:"
+msgstr "ชื่ออัลบั้ม:"
+
+#: smugalbum.cpp:87
+#, kde-format
+msgctxt "new smug album dialog"
+msgid "Category:"
+msgstr "หมวดหมู่:"
+
+#: smugalbum.cpp:88
+#, kde-format
+msgctxt "new smug album dialog"
+msgid "Subcategory:"
+msgstr "หมวดหมู่ย่อย:"
+
+#: smugalbum.cpp:89
+#, kde-format
+msgctxt "new smug album dialog"
+msgid "Description:"
+msgstr "คำอธิบาย:"
+
+#: smugalbum.cpp:90
+#, kde-format
+msgctxt "new smug album dialog"
+msgid "Template:"
+msgstr "แม่แบบ:"
+
+#: smugalbum.cpp:98
+#, kde-format
+msgid "Security && Privacy"
+msgstr "ความปลอดภัยและความเป็นส่วนตัว"
+
+#: smugalbum.cpp:99
+#, kde-format
+msgid "These are security and privacy settings for the new SmugMug album."
+msgstr "นี่เป็นส่วนตั้งค่าค่าความปลอดภัยและความเป็นส่วนตัวสำหรับใช้กับอัลบั้มใหม่ของ SmugMug"
+
+#: smugalbum.cpp:101
+#, kde-format
+msgctxt "smug album privacy"
+msgid "Public"
+msgstr "สาธารณะ"
+
+#: smugalbum.cpp:103
+#, kde-format
+msgid "Public album is listed on your public SmugMug page."
+msgstr "อัลบั้มแบบสาธารณะจะถูกแสดงรายการในหน้าเว็บสาธารณะบน SmugMug ของคุณ"
+
+#: smugalbum.cpp:104
+#, kde-format
+msgctxt "smug album privacy"
+msgid "Unlisted"
+msgstr "ไม่แสดงรายการ"
+
+#: smugalbum.cpp:105
+#, kde-format
+msgid "Unlisted album is only accessible via URL."
+msgstr "ไม่แสดงอัลบั้มในรายการ ซึ่งสามารถจะเข้าใช้งานผ่านทางที่อยู่ URL เท่านั้น"
+
+#: smugalbum.cpp:112
+#, kde-format
+msgid "Require password to access the album (optional)."
+msgstr "ต้องการรหัสผ่านในการเข้าใช้งานอัลบั้มนี้ (ตัวเลือกเพิ่มเติม)"
+
+#: smugalbum.cpp:115
+#, kde-format
+msgid "Password hint to present to users in the password prompt (optional)."
+msgstr "คำบอกใบ้รหัสผ่านให้กับผู้ใช้ในการป้อนรหัสผ่าน (ตัวเลือกเพิ่มเติม)"
+
+#: smugalbum.cpp:118
+#, kde-format
+msgid "Privacy:"
+msgstr "ความเป็นส่วนตัว:"
+
+#: smugalbum.cpp:119
+#, kde-format
+msgid "Password:"
+msgstr "รหัสผ่าน:"
+
+#: smugalbum.cpp:120
+#, kde-format
+msgid "Password Hint:"
+msgstr "คำบอกใบ้รหัสผ่าน:"
+
+#: smugtalker.cpp:111
+#, kde-format
+msgid "Logging in to SmugMug service..."
+msgstr "ทำการล็อกอินไปยังบริการ SmugMug..."
+
+#: smugtalker.cpp:464
+#, kde-format
+msgid "Login failed"
+msgstr "การล็อกอินล้มเหลว"
+
+#: smugtalker.cpp:467
+#, kde-format
+msgid "Invalid user/nick/password"
+msgstr "ชื่อผู้ใช้/ชื่อเล่น/รหัสผ่าน ใช้ไม่ได้หรือไม่ถูกต้อง"
+
+#: smugtalker.cpp:470
+#, kde-format
+msgid "Invalid API key"
+msgstr "กุญแจ API ใช้ไม่ได้หรือไม่ถูกต้อง"
+
+#: smugtalker.cpp:512 smugwindow.cpp:412 smugwindow.cpp:421 smugwindow.cpp:451
+#: smugwindow.cpp:484 smugwindow.cpp:516 smugwindow.cpp:546 smugwindow.cpp:920
+#, kde-format
+msgid "Error"
+msgstr ""
+
+#: smugwidget.cpp:73
+#, kde-format
+msgid "This is the list of images to upload to your SmugMug account."
+msgstr "นี่เป็นรายการของรูปภาพต่าง ๆ ที่จะถูกอัปโหลดไปยังบัญชีผู้ใช้บริการ SmugMug ของคุณ"
+
+#: smugwidget.cpp:79
+#, kde-format
+msgid ""
+"This is a clickable link to open the SmugMug home page in a web browser."
+msgstr "นี่เป็นส่วนเชื่อมโยงที่สามารถคลิกได้ เพื่อเปิดหน้าหลักของ SmugMug ในเว็บเบราว์เซอร์"
+
+#: smugwidget.cpp:85
+#, kde-format
+msgid "Account"
+msgstr "บัญชีผู้ใช้"
+
+#: smugwidget.cpp:86
+#, kde-format
+msgid "This is the SmugMug account that will be used to authenticate."
+msgstr "นี่เป็นบัญชีผู้ใช้งาน SmugMug ที่จะถูกทำการตรวจสอบสิทธิ์"
+
+#: smugwidget.cpp:89
+#, kde-format
+msgctxt "smug account login"
+msgid "Anonymous"
+msgstr "ผู้ใช้นิรนาม"
+
+#: smugwidget.cpp:90
+#, kde-format
+msgid "Login as anonymous to SmugMug web service."
+msgstr "ล็อกอินเป็นผู้ใช้นิรนามไปยังเว็บให้บริการ SmugMug"
+
+#: smugwidget.cpp:92
+#, kde-format
+msgid "SmugMug Account"
+msgstr "บัญชีผู้ใช้ของ SmugMug"
+
+#: smugwidget.cpp:93
+#, kde-format
+msgid "Login to SmugMug web service using email and password."
+msgstr "ล็อกอินไปยังเว็บบริการ SmugMug โดยใช้ที่อยู่อีเมลและรหัสผ่าน"
+
+#: smugwidget.cpp:95
+#, kde-format
+msgctxt "smug account settings"
+msgid "Name:"
+msgstr "ชื่อ:"
+
+#: smugwidget.cpp:97
+#, kde-format
+msgctxt "smug account settings"
+msgid "Email:"
+msgstr "อีเมล:"
+
+#: smugwidget.cpp:101
+#, kde-format
+msgid "Change Account"
+msgstr "เปลี่ยนบัญชีผู้ใช้"
+
+#: smugwidget.cpp:103
+#, kde-format
+msgid "Change SmugMug Account used to authenticate"
+msgstr "เปลี่ยนบัญชีผู้ใช้ของ SmugMug เพื่อใช้ในการตรวจสอบสิทธิ์"
+
+#: smugwidget.cpp:118
+#, kde-format
+msgid "This is the SmugMug album that will be used for transfer."
+msgstr "นี่เป็นอัลบั้มของ SmugMug ที่จะถูกทำการถ่ายโอนข้อมูล"
+
+#: smugwidget.cpp:123
+#, kde-format
+msgid "Nickname:"
+msgstr "ชื่อเล่น:"
+
+#: smugwidget.cpp:125
+#, kde-format
+msgid "Nickname of SmugMug user to list albums."
+msgstr "ชื่อเล่นของผู้ใช้บริการ SmugMug เพื่อใช้ในการเรียกรายการอัลบั้ม"
+
+#: smugwidget.cpp:126
+#, kde-format
+msgid "Site Password:"
+msgstr "รหัสผ่านของเว็บไซต์:"
+
+#: smugwidget.cpp:128
+#, kde-format
+msgid "Site-wide password for specified SmugMug nick/user."
+msgstr "รหัสผ่านของเว็บไซต์สำหรับผู้ใช้/ชื่อเล่นของ SmugMug ที่ระบุ"
+
+#: smugwidget.cpp:129
+#, kde-format
+msgid "Album Password:"
+msgstr "รหัสผ่านของอัลบั้ม:"
+
+#: smugwidget.cpp:131
+#, kde-format
+msgid "Password for SmugMug album."
+msgstr "รหัสผ่านสำหรับใช้งานอัลบั้มบน SmugMug"
+
+#: smugwidget.cpp:134
+#, kde-format
+msgid "New Album"
+msgstr "อัลบั้มใหม่"
+
+#: smugwidget.cpp:136
+#, kde-format
+msgid "Create new SmugMug album"
+msgstr "สร้างอัลบั้มใหม่ของ SmugMug"
+
+#: smugwidget.cpp:139
+#, kde-format
+msgctxt "reload album list"
+msgid "Reload"
+msgstr "โหลดใหม่อีกครั้ง"
+
+#: smugwidget.cpp:141
+#, kde-format
+msgid "Reload album list"
+msgstr "โหลดรายการอัลบั้มใหม่อีกครั้ง"
+
+#: smugwidget.cpp:155
+#, kde-format
+msgid "Destination"
+msgstr "ปลายทาง"
+
+#: smugwidget.cpp:156
+#, kde-format
+msgid "This is the location where SmugMug images will be downloaded."
+msgstr "นี่เป็นตำแหน่งที่จะใช้ในการเก็บภาพต่าง ๆ ของ SmugMug เมื่อทำการดาวน์โหลด"
+
+#: smugwidget.cpp:163
+#, kde-format
+msgid "Options"
+msgstr "ตัวเลือกต่าง ๆ"
+
+#: smugwidget.cpp:164
+#, kde-format
+msgid "These are options that will be applied to images before upload."
+msgstr "นี่เป็นตัวเลือกต่าง ๆ ที่จะถูกปรับใช้กับภาพต่าง ๆ ก่อนจะทำการอัปโหลด"
+
+#: smugwidget.cpp:168
+#, kde-format
+msgid "Resize photos before uploading"
+msgstr "ปรับขนาดภาพต่าง ๆ ก่อนทำการอัปโหลด"
+
+#: smugwidget.cpp:178
+#, kde-format
+msgid "Maximum dimension:"
+msgstr "มิติขนาดสูงสุด:"
+
+#: smugwidget.cpp:186
+#, kde-format
+msgid "JPEG quality:"
+msgstr "คุณภาพภาพ JPEG:"
+
+#: smugwindow.cpp:86
+#, kde-format
+msgid "Import from SmugMug Web Service"
+msgstr "นำเข้าจากเว็บบริการ SmugMug"
+
+#: smugwindow.cpp:88
+#, kde-format
+msgid "Start Download"
+msgstr "เริ่มการดาวน์โหลด"
+
+#: smugwindow.cpp:89
+#, kde-format
+msgid "Start download from SmugMug web service"
+msgstr "เริ่มการดาวน์โหลดจากเว็บบริการ SmugMug"
+
+#: smugwindow.cpp:95
+#, kde-format
+msgid "Export to SmugMug Web Service"
+msgstr "ส่งออกไปยังบริการ SmugMug บนเว็บ"
+
+#: smugwindow.cpp:97
+#, kde-format
+msgid "Start Upload"
+msgstr "เริ่มการอัปโหลด"
+
+#: smugwindow.cpp:98
+#, kde-format
+msgid "Start upload to SmugMug web service"
+msgstr "เริ่มการอัปโหลดไปยังเว็บบริการ SmugMug"
+
+#: smugwindow.cpp:127
+#, kde-format
+msgid "Smug Import/Export"
+msgstr "นำเข้า/ส่งออก ไปยังบริการ SmugMug"
+
+#: smugwindow.cpp:128
+#, fuzzy, kde-format
+#| msgid ""
+#| "A Kipi plugin to import/export image collections from/to the SmugMug web "
+#| "service."
+msgid ""
+"A tool to import/export image collections from/to the SmugMug web service."
+msgstr "ส่วนเสริมของ Kipi สำหรับส่งออกชุดภาพสะสมไปยังเว็บบริการ SmugMug"
+
+#: smugwindow.cpp:130
+#, fuzzy, kde-format
+#| msgid ""
+#| "(c) 2005-2008, Vardhman Jain\n"
+#| "(c) 2008-2009, Gilles Caulier\n"
+#| "(c) 2008-2009, Luka Renko"
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2012, Gilles Caulier\n"
+"(c) 2008-2009, Luka Renko"
+msgstr ""
+"สงวนลิขสิทธิ์ (c) 2005-2008, Vardhman Jain\n"
+"สงวนลิขสิทธิ์ (c) 2008-2009, Gilles Caulier\n"
+"สงวนลิขสิทธิ์ (c) 2008-2009, Luka Renko"
+
+#: smugwindow.cpp:134
+#, kde-format
+msgid "Luka Renko"
+msgstr "Luka Renko"
+
+#: smugwindow.cpp:135
+#, kde-format
+msgid "Author and maintainer"
+msgstr "ผู้เขียนและผู้ดูแล"
+
+#: smugwindow.cpp:144
+#, kde-format
+msgid ""
+"<qt>Enter the <b>email address</b> and <b>password</b> for your <a href="
+"\"http://www.smugmug.com\">SmugMug</a> account</qt>"
+msgstr ""
+"<qt>ป้อน<b>ที่อยู่อีเมล</b>และ<b>รหัสผ่าน</b>ของบัญชีผู้ใช้งานบริการ <a href=\"http://www."
+"smugmug.com\">SmugMug</a> ของคุณ</qt>"
+
+#: smugwindow.cpp:412 smugwindow.cpp:421 smugwindow.cpp:451 smugwindow.cpp:484
+#: smugwindow.cpp:516 smugwindow.cpp:546 smugwindow.cpp:920
+#, kde-format
+msgid "SmugMug Call Failed: %1\n"
+msgstr "ล้มเหลวในการเรียกใช้บริการ SmugMug: %1\n"
+
+#: smugwindow.cpp:480 smugwindow.cpp:542
+#, kde-format
+msgid "&lt;none&gt;"
+msgstr "&lt;ไม่มี&gt;"
+
+#: smugwindow.cpp:668 smugwindow.cpp:701
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: smugwindow.cpp:671
+#, fuzzy, kde-format
+#| msgid "Smug Import/Export"
+msgid "Smug Import"
+msgstr "นำเข้า/ส่งออก ไปยังบริการ SmugMug"
+
+#: smugwindow.cpp:704
+#, fuzzy, kde-format
+#| msgid "Smug Import/Export"
+msgid "Smug Export"
+msgstr "นำเข้า/ส่งออก ไปยังบริการ SmugMug"
+
+#: smugwindow.cpp:789 smugwindow.cpp:803
+#, kde-format
+msgid "Cannot open file"
+msgstr "ไม่สามารถเปิดแฟ้มได้"
+
+#: smugwindow.cpp:826
+#, fuzzy, kde-format
+#| msgid "Login failed"
+msgid "Uploading Failed"
+msgstr "การล็อกอินล้มเหลว"
+
+#: smugwindow.cpp:827
+#, fuzzy, kde-format
+#| msgid ""
+#| "Failed to upload photo into SmugMug: %1\n"
+#| "Do you want to continue?"
+msgid ""
+"Failed to upload photo to SmugMug.\n"
+"%1\n"
+"Do you want to continue?"
+msgstr ""
+"ล้มเหลวในการอัปโหลดไปไว้ใน SmugMug: %1\n"
+"คุณต้องการจะทำต่อไปหรือไม่ ?"
+
+#: smugwindow.cpp:888 smugwindow.cpp:901
+#, fuzzy, kde-format
+#| msgid "Login failed"
+msgid "Processing Failed"
+msgstr "การล็อกอินล้มเหลว"
+
+#: smugwindow.cpp:889
+#, kde-format
+msgid ""
+"Failed to save photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"ล้มเหลวในบันทึกภาพถ่าย: %1\n"
+"คุณต้องการจะทำต่อไปหรือไม่ ?"
+
+#: smugwindow.cpp:902
+#, kde-format
+msgid ""
+"Failed to download photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"ล้มเหลวในการดาวน์โหลดภาพถ่าย: %1\n"
+"คุณต้องการจะทำต่อไปหรือไม่ ?"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "ถนอมทรัพย์ นพบูรณ์"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "donga.nb@gmail.com"
+
+#~ msgid "Handbook"
+#~ msgstr "คู่มือการใช้งาน"

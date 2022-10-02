@@ -1,0 +1,474 @@
+# translation of kipiplugin_sendimages.po to bosanski
+# Chusslove Illich <caslav.ilic@gmx.net>, 2004.
+# Slobodan Simic <simicsl@verat.net>, 2005, 2007, 2008.
+# KDE 4 <megaribi@epn.ba>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_sendimages\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2015-02-22 15:43+0100\n"
+"Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
+"Language-Team: bosanski <bs@li.org>\n"
+"Language: bs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Launchpad (build 17341)\n"
+"X-Launchpad-Export-Date: 2015-02-16 06:45+0000\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#: imageresize.cpp:116
+#, kde-format
+msgid "Error opening input file"
+msgstr "Greška pri otvaranju datoteke za unos"
+
+#: imageresize.cpp:127
+#, kde-format
+msgid "Error opening temporary folder"
+msgstr "Greška pri otvaranju privremene datoteke"
+
+#: imageresize.cpp:175
+#, kde-format
+msgid "Cannot resize image. Aborting."
+msgstr "Ne mogu raširiti sliku. Prekidam."
+
+#: imageresize.cpp:186
+#, kde-format
+msgid "Cannot save resized image (JPEG). Aborting."
+msgstr "Ne mogu snimiti sliku promijenjene veličine  (JPEG). Prekidam."
+
+#: imageresize.cpp:194
+#, kde-format
+msgid "Cannot save resized image (PNG). Aborting."
+msgstr "Ne mogu snimiti sliku promijenjene veličine  (PNG). Prekidam."
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_sendimagesui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Izvezi"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_sendimagesui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Glavna alatna traka"
+
+#: plugin_sendimages.cpp:115
+#, kde-format
+msgid "Email Images..."
+msgstr "Pošalji slike e-poštom..."
+
+#: sendimages.cpp:133
+#, kde-format
+msgid "Email images"
+msgstr "Pošalji slike elektronskom poštom"
+
+#: sendimages.cpp:176
+#, kde-format
+msgid "Operation canceled by user"
+msgstr "Korisnik prekinuo opraciju"
+
+#: sendimages.cpp:190
+#, kde-format
+msgid "Resizing %1"
+msgstr "Promjena širine %1"
+
+#: sendimages.cpp:203
+#, kde-format
+msgid "%1 resized successfully"
+msgstr "%1 uspješno raširena"
+
+#: sendimages.cpp:212
+#, kde-format
+msgid "Failed to resize %1: %2"
+msgstr "Neuspjeh u promjeni širine %1: %2"
+
+#: sendimages.cpp:240
+#, kde-format
+msgid "There are no files to send"
+msgstr ""
+
+#: sendimages.cpp:258
+#, kde-format
+msgid "Build images properties file"
+msgstr "Izgradi datoteku svojstava slike"
+
+#: sendimages.cpp:271
+#, kde-format
+msgid "no caption"
+msgstr "bez komentara"
+
+#: sendimages.cpp:274
+#, kde-format
+msgid "no keywords"
+msgstr "nema ključnih riječi"
+
+#: sendimages.cpp:276
+#, kde-format
+msgid ""
+"file \"%1\":\n"
+"Original images: %2\n"
+msgstr ""
+"datoteka \"%1\":\n"
+"Originalne slike: %2\n"
+
+#: sendimages.cpp:279
+#, kde-format
+msgid "Comments: %1\n"
+msgstr "Komentari: %1\n"
+
+#: sendimages.cpp:282
+#, kde-format
+msgid "Tags: %1\n"
+msgstr "Oznake: %1\n"
+
+#: sendimages.cpp:285
+#, kde-format
+msgid "Rating: %1\n"
+msgstr "Rang: %1\n"
+
+#: sendimages.cpp:290 sendimages.cpp:298
+#, kde-format
+msgid "properties.txt"
+msgstr "properties.txt"
+
+#: sendimages.cpp:297
+#, fuzzy, kde-format
+#| msgid "Image properties file done"
+msgid "Image properties file cannot be opened"
+msgstr "Odrađena datoteka svojstava slike"
+
+#: sendimages.cpp:306
+#, kde-format
+msgid "Image properties file done"
+msgstr "Odrađena datoteka svojstava slike"
+
+#: sendimages.cpp:324
+#, kde-format
+msgid "Processing Failed"
+msgstr ""
+
+#: sendimages.cpp:325
+#, fuzzy, kde-format
+#| msgid ""
+#| "The images listed below cannot be resized.\n"
+#| "Do you want them to be added as attachments (without resizing)?"
+msgid ""
+"Some images cannot be resized.\n"
+"Do you want them to be added as attachments without resizing?"
+msgstr ""
+"Slikama navedenim u nastavku ne može se promijeniti veličina.\n"
+"Želite li ih dodati u priloge (bez promjene veličine)?"
+
+#: sendimages.cpp:390
+#, kde-format
+msgid ""
+"The file \"%1\" is too big to be sent, please reduce its size or change your "
+"settings"
+msgstr ""
+"Datoteka \"%1\" je prevelika da se šalje, molimo smanjiti njezinu veličinu "
+"ili promijeniti svoje postavke"
+
+#: sendimages.cpp:442
+#, fuzzy, kde-format
+#| msgid "Starting default KDE email program..."
+msgid "Starting default desktop email program..."
+msgstr "Pokrećem zadani KDE e-mail program ..."
+
+#: sendimages.cpp:674
+#, kde-format
+msgid "Failed to start \"%1\" program. Check your system."
+msgstr "Nije uspjelo pokretanje  \"%1\" programa. Provjerite svoj sistem."
+
+#: sendimages.cpp:687
+#, kde-format
+msgid "Starting \"%1\" program..."
+msgstr "Pokrećem \"%1\" program..."
+
+#: sendimages.cpp:697
+#, kde-format
+msgid "After having sent your images by email..."
+msgstr "Nakon što ste poslali svoje slike putem e-pošte ..."
+
+#: sendimages.cpp:698
+#, kde-format
+msgid "Press 'Close' button to clean up temporary files"
+msgstr "Pritisnite \"Zatvori\" dugme da počistite privremene datoteke"
+
+#: sendimagesdialog.cpp:81
+#, kde-format
+msgid "Email Images Options"
+msgstr "Opcije slanja slika e-poštom"
+
+#: sendimagesdialog.cpp:84
+#, kde-format
+msgctxt "@action:button"
+msgid "&Send"
+msgstr ""
+
+#: sendimagesdialog.cpp:103
+#, kde-format
+msgid "Send Images"
+msgstr "Pošalji slike"
+
+#: sendimagesdialog.cpp:104
+#, fuzzy, kde-format
+#| msgid "A plugin to e-mail items"
+msgid "A tool to e-mail items"
+msgstr "Dodatak za slanje slike elektronskom poštom"
+
+#: sendimagesdialog.cpp:105
+#, fuzzy, kde-format
+#| msgid "(c) 2003-2013, Gilles Caulier"
+msgid "(c) 2003-2016, Gilles Caulier"
+msgstr "(c) 2003-2013, Gilles Caulier"
+
+#: sendimagesdialog.cpp:107
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: sendimagesdialog.cpp:107
+#, kde-format
+msgid "Author and Maintainer"
+msgstr "Autor i Održavalac"
+
+#: sendimagesdialog.cpp:110
+#, kde-format
+msgid "Michael Hoechstetter"
+msgstr "Michael Hoechstetter"
+
+#: sendimagesdialog.cpp:110 sendimagesdialog.cpp:113
+#, kde-format
+msgid "Developer"
+msgstr "Programer"
+
+#: sendimagesdialog.cpp:113
+#, kde-format
+msgid "Tom Albers"
+msgstr "Tom Albers"
+
+#: settingswidget.cpp:91
+#, kde-format
+msgid "Mail program:"
+msgstr "Program pošte:"
+
+#: settingswidget.cpp:94
+#, fuzzy, kde-format
+#| msgctxt "default mail agent"
+#| msgid "Default"
+msgctxt "default desktop mail agent"
+msgid "Default"
+msgstr "Podrazumijevano"
+
+#: settingswidget.cpp:106
+#, fuzzy, kde-format
+#| msgid ""
+#| "Select your preferred external email program here. <b>Default</b> is the "
+#| "current email program set in KDE System Settings."
+msgid ""
+"Select your preferred external email program here. <b>Default</b> is the "
+"current email program set in desktop system settings."
+msgstr ""
+"Odaberite željeni vanjski program e-pošte ovdje.<b>Podrazumijevan</b> je "
+"trenutni e-mail program postavljen u KDE postavkama sistema."
+
+#: settingswidget.cpp:112
+#, kde-format
+msgid "Attach a file with image properties from %1"
+msgstr "Priloži datoteku sa svojstvima slika iz %1"
+
+#: settingswidget.cpp:115
+#, kde-format
+msgid ""
+"If you enable this option, all image properties set by %1 as Comments, "
+"Rating, or Tags, will be added as an attached file."
+msgstr ""
+"Ako omogućite ovu opciju, sva svojstava slike koje je postavio %1 kao "
+"komentari, ocjena, ili oznake, će biti dodani u priloženoj datoteci."
+
+#: settingswidget.cpp:125
+#, kde-format
+msgid " MB"
+msgstr " MB"
+
+#: settingswidget.cpp:127
+#, kde-format
+msgid "Maximum email size limit:"
+msgstr "Maksimalna veličina e-mail ograničenje:"
+
+#: settingswidget.cpp:132
+#, kde-format
+msgid "Adjust image properties"
+msgstr "Podesi svojstva slike"
+
+#: settingswidget.cpp:134
+#, kde-format
+msgid ""
+"If you enable this option, all images to be sent can be resized and "
+"recompressed."
+msgstr ""
+"Ako omogućite ovu opciju, svim slikama koje će biti poslan može se "
+"promijeniti veličina i kompresina."
+
+#: settingswidget.cpp:137
+#, kde-format
+msgid "Image Properties"
+msgstr "Svojstva slike"
+
+#: settingswidget.cpp:141 settingswidget.cpp:167
+#, kde-format
+msgid "Very Small (320 pixels)"
+msgstr "Vrlo male (320 piksela)"
+
+#: settingswidget.cpp:142 settingswidget.cpp:168
+#, kde-format
+msgid "Small (640 pixels)"
+msgstr "Male (640 piksela)"
+
+#: settingswidget.cpp:143 settingswidget.cpp:169
+#, kde-format
+msgid "Medium (800 pixels)"
+msgstr "Srednje (800 piksela)"
+
+#: settingswidget.cpp:144 settingswidget.cpp:170
+#, kde-format
+msgid "Big (1024 pixels)"
+msgstr "Velike (1024 piksela)"
+
+#: settingswidget.cpp:145 settingswidget.cpp:171
+#, kde-format
+msgid "Very Big (1280 pixels)"
+msgstr "Vrlo velike (1280 piksela)"
+
+#: settingswidget.cpp:146 settingswidget.cpp:172
+#, kde-format
+msgid "Large - for printing (1600 pixels)"
+msgstr "Ogromne - za štampu (1600 piksela)"
+
+#: settingswidget.cpp:147 settingswidget.cpp:173
+#, fuzzy, kde-format
+#| msgid "Small (640 pixels)"
+msgid "Full HD (1920 pixels)"
+msgstr "Male (640 piksela)"
+
+#: settingswidget.cpp:148 settingswidget.cpp:174
+#, fuzzy, kde-format
+#| msgid "Small (640 pixels)"
+msgid "Ultra HD (3840 pixels)"
+msgstr "Male (640 piksela)"
+
+#: settingswidget.cpp:150
+#, fuzzy, kde-format
+#| msgid ""
+#| "<p>Select the size of the images that are to be sent:</p><p><b>%1</b>: "
+#| "use this if you have a very slow Internet connection or the target "
+#| "mailbox size is very limited.</p><p><b>%2</b>: use this if you have a "
+#| "slow Internet connection and the target mailbox size is limited.</p><p><b>"
+#| "%3</b>: this is the default value for medium Internet connection speed "
+#| "and target mailbox size.</p><p><b>%4</b>: use this if you have a high-"
+#| "speed Internet connection and the target mailbox size is not limited.</"
+#| "p><p><b>%5</b>: use this if you have no size or speed restrictions.</"
+#| "p><p><b>%6</b>: use this only for printing purposes.</p>"
+msgid ""
+"<p>Select the size of the images that are to be sent:</p><p><b>%1</b>: use "
+"this if you have a very slow Internet connection or the target mailbox size "
+"is very limited.</p><p><b>%2</b>: use this if you have a slow Internet "
+"connection and the target mailbox size is limited.</p><p><b>%3</b>: this is "
+"the default value for medium Internet connection speed and target mailbox "
+"size.</p><p><b>%4</b>: use this if you have a high-speed Internet connection "
+"and the target mailbox size is not limited.</p><p><b>%5</b>: use this if you "
+"have no size or speed restrictions.</p><p><b>%6</b>: use this only for "
+"printing purposes.</p><p><b>%7</b>: use this for optimal viewing on Full HD "
+"displays. Only if you have a high-speed Internet connection and the target "
+"mailbox size is not limited.</p><p><b>%8</b>: use this for optimal viewing "
+"on Ultra HD displays. Only if you have a high-speed Internet connection and "
+"the target mailbox size is not limited.</p>"
+msgstr ""
+"<p>Odaberite veličinu slike koje se šalju:</p><p><b>%1</b>: Koristite ovo "
+"ako imate jako sporu internetsku vezu ili je veličina odredišnog poštanskog "
+"sandučića vrlo ograničena.</p><p><b>%2</b>: Koristite ovo ako imate sporu "
+"internetsku vezu ili je veličina odredišnog poštanskog sandučića ograničena."
+"</p><p><b>%3</b>: Ovo je podrazumijevana vrijednost za srednju internet "
+"brzinu i veličinu poštanskog sandučića.</p><p><b>%4</b>:Koristite ovo ako "
+"imate vrlo brzu internetsku vezu ili je veličina odredišnog poštanskog "
+"sandučića vrlo ograničena..</p><p><b>%5</b>: Koristite ovo ako nema "
+"ograničenja na veličinu ili brzinu.</p><p><b>%6</b>: Koristite ovo samo za "
+"štampu.</p>"
+
+#: settingswidget.cpp:177
+#, kde-format
+msgid "Image size:"
+msgstr "Veličina slike:"
+
+#: settingswidget.cpp:186
+#, kde-format
+msgid "<p>Select the file format of the image files to be sent.</p>"
+msgstr ""
+"<p>Odaberite datoteku formata slikovnih datoteka koja će biti poslana.</p>"
+
+#: settingswidget.cpp:187
+#, kde-format
+msgid ""
+"<p><b>JPEG</b>: The Joint Photographic Experts Group file format is a good "
+"web file format but it uses lossy compression.</p><p><b>PNG</b>: the "
+"Portable Network Graphics format is an extensible file format for the "
+"lossless, portable, well-compressed storage of raster images. PNG provides a "
+"patent-free replacement for GIF and can also replace many common uses of "
+"TIFF. PNG is designed to work well in online viewing applications, such as "
+"the World Wide Web, so it is fully streamable with a progressive display "
+"option. Also, PNG can store gamma and chromaticity data for improved color-"
+"matching on heterogeneous platforms.</p>"
+msgstr ""
+"<p><b>JPEG</b>: JPEG format je dobar web format, ali koristi kompresiju s "
+"gubicima.</p><p><b>PNG</b>:Portable Network Graphics Format je proširiv "
+"format datoteke za bez gubitaka, prijenosni, dobro komprimirani za pohranu "
+"rasterskih slika. PNG pruža bezpatentnu  zamjenu za GIF i također može "
+"zamijeniti mnoge uobičajene upotrebe TIFF. PNG je dizajniran da radi dobro u "
+"Internet preglednicima, kao što je World Wide Web, tako da je u potpunosti "
+"streamable s progresivnim opciju prikaza. Također, PNG može pohraniti gama i "
+"hrominansne podatke za poboljšanje slaganja boja na heterogenim platformama."
+"</p>"
+
+#: settingswidget.cpp:197
+#, kde-format
+msgid "Image format:"
+msgstr "Format slike:"
+
+#: settingswidget.cpp:206
+#, kde-format
+msgid "<p>The new compression value of JPEG images to be sent:</p>"
+msgstr "<p>Nova vrijednost  kompresije JPEG slika koja će biti poslana:</p>"
+
+#: settingswidget.cpp:207
+#, kde-format
+msgid ""
+"<p><b>1</b>: very high compression<br/><b>25</b>: high compression<br/"
+"><b>50</b>: medium compression<br/><b>75</b>: low compression (default "
+"value)<br/><b>100</b>: no compression</p>"
+msgstr ""
+"<p><b>1</b>: vrlo visoka kompresija<br/><b>25</b>: visoka kompresija<br/"
+"><b>50</b>: srednja kompresija<br/><b>75</b>: niska kompresija "
+"(podrazumijevana vrijednost)<br/><b>100</b>: bez kompresije</p>"
+
+#: settingswidget.cpp:215
+#, kde-format
+msgid "Image quality:"
+msgstr "Kvalitet slike:"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Samir Ribić"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "samir.ribic@etf.unsa.ba"
+
+#~ msgid "Failed to resize images"
+#~ msgstr "Nisam uspio promijeniti veličinu slike"
+
+#~ msgid "Huge - for printing (1600 pixels)"
+#~ msgstr "Ogromne - za štampu (1600 piksela)"

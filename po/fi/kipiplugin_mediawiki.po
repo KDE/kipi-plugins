@@ -1,0 +1,508 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Tommi Nieminen <translator@legisign.org>, 2014, 2018.
+# Lasse Liehu <lasse.liehu@gmail.com>, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2018-08-01 20:57+0200\n"
+"Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
+"Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_wikimediaui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Vie"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_wikimediaui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Päätyökalurivi"
+
+#: plugin_wikimedia.cpp:105
+#, kde-format
+msgid "Export to MediaWiki..."
+msgstr "Vie MediaWikiin…"
+
+#: wmtalker.cpp:125
+#, kde-format
+msgid "Error on file '%1'\n"
+msgstr "Virhe tiedostossa ”%1”\n"
+
+#: wmtalker.cpp:129
+#, kde-format
+msgid "Error on file '%1': %2\n"
+msgstr "Virhe tiedostossa ”%1”: %2\n"
+
+# Ilmeisesti tämä on hyvä jättää kääntämättä, koska kyseessä on lähetyksessä käytettävä oletusteksti
+#: wmtalker.cpp:167
+#, kde-format
+msgid "Uploaded via KIPI uploader"
+msgstr "Uploaded via KIPI uploader"
+
+#: wmtalker.cpp:188
+#, kde-format
+msgid "Error"
+msgstr "Virhe"
+
+#: wmwidget.cpp:112
+#, kde-format
+msgid "Select an image"
+msgstr "Valitse kuva"
+
+#: wmwidget.cpp:181
+#, kde-format
+msgid ""
+"This is a clickable link to open the MediaWiki home page in a web browser."
+msgstr "Tästä linkistä voit napsauttaa selaimeen auki MediaWikin kotisivun."
+
+#: wmwidget.cpp:189
+#, kde-format
+msgid "This is the list of images to upload to the wiki."
+msgstr "Tämä on wikiin lähetettävien kuvien luettelo."
+
+#: wmwidget.cpp:214 wmwidget.cpp:387
+#, kde-format
+msgid "This is the login form to your account on the chosen wiki."
+msgstr "Tämä on kirjautumislomake valitun wikin tilillesi."
+
+#: wmwidget.cpp:235
+#, kde-format
+msgid "Title:"
+msgstr "Otsikko:"
+
+#: wmwidget.cpp:237
+#, kde-format
+msgid "Date:"
+msgstr "Päiväys:"
+
+#: wmwidget.cpp:239
+#, kde-format
+msgid "Description:"
+msgstr "Kuvaus:"
+
+#: wmwidget.cpp:241
+#, kde-format
+msgid "Categories:"
+msgstr "Luokat:"
+
+#: wmwidget.cpp:243
+#, kde-format
+msgid "Latitude:"
+msgstr "Leveysaste:"
+
+#: wmwidget.cpp:245
+#, kde-format
+msgid "Longitude:"
+msgstr "Pituusaste:"
+
+#: wmwidget.cpp:273
+#, kde-format
+msgid "Account"
+msgstr "Tili"
+
+#: wmwidget.cpp:274
+#, kde-format
+msgid "This is the login form to your MediaWiki account."
+msgstr "Tämä on kirjautumislomake MediaWiki-tilillesi."
+
+#: wmwidget.cpp:281
+#, kde-format
+msgid "New"
+msgstr "Uusi"
+
+#: wmwidget.cpp:282
+#, kde-format
+msgid "Add a wiki to this list"
+msgstr "Lisää wiki tähän luetteloon"
+
+#: wmwidget.cpp:287
+#, kde-format
+msgid "Wikimedia Commons"
+msgstr "Wikimedia Commons"
+
+#: wmwidget.cpp:288
+#, kde-format
+msgid "Wikimedia Meta"
+msgstr "Wikimedia Meta"
+
+#: wmwidget.cpp:289
+#, kde-format
+msgid "Wikipedia"
+msgstr "Wikipedia"
+
+#: wmwidget.cpp:290
+#, kde-format
+msgid "Wikibooks"
+msgstr "Wikibooks"
+
+#: wmwidget.cpp:291
+#, kde-format
+msgid "Wikinews"
+msgstr "Wikinews"
+
+#: wmwidget.cpp:292
+#, kde-format
+msgid "Wikiquote"
+msgstr "Wikiquote"
+
+#: wmwidget.cpp:293
+#, kde-format
+msgid "Wikisource"
+msgstr "Wikisource"
+
+#: wmwidget.cpp:294
+#, kde-format
+msgid "Wiktionary"
+msgstr "Wiktionary"
+
+#: wmwidget.cpp:295
+#, kde-format
+msgid "MediaWiki"
+msgstr "MediaWiki"
+
+#: wmwidget.cpp:296
+#, kde-format
+msgid "Wikia Foto"
+msgstr "Wikia Foto"
+
+#: wmwidget.cpp:297
+#, kde-format
+msgid "Wikia Uncyclopedia"
+msgstr "Wikia Uncyclopedia"
+
+#: wmwidget.cpp:302
+#, kde-format
+msgid "Wiki:"
+msgstr "Wiki:"
+
+#: wmwidget.cpp:313
+#, kde-format
+msgid "These are options for adding a Wiki."
+msgstr "Nämä ovat wikin lisäämisen asetukset."
+
+#: wmwidget.cpp:318
+#, kde-format
+msgid "Name:"
+msgstr "Nimi:"
+
+#: wmwidget.cpp:321
+#, kde-format
+msgid "API URL:"
+msgstr "APIn verkko-osoite:"
+
+#: wmwidget.cpp:326
+#, kde-format
+msgid "Add"
+msgstr "Lisää"
+
+#: wmwidget.cpp:327
+#, kde-format
+msgid "Add a new wiki"
+msgstr "Lisää uusi wiki"
+
+#: wmwidget.cpp:336
+#, kde-format
+msgid "Login:"
+msgstr "Käyttäjätunnus:"
+
+#: wmwidget.cpp:339
+#, kde-format
+msgid "Password:"
+msgstr "Salasana:"
+
+#: wmwidget.cpp:344
+#, kde-format
+msgid "&Log in"
+msgstr "&Kirjaudu"
+
+#: wmwidget.cpp:360
+#, kde-format
+msgid "Login Information"
+msgstr "Kirjautumistiedot"
+
+#: wmwidget.cpp:366
+#, kde-format
+msgctxt "Name of the wiki the user is currently logged on"
+msgid "Logged on: "
+msgstr "Wiki: "
+
+#: wmwidget.cpp:370
+#, kde-format
+msgctxt "Username which is used to connect to the wiki"
+msgid "Logged as: "
+msgstr "Käyttäjätunnus: "
+
+#: wmwidget.cpp:373
+#, kde-format
+msgid "Change Account"
+msgstr "Vaihda tiliä"
+
+#: wmwidget.cpp:374
+#, kde-format
+msgid "Logout and change the account used for transfer"
+msgstr "Kirjaudu ulos ja vaihdo siirtoon käytettävää tiliä"
+
+#: wmwidget.cpp:386
+#, kde-format
+msgid "Information"
+msgstr "Tiedot"
+
+#: wmwidget.cpp:392
+#, kde-format
+msgid "Author:"
+msgstr "Tekijä:"
+
+#: wmwidget.cpp:395
+#, kde-format
+msgid "Source:"
+msgstr "Lähde:"
+
+#: wmwidget.cpp:398
+#, kde-format
+msgid "License:"
+msgstr "Lisenssi:"
+
+#: wmwidget.cpp:402
+#, kde-format
+msgid "Own work, Creative Commons Attribution-Share Alike 4.0"
+msgstr "Oma työ, Creative Commons Attribution-Share Alike 4.0"
+
+#: wmwidget.cpp:404
+#, kde-format
+msgid "Own work, multi-license with CC-BY-SA-3.0 and GFDL"
+msgstr "Oma työ, useampilisenssinen (CC-BY-SA-3.0 ja GFDL)"
+
+#: wmwidget.cpp:406
+#, kde-format
+msgid "Own work, multi-license with CC-BY-SA-3.0 and older"
+msgstr "Oma työ, useampilisenssinen (CC-BY-SA-3.0 ja vanhempi)"
+
+#: wmwidget.cpp:408
+#, kde-format
+msgid "Own work, Creative Commons Attribution-Share Alike 3.0"
+msgstr "Oma työ, Creative Commons Attribution-Share Alike 3.0"
+
+#: wmwidget.cpp:410
+#, kde-format
+msgid "Own work, Creative Commons Attribution 3.0"
+msgstr "Oma työ, Creative Commons Attribution 3.0"
+
+#: wmwidget.cpp:412
+#, kde-format
+msgid "Own work, release into public domain under the CC-Zero license"
+msgstr "Oma työ, viety public domainiin CC-Zero-lisenssillä"
+
+#: wmwidget.cpp:414
+#, kde-format
+msgid "Author died more than 100 years ago"
+msgstr "Tekijä kuoli yli sata vuotta sitten"
+
+#: wmwidget.cpp:416
+#, kde-format
+msgid ""
+"Photo of a two-dimensional work whose author died more than 100 years ago"
+msgstr ""
+"Kuva kaksiulotteisesta teoksesta, jonka tekijä kuoli yli sata vuotta sitten"
+
+#: wmwidget.cpp:418
+#, kde-format
+msgid "First published in the United States before 1923"
+msgstr "Julkaistu ensiksi Yhdysvalloissa ennen vuotta 1923"
+
+#: wmwidget.cpp:420
+#, kde-format
+msgid "Work of a U.S. government agency"
+msgstr "Yhdysvaltain hallintoviranomaisen työ"
+
+#: wmwidget.cpp:422
+#, kde-format
+msgid "Simple typefaces, individual words or geometric shapes"
+msgstr ""
+"Yksinkertainen kirjasinleikkaus, yksittäisiä sanoja tai geometrisia kuvioita"
+
+#: wmwidget.cpp:424
+#, kde-format
+msgid "Logos with only simple typefaces, individual words or geometric shapes"
+msgstr ""
+"Logo yksinkertaisin kirjasinleikkauksin, yksittäisin sanoin ja geometrisin "
+"kuvioin"
+
+#: wmwidget.cpp:426
+#, kde-format
+msgid "No license specified (not recommended for public wiki sites)"
+msgstr "Ei määrälisenssiä (ei suositella julkisilla wikisivustoilla)"
+
+#: wmwidget.cpp:429
+#, kde-format
+msgid "Generic categories:"
+msgstr "Yleisluokat:"
+
+#: wmwidget.cpp:432
+#, kde-format
+msgid ""
+"This is a place to enter categories that will be added to all the files."
+msgstr "Tässä kohtaa voit antaa luokkia, jotka lisätään kaikkiin tiedostoihin."
+
+#: wmwidget.cpp:435
+#, kde-format
+msgid "Generic text:"
+msgstr "Yleisteksti:"
+
+#: wmwidget.cpp:438
+#, kde-format
+msgid ""
+"This is a place to enter text that will be added to all the files, below the "
+"Information template."
+msgstr ""
+"Tässä kohtaa voit kirjoittaa tekstin, joka lisätään kaikkiin tiedostoihin "
+"kuvausmallin alle."
+
+#: wmwidget.cpp:442
+#, kde-format
+msgid "Upload comments:"
+msgstr "Lähetä kommentit:"
+
+#: wmwidget.cpp:445
+#, kde-format
+msgid ""
+"This is a place to enter text that will be used as upload comments. The "
+"default of 'Uploaded via KIPI uploader' will be used if empty."
+msgstr ""
+"Tässä kohtaa voit kirjoittaa tekstin käytettäväksi kommenttien lähetyksessä. "
+"Oletuksena on (jos jätetään tyhjäksi) ”Uploaded via KIPI uploader”."
+
+#: wmwidget.cpp:467
+#, kde-format
+msgid "Options"
+msgstr "Asetukset"
+
+#: wmwidget.cpp:468
+#, kde-format
+msgid "These are options that will be applied to photos before upload."
+msgstr "Nämä valinnat koskevat kuvien muokkausta ennen lähetystä."
+
+#: wmwidget.cpp:474
+#, kde-format
+msgid "Resize photos before uploading"
+msgstr "Muuta kuvien kokoa ennen lähetystä"
+
+#: wmwidget.cpp:484
+#, kde-format
+msgid "Maximum size:"
+msgstr "Enimmäiskoko:"
+
+#: wmwidget.cpp:492
+#, kde-format
+msgid "JPEG quality:"
+msgstr "JPEG-laatu:"
+
+#: wmwidget.cpp:495
+#, kde-format
+msgid "Remove metadata from file"
+msgstr "Poista tiedostoista metatiedot"
+
+#: wmwidget.cpp:499
+#, kde-format
+msgid "Remove coordinates from file"
+msgstr "Poista tiedostoista sijainti"
+
+#: wmwidget.cpp:516
+#, kde-format
+msgid "Items Properties"
+msgstr "Tietueiden ominaisuudet"
+
+#: wmwidget.cpp:517
+#, kde-format
+msgid "Upload Settings"
+msgstr "Lähetysasetukset"
+
+#: wmwindow.cpp:114
+#, kde-format
+msgid "Export to MediaWiki"
+msgstr "Vie MediaWikiin"
+
+#: wmwindow.cpp:116
+#, kde-format
+msgid "Start Upload"
+msgstr "Käynnistä lähetys"
+
+#: wmwindow.cpp:117
+#, kde-format
+msgid "Start upload to MediaWiki"
+msgstr "Käynnistä lähetys MediaWikiin"
+
+#: wmwindow.cpp:124 wmwindow.cpp:354
+#, kde-format
+msgid "MediaWiki export"
+msgstr "MediaWiki-vienti"
+
+#: wmwindow.cpp:125
+#, kde-format
+msgid ""
+"A tool to export image collection to a MediaWiki installation.\n"
+"Using libmediawiki version %1"
+msgstr ""
+"Työkalu kuvakokoelman viemiseksi MediaWiki-asennukseen.\n"
+"Käytössä libmediawikin versio %1"
+
+#: wmwindow.cpp:128
+#, kde-format
+msgid "(c) 2011, Alexandre Mendes"
+msgstr "© 2011, Alexandre Mendes"
+
+#: wmwindow.cpp:130
+#, kde-format
+msgid "Alexandre Mendes"
+msgstr "Alexandre Mendes"
+
+#: wmwindow.cpp:131
+#, kde-format
+msgid "Author"
+msgstr "Tekijä"
+
+#: wmwindow.cpp:134
+#, kde-format
+msgid "Guillaume Hormiere"
+msgstr "Guillaume Hormiere"
+
+#: wmwindow.cpp:135 wmwindow.cpp:139 wmwindow.cpp:143
+#, kde-format
+msgid "Developer"
+msgstr "Kehittäjä"
+
+#: wmwindow.cpp:138
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: wmwindow.cpp:142
+#, kde-format
+msgid "Peter Potrowl"
+msgstr "Peter Potrowl"
+
+#: wmwindow.cpp:389
+#, kde-format
+msgid "Login Error"
+msgstr "Kirjautumisvirhe"
+
+#: wmwindow.cpp:389
+#, kde-format
+msgid "Please check your credentials and try again."
+msgstr "Tarkista kirjautumistietosi ja yritä uudelleen."
+
+#: wmwindow.cpp:410
+#, kde-format
+msgid "Upload finished with no errors."
+msgstr "Lähetys valmistui virheittä."

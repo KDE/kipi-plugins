@@ -1,0 +1,269 @@
+# translation of kipiplugin_imgurexport.po to Slovak
+# Roman Paholík <wizzardsk@gmail.com>, 2013, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_imgurexport\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2016-08-19 18:53+0100\n"
+"Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
+"Language-Team: Slovak <kde-sk@linux.sk>\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 2.0\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: imgurapi3.cpp:132
+#, kde-format
+msgid "Could not authorize"
+msgstr "Nemôžem overiť"
+
+#: imgurapi3.cpp:309
+#, kde-format
+msgid "Could not open file"
+msgstr "Nepodarilo sa otvoriť súbor"
+
+#: imgurimageslist.cpp:59
+#, kde-format
+msgid "Thumbnail"
+msgstr "Miniatúra"
+
+#: imgurimageslist.cpp:62
+#, kde-format
+msgid "Submission title"
+msgstr "Názov podania"
+
+#: imgurimageslist.cpp:65
+#, kde-format
+msgid "Submission description"
+msgstr "Popis podania"
+
+#: imgurimageslist.cpp:68
+#, kde-format
+msgid "Imgur URL"
+msgstr "Imgur URL"
+
+#: imgurimageslist.cpp:71
+#, kde-format
+msgid "Imgur Delete URL"
+msgstr "Imgur vymazať URL"
+
+#: imgurwindow.cpp:82
+#, kde-format
+msgid "Logged in as:"
+msgstr "Prihlásený ako:"
+
+#: imgurwindow.cpp:90
+#, kde-format
+msgid "Forget"
+msgstr "Zabudnúť"
+
+#: imgurwindow.cpp:100
+#, kde-format
+msgid "Upload Anonymously"
+msgstr "Nahrať anonymne"
+
+#: imgurwindow.cpp:116
+#, kde-format
+msgid "Export to imgur.com"
+msgstr "Export do imgur.com"
+
+#: imgurwindow.cpp:119
+#, kde-format
+msgid "Upload"
+msgstr "Odoslať"
+
+#: imgurwindow.cpp:120
+#, kde-format
+msgid "Start upload to Imgur"
+msgstr "Spustiť upload do Imgur"
+
+#: imgurwindow.cpp:125
+#, kde-format
+msgid "Imgur Export"
+msgstr "Imgur Export"
+
+#: imgurwindow.cpp:126
+#, kde-format
+msgid "A tool to export images to Imgur web service"
+msgstr "Nástroj na export obrázkov do webovej služby Imgur"
+
+#: imgurwindow.cpp:127
+#, kde-format
+msgid "(c) 2012-2013, Marius Orcsik"
+msgstr "(c) 2012-2013, Marius Orcsik"
+
+#: imgurwindow.cpp:129
+#, kde-format
+msgid "Marius Orcsik"
+msgstr "Marius Orcsik"
+
+#: imgurwindow.cpp:130
+#, kde-format
+msgid "Author"
+msgstr "Autor"
+
+#: imgurwindow.cpp:133
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: imgurwindow.cpp:134 imgurwindow.cpp:138
+#, kde-format
+msgid "Developer"
+msgstr "Vývojár"
+
+#: imgurwindow.cpp:137
+#, kde-format
+msgid "Fabian Vogt"
+msgstr "Fabian Vogt"
+
+#: imgurwindow.cpp:220
+#, kde-format
+msgid "<Not logged in>"
+msgstr "<neprihlásený>"
+
+#: imgurwindow.cpp:227
+#, kde-format
+msgid "Authorization Failed"
+msgstr "Overenie zlyhalo"
+
+#: imgurwindow.cpp:228
+#, kde-format
+msgid "Failed to log into Imgur: %1\n"
+msgstr "Zlyhalo nahranie fotky do Imgur: %1\n"
+
+#: imgurwindow.cpp:254 imgurwindow.cpp:261
+#, kde-format
+msgid "Uploading Failed"
+msgstr "Odoslanie zlyhalo"
+
+#: imgurwindow.cpp:255
+#, kde-format
+msgid "Failed to upload photo to Imgur: %1\n"
+msgstr "Zlyhalo nahranie fotky do Imgur: %1\n"
+
+#: imgurwindow.cpp:262
+#, kde-format
+msgid ""
+"Failed to upload photo to Imgur: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Zlyhalo nahranie fotky do Imgur: %1\n"
+"Chcete pokračovať?"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_imgurui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Exportovať"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_imgurui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Hlavný panel nástrojov"
+
+#: plugin_imgur.cpp:102
+#, kde-format
+msgid "Export to &Imgur..."
+msgstr "Export do &Imgur..."
+
+#~ msgid "Unexpected response from the web service"
+#~ msgstr "Neočakávaná odpoveď z webovej služby"
+
+#~ msgid "Upload failed"
+#~ msgstr "Odoslanie zlyhalo"
+
+#~ msgid "Parse error"
+#~ msgstr "Chyba spracovania"
+
+#~ msgid "Network error: timeout, cannot connect."
+#~ msgstr "Chyba siete: timeout, nemôžem pripojiť."
+
+#~ msgid "Request endpoint is not valid."
+#~ msgstr "Koncový bod požiadavky nie je platný."
+
+#~ msgid "Request is not valid: some parameter missing?"
+#~ msgstr "Požiadavka nie je platná: chýbajú nejaké parametre?"
+
+#~ msgid "Authorization error: trying to access a resource without tokens."
+#~ msgstr "Chyba overenia: pokus o prístup k zdroju bez tokenov."
+
+#~ msgid "The given request is invalid."
+#~ msgstr "Daná požiadavka je neplatná."
+
+#~ msgid "Manager error, cannot use for sending requests."
+#~ msgstr "Chyba správcu, nemôžem použiť na posielanie požiadaviek."
+
+#~ msgid "No error"
+#~ msgstr "Žiadna chyba"
+
+#~ msgid "OK"
+#~ msgstr "OK"
+
+#~ msgid ""
+#~ "This is a clickable link to open the Imgur home page in a web browser"
+#~ msgstr ""
+#~ "Toto je klikateľný odkaz na otvorenie domovskej stránky vo webovom "
+#~ "prehliadači"
+
+#~ msgid ""
+#~ "Requesting Imgur for authorization to upload images with the KIPI Imgur "
+#~ "Exporter plugin."
+#~ msgstr ""
+#~ "Vyžaduje sa overenie Imgur na nahranie obrázkov s pluginom KIPI Imgur "
+#~ "Exporter."
+
+#~ msgid "Request authorization"
+#~ msgstr "Požadovať overenie "
+
+#~ msgid ""
+#~ "Set permissions for the current application to upload images to Imgur."
+#~ msgstr ""
+#~ "Nastaviť práva pre aktuálnu aplikáciu na nahranie obrázkov do Imgur."
+
+#~ msgid "Processing %1"
+#~ msgstr "Spracúva sa %1"
+
+#~ msgid "Authenticated"
+#~ msgstr "Overený"
+
+#~ msgid "%v / %m"
+#~ msgstr "%v / %m"
+
+#~ msgid "Export to Imgur"
+#~ msgstr "Export do Imgur"
+
+#~ msgctxt "%1 is the error string"
+#~ msgid ""
+#~ "Failed to authenticate to Imgur.\n"
+#~ "%1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Zlyhalo overenie do Imgur.\n"
+#~ "%1\n"
+#~ "Chcete pokračovať?"
+
+#~ msgid ""
+#~ "Failed to authenticate to Imgur.\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Zlyhalo overenie do Imgur.\n"
+#~ "Chcete pokračovať?"
+
+#~ msgid "Processing Failed"
+#~ msgstr "Spracovanie zlyhalo"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Roman Paholík"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "wizzardsk@gmail.com"
+
+#~ msgid "Author and Maintainer"
+#~ msgstr "Autor a správca"

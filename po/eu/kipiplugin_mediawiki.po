@@ -1,0 +1,518 @@
+# Translation of kipiplugin_mediawiki.po to Euskara/Basque (eu).
+# Copyright (C) 2019, This file is copyright:
+# This file is distributed under the same license as the kipi-plugins package.
+# KDE euskaratzeko proiektuaren arduraduna <xalba@euskalnet.net>.
+#
+# Translators:
+# Iñigo Salvador Azurmendi <xalba@euskalnet.net>, 2019.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipi-plugins\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2019-08-18 23:51+0200\n"
+"Last-Translator: Iñigo Salvador Azurmendi <xalba@euskalnet.net>\n"
+"Language-Team: Basque <kde-i18n-eu@kde.org>\n"
+"Language: eu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 19.08.0\n"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_wikimediaui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Esportatu"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_wikimediaui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Tresna-barra nagusia"
+
+#: plugin_wikimedia.cpp:105
+#, kde-format
+msgid "Export to MediaWiki..."
+msgstr "Esportatu MediaWiki-ra..."
+
+#: wmtalker.cpp:125
+#, kde-format
+msgid "Error on file '%1'\n"
+msgstr "Errorea '%1' fitxategian\n"
+
+#: wmtalker.cpp:129
+#, kde-format
+msgid "Error on file '%1': %2\n"
+msgstr "Errorea '%1' fitxategian: %2\n"
+
+#: wmtalker.cpp:167
+#, kde-format
+msgid "Uploaded via KIPI uploader"
+msgstr "KIPI zamaketariaren bidez zama-igota"
+
+#: wmtalker.cpp:188
+#, kde-format
+msgid "Error"
+msgstr "Errorea"
+
+#: wmwidget.cpp:112
+#, kde-format
+msgid "Select an image"
+msgstr "Hautatu irudi bat"
+
+#: wmwidget.cpp:181
+#, kde-format
+msgid ""
+"This is a clickable link to open the MediaWiki home page in a web browser."
+msgstr ""
+"Hau MediaWiki-ren orri nagusia web-arakatzaile batean irekitzeko esteka "
+"klikagarri bat da."
+
+#: wmwidget.cpp:189
+#, kde-format
+msgid "This is the list of images to upload to the wiki."
+msgstr "Hau da wikira igo beharreko irudien zerrenda."
+
+#: wmwidget.cpp:214 wmwidget.cpp:387
+#, kde-format
+msgid "This is the login form to your account on the chosen wiki."
+msgstr "Hau da hautatutako wikian zure kontuan saio-hasteko inprimakia."
+
+#: wmwidget.cpp:235
+#, kde-format
+msgid "Title:"
+msgstr "Titulua:"
+
+#: wmwidget.cpp:237
+#, kde-format
+msgid "Date:"
+msgstr "Data:"
+
+#: wmwidget.cpp:239
+#, kde-format
+msgid "Description:"
+msgstr "Azalpena:"
+
+#: wmwidget.cpp:241
+#, kde-format
+msgid "Categories:"
+msgstr "Kategoriak: "
+
+#: wmwidget.cpp:243
+#, kde-format
+msgid "Latitude:"
+msgstr "Latitudea:"
+
+#: wmwidget.cpp:245
+#, kde-format
+msgid "Longitude:"
+msgstr "Longitudea:"
+
+#: wmwidget.cpp:273
+#, kde-format
+msgid "Account"
+msgstr "Kontua"
+
+#: wmwidget.cpp:274
+#, kde-format
+msgid "This is the login form to your MediaWiki account."
+msgstr "Hau da zure MediaWiki kontuan saio-hasteko inprimakia."
+
+#: wmwidget.cpp:281
+#, kde-format
+msgid "New"
+msgstr "Berria"
+
+#: wmwidget.cpp:282
+#, kde-format
+msgid "Add a wiki to this list"
+msgstr "Gehitu wiki bat zerrenda honetara"
+
+#: wmwidget.cpp:287
+#, kde-format
+msgid "Wikimedia Commons"
+msgstr "Wikimedia Commons"
+
+#: wmwidget.cpp:288
+#, kde-format
+msgid "Wikimedia Meta"
+msgstr "Wikimedia Meta"
+
+#: wmwidget.cpp:289
+#, kde-format
+msgid "Wikipedia"
+msgstr "Wikipedia"
+
+#: wmwidget.cpp:290
+#, kde-format
+msgid "Wikibooks"
+msgstr "Wikibooks"
+
+#: wmwidget.cpp:291
+#, kde-format
+msgid "Wikinews"
+msgstr "Wikinews"
+
+#: wmwidget.cpp:292
+#, kde-format
+msgid "Wikiquote"
+msgstr "Wikiquote"
+
+#: wmwidget.cpp:293
+#, kde-format
+msgid "Wikisource"
+msgstr "Wikisource"
+
+#: wmwidget.cpp:294
+#, kde-format
+msgid "Wiktionary"
+msgstr "Wiktionary"
+
+#: wmwidget.cpp:295
+#, kde-format
+msgid "MediaWiki"
+msgstr "MediaWiki"
+
+#: wmwidget.cpp:296
+#, kde-format
+msgid "Wikia Foto"
+msgstr "Wikia Foto"
+
+#: wmwidget.cpp:297
+#, kde-format
+msgid "Wikia Uncyclopedia"
+msgstr "Wikia Uncyclopedia"
+
+#: wmwidget.cpp:302
+#, kde-format
+msgid "Wiki:"
+msgstr "Wiki:"
+
+#: wmwidget.cpp:313
+#, kde-format
+msgid "These are options for adding a Wiki."
+msgstr "Hauek dira Wiki bat Wiki bat gehitzeko aukerak."
+
+#: wmwidget.cpp:318
+#, kde-format
+msgid "Name:"
+msgstr "Izena:"
+
+#: wmwidget.cpp:321
+#, kde-format
+msgid "API URL:"
+msgstr "APIaren URL:"
+
+#: wmwidget.cpp:326
+#, kde-format
+msgid "Add"
+msgstr "Gehitu"
+
+#: wmwidget.cpp:327
+#, kde-format
+msgid "Add a new wiki"
+msgstr "Gehitu wiki berri bat"
+
+#: wmwidget.cpp:336
+#, kde-format
+msgid "Login:"
+msgstr "Saio-hasi:"
+
+#: wmwidget.cpp:339
+#, kde-format
+msgid "Password:"
+msgstr "Pasahitza:"
+
+#: wmwidget.cpp:344
+#, kde-format
+msgid "&Log in"
+msgstr "&Hasi saioa"
+
+#: wmwidget.cpp:360
+#, kde-format
+msgid "Login Information"
+msgstr "Saio-hasteko informazioa"
+
+#: wmwidget.cpp:366
+#, kde-format
+msgctxt "Name of the wiki the user is currently logged on"
+msgid "Logged on: "
+msgstr "Saio-hasita hemen:"
+
+#: wmwidget.cpp:370
+#, kde-format
+msgctxt "Username which is used to connect to the wiki"
+msgid "Logged as: "
+msgstr "Saio-hasita honela:"
+
+#: wmwidget.cpp:373
+#, kde-format
+msgid "Change Account"
+msgstr "Aldatu kontua"
+
+#: wmwidget.cpp:374
+#, kde-format
+msgid "Logout and change the account used for transfer"
+msgstr "Saio-itxi eta aldatu transferentziak egiteko erabilitako kontua"
+
+#: wmwidget.cpp:386
+#, kde-format
+msgid "Information"
+msgstr "Informazioa"
+
+#: wmwidget.cpp:392
+#, kde-format
+msgid "Author:"
+msgstr "Egilea:"
+
+#: wmwidget.cpp:395
+#, kde-format
+msgid "Source:"
+msgstr "Sorburua:"
+
+#: wmwidget.cpp:398
+#, kde-format
+msgid "License:"
+msgstr "Lizentzia:"
+
+#: wmwidget.cpp:402
+#, kde-format
+msgid "Own work, Creative Commons Attribution-Share Alike 4.0"
+msgstr ""
+"Nere lana, Creative Commons Attribution-Share Alike 4.0 (Aitortzea-Berdin "
+"Partekatzea)"
+
+#: wmwidget.cpp:404
+#, kde-format
+msgid "Own work, multi-license with CC-BY-SA-3.0 and GFDL"
+msgstr "Nere lana, lizentzia-aniztuna CC-BY-SA-3.0 eta GFDL"
+
+#: wmwidget.cpp:406
+#, kde-format
+msgid "Own work, multi-license with CC-BY-SA-3.0 and older"
+msgstr "Nere lana, lizentzia-aniztuna CC-BY-SA-3.0 eta zaharragoa"
+
+#: wmwidget.cpp:408
+#, kde-format
+msgid "Own work, Creative Commons Attribution-Share Alike 3.0"
+msgstr ""
+"Nere lana, Creative Commons Attribution-Share Alike 3.0  (Aitortzea-Berdin "
+"Partekatzea)"
+
+#: wmwidget.cpp:410
+#, kde-format
+msgid "Own work, Creative Commons Attribution 3.0"
+msgstr "Nere lana, Creative Commons Attribution 3.0 ( (Aitortzea)"
+
+#: wmwidget.cpp:412
+#, kde-format
+msgid "Own work, release into public domain under the CC-Zero license"
+msgstr "Nere lana, argitaratu jendartean CC-Zero lizentziaren babespean"
+
+#: wmwidget.cpp:414
+#, kde-format
+msgid "Author died more than 100 years ago"
+msgstr "Egilea duela 100 baino gehiago hil zen"
+
+#: wmwidget.cpp:416
+#, kde-format
+msgid ""
+"Photo of a two-dimensional work whose author died more than 100 years ago"
+msgstr ""
+"Bi dimentsiotako lan baten argazkia, zeinen egilea duela 100 urte baino "
+"gehiago hil zen"
+
+#: wmwidget.cpp:418
+#, kde-format
+msgid "First published in the United States before 1923"
+msgstr "Aurrenekoz argitaratua AEBetan 1923 baino lehen"
+
+#: wmwidget.cpp:420
+#, kde-format
+msgid "Work of a U.S. government agency"
+msgstr "AEBetako gobernu-agentzia baten lana"
+
+#: wmwidget.cpp:422
+#, kde-format
+msgid "Simple typefaces, individual words or geometric shapes"
+msgstr "Tipografia soilak, banakako hitzak edo forma geometrikoak"
+
+#: wmwidget.cpp:424
+#, kde-format
+msgid "Logos with only simple typefaces, individual words or geometric shapes"
+msgstr ""
+"Tipografia soilak baino ez dituzten logotipoak, banakako hitzak edo forma "
+"geometrikoak"
+
+#: wmwidget.cpp:426
+#, kde-format
+msgid "No license specified (not recommended for public wiki sites)"
+msgstr ""
+"Ez da lizentziarik zehaztu (wiki-leku publikoetan ez erabiltzea gomendatzen "
+"da)"
+
+#: wmwidget.cpp:429
+#, kde-format
+msgid "Generic categories:"
+msgstr "Kategoria generikoak:"
+
+#: wmwidget.cpp:432
+#, kde-format
+msgid ""
+"This is a place to enter categories that will be added to all the files."
+msgstr "Hau da fitxategi guztiei gehituko zaizkien kategoriak sartzeko tokia."
+
+#: wmwidget.cpp:435
+#, kde-format
+msgid "Generic text:"
+msgstr "Testu generikoa:"
+
+#: wmwidget.cpp:438
+#, kde-format
+msgid ""
+"This is a place to enter text that will be added to all the files, below the "
+"Information template."
+msgstr ""
+"Hau da fitxategi guztiei, informazio txantiloiaren azpian, gehituko zaien "
+"testua sartzeko tokia."
+
+#: wmwidget.cpp:442
+#, kde-format
+msgid "Upload comments:"
+msgstr "Zama-igo iruzkinak:"
+
+#: wmwidget.cpp:445
+#, kde-format
+msgid ""
+"This is a place to enter text that will be used as upload comments. The "
+"default of 'Uploaded via KIPI uploader' will be used if empty."
+msgstr ""
+"Hau da zama-igotzeko iruzkin bezala erabiliko den testua sartzeko tokia. "
+"Lehenetsitako 'KIPI zamaketariaren bidez zama-igota' erabiliko da hutsik "
+"badago."
+
+#: wmwidget.cpp:467
+#, kde-format
+msgid "Options"
+msgstr "Aukerak"
+
+#: wmwidget.cpp:468
+#, kde-format
+msgid "These are options that will be applied to photos before upload."
+msgstr "Aukera hauek dira argazkiei zama-igo aurretik ezarriko zaizkienak."
+
+#: wmwidget.cpp:474
+#, kde-format
+msgid "Resize photos before uploading"
+msgstr "Aldatu argazkien handiera zama-igo aurretik"
+
+#: wmwidget.cpp:484
+#, kde-format
+msgid "Maximum size:"
+msgstr "Gehienezko neurria:"
+
+#: wmwidget.cpp:492
+#, kde-format
+msgid "JPEG quality:"
+msgstr "JPEG kalitatea:"
+
+#: wmwidget.cpp:495
+#, kde-format
+msgid "Remove metadata from file"
+msgstr "Kendu fitxategiko meta-datuak"
+
+#: wmwidget.cpp:499
+#, kde-format
+msgid "Remove coordinates from file"
+msgstr "Kendu fitxategiko koordenatuak"
+
+#: wmwidget.cpp:516
+#, kde-format
+msgid "Items Properties"
+msgstr "Elementuen propietateak"
+
+#: wmwidget.cpp:517
+#, kde-format
+msgid "Upload Settings"
+msgstr "Zama-igotzeko ezarpenak"
+
+#: wmwindow.cpp:114
+#, kde-format
+msgid "Export to MediaWiki"
+msgstr "Esportatu MediaWiki-ra"
+
+#: wmwindow.cpp:116
+#, kde-format
+msgid "Start Upload"
+msgstr "Abiatu zama-igotzea"
+
+#: wmwindow.cpp:117
+#, kde-format
+msgid "Start upload to MediaWiki"
+msgstr "Abiatu zama-igotzea MediaWiki-ra"
+
+#: wmwindow.cpp:124 wmwindow.cpp:354
+#, kde-format
+msgid "MediaWiki export"
+msgstr "MediaWiki Esportatu"
+
+#: wmwindow.cpp:125
+#, kde-format
+msgid ""
+"A tool to export image collection to a MediaWiki installation.\n"
+"Using libmediawiki version %1"
+msgstr ""
+"MediaWiki instalazio batera irudi bildumak esportatzeko tresna bat.\n"
+"libmediawiki %1 bertsioa erabiltzen du"
+
+#: wmwindow.cpp:128
+#, kde-format
+msgid "(c) 2011, Alexandre Mendes"
+msgstr "(c) 2011, Alexandre Mendes"
+
+#: wmwindow.cpp:130
+#, kde-format
+msgid "Alexandre Mendes"
+msgstr "Alexandre Mendes"
+
+#: wmwindow.cpp:131
+#, kde-format
+msgid "Author"
+msgstr "Egilea"
+
+#: wmwindow.cpp:134
+#, kde-format
+msgid "Guillaume Hormiere"
+msgstr "Guillaume Hormiere"
+
+#: wmwindow.cpp:135 wmwindow.cpp:139 wmwindow.cpp:143
+#, kde-format
+msgid "Developer"
+msgstr "Garatzailea"
+
+#: wmwindow.cpp:138
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: wmwindow.cpp:142
+#, kde-format
+msgid "Peter Potrowl"
+msgstr "Peter Potrowl"
+
+#: wmwindow.cpp:389
+#, kde-format
+msgid "Login Error"
+msgstr "Saio-haste errorea"
+
+#: wmwindow.cpp:389
+#, kde-format
+msgid "Please check your credentials and try again."
+msgstr "Ikuskatu zure egiaztagiriak eta berriz saiatu."
+
+#: wmwindow.cpp:410
+#, kde-format
+msgid "Upload finished with no errors."
+msgstr "Zama-igotzea errorerik gabe amaitu da."

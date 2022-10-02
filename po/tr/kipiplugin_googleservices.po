@@ -1,0 +1,614 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Volkan Gezer, 2013-2014.
+# Emir SARI <emir_sari@icloud.com>, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: extragear-graphics-kde4\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2022-04-11 11:27+0300\n"
+"Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
+"Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 21.12.3\n"
+
+#: authorize.cpp:116
+#, kde-format
+msgid "Google Drive Authorization"
+msgstr "Google Drive Yetkilendirmesi"
+
+#: authorize.cpp:129
+#, kde-format
+msgid ""
+"Please follow the instructions in the browser. After logging in and "
+"authorizing the application, copy the code from the browser, paste it in the "
+"textbox below, and click OK."
+msgstr ""
+"Lütfen tarayıcınızda talimatları izleyin. Oturum açıp uygulamayı "
+"yetkilendirdikten sonra, kodu tarayıcıdan kopyalayın ve aşağıdaki metin "
+"alanına yapıştırıp Tamam tıklayın."
+
+#: authorize.cpp:249 gdtalker.cpp:272 gptalker.cpp:644
+#, kde-format
+msgid "Error"
+msgstr "Hata"
+
+#: gdtalker.cpp:337
+#, kde-format
+msgid "Failed to list folders"
+msgstr "Klasör listeleme başarısız"
+
+#: gdtalker.cpp:385
+#, kde-format
+msgid "Failed to create folder"
+msgstr "Klasör oluşturma başarısız"
+
+#: gdtalker.cpp:416 gptalker.cpp:937
+#, kde-format
+msgid "Failed to upload photo"
+msgstr "Fotoğraf gönderme başarısız"
+
+#: gptalker.cpp:569
+#, kde-format
+msgid "No photo specified"
+msgstr "Hiç fotoğraf belirtilmedi"
+
+#: gptalker.cpp:572
+#, kde-format
+msgid "General upload failure"
+msgstr "Genel gönderim hatası"
+
+#: gptalker.cpp:575
+#, kde-format
+msgid "File-size was zero"
+msgstr "Dosya boyutu sıfır"
+
+#: gptalker.cpp:578
+#, kde-format
+msgid "File-type was not recognized"
+msgstr "Dosya türü belirlenemedi"
+
+#: gptalker.cpp:581
+#, kde-format
+msgid "User exceeded upload limit"
+msgstr "Kullanıcı gönderim sınırını aştı"
+
+#: gptalker.cpp:584
+#, kde-format
+msgid "Invalid signature"
+msgstr "Geçersiz imza"
+
+#: gptalker.cpp:587
+#, kde-format
+msgid "Missing signature"
+msgstr "İmza yok"
+
+#: gptalker.cpp:590
+#, kde-format
+msgid "Login failed / Invalid auth token"
+msgstr "Giriş başarısız oldu / Geçersiz kimlik doğrulama ifadesi"
+
+#: gptalker.cpp:593
+#, kde-format
+msgid "Invalid API Key"
+msgstr "Geçersiz API Anahtarı"
+
+#: gptalker.cpp:596
+#, kde-format
+msgid "Service currently unavailable"
+msgstr "Servis şu anda kullanılabilir değil"
+
+#: gptalker.cpp:599
+#, kde-format
+msgid "Invalid Frob"
+msgstr "Geçersiz Frob"
+
+#: gptalker.cpp:602
+#, kde-format
+msgid "Format \"xxx\" not found"
+msgstr "Biçim \"xxx\" bulunamadı"
+
+#: gptalker.cpp:605
+#, kde-format
+msgid "Method \"xxx\" not found"
+msgstr "Yöntem \"xxx\" bulunamadı"
+
+#: gptalker.cpp:608
+#, kde-format
+msgid "Invalid SOAP envelope"
+msgstr "Geçersiz SOAP zarfı"
+
+#: gptalker.cpp:611
+#, kde-format
+msgid "Invalid XML-RPC Method Call"
+msgstr "Geçersiz XML-RPC Yöntemi Çağrısı"
+
+#: gptalker.cpp:614
+#, kde-format
+msgid "The POST method is now required for all setters."
+msgstr "POST yöntemi artık tüm dizgiciler için gerekli."
+
+#: gptalker.cpp:617
+#, kde-format
+msgid "Unknown error"
+msgstr "Bilinmeyen hata"
+
+#: gptalker.cpp:620 gswindow.cpp:427 gswindow.cpp:466 gswindow.cpp:548
+#: gswindow.cpp:576 gswindow.cpp:652 gswindow.cpp:668 gswindow.cpp:1078
+#: gswindow.cpp:1198 gswindow.cpp:1241 gswindow.cpp:1249
+#, kde-format
+msgctxt "@title:window"
+msgid "Error"
+msgstr "Hata"
+
+#: gptalker.cpp:621
+#, kde-format
+msgid ""
+"Error occurred: %1\n"
+"Unable to proceed further."
+msgstr ""
+"Hata oluştu: %1\n"
+"Daha fazla sürdüremiyoruz."
+
+#: gptalker.cpp:691 gptalker.cpp:758
+#, kde-format
+msgid "Failed to fetch photo-set list"
+msgstr "photo-set listesi getirme başarısız"
+
+#: gptalker.cpp:894 gptalker.cpp:927
+#, kde-format
+msgid "Failed to create album"
+msgstr "Albüm oluşturma başarısız"
+
+#: gswidget.cpp:60
+#, kde-format
+msgid "Tag path behavior :"
+msgstr "Etiket yol davranışı :"
+
+#: gswidget.cpp:62
+#, kde-format
+msgid "Leaf tags only"
+msgstr "Sadece yaprak etiketler"
+
+#: gswidget.cpp:63
+#, kde-format
+msgid "Export only the leaf tags of tag hierarchies"
+msgstr "Etiket hiyerarşilerinin sadece yaprak etiketlerini aktar"
+
+#: gswidget.cpp:64
+#, kde-format
+msgid "Split tags"
+msgstr "Etiketleri ayır"
+
+#: gswidget.cpp:65
+#, kde-format
+msgid "Export the leaf tag and all ancestors as single tags."
+msgstr "Yaprak etiketi ve tüm atalarını tek etiket olarak aktar."
+
+#: gswidget.cpp:66
+#, kde-format
+msgid "Combined String"
+msgstr "Bileşik Dizge"
+
+#: gswidget.cpp:67
+#, kde-format
+msgid "Build a combined tag string."
+msgstr "Bileşik bir etiket dizgesi oluştur."
+
+#: gswindow.cpp:116
+#, kde-format
+msgid "Google Drive Export"
+msgstr "Google Drive Aktarımı"
+
+#: gswindow.cpp:117
+#, kde-format
+msgid "A tool to export images to Google Drive"
+msgstr "Görselleri Google Drive'a aktarmak için bir araç"
+
+#: gswindow.cpp:119
+#, kde-format
+msgid ""
+"(c) 2013, Saurabh Patel\n"
+"(c) 2015, Shourya Singh Gupta"
+msgstr ""
+"(c) 2013, Saurabh Patel\n"
+"(c) 2015, Shourya Singh Gupta"
+
+#: gswindow.cpp:122
+#, kde-format
+msgid "Saurabh Patel"
+msgstr "Saurabh Patel"
+
+#: gswindow.cpp:122 gswindow.cpp:195
+#, kde-format
+msgid "Author and maintainer"
+msgstr "Geliştirici ve projeyi yürüten"
+
+#: gswindow.cpp:125 gswindow.cpp:207
+#, kde-format
+msgid "Shourya Singh Gupta"
+msgstr "Şurya Singh Gupta"
+
+#: gswindow.cpp:125 gswindow.cpp:198 gswindow.cpp:201 gswindow.cpp:204
+#: gswindow.cpp:207
+#, kde-format
+msgid "Developer"
+msgstr "Geliştirici"
+
+#: gswindow.cpp:132
+#, kde-format
+msgid "Export to Google Drive"
+msgstr "Google Drive'a Aktar"
+
+#: gswindow.cpp:134 gswindow.cpp:219
+#, kde-format
+msgid "Start Upload"
+msgstr "Yüklemeyi Başlat"
+
+#: gswindow.cpp:135
+#, kde-format
+msgid "Start upload to Google Drive"
+msgstr "Google Drive'a yüklemeyi başlat"
+
+#: gswindow.cpp:186
+#, kde-format
+msgid "Google Photos/PicasaWeb Export"
+msgstr "Google Fotoğraflar/PicasaWeb Aktarımı"
+
+#: gswindow.cpp:187
+#, kde-format
+msgid "A tool to export image collections to Google Photos/Picasa web service."
+msgstr ""
+"Görsel koleksiyonlarını Google Drive'a/Picasa web hizmetine aktarmak için "
+"bir araç."
+
+#: gswindow.cpp:189
+#, kde-format
+msgid ""
+"(c) 2007-2009, Vardhman Jain\n"
+"(c) 2008-2016, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2010, Jens Mueller\n"
+"(c) 2015, Shourya Singh Gupta"
+msgstr ""
+"(c) 2007-2009, Vardhman Jain\n"
+"(c) 2008-2016, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2010, Jens Mueller\n"
+"(c) 2015, Shourya Singh Gupta"
+
+#: gswindow.cpp:195
+#, kde-format
+msgid "Vardhman Jain"
+msgstr "Vardhman Jain"
+
+#: gswindow.cpp:198
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: gswindow.cpp:201
+#, kde-format
+msgid "Luka Renko"
+msgstr "Luka Renko"
+
+#: gswindow.cpp:204
+#, kde-format
+msgid "Jens Mueller"
+msgstr "Jens Mueller"
+
+#: gswindow.cpp:217
+#, kde-format
+msgid "Export to Google Photos/PicasaWeb Service"
+msgstr "Google Fotoğraflar/PicasaWeb Servisine Aktar"
+
+#: gswindow.cpp:220
+#, kde-format
+msgid "Start upload to Google Photos/PicasaWeb Service"
+msgstr "Google Fotoğraflar/PicasaWeb Servisine Yüklemeyi Başlat"
+
+#: gswindow.cpp:226
+#, kde-format
+msgid "Import from Google Photos/PicasaWeb Service"
+msgstr "Google Fotoğraflar/PicasaWeb Servisinden İçe Aktar"
+
+#: gswindow.cpp:228
+#, kde-format
+msgid "Start Download"
+msgstr "İndirmeyi Başlat"
+
+#: gswindow.cpp:229
+#, kde-format
+msgid "Start download from Google Photos/PicasaWeb service"
+msgstr "Google Fotoğraflar/PicasaWeb Servisinden indirmeyi Başlat"
+
+#: gswindow.cpp:428 gswindow.cpp:467 gswindow.cpp:577
+#, kde-format
+msgid "Google Photos/PicasaWeb Call Failed: %1\n"
+msgstr "Google Fotoğraflar/PicasaWeb Çağrısı Başarısız: %1\n"
+
+#: gswindow.cpp:448 gswindow.cpp:527 gswindow.cpp:758
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: gswindow.cpp:531
+#, kde-format
+msgid "Google Photo Export"
+msgstr "Google Fotoğraflar Dışa Aktar"
+
+#: gswindow.cpp:549
+#, kde-format
+msgid "Google Drive Call Failed: %1\n"
+msgstr "Google Drive Çağrısı Başarısız: %1\n"
+
+#: gswindow.cpp:653
+#, kde-format
+msgid ""
+"The textbox is empty, please enter the code from the browser in the textbox. "
+"To complete the authentication click \"Change Account\", or \"Start Upload\" "
+"to authenticate again."
+msgstr ""
+"Metin kutusu boş, lütfen metin kutusuna tarayıcıdaki kodu girin. Kimlik "
+"doğrulamasını tamamlamak için \"Hesabı Değiştir\" veya tekrar kimlik "
+"doğrulamak için \"Yüklemeyi Başlat\" tıklayın."
+
+#: gswindow.cpp:669
+#, kde-format
+msgid "No image selected. Please select which images should be uploaded."
+msgstr "Hiçbir görsel seçilmedi. Lütfen yüklenecek görselleri seçin."
+
+#: gswindow.cpp:683 gswindow.cpp:706 gswindow.cpp:1014 gswindow.cpp:1032
+#: gswindow.cpp:1105
+#, kde-format
+msgid "Warning"
+msgstr "Uyarı"
+
+#: gswindow.cpp:684 gswindow.cpp:707
+#, kde-format
+msgid "Authentication failed. Click \"Continue\" to authenticate."
+msgstr ""
+"Kimlik doğrulama başarısız. Kimlik doğrulaması için \"Sürdür\"e tıklayın."
+
+#: gswindow.cpp:687 gswindow.cpp:710 gswindow.cpp:1019 gswindow.cpp:1037
+#: gswindow.cpp:1109 gswindow.cpp:1288
+#, kde-format
+msgid "Continue"
+msgstr "Sürdür"
+
+#: gswindow.cpp:688 gswindow.cpp:711 gswindow.cpp:1020 gswindow.cpp:1038
+#: gswindow.cpp:1110 gswindow.cpp:1289
+#, kde-format
+msgid "Cancel"
+msgstr "İptal"
+
+#: gswindow.cpp:762
+#, kde-format
+msgid "Google Drive export"
+msgstr "Google Drive aktarımı"
+
+#: gswindow.cpp:1015
+#, kde-format
+msgid ""
+"Failed to save photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Fotoğraf kaydetme başarısız: %1\n"
+"Sürdürmek istiyor musunuz?"
+
+#: gswindow.cpp:1033
+#, kde-format
+msgid ""
+"Failed to download photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Fotoğraf indirme başarısız: %1\n"
+"Sürdürmek istiyor musunuz?"
+
+#: gswindow.cpp:1079
+#, kde-format
+msgid "Failed to save image to %1"
+msgstr "Görsel %1 konumuna kaydedilemedi"
+
+#: gswindow.cpp:1106
+#, kde-format
+msgid ""
+"Failed to upload photo to %1.\n"
+"%2\n"
+"Do you want to continue?"
+msgstr ""
+"Fotoğraf %1 konumuna kaydedilemedi.\n"
+"%2\n"
+"Sürdürmek istiyor musunuz?"
+
+#: gswindow.cpp:1200
+#, kde-format
+msgctxt "%1 is the error string, %2 is the error code"
+msgid "An authentication error occurred: %1 (%2)"
+msgstr "Bir kimlik doğrulama hatası oluştu: %1 (%2)"
+
+#: gswindow.cpp:1242
+#, kde-format
+msgid ""
+"Google Drive call failed:\n"
+"%1"
+msgstr ""
+"Google Drive çağrımı başarısız:\n"
+"%1"
+
+#: gswindow.cpp:1250
+#, kde-format
+msgid ""
+"Google Photos/PicasaWeb call failed:\n"
+"%1"
+msgstr ""
+"Google Fotoğraflar/PicasaWeb çağrısı başarısız:\n"
+"%1"
+
+#: gswindow.cpp:1283
+#, kde-format
+msgctxt "@title:window"
+msgid "Warning"
+msgstr "Uyarı"
+
+#: gswindow.cpp:1284
+#, kde-format
+msgid ""
+"After you have been logged out in the browser, click \"Continue\" to "
+"authenticate for another account"
+msgstr ""
+"Tarayıcıda oturumunuzu kapattıktan sonra, farklı bir hesabın kimlik "
+"doğrulaması için \"Sürdür\"e tıklayın"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_googleservicesui.rc:7 kipiplugin_googleservicesui.rc:15
+#, kde-format
+msgid "&Export"
+msgstr "&Dışarıya Aktar"
+
+#. i18n: ectx: Menu (Import)
+#: kipiplugin_googleservicesui.rc:11
+#, kde-format
+msgid "&Import"
+msgstr "&İçe Aktar"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_googleservicesui.rc:21
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Ana Araç Çubuğu"
+
+#: newalbumdlg.cpp:54
+#, kde-format
+msgid "Access Level"
+msgstr "Erişim Düzeyi"
+
+#: newalbumdlg.cpp:55
+#, kde-format
+msgid ""
+"These are security and privacy settings for the new Google Photos/PicasaWeb "
+"album."
+msgstr ""
+"Bunlar, yeni Google Fotoğraflar/PicasaWeb albüm için güvenlik ve gizlilik "
+"seçenekleridir."
+
+#: newalbumdlg.cpp:57
+#, kde-format
+msgctxt "google photos/picasaweb album privacy"
+msgid "Public"
+msgstr "Genel"
+
+#: newalbumdlg.cpp:59
+#, kde-format
+msgid "Public album is listed on your public Google Photos/PicasaWeb page."
+msgstr ""
+"Genel albüm sizin genel Google Fotoğraflar/PicasaWeb sayfanızda listelenir."
+
+#: newalbumdlg.cpp:60
+#, kde-format
+msgctxt "google photos/picasaweb album privacy"
+msgid "Unlisted / Private"
+msgstr "Listelenmemiş / Özel"
+
+#: newalbumdlg.cpp:61
+#, kde-format
+msgid "Unlisted album is only accessible via URL."
+msgstr "Listelenmemiş albüm sadece bir adres ile ulaşılabilir."
+
+#: newalbumdlg.cpp:62
+#, kde-format
+msgctxt "google photos/picasaweb album privacy"
+msgid "Sign-In Required to View"
+msgstr "Görüntülemek için Giriş Yapmak Gerekli"
+
+#: newalbumdlg.cpp:63
+#, kde-format
+msgid "Unlisted album require Sign-In to View"
+msgstr "Listelenmemiş albüm için giriş yapmak gerekli"
+
+#: newalbumdlg.cpp:71
+#, kde-format
+msgid "Privacy:"
+msgstr "Gizlilik:"
+
+#: plugin_googleservices.cpp:100
+#, kde-format
+msgid "Export to &Google Drive..."
+msgstr "&Google Drive'a Aktar..."
+
+#: plugin_googleservices.cpp:110
+#, kde-format
+msgid "Export to &Google Photos/PicasaWeb..."
+msgstr "&Google Fotoğraflar/PicasaWeb'e Aktar..."
+
+#: plugin_googleservices.cpp:120
+#, kde-format
+msgid "Import from &Google Photos/PicasaWeb..."
+msgstr "&Google Fotoğraflar/PicasaWeb'den Aktar..."
+
+#: replacedialog.cpp:112
+#, kde-format
+msgid "Add As New"
+msgstr "Yeni Olarak Ekle"
+
+#: replacedialog.cpp:113
+#, kde-format
+msgid "Item will be added alongside the linked version."
+msgstr "Öge bağlantısı sürümünün yanına eklenecektir."
+
+#: replacedialog.cpp:119
+#, kde-format
+msgid "Add All"
+msgstr "Tümünü Ekle"
+
+#: replacedialog.cpp:120
+#, kde-format
+msgid ""
+"Items will be added alongside the linked version. You will not be prompted "
+"again."
+msgstr ""
+"Ögeler bağlantılı sürümlerinin yanına eklenecektir. Tekrar sorulmayacak."
+
+#: replacedialog.cpp:126
+#, kde-format
+msgid "Replace"
+msgstr "Değiştir"
+
+#: replacedialog.cpp:127
+#, kde-format
+msgid "Item will be replacing the linked version."
+msgstr "Öge, bağlantılı sürümü ile yer değiştirecektir."
+
+#: replacedialog.cpp:133
+#, kde-format
+msgid "Replace All"
+msgstr "Tümünü Değiştir"
+
+#: replacedialog.cpp:134
+#, kde-format
+msgid ""
+"Items will be replacing the linked version. You will not be prompted again."
+msgstr ""
+"Ögeler bağlantılı sürümleri ile yer değiştirecektir. Tekrar sorulmayacak."
+
+#: replacedialog.cpp:157
+#, kde-format
+msgid "A linked item already exists."
+msgstr "Bağlantılı öge zaten mevcut."
+
+#: replacedialog.cpp:177
+#, kde-format
+msgid "Destination"
+msgstr "Hedef"
+
+#: replacedialog.cpp:182
+#, kde-format
+msgid "Source"
+msgstr "Kaynak"

@@ -1,0 +1,271 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Andrej Mernik <andrejm@ubuntu.si>, 2013, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2016-07-23 20:45+0200\n"
+"Last-Translator: Andrej Mernik <andrejm@ubuntu.si>\n"
+"Language-Team: Slovenian <lugos-slo@lugos.si>\n"
+"Language: sl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
+"%100==4 ? 3 : 0);\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: imgurapi3.cpp:132
+#, kde-format
+msgid "Could not authorize"
+msgstr "Ni bilo mogoče pooblastiti"
+
+#: imgurapi3.cpp:309
+#, kde-format
+msgid "Could not open file"
+msgstr "Datoteke ni bilo mogoče odpreti"
+
+#: imgurimageslist.cpp:59
+#, kde-format
+msgid "Thumbnail"
+msgstr "Sličica"
+
+#: imgurimageslist.cpp:62
+#, kde-format
+msgid "Submission title"
+msgstr "Naslov objave"
+
+#: imgurimageslist.cpp:65
+#, kde-format
+msgid "Submission description"
+msgstr "Opis objave"
+
+#: imgurimageslist.cpp:68
+#, kde-format
+msgid "Imgur URL"
+msgstr "Naslov URL Imgur"
+
+#: imgurimageslist.cpp:71
+#, kde-format
+msgid "Imgur Delete URL"
+msgstr "Naslov za izbris Imgur"
+
+#: imgurwindow.cpp:82
+#, kde-format
+msgid "Logged in as:"
+msgstr "Prijavljeni kot:"
+
+#: imgurwindow.cpp:90
+#, kde-format
+msgid "Forget"
+msgstr "Pozabi"
+
+#: imgurwindow.cpp:100
+#, kde-format
+msgid "Upload Anonymously"
+msgstr "Pošlji anonimno"
+
+#: imgurwindow.cpp:116
+#, kde-format
+msgid "Export to imgur.com"
+msgstr "Izvozi v imgur.com"
+
+#: imgurwindow.cpp:119
+#, kde-format
+msgid "Upload"
+msgstr "Pošlji"
+
+#: imgurwindow.cpp:120
+#, kde-format
+msgid "Start upload to Imgur"
+msgstr "Začni pošiljanje v Imgur"
+
+#: imgurwindow.cpp:125
+#, kde-format
+msgid "Imgur Export"
+msgstr "Izvoz Imgur"
+
+#: imgurwindow.cpp:126
+#, kde-format
+msgid "A tool to export images to Imgur web service"
+msgstr "Orodje za izvoz slik v oddaljeno spletno storitev Imgur"
+
+#: imgurwindow.cpp:127
+#, kde-format
+msgid "(c) 2012-2013, Marius Orcsik"
+msgstr "(c) 2012-2013, Marius Orcsik"
+
+#: imgurwindow.cpp:129
+#, kde-format
+msgid "Marius Orcsik"
+msgstr "Marius Orcsik"
+
+#: imgurwindow.cpp:130
+#, kde-format
+msgid "Author"
+msgstr "Avtor"
+
+#: imgurwindow.cpp:133
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: imgurwindow.cpp:134 imgurwindow.cpp:138
+#, kde-format
+msgid "Developer"
+msgstr "Razvijalec"
+
+#: imgurwindow.cpp:137
+#, kde-format
+msgid "Fabian Vogt"
+msgstr "Fabian Vogt"
+
+#: imgurwindow.cpp:220
+#, kde-format
+msgid "<Not logged in>"
+msgstr "<ni prijave>"
+
+#: imgurwindow.cpp:227
+#, kde-format
+msgid "Authorization Failed"
+msgstr "Pooblastitev ni uspela"
+
+#: imgurwindow.cpp:228
+#, kde-format
+msgid "Failed to log into Imgur: %1\n"
+msgstr "Ni se bilo mogoče prijaviti v Imgur: %1\n"
+
+#: imgurwindow.cpp:254 imgurwindow.cpp:261
+#, kde-format
+msgid "Uploading Failed"
+msgstr "Pošiljanje ni uspelo"
+
+#: imgurwindow.cpp:255
+#, kde-format
+msgid "Failed to upload photo to Imgur: %1\n"
+msgstr "Fotografije ni bilo mogoče poslati v Imgur: %1\n"
+
+#: imgurwindow.cpp:262
+#, kde-format
+msgid ""
+"Failed to upload photo to Imgur: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Fotografije ni bilo mogoče poslati v Imgur: %1\n"
+"Ali želite nadaljevati?"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_imgurui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Izvozi"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_imgurui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Glavna orodna vrstica"
+
+#: plugin_imgur.cpp:102
+#, kde-format
+msgid "Export to &Imgur..."
+msgstr "Izvozi v &Imgur ..."
+
+#~ msgid "Unexpected response from the web service"
+#~ msgstr "Nepričakovan odziv iz spletne storitve"
+
+#~ msgid "Upload failed"
+#~ msgstr "Pošiljanje ni uspelo"
+
+#~ msgid "Parse error"
+#~ msgstr "Napaka med razčlenjevanjem"
+
+#~ msgid "Network error: timeout, cannot connect."
+#~ msgstr "Napaka omrežja: časovni pretek, ni se mogoče povezati."
+
+#~ msgid "Request endpoint is not valid."
+#~ msgstr "Končna točka zahteve je neveljavna."
+
+#~ msgid "Request is not valid: some parameter missing?"
+#~ msgstr "Zahteva ni veljavna: morda manjka kak parameter?"
+
+#~ msgid "Authorization error: trying to access a resource without tokens."
+#~ msgstr "Napaka pooblastitve: poskus dostopanja do vira brez žetonov."
+
+#~ msgid "The given request is invalid."
+#~ msgstr "Podana zahteva je neveljavna."
+
+#~ msgid "Manager error, cannot use for sending requests."
+#~ msgstr "Napaka upravljalnika, ni ga mogoče uporabiti za pošiljanje zahtev."
+
+#~ msgid "No error"
+#~ msgstr "Brez napake"
+
+#~ msgid "OK"
+#~ msgstr "V redu"
+
+#~ msgid ""
+#~ "This is a clickable link to open the Imgur home page in a web browser"
+#~ msgstr ""
+#~ "To je povezava, ki jo lahko kliknete Odpre domačo stran Imgur v spletnem "
+#~ "brskalniku"
+
+#~ msgid ""
+#~ "Requesting Imgur for authorization to upload images with the KIPI Imgur "
+#~ "Exporter plugin."
+#~ msgstr ""
+#~ "Zahteva Imgur za pooblastitev za pošiljanje slik z vstavkom za izvoz v "
+#~ "Imgur."
+
+#~ msgid "Request authorization"
+#~ msgstr "Zahteva za pooblastitev"
+
+#~ msgid ""
+#~ "Set permissions for the current application to upload images to Imgur."
+#~ msgstr "Nastavi dovoljenja za trenutni program, da lahko pošilja na Imgur."
+
+#~ msgid "Processing %1"
+#~ msgstr "Obdelovanje %1"
+
+#~ msgid "Authenticated"
+#~ msgstr "Overjeno"
+
+#~ msgid "%v / %m"
+#~ msgstr "%v / %m"
+
+#~ msgid "Export to Imgur"
+#~ msgstr "Izvozi v Imgur"
+
+#~ msgctxt "%1 is the error string"
+#~ msgid ""
+#~ "Failed to authenticate to Imgur.\n"
+#~ "%1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Ni se bilo mogoče overiti v Imgur.\n"
+#~ "%1\n"
+#~ "Ali želite nadaljevati?"
+
+#~ msgid ""
+#~ "Failed to authenticate to Imgur.\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Ni se bilo mogoče overiti v Imgur.\n"
+#~ "Ali želite nadaljevati?"
+
+#~ msgid "Processing Failed"
+#~ msgstr "Obdelovanje ni uspelo"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Andrej Mernik"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "andrejm@ubuntu.si"
+
+#~ msgid "Author and Maintainer"
+#~ msgstr "Avtor in vzdrževalec"

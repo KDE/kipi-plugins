@@ -1,0 +1,295 @@
+# translation of kipiplugin_rajceexport.po into [el]
+# copyright (c) year this_file_is_part_of_kde
+# this file is distributed under the same license as the PACKAGE package.
+#
+# Stelios <sstavra@gmail.com>, 2011, 2017.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_rajceexport\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2017-10-12 14:16+0200\n"
+"Last-Translator: Stelios <sstavra@gmail.com>\n"
+"Language-Team: Greek <kde-i18n-el@kde.org>\n"
+"Language: el\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 2.0\n"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_rajceui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Εξαγωγή"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_rajceui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Κύρια γραμμή εργαλείων"
+
+#: newalbumdialog.cpp:47
+#, kde-format
+msgid "Visibility"
+msgstr "Ορατότητα"
+
+#: newalbumdialog.cpp:48
+#, kde-format
+msgid "Set the visibility of the album"
+msgstr "Ρύθμιση της ορατότητας του λευκώματος"
+
+#: newalbumdialog.cpp:50
+#, kde-format
+msgid "Public"
+msgstr "Δημόσιο"
+
+#: plugin_rajce.cpp:90
+#, kde-format
+msgid "Export to &Rajce.net..."
+msgstr "Εξαγωγή στο &Rajce.net..."
+
+#: rajcewidget.cpp:120
+#, kde-format
+msgid "Not logged in"
+msgstr "Δεν έχει γίνει είσοδος"
+
+#: rajcewidget.cpp:184
+#, kde-format
+msgid "Unknown error"
+msgstr "Άγνωστο σφάλμα"
+
+#: rajcewidget.cpp:185
+#, kde-format
+msgid "Invalid command"
+msgstr "Μη έγκυρη εντολή"
+
+#: rajcewidget.cpp:186
+#, kde-format
+msgid "Invalid login name or password"
+msgstr "Μη έγκυρο το όνομα χρήστη ή ο κωδικός"
+
+#: rajcewidget.cpp:187
+#, kde-format
+msgid "Session expired"
+msgstr "Λήξη συνεδρίας"
+
+#: rajcewidget.cpp:189 rajcewidget.cpp:190
+#, kde-format
+msgid "Unknown album"
+msgstr "Άγνωστο λεύκωμα"
+
+#: rajcewidget.cpp:191
+#, kde-format
+msgid "Failed to open album"
+msgstr "Αποτυχία στο άνοιγμα λευκώματος"
+
+#: rajcewidget.cpp:192
+#, kde-format
+msgid "The album name cannot be empty"
+msgstr "Το όνομα λευκώματος δεν μπορεί να είναι κενό"
+
+#: rajcewidget.cpp:193
+#, kde-format
+msgid "Failed to create album"
+msgstr "Αποτυχία δημιουργίας λευκώματος"
+
+#: rajcewidget.cpp:194
+#, kde-format
+msgid "Album does not exist"
+msgstr "το λεύκωμα δεν υπάρχει"
+
+#: rajcewidget.cpp:197 rajcewidget.cpp:199
+#, kde-format
+msgid "File upload failed"
+msgstr "Αποτυχία αποστολής αρχείου"
+
+#: rajcewidget.cpp:200
+#, kde-format
+msgid "Unsupported file extension"
+msgstr "Η επέκταση αρχείου δεν υποστηρίζεται"
+
+#: rajcewidget.cpp:269
+#, kde-format
+msgid "Logging in %v%"
+msgstr "Είσοδος %v%"
+
+#: rajcewidget.cpp:270
+#, kde-format
+msgid "Logging out %v%"
+msgstr "Έξοδος %v%"
+
+#: rajcewidget.cpp:271
+#, kde-format
+msgid "Loading albums %v%"
+msgstr "Φόρτωση λευκωμάτων %v%"
+
+#: rajcewidget.cpp:272
+#, kde-format
+msgid "Creating album %v%"
+msgstr "Δημιουργία λευκώματος %v%"
+
+#: rajcewidget.cpp:273
+#, kde-format
+msgid "Opening album %v%"
+msgstr "Άνοιγμα λευκώματος %v%"
+
+#: rajcewidget.cpp:274
+#, kde-format
+msgid "Closing album %v%"
+msgstr "Κλείσιμο λευκώματος %v%"
+
+#: rajcewidget.cpp:275
+#, kde-format
+msgid "Adding photos %v%"
+msgstr "Προσθήκη φωτογραφιών %v%"
+
+#: rajcewindow.cpp:53
+#, kde-format
+msgid "Export to Rajce.net"
+msgstr "Εξαγωγή στο Rajce.net"
+
+#: rajcewindow.cpp:55
+#, kde-format
+msgid "Start Upload"
+msgstr "Έναρξη αποστολής"
+
+#: rajcewindow.cpp:56
+#, kde-format
+msgid "Start upload to Rajce.net"
+msgstr "Έναρξη αποστολής στο Rajce.net"
+
+#: rajcewindow.cpp:71
+#, kde-format
+msgid "Rajce.net Export"
+msgstr "Εξαγωγή Rajce.net"
+
+#: rajcewindow.cpp:72
+#, kde-format
+msgid "A tool to export image collections to Rajce.net."
+msgstr "Ένα εργαλείο εξαγωγής συλλογών εικόνων στο Rajce.net ."
+
+#: rajcewindow.cpp:74
+#, kde-format
+msgid "(c) 2011-2013, Lukas Krejci"
+msgstr "(c) 2011-2013, Lukas Krejci"
+
+#: rajcewindow.cpp:76
+#, kde-format
+msgid "Lukas Krejci"
+msgstr "Lukas Krejci"
+
+#: rajcewindow.cpp:77
+#, kde-format
+msgid "Author"
+msgstr "Συγγραφέας"
+
+#~ msgid "Login:"
+#~ msgstr "Είσοδος:"
+
+#~ msgid "Password:"
+#~ msgstr "Κωδικός:"
+
+#~ msgid "&OK"
+#~ msgstr "&Εντάξει"
+
+#~ msgid "&Cancel"
+#~ msgstr "&Ακύρωση"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Stelios"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "sstavra@gmail.com"
+
+#~ msgid "New Album"
+#~ msgstr "Νέο λεύκωμα"
+
+#~ msgid "Name"
+#~ msgstr "Όνομα"
+
+#~ msgid "Description"
+#~ msgstr "Περιγραφή"
+
+#~ msgid "This is the list of images to upload to your Rajce.net account."
+#~ msgstr ""
+#~ "Αυτή είναι η λίστα εικόνων για αποστολή στο Rajce.net λογαριασμό σας."
+
+#~ msgid ""
+#~ "This is a clickable link to open the Rajce.net home page in a web browser."
+#~ msgstr ""
+#~ "Αυτός είναι ένας σύνδεσμος για το άνοιγμα της αρχικής σελίδας του Rajce."
+#~ "net σε έναν περιηγητή ιστού."
+
+#~ msgid "Account"
+#~ msgstr "Λογαριασμός"
+
+#~ msgid "This is the Rajce.net account that will be used to authenticate."
+#~ msgstr "Αυτός είναι ο Rajce.net λογαριασμός για την ταυτοποίηση."
+
+#~ msgctxt "Rajce.net account login"
+#~ msgid "Anonymous"
+#~ msgstr "Ανώνυμος"
+
+#~ msgid "Login as anonymous to Rajce.net web service."
+#~ msgstr "Είσοδος ανώνυμα στην υπηρεσία ιστού Rajce.net ."
+
+#~ msgid "Rajce.net Account"
+#~ msgstr "Rajce.net λογαριασμός"
+
+#~ msgid "Login to Rajce.net using username and password."
+#~ msgstr "Είσοδος στο Rajce.net με όνομα χρήστη και κωδικό."
+
+#~ msgctxt "Rajce.net account settings"
+#~ msgid "Name:"
+#~ msgstr "Όνομα:"
+
+#~ msgid "Change Account"
+#~ msgstr "Αλλαγή λογαριασμού"
+
+#~ msgid "Change Rajce.net Account used to authenticate"
+#~ msgstr "Αλλαγή Rajce.net λογαριασμού για την ταυτοποίηση"
+
+#~ msgid "Album"
+#~ msgstr "Λεύκωμα"
+
+#~ msgid "This is the Rajce.net album that will be used for transfer."
+#~ msgstr ""
+#~ "Αυτό είναι το Rajce.net λεύκωμα που θα χρησιμοποιηθεί για τη μεταφορά."
+
+#~ msgid "Create new Rajce.net album"
+#~ msgstr "Δημιουργία νέου Rajce.net λευκώματος"
+
+#~ msgctxt "reload album list"
+#~ msgid "Reload"
+#~ msgstr "Επαναφόρτωση"
+
+#~ msgid "Reload album list"
+#~ msgstr "Επαναφόρτωση λίστας λευκωμάτων"
+
+#~ msgid "Destination"
+#~ msgstr "Προορισμός"
+
+#~ msgid "This is the location where Rajce.net images will be downloaded."
+#~ msgstr "Αυτή είναι η θέση από όπου θα γίνει λήψη των Rajce.net εικόνων."
+
+#~ msgid "Options"
+#~ msgstr "Επιλογές"
+
+#~ msgid "These are options that will be applied to images before upload."
+#~ msgstr "Αυτές οι επιλογές θα εφαρμοστούν στις εικόνες πριν από τη λήψη."
+
+#~ msgid "Maximum dimension:"
+#~ msgstr "Μέγιστη διάσταση:"
+
+#~ msgid "JPEG quality:"
+#~ msgstr "Ποιότητα JPEG:"
+
+#~ msgid "Author and maintainer"
+#~ msgstr "Συγγραφέας και συντηρητής"
+
+#~ msgid "Handbook"
+#~ msgstr "Εγχειρίδιο"

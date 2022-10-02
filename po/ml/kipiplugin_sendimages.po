@@ -1,0 +1,400 @@
+# Malayalam translations for kipi-plugins package.
+# Copyright (C) 2019 This file is copyright:
+# This file is distributed under the same license as the kipi-plugins package.
+# Automatically generated, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kipi-plugins\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2019-05-20 03:07+0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: Swathanthra|സ്വതന്ത്ര Malayalam|മലയാളം Computing|കമ്പ്യൂട്ടിങ്ങ് <smc."
+"org.in>\n"
+"Language: ml\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: imageresize.cpp:116
+#, kde-format
+msgid "Error opening input file"
+msgstr ""
+
+#: imageresize.cpp:127
+#, kde-format
+msgid "Error opening temporary folder"
+msgstr ""
+
+#: imageresize.cpp:175
+#, kde-format
+msgid "Cannot resize image. Aborting."
+msgstr ""
+
+#: imageresize.cpp:186
+#, kde-format
+msgid "Cannot save resized image (JPEG). Aborting."
+msgstr ""
+
+#: imageresize.cpp:194
+#, kde-format
+msgid "Cannot save resized image (PNG). Aborting."
+msgstr ""
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_sendimagesui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr ""
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_sendimagesui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr ""
+
+#: plugin_sendimages.cpp:115
+#, kde-format
+msgid "Email Images..."
+msgstr ""
+
+#: sendimages.cpp:133
+#, kde-format
+msgid "Email images"
+msgstr ""
+
+#: sendimages.cpp:176
+#, kde-format
+msgid "Operation canceled by user"
+msgstr ""
+
+#: sendimages.cpp:190
+#, kde-format
+msgid "Resizing %1"
+msgstr ""
+
+#: sendimages.cpp:203
+#, kde-format
+msgid "%1 resized successfully"
+msgstr ""
+
+#: sendimages.cpp:212
+#, kde-format
+msgid "Failed to resize %1: %2"
+msgstr ""
+
+#: sendimages.cpp:240
+#, kde-format
+msgid "There are no files to send"
+msgstr ""
+
+#: sendimages.cpp:258
+#, kde-format
+msgid "Build images properties file"
+msgstr ""
+
+#: sendimages.cpp:271
+#, kde-format
+msgid "no caption"
+msgstr ""
+
+#: sendimages.cpp:274
+#, kde-format
+msgid "no keywords"
+msgstr ""
+
+#: sendimages.cpp:276
+#, kde-format
+msgid ""
+"file \"%1\":\n"
+"Original images: %2\n"
+msgstr ""
+
+#: sendimages.cpp:279
+#, kde-format
+msgid "Comments: %1\n"
+msgstr ""
+
+#: sendimages.cpp:282
+#, kde-format
+msgid "Tags: %1\n"
+msgstr ""
+
+#: sendimages.cpp:285
+#, kde-format
+msgid "Rating: %1\n"
+msgstr ""
+
+#: sendimages.cpp:290 sendimages.cpp:298
+#, kde-format
+msgid "properties.txt"
+msgstr ""
+
+#: sendimages.cpp:297
+#, kde-format
+msgid "Image properties file cannot be opened"
+msgstr ""
+
+#: sendimages.cpp:306
+#, kde-format
+msgid "Image properties file done"
+msgstr ""
+
+#: sendimages.cpp:324
+#, kde-format
+msgid "Processing Failed"
+msgstr ""
+
+#: sendimages.cpp:325
+#, kde-format
+msgid ""
+"Some images cannot be resized.\n"
+"Do you want them to be added as attachments without resizing?"
+msgstr ""
+
+#: sendimages.cpp:390
+#, kde-format
+msgid ""
+"The file \"%1\" is too big to be sent, please reduce its size or change your "
+"settings"
+msgstr ""
+
+#: sendimages.cpp:442
+#, kde-format
+msgid "Starting default desktop email program..."
+msgstr ""
+
+#: sendimages.cpp:674
+#, kde-format
+msgid "Failed to start \"%1\" program. Check your system."
+msgstr ""
+
+#: sendimages.cpp:687
+#, kde-format
+msgid "Starting \"%1\" program..."
+msgstr ""
+
+#: sendimages.cpp:697
+#, kde-format
+msgid "After having sent your images by email..."
+msgstr ""
+
+#: sendimages.cpp:698
+#, kde-format
+msgid "Press 'Close' button to clean up temporary files"
+msgstr ""
+
+#: sendimagesdialog.cpp:81
+#, kde-format
+msgid "Email Images Options"
+msgstr ""
+
+#: sendimagesdialog.cpp:84
+#, kde-format
+msgctxt "@action:button"
+msgid "&Send"
+msgstr ""
+
+#: sendimagesdialog.cpp:103
+#, kde-format
+msgid "Send Images"
+msgstr ""
+
+#: sendimagesdialog.cpp:104
+#, kde-format
+msgid "A tool to e-mail items"
+msgstr ""
+
+#: sendimagesdialog.cpp:105
+#, kde-format
+msgid "(c) 2003-2016, Gilles Caulier"
+msgstr ""
+
+#: sendimagesdialog.cpp:107
+#, kde-format
+msgid "Gilles Caulier"
+msgstr ""
+
+#: sendimagesdialog.cpp:107
+#, kde-format
+msgid "Author and Maintainer"
+msgstr ""
+
+#: sendimagesdialog.cpp:110
+#, kde-format
+msgid "Michael Hoechstetter"
+msgstr ""
+
+#: sendimagesdialog.cpp:110 sendimagesdialog.cpp:113
+#, kde-format
+msgid "Developer"
+msgstr ""
+
+#: sendimagesdialog.cpp:113
+#, kde-format
+msgid "Tom Albers"
+msgstr ""
+
+#: settingswidget.cpp:91
+#, kde-format
+msgid "Mail program:"
+msgstr ""
+
+#: settingswidget.cpp:94
+#, kde-format
+msgctxt "default desktop mail agent"
+msgid "Default"
+msgstr ""
+
+#: settingswidget.cpp:106
+#, kde-format
+msgid ""
+"Select your preferred external email program here. <b>Default</b> is the "
+"current email program set in desktop system settings."
+msgstr ""
+
+#: settingswidget.cpp:112
+#, kde-format
+msgid "Attach a file with image properties from %1"
+msgstr ""
+
+#: settingswidget.cpp:115
+#, kde-format
+msgid ""
+"If you enable this option, all image properties set by %1 as Comments, "
+"Rating, or Tags, will be added as an attached file."
+msgstr ""
+
+#: settingswidget.cpp:125
+#, kde-format
+msgid " MB"
+msgstr ""
+
+#: settingswidget.cpp:127
+#, kde-format
+msgid "Maximum email size limit:"
+msgstr ""
+
+#: settingswidget.cpp:132
+#, kde-format
+msgid "Adjust image properties"
+msgstr ""
+
+#: settingswidget.cpp:134
+#, kde-format
+msgid ""
+"If you enable this option, all images to be sent can be resized and "
+"recompressed."
+msgstr ""
+
+#: settingswidget.cpp:137
+#, kde-format
+msgid "Image Properties"
+msgstr ""
+
+#: settingswidget.cpp:141 settingswidget.cpp:167
+#, kde-format
+msgid "Very Small (320 pixels)"
+msgstr ""
+
+#: settingswidget.cpp:142 settingswidget.cpp:168
+#, kde-format
+msgid "Small (640 pixels)"
+msgstr ""
+
+#: settingswidget.cpp:143 settingswidget.cpp:169
+#, kde-format
+msgid "Medium (800 pixels)"
+msgstr ""
+
+#: settingswidget.cpp:144 settingswidget.cpp:170
+#, kde-format
+msgid "Big (1024 pixels)"
+msgstr ""
+
+#: settingswidget.cpp:145 settingswidget.cpp:171
+#, kde-format
+msgid "Very Big (1280 pixels)"
+msgstr ""
+
+#: settingswidget.cpp:146 settingswidget.cpp:172
+#, kde-format
+msgid "Large - for printing (1600 pixels)"
+msgstr ""
+
+#: settingswidget.cpp:147 settingswidget.cpp:173
+#, kde-format
+msgid "Full HD (1920 pixels)"
+msgstr ""
+
+#: settingswidget.cpp:148 settingswidget.cpp:174
+#, kde-format
+msgid "Ultra HD (3840 pixels)"
+msgstr ""
+
+#: settingswidget.cpp:150
+#, kde-format
+msgid ""
+"<p>Select the size of the images that are to be sent:</p><p><b>%1</b>: use "
+"this if you have a very slow Internet connection or the target mailbox size "
+"is very limited.</p><p><b>%2</b>: use this if you have a slow Internet "
+"connection and the target mailbox size is limited.</p><p><b>%3</b>: this is "
+"the default value for medium Internet connection speed and target mailbox "
+"size.</p><p><b>%4</b>: use this if you have a high-speed Internet connection "
+"and the target mailbox size is not limited.</p><p><b>%5</b>: use this if you "
+"have no size or speed restrictions.</p><p><b>%6</b>: use this only for "
+"printing purposes.</p><p><b>%7</b>: use this for optimal viewing on Full HD "
+"displays. Only if you have a high-speed Internet connection and the target "
+"mailbox size is not limited.</p><p><b>%8</b>: use this for optimal viewing "
+"on Ultra HD displays. Only if you have a high-speed Internet connection and "
+"the target mailbox size is not limited.</p>"
+msgstr ""
+
+#: settingswidget.cpp:177
+#, kde-format
+msgid "Image size:"
+msgstr ""
+
+#: settingswidget.cpp:186
+#, kde-format
+msgid "<p>Select the file format of the image files to be sent.</p>"
+msgstr ""
+
+#: settingswidget.cpp:187
+#, kde-format
+msgid ""
+"<p><b>JPEG</b>: The Joint Photographic Experts Group file format is a good "
+"web file format but it uses lossy compression.</p><p><b>PNG</b>: the "
+"Portable Network Graphics format is an extensible file format for the "
+"lossless, portable, well-compressed storage of raster images. PNG provides a "
+"patent-free replacement for GIF and can also replace many common uses of "
+"TIFF. PNG is designed to work well in online viewing applications, such as "
+"the World Wide Web, so it is fully streamable with a progressive display "
+"option. Also, PNG can store gamma and chromaticity data for improved color-"
+"matching on heterogeneous platforms.</p>"
+msgstr ""
+
+#: settingswidget.cpp:197
+#, kde-format
+msgid "Image format:"
+msgstr ""
+
+#: settingswidget.cpp:206
+#, kde-format
+msgid "<p>The new compression value of JPEG images to be sent:</p>"
+msgstr ""
+
+#: settingswidget.cpp:207
+#, kde-format
+msgid ""
+"<p><b>1</b>: very high compression<br/><b>25</b>: high compression<br/"
+"><b>50</b>: medium compression<br/><b>75</b>: low compression (default "
+"value)<br/><b>100</b>: no compression</p>"
+msgstr ""
+
+#: settingswidget.cpp:215
+#, kde-format
+msgid "Image quality:"
+msgstr ""

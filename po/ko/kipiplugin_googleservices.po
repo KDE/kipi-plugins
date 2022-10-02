@@ -1,0 +1,821 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Shinjo Park <kde@peremen.name>, 2014, 2015, 2017, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2022-04-16 22:55+0200\n"
+"Last-Translator: Shinjo Park <kde@peremen.name>\n"
+"Language-Team: Korean <kde-kr@kde.org>\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 21.08.1\n"
+
+#: authorize.cpp:116
+#, kde-format
+msgid "Google Drive Authorization"
+msgstr "Google 드라이브 인증"
+
+#: authorize.cpp:129
+#, kde-format
+msgid ""
+"Please follow the instructions in the browser. After logging in and "
+"authorizing the application, copy the code from the browser, paste it in the "
+"textbox below, and click OK."
+msgstr ""
+"웹 브라우저에서 다음 절차를 따르십시오. 로그인 및 앱 인증 후 브라우저에 표시"
+"된 코드를 복사하여 아래 텍스트 상자에 붙여넣은 후 확인을 클릭하십시오."
+
+#: authorize.cpp:249 gdtalker.cpp:272 gptalker.cpp:644
+#, kde-format
+msgid "Error"
+msgstr "오류"
+
+#: gdtalker.cpp:337
+#, kde-format
+msgid "Failed to list folders"
+msgstr "폴더 목록을 가져올 수 없음"
+
+#: gdtalker.cpp:385
+#, kde-format
+msgid "Failed to create folder"
+msgstr "폴더를 만들 수 없음"
+
+#: gdtalker.cpp:416 gptalker.cpp:937
+#, kde-format
+msgid "Failed to upload photo"
+msgstr "사진을 업로드할 수 없음"
+
+#: gptalker.cpp:569
+#, kde-format
+msgid "No photo specified"
+msgstr "지정한 사진 없음"
+
+#: gptalker.cpp:572
+#, kde-format
+msgid "General upload failure"
+msgstr "일반 업로드 실패"
+
+#: gptalker.cpp:575
+#, kde-format
+msgid "File-size was zero"
+msgstr "파일 크기가 0임"
+
+#: gptalker.cpp:578
+#, kde-format
+msgid "File-type was not recognized"
+msgstr "파일 형식을 인식할 수 없음"
+
+#: gptalker.cpp:581
+#, kde-format
+msgid "User exceeded upload limit"
+msgstr "사용자의 업로드 크기 제한 초과"
+
+#: gptalker.cpp:584
+#, kde-format
+msgid "Invalid signature"
+msgstr "서명 잘못됨"
+
+#: gptalker.cpp:587
+#, kde-format
+msgid "Missing signature"
+msgstr "서명 없음"
+
+#: gptalker.cpp:590
+#, kde-format
+msgid "Login failed / Invalid auth token"
+msgstr "로그인 실패/인증 토큰 잘못됨"
+
+#: gptalker.cpp:593
+#, kde-format
+msgid "Invalid API Key"
+msgstr "잘못된 API 키"
+
+#: gptalker.cpp:596
+#, kde-format
+msgid "Service currently unavailable"
+msgstr "서비스를 사용할 수 없음"
+
+#: gptalker.cpp:599
+#, kde-format
+msgid "Invalid Frob"
+msgstr "잘못된 Frob"
+
+#: gptalker.cpp:602
+#, kde-format
+msgid "Format \"xxx\" not found"
+msgstr "형식 \"xxx\"를 찾을 수 없음"
+
+#: gptalker.cpp:605
+#, kde-format
+msgid "Method \"xxx\" not found"
+msgstr "메서드 \"xxx\"를 찾을 수 없음"
+
+#: gptalker.cpp:608
+#, kde-format
+msgid "Invalid SOAP envelope"
+msgstr "잘못된 SOAP Envelope"
+
+#: gptalker.cpp:611
+#, kde-format
+msgid "Invalid XML-RPC Method Call"
+msgstr "잘못된 XML-RPC 메서드 호출"
+
+#: gptalker.cpp:614
+#, kde-format
+msgid "The POST method is now required for all setters."
+msgstr "POST 메서드가 필요합니다."
+
+#: gptalker.cpp:617
+#, kde-format
+msgid "Unknown error"
+msgstr "알 수 없는 오류"
+
+#: gptalker.cpp:620 gswindow.cpp:427 gswindow.cpp:466 gswindow.cpp:548
+#: gswindow.cpp:576 gswindow.cpp:652 gswindow.cpp:668 gswindow.cpp:1078
+#: gswindow.cpp:1198 gswindow.cpp:1241 gswindow.cpp:1249
+#, kde-format
+msgctxt "@title:window"
+msgid "Error"
+msgstr "오류"
+
+#: gptalker.cpp:621
+#, kde-format
+msgid ""
+"Error occurred: %1\n"
+"Unable to proceed further."
+msgstr ""
+"오류: %1\n"
+"더 이상 진행할 수 없습니다."
+
+#: gptalker.cpp:691 gptalker.cpp:758
+#, kde-format
+msgid "Failed to fetch photo-set list"
+msgstr "사진 모음 목록을 가져올 수 없음"
+
+#: gptalker.cpp:894 gptalker.cpp:927
+#, kde-format
+msgid "Failed to create album"
+msgstr "앨범을 만들 수 없음"
+
+#: gswidget.cpp:60
+#, kde-format
+msgid "Tag path behavior :"
+msgstr "태그 경로 처리:"
+
+#: gswidget.cpp:62
+#, kde-format
+msgid "Leaf tags only"
+msgstr "잎 태그만"
+
+#: gswidget.cpp:63
+#, kde-format
+msgid "Export only the leaf tags of tag hierarchies"
+msgstr "태그 구조의 잎 태그만 내보내기"
+
+#: gswidget.cpp:64
+#, kde-format
+msgid "Split tags"
+msgstr "태그 나누기"
+
+#: gswidget.cpp:65
+#, kde-format
+msgid "Export the leaf tag and all ancestors as single tags."
+msgstr "잎 태그와 모든 부모 태그를 개별 태그로 나눕니다."
+
+#: gswidget.cpp:66
+#, kde-format
+msgid "Combined String"
+msgstr "합쳐진 문자열"
+
+#: gswidget.cpp:67
+#, kde-format
+msgid "Build a combined tag string."
+msgstr "합쳐진 태그 문자열을 사용합니다."
+
+#: gswindow.cpp:116
+#, kde-format
+msgid "Google Drive Export"
+msgstr "Google 드라이브 내보내기"
+
+#: gswindow.cpp:117
+#, kde-format
+msgid "A tool to export images to Google Drive"
+msgstr "Google 드라이브로 사진을 내보내는 도구"
+
+#: gswindow.cpp:119
+#, kde-format
+msgid ""
+"(c) 2013, Saurabh Patel\n"
+"(c) 2015, Shourya Singh Gupta"
+msgstr ""
+"(c) 2013, Saurabh Patel\n"
+"(c) 2015, Shourya Singh Gupta"
+
+#: gswindow.cpp:122
+#, kde-format
+msgid "Saurabh Patel"
+msgstr "Saurabh Patel"
+
+#: gswindow.cpp:122 gswindow.cpp:195
+#, kde-format
+msgid "Author and maintainer"
+msgstr "작성자 및 관리자"
+
+#: gswindow.cpp:125 gswindow.cpp:207
+#, kde-format
+msgid "Shourya Singh Gupta"
+msgstr "Shourya Singh Gupta"
+
+#: gswindow.cpp:125 gswindow.cpp:198 gswindow.cpp:201 gswindow.cpp:204
+#: gswindow.cpp:207
+#, kde-format
+msgid "Developer"
+msgstr "개발자"
+
+#: gswindow.cpp:132
+#, kde-format
+msgid "Export to Google Drive"
+msgstr "Google 드라이브로 내보내기"
+
+#: gswindow.cpp:134 gswindow.cpp:219
+#, kde-format
+msgid "Start Upload"
+msgstr "업로드 시작"
+
+#: gswindow.cpp:135
+#, kde-format
+msgid "Start upload to Google Drive"
+msgstr "Google 드라이브로 업로드 시작"
+
+#: gswindow.cpp:186
+#, kde-format
+msgid "Google Photos/PicasaWeb Export"
+msgstr "Google 사진/Picasa 웹앨범으로 내보내기"
+
+#: gswindow.cpp:187
+#, kde-format
+msgid "A tool to export image collections to Google Photos/Picasa web service."
+msgstr "Google 사진/Picaca 웹앨범으로 사진을 내보내는 도구입니다."
+
+#: gswindow.cpp:189
+#, kde-format
+msgid ""
+"(c) 2007-2009, Vardhman Jain\n"
+"(c) 2008-2016, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2010, Jens Mueller\n"
+"(c) 2015, Shourya Singh Gupta"
+msgstr ""
+"(c) 2007-2009, Vardhman Jain\n"
+"(c) 2008-2016, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2010, Jens Mueller\n"
+"(c) 2015, Shourya Singh Gupta"
+
+#: gswindow.cpp:195
+#, kde-format
+msgid "Vardhman Jain"
+msgstr "Vardhman Jain"
+
+#: gswindow.cpp:198
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: gswindow.cpp:201
+#, kde-format
+msgid "Luka Renko"
+msgstr "Luka Renko"
+
+#: gswindow.cpp:204
+#, kde-format
+msgid "Jens Mueller"
+msgstr "Jens Mueller"
+
+#: gswindow.cpp:217
+#, kde-format
+msgid "Export to Google Photos/PicasaWeb Service"
+msgstr "Google 사진/Picasa 웹앨범으로 내보내기"
+
+#: gswindow.cpp:220
+#, kde-format
+msgid "Start upload to Google Photos/PicasaWeb Service"
+msgstr "Google 사진/Picasa 웹앨범 업로드 시작"
+
+#: gswindow.cpp:226
+#, kde-format
+msgid "Import from Google Photos/PicasaWeb Service"
+msgstr "Google 사진/Picasa 웹앨범에서 가져오기"
+
+#: gswindow.cpp:228
+#, kde-format
+msgid "Start Download"
+msgstr "다운로드 시작"
+
+#: gswindow.cpp:229
+#, kde-format
+msgid "Start download from Google Photos/PicasaWeb service"
+msgstr "Google 사진/Picasa 웹앨범 다운로드 시작"
+
+#: gswindow.cpp:428 gswindow.cpp:467 gswindow.cpp:577
+#, kde-format
+msgid "Google Photos/PicasaWeb Call Failed: %1\n"
+msgstr "Google 사진/Picasa 웹앨범 호출 실패: %1\n"
+
+#: gswindow.cpp:448 gswindow.cpp:527 gswindow.cpp:758
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: gswindow.cpp:531
+#, kde-format
+msgid "Google Photo Export"
+msgstr "Google 사진으로 내보내기"
+
+#: gswindow.cpp:549
+#, kde-format
+msgid "Google Drive Call Failed: %1\n"
+msgstr "Google 드라이브 호출 실패: %1\n"
+
+#: gswindow.cpp:653
+#, kde-format
+msgid ""
+"The textbox is empty, please enter the code from the browser in the textbox. "
+"To complete the authentication click \"Change Account\", or \"Start Upload\" "
+"to authenticate again."
+msgstr ""
+"텍스트 상자가 비어 있습니다. 웹 브라우저에 표시된 텍스트를 입력하십시오. 인증"
+"을 완료하려면 \"계정 변경\"을, 다시 인증하려면 \"업로드 시작\"을 클릭하십시"
+"오."
+
+#: gswindow.cpp:669
+#, kde-format
+msgid "No image selected. Please select which images should be uploaded."
+msgstr "그림을 선택하지 않았습니다. 업로드할 그림을 선택하십시오."
+
+#: gswindow.cpp:683 gswindow.cpp:706 gswindow.cpp:1014 gswindow.cpp:1032
+#: gswindow.cpp:1105
+#, kde-format
+msgid "Warning"
+msgstr "경고"
+
+#: gswindow.cpp:684 gswindow.cpp:707
+#, kde-format
+msgid "Authentication failed. Click \"Continue\" to authenticate."
+msgstr "인증이 실패했습니다. \"계속\"을 클릭하여 인증하십시오."
+
+#: gswindow.cpp:687 gswindow.cpp:710 gswindow.cpp:1019 gswindow.cpp:1037
+#: gswindow.cpp:1109 gswindow.cpp:1288
+#, kde-format
+msgid "Continue"
+msgstr "계속"
+
+#: gswindow.cpp:688 gswindow.cpp:711 gswindow.cpp:1020 gswindow.cpp:1038
+#: gswindow.cpp:1110 gswindow.cpp:1289
+#, kde-format
+msgid "Cancel"
+msgstr "취소"
+
+#: gswindow.cpp:762
+#, kde-format
+msgid "Google Drive export"
+msgstr "Google 드라이브 내보내기"
+
+#: gswindow.cpp:1015
+#, kde-format
+msgid ""
+"Failed to save photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"사진을 저장할 수 없습니다: %1\n"
+"계속 진행하시겠습니까?"
+
+#: gswindow.cpp:1033
+#, kde-format
+msgid ""
+"Failed to download photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"사진을 다운로드할 수 없습니다: %1\n"
+"계속 진행하시겠습니까?"
+
+#: gswindow.cpp:1079
+#, kde-format
+msgid "Failed to save image to %1"
+msgstr "사진을 %1(으)로 저장할 수 없음"
+
+#: gswindow.cpp:1106
+#, kde-format
+msgid ""
+"Failed to upload photo to %1.\n"
+"%2\n"
+"Do you want to continue?"
+msgstr ""
+"%1에 사진을 업로드할 수 없습니다: \n"
+"%2\n"
+"계속 진행하시겠습니까?"
+
+#: gswindow.cpp:1200
+#, kde-format
+msgctxt "%1 is the error string, %2 is the error code"
+msgid "An authentication error occurred: %1 (%2)"
+msgstr "인증 오류 발생: %1 (%2)"
+
+#: gswindow.cpp:1242
+#, kde-format
+msgid ""
+"Google Drive call failed:\n"
+"%1"
+msgstr ""
+"Google 드라이브 호출 실패:\n"
+"%1"
+
+#: gswindow.cpp:1250
+#, kde-format
+msgid ""
+"Google Photos/PicasaWeb call failed:\n"
+"%1"
+msgstr ""
+"Google 사진/Picasa 웹 호출 실패:\n"
+"%1"
+
+#: gswindow.cpp:1283
+#, kde-format
+msgctxt "@title:window"
+msgid "Warning"
+msgstr "경고"
+
+#: gswindow.cpp:1284
+#, kde-format
+msgid ""
+"After you have been logged out in the browser, click \"Continue\" to "
+"authenticate for another account"
+msgstr ""
+"웹 브라우저에서 로그아웃한 후 \"계속\"을 클릭하여 다른 계정을 인증하십시오"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_googleservicesui.rc:7 kipiplugin_googleservicesui.rc:15
+#, kde-format
+msgid "&Export"
+msgstr "내보내기(&E)"
+
+#. i18n: ectx: Menu (Import)
+#: kipiplugin_googleservicesui.rc:11
+#, kde-format
+msgid "&Import"
+msgstr "가져오기(&I)"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_googleservicesui.rc:21
+#, kde-format
+msgid "Main Toolbar"
+msgstr "주 도구 모음"
+
+#: newalbumdlg.cpp:54
+#, kde-format
+msgid "Access Level"
+msgstr "접근 단계"
+
+#: newalbumdlg.cpp:55
+#, kde-format
+msgid ""
+"These are security and privacy settings for the new Google Photos/PicasaWeb "
+"album."
+msgstr "새로운 Google 사진/Picasa 웹앨범의 보안 설정입니다."
+
+#: newalbumdlg.cpp:57
+#, kde-format
+msgctxt "google photos/picasaweb album privacy"
+msgid "Public"
+msgstr "공개"
+
+#: newalbumdlg.cpp:59
+#, kde-format
+msgid "Public album is listed on your public Google Photos/PicasaWeb page."
+msgstr "공개 앨범은 Google 사진/Picasa 웹앨범의 공개 페이지에 표시됩니다."
+
+#: newalbumdlg.cpp:60
+#, kde-format
+msgctxt "google photos/picasaweb album privacy"
+msgid "Unlisted / Private"
+msgstr "제한 공개"
+
+#: newalbumdlg.cpp:61
+#, kde-format
+msgid "Unlisted album is only accessible via URL."
+msgstr "제한 공개 앨범은 URL로만 접근할 수 있습니다."
+
+#: newalbumdlg.cpp:62
+#, kde-format
+msgctxt "google photos/picasaweb album privacy"
+msgid "Sign-In Required to View"
+msgstr "로그인 필요"
+
+#: newalbumdlg.cpp:63
+#, kde-format
+msgid "Unlisted album require Sign-In to View"
+msgstr "제한 공개 앨범을 볼 때 로그인 요구"
+
+#: newalbumdlg.cpp:71
+#, kde-format
+msgid "Privacy:"
+msgstr "정보 보호:"
+
+#: plugin_googleservices.cpp:100
+#, kde-format
+msgid "Export to &Google Drive..."
+msgstr "Google 드라이브로 내보내기(&G)..."
+
+#: plugin_googleservices.cpp:110
+#, kde-format
+msgid "Export to &Google Photos/PicasaWeb..."
+msgstr "Google 사진/Picasa 웹앨범으로 내보내기(&G)..."
+
+#: plugin_googleservices.cpp:120
+#, kde-format
+msgid "Import from &Google Photos/PicasaWeb..."
+msgstr "Google 사진/Picasa 웹앨범에서 가져오기(&G)..."
+
+#: replacedialog.cpp:112
+#, kde-format
+msgid "Add As New"
+msgstr "새로운 항목으로 추가"
+
+#: replacedialog.cpp:113
+#, kde-format
+msgid "Item will be added alongside the linked version."
+msgstr "링크된 버전과 함께 항목을 추가합니다."
+
+#: replacedialog.cpp:119
+#, kde-format
+msgid "Add All"
+msgstr "모두 추가"
+
+#: replacedialog.cpp:120
+#, kde-format
+msgid ""
+"Items will be added alongside the linked version. You will not be prompted "
+"again."
+msgstr "링크된 버전과 함께 항목을 추가합니다. 다시 묻지 않습니다."
+
+#: replacedialog.cpp:126
+#, kde-format
+msgid "Replace"
+msgstr "바꾸기"
+
+#: replacedialog.cpp:127
+#, kde-format
+msgid "Item will be replacing the linked version."
+msgstr "링크된 버전을 항목으로 덮어씁니다."
+
+#: replacedialog.cpp:133
+#, kde-format
+msgid "Replace All"
+msgstr "모두 바꾸기"
+
+#: replacedialog.cpp:134
+#, kde-format
+msgid ""
+"Items will be replacing the linked version. You will not be prompted again."
+msgstr "링크된 버전을 항목으로 덮어씁니다. 다시 묻지 않습니다."
+
+#: replacedialog.cpp:157
+#, kde-format
+msgid "A linked item already exists."
+msgstr "링크된 항목이 이미 존재합니다."
+
+#: replacedialog.cpp:177
+#, kde-format
+msgid "Destination"
+msgstr "대상"
+
+#: replacedialog.cpp:182
+#, kde-format
+msgid "Source"
+msgstr "원본"
+
+#, fuzzy
+#~| msgid "&Export"
+#~ msgid "Picasa Export"
+#~ msgstr "내보내기(&E)"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Shinjo Park"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "kde@peremen.name"
+
+#~ msgid "This is the list of images to upload to your Google Drive account."
+#~ msgstr "Google 드라이브 계정에 업로드할 사진 목록입니다."
+
+#, fuzzy
+#~| msgid "This is the list of images to upload to your Google Drive account."
+#~ msgid ""
+#~ "This is the list of images to upload to your Google Photos/PicasaWeb "
+#~ "account."
+#~ msgstr "Google 드라이브 계정에 업로드할 사진 목록입니다."
+
+#~ msgid "This is a clickable link to open Google Drive in a browser."
+#~ msgstr "Google 드라이브를 웹 브라우저로 여는 링크입니다."
+
+#, fuzzy
+#~| msgid "This is a clickable link to open Google Drive in a browser."
+#~ msgid ""
+#~ "This is a clickable link to open Google Photos/PicasaWeb in a browser."
+#~ msgstr "Google 드라이브를 웹 브라우저로 여는 링크입니다."
+
+#~ msgid "Account"
+#~ msgstr "계정"
+
+#~ msgid "This is the Google Drive account that is currently logged in."
+#~ msgstr "현재 사용 중인 Google 드라이브 계정입니다."
+
+#, fuzzy
+#~| msgid "This is the Google Drive account that is currently logged in."
+#~ msgid ""
+#~ "This is the Google Photos/PicasaWeb account that is currently logged in."
+#~ msgstr "현재 사용 중인 Google 드라이브 계정입니다."
+
+#~ msgctxt "account settings"
+#~ msgid "Name:"
+#~ msgstr "이름:"
+
+#~ msgid "Change Account"
+#~ msgstr "계정 변경"
+
+#~ msgid "Change Google Drive account for transfer"
+#~ msgstr "전송할 Google 드라이브 계정 변경"
+
+#, fuzzy
+#~| msgid "Change Google Drive account for transfer"
+#~ msgid "Change Google Photos/PicasaWeb account for transfer"
+#~ msgstr "전송할 Google 드라이브 계정 변경"
+
+#, fuzzy
+#~| msgid "Album:"
+#~ msgid "Album"
+#~ msgstr "앨범:"
+
+#~ msgid ""
+#~ "This is the Google Drive folder to which selected photos will be uploaded."
+#~ msgstr "선택한 사진을 업로드할 Google 드라이브 폴더입니다."
+
+#, fuzzy
+#~| msgid ""
+#~| "This is the Google Drive folder to which selected photos will be "
+#~| "uploaded."
+#~ msgid ""
+#~ "This is the Google Photos/PicasaWeb folder to which selected photos will "
+#~ "be uploaded."
+#~ msgstr "선택한 사진을 업로드할 Google 드라이브 폴더입니다."
+
+#, fuzzy
+#~| msgid ""
+#~| "This is the Google Drive folder to which selected photos will be "
+#~| "uploaded."
+#~ msgid ""
+#~ "This is the Google Photos/PicasaWeb folder from which selected photos "
+#~ "will be downloaded."
+#~ msgstr "선택한 사진을 업로드할 Google 드라이브 폴더입니다."
+
+#~ msgid "Album:"
+#~ msgstr "앨범:"
+
+#~ msgid "New Album"
+#~ msgstr "새 앨범"
+
+#~ msgid "Create new Google Drive folder"
+#~ msgstr "새 Google 드라이브 폴더 만들기"
+
+#, fuzzy
+#~| msgid "Create new Google Drive folder"
+#~ msgid "Create new Google Photos/PicasaWeb folder"
+#~ msgstr "새 Google 드라이브 폴더 만들기"
+
+#~ msgctxt "album list"
+#~ msgid "Reload"
+#~ msgstr "새로 고침"
+
+#~ msgid "Reload album list"
+#~ msgstr "앨범 목록 새로 고침"
+
+#, fuzzy
+#~| msgid "Maximum Dimension:"
+#~ msgid "Max Dimension"
+#~ msgstr "최대 크기:"
+
+#, fuzzy
+#~| msgid "This is the title of the folder that will be created."
+#~ msgid ""
+#~ "This is the maximum dimension of the images. Images larger than this will "
+#~ "be scaled down."
+#~ msgstr "만들 폴더 제목입니다."
+
+#, fuzzy
+#~| msgid "This is the title of the folder that will be created."
+#~ msgid ""
+#~ "This is the location where Google Photos/PicasaWeb images will be "
+#~ "downloaded."
+#~ msgstr "만들 폴더 제목입니다."
+
+#~ msgid "Options"
+#~ msgstr "옵션"
+
+#~ msgid "These are the options that would be applied to photos before upload."
+#~ msgstr "사진 업로드 전에 적용할 옵션입니다."
+
+#~ msgid "Resize photos before uploading"
+#~ msgstr "업로드 전에 크기 조절"
+
+#~ msgid "Maximum Dimension:"
+#~ msgstr "최대 크기:"
+
+#~ msgid "JPEG Quality:"
+#~ msgstr "JPEG 품질:"
+
+#, fuzzy
+#~| msgid "This is the title of the folder that will be created."
+#~ msgid "Title of the album that will be created (required)."
+#~ msgstr "만들 폴더 제목입니다."
+
+#, fuzzy
+#~| msgid "This is the title of the folder that will be created."
+#~ msgid "Date and Time of the album that will be created (optional)."
+#~ msgstr "만들 폴더 제목입니다."
+
+#, fuzzy
+#~| msgid "This is the title of the folder that will be created."
+#~ msgid "Description of the album that will be created (optional)."
+#~ msgstr "만들 폴더 제목입니다."
+
+#, fuzzy
+#~| msgid "This is the title of the folder that will be created."
+#~ msgid "Location of the album that will be created (optional)."
+#~ msgstr "만들 폴더 제목입니다."
+
+#~ msgid "This is the title of the folder that will be created."
+#~ msgstr "만들 폴더 제목입니다."
+
+#~ msgctxt "folder edit"
+#~ msgid "Title:"
+#~ msgstr "제목:"
+
+#, fuzzy
+#~| msgctxt "folder edit"
+#~| msgid "Title:"
+#~ msgctxt "new google photos/picasaweb album dialog"
+#~ msgid "Title:"
+#~ msgstr "제목:"
+
+#, fuzzy
+#~| msgid "Destination"
+#~ msgctxt "new google photos/picasaweb album dialog"
+#~ msgid "Description:"
+#~ msgstr "대상"
+
+#~ msgid ""
+#~ "Failed to upload photo to Google Drive.\n"
+#~ "%1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Google 드라이브에 사진을 업로드할 수 없습니다: \n"
+#~ "%1\n"
+#~ "계속 진행하시겠습니까?"
+
+#, fuzzy
+#~| msgid ""
+#~| "Failed to upload photo to Google Drive.\n"
+#~| "%1\n"
+#~| "Do you want to continue?"
+#~ msgid ""
+#~ "Failed to upload photo to Google Photos/PicasaWeb.\n"
+#~ "%1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Google 드라이브에 사진을 업로드할 수 없습니다: \n"
+#~ "%1\n"
+#~ "계속 진행하시겠습니까?"
+
+#, fuzzy
+#~| msgctxt "folder edit"
+#~| msgid "Title:"
+#~ msgctxt "new picasaweb album dialog"
+#~ msgid "Title:"
+#~ msgstr "제목:"
+
+#~ msgid "Google Drive New Album"
+#~ msgstr "Google 드라이브 새 앨범"
+
+#, fuzzy
+#~| msgid "New Album"
+#~ msgid "Picasaweb New Album"
+#~ msgstr "새 앨범"

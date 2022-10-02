@@ -1,0 +1,293 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <megaribi@epn.ba>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_rajceexport.po\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2014-10-20 20:14+0000\n"
+"Last-Translator: Emrah Dautbegovic <edautbegov1@etf.unsa.ba>\n"
+"Language-Team: bs <bs@kde.org>\n"
+"Language: bs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Launchpad (build 17341)\n"
+"X-Launchpad-Export-Date: 2015-02-15 06:23+0000\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_rajceui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Izvezi"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_rajceui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Glavna alatna traka"
+
+#: newalbumdialog.cpp:47
+#, kde-format
+msgid "Visibility"
+msgstr ""
+
+#: newalbumdialog.cpp:48
+#, kde-format
+msgid "Set the visibility of the album"
+msgstr ""
+
+#: newalbumdialog.cpp:50
+#, kde-format
+msgid "Public"
+msgstr "Javni"
+
+#: plugin_rajce.cpp:90
+#, kde-format
+msgid "Export to &Rajce.net..."
+msgstr "Izvoz u &Rajce.net..."
+
+#: rajcewidget.cpp:120
+#, kde-format
+msgid "Not logged in"
+msgstr "Nije prijavljen"
+
+#: rajcewidget.cpp:184
+#, kde-format
+msgid "Unknown error"
+msgstr "Nepoznata greška"
+
+#: rajcewidget.cpp:185
+#, kde-format
+msgid "Invalid command"
+msgstr "Nevažeća komanda"
+
+#: rajcewidget.cpp:186
+#, kde-format
+msgid "Invalid login name or password"
+msgstr "Neispravno korisničko ime ili lozinka"
+
+#: rajcewidget.cpp:187
+#, kde-format
+msgid "Session expired"
+msgstr "Sesija istekla"
+
+#: rajcewidget.cpp:189 rajcewidget.cpp:190
+#, kde-format
+msgid "Unknown album"
+msgstr "Nepoznat album"
+
+#: rajcewidget.cpp:191
+#, kde-format
+msgid "Failed to open album"
+msgstr "Neuspjelo otvaranje albuma"
+
+#: rajcewidget.cpp:192
+#, kde-format
+msgid "The album name cannot be empty"
+msgstr "Ime albuma ne može biti prazno"
+
+#: rajcewidget.cpp:193
+#, kde-format
+msgid "Failed to create album"
+msgstr "Neuspjelo kreiranje albuma"
+
+#: rajcewidget.cpp:194
+#, kde-format
+msgid "Album does not exist"
+msgstr "Album ne postoji"
+
+#: rajcewidget.cpp:197 rajcewidget.cpp:199
+#, kde-format
+msgid "File upload failed"
+msgstr "Neuspjelo slanje datoteke"
+
+#: rajcewidget.cpp:200
+#, kde-format
+msgid "Unsupported file extension"
+msgstr "Nepodržano širenje datoteke"
+
+#: rajcewidget.cpp:269
+#, kde-format
+msgid "Logging in %v%"
+msgstr "Prijava u %v%"
+
+#: rajcewidget.cpp:270
+#, kde-format
+msgid "Logging out %v%"
+msgstr "Odjava %v%"
+
+#: rajcewidget.cpp:271
+#, kde-format
+msgid "Loading albums %v%"
+msgstr "Učitavanje albuma %v%"
+
+#: rajcewidget.cpp:272
+#, kde-format
+msgid "Creating album %v%"
+msgstr "Kreiranje albuma %v%"
+
+#: rajcewidget.cpp:273
+#, kde-format
+msgid "Opening album %v%"
+msgstr "Otvaranje albuma %v%"
+
+#: rajcewidget.cpp:274
+#, kde-format
+msgid "Closing album %v%"
+msgstr "Zatvaranje albuma %v%"
+
+#: rajcewidget.cpp:275
+#, kde-format
+msgid "Adding photos %v%"
+msgstr "Dodavanje slika %v%"
+
+#: rajcewindow.cpp:53
+#, kde-format
+msgid "Export to Rajce.net"
+msgstr "Izvoz u Rajce.net"
+
+#: rajcewindow.cpp:55
+#, kde-format
+msgid "Start Upload"
+msgstr "Počni slanje"
+
+#: rajcewindow.cpp:56
+#, kde-format
+msgid "Start upload to Rajce.net"
+msgstr "Počni slanje u RAjce.net"
+
+#: rajcewindow.cpp:71
+#, kde-format
+msgid "Rajce.net Export"
+msgstr "Rajce.net izvoz"
+
+#: rajcewindow.cpp:72
+#, fuzzy, kde-format
+#| msgid "A Kipi plugin to export image collections to Rajce.net."
+msgid "A tool to export image collections to Rajce.net."
+msgstr "Kipi priključak za izvoz kolekcija slika u Rajce.net."
+
+#: rajcewindow.cpp:74
+#, kde-format
+msgid "(c) 2011-2013, Lukas Krejci"
+msgstr "(c) 2011-2013, Lukas Krejci"
+
+#: rajcewindow.cpp:76
+#, kde-format
+msgid "Lukas Krejci"
+msgstr "Lukas Krejci"
+
+#: rajcewindow.cpp:77
+#, kde-format
+msgid "Author"
+msgstr ""
+
+#~ msgid "Login:"
+#~ msgstr "Prijava:"
+
+#~ msgid "Password:"
+#~ msgstr "Lozinka:"
+
+#~ msgid "&OK"
+#~ msgstr "&U redu"
+
+#~ msgid "&Cancel"
+#~ msgstr "&Odustani"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Samir Ribić,Emrah Dautbegovic"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "Samir.ribic@etf.unsa.ba,edautbegov1@etf.unsa.ba"
+
+#~ msgid "New Album"
+#~ msgstr "Novi album"
+
+#~ msgid "Name"
+#~ msgstr "Ime"
+
+#~ msgid "Description"
+#~ msgstr "Opis"
+
+#~ msgid "This is the list of images to upload to your Rajce.net account."
+#~ msgstr "Ovo je lista slika za dodavanje na tvoj Rajce.net nalog."
+
+#~ msgid ""
+#~ "This is a clickable link to open the Rajce.net home page in a web browser."
+#~ msgstr ""
+#~ "Ovo je veza koju možeš kliknuti da otvoriš Rajce.net stranicu u veb "
+#~ "pretraživaču."
+
+#~ msgid "Account"
+#~ msgstr "Nalog"
+
+#~ msgid "This is the Rajce.net account that will be used to authenticate."
+#~ msgstr "Ovo je Rajce.net nalog koji će biti korišten za potvrdu."
+
+#~ msgctxt "Rajce.net account login"
+#~ msgid "Anonymous"
+#~ msgstr "Anoniman"
+
+#~ msgid "Login as anonymous to Rajce.net web service."
+#~ msgstr "Prijavi se kao anoniman na Rajce.net veb servis."
+
+#~ msgid "Rajce.net Account"
+#~ msgstr "Rajce.net nalog"
+
+#~ msgid "Login to Rajce.net using username and password."
+#~ msgstr "Prijavi se na RAjce.net koristeći korisničko ime i lozinku."
+
+#~ msgctxt "Rajce.net account settings"
+#~ msgid "Name:"
+#~ msgstr "Ime:"
+
+#~ msgid "Change Account"
+#~ msgstr "Promijeni nalog"
+
+#~ msgid "Change Rajce.net Account used to authenticate"
+#~ msgstr "Promijeni Rajce.net nalog korišten za potvrdu"
+
+#~ msgid "Album"
+#~ msgstr "Album"
+
+#~ msgid "This is the Rajce.net album that will be used for transfer."
+#~ msgstr "Ovo je Rajce.net album koji je korišten za transfer."
+
+#~ msgid "Create new Rajce.net album"
+#~ msgstr "Napravi novi Rajce.net album"
+
+#~ msgctxt "reload album list"
+#~ msgid "Reload"
+#~ msgstr "Ponovo učitaj"
+
+#~ msgid "Reload album list"
+#~ msgstr "Ponovo učitaj listu albuma"
+
+#~ msgid "Destination"
+#~ msgstr "Odredište"
+
+#~ msgid "This is the location where Rajce.net images will be downloaded."
+#~ msgstr "Ovo je lokacija gdje će Rajce.net slike biti skinute."
+
+#~ msgid "Options"
+#~ msgstr "Opcije"
+
+#~ msgid "These are options that will be applied to images before upload."
+#~ msgstr "Ovo su opcije koje će biti primjenjene na slikama prije učitavanja."
+
+#~ msgid "Maximum dimension:"
+#~ msgstr "Najveća veličina:"
+
+#~ msgid "JPEG quality:"
+#~ msgstr "JPEG kvalitet:"
+
+#~ msgid "Author and maintainer"
+#~ msgstr "Autor i održavalac"

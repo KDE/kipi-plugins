@@ -1,0 +1,211 @@
+# translation of kipiplugin_kioexportimport.po to Low Saxon
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Manfred Wiese <m.j.wiese@web.de>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_kioexportimport\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2009-10-28 07:24+0100\n"
+"Last-Translator: Manfred Wiese <m.j.wiese@web.de>\n"
+"Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
+"Language: nds\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: KioExportWidget.cpp:61
+#, kde-format
+msgid "Target location: "
+msgstr "Teeladress: "
+
+#: KioExportWidget.cpp:62
+#, kde-format
+msgid ""
+"Sets the target address to upload the images to. This can be any address as "
+"used in Dolphin or Konqueror, e.g. ftp://my.server.org/sub/folder."
+msgstr ""
+"Leggt de Teeladress fast, na de de Biller hoochlaadt warrt. Dit kann "
+"jichtenseen Adress wesen, de sik mit Dolphin oder Konqueror bruken lett, a."
+"B. ftp://mien.server.de/uenner/orner."
+
+#: KioExportWidget.cpp:66
+#, kde-format
+msgid "Select target location..."
+msgstr "Teeladress utsöken..."
+
+#: KioExportWidget.cpp:72
+#, kde-format
+msgid "This is the list of images to upload to the specified target."
+msgstr ""
+"Dit is de List vun Biller, de Du na de angeven Adress hoochladen wullt."
+
+#: KioExportWidget.cpp:134
+#, kde-format
+msgid "Select target..."
+msgstr "Teel utsöken..."
+
+#: KioExportWidget.cpp:135
+#, kde-format
+msgid "All Files (*)"
+msgstr ""
+
+#: KioExportWidget.cpp:155
+#, fuzzy, kde-format
+#| msgid "not selected"
+msgid "<not selected>"
+msgstr "Keen utsöcht"
+
+#: KioExportWindow.cpp:64
+#, fuzzy, kde-format
+#| msgid "Export to Remote Computer"
+msgid "Export to Remote Storage"
+msgstr "Na feern Reekner exporteren"
+
+#: KioExportWindow.cpp:67
+#, kde-format
+msgid "Start export"
+msgstr "Exporteren starten"
+
+#: KioExportWindow.cpp:68
+#, kde-format
+msgid "Start export to the specified target"
+msgstr "Exporteren na de angeven Teeladress starten"
+
+#: KioExportWindow.cpp:84
+#, fuzzy, kde-format
+#| msgid "Export to remote computer"
+msgid "Export to remote storage"
+msgstr "Na feern Reekner exporteren"
+
+#: KioExportWindow.cpp:85
+#, fuzzy, kde-format
+#| msgid "A Kipi plugin to export images over network using KIO-Slave"
+msgid "A tool to export images over network using KIO-Slave"
+msgstr ""
+"En KIPI-Moduul för't Exporteren vun Biller över't Nettwark mit dat In-/"
+"Utgaavmoduul."
+
+#: KioExportWindow.cpp:86 KioImportWindow.cpp:83
+#, kde-format
+msgid "(c) 2009, Johannes Wienke"
+msgstr "© 2009: Johannes Wienke"
+
+#: KioExportWindow.cpp:88 KioImportWindow.cpp:85
+#, kde-format
+msgid "Johannes Wienke"
+msgstr "Johannes Wienke"
+
+#: KioExportWindow.cpp:89 KioImportWindow.cpp:86
+#, kde-format
+msgid "Developer and maintainer"
+msgstr "Autor un Pleger"
+
+#: KioExportWindow.cpp:198
+#, kde-format
+msgid "Upload not completed"
+msgstr "Hoochladen nich afslaten"
+
+#: KioExportWindow.cpp:199
+#, kde-format
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to export these images now."
+msgstr ""
+"De List bargt noch en Reeg vun Biller, de nich överdragen wöörn. Du kannst "
+"man nochmaal versöken, wat sik disse Biller nu exporteren laat."
+
+#: KioImportWidget.cpp:52
+#, kde-format
+msgid "This is the list of images to import into the current album."
+msgstr ""
+"Dit is de List vun Biller, de Du na dat aktuelle Album importeren wullt."
+
+#: KioImportWindow.cpp:60
+#, fuzzy, kde-format
+#| msgid "Import from Remote Computer"
+msgid "Import from Remote Storage"
+msgstr "Vun feern Reekner importeren"
+
+#: KioImportWindow.cpp:64
+#, kde-format
+msgid "Start import"
+msgstr "Importeren starten"
+
+#: KioImportWindow.cpp:65
+#, kde-format
+msgid "Start importing the specified images into the currently selected album."
+msgstr "De utsöchten Biller nu na dat opstunns utsöchte Album importeren."
+
+#: KioImportWindow.cpp:81
+#, fuzzy, kde-format
+#| msgid "Import from remote computer"
+msgid "Import from remote storage"
+msgstr "Vun feern Reekner importeren"
+
+#: KioImportWindow.cpp:82
+#, fuzzy, kde-format
+#| msgid "A Kipi plugin to import images over network using KIO-Slave"
+msgid "A tool to import images over network"
+msgstr ""
+"En KIPI-Moduul för't Importeren vun Biller över't Nettwark mit dat In-/"
+"Utgaavmoduul."
+
+#: KioImportWindow.cpp:137
+#, kde-format
+msgid "Import not completed"
+msgstr "Importeren nich afslaten"
+
+#: KioImportWindow.cpp:138
+#, kde-format
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to import these images now."
+msgstr ""
+"De List bargt noch en Reeg vun Biller, de noch överdragen wöörn. Du kannst "
+"man nochmaal versöken, wat sik disse Biller nu importeren laat."
+
+#. i18n: ectx: Menu (Import)
+#: kipiplugin_remotestorageui.rc:7
+#, kde-format
+msgid "&Import"
+msgstr ""
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_remotestorageui.rc:11
+#, kde-format
+msgid "&Export"
+msgstr ""
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_remotestorageui.rc:17
+#, kde-format
+msgid "Main Toolbar"
+msgstr ""
+
+#: plugin_remotestorage.cpp:93
+#, fuzzy, kde-format
+#| msgid "Export to remote computer..."
+msgid "Export to remote storage..."
+msgstr "Na feern Reekner exporteren.."
+
+#: plugin_remotestorage.cpp:105
+#, fuzzy, kde-format
+#| msgid "Import from remote computer..."
+msgid "Import from remote storage..."
+msgstr "Vun feern Reekner importeren..."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Manfred Wiese"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "m.j.wiese@web.de"
+
+#~ msgid "Handbook"
+#~ msgstr "Handbook"

@@ -1,0 +1,515 @@
+# translation of kipiplugin_sendimages.po to Thai
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Thanomsub Noppaburana <donga.nb@gmail.com>, 2008, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_sendimages\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2010-03-07 20:11+0700\n"
+"Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
+"Language-Team: Thai <thai-l10n@googlegroups.com>\n"
+"Language: th\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: imageresize.cpp:116
+#, kde-format
+msgid "Error opening input file"
+msgstr "เกิดข้อผิดพลาดในการเปิดแฟ้มข้อมูลเข้า"
+
+#: imageresize.cpp:127
+#, kde-format
+msgid "Error opening temporary folder"
+msgstr "เกิดข้อผิดพลาดในการเปิดโฟลเดอร์ชั่วคราว"
+
+#: imageresize.cpp:175
+#, kde-format
+msgid "Cannot resize image. Aborting."
+msgstr "ไม่สามารถปรับขนาดภาพได้ ทำการยุติ"
+
+#: imageresize.cpp:186
+#, kde-format
+msgid "Cannot save resized image (JPEG). Aborting."
+msgstr "ไม่สามารถบันทึกภาพที่ถูกปรับขนาด (รูปแบบ JPEG) ได้ ทำการยุติ"
+
+#: imageresize.cpp:194
+#, kde-format
+msgid "Cannot save resized image (PNG). Aborting."
+msgstr "ไม่สามารถบันทึกภาพที่ถูกปรับขนาด (รูปแบบ PNG) ได้ ทำการยุติ"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_sendimagesui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr ""
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_sendimagesui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr ""
+
+#: plugin_sendimages.cpp:115
+#, kde-format
+msgid "Email Images..."
+msgstr "ส่งภาพต่าง ๆ ทางอีเมล..."
+
+#: sendimages.cpp:133
+#, kde-format
+msgid "Email images"
+msgstr "ส่งภาพต่าง ๆ ทางอีเมล"
+
+#: sendimages.cpp:176
+#, kde-format
+msgid "Operation canceled by user"
+msgstr "ปฎิบัติการถูกยกเลิกโดยผู้ใช้"
+
+#: sendimages.cpp:190
+#, kde-format
+msgid "Resizing %1"
+msgstr "ทำการปรับขนาด %1"
+
+#: sendimages.cpp:203
+#, kde-format
+msgid "%1 resized successfully"
+msgstr "ปรับขนาด %1 เรียบร้อยแล้ว"
+
+#: sendimages.cpp:212
+#, kde-format
+msgid "Failed to resize %1: %2"
+msgstr "ล้มเหลวในการปรับขนาด %1 : %2"
+
+#: sendimages.cpp:240
+#, kde-format
+msgid "There are no files to send"
+msgstr ""
+
+#: sendimages.cpp:258
+#, kde-format
+msgid "Build images properties file"
+msgstr "สร้างแฟ้มคุณสมบัติของภาพต่าง ๆ"
+
+#: sendimages.cpp:271
+#, kde-format
+msgid "no caption"
+msgstr "ไม่มีชื่อภาพ"
+
+#: sendimages.cpp:274
+#, kde-format
+msgid "no keywords"
+msgstr "ไม่มีคำสำคัญใด ๆ"
+
+#: sendimages.cpp:276
+#, kde-format
+msgid ""
+"file \"%1\":\n"
+"Original images: %2\n"
+msgstr ""
+"แฟ้ม \"%1\":\n"
+"ขนาดเดิมของภาพ: %2\n"
+
+#: sendimages.cpp:279
+#, kde-format
+msgid "Comments: %1\n"
+msgstr "หมายเหตุ: %1\n"
+
+#: sendimages.cpp:282
+#, kde-format
+msgid "Tags: %1\n"
+msgstr "ป้าย: %1\n"
+
+#: sendimages.cpp:285
+#, kde-format
+msgid "Rating: %1\n"
+msgstr "อันดับ: %1\n"
+
+#: sendimages.cpp:290 sendimages.cpp:298
+#, kde-format
+msgid "properties.txt"
+msgstr "คุณสมบัติ.txt"
+
+#: sendimages.cpp:297
+#, fuzzy, kde-format
+#| msgid "Image properties file done"
+msgid "Image properties file cannot be opened"
+msgstr "แฟ้มคุณสมบัติภาพเสร็จแล้ว"
+
+#: sendimages.cpp:306
+#, kde-format
+msgid "Image properties file done"
+msgstr "แฟ้มคุณสมบัติภาพเสร็จแล้ว"
+
+#: sendimages.cpp:324
+#, kde-format
+msgid "Processing Failed"
+msgstr ""
+
+#: sendimages.cpp:325
+#, fuzzy, kde-format
+#| msgid ""
+#| "The images listed below cannot be resized.\n"
+#| "Do you want them to be added as attachments (without resizing)?"
+msgid ""
+"Some images cannot be resized.\n"
+"Do you want them to be added as attachments without resizing?"
+msgstr ""
+"ไม่สามารถปรับขนาดภาพตามรายการด้านล่างนี้ได้\n"
+"คุณต้องการจะเพิ่มมันเข้าไปเป็นแฟ้มแนบ (โดยไม่มีการปรับขนาด) อยู่อีกหรือไม่ ?"
+
+#: sendimages.cpp:390
+#, kde-format
+msgid ""
+"The file \"%1\" is too big to be sent, please reduce its size or change your "
+"settings"
+msgstr ""
+"แฟ้ม \"%1\" มีขนาดใหญ่เกินไปที่จะส่งได้ โปรดลดขนาดของมัน หรือแก้ไขการตั้งค่าต่าง ๆ ของคุณก่อน"
+
+#: sendimages.cpp:442
+#, fuzzy, kde-format
+#| msgid "Starting default KDE email program..."
+msgid "Starting default desktop email program..."
+msgstr "ทำการเริ่มโปรแกรมส่งเมลปริยายของ KDE..."
+
+#: sendimages.cpp:674
+#, kde-format
+msgid "Failed to start \"%1\" program. Check your system."
+msgstr "ล้มเหลวในการเริ่มโปรแกรม \"%1\" โปรดตรวจสอบระบบของคุณ"
+
+#: sendimages.cpp:687
+#, kde-format
+msgid "Starting \"%1\" program..."
+msgstr "ทำการเริ่มโปรแกรม \"%1\"..."
+
+#: sendimages.cpp:697
+#, kde-format
+msgid "After having sent your images by email..."
+msgstr "หลังจากส่งภาพต่าง ๆ ของคุณทางอีเมลแล้ว..."
+
+#: sendimages.cpp:698
+#, kde-format
+msgid "Press 'Close' button to clean up temporary files"
+msgstr "กดปุ่ม 'ปิด' เพื่อล้างแฟ้มชั่วคราวต่าง ๆ ออกไป"
+
+#: sendimagesdialog.cpp:81
+#, kde-format
+msgid "Email Images Options"
+msgstr "ตัวเลือกการส่งภาพต่าง ๆ ทางอีเมล"
+
+#: sendimagesdialog.cpp:84
+#, kde-format
+msgctxt "@action:button"
+msgid "&Send"
+msgstr ""
+
+#: sendimagesdialog.cpp:103
+#, kde-format
+msgid "Send Images"
+msgstr "ส่งภาพต่าง ๆ"
+
+#: sendimagesdialog.cpp:104
+#, fuzzy, kde-format
+#| msgid "A plugin to email pictures"
+msgid "A tool to e-mail items"
+msgstr "ส่วนเสริมสำหรับส่งภาพต่าง ๆ ทางอีเมล"
+
+#: sendimagesdialog.cpp:105
+#, fuzzy, kde-format
+#| msgid "(c) 2003-2009, Gilles Caulier"
+msgid "(c) 2003-2016, Gilles Caulier"
+msgstr "สงวนลิขสิทธิ์ (c) 2003-2009, Gilles Caulier"
+
+#: sendimagesdialog.cpp:107
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: sendimagesdialog.cpp:107
+#, kde-format
+msgid "Author and Maintainer"
+msgstr "ผู้เขียนและผู้ดูแล"
+
+#: sendimagesdialog.cpp:110
+#, kde-format
+msgid "Michael Hoechstetter"
+msgstr "Michael Hoechstetter"
+
+#: sendimagesdialog.cpp:110 sendimagesdialog.cpp:113
+#, kde-format
+msgid "Developer"
+msgstr "ผู้พัฒนา"
+
+#: sendimagesdialog.cpp:113
+#, kde-format
+msgid "Tom Albers"
+msgstr "Tom Albers"
+
+#: settingswidget.cpp:91
+#, kde-format
+msgid "Mail program:"
+msgstr "โปรแกรมส่งเมล:"
+
+#: settingswidget.cpp:94
+#, fuzzy, kde-format
+#| msgctxt "default mail agent"
+#| msgid "Default"
+msgctxt "default desktop mail agent"
+msgid "Default"
+msgstr "ค่าปริยาย"
+
+#: settingswidget.cpp:106
+#, fuzzy, kde-format
+#| msgid ""
+#| "Select your preferred external email program here. <b>Default</b> is the "
+#| "current email program set in KDE System Settings."
+msgid ""
+"Select your preferred external email program here. <b>Default</b> is the "
+"current email program set in desktop system settings."
+msgstr ""
+"เลือกโปรแกรมส่งเมลภายนอกที่ควรใช้ได้ที่นี่ <b>ค่าปริยาย</b> "
+"จะหมายถึงโปรแกรมส่งอีเมลที่ถูกกำหนดไว้ที่ 'ตั้งค่าระบบ' ของ KDE"
+
+#: settingswidget.cpp:112
+#, kde-format
+msgid "Attach a file with image properties from %1"
+msgstr "แนบแฟ้มพร้อมกับคุณสมบัติต่าง ๆ ของภาพจาก %1"
+
+#: settingswidget.cpp:115
+#, kde-format
+msgid ""
+"If you enable this option, all image properties set by %1 as Comments, "
+"Rating, or Tags, will be added as an attached file."
+msgstr ""
+"หากเปิดใช้งานตัวเลือกนี้ คุณสมบัติต่าง ๆ ทั้งหมดของภาพ ที่ตั้งค่าโดย %1 ที่เป็นทั้ง หมายเหตุ, "
+"ระดับความชื่นชอบ หรือป้ายกำกับต่าง ๆ จะถูกเพิ่ม เข้าเป็นแฟ้มแนบด้วย"
+
+#: settingswidget.cpp:125
+#, fuzzy, kde-format
+#| msgid "MB"
+msgid " MB"
+msgstr "เมกะไบต์"
+
+#: settingswidget.cpp:127
+#, kde-format
+msgid "Maximum email size limit:"
+msgstr "จำกัดขนาดสูงสุดของอีเมล:"
+
+#: settingswidget.cpp:132
+#, kde-format
+msgid "Adjust image properties"
+msgstr "ปรับแก้คุณสมบัติต่าง ๆ ของภาพ"
+
+#: settingswidget.cpp:134
+#, kde-format
+msgid ""
+"If you enable this option, all images to be sent can be resized and "
+"recompressed."
+msgstr "หากเปิดใช้ตัวเลือกนี้ ภาพทั้งหมดที่จะถูกส่งไป จะสามารถถูกปรับขนาดและถูกบีบข้อมูลใหม่ทั้งหมด"
+
+#: settingswidget.cpp:137
+#, kde-format
+msgid "Image Properties"
+msgstr "คุณสมบัติต่าง ๆ ของภาพ"
+
+#: settingswidget.cpp:141 settingswidget.cpp:167
+#, kde-format
+msgid "Very Small (320 pixels)"
+msgstr "เล็กมาก (320 พิกเซล)"
+
+#: settingswidget.cpp:142 settingswidget.cpp:168
+#, kde-format
+msgid "Small (640 pixels)"
+msgstr "เล็ก (640 พิกเซล)"
+
+#: settingswidget.cpp:143 settingswidget.cpp:169
+#, kde-format
+msgid "Medium (800 pixels)"
+msgstr "ปานกลาง (800 พิกเซล)"
+
+#: settingswidget.cpp:144 settingswidget.cpp:170
+#, kde-format
+msgid "Big (1024 pixels)"
+msgstr "ใหญ่ (1024 พิกเซล)"
+
+#: settingswidget.cpp:145 settingswidget.cpp:171
+#, kde-format
+msgid "Very Big (1280 pixels)"
+msgstr "ใหญ่มาก (1280 พิกเซล)"
+
+#: settingswidget.cpp:146 settingswidget.cpp:172
+#, fuzzy, kde-format
+#| msgid "Huge - for printing (1600 pixels)"
+msgid "Large - for printing (1600 pixels)"
+msgstr "ใหญ่ที่สุด - เหมาะสำหรับการพิมพ์ (1600 พิกเซล)"
+
+#: settingswidget.cpp:147 settingswidget.cpp:173
+#, fuzzy, kde-format
+#| msgid "Small (640 pixels)"
+msgid "Full HD (1920 pixels)"
+msgstr "เล็ก (640 พิกเซล)"
+
+#: settingswidget.cpp:148 settingswidget.cpp:174
+#, fuzzy, kde-format
+#| msgid "Small (640 pixels)"
+msgid "Ultra HD (3840 pixels)"
+msgstr "เล็ก (640 พิกเซล)"
+
+#: settingswidget.cpp:150
+#, fuzzy, kde-format
+#| msgid ""
+#| "<p>Select the size of the images that are to be sent:</p><p><b>%1</b>: "
+#| "use this if you have a very slow Internet connection or the target "
+#| "mailbox size is very limited.</p><p><b>%2</b>: use this if you have a "
+#| "slow Internet connection and the target mailbox size is limited.</p><p><b>"
+#| "%3</b>: this is the default value for medium Internet connection speed "
+#| "and target mailbox size.</p><p><b>%4</b>: use this if you have a high-"
+#| "speed Internet connection and the target mailbox size is not limited.</"
+#| "p><p><b>%5</b>: use this if you have no size or speed restrictions.</"
+#| "p><p><b>%6</b>: use this only for printing purposes.</p>"
+msgid ""
+"<p>Select the size of the images that are to be sent:</p><p><b>%1</b>: use "
+"this if you have a very slow Internet connection or the target mailbox size "
+"is very limited.</p><p><b>%2</b>: use this if you have a slow Internet "
+"connection and the target mailbox size is limited.</p><p><b>%3</b>: this is "
+"the default value for medium Internet connection speed and target mailbox "
+"size.</p><p><b>%4</b>: use this if you have a high-speed Internet connection "
+"and the target mailbox size is not limited.</p><p><b>%5</b>: use this if you "
+"have no size or speed restrictions.</p><p><b>%6</b>: use this only for "
+"printing purposes.</p><p><b>%7</b>: use this for optimal viewing on Full HD "
+"displays. Only if you have a high-speed Internet connection and the target "
+"mailbox size is not limited.</p><p><b>%8</b>: use this for optimal viewing "
+"on Ultra HD displays. Only if you have a high-speed Internet connection and "
+"the target mailbox size is not limited.</p>"
+msgstr ""
+"<p>เลือกขนาดภาพต่าง ๆ ที่จะถูกส่งไป:</p><p><b>%1</b>: ใช้ตัวเลือกนี้ "
+"หากการเชื่อมต่ออินเทอร์เน็ตของคุณมีความเร็วต่ำมาก หรือมีขนาดกล่องรับจดหมายปลายทางที่จำกัดมาก</"
+"p><p><b>%2</b>: ใช้ตัวเลือกนี้ หากการเชื่อมต่ออินเทอร์เน็ตของคุณมีความเร็วต่ำ "
+"หรือมีขนาดกล่องรับจดหมายปลายทางที่จำกัด</p><p><b>%3</b>: นี่เป็นค่าปริยาย "
+"เหมาะกับการเชื่อมต่ออินเทอร์เน็ตที่มีความเร็วปานกลาง "
+"หรือมีขนาดกล่องรับจดหมายปลายทางปานกลาง</p><p><b>%4</b>: ใช้ตัวเลือกนี้ "
+"หากการเชื่อมต่ออินเทอร์เน็ตของคุณมีความเร็วสูง หรือมีขนาดกล่องรับจดหมายที่ไม่จำกัด </p><p><b>"
+"%5</b>: ใช้ตัวเลือกนี้ หากไม่มีข้อจำกัดด้านการเชื่อมต่ออินเทอร์เน็ตของคุณ "
+"หรือไม่จำกัดขนาดของกล่องรับจดหมายปลายทาง</p><p><b>%6</b>: "
+"ใช้ตัวเลือกนี้สำหรับวัตถุประสงค์ในการพิมพ์เท่านั้น</p>"
+
+#: settingswidget.cpp:177
+#, kde-format
+msgid "Image size:"
+msgstr "ขนาดภาพ:"
+
+#: settingswidget.cpp:186
+#, kde-format
+msgid "<p>Select the file format of the image files to be sent.</p>"
+msgstr "<p>เลือกรูปแบบของแฟ้มภาพของภาพต่าง ๆ ที่จะถูกส่งไป</p>"
+
+#: settingswidget.cpp:187
+#, kde-format
+msgid ""
+"<p><b>JPEG</b>: The Joint Photographic Experts Group file format is a good "
+"web file format but it uses lossy compression.</p><p><b>PNG</b>: the "
+"Portable Network Graphics format is an extensible file format for the "
+"lossless, portable, well-compressed storage of raster images. PNG provides a "
+"patent-free replacement for GIF and can also replace many common uses of "
+"TIFF. PNG is designed to work well in online viewing applications, such as "
+"the World Wide Web, so it is fully streamable with a progressive display "
+"option. Also, PNG can store gamma and chromaticity data for improved color-"
+"matching on heterogeneous platforms.</p>"
+msgstr ""
+"<p><b>รูปแบบ JPEG</b>: รูปแบบแฟ้มตามมาตรฐานของกลุ่ม The Joint Photographic "
+"Experts Group เหมาะสำหรับใช้กับเว็บ แต่จะมีการบีบข้อมูลที่ทำให้ภาพเสียรายละเอียด </"
+"p><p><b>รูปแบบ PNG</b>: รูปแบบแฟ้ม Portable Network Graphics "
+"เป็นแฟ้มที่ภาพเสียรายละเอียดน้อยมาก มีขนาดที่เหมาะสมและเหมาะกับการใช้งาน แฟ้มแบบ PNG "
+"นั้นไม่มีปัญหาเรื่องสิทธิบัตรซึ่งต่างจากแฟ้มแบบ GIF และยังสามารถใช้ทดแทนแฟ้มแบบ TIFF ได้ดีอีกด้วย "
+"แฟ้มแบบ PNG ถูกออกแบบมาให้ทำงานได้ดีกับการแสดงผลแบบออนไลน์ เช่น ภาพบนเว็บ เป็นต้น "
+"ดังนั้นมันจึงสามารถเลือกทำการแสดงผลแบบโพรเกรสซีฟในระหว่างการรับสายข้อมูลได้ และเช่นกัน "
+"แฟ้มแบบ PNG ยังสามารถเก็บค่าแกมม่าและค่าข้อมูลโครม่า "
+"สำหรับปรับปรุงใช้งานระบบกับอุปกรณ์ที่แตกต่างกันได้ง่ายอีกด้วย</p>"
+
+#: settingswidget.cpp:197
+#, fuzzy, kde-format
+#| msgid "Image file format:"
+msgid "Image format:"
+msgstr "รูปแบบของแฟ้มภาพ:"
+
+#: settingswidget.cpp:206
+#, kde-format
+msgid "<p>The new compression value of JPEG images to be sent:</p>"
+msgstr "<p>ค่าการบีบอัดข้อมูลภาพรูปแบบ JPEG ของภาพต่าง ๆ ที่จะถูกส่งไป:</p>"
+
+#: settingswidget.cpp:207
+#, kde-format
+msgid ""
+"<p><b>1</b>: very high compression<br/><b>25</b>: high compression<br/"
+"><b>50</b>: medium compression<br/><b>75</b>: low compression (default "
+"value)<br/><b>100</b>: no compression</p>"
+msgstr ""
+"<p><b>1</b>: บีบข้อมูลสูงมาก<br/><b>25</b>: บีบข้อมูลสูง<br/><b>50</b>: "
+"บีบข้อมูลปานกลาง<br/><b>75</b>: บีบข้อมูลน้อย (ค่าปริยาย)<br/><b>100</b>: ไม่บีบข้อมูล</p>"
+
+#: settingswidget.cpp:215
+#, kde-format
+msgid "Image quality:"
+msgstr "คุณภาพของภาพ:"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "ถนอมทรัพย์ นพบูรณ์"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "donga.nb@gmail.com"
+
+#~ msgid "Failed to resize images"
+#~ msgstr "ล้มเหลวในการปรับขนาดภาพ"
+
+#~ msgid "Huge - for printing (1600 pixels)"
+#~ msgstr "ใหญ่ที่สุด - เหมาะสำหรับการพิมพ์ (1600 พิกเซล)"
+
+#~ msgid "Handbook"
+#~ msgstr "คู่มือการใช้งาน"
+
+#~ msgid "Images"
+#~ msgstr "ภาพต่าง ๆ"
+
+#~ msgid "Image List"
+#~ msgstr "รายการภาพ"
+
+#~ msgid "Mail"
+#~ msgstr "อีเมล"
+
+#~ msgid "Mail Options"
+#~ msgstr "ตัวเลือกต่าง ๆ ของอีเมล"
+
+#~ msgid "very small (320 pixels)"
+#~ msgstr "เล็กมาก (320 พิกเซล)"
+
+#~ msgid "small (640 pixels)"
+#~ msgstr "เล็ก (640 พิกเซล)"
+
+#~ msgid "medium (800 pixels)"
+#~ msgstr "ปานกลาง (800 พิกเซล)"
+
+#~ msgid "big (1024 pixels)"
+#~ msgstr "ใหญ่ (1024 พิกเซล)"
+
+#~ msgid "very big (1280 pixels)"
+#~ msgstr "ใหญ่มาก (1280 พิกเซล)"
+
+#~ msgid "huge - for printing (1600 pixels)"
+#~ msgstr "ใหญ่ที่สุด - เหมาะสำหรับการพิมพ์ (1600 พิกเซล)"
+
+#, fuzzy
+#~| msgid "<p>This is the list of images to e-mail."
+#~ msgid "This is the list of images to e-mail."
+#~ msgstr "<p>นี่เป็นรายการของภาพต่าง ๆ ที่จะส่งทางอีเมล"
+
+#~ msgid "&Add"
+#~ msgstr "เพิ่ม"
+
+#~ msgid "&Remove"
+#~ msgstr "เอาออก"

@@ -1,0 +1,180 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: kdeorg\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2022-09-20 01:55\n"
+"Last-Translator: \n"
+"Language-Team: Chinese Simplified\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Crowdin-Project: kdeorg\n"
+"X-Crowdin-Project-ID: 269464\n"
+"X-Crowdin-Language: zh-CN\n"
+"X-Crowdin-File: /kf5-trunk/messages/kipi-plugins/kipiplugin_remotestorage."
+"pot\n"
+"X-Crowdin-File-ID: 10452\n"
+
+#: KioExportWidget.cpp:61
+#, kde-format
+msgid "Target location: "
+msgstr "目标位置："
+
+#: KioExportWidget.cpp:62
+#, kde-format
+msgid ""
+"Sets the target address to upload the images to. This can be any address as "
+"used in Dolphin or Konqueror, e.g. ftp://my.server.org/sub/folder."
+msgstr ""
+"设定图像要上传到的目标地址。此地址可以是 Dolphin 或 Konqueror 中所使用的 任何"
+"地址，例如 ftp://my.server.org/sub/folder。"
+
+#: KioExportWidget.cpp:66
+#, kde-format
+msgid "Select target location..."
+msgstr "选择目标位置..."
+
+#: KioExportWidget.cpp:72
+#, kde-format
+msgid "This is the list of images to upload to the specified target."
+msgstr "这是要上传到指定目标的图像列表。"
+
+#: KioExportWidget.cpp:134
+#, kde-format
+msgid "Select target..."
+msgstr "选择目标..."
+
+#: KioExportWidget.cpp:135
+#, kde-format
+msgid "All Files (*)"
+msgstr "所有文件 (*)"
+
+#: KioExportWidget.cpp:155
+#, kde-format
+msgid "<not selected>"
+msgstr "<未选择>"
+
+#: KioExportWindow.cpp:64
+#, kde-format
+msgid "Export to Remote Storage"
+msgstr "导出到远程存储"
+
+#: KioExportWindow.cpp:67
+#, kde-format
+msgid "Start export"
+msgstr "开始导出"
+
+#: KioExportWindow.cpp:68
+#, kde-format
+msgid "Start export to the specified target"
+msgstr "开始导出至指定目标"
+
+#: KioExportWindow.cpp:84
+#, kde-format
+msgid "Export to remote storage"
+msgstr "导出到远程存储"
+
+#: KioExportWindow.cpp:85
+#, kde-format
+msgid "A tool to export images over network using KIO-Slave"
+msgstr "一个使用 KIO-Slave 在网络上导出图像的工具"
+
+#: KioExportWindow.cpp:86 KioImportWindow.cpp:83
+#, kde-format
+msgid "(c) 2009, Johannes Wienke"
+msgstr "(c) 2009, Johannes Wienke"
+
+#: KioExportWindow.cpp:88 KioImportWindow.cpp:85
+#, kde-format
+msgid "Johannes Wienke"
+msgstr "Johannes Wienke"
+
+#: KioExportWindow.cpp:89 KioImportWindow.cpp:86
+#, kde-format
+msgid "Developer and maintainer"
+msgstr "开发者和维护者"
+
+#: KioExportWindow.cpp:198
+#, kde-format
+msgid "Upload not completed"
+msgstr "上传未完成"
+
+#: KioExportWindow.cpp:199
+#, kde-format
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to export these images now."
+msgstr "某些图像未能传输并仍处在列表中。您现在可以重新尝试导出这些图像。"
+
+#: KioImportWidget.cpp:52
+#, kde-format
+msgid "This is the list of images to import into the current album."
+msgstr "这是要导入至当前相册的图像列表。"
+
+#: KioImportWindow.cpp:60
+#, kde-format
+msgid "Import from Remote Storage"
+msgstr "从远程存储中导入"
+
+#: KioImportWindow.cpp:64
+#, kde-format
+msgid "Start import"
+msgstr "开始导入"
+
+#: KioImportWindow.cpp:65
+#, kde-format
+msgid "Start importing the specified images into the currently selected album."
+msgstr "开始将指定的图像导入至当前所选的相册。"
+
+#: KioImportWindow.cpp:81
+#, kde-format
+msgid "Import from remote storage"
+msgstr "从远程存储中导入"
+
+#: KioImportWindow.cpp:82
+#, kde-format
+msgid "A tool to import images over network"
+msgstr "一个通过网络导入图像的工具"
+
+#: KioImportWindow.cpp:137
+#, kde-format
+msgid "Import not completed"
+msgstr "导入未完成"
+
+#: KioImportWindow.cpp:138
+#, kde-format
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to import these images now."
+msgstr "某些图像未能传输并仍处在列表中。您现在可以重新尝试导入这些图像。"
+
+#. i18n: ectx: Menu (Import)
+#: kipiplugin_remotestorageui.rc:7
+#, kde-format
+msgid "&Import"
+msgstr "导入(&I)"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_remotestorageui.rc:11
+#, kde-format
+msgid "&Export"
+msgstr "导出(&E)"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_remotestorageui.rc:17
+#, kde-format
+msgid "Main Toolbar"
+msgstr "主工具栏"
+
+#: plugin_remotestorage.cpp:93
+#, kde-format
+msgid "Export to remote storage..."
+msgstr "导出到远程存储..."
+
+#: plugin_remotestorage.cpp:105
+#, kde-format
+msgid "Import from remote storage..."
+msgstr "从远程存储中导入..."

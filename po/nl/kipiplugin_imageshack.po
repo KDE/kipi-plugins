@@ -1,0 +1,305 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Freek de Kruijf <freekdekruijf@kde.nl>, 2013, 2014, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2016-08-26 14:39+0200\n"
+"Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
+"Language-Team: Dutch <kde-i18n-nl@kde.org>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: imageshacktalker.cpp:173
+#, kde-format
+msgid "Authenticating the user"
+msgstr "Bezig met authenticatie van de gebruiker"
+
+#: imageshacktalker.cpp:199
+#, kde-format
+msgid "Getting galleries from server"
+msgstr "Galerijen ophalen van de server"
+
+#: imageshacktalker.cpp:289
+#, kde-format
+msgid "Successfully retrieved galleries"
+msgstr "Galerijen ophalen is gelukt"
+
+#: imageshackwidget.cpp:82
+#, kde-format
+msgid "Make private"
+msgstr "Privé maken"
+
+#: imageshackwidget.cpp:86
+#, kde-format
+msgid "Tags (optional):"
+msgstr "Tags (optioneel):"
+
+#: imageshackwidget.cpp:88
+#, kde-format
+msgid "Remove information bar on thumbnails"
+msgstr "Informatiebalk op miniaturen verwijderen"
+
+#: imageshackwidget.cpp:125
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Add to root folder"
+msgstr "Aan hoofdmap toevoegen"
+
+#: imageshackwidget.cpp:128
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Create new gallery"
+msgstr "Nieuwe galerij aanmaken"
+
+#: imageshackwindow.cpp:81
+#, kde-format
+msgid "Export to Imageshack"
+msgstr "Naar Imageshack exporteren"
+
+#: imageshackwindow.cpp:89
+#, kde-format
+msgid "Upload"
+msgstr "Uploaden"
+
+#: imageshackwindow.cpp:90
+#, kde-format
+msgid "Start upload to Imageshack web service"
+msgstr "Upload naar Imageshack-webservice starten"
+
+#: imageshackwindow.cpp:98
+#, kde-format
+msgid "Imageshack Export"
+msgstr "Imageshack-export"
+
+#: imageshackwindow.cpp:99
+#, kde-format
+msgid "A tool to export images to Imageshack web service."
+msgstr ""
+"Een hulpmiddel om afbeeldingen naar de Imageshack-webservice te exporteren."
+
+#: imageshackwindow.cpp:100
+#, kde-format
+msgid "(c) 2012, Dodon Victor\n"
+msgstr "(c) 2012, Dodon Victor\n"
+
+#: imageshackwindow.cpp:102
+#, kde-format
+msgid "Dodon Victor"
+msgstr "Dodon Victor"
+
+#: imageshackwindow.cpp:103
+#, kde-format
+msgid "Author"
+msgstr "Auteur"
+
+#: imageshackwindow.cpp:230
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: imageshackwindow.cpp:234
+#, kde-format
+msgid "Image Shack Export"
+msgstr "Exporteren naar ImageShack"
+
+#: imageshackwindow.cpp:261
+#, kde-format
+msgid "Authenticating..."
+msgstr "Bezig met authenticatie..."
+
+#: imageshackwindow.cpp:318
+#, kde-format
+msgid "Login failed: %1\n"
+msgstr "Aanmelden mislukt: %1\n"
+
+#: imageshackwindow.cpp:332
+#, kde-format
+msgid "Failed to get galleries list: %1\n"
+msgstr "Ophalen van de lijst met galerijen is mislukt: %1\n"
+
+#: imageshackwindow.cpp:404
+#, kde-format
+msgid "Uploading Failed"
+msgstr "Uploaden is mislukt"
+
+#: imageshackwindow.cpp:405
+#, kde-format
+msgid ""
+"Failed to upload photo into Imageshack: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Het uploaden van een foto naar Imageshack is mislukt: %1\n"
+"Wilt u doorgaan?"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_imageshackui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Exporteren"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_imageshackui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Hoofdwerkbalk"
+
+#: plugin_imageshack.cpp:103
+#, kde-format
+msgid "Export to &Imageshack..."
+msgstr "Naar &Imageshack exporteren..."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Freek de Kruijf"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "freekdekruijf@kde.nl"
+
+#~ msgid "Checking the registration code"
+#~ msgstr "De registratiecode controleren"
+
+#~ msgid "Checking the web server"
+#~ msgstr "De webserver controleren"
+
+#~ msgid "Server does not respond. Please check you internet connection!"
+#~ msgstr "De server geeft geen antwoord. Controleer uw internetverbinding!"
+
+#~ msgid "Registration code successfully verified"
+#~ msgstr "Registratiecode met succes gecontroleerd"
+
+#~ msgid "Registration code not valid!"
+#~ msgstr "Registratiecode is niet geldig!"
+
+#~ msgid "Images to upload to Imageshack web service"
+#~ msgstr "Te uploaden afbeeldingen naar de Imageshack-webservice"
+
+#~ msgid ""
+#~ "This is a clickable link to open the Imageshack home page in a web browser"
+#~ msgstr ""
+#~ "Dit is een aanklikbare koppeling om de Imageshack-homepagina te openen in "
+#~ "uw webbrowser"
+
+#~ msgid "ImageShack"
+#~ msgstr "ImageShack"
+
+#~ msgid "Account"
+#~ msgstr "Account"
+
+#~ msgid "Imageshack account info"
+#~ msgstr "Informatie over het Imageshack-account"
+
+#~ msgctxt "Account info"
+#~ msgid "Name:"
+#~ msgstr "Naam:"
+
+#~ msgctxt "Account info"
+#~ msgid "Email:"
+#~ msgstr "E-mail:"
+
+#~ msgid "Change account"
+#~ msgstr "Account wijzigen"
+
+#~ msgid ""
+#~ "Change the registration code for the Imageshack account used to upload "
+#~ "images"
+#~ msgstr ""
+#~ "De registratiecode voor het Imageshack-account dat wordt gebruikt om "
+#~ "afbeeldingen te uploaden wijzigen"
+
+#~ msgid "Destination"
+#~ msgstr "Bestemming"
+
+#~ msgid ""
+#~ "This is the ImageShack gallery to which selected items will be uploaded"
+#~ msgstr ""
+#~ "Dit is de galerij van ImageShack waarnaar de geselecteerde items zullen "
+#~ "worden geüpload"
+
+#~ msgid "Upload to galleries"
+#~ msgstr "Naar galerijen"
+
+#~ msgid "Gallery:"
+#~ msgstr "Galerij:"
+
+#~ msgid "Name:"
+#~ msgstr "Naam:"
+
+#~ msgctxt "ImageShack galleries list"
+#~ msgid "Reload"
+#~ msgstr "Herladen"
+
+#~ msgid "Reload ImageShack galleries list"
+#~ msgstr "Lijst met galerijen van ImageShack herladen"
+
+#~ msgid "Options"
+#~ msgstr "Opties"
+
+#~ msgid "These are the options that will be applied to photos"
+#~ msgstr "Dit zijn de opties die zullen worden toegepast op de foto's"
+
+#~ msgid "Resize options"
+#~ msgstr "Opties voor wijziging van grootte"
+
+#~ msgid "Do not resize photos"
+#~ msgstr "Grootte van foto's niet wijzigen"
+
+#~ msgid "Predefined templates"
+#~ msgstr "Voorgedefinieerde sjablonen"
+
+#~ msgid "Custom resize dimensions"
+#~ msgstr "Aangepaste afmetingen"
+
+#~ msgid "Width:"
+#~ msgstr "Breedte:"
+
+#~ msgid "Height:"
+#~ msgstr "Hoogte:"
+
+#~ msgid "100x75 (avatar)"
+#~ msgstr "100x75 (avatar)"
+
+#~ msgid "150x122 (thumbnail)"
+#~ msgstr "150x122 (miniatuur)"
+
+#~ msgid "320x240 (for websites and email)"
+#~ msgstr "320x240 (voor websites en e-mail)"
+
+#~ msgid "640x480 (for message boards)"
+#~ msgstr "640x480 (voor berichtenborden)"
+
+#~ msgid "800x600 (15-inch monitor)"
+#~ msgstr "800x600 (15-inch monitor)"
+
+#~ msgid "1024x768 (17-inch monitor)"
+#~ msgstr "1024x768 (17-inch monitor)"
+
+#~ msgid "1280x1024 (19-inch monitor)"
+#~ msgstr "1280x1024 (19-inch monitor)"
+
+#~ msgid "1600x1200 (21-inch monitor)"
+#~ msgstr "1600x1200 (21-inch monitor)"
+
+#~ msgid "optimize without resizing"
+#~ msgstr "optimaliseren zonder afmetingen aanpassen"
+
+#~ msgid "Create new gallery."
+#~ msgstr "Nieuwe galerij aanmaken."
+
+#~ msgid "Imageshack authorization"
+#~ msgstr "Autorisatie van Imageshack"
+
+#~ msgid ""
+#~ "Please paste the registration code for your ImageShack account into the "
+#~ "textbox below and press \"OK\"."
+#~ msgstr ""
+#~ "Plak de registratiecode van uw ImageShack-account in het onderstaande "
+#~ "tekstvak en druk op \"OK\"."

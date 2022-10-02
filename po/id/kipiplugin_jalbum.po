@@ -1,0 +1,156 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Wantoyo <wantoyek@gmail.com>, 2018, 2019, 2021, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2022-08-19 20:36+0700\n"
+"Last-Translator: Wantoyèk <wantoyek@gmail.com>\n"
+"Language-Team: https://t.me/Localizations_KDE_Indonesia\n"
+"Language: id\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 21.12.3\n"
+
+#: jalbumconfig.cpp:97 jalbumconfig.cpp:160
+#, kde-format
+msgid "Select Albums Location"
+msgstr "Pilih Lokasi Album"
+
+#: jalbumconfig.cpp:111
+#, kde-format
+msgid "Select jAlbum jar File Location"
+msgstr "Pilih Lokasi File jar jAlbum"
+
+#: jalbumconfig.cpp:118
+#, kde-format
+msgid "OK"
+msgstr "Oke"
+
+#: jalbumconfig.cpp:119
+#, kde-format
+msgid "Cancel"
+msgstr "Batal"
+
+#: jalbumconfig.cpp:180
+#, kde-format
+msgid "Select jar File Location"
+msgstr "Pilih Lokasi File jar"
+
+#: jalbumconfig.cpp:234
+#, kde-format
+msgid "Not a directory"
+msgstr "Bukan sebuah direktori"
+
+#: jalbumconfig.cpp:234
+#, kde-format
+msgid "Chosen path is not a directory"
+msgstr "Pilihan alur adalah bukan sebuah direktori"
+
+#: jalbumconfig.cpp:238
+#, kde-format
+msgid "Missing directory"
+msgstr "Hilangnya direktori"
+
+#: jalbumconfig.cpp:239
+#, kde-format
+msgid "Directory %1 does not exist, do you wish to create it?"
+msgstr "Direktori %1 tidak ada, apakah kamu hendak menciptakannya?"
+
+#: jalbumconfig.cpp:250 jalbumconfig.cpp:251
+#, kde-format
+msgid "Failed to create directory"
+msgstr "Gagal menciptakan direktori"
+
+#: jalbumwindow.cpp:95
+#, kde-format
+msgid "jAlbum Album name to export to:"
+msgstr "Nama Album jAlbum untuk mengekspor ke:"
+
+#: jalbumwindow.cpp:113
+#, kde-format
+msgid "Settings"
+msgstr "Pengaturan"
+
+#: jalbumwindow.cpp:124 jalbumwindow.cpp:127
+#, kde-format
+msgid "jAlbum Export"
+msgstr "Ekspor jAlbum"
+
+#: jalbumwindow.cpp:128
+#, kde-format
+msgid "A Kipi plugin to launch jAlbum using selected images."
+msgstr ""
+"Sebuah plugin Kipi untuk meluncurkan jAlbum menggunakan citra yang dipilih."
+
+#: jalbumwindow.cpp:129
+#, kde-format
+msgid "(c) 2013-2017, Andrew Goodbody\n"
+msgstr "(c) 2013-2017, Andrew Goodbody\n"
+
+#: jalbumwindow.cpp:160
+#, kde-format
+msgid "Error"
+msgstr "Error"
+
+#: jalbumwindow.cpp:175
+#, kde-format
+msgid "Overwrite?"
+msgstr "Timpa?"
+
+#: jalbumwindow.cpp:176
+#, kde-format
+msgid "Album %1 already exists, do you wish to overwrite it?"
+msgstr "Album %1 sudah ada, apakah kamu hendak menimpanya?"
+
+#: jalbumwindow.cpp:186
+#, kde-format
+msgid "Create dir Failed"
+msgstr "Penciptaan dir Gagal"
+
+#: jalbumwindow.cpp:187
+#, kde-format
+msgid "Failed to create album directory"
+msgstr "Gagal menciptakan direktori album"
+
+#: jalbumwindow.cpp:200 jalbumwindow.cpp:218
+#, kde-format
+msgid "Writing Failed"
+msgstr "Gagal Menulis"
+
+#: jalbumwindow.cpp:201
+#, kde-format
+msgid "Could not open 'albumfiles.txt' for writing"
+msgstr "Tidak dapat membuka 'albumfiles.txt' untuk penulisan"
+
+#: jalbumwindow.cpp:219
+#, kde-format
+msgid "Could not open 'jalbum-settings.jap' for writing"
+msgstr "Tidak dapat membuka  'jalbum-settings.jap' untuk penulisan"
+
+#: jalbumwindow.cpp:255 plugin_jalbum.cpp:123
+#, kde-format
+msgid "Edit jAlbum Data"
+msgstr "Edit Data jAlbum"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_jalbumui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Ekspor"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_jalbumui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Bilah Alat Utama"
+
+#: plugin_jalbum.cpp:105
+#, kde-format
+msgid "Export to &jAlbum"
+msgstr "Ekspor ke &jAlbum"

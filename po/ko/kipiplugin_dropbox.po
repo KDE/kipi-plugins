@@ -1,0 +1,259 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Shinjo Park <kde@peremen.name>, 2014, 2015, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2017-01-22 21:13+0100\n"
+"Last-Translator: Shinjo Park <kde@peremen.name>\n"
+"Language-Team: Korean <kde-kr@kde.org>\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: dbtalker.cpp:317
+#, kde-format
+msgid "Error"
+msgstr "오류"
+
+#: dbtalker.cpp:360
+#, kde-format
+msgid "Failed to upload photo"
+msgstr "사진을 업로드할 수 없음"
+
+#: dbtalker.cpp:387
+#, kde-format
+msgid "Failed to list folders"
+msgstr "폴더 목록을 가져올 수 없음"
+
+#: dbwindow.cpp:70
+#, kde-format
+msgid "Export to Dropbox"
+msgstr "Dropbox로 내보내기"
+
+#: dbwindow.cpp:72
+#, kde-format
+msgid "Start Upload"
+msgstr "업로드 시작"
+
+#: dbwindow.cpp:73
+#, kde-format
+msgid "Start upload to Dropbox"
+msgstr "Dropbox에 업로드 시작"
+
+#: dbwindow.cpp:92
+#, kde-format
+msgid "Dropbox Export"
+msgstr "Dropbox 내보내기"
+
+#: dbwindow.cpp:93
+#, kde-format
+msgid "A tool to export images to Dropbox"
+msgstr "Dropbox로 사진을 내보내는 도구"
+
+#: dbwindow.cpp:95
+#, kde-format
+msgid "(c) 2013, Saurabh Patel"
+msgstr "(c) 2013, Saurabh Patel"
+
+#: dbwindow.cpp:97
+#, kde-format
+msgid "Saurabh Patel"
+msgstr "Saurabh Patel"
+
+#: dbwindow.cpp:98
+#, kde-format
+msgid "Author"
+msgstr "작성자"
+
+#: dbwindow.cpp:259
+#, kde-format
+msgctxt "@title:window"
+msgid "Error"
+msgstr "오류"
+
+#: dbwindow.cpp:260
+#, kde-format
+msgid "No image selected. Please select which images should be uploaded."
+msgstr "그림을 선택하지 않았습니다. 업로드할 그림을 선택하십시오."
+
+#: dbwindow.cpp:266 dbwindow.cpp:386
+#, kde-format
+msgid "Login Failed"
+msgstr "로그인 실패"
+
+#: dbwindow.cpp:267 dbwindow.cpp:387
+#, kde-format
+msgid "Authentication failed. Do you want to try again?"
+msgstr "인증이 실패했습니다. 다시 시도하시겠습니까?"
+
+#: dbwindow.cpp:291
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: dbwindow.cpp:295
+#, kde-format
+msgid "Dropbox export"
+msgstr "Dropbox 내보내기"
+
+#: dbwindow.cpp:328
+#, kde-format
+msgid "Uploading Failed"
+msgstr "업로드 실패"
+
+#: dbwindow.cpp:329
+#, kde-format
+msgid ""
+"Failed to upload photo to Dropbox.\n"
+"%1\n"
+"Do you want to continue?"
+msgstr ""
+"Dropbox에 사진을 업로드할 수 없습니다: \n"
+"%1\n"
+"계속 진행하시겠습니까?"
+
+#: dbwindow.cpp:401 dbwindow.cpp:406
+#, kde-format
+msgid ""
+"Dropbox call failed:\n"
+"%1"
+msgstr ""
+"Dropbox 호출 실패:\n"
+"%1"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_dropboxui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "내보내기(&E)"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_dropboxui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "주 도구 모음"
+
+#: plugin_dropbox.cpp:90
+#, kde-format
+msgid "Export to &Dropbox..."
+msgstr "Dropbox로 내보내기(&D)..."
+
+#~ msgid "Authorize Dropbox"
+#~ msgstr "Dropbox 인증"
+
+#~ msgid ""
+#~ "Please follow the instructions in the browser. After logging in and "
+#~ "authorizing the application, press OK."
+#~ msgstr ""
+#~ "웹 브라우저에서 다음 절차를 따르십시오. 로그인 및 앱 인증 후 확인을 누르십"
+#~ "시오."
+
+#~ msgid ""
+#~ "The textbox is empty, please enter the code from the browser in the "
+#~ "textbox. To complete the authentication click \"Change Account\", or "
+#~ "\"Start Upload\" to authenticate again."
+#~ msgstr ""
+#~ "텍스트 상자가 비어 있습니다. 웹 브라우저에 표시된 텍스트를 입력하십시오. "
+#~ "인증을 완료하려면 \"계정 변경\"을, 다시 인증하려면 \"업로드 시작\"을 누르"
+#~ "십시오."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Shinjo Park"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "kde@peremen.name"
+
+#~ msgid "Dropbox New Folder"
+#~ msgstr "Dropbox 새 폴더"
+
+#~ msgid "The name of the folder that will be created"
+#~ msgstr "만들 폴더 이름"
+
+#~ msgctxt "album edit"
+#~ msgid "Title:"
+#~ msgstr "제목:"
+
+#~ msgid "This is the list of images to upload to your Dropbox account."
+#~ msgstr "Dropbox 계정에 업로드할 사진 목록입니다."
+
+#~ msgid "This is a clickable link to open Dropbox in a browser."
+#~ msgstr "Dropbox 홈 페이지를 웹 브라우저로 여는 링크입니다."
+
+#~ msgid "Account"
+#~ msgstr "계정"
+
+#~ msgid "This is the Dropbox account that is currently logged in."
+#~ msgstr "현재 사용 중인 Dropbox 계정입니다."
+
+#~ msgctxt "account settings"
+#~ msgid "Name:"
+#~ msgstr "이름:"
+
+#~ msgid "Change Account"
+#~ msgstr "계정 변경"
+
+#~ msgid "Change Dropbox account for transfer"
+#~ msgstr "전송할 Dropbox 계정 변경"
+
+#~ msgid "Destination"
+#~ msgstr "대상"
+
+#~ msgid ""
+#~ "This is the Dropbox folder to which selected photos will be uploaded."
+#~ msgstr "선택한 사진을 업로드할 Dropbox 폴더입니다."
+
+#~ msgid "Folder:"
+#~ msgstr "폴더:"
+
+#~ msgid "New Folder"
+#~ msgstr "새 폴더"
+
+#~ msgid "Create new Dropbox folder"
+#~ msgstr "새 Dropbox 폴더 만들기"
+
+#~ msgctxt "album list"
+#~ msgid "Reload"
+#~ msgstr "새로 고침"
+
+#~ msgid "Reload album list"
+#~ msgstr "앨범 목록 새로 고침"
+
+#~ msgid "Options"
+#~ msgstr "옵션"
+
+#~ msgid "These are the options that would be applied to photos before upload."
+#~ msgstr "사진 업로드 전에 적용할 옵션입니다."
+
+#~ msgid "Resize photos before uploading"
+#~ msgstr "업로드 전에 크기 조절"
+
+#~ msgid "Maximum Dimension:"
+#~ msgstr "최대 크기:"
+
+#~ msgid "JPEG Quality:"
+#~ msgstr "JPEG 품질:"
+
+#~ msgid ""
+#~ "(c) 2013, Saurabh Patel\n"
+#~ "(c) 2015, Shourya Singh Gupta"
+#~ msgstr ""
+#~ "(c) 2013, Saurabh Patel\n"
+#~ "(c) 2015, Shourya Singh Gupta"
+
+#~ msgid "Author and maintainer"
+#~ msgstr "작성자 및 관리자"
+
+#~ msgid "Shourya Singh Gupta"
+#~ msgstr "Shourya Singh Gupta"
+
+#~ msgid "Developer"
+#~ msgstr "개발자"

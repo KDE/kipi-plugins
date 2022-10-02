@@ -1,0 +1,346 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Andrew Coles <andrew_coles@yahoo.co.uk>, 2010, 2011.
+# Steve Allewell <steve.allewell@gmail.com>, 2014, 2015, 2016, 2017.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2017-01-22 10:16+0000\n"
+"Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
+"Language-Team: British English <kde-l10n-en_gb@kde.org>\n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 2.0\n"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_piwigoui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Export"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_piwigoui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Main Toolbar"
+
+#: piwigoconfig.cpp:76
+#, kde-format
+msgctxt "piwigo login settings"
+msgid "URL:"
+msgstr "URL:"
+
+#: piwigoconfig.cpp:80
+#, kde-format
+msgctxt "piwigo login settings"
+msgid "Username:"
+msgstr "Username:"
+
+#: piwigoconfig.cpp:84
+#, kde-format
+msgctxt "piwigo login settings"
+msgid "Password:"
+msgstr "Password:"
+
+#: piwigotalker.cpp:305
+#, kde-format
+msgid "Check if %1 already exists"
+msgstr "Check if %1 already exists"
+
+#: piwigotalker.cpp:346
+#, kde-format
+msgid "Error"
+msgstr "Error"
+
+#: piwigotalker.cpp:440
+#, kde-format
+msgid "Piwigo URL probably incorrect"
+msgstr "Piwigo URL probably incorrect"
+
+#: piwigotalker.cpp:446
+#, kde-format
+msgid "Incorrect username or password specified"
+msgstr "Incorrect username or password specified"
+
+#: piwigotalker.cpp:489 piwigotalker.cpp:663
+#, kde-format
+msgid "Upload to Piwigo version < 2.4 is no longer supported"
+msgstr "Upload to Piwigo version < 2.4 is no longer supported"
+
+#: piwigotalker.cpp:561 piwigotalker.cpp:639 piwigotalker.cpp:708
+#: piwigotalker.cpp:779
+#, kde-format
+msgid "Invalid response received from remote Piwigo"
+msgstr "Invalid response received from remote Piwigo"
+
+#: piwigotalker.cpp:567
+#, kde-format
+msgid "Failed to list albums"
+msgstr "Failed to list albums"
+
+#: piwigotalker.cpp:613
+#, kde-format
+msgid "Photo '%1' already exists."
+msgstr "Photo '%1' already exists."
+
+#: piwigotalker.cpp:645 piwigotalker.cpp:785 piwigotalker.cpp:945
+#, kde-format
+msgid "Failed to upload photo"
+msgstr "Failed to upload photo"
+
+#: piwigotalker.cpp:714
+#, kde-format
+msgid "Photo '%1' already exists in this album."
+msgstr "Photo '%1' already exists in this album."
+
+#: piwigotalker.cpp:800
+#, kde-format
+msgid "Error : Cannot open photo: %1"
+msgstr "Error : Cannot open photo: %1"
+
+#: piwigotalker.cpp:827
+#, kde-format
+msgid "Upload the chunk %1/%2 of %3"
+msgstr "Upload the chunk %1/%2 of %3"
+
+#: piwigotalker.cpp:860
+#, kde-format
+msgid "Warning : The full size photo cannot be uploaded."
+msgstr "Warning : The full size photo cannot be uploaded."
+
+#: piwigotalker.cpp:906
+#, kde-format
+msgid "Upload the metadata of %1"
+msgstr "Upload the metadata of %1"
+
+#: piwigotalker.cpp:939
+#, kde-format
+msgid "Invalid response received from remote Piwigo (%1)"
+msgstr "Invalid response received from remote Piwigo (%1)"
+
+#: piwigowindow.cpp:128
+#, kde-format
+msgid "Visit Piwigo website"
+msgstr "Visit Piwigo website"
+
+#: piwigowindow.cpp:145
+#, kde-format
+msgid "Albums"
+msgstr "Albums"
+
+#: piwigowindow.cpp:156
+#, kde-format
+msgid "Change Account"
+msgstr "Change Account"
+
+#: piwigowindow.cpp:160
+#, kde-format
+msgid "Options"
+msgstr "Options"
+
+#: piwigowindow.cpp:164
+#, kde-format
+msgid "Resize photos before uploading"
+msgstr "Resize photos before uploading"
+
+#: piwigowindow.cpp:167
+#, kde-format
+msgid "Maximum width:"
+msgstr "Maximum width:"
+
+#: piwigowindow.cpp:173
+#, kde-format
+msgid "Maximum height:"
+msgstr "Maximum height:"
+
+#: piwigowindow.cpp:179
+#, kde-format
+msgid "Resized JPEG quality:"
+msgstr "Resized JPEG quality:"
+
+#: piwigowindow.cpp:231 piwigowindow.cpp:235
+#, kde-format
+msgid "Piwigo Export"
+msgstr "Piwigo Export"
+
+#: piwigowindow.cpp:236
+#, kde-format
+msgid "A tool to export image collections to a remote Piwigo server."
+msgstr "A tool to export image collections to a remote Piwigo server."
+
+#: piwigowindow.cpp:237
+#, kde-format
+msgid ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2007, Colin Guthrie\n"
+"(c) 2006-2015, Gilles Caulier\n"
+"(c) 2008, Andrea Diamantini\n"
+"(c) 2010-2014, Frédéric Coiffier\n"
+msgstr ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2007, Colin Guthrie\n"
+"(c) 2006-2015, Gilles Caulier\n"
+"(c) 2008, Andrea Diamantini\n"
+"(c) 2010-2014, Frédéric Coiffier\n"
+
+#: piwigowindow.cpp:243
+#, kde-format
+msgid "Renchi Raju"
+msgstr "Renchi Raju"
+
+#: piwigowindow.cpp:244 piwigowindow.cpp:248 piwigowindow.cpp:252
+#: piwigowindow.cpp:256 piwigowindow.cpp:260
+#, kde-format
+msgid "Developer"
+msgstr "Developer"
+
+#: piwigowindow.cpp:247
+#, kde-format
+msgid "Colin Guthrie"
+msgstr "Colin Guthrie"
+
+#: piwigowindow.cpp:251
+#, kde-format
+msgid "Andrea Diamantini"
+msgstr "Andrea Diamantini"
+
+#: piwigowindow.cpp:255
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: piwigowindow.cpp:259
+#, kde-format
+msgid "Frédéric Coiffier"
+msgstr "Frédéric Coiffier"
+
+#: piwigowindow.cpp:267
+#, kde-format
+msgid "Start Upload"
+msgstr "Start Upload"
+
+#: piwigowindow.cpp:395
+#, kde-format
+msgid "Login Failed"
+msgstr "Login Failed"
+
+#: piwigowindow.cpp:396
+#, kde-format
+msgid "Failed to login into remote piwigo. "
+msgstr "Failed to login into remote piwigo. "
+
+#: piwigowindow.cpp:397
+#, kde-format
+msgid ""
+"\n"
+"Do you want to check your settings and try again?"
+msgstr ""
+"\n"
+"Do you want to check your settings and try again?"
+
+#: piwigowindow.cpp:404 piwigowindow.cpp:644 plugin_piwigo.cpp:117
+#, kde-format
+msgid "Edit Piwigo Data"
+msgstr "Edit Piwigo Data"
+
+#: piwigowindow.cpp:464 piwigowindow.cpp:488
+#, kde-format
+msgid "Album"
+msgstr "Album"
+
+#: piwigowindow.cpp:507
+#, kde-format
+msgid "Image"
+msgstr "Image"
+
+#: piwigowindow.cpp:538
+#, kde-format
+msgid "Nothing to upload - please select photos to upload."
+msgstr "Nothing to upload - please select photos to upload."
+
+#: piwigowindow.cpp:576
+#, kde-format
+msgid "The file %1 is not a supported image or video format"
+msgstr "The file %1 is not a supported image or video format"
+
+#: piwigowindow.cpp:580
+#, kde-format
+msgid "Uploading file %1"
+msgstr "Uploading file %1"
+
+#: piwigowindow.cpp:598
+#, kde-format
+msgid "Uploading Failed"
+msgstr "Uploading Failed"
+
+#: piwigowindow.cpp:599
+#, kde-format
+msgid "Failed to upload media into remote Piwigo. "
+msgstr "Failed to upload media into remote Piwigo. "
+
+#: piwigowindow.cpp:600
+#, kde-format
+msgid ""
+"\n"
+"Do you want to continue?"
+msgstr ""
+"\n"
+"Do you want to continue?"
+
+#: plugin_piwigo.cpp:97
+#, kde-format
+msgid "Export to &Piwigo..."
+msgstr "Export to &Piwigo..."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Andrew Coles, Steve Allewell"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "andrew_coles@yahoo.co.uk, steve.allewell@gmail.com"
+
+#~ msgid "Author"
+#~ msgstr "Author"
+
+#~ msgid "Maintainer"
+#~ msgstr "Maintainer"
+
+#~ msgid "Upload resized version of %1"
+#~ msgstr "Upload resized version of %1"
+
+#~ msgid "Upload the thumbnail of %1"
+#~ msgstr "Upload the thumbnail of %1"
+
+#~ msgid "Maximum thumbnail dimension:"
+#~ msgstr "Maximum thumbnail dimension:"
+
+#~ msgid "Thumbnail size is ignored with Piwigo > 2.4"
+#~ msgstr "Thumbnail size is ignored with Piwigo > 2.4"
+
+#~ msgid "&Add Selected Photos"
+#~ msgstr "&Add Selected Photos"
+
+#~ msgid "Override Default Options"
+#~ msgstr "Override Default Options"
+
+#~ msgid "EXIF Comment (instead of file name) sets Title"
+#~ msgstr "EXIF Comment (instead of file name) sets Title"
+
+#~ msgid "EXIF Comment (instead of file name) sets Comment"
+#~ msgstr "EXIF Comment (instead of file name) sets Comment"
+
+#~ msgid "Also download the full size version"
+#~ msgstr "Also download the full size version"
+
+#~ msgid "Handbook"
+#~ msgstr "Handbook"
+
+#~ msgid "Settings"
+#~ msgstr "Settings"

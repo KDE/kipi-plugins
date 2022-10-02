@@ -1,0 +1,257 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Martin Schlander <mschlander@opensuse.org>, 2013, 2014, 2016, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2020-04-08 21:21+0200\n"
+"Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
+"Language-Team: Danish <kde-i18n-doc@kde.org>\n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 18.12.3\n"
+
+#: dbtalker.cpp:317
+#, kde-format
+msgid "Error"
+msgstr "Fejl"
+
+#: dbtalker.cpp:360
+#, kde-format
+msgid "Failed to upload photo"
+msgstr "Kunne ikke uploade foto"
+
+#: dbtalker.cpp:387
+#, kde-format
+msgid "Failed to list folders"
+msgstr "Kunne ikke opliste mapper"
+
+#: dbwindow.cpp:70
+#, kde-format
+msgid "Export to Dropbox"
+msgstr "Eksportér til Dropbox"
+
+#: dbwindow.cpp:72
+#, kde-format
+msgid "Start Upload"
+msgstr "Start upload"
+
+#: dbwindow.cpp:73
+#, kde-format
+msgid "Start upload to Dropbox"
+msgstr "Start upload til Dropbox"
+
+#: dbwindow.cpp:92
+#, kde-format
+msgid "Dropbox Export"
+msgstr "Eksport til Dropbox"
+
+#: dbwindow.cpp:93
+#, kde-format
+msgid "A tool to export images to Dropbox"
+msgstr "Et værktøj til at eksportere billeder til Dropbox"
+
+#: dbwindow.cpp:95
+#, kde-format
+msgid "(c) 2013, Saurabh Patel"
+msgstr "(c) 2013, Saurabh Patel"
+
+#: dbwindow.cpp:97
+#, kde-format
+msgid "Saurabh Patel"
+msgstr "Saurabh Patel"
+
+#: dbwindow.cpp:98
+#, kde-format
+msgid "Author"
+msgstr "Ophavsmand"
+
+#: dbwindow.cpp:259
+#, kde-format
+msgctxt "@title:window"
+msgid "Error"
+msgstr "Fejl"
+
+#: dbwindow.cpp:260
+#, kde-format
+msgid "No image selected. Please select which images should be uploaded."
+msgstr "Intet billede valgt. Vælg hvilke billeder der skal uploades."
+
+#: dbwindow.cpp:266 dbwindow.cpp:386
+#, kde-format
+msgid "Login Failed"
+msgstr "Login mislykkedes"
+
+#: dbwindow.cpp:267 dbwindow.cpp:387
+#, kde-format
+msgid "Authentication failed. Do you want to try again?"
+msgstr "Godkendelse mislykkedes. Vil du prøve igen?"
+
+#: dbwindow.cpp:291
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: dbwindow.cpp:295
+#, kde-format
+msgid "Dropbox export"
+msgstr "Eksport til Dropbox"
+
+#: dbwindow.cpp:328
+#, kde-format
+msgid "Uploading Failed"
+msgstr "Upload mislykkedes"
+
+#: dbwindow.cpp:329
+#, kde-format
+msgid ""
+"Failed to upload photo to Dropbox.\n"
+"%1\n"
+"Do you want to continue?"
+msgstr ""
+"Kunne ikke uploade billede til Dropbox: \n"
+"%1\n"
+"Vil du fortsætte?"
+
+#: dbwindow.cpp:401 dbwindow.cpp:406
+#, kde-format
+msgid ""
+"Dropbox call failed:\n"
+"%1"
+msgstr ""
+"Kald til Dropbox mislykkedes:\n"
+"%1"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_dropboxui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Eksportér"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_dropboxui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Hovedværktøjslinje"
+
+#: plugin_dropbox.cpp:90
+#, kde-format
+msgid "Export to &Dropbox..."
+msgstr "Eksportér til &Dropbox..."
+
+#~ msgid "Authorize Dropbox"
+#~ msgstr "Godkend Dropbox"
+
+#~ msgid ""
+#~ "Please follow the instructions in the browser. After logging in and "
+#~ "authorizing the application, press OK."
+#~ msgstr ""
+#~ "Følg instrukserne i browseren. Efter login og godkendelse af programmet "
+#~ "skal du trykke o.k."
+
+#~ msgid ""
+#~ "The textbox is empty, please enter the code from the browser in the "
+#~ "textbox. To complete the authentication click \"Change Account\", or "
+#~ "\"Start Upload\" to authenticate again."
+#~ msgstr ""
+#~ "Tekstfeltet er tomt, angiv koden fra webbrowseren i tekstfeltet. For at "
+#~ "afslutte godkendelsen klik på \"Skift konto\" eller \"Start upload\" for "
+#~ "at autentificere igen."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Martin Schlander"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "mschlander@opensuse.org"
+
+#~ msgid "Dropbox New Folder"
+#~ msgstr "Ny Dropbox-mappe"
+
+#~ msgid "The name of the folder that will be created"
+#~ msgstr "Navnet på den mappe der bliver oprettet"
+
+#~ msgctxt "album edit"
+#~ msgid "Title:"
+#~ msgstr "Titel:"
+
+#~ msgid "This is the list of images to upload to your Dropbox account."
+#~ msgstr ""
+#~ "Dette er listen over billeder der skal uploades til din Dropbox-konto."
+
+#~ msgid "This is a clickable link to open Dropbox in a browser."
+#~ msgstr "Dette er et klikbart link til at åbne Dropbox i en webbrowser."
+
+#~ msgid "Account"
+#~ msgstr "Konto"
+
+#~ msgid "This is the Dropbox account that is currently logged in."
+#~ msgstr "Dette er den Dropbox-konto der i øjeblikket er logget ind."
+
+#~ msgctxt "account settings"
+#~ msgid "Name:"
+#~ msgstr "Navn:"
+
+#~ msgid "Change Account"
+#~ msgstr "Skift konto"
+
+#~ msgid "Change Dropbox account for transfer"
+#~ msgstr "Skift Dropbox-konto for overførsel"
+
+#~ msgid "Destination"
+#~ msgstr "Destination"
+
+#~ msgid ""
+#~ "This is the Dropbox folder to which selected photos will be uploaded."
+#~ msgstr ""
+#~ "Dette er den Dropbox-mappe hvortil de markerede billeder vil blive "
+#~ "uploadet."
+
+#~ msgid "Folder:"
+#~ msgstr "Mappe:"
+
+#~ msgid "New Folder"
+#~ msgstr "Ny mappe"
+
+#~ msgid "Create new Dropbox folder"
+#~ msgstr "Opret ny Dropbox-mappe"
+
+#~ msgctxt "album list"
+#~ msgid "Reload"
+#~ msgstr "Genindlæs"
+
+#~ msgid "Reload album list"
+#~ msgstr "Genindlæs albumliste"
+
+#~ msgid "Options"
+#~ msgstr "Indstillinger"
+
+#~ msgid "These are the options that would be applied to photos before upload."
+#~ msgstr ""
+#~ "Dette er de indstillinger, der vil blive anvendt på fotos før upload."
+
+#~ msgid "Resize photos before uploading"
+#~ msgstr "Tilpas størrelse på fotos før upload"
+
+#~ msgid "Maximum Dimension:"
+#~ msgstr "Maksimal dimension:"
+
+#~ msgid "JPEG Quality:"
+#~ msgstr "JPEG-kvalitet:"
+
+#, fuzzy
+#~| msgid "(c) 2013, Saurabh Patel"
+#~ msgid ""
+#~ "(c) 2013, Saurabh Patel\n"
+#~ "(c) 2015, Shourya Singh Gupta"
+#~ msgstr "(c) 2013, Saurabh Patel"
+
+#~ msgid "Author and maintainer"
+#~ msgstr "Udvikler og vedligeholder"

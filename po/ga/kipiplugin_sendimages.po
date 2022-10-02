@@ -1,0 +1,558 @@
+# Irish translation of kipiplugin_sendimages
+# Copyright (C) 2009 This_file_is_part_of_KDE
+# This file is distributed under the same license as the kipiplugin_sendimages package.
+# Kevin Scannell <kscanne@gmail.com>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: extragear-libs/kipiplugin_sendimages.po\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2007-10-30 20:08-0500\n"
+"Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
+"Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
+"Language: ga\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n < 11 ? "
+"3 : 4\n"
+
+#: imageresize.cpp:116
+#, kde-format
+msgid "Error opening input file"
+msgstr "Earráid agus inchomhad á oscailt"
+
+#: imageresize.cpp:127
+#, kde-format
+msgid "Error opening temporary folder"
+msgstr "Earráid agus fillteán sealadach á oscailt"
+
+#: imageresize.cpp:175
+#, kde-format
+msgid "Cannot resize image. Aborting."
+msgstr "Ní féidir méid na híomhá a athrú. Á Thobscor."
+
+#: imageresize.cpp:186
+#, kde-format
+msgid "Cannot save resized image (JPEG). Aborting."
+msgstr "Ní féidir íomhá JPEG a n-athraíodh a méid a shábháil. Á Thobscor."
+
+#: imageresize.cpp:194
+#, kde-format
+msgid "Cannot save resized image (PNG). Aborting."
+msgstr "Ní féidir íomhá PNG a n-athraíodh a méid a shábháil. Á Thobscor."
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_sendimagesui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Easpórtáil"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_sendimagesui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Príomhbharra Uirlisí"
+
+#: plugin_sendimages.cpp:115
+#, kde-format
+msgid "Email Images..."
+msgstr "Seol Íomhánna trí Ríomhphost..."
+
+#: sendimages.cpp:133
+#, kde-format
+msgid "Email images"
+msgstr "Seol Íomhánna trí Ríomhphost"
+
+#: sendimages.cpp:176
+#, kde-format
+msgid "Operation canceled by user"
+msgstr "Chealaigh an t-úsáideoir an oibríocht"
+
+#: sendimages.cpp:190
+#, kde-format
+msgid "Resizing %1"
+msgstr "Méid %1 á hathrú"
+
+#: sendimages.cpp:203
+#, kde-format
+msgid "%1 resized successfully"
+msgstr "Athraíodh méid %1"
+
+#: sendimages.cpp:212
+#, kde-format
+msgid "Failed to resize %1: %2"
+msgstr "Theip ar mhéid %1 a athrú: %2"
+
+#: sendimages.cpp:240
+#, kde-format
+msgid "There are no files to send"
+msgstr ""
+
+#: sendimages.cpp:258
+#, kde-format
+msgid "Build images properties file"
+msgstr "Tóg comhad airíonna na n-íomhánna"
+
+#: sendimages.cpp:271
+#, kde-format
+msgid "no caption"
+msgstr "gan fotheideal"
+
+#: sendimages.cpp:274
+#, kde-format
+msgid "no keywords"
+msgstr "gan lorgfhocail"
+
+#: sendimages.cpp:276
+#, kde-format
+msgid ""
+"file \"%1\":\n"
+"Original images: %2\n"
+msgstr ""
+"comhad \"%1\":\n"
+"Buníomhánna: %2\n"
+
+#: sendimages.cpp:279
+#, kde-format
+msgid "Comments: %1\n"
+msgstr "Nótaí: %1\n"
+
+#: sendimages.cpp:282
+#, kde-format
+msgid "Tags: %1\n"
+msgstr "Clibeanna: %1\n"
+
+#: sendimages.cpp:285
+#, kde-format
+msgid "Rating: %1\n"
+msgstr "Rátáil: %1\n"
+
+#: sendimages.cpp:290 sendimages.cpp:298
+#, kde-format
+msgid "properties.txt"
+msgstr "properties.txt"
+
+#: sendimages.cpp:297
+#, fuzzy, kde-format
+#| msgid "Image properties file done"
+msgid "Image properties file cannot be opened"
+msgstr "Comhad airíonna na híomhá críochnaithe"
+
+#: sendimages.cpp:306
+#, kde-format
+msgid "Image properties file done"
+msgstr "Comhad airíonna na híomhá críochnaithe"
+
+#: sendimages.cpp:324
+#, kde-format
+msgid "Processing Failed"
+msgstr ""
+
+#: sendimages.cpp:325
+#, fuzzy, kde-format
+#| msgid ""
+#| "The images listed below cannot be resized.\n"
+#| "Do you want them to be added as attachments (without resizing)?"
+msgid ""
+"Some images cannot be resized.\n"
+"Do you want them to be added as attachments without resizing?"
+msgstr ""
+"Ní féidir méid na n-íomhánna seo a leanas a athrú.\n"
+"An bhfuil fonn ort iad a chur leis mar iatáin (gan an méid a athrú)?"
+
+#: sendimages.cpp:390
+#, kde-format
+msgid ""
+"The file \"%1\" is too big to be sent, please reduce its size or change your "
+"settings"
+msgstr ""
+
+#: sendimages.cpp:442
+#, fuzzy, kde-format
+#| msgid "Starting default KDE email program..."
+msgid "Starting default desktop email program..."
+msgstr "Cliant réamhshocraithe ríomhphoist KDE á thosú..."
+
+#: sendimages.cpp:674
+#, kde-format
+msgid "Failed to start \"%1\" program. Check your system."
+msgstr "Ní féidir ríomhchlár \"%1\" a thosú. Seiceáil do chóras le do thoil."
+
+#: sendimages.cpp:687
+#, kde-format
+msgid "Starting \"%1\" program..."
+msgstr "Ríomhchlár \"%1\" á thosú..."
+
+#: sendimages.cpp:697
+#, kde-format
+msgid "After having sent your images by email..."
+msgstr "Tar éis do chuid íomhánna a sheoladh trí ríomhphost..."
+
+#: sendimages.cpp:698
+#, kde-format
+msgid "Press 'Close' button to clean up temporary files"
+msgstr "Brúigh an cnaipe 'Dún' chun comhaid shealadacha a ghlanadh"
+
+#: sendimagesdialog.cpp:81
+#, kde-format
+msgid "Email Images Options"
+msgstr "Roghanna Ríomhphoist"
+
+#: sendimagesdialog.cpp:84
+#, kde-format
+msgctxt "@action:button"
+msgid "&Send"
+msgstr ""
+
+#: sendimagesdialog.cpp:103
+#, kde-format
+msgid "Send Images"
+msgstr "Seol Íomhánna"
+
+#: sendimagesdialog.cpp:104
+#, fuzzy, kde-format
+#| msgid "A plugin to e-mail items"
+msgid "A tool to e-mail items"
+msgstr "Breiseán a sheolann míreanna trí ríomhphost"
+
+#: sendimagesdialog.cpp:105
+#, fuzzy, kde-format
+#| msgid "(c) 2003-2012, Gilles Caulier"
+msgid "(c) 2003-2016, Gilles Caulier"
+msgstr "© 2003-2012, Gilles Caulier"
+
+#: sendimagesdialog.cpp:107
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: sendimagesdialog.cpp:107
+#, kde-format
+msgid "Author and Maintainer"
+msgstr "Údar agus Cothaitheoir"
+
+#: sendimagesdialog.cpp:110
+#, kde-format
+msgid "Michael Hoechstetter"
+msgstr "Michael Hoechstetter"
+
+#: sendimagesdialog.cpp:110 sendimagesdialog.cpp:113
+#, kde-format
+msgid "Developer"
+msgstr "Forbróir"
+
+#: sendimagesdialog.cpp:113
+#, kde-format
+msgid "Tom Albers"
+msgstr "Tom Albers"
+
+#: settingswidget.cpp:91
+#, kde-format
+msgid "Mail program:"
+msgstr "Clár ríomhphoist:"
+
+#: settingswidget.cpp:94
+#, fuzzy, kde-format
+#| msgctxt "default mail agent"
+#| msgid "Default"
+msgctxt "default desktop mail agent"
+msgid "Default"
+msgstr "Réamhshocrú"
+
+#: settingswidget.cpp:106
+#, fuzzy, kde-format
+#| msgid ""
+#| "Select your preferred external email program here. <b>Default</b> is the "
+#| "current email program set in KDE System Settings."
+msgid ""
+"Select your preferred external email program here. <b>Default</b> is the "
+"current email program set in desktop system settings."
+msgstr ""
+"Anseo is féidir leat do rogha cliant seachtrach ríomhphoist a chumrú. <b>De "
+"réir réamhshocraithe</b>, úsáidtear an cliant ríomhphoist atá socraithe i "
+"Socruithe Córais KDE."
+
+#: settingswidget.cpp:112
+#, kde-format
+msgid "Attach a file with image properties from %1"
+msgstr "Ceangail comhad le hairíonna íomhá ó %1"
+
+#: settingswidget.cpp:115
+#, kde-format
+msgid ""
+"If you enable this option, all image properties set by %1 as Comments, "
+"Rating, or Tags, will be added as an attached file."
+msgstr ""
+"Leis an rogha seo, cuirfear gach airí íomhá socraithe ag %1 mar Nóta, "
+"Rátáil, nó Clib leis mar chomhad ceangailte."
+
+#: settingswidget.cpp:125
+#, kde-format
+msgid " MB"
+msgstr " MB"
+
+#: settingswidget.cpp:127
+#, kde-format
+msgid "Maximum email size limit:"
+msgstr "Uasmhéid ríomhphoist:"
+
+#: settingswidget.cpp:132
+#, kde-format
+msgid "Adjust image properties"
+msgstr "Coigeartaigh airíonna na híomhá"
+
+#: settingswidget.cpp:134
+#, kde-format
+msgid ""
+"If you enable this option, all images to be sent can be resized and "
+"recompressed."
+msgstr ""
+"Má chumasaíonn tú an rogha seo, is féidir méid na n-íomhánna a athrú agus na "
+"híomhánna a chomhbhrú arís."
+
+#: settingswidget.cpp:137
+#, kde-format
+msgid "Image Properties"
+msgstr "Airíonna na hÍomhá"
+
+#: settingswidget.cpp:141 settingswidget.cpp:167
+#, kde-format
+msgid "Very Small (320 pixels)"
+msgstr "An-Bheag (320 picteilín)"
+
+#: settingswidget.cpp:142 settingswidget.cpp:168
+#, kde-format
+msgid "Small (640 pixels)"
+msgstr "Beag (640 picteilín)"
+
+#: settingswidget.cpp:143 settingswidget.cpp:169
+#, kde-format
+msgid "Medium (800 pixels)"
+msgstr "Gnáthmhéid (800 picteilín)"
+
+#: settingswidget.cpp:144 settingswidget.cpp:170
+#, kde-format
+msgid "Big (1024 pixels)"
+msgstr "Mór (1024 picteilín)"
+
+#: settingswidget.cpp:145 settingswidget.cpp:171
+#, kde-format
+msgid "Very Big (1280 pixels)"
+msgstr "An-Mhór (1280 picteilín)"
+
+#: settingswidget.cpp:146 settingswidget.cpp:172
+#, fuzzy, kde-format
+#| msgid "Huge - for printing (1600 pixels)"
+msgid "Large - for printing (1600 pixels)"
+msgstr "Ollmhór - le haghaidh priontála (1600 picteilín)"
+
+#: settingswidget.cpp:147 settingswidget.cpp:173
+#, fuzzy, kde-format
+#| msgid "Small (640 pixels)"
+msgid "Full HD (1920 pixels)"
+msgstr "Beag (640 picteilín)"
+
+#: settingswidget.cpp:148 settingswidget.cpp:174
+#, fuzzy, kde-format
+#| msgid "Small (640 pixels)"
+msgid "Ultra HD (3840 pixels)"
+msgstr "Beag (640 picteilín)"
+
+#: settingswidget.cpp:150
+#, fuzzy, kde-format
+#| msgid ""
+#| "<p>Select the size of the images that are to be sent:</p><p><b>%1</b>: "
+#| "use this if you have a very slow Internet connection or the target "
+#| "mailbox size is very limited.</p><p><b>%2</b>: use this if you have a "
+#| "slow Internet connection and the target mailbox size is limited.</p><p><b>"
+#| "%3</b>: this is the default value for medium Internet connection speed "
+#| "and target mailbox size.</p><p><b>%4</b>: use this if you have a high-"
+#| "speed Internet connection and the target mailbox size is not limited.</"
+#| "p><p><b>%5</b>: use this if you have no size or speed restrictions.</"
+#| "p><p><b>%6</b>: use this only for printing purposes.</p>"
+msgid ""
+"<p>Select the size of the images that are to be sent:</p><p><b>%1</b>: use "
+"this if you have a very slow Internet connection or the target mailbox size "
+"is very limited.</p><p><b>%2</b>: use this if you have a slow Internet "
+"connection and the target mailbox size is limited.</p><p><b>%3</b>: this is "
+"the default value for medium Internet connection speed and target mailbox "
+"size.</p><p><b>%4</b>: use this if you have a high-speed Internet connection "
+"and the target mailbox size is not limited.</p><p><b>%5</b>: use this if you "
+"have no size or speed restrictions.</p><p><b>%6</b>: use this only for "
+"printing purposes.</p><p><b>%7</b>: use this for optimal viewing on Full HD "
+"displays. Only if you have a high-speed Internet connection and the target "
+"mailbox size is not limited.</p><p><b>%8</b>: use this for optimal viewing "
+"on Ultra HD displays. Only if you have a high-speed Internet connection and "
+"the target mailbox size is not limited.</p>"
+msgstr ""
+"<p>Anseo roghnaigh méid na n-íomhánna le seoladh:</p><p><b>%1</b>: úsáid é "
+"seo má tá ceangal Idirlín an-mhall agat nó má tá teorainn ar mhéid an bosca "
+"sprice.</p><p><b>%2</b>: úsáid é seo má tá ceangal Idirlín an-mhall agat "
+"agus tá teorainn ar mhéid an bosca sprice.</p><p><b>%3</b>: seo é an luach "
+"réamhshocraithe má tá ceangal Idirlín measartha tapa agus bosca sprice de "
+"mheánmhéid.</p><p><b>%4</b>: úsáid é seo má tá ceangal Idirlín ardluais agat "
+"agus nach bhfuil teorainn ar mhéid an bhosca sprice.</p><p><b>%5</b>: úsáid "
+"é seo mura bhfuil srian ar bith ar luas do cheangail nó ar mhéid an bhosca.</"
+"p><p><b>%6</b>: úsáid é seo chun na híomhánna a phriontáil amháin.</p>"
+
+#: settingswidget.cpp:177
+#, kde-format
+msgid "Image size:"
+msgstr "Méid na híomhá:"
+
+#: settingswidget.cpp:186
+#, kde-format
+msgid "<p>Select the file format of the image files to be sent.</p>"
+msgstr "<p>Anseo, roghnaigh formáid na n-íomhánna le seoladh.</p>"
+
+#: settingswidget.cpp:187
+#, kde-format
+msgid ""
+"<p><b>JPEG</b>: The Joint Photographic Experts Group file format is a good "
+"web file format but it uses lossy compression.</p><p><b>PNG</b>: the "
+"Portable Network Graphics format is an extensible file format for the "
+"lossless, portable, well-compressed storage of raster images. PNG provides a "
+"patent-free replacement for GIF and can also replace many common uses of "
+"TIFF. PNG is designed to work well in online viewing applications, such as "
+"the World Wide Web, so it is fully streamable with a progressive display "
+"option. Also, PNG can store gamma and chromaticity data for improved color-"
+"matching on heterogeneous platforms.</p>"
+msgstr ""
+"<p><b>JPEG</b>: Tá an fhormáid JPEG (Joint Photographic Experts Group) "
+"oiriúnach don Ghréasán, ach úsáideann sé comhbhrú caillteach.</p><p><b>PNG</"
+"b>: Formáid neamhchaillteach iniompartha inbhreisithe é PNG (Portable "
+"Network Graphics), le comhbhrú maith d'íomhánna rastair.  Is féidir PNG a "
+"úsáid in áit GIF, gan srianta paitinne, agus is féidir é a úsáid in áit TIFF "
+"freisin go minic. Dearadh PNG sa chaoi go n-oibreodh sé go maith i "
+"bhfeidhmchláir ar líne, mar shampla ar an nGréasán, agus dá bhrí seo tá sé "
+"in-sruthaithe le rogha taispeána forchéimnithí. Lena chois sin, is féidir le "
+"PNG sonraí gáma agus sonraí crómatachta a stóráil chun dathanna "
+"comhoiriúnacha a roghnú ar ardáin éagsúla.</p>"
+
+#: settingswidget.cpp:197
+#, kde-format
+msgid "Image format:"
+msgstr "Formáid na híomhá:"
+
+#: settingswidget.cpp:206
+#, kde-format
+msgid "<p>The new compression value of JPEG images to be sent:</p>"
+msgstr "<p>Luach nua comhbhrúite d'íomhánna JPEG le seoladh:</p>"
+
+#: settingswidget.cpp:207
+#, kde-format
+msgid ""
+"<p><b>1</b>: very high compression<br/><b>25</b>: high compression<br/"
+"><b>50</b>: medium compression<br/><b>75</b>: low compression (default "
+"value)<br/><b>100</b>: no compression</p>"
+msgstr ""
+"<p><b>1</b>: comhbhrú an-ard<br/><b>25</b>: comhbhrú ard<br/><b>50</b>: meán-"
+"chomhbhrú<br/><b>75</b>: comhbhrú íseal (luach réamhshocraithe)<br/><b>100</"
+"b>: gan chomhbhrú</p>"
+
+#: settingswidget.cpp:215
+#, kde-format
+msgid "Image quality:"
+msgstr "Cáilíocht na híomhá:"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Kevin Scannell"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "kscanne@gmail.com"
+
+#~ msgid "Failed to resize images"
+#~ msgstr "Theip ar mhéid na n-íomhánna a athrú"
+
+#~ msgid "Huge - for printing (1600 pixels)"
+#~ msgstr "Ollmhór - le haghaidh priontála (1600 picteilín)"
+
+#~ msgid "Handbook"
+#~ msgstr "Lámhleabhar"
+
+#~ msgid "Images"
+#~ msgstr "Íomhánna"
+
+#~ msgid "Image List"
+#~ msgstr "Liosta Íomhánna"
+
+#~ msgid "Mail"
+#~ msgstr "Ríomhphost"
+
+#~ msgid "Mail Options"
+#~ msgstr "Roghanna Ríomhphoist"
+
+#~ msgid "very small (320 pixels)"
+#~ msgstr "an-bheag (320 picteilín)"
+
+#~ msgid "small (640 pixels)"
+#~ msgstr "beag (640 picteilín)"
+
+#~ msgid "medium (800 pixels)"
+#~ msgstr "gnáthmhéid (800 picteilín)"
+
+#~ msgid "big (1024 pixels)"
+#~ msgstr "mór (1024 picteilín)"
+
+#~ msgid "very big (1280 pixels)"
+#~ msgstr "an-mhór (1280 picteilín)"
+
+#~ msgid "huge - for printing (1600 pixels)"
+#~ msgstr "ollmhór - le haghaidh priontála (1600 picteilín)"
+
+#~ msgid "&Add"
+#~ msgstr "&Cuir Leis"
+
+#~ msgid "&Remove"
+#~ msgstr "&Bain"
+
+#~ msgid "Add Images"
+#~ msgstr "Cuir Íomhánna Leis"
+
+#~ msgid "Thumb"
+#~ msgstr "Mionsamhail"
+
+#~ msgid "Name"
+#~ msgstr "Ainm"
+
+#~ msgid "&Thunderbird path:"
+#~ msgstr "Conair &Thunderbird:"
+
+#~ msgid "Invoke e-mail program"
+#~ msgstr "Tosaigh an clár ríomhphoist"
+
+#~ msgid "Image File Name"
+#~ msgstr "Ainm an Chomhaid Íomhá"
+
+#~ msgid "From Album"
+#~ msgstr "Ó Albam"
+
+#~ msgid "Error during resize images process."
+#~ msgstr "Earráid agus méid na híomhá á hathrú."
+
+#~ msgid "<p>Add images to the list."
+#~ msgstr "<p>Cuir íomhánna leis an liosta."
+
+#~ msgid "<p>Remove selected images from the list."
+#~ msgstr "<p>Bain íomhánna roghnaithe amach as an liosta."
+
+#~ msgid "<p>Preview of the currently selected image on the list."
+#~ msgstr "<p>Réamhamharc ar an íomhá ón liosta atá roghnaithe faoi láthair."
+
+#~ msgid "Image Description"
+#~ msgstr "Cur Síos na hÍomhá"
+
+#~ msgid "<p>The description of the currently selected image on the list."
+#~ msgstr "<p>Cur síos ar an íomhá ón liosta atá roghnaithe faoi láthair."
+
+#~ msgid "Mail agent:"
+#~ msgstr "Gníomhaí ríomhphoist:"
+
+#~ msgid "Album: %1"
+#~ msgstr "Albam: %1"
+
+#~ msgid "Image List (1 item)"
+#~ msgstr "Liosta Íomhánna (mír amháin)"

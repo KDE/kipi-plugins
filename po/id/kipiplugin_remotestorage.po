@@ -1,0 +1,186 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Wantoyo <wantoyek@gmail.com>, 2017, 2018, 2019, 2021, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2022-08-19 20:36+0700\n"
+"Last-Translator: Wantoyèk <wantoyek@gmail.com>\n"
+"Language-Team: https://t.me/Localizations_KDE_Indonesia\n"
+"Language: id\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 21.12.3\n"
+
+#: KioExportWidget.cpp:61
+#, kde-format
+msgid "Target location: "
+msgstr "Lokasi sasaran:"
+
+#: KioExportWidget.cpp:62
+#, kde-format
+msgid ""
+"Sets the target address to upload the images to. This can be any address as "
+"used in Dolphin or Konqueror, e.g. ftp://my.server.org/sub/folder."
+msgstr ""
+"Menetapkan alamat sasaran untuk mengunggah gambar ke mana. Ini bisa berupa "
+"alamat apa pun seperti yang digunakan di Dolphin atau Konqueror, misal ftp://"
+"my.server.org/sub/folder."
+
+#: KioExportWidget.cpp:66
+#, kde-format
+msgid "Select target location..."
+msgstr "Pilih lokasai sasaran..."
+
+#: KioExportWidget.cpp:72
+#, kde-format
+msgid "This is the list of images to upload to the specified target."
+msgstr "Ini adalah daftar citra untuk diunggah ke sasaran yang ditetapkan."
+
+#: KioExportWidget.cpp:134
+#, kde-format
+msgid "Select target..."
+msgstr "Pilih sasaran..."
+
+#: KioExportWidget.cpp:135
+#, kde-format
+msgid "All Files (*)"
+msgstr "Semua File (*)"
+
+#: KioExportWidget.cpp:155
+#, kde-format
+msgid "<not selected>"
+msgstr "<tidak dipilih>"
+
+#: KioExportWindow.cpp:64
+#, kde-format
+msgid "Export to Remote Storage"
+msgstr "Ekspor ke Penyimpanan Jarak Jauh"
+
+#: KioExportWindow.cpp:67
+#, kde-format
+msgid "Start export"
+msgstr "Mulai ekspor"
+
+#: KioExportWindow.cpp:68
+#, kde-format
+msgid "Start export to the specified target"
+msgstr "Mulai ekspor ke sasaran yang ditetapkan"
+
+#: KioExportWindow.cpp:84
+#, kde-format
+msgid "Export to remote storage"
+msgstr "Ekspor ke penyimpanan jarak jauh"
+
+#: KioExportWindow.cpp:85
+#, kde-format
+msgid "A tool to export images over network using KIO-Slave"
+msgstr ""
+"Sebuah alat untuk mengekspor citra melalui jaringan menggunakan KIO-Slave"
+
+#: KioExportWindow.cpp:86 KioImportWindow.cpp:83
+#, kde-format
+msgid "(c) 2009, Johannes Wienke"
+msgstr "(c) 2009, Johannes Wienke"
+
+#: KioExportWindow.cpp:88 KioImportWindow.cpp:85
+#, kde-format
+msgid "Johannes Wienke"
+msgstr "Johannes Wienke"
+
+#: KioExportWindow.cpp:89 KioImportWindow.cpp:86
+#, kde-format
+msgid "Developer and maintainer"
+msgstr "Pengembang dan pemelihara"
+
+#: KioExportWindow.cpp:198
+#, kde-format
+msgid "Upload not completed"
+msgstr "Pengunggahan tidak lengkap"
+
+#: KioExportWindow.cpp:199
+#, kde-format
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to export these images now."
+msgstr ""
+"Beberapa citra tidak tertransfer dan masih berada di dalam daftar. Anda bisa "
+"mencoba kembali untuk mengekspor citra tersebut sekarang."
+
+#: KioImportWidget.cpp:52
+#, kde-format
+msgid "This is the list of images to import into the current album."
+msgstr "Ini adalah daftar citra untuk mengimpor ke dalam album saat ini."
+
+#: KioImportWindow.cpp:60
+#, kde-format
+msgid "Import from Remote Storage"
+msgstr "Impor dari Penyimpanan Jarak Jauh"
+
+#: KioImportWindow.cpp:64
+#, kde-format
+msgid "Start import"
+msgstr "Mulai impor"
+
+#: KioImportWindow.cpp:65
+#, kde-format
+msgid "Start importing the specified images into the currently selected album."
+msgstr ""
+"Mulai mengimpor citra yang ditentukan ke dalam album yang dipilih saat ini."
+
+#: KioImportWindow.cpp:81
+#, kde-format
+msgid "Import from remote storage"
+msgstr "Impor dari penyimpanan jarak jauh"
+
+#: KioImportWindow.cpp:82
+#, kde-format
+msgid "A tool to import images over network"
+msgstr "Sebuah alat untuk mengimpor citra melalui jaringan"
+
+#: KioImportWindow.cpp:137
+#, kde-format
+msgid "Import not completed"
+msgstr "Pengimporan tidak lengkap"
+
+#: KioImportWindow.cpp:138
+#, kde-format
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to import these images now."
+msgstr ""
+"Beberapa citra tidak tertransfer dan masih berada di dalam daftar. Anda bisa "
+"mencoba kembali untuk mengimpor citra tersebut sekarang."
+
+#. i18n: ectx: Menu (Import)
+#: kipiplugin_remotestorageui.rc:7
+#, kde-format
+msgid "&Import"
+msgstr "&Impor"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_remotestorageui.rc:11
+#, kde-format
+msgid "&Export"
+msgstr "&Ekspor"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_remotestorageui.rc:17
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Bilah Alat Utama"
+
+#: plugin_remotestorage.cpp:93
+#, kde-format
+msgid "Export to remote storage..."
+msgstr "Ekspor ke penyimpanan jarak jauh..."
+
+#: plugin_remotestorage.cpp:105
+#, kde-format
+msgid "Import from remote storage..."
+msgstr "Impor dari penyimpanan jarak jauh..."

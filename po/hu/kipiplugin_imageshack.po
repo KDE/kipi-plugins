@@ -1,0 +1,311 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Balázs Úr <urbalazs@gmail.com>, 2013, 2014.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2014-12-09 20:42+0100\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
+"Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: imageshacktalker.cpp:173
+#, fuzzy, kde-format
+#| msgid "Authenticating..."
+msgid "Authenticating the user"
+msgstr "Hitelesítés…"
+
+#: imageshacktalker.cpp:199
+#, kde-format
+msgid "Getting galleries from server"
+msgstr "Galériák letöltése a kiszolgálóról"
+
+#: imageshacktalker.cpp:289
+#, kde-format
+msgid "Successfully retrieved galleries"
+msgstr "A galériák sikeresen lekérve."
+
+#: imageshackwidget.cpp:82
+#, kde-format
+msgid "Make private"
+msgstr "Magánjellegűvé tétel"
+
+#: imageshackwidget.cpp:86
+#, kde-format
+msgid "Tags (optional):"
+msgstr "Címkék (opcionális):"
+
+#: imageshackwidget.cpp:88
+#, kde-format
+msgid "Remove information bar on thumbnails"
+msgstr "Információs sáv eltávolítása a bélyegképekről"
+
+#: imageshackwidget.cpp:125
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Add to root folder"
+msgstr ""
+
+#: imageshackwidget.cpp:128
+#, fuzzy, kde-format
+#| msgid "Create new gallery"
+msgctxt "@item:inlistbox"
+msgid "Create new gallery"
+msgstr "Új galéria létrehozása"
+
+#: imageshackwindow.cpp:81
+#, kde-format
+msgid "Export to Imageshack"
+msgstr "Exportálás az Imageshackbe"
+
+#: imageshackwindow.cpp:89
+#, kde-format
+msgid "Upload"
+msgstr "Feltöltés"
+
+#: imageshackwindow.cpp:90
+#, kde-format
+msgid "Start upload to Imageshack web service"
+msgstr "Feltöltés indítása az Imageshack webszolgáltatásba"
+
+#: imageshackwindow.cpp:98
+#, kde-format
+msgid "Imageshack Export"
+msgstr "Imageshack exportálás"
+
+#: imageshackwindow.cpp:99
+#, fuzzy, kde-format
+#| msgid "A kipi plugin to export images to Imageshack web service."
+msgid "A tool to export images to Imageshack web service."
+msgstr ""
+"Egy kipi bővítmény képek exportálásához az Imageshack webszolgáltatásba."
+
+#: imageshackwindow.cpp:100
+#, kde-format
+msgid "(c) 2012, Dodon Victor\n"
+msgstr "© Dodon Victor, 2012.\n"
+
+#: imageshackwindow.cpp:102
+#, kde-format
+msgid "Dodon Victor"
+msgstr "Dodon Victor"
+
+#: imageshackwindow.cpp:103
+#, kde-format
+msgid "Author"
+msgstr "Szerző"
+
+#: imageshackwindow.cpp:230
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: imageshackwindow.cpp:234
+#, kde-format
+msgid "Image Shack Export"
+msgstr "Image Shack exportálás"
+
+#: imageshackwindow.cpp:261
+#, kde-format
+msgid "Authenticating..."
+msgstr "Hitelesítés…"
+
+#: imageshackwindow.cpp:318
+#, kde-format
+msgid "Login failed: %1\n"
+msgstr "Sikertelen bejelentkezés: %1\n"
+
+#: imageshackwindow.cpp:332
+#, kde-format
+msgid "Failed to get galleries list: %1\n"
+msgstr "Nem sikerült megszerezni a galériák listáját: %1\n"
+
+#: imageshackwindow.cpp:404
+#, kde-format
+msgid "Uploading Failed"
+msgstr ""
+
+#: imageshackwindow.cpp:405
+#, fuzzy, kde-format
+#| msgid ""
+#| "Failed to upload photo to Imageshack: %1\n"
+#| "Do you want to continue?"
+msgid ""
+"Failed to upload photo into Imageshack: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Nem sikerült feltölteni a fényképet az Imageshackbe: %1\n"
+"Szeretné folytatni?"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_imageshackui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Exportálás"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_imageshackui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Fő eszköztár"
+
+#: plugin_imageshack.cpp:103
+#, kde-format
+msgid "Export to &Imageshack..."
+msgstr "Exportálás az &Imageshackbe…"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Úr Balázs"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "urbalazs@gmail.com"
+
+#~ msgid "Checking the registration code"
+#~ msgstr "A regisztrációs kód ellenőrzése"
+
+#~ msgid "Checking the web server"
+#~ msgstr "A webkiszolgáló ellenőrzése"
+
+#~ msgid "Server does not respond. Please check you internet connection!"
+#~ msgstr "A kiszolgáló nem válaszol. Ellenőrizze az internet-kapcsolatát!"
+
+#~ msgid "Registration code successfully verified"
+#~ msgstr "A regisztrációs kód sikeresen ellenőrizve"
+
+#~ msgid "Registration code not valid!"
+#~ msgstr "A regisztrációs kód nem érvényes!"
+
+#~ msgid "Images to upload to Imageshack web service"
+#~ msgstr "Feltöltendő képek az Imageshack webszolgáltatásba"
+
+#~ msgid ""
+#~ "This is a clickable link to open the Imageshack home page in a web browser"
+#~ msgstr ""
+#~ "Ez egy kattintható hivatkozás, amely megnyitja az Imageshack kezdőlapot a "
+#~ "webböngészőben"
+
+#~ msgid "ImageShack"
+#~ msgstr "ImageShack"
+
+#~ msgid "Account"
+#~ msgstr "Fiók"
+
+#~ msgid "Imageshack account info"
+#~ msgstr "Imageshack fiókinformációk"
+
+#~ msgctxt "Account info"
+#~ msgid "Name:"
+#~ msgstr "Név:"
+
+#~ msgctxt "Account info"
+#~ msgid "Email:"
+#~ msgstr "E-mail:"
+
+#~ msgid "Change account"
+#~ msgstr "Fiók változtatása"
+
+#~ msgid ""
+#~ "Change the registration code for the Imageshack account used to upload "
+#~ "images"
+#~ msgstr ""
+#~ "A képek feltöltéséhez használt Imageshack fiók regisztrációs kódjának "
+#~ "megváltoztatása"
+
+#~ msgid "Destination"
+#~ msgstr "Cél"
+
+#~ msgid ""
+#~ "This is the ImageShack gallery to which selected items will be uploaded"
+#~ msgstr ""
+#~ "Ez az az ImageShack galéria, amelybe a kijelölt elemek feltöltésre "
+#~ "kerülnek"
+
+#~ msgid "Upload to galleries"
+#~ msgstr "Feltöltés a galériákba"
+
+#~ msgid "Gallery:"
+#~ msgstr "Galéria:"
+
+#~ msgid "Name:"
+#~ msgstr "Név:"
+
+#~ msgctxt "ImageShack galleries list"
+#~ msgid "Reload"
+#~ msgstr "Újratöltés"
+
+#~ msgid "Reload ImageShack galleries list"
+#~ msgstr "Az ImageShack galériák listájának újratöltése"
+
+#~ msgid "Options"
+#~ msgstr "Beállítások"
+
+#~ msgid "These are the options that will be applied to photos"
+#~ msgstr "Ezek azok a beállítások, amelyek alkalmazva lesznek a fényképekre"
+
+#~ msgid "Resize options"
+#~ msgstr "Átméretezési beállítások"
+
+#~ msgid "Do not resize photos"
+#~ msgstr "Ne méretezze át a fényképeket"
+
+#~ msgid "Predefined templates"
+#~ msgstr "Előre meghatározott sablonok"
+
+#~ msgid "Custom resize dimensions"
+#~ msgstr "Egyéni átméretezési dimenziók"
+
+#~ msgid "Width:"
+#~ msgstr "Szélesség:"
+
+#~ msgid "Height:"
+#~ msgstr "Magasság:"
+
+#~ msgid "100x75 (avatar)"
+#~ msgstr "100x75 (avatar)"
+
+#~ msgid "150x122 (thumbnail)"
+#~ msgstr "150x122 (bélyegkép)"
+
+#~ msgid "320x240 (for websites and email)"
+#~ msgstr "320x240 (weboldalakhoz és levelekhez)"
+
+#~ msgid "640x480 (for message boards)"
+#~ msgstr "640x480 (üzenőfalakhoz)"
+
+#~ msgid "800x600 (15-inch monitor)"
+#~ msgstr "800x600 (15 colos monitorhoz)"
+
+#~ msgid "1024x768 (17-inch monitor)"
+#~ msgstr "1024x768 (17 colos monitorhoz)"
+
+#~ msgid "1280x1024 (19-inch monitor)"
+#~ msgstr "1280x1024 (19 colos monitorhoz)"
+
+#~ msgid "1600x1200 (21-inch monitor)"
+#~ msgstr "1600x1200 (21 colos monitorhoz)"
+
+#~ msgid "optimize without resizing"
+#~ msgstr "optimalizálás átméretezés nélkül"
+
+#~ msgid "Create new gallery."
+#~ msgstr "Új galéria létrehozása."
+
+#~ msgid "Imageshack authorization"
+#~ msgstr "Imageshack felhatalmazás"
+
+#~ msgid ""
+#~ "Please paste the registration code for your ImageShack account into the "
+#~ "textbox below and press \"OK\"."
+#~ msgstr ""
+#~ "Kérjük illessze be az ImageShack fiókjának regisztrációs kódját a lenti "
+#~ "szövegdobozba és nyomja meg az „OK” gombot."

@@ -1,0 +1,266 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Freek de Kruijf <freekdekruijf@kde.nl>, 2013, 2014, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2016-08-26 14:38+0200\n"
+"Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
+"Language-Team: Dutch <kde-i18n-nl@kde.org>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: dbtalker.cpp:317
+#, kde-format
+msgid "Error"
+msgstr "Fout"
+
+#: dbtalker.cpp:360
+#, kde-format
+msgid "Failed to upload photo"
+msgstr "Foto uploaden mislukt"
+
+#: dbtalker.cpp:387
+#, kde-format
+msgid "Failed to list folders"
+msgstr "Een lijst van mappen maken is mislukt"
+
+#: dbwindow.cpp:70
+#, kde-format
+msgid "Export to Dropbox"
+msgstr "Exporteren naar Dropbox"
+
+#: dbwindow.cpp:72
+#, kde-format
+msgid "Start Upload"
+msgstr "Uploaden starten"
+
+#: dbwindow.cpp:73
+#, kde-format
+msgid "Start upload to Dropbox"
+msgstr "Beginnen met uploaden naar Dropbox"
+
+#: dbwindow.cpp:92
+#, kde-format
+msgid "Dropbox Export"
+msgstr "Exporteren naar DropBox"
+
+#: dbwindow.cpp:93
+#, kde-format
+msgid "A tool to export images to Dropbox"
+msgstr "Een hulpmiddel om afbeeldingen naar Dropbox te exporteren"
+
+#: dbwindow.cpp:95
+#, kde-format
+msgid "(c) 2013, Saurabh Patel"
+msgstr "(c) 2013, Saurabh Patel"
+
+#: dbwindow.cpp:97
+#, kde-format
+msgid "Saurabh Patel"
+msgstr "Saurabh Patel"
+
+#: dbwindow.cpp:98
+#, kde-format
+msgid "Author"
+msgstr "Auteur"
+
+#: dbwindow.cpp:259
+#, kde-format
+msgctxt "@title:window"
+msgid "Error"
+msgstr "Fout"
+
+#: dbwindow.cpp:260
+#, kde-format
+msgid "No image selected. Please select which images should be uploaded."
+msgstr ""
+"Geen afbeelding geselecteerd. Selecteer welke afbeeldingen geüpload moeten "
+"worden."
+
+#: dbwindow.cpp:266 dbwindow.cpp:386
+#, kde-format
+msgid "Login Failed"
+msgstr "Aanmelden mislukt"
+
+#: dbwindow.cpp:267 dbwindow.cpp:387
+#, kde-format
+msgid "Authentication failed. Do you want to try again?"
+msgstr "Authenticatie is mislukt. Wilt u het nog eens proberen?"
+
+#: dbwindow.cpp:291
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: dbwindow.cpp:295
+#, kde-format
+msgid "Dropbox export"
+msgstr "Exporteren naar DropBox"
+
+#: dbwindow.cpp:328
+#, kde-format
+msgid "Uploading Failed"
+msgstr "Uploaden is mislukt"
+
+#: dbwindow.cpp:329
+#, kde-format
+msgid ""
+"Failed to upload photo to Dropbox.\n"
+"%1\n"
+"Do you want to continue?"
+msgstr ""
+"Uploaden van foto naar Dropbox is mislukt.\n"
+"%1\n"
+"Wilt u doorgaan?"
+
+#: dbwindow.cpp:401 dbwindow.cpp:406
+#, kde-format
+msgid ""
+"Dropbox call failed:\n"
+"%1"
+msgstr ""
+"Oproep naar Dropbox is mislukt:\n"
+"%1"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_dropboxui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Exporteren"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_dropboxui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Hoofdwerkbalk"
+
+#: plugin_dropbox.cpp:90
+#, kde-format
+msgid "Export to &Dropbox..."
+msgstr "Exporteren naar &Dropbox"
+
+#~ msgid "Authorize Dropbox"
+#~ msgstr "Dropbox autoriseren"
+
+#~ msgid ""
+#~ "Please follow the instructions in the browser. After logging in and "
+#~ "authorizing the application, press OK."
+#~ msgstr ""
+#~ "Volg de instructies in het browservenster. Na aanmelden en autorisatie "
+#~ "van de toepassing, druk op OK."
+
+#~ msgid ""
+#~ "The textbox is empty, please enter the code from the browser in the "
+#~ "textbox. To complete the authentication click \"Change Account\", or "
+#~ "\"Start Upload\" to authenticate again."
+#~ msgstr ""
+#~ "Het tekstvak is leeg, voer de code uit de browser in in het tekstvak. Om "
+#~ "de authenticatie te voltooien, klik op \"Account wijzigen\" od \"Uploaden "
+#~ "beginnen\" om opnieuw de authenticatie te doen."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Freek de Kruijf"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "freekdekruijf@kde.nl"
+
+#~ msgid "Dropbox New Folder"
+#~ msgstr "Dropbox nieuwe map"
+
+#~ msgid "The name of the folder that will be created"
+#~ msgstr "De naam van de map die u wilt aanmaken"
+
+#~ msgctxt "album edit"
+#~ msgid "Title:"
+#~ msgstr "Titel:"
+
+#~ msgid "This is the list of images to upload to your Dropbox account."
+#~ msgstr ""
+#~ "Dit is de lijst van te uploaden afbeeldingen naar uw Dropbox account."
+
+#~ msgid "This is a clickable link to open Dropbox in a browser."
+#~ msgstr ""
+#~ "Dit is een aan te klikken koppeling om Dropbox in een webbrowser te "
+#~ "openen."
+
+#~ msgid "Account"
+#~ msgstr "Account"
+
+#~ msgid "This is the Dropbox account that is currently logged in."
+#~ msgstr "Dit is het Dropbox account dat nu is aangemeld."
+
+#~ msgctxt "account settings"
+#~ msgid "Name:"
+#~ msgstr "Naam:"
+
+#~ msgid "Change Account"
+#~ msgstr "Account wijzigen"
+
+#~ msgid "Change Dropbox account for transfer"
+#~ msgstr "Dropbox account wijzigen voor de overdracht"
+
+#~ msgid "Destination"
+#~ msgstr "Bestemming"
+
+#~ msgid ""
+#~ "This is the Dropbox folder to which selected photos will be uploaded."
+#~ msgstr ""
+#~ "Dit is de Dropbox map waarnaar de geselecteerde foto's zullen worden "
+#~ "geüpload."
+
+#~ msgid "Folder:"
+#~ msgstr "Map:"
+
+#~ msgid "New Folder"
+#~ msgstr "Nieuwe map"
+
+#~ msgid "Create new Dropbox folder"
+#~ msgstr "Een nieuwe Dropbox map aanmaken"
+
+#~ msgctxt "album list"
+#~ msgid "Reload"
+#~ msgstr "Herladen"
+
+#~ msgid "Reload album list"
+#~ msgstr "Laad de albumlijst opnieuw"
+
+#~ msgid "Options"
+#~ msgstr "Opties"
+
+#~ msgid "These are the options that would be applied to photos before upload."
+#~ msgstr "Deze opties zullen worden toegepast op de foto's vóór het uploaden."
+
+#~ msgid "Resize photos before uploading"
+#~ msgstr "Grootte van foto's wijzigen vóór het uploaden"
+
+#~ msgid "Maximum Dimension:"
+#~ msgstr "Maximale afmeting:"
+
+#~ msgid "JPEG Quality:"
+#~ msgstr "JPEG-kwaliteit:"
+
+#~ msgid ""
+#~ "(c) 2013, Saurabh Patel\n"
+#~ "(c) 2015, Shourya Singh Gupta"
+#~ msgstr ""
+#~ "(c) 2013, Saurabh Patel\n"
+#~ "(c) 2015, Shourya Singh Gupta"
+
+#~ msgid "Author and maintainer"
+#~ msgstr "Auteur en onderhouder"
+
+#~ msgid "Shourya Singh Gupta"
+#~ msgstr "Shourya Singh Gupta"
+
+#~ msgid "Developer"
+#~ msgstr "Ontwikkelaar"

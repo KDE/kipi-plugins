@@ -1,0 +1,336 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Balázs Úr <urbalazs@gmail.com>, 2013, 2014.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2014-12-09 21:55+0100\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
+"Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.5\n"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_piwigoui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Exportálás"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_piwigoui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Fő eszköztár"
+
+#: piwigoconfig.cpp:76
+#, kde-format
+msgctxt "piwigo login settings"
+msgid "URL:"
+msgstr "URL:"
+
+#: piwigoconfig.cpp:80
+#, kde-format
+msgctxt "piwigo login settings"
+msgid "Username:"
+msgstr "Felhasználónév:"
+
+#: piwigoconfig.cpp:84
+#, kde-format
+msgctxt "piwigo login settings"
+msgid "Password:"
+msgstr "Jelszó:"
+
+#: piwigotalker.cpp:305
+#, kde-format
+msgid "Check if %1 already exists"
+msgstr "Ellenőrzés, hogy %1 létezik-e már"
+
+#: piwigotalker.cpp:346
+#, kde-format
+msgid "Error"
+msgstr ""
+
+#: piwigotalker.cpp:440
+#, kde-format
+msgid "Piwigo URL probably incorrect"
+msgstr "A Piwigo URL valószínűleg hibás"
+
+#: piwigotalker.cpp:446
+#, kde-format
+msgid "Incorrect username or password specified"
+msgstr "A megadott felhasználónév vagy jelszó hibás"
+
+#: piwigotalker.cpp:489 piwigotalker.cpp:663
+#, kde-format
+msgid "Upload to Piwigo version < 2.4 is no longer supported"
+msgstr "A Piwigo 2.4 verziónál kisebbre feltöltés többé nem támogatott"
+
+#: piwigotalker.cpp:561 piwigotalker.cpp:639 piwigotalker.cpp:708
+#: piwigotalker.cpp:779
+#, kde-format
+msgid "Invalid response received from remote Piwigo"
+msgstr "Érvénytelen válasz érkezett a távoli Piwigo-tól"
+
+#: piwigotalker.cpp:567
+#, kde-format
+msgid "Failed to list albums"
+msgstr "Nem sikerült az albumok listázása"
+
+#: piwigotalker.cpp:613
+#, kde-format
+msgid "Photo '%1' already exists."
+msgstr "A(z) „%1” fénykép már létezik."
+
+#: piwigotalker.cpp:645 piwigotalker.cpp:785 piwigotalker.cpp:945
+#, kde-format
+msgid "Failed to upload photo"
+msgstr "Nem sikerült a fénykép feltöltése"
+
+#: piwigotalker.cpp:714
+#, kde-format
+msgid "Photo '%1' already exists in this album."
+msgstr "A(z) „%1” fénykép már létezik ebben az albumban."
+
+#: piwigotalker.cpp:800
+#, kde-format
+msgid "Error : Cannot open photo: %1"
+msgstr ""
+
+#: piwigotalker.cpp:827
+#, kde-format
+msgid "Upload the chunk %1/%2 of %3"
+msgstr "%1/%2 / %3 darab feltöltése"
+
+#: piwigotalker.cpp:860
+#, kde-format
+msgid "Warning : The full size photo cannot be uploaded."
+msgstr "Figyelem: A teljes méretű fénykép nem tölthető fel."
+
+#: piwigotalker.cpp:906
+#, kde-format
+msgid "Upload the metadata of %1"
+msgstr "%1 metaadatainak feltöltése"
+
+#: piwigotalker.cpp:939
+#, kde-format
+msgid "Invalid response received from remote Piwigo (%1)"
+msgstr "Érvénytelen válasz érkezett a távoli Piwigo-tól (%1)"
+
+#: piwigowindow.cpp:128
+#, fuzzy, kde-format
+#| msgid "Edit Piwigo Data"
+msgid "Visit Piwigo website"
+msgstr "Piwigo adatok szerkesztése"
+
+#: piwigowindow.cpp:145
+#, kde-format
+msgid "Albums"
+msgstr "Albumok"
+
+#: piwigowindow.cpp:156
+#, kde-format
+msgid "Change Account"
+msgstr "Fiók változtatása"
+
+#: piwigowindow.cpp:160
+#, kde-format
+msgid "Options"
+msgstr "Beállítások"
+
+#: piwigowindow.cpp:164
+#, kde-format
+msgid "Resize photos before uploading"
+msgstr "Fényképek átméretezése feltöltés előtt"
+
+#: piwigowindow.cpp:167
+#, kde-format
+msgid "Maximum width:"
+msgstr "Maximális szélesség:"
+
+#: piwigowindow.cpp:173
+#, kde-format
+msgid "Maximum height:"
+msgstr "Maximális magasság:"
+
+#: piwigowindow.cpp:179
+#, kde-format
+msgid "Resized JPEG quality:"
+msgstr "Átméretezett JPEG minőség:"
+
+#: piwigowindow.cpp:231 piwigowindow.cpp:235
+#, kde-format
+msgid "Piwigo Export"
+msgstr "Piwigo exportálás"
+
+#: piwigowindow.cpp:236
+#, fuzzy, kde-format
+#| msgid "A Kipi plugin to export image collections to a remote Piwigo server."
+msgid "A tool to export image collections to a remote Piwigo server."
+msgstr ""
+"Egy Kipi bővítmény képgyűjtemények exportálásához egy távoli Piwigo "
+"kiszolgálóra."
+
+#: piwigowindow.cpp:237
+#, fuzzy, kde-format
+#| msgid ""
+#| "(c) 2003-2005, Renchi Raju\n"
+#| "(c) 2006-2007, Colin Guthrie\n"
+#| "(c) 2006-2013, Gilles Caulier\n"
+#| "(c) 2008, Andrea Diamantini\n"
+#| "(c) 2010-2014, Frédéric Coiffier\n"
+msgid ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2007, Colin Guthrie\n"
+"(c) 2006-2015, Gilles Caulier\n"
+"(c) 2008, Andrea Diamantini\n"
+"(c) 2010-2014, Frédéric Coiffier\n"
+msgstr ""
+"© Renchi Raju, 2003-2005.\n"
+"© Colin Guthrie, 2006-2007.\n"
+"© Gilles Caulier, 2006-2013.\n"
+"© Andrea Diamantini, 2008.\n"
+"© Frédéric Coiffier, 2010-2014.\n"
+
+#: piwigowindow.cpp:243
+#, kde-format
+msgid "Renchi Raju"
+msgstr "Renchi Raju"
+
+#: piwigowindow.cpp:244 piwigowindow.cpp:248 piwigowindow.cpp:252
+#: piwigowindow.cpp:256 piwigowindow.cpp:260
+#, kde-format
+msgid "Developer"
+msgstr "Fejlesztő"
+
+#: piwigowindow.cpp:247
+#, kde-format
+msgid "Colin Guthrie"
+msgstr "Colin Guthrie"
+
+#: piwigowindow.cpp:251
+#, kde-format
+msgid "Andrea Diamantini"
+msgstr "Andrea Diamantini"
+
+#: piwigowindow.cpp:255
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: piwigowindow.cpp:259
+#, kde-format
+msgid "Frédéric Coiffier"
+msgstr "Frédéric Coiffier"
+
+#: piwigowindow.cpp:267
+#, kde-format
+msgid "Start Upload"
+msgstr "Feltöltés indítása"
+
+#: piwigowindow.cpp:395
+#, kde-format
+msgid "Login Failed"
+msgstr ""
+
+#: piwigowindow.cpp:396
+#, kde-format
+msgid "Failed to login into remote piwigo. "
+msgstr "Nem sikerült bejelentkezni a távoli Piwigo-ba."
+
+#: piwigowindow.cpp:397
+#, kde-format
+msgid ""
+"\n"
+"Do you want to check your settings and try again?"
+msgstr ""
+"\n"
+"Szeretné ellenőrizni a beállításokat és újra megpróbálni?"
+
+#: piwigowindow.cpp:404 piwigowindow.cpp:644 plugin_piwigo.cpp:117
+#, kde-format
+msgid "Edit Piwigo Data"
+msgstr "Piwigo adatok szerkesztése"
+
+#: piwigowindow.cpp:464 piwigowindow.cpp:488
+#, kde-format
+msgid "Album"
+msgstr "Album"
+
+#: piwigowindow.cpp:507
+#, kde-format
+msgid "Image"
+msgstr "Kép"
+
+#: piwigowindow.cpp:538
+#, kde-format
+msgid "Nothing to upload - please select photos to upload."
+msgstr "Nincs mit feltölteni - kérjük válasszon feltöltendő képeket."
+
+#: piwigowindow.cpp:576
+#, kde-format
+msgid "The file %1 is not a supported image or video format"
+msgstr "A(z) %1 fájl nem támogatott kép- vagy videoformátum"
+
+#: piwigowindow.cpp:580
+#, kde-format
+msgid "Uploading file %1"
+msgstr "%1 fájl feltöltése"
+
+#: piwigowindow.cpp:598
+#, fuzzy, kde-format
+#| msgid "Uploading file %1"
+msgid "Uploading Failed"
+msgstr "%1 fájl feltöltése"
+
+#: piwigowindow.cpp:599
+#, fuzzy, kde-format
+#| msgid "Failed to upload media into remote piwigo. "
+msgid "Failed to upload media into remote Piwigo. "
+msgstr "Nem sikerült feltölteni a médiát a távoli Piwigo-ba."
+
+#: piwigowindow.cpp:600
+#, kde-format
+msgid ""
+"\n"
+"Do you want to continue?"
+msgstr ""
+"\n"
+"Szeretné folytatni?"
+
+#: plugin_piwigo.cpp:97
+#, kde-format
+msgid "Export to &Piwigo..."
+msgstr "Exportálás a &Piwigo-ba…"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Úr Balázs"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "urbalazs@gmail.com"
+
+#~ msgid "Author"
+#~ msgstr "Szerző"
+
+#~ msgid "Maintainer"
+#~ msgstr "Karbantartó"
+
+#~ msgid "Upload resized version of %1"
+#~ msgstr "%1 átméretezett verziójának feltöltése"
+
+#~ msgid "Upload the thumbnail of %1"
+#~ msgstr "%1 bélyegképének feltöltése"
+
+#~ msgid "Maximum thumbnail dimension:"
+#~ msgstr "Maximális bélyegkép dimenzió:"
+
+#~ msgid "Thumbnail size is ignored with Piwigo > 2.4"
+#~ msgstr "A bélyegképméret mellőzve van a Piwigo 2.4 vagy újabb verziójában"

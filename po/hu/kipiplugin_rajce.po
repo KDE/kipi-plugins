@@ -1,0 +1,296 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Balázs Úr <urbalazs@gmail.com>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2013-07-29 11:05+0200\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
+"Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.5\n"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_rajceui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Exportálás"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_rajceui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Fő eszköztár"
+
+#: newalbumdialog.cpp:47
+#, kde-format
+msgid "Visibility"
+msgstr ""
+
+#: newalbumdialog.cpp:48
+#, kde-format
+msgid "Set the visibility of the album"
+msgstr ""
+
+#: newalbumdialog.cpp:50
+#, kde-format
+msgid "Public"
+msgstr "Nyilvános"
+
+#: plugin_rajce.cpp:90
+#, kde-format
+msgid "Export to &Rajce.net..."
+msgstr "Exportálás a &Rajce.net oldalra…"
+
+#: rajcewidget.cpp:120
+#, kde-format
+msgid "Not logged in"
+msgstr "Nincs bejelentkezve"
+
+#: rajcewidget.cpp:184
+#, kde-format
+msgid "Unknown error"
+msgstr "Ismeretlen hiba"
+
+#: rajcewidget.cpp:185
+#, kde-format
+msgid "Invalid command"
+msgstr "Érvénytelen parancs"
+
+#: rajcewidget.cpp:186
+#, kde-format
+msgid "Invalid login name or password"
+msgstr "Érvénytelen bejelentkezési név vagy jelszó"
+
+#: rajcewidget.cpp:187
+#, kde-format
+msgid "Session expired"
+msgstr "A munkamenet lejárt"
+
+#: rajcewidget.cpp:189 rajcewidget.cpp:190
+#, kde-format
+msgid "Unknown album"
+msgstr "Ismeretlen album"
+
+#: rajcewidget.cpp:191
+#, kde-format
+msgid "Failed to open album"
+msgstr "Nem sikerült az album megnyitása"
+
+#: rajcewidget.cpp:192
+#, kde-format
+msgid "The album name cannot be empty"
+msgstr "Az album neve nem lehet üres"
+
+#: rajcewidget.cpp:193
+#, kde-format
+msgid "Failed to create album"
+msgstr "Nem sikerült az album létrehozása"
+
+#: rajcewidget.cpp:194
+#, kde-format
+msgid "Album does not exist"
+msgstr "Az album nem létezik"
+
+#: rajcewidget.cpp:197 rajcewidget.cpp:199
+#, kde-format
+msgid "File upload failed"
+msgstr "Sikertelen fájlfeltöltés"
+
+#: rajcewidget.cpp:200
+#, kde-format
+msgid "Unsupported file extension"
+msgstr "Nem támogatott fájlkiterjesztés"
+
+#: rajcewidget.cpp:269
+#, kde-format
+msgid "Logging in %v%"
+msgstr "Bejelentkezés: %v%"
+
+#: rajcewidget.cpp:270
+#, kde-format
+msgid "Logging out %v%"
+msgstr "Kijelentkezés: %v%"
+
+#: rajcewidget.cpp:271
+#, kde-format
+msgid "Loading albums %v%"
+msgstr "Albumok betöltése: %v%"
+
+#: rajcewidget.cpp:272
+#, kde-format
+msgid "Creating album %v%"
+msgstr "Album létrehozása: %v%"
+
+#: rajcewidget.cpp:273
+#, kde-format
+msgid "Opening album %v%"
+msgstr "Album megnyitása: %v%"
+
+#: rajcewidget.cpp:274
+#, kde-format
+msgid "Closing album %v%"
+msgstr "Album bezárása: %v%"
+
+#: rajcewidget.cpp:275
+#, kde-format
+msgid "Adding photos %v%"
+msgstr "Fényképek hozzáadása: %v%"
+
+#: rajcewindow.cpp:53
+#, kde-format
+msgid "Export to Rajce.net"
+msgstr "Exportálás a Rajce.net oldalra"
+
+#: rajcewindow.cpp:55
+#, kde-format
+msgid "Start Upload"
+msgstr "Feltöltés indítása"
+
+#: rajcewindow.cpp:56
+#, kde-format
+msgid "Start upload to Rajce.net"
+msgstr "Feltöltés indítása a Rajce.net szolgáltatásba"
+
+#: rajcewindow.cpp:71
+#, kde-format
+msgid "Rajce.net Export"
+msgstr "Rajce.net exportálás"
+
+#: rajcewindow.cpp:72
+#, fuzzy, kde-format
+#| msgid "A Kipi plugin to export image collections to Rajce.net."
+msgid "A tool to export image collections to Rajce.net."
+msgstr ""
+"Egy Kipi-bővítmény képgyűjtemények exportálásához a Rajce.net "
+"webszolgáltatásba."
+
+#: rajcewindow.cpp:74
+#, kde-format
+msgid "(c) 2011-2013, Lukas Krejci"
+msgstr "© Lukas Krejci, 2011-2013."
+
+#: rajcewindow.cpp:76
+#, kde-format
+msgid "Lukas Krejci"
+msgstr "Lukas Krejci"
+
+#: rajcewindow.cpp:77
+#, kde-format
+msgid "Author"
+msgstr ""
+
+#~ msgid "Login:"
+#~ msgstr "Bejelentkezés:"
+
+#~ msgid "Password:"
+#~ msgstr "Jelszó:"
+
+#~ msgid "&OK"
+#~ msgstr "&OK"
+
+#~ msgid "&Cancel"
+#~ msgstr "&Mégse"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Úr Balázs"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "urbalazs@gmail.com"
+
+#~ msgid "New Album"
+#~ msgstr "Új album"
+
+#~ msgid "Name"
+#~ msgstr "Név"
+
+#~ msgid "Description"
+#~ msgstr "Leírás"
+
+#~ msgid "This is the list of images to upload to your Rajce.net account."
+#~ msgstr "Ez a Rajce.net fiókjába feltöltendő képek listája."
+
+#~ msgid ""
+#~ "This is a clickable link to open the Rajce.net home page in a web browser."
+#~ msgstr ""
+#~ "Ez egy kattintható hivatkozás, amely megnyitja a Rajce.net kezdőlapot a "
+#~ "webböngészőben."
+
+#~ msgid "Account"
+#~ msgstr "Fiók"
+
+#~ msgid "This is the Rajce.net account that will be used to authenticate."
+#~ msgstr "Ez az a Rajce.net fiók, amely a hitelesítéshez lesz használva."
+
+#~ msgctxt "Rajce.net account login"
+#~ msgid "Anonymous"
+#~ msgstr "Névtelen"
+
+#~ msgid "Login as anonymous to Rajce.net web service."
+#~ msgstr "Bejelentkezés névtelenül a Rajce.net webszolgáltatásba."
+
+#~ msgid "Rajce.net Account"
+#~ msgstr "Rajce.net fiók"
+
+#~ msgid "Login to Rajce.net using username and password."
+#~ msgstr ""
+#~ "Bejelentkezés a Rajce.net szolgáltatásba felhasználónév és jelszó "
+#~ "használatával."
+
+#~ msgctxt "Rajce.net account settings"
+#~ msgid "Name:"
+#~ msgstr "Név:"
+
+#~ msgid "Change Account"
+#~ msgstr "Fiók változtatása"
+
+#~ msgid "Change Rajce.net Account used to authenticate"
+#~ msgstr "A hitelesítéshez használt Rajce.net fiók megváltoztatása"
+
+#~ msgid "Album"
+#~ msgstr "Album"
+
+#~ msgid "This is the Rajce.net album that will be used for transfer."
+#~ msgstr "Ez az a Rajce.net album, amely az átvitel során használva lesz."
+
+#~ msgid "Create new Rajce.net album"
+#~ msgstr "Új Rajce.net album létrehozása"
+
+#~ msgctxt "reload album list"
+#~ msgid "Reload"
+#~ msgstr "Újratöltés"
+
+#~ msgid "Reload album list"
+#~ msgstr "Albumlista újratöltése"
+
+#~ msgid "Destination"
+#~ msgstr "Cél"
+
+#~ msgid "This is the location where Rajce.net images will be downloaded."
+#~ msgstr "Ez az a hely, ahova a Rajce.net képek letöltésre kerülnek."
+
+#~ msgid "Options"
+#~ msgstr "Beállítások"
+
+#~ msgid "These are options that will be applied to images before upload."
+#~ msgstr ""
+#~ "Ezek azok a beállítások, amelyek alkalmazva lesznek a képekre feltöltés "
+#~ "előtt."
+
+#~ msgid "Maximum dimension:"
+#~ msgstr "Maximum dimenzió:"
+
+#~ msgid "JPEG quality:"
+#~ msgstr "JPEG minőség:"
+
+#~ msgid "Author and maintainer"
+#~ msgstr "Szerző és karbantartó"

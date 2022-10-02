@@ -1,0 +1,520 @@
+# Translation of kipiplugin_mediawiki.po to Catalan
+# Copyright (C) 2011-2020 This_file_is_part_of_KDE
+# This file is distributed under the license LGPL version 2.1 or
+# version 3 or later versions approved by the membership of KDE e.V.
+#
+# Josep M. Ferrer <txemaq@gmail.com>, 2011, 2013, 2015, 2016, 2020.
+# Antoni Bella Pérez <antonibella5@yahoo.com>, 2012, 2014, 2015, 2017, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipi-plugins\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2020-11-28 19:17+0100\n"
+"Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
+"Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 2.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Accelerator-Marker: &\n"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_wikimediaui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Exporta"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_wikimediaui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Barra d'eines principal"
+
+#: plugin_wikimedia.cpp:105
+#, kde-format
+msgid "Export to MediaWiki..."
+msgstr "Exporta al MediaWiki..."
+
+#: wmtalker.cpp:125
+#, kde-format
+msgid "Error on file '%1'\n"
+msgstr "Error en el fitxer «%1»\n"
+
+#: wmtalker.cpp:129
+#, kde-format
+msgid "Error on file '%1': %2\n"
+msgstr "Error en el fitxer «%1»: %2\n"
+
+#: wmtalker.cpp:167
+#, kde-format
+msgid "Uploaded via KIPI uploader"
+msgstr "Pujat mitjançant el pujador del KIPI"
+
+#: wmtalker.cpp:188
+#, kde-format
+msgid "Error"
+msgstr "Error"
+
+#: wmwidget.cpp:112
+#, kde-format
+msgid "Select an image"
+msgstr "Selecciona una imatge"
+
+#: wmwidget.cpp:181
+#, kde-format
+msgid ""
+"This is a clickable link to open the MediaWiki home page in a web browser."
+msgstr ""
+"Aquest és un enllaç que podeu clicar per a obrir la pàgina inicial del "
+"MediaWiki en un navegador web."
+
+#: wmwidget.cpp:189
+#, kde-format
+msgid "This is the list of images to upload to the wiki."
+msgstr "Aquesta és la llista de les imatges a pujar al wiki."
+
+#: wmwidget.cpp:214 wmwidget.cpp:387
+#, kde-format
+msgid "This is the login form to your account on the chosen wiki."
+msgstr "Aquest és el formulari de connexió al vostre compte al wiki escollit."
+
+#: wmwidget.cpp:235
+#, kde-format
+msgid "Title:"
+msgstr "Títol:"
+
+#: wmwidget.cpp:237
+#, kde-format
+msgid "Date:"
+msgstr "Data:"
+
+#: wmwidget.cpp:239
+#, kde-format
+msgid "Description:"
+msgstr "Descripció:"
+
+#: wmwidget.cpp:241
+#, kde-format
+msgid "Categories:"
+msgstr "Categories:"
+
+#: wmwidget.cpp:243
+#, kde-format
+msgid "Latitude:"
+msgstr "Latitud:"
+
+#: wmwidget.cpp:245
+#, kde-format
+msgid "Longitude:"
+msgstr "Longitud:"
+
+#: wmwidget.cpp:273
+#, kde-format
+msgid "Account"
+msgstr "Compte"
+
+#: wmwidget.cpp:274
+#, kde-format
+msgid "This is the login form to your MediaWiki account."
+msgstr "Aquest és el formulari de connexió al vostre compte del MediaWiki."
+
+#: wmwidget.cpp:281
+#, kde-format
+msgid "New"
+msgstr "Nou"
+
+#: wmwidget.cpp:282
+#, kde-format
+msgid "Add a wiki to this list"
+msgstr "Afegeix un wiki a la llista"
+
+#: wmwidget.cpp:287
+#, kde-format
+msgid "Wikimedia Commons"
+msgstr "Wikimedia Commons"
+
+#: wmwidget.cpp:288
+#, kde-format
+msgid "Wikimedia Meta"
+msgstr "Wikimedia Meta"
+
+#: wmwidget.cpp:289
+#, kde-format
+msgid "Wikipedia"
+msgstr "Viquipèdia"
+
+#: wmwidget.cpp:290
+#, kde-format
+msgid "Wikibooks"
+msgstr "Wikibooks"
+
+#: wmwidget.cpp:291
+#, kde-format
+msgid "Wikinews"
+msgstr "Wikinews"
+
+#: wmwidget.cpp:292
+#, kde-format
+msgid "Wikiquote"
+msgstr "Wikiquote"
+
+#: wmwidget.cpp:293
+#, kde-format
+msgid "Wikisource"
+msgstr "Wikisource"
+
+#: wmwidget.cpp:294
+#, kde-format
+msgid "Wiktionary"
+msgstr "Wiktionary"
+
+#: wmwidget.cpp:295
+#, kde-format
+msgid "MediaWiki"
+msgstr "MediaWiki"
+
+#: wmwidget.cpp:296
+#, kde-format
+msgid "Wikia Foto"
+msgstr "Wikia Foto"
+
+#: wmwidget.cpp:297
+#, kde-format
+msgid "Wikia Uncyclopedia"
+msgstr "Wikia Uncyclopedia"
+
+#: wmwidget.cpp:302
+#, kde-format
+msgid "Wiki:"
+msgstr "Wiki:"
+
+#: wmwidget.cpp:313
+#, kde-format
+msgid "These are options for adding a Wiki."
+msgstr "Aquestes són les opcions per a afegir un wiki."
+
+#: wmwidget.cpp:318
+#, kde-format
+msgid "Name:"
+msgstr "Nom:"
+
+#: wmwidget.cpp:321
+#, kde-format
+msgid "API URL:"
+msgstr "URL de l'API:"
+
+#: wmwidget.cpp:326
+#, kde-format
+msgid "Add"
+msgstr "Afegeix"
+
+#: wmwidget.cpp:327
+#, kde-format
+msgid "Add a new wiki"
+msgstr "Afegeix un wiki nou"
+
+#: wmwidget.cpp:336
+#, kde-format
+msgid "Login:"
+msgstr "Usuari:"
+
+#: wmwidget.cpp:339
+#, kde-format
+msgid "Password:"
+msgstr "Contrasenya:"
+
+#: wmwidget.cpp:344
+#, kde-format
+msgid "&Log in"
+msgstr "&Inicia la sessió"
+
+#: wmwidget.cpp:360
+#, kde-format
+msgid "Login Information"
+msgstr "Informació per a l'inici de la sessió"
+
+#: wmwidget.cpp:366
+#, kde-format
+msgctxt "Name of the wiki the user is currently logged on"
+msgid "Logged on: "
+msgstr "Connectat a: "
+
+#: wmwidget.cpp:370
+#, kde-format
+msgctxt "Username which is used to connect to the wiki"
+msgid "Logged as: "
+msgstr "Connectat com a: "
+
+#: wmwidget.cpp:373
+#, kde-format
+msgid "Change Account"
+msgstr "Canvia de compte"
+
+#: wmwidget.cpp:374
+#, kde-format
+msgid "Logout and change the account used for transfer"
+msgstr "Desconnecta i canvia el compte emprat per a transferir"
+
+#: wmwidget.cpp:386
+#, kde-format
+msgid "Information"
+msgstr "Informació"
+
+#: wmwidget.cpp:392
+#, kde-format
+msgid "Author:"
+msgstr "Autor:"
+
+#: wmwidget.cpp:395
+#, kde-format
+msgid "Source:"
+msgstr "Origen:"
+
+#: wmwidget.cpp:398
+#, kde-format
+msgid "License:"
+msgstr "Llicència:"
+
+# skip-rule: barb-igual
+#: wmwidget.cpp:402
+#, kde-format
+msgid "Own work, Creative Commons Attribution-Share Alike 4.0"
+msgstr "Treball propi, Creative Commons Reconeixement-Compartir Igual 3.0"
+
+#: wmwidget.cpp:404
+#, kde-format
+msgid "Own work, multi-license with CC-BY-SA-3.0 and GFDL"
+msgstr "Treball propi, llicència múltiple amb CC-BY-SA-3.0 i GFDL"
+
+#: wmwidget.cpp:406
+#, kde-format
+msgid "Own work, multi-license with CC-BY-SA-3.0 and older"
+msgstr "Treball propi, llicència múltiple amb CC-BY-SA-3.0 i anterior"
+
+# skip-rule: barb-igual
+#: wmwidget.cpp:408
+#, kde-format
+msgid "Own work, Creative Commons Attribution-Share Alike 3.0"
+msgstr "Treball propi, Creative Commons Reconeixement-Compartir Igual 3.0"
+
+#: wmwidget.cpp:410
+#, kde-format
+msgid "Own work, Creative Commons Attribution 3.0"
+msgstr "Treball propi, Creative Commons Reconeixement 3.0"
+
+#: wmwidget.cpp:412
+#, kde-format
+msgid "Own work, release into public domain under the CC-Zero license"
+msgstr "Treball propi, publicat en el domini públic amb la llicència CC-Zero"
+
+#: wmwidget.cpp:414
+#, kde-format
+msgid "Author died more than 100 years ago"
+msgstr "L'autor va morir fa més de 100 anys"
+
+#: wmwidget.cpp:416
+#, kde-format
+msgid ""
+"Photo of a two-dimensional work whose author died more than 100 years ago"
+msgstr ""
+"Fotografia d'un treball en dues dimensions en què l'autor va morir fa més de "
+"100 anys"
+
+#: wmwidget.cpp:418
+#, kde-format
+msgid "First published in the United States before 1923"
+msgstr "Es va publicar per primer cop als Estats Units abans del 1923"
+
+#: wmwidget.cpp:420
+#, kde-format
+msgid "Work of a U.S. government agency"
+msgstr "Treball d'una agència del govern dels EUA"
+
+#: wmwidget.cpp:422
+#, kde-format
+msgid "Simple typefaces, individual words or geometric shapes"
+msgstr "Text senzill, paraules individuals o figures geomètriques"
+
+#: wmwidget.cpp:424
+#, kde-format
+msgid "Logos with only simple typefaces, individual words or geometric shapes"
+msgstr "Logotips amb text senzill, paraules individuals o figures geomètriques"
+
+#: wmwidget.cpp:426
+#, kde-format
+msgid "No license specified (not recommended for public wiki sites)"
+msgstr ""
+"No s'ha especificat cap llicència (no es recomana per als llocs de wiki "
+"públics)"
+
+#: wmwidget.cpp:429
+#, kde-format
+msgid "Generic categories:"
+msgstr "Categories genèriques:"
+
+#: wmwidget.cpp:432
+#, kde-format
+msgid ""
+"This is a place to enter categories that will be added to all the files."
+msgstr ""
+"Aquest és un lloc per a introduir quines categories s'afegiran a tots els "
+"fitxers."
+
+#: wmwidget.cpp:435
+#, kde-format
+msgid "Generic text:"
+msgstr "Text genèric:"
+
+#: wmwidget.cpp:438
+#, kde-format
+msgid ""
+"This is a place to enter text that will be added to all the files, below the "
+"Information template."
+msgstr ""
+"Aquest és un lloc per a introduir el text que s'afegirà a tots els fitxers, "
+"per sota de la plantilla d'informació."
+
+#: wmwidget.cpp:442
+#, kde-format
+msgid "Upload comments:"
+msgstr "Puja els comentaris:"
+
+#: wmwidget.cpp:445
+#, kde-format
+msgid ""
+"This is a place to enter text that will be used as upload comments. The "
+"default of 'Uploaded via KIPI uploader' will be used if empty."
+msgstr ""
+"Aquest és un lloc per a introduir el text que s'usarà com a comentaris de la "
+"pujada. El predeterminat és «Pujat mitjançant el pujador del KIPI» i s'usarà "
+"quan resti buit."
+
+#: wmwidget.cpp:467
+#, kde-format
+msgid "Options"
+msgstr "Opcions"
+
+#: wmwidget.cpp:468
+#, kde-format
+msgid "These are options that will be applied to photos before upload."
+msgstr ""
+"Aquestes són les opcions que s'aplicaran a les fotografies abans de pujar-"
+"les."
+
+#: wmwidget.cpp:474
+#, kde-format
+msgid "Resize photos before uploading"
+msgstr "Redimensiona les fotografies abans de pujar-les"
+
+#: wmwidget.cpp:484
+#, kde-format
+msgid "Maximum size:"
+msgstr "Mida màxima:"
+
+#: wmwidget.cpp:492
+#, kde-format
+msgid "JPEG quality:"
+msgstr "Qualitat JPEG:"
+
+#: wmwidget.cpp:495
+#, kde-format
+msgid "Remove metadata from file"
+msgstr "Suprimeix les metadades del fitxer"
+
+#: wmwidget.cpp:499
+#, kde-format
+msgid "Remove coordinates from file"
+msgstr "Suprimeix les coordenades del fitxer"
+
+#: wmwidget.cpp:516
+#, kde-format
+msgid "Items Properties"
+msgstr "Propietats dels elements"
+
+#: wmwidget.cpp:517
+#, kde-format
+msgid "Upload Settings"
+msgstr "Configuració de la pujada"
+
+#: wmwindow.cpp:114
+#, kde-format
+msgid "Export to MediaWiki"
+msgstr "Exporta al MediaWiki"
+
+#: wmwindow.cpp:116
+#, kde-format
+msgid "Start Upload"
+msgstr "Comença la pujada"
+
+#: wmwindow.cpp:117
+#, kde-format
+msgid "Start upload to MediaWiki"
+msgstr "Comença la pujada al MediaWiki"
+
+#: wmwindow.cpp:124 wmwindow.cpp:354
+#, kde-format
+msgid "MediaWiki export"
+msgstr "Exportador al MediaWiki"
+
+#: wmwindow.cpp:125
+#, kde-format
+msgid ""
+"A tool to export image collection to a MediaWiki installation.\n"
+"Using libmediawiki version %1"
+msgstr ""
+"Una eina per a exportar col·leccions d'imatges a una instal·lació del "
+"MediaWiki.\n"
+"S'empra la versió %1 de la «libmediawiki»"
+
+#: wmwindow.cpp:128
+#, kde-format
+msgid "(c) 2011, Alexandre Mendes"
+msgstr "(c) 2011, Alexandre Mendes"
+
+#: wmwindow.cpp:130
+#, kde-format
+msgid "Alexandre Mendes"
+msgstr "Alexandre Mendes"
+
+#: wmwindow.cpp:131
+#, kde-format
+msgid "Author"
+msgstr "Autor"
+
+#: wmwindow.cpp:134
+#, kde-format
+msgid "Guillaume Hormiere"
+msgstr "Guillaume Hormiere"
+
+#: wmwindow.cpp:135 wmwindow.cpp:139 wmwindow.cpp:143
+#, kde-format
+msgid "Developer"
+msgstr "Desenvolupador"
+
+#: wmwindow.cpp:138
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: wmwindow.cpp:142
+#, kde-format
+msgid "Peter Potrowl"
+msgstr "Peter Potrowl"
+
+#: wmwindow.cpp:389
+#, kde-format
+msgid "Login Error"
+msgstr "Error en iniciar la sessió"
+
+#: wmwindow.cpp:389
+#, kde-format
+msgid "Please check your credentials and try again."
+msgstr "Comproveu les credencials i torneu-ho a intentar."
+
+#: wmwindow.cpp:410
+#, kde-format
+msgid "Upload finished with no errors."
+msgstr "La pujada ha acabat sense errors."

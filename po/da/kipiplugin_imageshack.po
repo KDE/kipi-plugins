@@ -1,0 +1,305 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Martin Schlander <mschlander@opensuse.org>, 2013, 2014, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2016-06-14 18:26+0100\n"
+"Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
+"Language-Team: Danish <kde-i18n-doc@kde.org>\n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: imageshacktalker.cpp:173
+#, kde-format
+msgid "Authenticating the user"
+msgstr "Autentificerer brugeren..."
+
+#: imageshacktalker.cpp:199
+#, kde-format
+msgid "Getting galleries from server"
+msgstr "Henter gallerier fra serveren"
+
+#: imageshacktalker.cpp:289
+#, kde-format
+msgid "Successfully retrieved galleries"
+msgstr "Gallerierne blev hentet"
+
+#: imageshackwidget.cpp:82
+#, kde-format
+msgid "Make private"
+msgstr "Gør privat"
+
+#: imageshackwidget.cpp:86
+#, kde-format
+msgid "Tags (optional):"
+msgstr "Mærker (valgfrit):"
+
+#: imageshackwidget.cpp:88
+#, kde-format
+msgid "Remove information bar on thumbnails"
+msgstr "Fjern informationsbjælke på miniaturer"
+
+#: imageshackwidget.cpp:125
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Add to root folder"
+msgstr "Føj til rodmappe"
+
+#: imageshackwidget.cpp:128
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Create new gallery"
+msgstr "Opret nyt galleri"
+
+#: imageshackwindow.cpp:81
+#, kde-format
+msgid "Export to Imageshack"
+msgstr "Eksportér til Imageshack"
+
+#: imageshackwindow.cpp:89
+#, kde-format
+msgid "Upload"
+msgstr "Upload"
+
+#: imageshackwindow.cpp:90
+#, kde-format
+msgid "Start upload to Imageshack web service"
+msgstr "Start upload til webtjenesten Imageshack"
+
+#: imageshackwindow.cpp:98
+#, kde-format
+msgid "Imageshack Export"
+msgstr "Eksport til Imageshack"
+
+#: imageshackwindow.cpp:99
+#, fuzzy, kde-format
+#| msgid "A kipi plugin to export images to Imageshack web service."
+msgid "A tool to export images to Imageshack web service."
+msgstr "Et KIPI-plugin til at eksportere billeder til webtjenesten Imageshack."
+
+#: imageshackwindow.cpp:100
+#, kde-format
+msgid "(c) 2012, Dodon Victor\n"
+msgstr "(c) 2012, Dodon Victor\n"
+
+#: imageshackwindow.cpp:102
+#, kde-format
+msgid "Dodon Victor"
+msgstr "Dodon Victor"
+
+#: imageshackwindow.cpp:103
+#, kde-format
+msgid "Author"
+msgstr "Ophavsmand"
+
+#: imageshackwindow.cpp:230
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: imageshackwindow.cpp:234
+#, kde-format
+msgid "Image Shack Export"
+msgstr "Eksport til Imageshack"
+
+#: imageshackwindow.cpp:261
+#, kde-format
+msgid "Authenticating..."
+msgstr "Autentificerer..."
+
+#: imageshackwindow.cpp:318
+#, kde-format
+msgid "Login failed: %1\n"
+msgstr "Login mislykkedes: %1\n"
+
+#: imageshackwindow.cpp:332
+#, kde-format
+msgid "Failed to get galleries list: %1\n"
+msgstr "Kunne ikke hente liste over gallerier: %1\n"
+
+#: imageshackwindow.cpp:404
+#, kde-format
+msgid "Uploading Failed"
+msgstr "Upload mislykkedes"
+
+#: imageshackwindow.cpp:405
+#, kde-format
+msgid ""
+"Failed to upload photo into Imageshack: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Kunne ikke uploade foto til Imageshack: %1\n"
+"Vil du fortsætte?"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_imageshackui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Eksportér"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_imageshackui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Hovedværktøjslinje"
+
+#: plugin_imageshack.cpp:103
+#, kde-format
+msgid "Export to &Imageshack..."
+msgstr "Eksportér til &Imageshack..."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Martin Schlander"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "mschlander@opensuse.org"
+
+#~ msgid "Checking the registration code"
+#~ msgstr "Tjekker registreringskoden"
+
+#~ msgid "Checking the web server"
+#~ msgstr "Tjekker webserveren"
+
+#~ msgid "Server does not respond. Please check you internet connection!"
+#~ msgstr "Serveren svarer ikke. Tjek din internetforbindelse!"
+
+#~ msgid "Registration code successfully verified"
+#~ msgstr "Registreringskoden blev bekræftet"
+
+#~ msgid "Registration code not valid!"
+#~ msgstr "Registreringskoden er ikke gyldig!"
+
+#~ msgid "Images to upload to Imageshack web service"
+#~ msgstr "Billeder der skal uploades til webtjenesten Imageshack"
+
+#~ msgid ""
+#~ "This is a clickable link to open the Imageshack home page in a web browser"
+#~ msgstr ""
+#~ "Dette er et klikbart link til at åbne Imageshack-hjemmesiden i en "
+#~ "webbrowser"
+
+#~ msgid "ImageShack"
+#~ msgstr "ImageShack"
+
+#~ msgid "Account"
+#~ msgstr "Konto"
+
+#~ msgid "Imageshack account info"
+#~ msgstr "Info om Imageshack-konto"
+
+#~ msgctxt "Account info"
+#~ msgid "Name:"
+#~ msgstr "Navn:"
+
+#~ msgctxt "Account info"
+#~ msgid "Email:"
+#~ msgstr "E-mail:"
+
+#~ msgid "Change account"
+#~ msgstr "Skift konto"
+
+#~ msgid ""
+#~ "Change the registration code for the Imageshack account used to upload "
+#~ "images"
+#~ msgstr ""
+#~ "Skift registreringskode for den Imageshack-konto der bruges til at "
+#~ "uploade billeder"
+
+#~ msgid "Destination"
+#~ msgstr "Destination"
+
+#~ msgid ""
+#~ "This is the ImageShack gallery to which selected items will be uploaded"
+#~ msgstr ""
+#~ "Dette er det Imageshack-galleri som de valgte elementer vil blive "
+#~ "uploadet til"
+
+#~ msgid "Upload to galleries"
+#~ msgstr "Upload til gallerier"
+
+#~ msgid "Gallery:"
+#~ msgstr "Galleri:"
+
+#~ msgid "Name:"
+#~ msgstr "Navn:"
+
+#~ msgctxt "ImageShack galleries list"
+#~ msgid "Reload"
+#~ msgstr "Genindlæs"
+
+#~ msgid "Reload ImageShack galleries list"
+#~ msgstr "Genindlæs liste over Imageshack-gallerier"
+
+#~ msgid "Options"
+#~ msgstr "Indstillinger"
+
+#~ msgid "These are the options that will be applied to photos"
+#~ msgstr "Det er disse indstillinger der vil blive anvendt på fotos"
+
+#~ msgid "Resize options"
+#~ msgstr "Indstillinger for ændring af størrelse"
+
+#~ msgid "Do not resize photos"
+#~ msgstr "Ændr ikke større på fotos"
+
+#~ msgid "Predefined templates"
+#~ msgstr "Prædefinerede skabeloner"
+
+#~ msgid "Custom resize dimensions"
+#~ msgstr "Brugervalgte dimensioner for størrelsesændring"
+
+#~ msgid "Width:"
+#~ msgstr "Bredde:"
+
+#~ msgid "Height:"
+#~ msgstr "Højde:"
+
+#~ msgid "100x75 (avatar)"
+#~ msgstr "100x75 (avatar)"
+
+#~ msgid "150x122 (thumbnail)"
+#~ msgstr "150x122 (miniature)"
+
+#~ msgid "320x240 (for websites and email)"
+#~ msgstr "320x240 (til websider og e-mail)"
+
+#~ msgid "640x480 (for message boards)"
+#~ msgstr "640x480 (til webfora)"
+
+#~ msgid "800x600 (15-inch monitor)"
+#~ msgstr "800x600 (15\" skærm)"
+
+#~ msgid "1024x768 (17-inch monitor)"
+#~ msgstr "1024x768 (17\" skærm)"
+
+#~ msgid "1280x1024 (19-inch monitor)"
+#~ msgstr "1280x1024 (19\" skærm)"
+
+#~ msgid "1600x1200 (21-inch monitor)"
+#~ msgstr "1600x1200 (21\" skærm)"
+
+#~ msgid "optimize without resizing"
+#~ msgstr "optimér uden størrelsesændring"
+
+#~ msgid "Create new gallery."
+#~ msgstr "Opret nyt galleri."
+
+#~ msgid "Imageshack authorization"
+#~ msgstr "Imageshack-godkendelse"
+
+#~ msgid ""
+#~ "Please paste the registration code for your ImageShack account into the "
+#~ "textbox below and press \"OK\"."
+#~ msgstr ""
+#~ "Angiv registreringskoden for din Imageshack-konto i tekstfeltet nedenfor "
+#~ "og tryk på \"O.k.\"."

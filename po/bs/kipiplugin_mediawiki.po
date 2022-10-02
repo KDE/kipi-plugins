@@ -1,0 +1,531 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <megaribi@epn.ba>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_mediawiki.po\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2014-10-20 19:46+0000\n"
+"Last-Translator: Mirhat <mbabic1@etf.unsa.ba>\n"
+"Language-Team: bs <bs@kde.org>\n"
+"Language: bs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Launchpad (build 17341)\n"
+"X-Launchpad-Export-Date: 2015-02-16 06:46+0000\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_wikimediaui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Izvezi"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_wikimediaui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Glavna alatna traka"
+
+#: plugin_wikimedia.cpp:105
+#, kde-format
+msgid "Export to MediaWiki..."
+msgstr "Izvezi u MediaWiki..."
+
+#: wmtalker.cpp:125
+#, kde-format
+msgid "Error on file '%1'\n"
+msgstr "Greška u datoteci '%1'\n"
+
+#: wmtalker.cpp:129
+#, kde-format
+msgid "Error on file '%1': %2\n"
+msgstr "Greška u datoteci '%1': %2\n"
+
+#: wmtalker.cpp:167
+#, kde-format
+msgid "Uploaded via KIPI uploader"
+msgstr "Poslano preko KIPI uploadera"
+
+#: wmtalker.cpp:188
+#, kde-format
+msgid "Error"
+msgstr ""
+
+#: wmwidget.cpp:112
+#, kde-format
+msgid "Select an image"
+msgstr "Izaberite sliku"
+
+#: wmwidget.cpp:181
+#, kde-format
+msgid ""
+"This is a clickable link to open the MediaWiki home page in a web browser."
+msgstr ""
+"Ovo je direktna veza za otvaranje MediaWiki početne stranice u internet "
+"pretraživaču."
+
+#: wmwidget.cpp:189
+#, kde-format
+msgid "This is the list of images to upload to the wiki."
+msgstr "Ovo je lista slika za učitanje u wiki."
+
+#: wmwidget.cpp:214 wmwidget.cpp:387
+#, kde-format
+msgid "This is the login form to your account on the chosen wiki."
+msgstr "Ovo je forma za prijavu na vaš račun u odabrani wiki."
+
+#: wmwidget.cpp:235
+#, kde-format
+msgid "Title:"
+msgstr "Naslov:"
+
+#: wmwidget.cpp:237
+#, kde-format
+msgid "Date:"
+msgstr "Datum:"
+
+#: wmwidget.cpp:239
+#, kde-format
+msgid "Description:"
+msgstr "Opis:"
+
+#: wmwidget.cpp:241
+#, kde-format
+msgid "Categories:"
+msgstr "Kategorije:"
+
+#: wmwidget.cpp:243
+#, kde-format
+msgid "Latitude:"
+msgstr "Geografska širina:"
+
+#: wmwidget.cpp:245
+#, kde-format
+msgid "Longitude:"
+msgstr "Geografska dužina:"
+
+#: wmwidget.cpp:273
+#, kde-format
+msgid "Account"
+msgstr "Nalog"
+
+#: wmwidget.cpp:274
+#, kde-format
+msgid "This is the login form to your MediaWiki account."
+msgstr "Ovo je forma za prijavu na vaš MediaWiki račun."
+
+#: wmwidget.cpp:281
+#, kde-format
+msgid "New"
+msgstr "Novo"
+
+#: wmwidget.cpp:282
+#, kde-format
+msgid "Add a wiki to this list"
+msgstr "Dodaj wiki u listu"
+
+#: wmwidget.cpp:287
+#, kde-format
+msgid "Wikimedia Commons"
+msgstr "Wikimedia zajednička dobra"
+
+#: wmwidget.cpp:288
+#, kde-format
+msgid "Wikimedia Meta"
+msgstr "Wikimedia meta"
+
+#: wmwidget.cpp:289
+#, kde-format
+msgid "Wikipedia"
+msgstr "Wikipedia"
+
+#: wmwidget.cpp:290
+#, kde-format
+msgid "Wikibooks"
+msgstr "Wikibooks"
+
+#: wmwidget.cpp:291
+#, kde-format
+msgid "Wikinews"
+msgstr "Wikinews"
+
+#: wmwidget.cpp:292
+#, kde-format
+msgid "Wikiquote"
+msgstr "Wikiquote"
+
+#: wmwidget.cpp:293
+#, kde-format
+msgid "Wikisource"
+msgstr "Wikisource"
+
+#: wmwidget.cpp:294
+#, kde-format
+msgid "Wiktionary"
+msgstr "Wiktionary"
+
+#: wmwidget.cpp:295
+#, kde-format
+msgid "MediaWiki"
+msgstr "MediaWiki"
+
+#: wmwidget.cpp:296
+#, kde-format
+msgid "Wikia Foto"
+msgstr "Wikia slika"
+
+#: wmwidget.cpp:297
+#, kde-format
+msgid "Wikia Uncyclopedia"
+msgstr "Wikia Uncyclopedia"
+
+#: wmwidget.cpp:302
+#, kde-format
+msgid "Wiki:"
+msgstr "Wiki:"
+
+#: wmwidget.cpp:313
+#, kde-format
+msgid "These are options for adding a Wiki."
+msgstr "Ovo su opcije za dodavanje na Wiki."
+
+#: wmwidget.cpp:318
+#, kde-format
+msgid "Name:"
+msgstr "Ime:"
+
+#: wmwidget.cpp:321
+#, kde-format
+msgid "API URL:"
+msgstr "API URL:"
+
+#: wmwidget.cpp:326
+#, kde-format
+msgid "Add"
+msgstr "Dodaj"
+
+#: wmwidget.cpp:327
+#, kde-format
+msgid "Add a new wiki"
+msgstr "Dodaj novi wiki"
+
+#: wmwidget.cpp:336
+#, kde-format
+msgid "Login:"
+msgstr "Prijava:"
+
+#: wmwidget.cpp:339
+#, kde-format
+msgid "Password:"
+msgstr "Lozinka:"
+
+#: wmwidget.cpp:344
+#, kde-format
+msgid "&Log in"
+msgstr "&Prijavi se"
+
+#: wmwidget.cpp:360
+#, fuzzy, kde-format
+#| msgid "Information"
+msgid "Login Information"
+msgstr "Informacija"
+
+#: wmwidget.cpp:366
+#, kde-format
+msgctxt "Name of the wiki the user is currently logged on"
+msgid "Logged on: "
+msgstr "Prijavljeno na: "
+
+#: wmwidget.cpp:370
+#, kde-format
+msgctxt "Username which is used to connect to the wiki"
+msgid "Logged as: "
+msgstr "Prijavljeno kao: "
+
+#: wmwidget.cpp:373
+#, kde-format
+msgid "Change Account"
+msgstr "Promijeni nalog"
+
+#: wmwidget.cpp:374
+#, kde-format
+msgid "Logout and change the account used for transfer"
+msgstr "Odjavi se i promijeni račun korišten za transfer"
+
+#: wmwidget.cpp:386
+#, kde-format
+msgid "Information"
+msgstr "Informacija"
+
+#: wmwidget.cpp:392
+#, kde-format
+msgid "Author:"
+msgstr "Autor:"
+
+#: wmwidget.cpp:395
+#, kde-format
+msgid "Source:"
+msgstr "Izvor:"
+
+#: wmwidget.cpp:398
+#, kde-format
+msgid "License:"
+msgstr "Licenca:"
+
+#: wmwidget.cpp:402
+#, fuzzy, kde-format
+#| msgid "Creative Commons Attribution-Share Alike 3.0"
+msgid "Own work, Creative Commons Attribution-Share Alike 4.0"
+msgstr "Creative Commons Attribution-Share Alike 3.0"
+
+#: wmwidget.cpp:404
+#, kde-format
+msgid "Own work, multi-license with CC-BY-SA-3.0 and GFDL"
+msgstr "Vlastiti rad, multi-licenca sa CC-BY-SA-3.0 i GFDL"
+
+#: wmwidget.cpp:406
+#, kde-format
+msgid "Own work, multi-license with CC-BY-SA-3.0 and older"
+msgstr "Vlastiti rad, multi-licenca sa CC-BY-SA-3.0 i stariji"
+
+#: wmwidget.cpp:408
+#, fuzzy, kde-format
+#| msgid "Creative Commons Attribution-Share Alike 3.0"
+msgid "Own work, Creative Commons Attribution-Share Alike 3.0"
+msgstr "Creative Commons Attribution-Share Alike 3.0"
+
+#: wmwidget.cpp:410
+#, kde-format
+msgid "Own work, Creative Commons Attribution 3.0"
+msgstr "Vlastiti rad, Creative Commons Attribution 3.0"
+
+#: wmwidget.cpp:412
+#, kde-format
+msgid "Own work, release into public domain under the CC-Zero license"
+msgstr "Vlastiti rad, objavljen u javnu domenu pod CC-Zero licencom"
+
+#: wmwidget.cpp:414
+#, kde-format
+msgid "Author died more than 100 years ago"
+msgstr "Autor je umro prije više od 100 godina"
+
+#: wmwidget.cpp:416
+#, kde-format
+msgid ""
+"Photo of a two-dimensional work whose author died more than 100 years ago"
+msgstr ""
+"Slika dvodimenzionalnog rada čiji je autor umro prije više od 100 godina"
+
+#: wmwidget.cpp:418
+#, kde-format
+msgid "First published in the United States before 1923"
+msgstr "Prvi put objavljeno u Sjedinjenim američkim državama prije 1923"
+
+#: wmwidget.cpp:420
+#, kde-format
+msgid "Work of a U.S. government agency"
+msgstr "Rad U.S vladine agencije"
+
+#: wmwidget.cpp:422
+#, kde-format
+msgid "Simple typefaces, individual words or geometric shapes"
+msgstr "Jednostavna pisma, pojedinačne riječi ili geometrijski oblici"
+
+#: wmwidget.cpp:424
+#, kde-format
+msgid "Logos with only simple typefaces, individual words or geometric shapes"
+msgstr ""
+"Logotipi sa jednostavnim pismima, pojedinačnim riječima ili geometrijskim "
+"oblicima"
+
+#: wmwidget.cpp:426
+#, kde-format
+msgid "No license specified (not recommended for public wiki sites)"
+msgstr "Nema navedene licence (nije preporučljivo za javne wiki sajtove)"
+
+#: wmwidget.cpp:429
+#, kde-format
+msgid "Generic categories:"
+msgstr "Generičke kategorije:"
+
+#: wmwidget.cpp:432
+#, kde-format
+msgid ""
+"This is a place to enter categories that will be added to all the files."
+msgstr "Ovo je mjesto za unos kategorija koje će biti dodate u sve dokumente."
+
+#: wmwidget.cpp:435
+#, kde-format
+msgid "Generic text:"
+msgstr "Generički tekst:"
+
+#: wmwidget.cpp:438
+#, kde-format
+msgid ""
+"This is a place to enter text that will be added to all the files, below the "
+"Information template."
+msgstr ""
+"Ovo je mjesto za unos kategorija koje će biti dodate u sve dokumente, ispod "
+"informacionog šablona."
+
+#: wmwidget.cpp:442
+#, kde-format
+msgid "Upload comments:"
+msgstr "Pošalji komentare:"
+
+#: wmwidget.cpp:445
+#, kde-format
+msgid ""
+"This is a place to enter text that will be used as upload comments. The "
+"default of 'Uploaded via KIPI uploader' will be used if empty."
+msgstr ""
+"Ovo je mjesto za unos teksta koji će se koristiti kao uploada komentare. "
+"Podrazumijevani od \"Poslano preko Kipi uploadera 'će se koristiti ako je "
+"prazno."
+
+#: wmwidget.cpp:467
+#, kde-format
+msgid "Options"
+msgstr "Opcije"
+
+#: wmwidget.cpp:468
+#, kde-format
+msgid "These are options that will be applied to photos before upload."
+msgstr ""
+"Ovo su opcije koje će biti primjenje na fotografijama prije učitavanja."
+
+#: wmwidget.cpp:474
+#, kde-format
+msgid "Resize photos before uploading"
+msgstr "Promijeni veličinu prije učitavanja"
+
+#: wmwidget.cpp:484
+#, kde-format
+msgid "Maximum size:"
+msgstr "Najveća veličina:"
+
+#: wmwidget.cpp:492
+#, kde-format
+msgid "JPEG quality:"
+msgstr "JPEG kvalitet:"
+
+#: wmwidget.cpp:495
+#, kde-format
+msgid "Remove metadata from file"
+msgstr "Ukloni metapodatke iz datoteke"
+
+#: wmwidget.cpp:499
+#, kde-format
+msgid "Remove coordinates from file"
+msgstr "Ukloni koordinate iz datoteke"
+
+#: wmwidget.cpp:516
+#, kde-format
+msgid "Items Properties"
+msgstr "Postavke stavki"
+
+#: wmwidget.cpp:517
+#, kde-format
+msgid "Upload Settings"
+msgstr "Postavke učitanja"
+
+#: wmwindow.cpp:114
+#, kde-format
+msgid "Export to MediaWiki"
+msgstr "Izvezi u MediaWiki"
+
+#: wmwindow.cpp:116
+#, kde-format
+msgid "Start Upload"
+msgstr "Počni otpremanje"
+
+#: wmwindow.cpp:117
+#, kde-format
+msgid "Start upload to MediaWiki"
+msgstr "Započni učitanje u MediaWiki"
+
+#: wmwindow.cpp:124 wmwindow.cpp:354
+#, kde-format
+msgid "MediaWiki export"
+msgstr "MediaWiki izvoz"
+
+#: wmwindow.cpp:125
+#, fuzzy, kde-format
+#| msgid ""
+#| "A Kipi plugin to export image collection to a MediaWiki installation.\n"
+#| "Using libmediawiki version %1"
+msgid ""
+"A tool to export image collection to a MediaWiki installation.\n"
+"Using libmediawiki version %1"
+msgstr ""
+"Kipi dodatak za izvoz kolekcije slika u MediaWiki instalaciju.\n"
+"Koristeći libmediawiki verzija %1"
+
+#: wmwindow.cpp:128
+#, kde-format
+msgid "(c) 2011, Alexandre Mendes"
+msgstr "(c) 2011, Alexandre Mendes"
+
+#: wmwindow.cpp:130
+#, kde-format
+msgid "Alexandre Mendes"
+msgstr "Alexandre Mendes"
+
+#: wmwindow.cpp:131
+#, kde-format
+msgid "Author"
+msgstr "Autor"
+
+#: wmwindow.cpp:134
+#, kde-format
+msgid "Guillaume Hormiere"
+msgstr "Guillaume Hormiere"
+
+#: wmwindow.cpp:135 wmwindow.cpp:139 wmwindow.cpp:143
+#, kde-format
+msgid "Developer"
+msgstr "Programer"
+
+#: wmwindow.cpp:138
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: wmwindow.cpp:142
+#, kde-format
+msgid "Peter Potrowl"
+msgstr "Peter Potrowl"
+
+#: wmwindow.cpp:389
+#, kde-format
+msgid "Login Error"
+msgstr ""
+
+#: wmwindow.cpp:389
+#, fuzzy, kde-format
+#| msgid ""
+#| "Login error\n"
+#| "Please check your credentials and try again."
+msgid "Please check your credentials and try again."
+msgstr ""
+"Greška prilikom prijave\n"
+"Molimo provjerite vaš akreditiv i pokušajte opet."
+
+#: wmwindow.cpp:410
+#, kde-format
+msgid "Upload finished with no errors."
+msgstr "Učitanje završeno bez grešaka."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Samir Ribić,Mirhat Babić"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "Samir.ribic@etf.unsa.ba,mbabic1@etf.unsa.ba"

@@ -1,0 +1,851 @@
+# translation of kipiplugin_googledrive.po to Slovak
+# Roman Paholík <wizzardsk@gmail.com>, 2013, 2014, 2015, 2016.
+# Matej Mrenica <matejm98mthw@gmail.com>, 2019, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_googledrive\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2020-01-02 16:47+0100\n"
+"Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
+"Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 19.12.0\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: authorize.cpp:116
+#, kde-format
+msgid "Google Drive Authorization"
+msgstr "Overenie Google Drive"
+
+#: authorize.cpp:129
+#, kde-format
+msgid ""
+"Please follow the instructions in the browser. After logging in and "
+"authorizing the application, copy the code from the browser, paste it in the "
+"textbox below, and click OK."
+msgstr ""
+"Prosím sledujte inštrukcie v prehliadači. Po prihlásení a overení aplikácie, "
+"skopírujte kód z prehliadača, vložte ho do textového poľa a kliknite na OK."
+
+#: authorize.cpp:249 gdtalker.cpp:272 gptalker.cpp:644
+#, kde-format
+msgid "Error"
+msgstr "Chyba"
+
+#: gdtalker.cpp:337
+#, kde-format
+msgid "Failed to list folders"
+msgstr "Zlyhalo vypísanie priečinkov"
+
+#: gdtalker.cpp:385
+#, kde-format
+msgid "Failed to create folder"
+msgstr "Nepodarilo sa vytvoriť priečinok"
+
+#: gdtalker.cpp:416 gptalker.cpp:937
+#, kde-format
+msgid "Failed to upload photo"
+msgstr "Zlyhalo nahratie fotky"
+
+#: gptalker.cpp:569
+#, kde-format
+msgid "No photo specified"
+msgstr "Nespresnená žiadna fotografia"
+
+#: gptalker.cpp:572
+#, kde-format
+msgid "General upload failure"
+msgstr "Všeobecné zlyhanie pri nahrávaní"
+
+#: gptalker.cpp:575
+#, kde-format
+msgid "File-size was zero"
+msgstr "Veľkosť súboru bola nula"
+
+#: gptalker.cpp:578
+#, kde-format
+msgid "File-type was not recognized"
+msgstr "Typ súboru nebol rozpoznaný"
+
+#: gptalker.cpp:581
+#, kde-format
+msgid "User exceeded upload limit"
+msgstr "Používateľ prekročil limit odosielania"
+
+#: gptalker.cpp:584
+#, kde-format
+msgid "Invalid signature"
+msgstr "Neplatný podpis"
+
+#: gptalker.cpp:587
+#, kde-format
+msgid "Missing signature"
+msgstr "Chýbajúci podpis"
+
+#: gptalker.cpp:590
+#, kde-format
+msgid "Login failed / Invalid auth token"
+msgstr "Prihlásenie zlyhalo / neplatný token autorizácie"
+
+#: gptalker.cpp:593
+#, kde-format
+msgid "Invalid API Key"
+msgstr "Neplatný API kľúč"
+
+#: gptalker.cpp:596
+#, kde-format
+msgid "Service currently unavailable"
+msgstr "Služba je momentálne nedostupná"
+
+#: gptalker.cpp:599
+#, kde-format
+msgid "Invalid Frob"
+msgstr "Neplatné Frob"
+
+#: gptalker.cpp:602
+#, kde-format
+msgid "Format \"xxx\" not found"
+msgstr "Formát „xxx“ sa nenašiel"
+
+#: gptalker.cpp:605
+#, kde-format
+msgid "Method \"xxx\" not found"
+msgstr "Metóda „xxx“ sa nenašla"
+
+#: gptalker.cpp:608
+#, kde-format
+msgid "Invalid SOAP envelope"
+msgstr "Neplatná obálka SOAP"
+
+#: gptalker.cpp:611
+#, kde-format
+msgid "Invalid XML-RPC Method Call"
+msgstr "Neplatné volanie metódy XML-RPC"
+
+#: gptalker.cpp:614
+#, kde-format
+msgid "The POST method is now required for all setters."
+msgstr "Metóda POST sa teraz vyžaduje pre všetky nastavovače."
+
+#: gptalker.cpp:617
+#, kde-format
+msgid "Unknown error"
+msgstr "Neznáma chyba"
+
+#: gptalker.cpp:620 gswindow.cpp:427 gswindow.cpp:466 gswindow.cpp:548
+#: gswindow.cpp:576 gswindow.cpp:652 gswindow.cpp:668 gswindow.cpp:1078
+#: gswindow.cpp:1198 gswindow.cpp:1241 gswindow.cpp:1249
+#, kde-format
+msgctxt "@title:window"
+msgid "Error"
+msgstr "Chyba"
+
+#: gptalker.cpp:621
+#, kde-format
+msgid ""
+"Error occurred: %1\n"
+"Unable to proceed further."
+msgstr ""
+"Vyskytla sa chyba: %1\n"
+"Nemožno pokračovať ďalej."
+
+#: gptalker.cpp:691 gptalker.cpp:758
+#, kde-format
+msgid "Failed to fetch photo-set list"
+msgstr "Nepodarilo sa načítať zoznam fotiek"
+
+#: gptalker.cpp:894 gptalker.cpp:927
+#, kde-format
+msgid "Failed to create album"
+msgstr "Zlyhalo vytvorenie albumu"
+
+#: gswidget.cpp:60
+#, kde-format
+msgid "Tag path behavior :"
+msgstr "Správanie cesty značky:"
+
+#: gswidget.cpp:62
+#, kde-format
+msgid "Leaf tags only"
+msgstr "Iba koncové značky"
+
+#: gswidget.cpp:63
+#, kde-format
+msgid "Export only the leaf tags of tag hierarchies"
+msgstr "Exportovať iba koncové značky hierarchií značiek"
+
+#: gswidget.cpp:64
+#, kde-format
+msgid "Split tags"
+msgstr "Rozdeliť značky"
+
+#: gswidget.cpp:65
+#, kde-format
+msgid "Export the leaf tag and all ancestors as single tags."
+msgstr "Exportovať okrajové značky a všetkých predkov ako jednotlivé značky."
+
+#: gswidget.cpp:66
+#, kde-format
+msgid "Combined String"
+msgstr "Kombinovaný reťazec"
+
+#: gswidget.cpp:67
+#, kde-format
+msgid "Build a combined tag string."
+msgstr "Zostavte kombinovaný reťazec značiek."
+
+#: gswindow.cpp:116
+#, kde-format
+msgid "Google Drive Export"
+msgstr "Google Drive Export"
+
+#: gswindow.cpp:117
+#, kde-format
+msgid "A tool to export images to Google Drive"
+msgstr "Nástroj na export obrázkov na Disk Google"
+
+#: gswindow.cpp:119
+#, kde-format
+msgid ""
+"(c) 2013, Saurabh Patel\n"
+"(c) 2015, Shourya Singh Gupta"
+msgstr ""
+"(c) 2013, Saurabh Patel\n"
+"(c) 2015, Shourya Singh Gupta"
+
+#: gswindow.cpp:122
+#, kde-format
+msgid "Saurabh Patel"
+msgstr "Saurabh Patel"
+
+#: gswindow.cpp:122 gswindow.cpp:195
+#, kde-format
+msgid "Author and maintainer"
+msgstr "Autor a správca"
+
+#: gswindow.cpp:125 gswindow.cpp:207
+#, kde-format
+msgid "Shourya Singh Gupta"
+msgstr "Shourya Singh Gupta"
+
+#: gswindow.cpp:125 gswindow.cpp:198 gswindow.cpp:201 gswindow.cpp:204
+#: gswindow.cpp:207
+#, kde-format
+msgid "Developer"
+msgstr "Vývojár"
+
+#: gswindow.cpp:132
+#, kde-format
+msgid "Export to Google Drive"
+msgstr "Exportovať na Google Drive"
+
+#: gswindow.cpp:134 gswindow.cpp:219
+#, kde-format
+msgid "Start Upload"
+msgstr "Spustiť odoslanie"
+
+#: gswindow.cpp:135
+#, kde-format
+msgid "Start upload to Google Drive"
+msgstr "Spustiť nahrávanie na Google Drive"
+
+#: gswindow.cpp:186
+#, kde-format
+msgid "Google Photos/PicasaWeb Export"
+msgstr "Fotky Google/PicasaWeb Export"
+
+#: gswindow.cpp:187
+#, kde-format
+msgid "A tool to export image collections to Google Photos/Picasa web service."
+msgstr ""
+"Nástroj na export kolekcií obrázkov do webovej služby Fotky Google / Picasa."
+
+#: gswindow.cpp:189
+#, kde-format
+msgid ""
+"(c) 2007-2009, Vardhman Jain\n"
+"(c) 2008-2016, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2010, Jens Mueller\n"
+"(c) 2015, Shourya Singh Gupta"
+msgstr ""
+"(c) 2007-2009, Vardhman Jain\n"
+"(c) 2008-2016, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2010, Jens Mueller\n"
+"(c) 2015, Shourya Singh Gupta"
+
+#: gswindow.cpp:195
+#, kde-format
+msgid "Vardhman Jain"
+msgstr "Vardhman Jain"
+
+#: gswindow.cpp:198
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: gswindow.cpp:201
+#, kde-format
+msgid "Luka Renko"
+msgstr "Luka Renko"
+
+#: gswindow.cpp:204
+#, kde-format
+msgid "Jens Mueller"
+msgstr "Jens Mueller"
+
+#: gswindow.cpp:217
+#, kde-format
+msgid "Export to Google Photos/PicasaWeb Service"
+msgstr "Export do služby Fotky Google/PicasaWeb"
+
+#: gswindow.cpp:220
+#, kde-format
+msgid "Start upload to Google Photos/PicasaWeb Service"
+msgstr "Spustiť nahrávanie do služby Fotky Google/PicasaWeb"
+
+#: gswindow.cpp:226
+#, kde-format
+msgid "Import from Google Photos/PicasaWeb Service"
+msgstr "Importovať zo služby Fotky Google/PicasaWeb"
+
+#: gswindow.cpp:228
+#, kde-format
+msgid "Start Download"
+msgstr "Spustiť preberanie"
+
+#: gswindow.cpp:229
+#, kde-format
+msgid "Start download from Google Photos/PicasaWeb service"
+msgstr "Spustiť sťahovanie zo služby Fotky Google/PicasaWeb"
+
+#: gswindow.cpp:428 gswindow.cpp:467 gswindow.cpp:577
+#, kde-format
+msgid "Google Photos/PicasaWeb Call Failed: %1\n"
+msgstr "Zlyhalo volanie do Fotky Google/Picasa: %1\n"
+
+#: gswindow.cpp:448 gswindow.cpp:527 gswindow.cpp:758
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: gswindow.cpp:531
+#, kde-format
+msgid "Google Photo Export"
+msgstr "Export fotografií Google"
+
+#: gswindow.cpp:549
+#, kde-format
+msgid "Google Drive Call Failed: %1\n"
+msgstr "Volanie Google Drive zlyhalo: %1\n"
+
+#: gswindow.cpp:653
+#, kde-format
+msgid ""
+"The textbox is empty, please enter the code from the browser in the textbox. "
+"To complete the authentication click \"Change Account\", or \"Start Upload\" "
+"to authenticate again."
+msgstr ""
+"Textové pole je prázdne, prosím zadajte kód z prehliadača do textového poľa. "
+"Na ukončenie overenia kliknite na \"Zmeniť účet\" alebo \"Spustiť nahrávanie"
+"\" na overenie znova."
+
+#: gswindow.cpp:669
+#, kde-format
+msgid "No image selected. Please select which images should be uploaded."
+msgstr "Nie je vybraný obrázok. Prosím vyberte, ktoré obrázky sa majú nahrať."
+
+#: gswindow.cpp:683 gswindow.cpp:706 gswindow.cpp:1014 gswindow.cpp:1032
+#: gswindow.cpp:1105
+#, kde-format
+msgid "Warning"
+msgstr "Upozornenie"
+
+#: gswindow.cpp:684 gswindow.cpp:707
+#, kde-format
+msgid "Authentication failed. Click \"Continue\" to authenticate."
+msgstr "Overenie zlyhalo. Kliknite na \"Pokračovať\" na overenie."
+
+#: gswindow.cpp:687 gswindow.cpp:710 gswindow.cpp:1019 gswindow.cpp:1037
+#: gswindow.cpp:1109 gswindow.cpp:1288
+#, kde-format
+msgid "Continue"
+msgstr "Pokračovať"
+
+#: gswindow.cpp:688 gswindow.cpp:711 gswindow.cpp:1020 gswindow.cpp:1038
+#: gswindow.cpp:1110 gswindow.cpp:1289
+#, kde-format
+msgid "Cancel"
+msgstr "Zrušiť"
+
+#: gswindow.cpp:762
+#, kde-format
+msgid "Google Drive export"
+msgstr "Google Drive export"
+
+#: gswindow.cpp:1015
+#, kde-format
+msgid ""
+"Failed to save photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Fotku sa nepodarilo uložiť: %1\n"
+"Chcete pokračovať?"
+
+#: gswindow.cpp:1033
+#, kde-format
+msgid ""
+"Failed to download photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Nepodarilo sa stiahnuť fotografiu: %1\n"
+"Chcete pokračovať?"
+
+#: gswindow.cpp:1079
+#, kde-format
+msgid "Failed to save image to %1"
+msgstr "Obrázok sa nepodarilo uložiť na %1"
+
+#: gswindow.cpp:1106
+#, kde-format
+msgid ""
+"Failed to upload photo to %1.\n"
+"%2\n"
+"Do you want to continue?"
+msgstr ""
+"Nepodarilo sa nahrať fotografiu do %1.\n"
+"%2\n"
+"Chcete pokračovať?"
+
+#: gswindow.cpp:1200
+#, kde-format
+msgctxt "%1 is the error string, %2 is the error code"
+msgid "An authentication error occurred: %1 (%2)"
+msgstr "Nastala chyba pri overení: %1 (%2)"
+
+#: gswindow.cpp:1242
+#, kde-format
+msgid ""
+"Google Drive call failed:\n"
+"%1"
+msgstr ""
+"Volanie Google Drive zlyhalo:\n"
+"%1"
+
+#: gswindow.cpp:1250
+#, kde-format
+msgid ""
+"Google Photos/PicasaWeb call failed:\n"
+"%1"
+msgstr ""
+"Zlyhalo volanie do Fotky Google/Picasa:\n"
+"%1"
+
+#: gswindow.cpp:1283
+#, kde-format
+msgctxt "@title:window"
+msgid "Warning"
+msgstr "Upozornenie"
+
+#: gswindow.cpp:1284
+#, kde-format
+msgid ""
+"After you have been logged out in the browser, click \"Continue\" to "
+"authenticate for another account"
+msgstr ""
+"Po tom, ako ste sa odhlásili v prehliadači, kliknite na \"Pokračovať\" na "
+"overenie pre iný účet"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_googleservicesui.rc:7 kipiplugin_googleservicesui.rc:15
+#, kde-format
+msgid "&Export"
+msgstr "&Exportovať"
+
+#. i18n: ectx: Menu (Import)
+#: kipiplugin_googleservicesui.rc:11
+#, kde-format
+msgid "&Import"
+msgstr "&Importovať"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_googleservicesui.rc:21
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Hlavný panel nástrojov"
+
+#: newalbumdlg.cpp:54
+#, kde-format
+msgid "Access Level"
+msgstr "Prístupová úroveň"
+
+#: newalbumdlg.cpp:55
+#, kde-format
+msgid ""
+"These are security and privacy settings for the new Google Photos/PicasaWeb "
+"album."
+msgstr ""
+"Toto sú nastavenia zabezpečenia a súkromia pre nové albumy Fotky Google/"
+"PicasaWeb."
+
+#: newalbumdlg.cpp:57
+#, kde-format
+msgctxt "google photos/picasaweb album privacy"
+msgid "Public"
+msgstr "Verejné"
+
+#: newalbumdlg.cpp:59
+#, kde-format
+msgid "Public album is listed on your public Google Photos/PicasaWeb page."
+msgstr ""
+"Verejný album je uvedený na vašej verejnej stránke Fotky Google/Picasa."
+
+#: newalbumdlg.cpp:60
+#, kde-format
+msgctxt "google photos/picasaweb album privacy"
+msgid "Unlisted / Private"
+msgstr "Neuvedené / Súkromné"
+
+#: newalbumdlg.cpp:61
+#, kde-format
+msgid "Unlisted album is only accessible via URL."
+msgstr "Neuvedený album je prístupný iba prostredníctvom adresy URL."
+
+#: newalbumdlg.cpp:62
+#, kde-format
+msgctxt "google photos/picasaweb album privacy"
+msgid "Sign-In Required to View"
+msgstr "Na zobrazenie sa vyžaduje prihlásenie"
+
+#: newalbumdlg.cpp:63
+#, kde-format
+msgid "Unlisted album require Sign-In to View"
+msgstr "Neuvedený album vyžaduje prihlásenie na zobrazenie"
+
+#: newalbumdlg.cpp:71
+#, kde-format
+msgid "Privacy:"
+msgstr "Súkromie:"
+
+#: plugin_googleservices.cpp:100
+#, kde-format
+msgid "Export to &Google Drive..."
+msgstr "Exportovať na Google Drive..."
+
+#: plugin_googleservices.cpp:110
+#, kde-format
+msgid "Export to &Google Photos/PicasaWeb..."
+msgstr "Exportovať do Fotky Google/PicasaWeb..."
+
+#: plugin_googleservices.cpp:120
+#, kde-format
+msgid "Import from &Google Photos/PicasaWeb..."
+msgstr "Importovať z Fotky Google/PicasaWeb..."
+
+#: replacedialog.cpp:112
+#, kde-format
+msgid "Add As New"
+msgstr "Pridať ako nový"
+
+#: replacedialog.cpp:113
+#, kde-format
+msgid "Item will be added alongside the linked version."
+msgstr "Položka bude pridaná spolu s prepojenou verziou."
+
+#: replacedialog.cpp:119
+#, kde-format
+msgid "Add All"
+msgstr "Pridať všetko"
+
+#: replacedialog.cpp:120
+#, kde-format
+msgid ""
+"Items will be added alongside the linked version. You will not be prompted "
+"again."
+msgstr "Položky sa pridajú spolu s prepojenou verziou. Nebudete znova vyzvaní."
+
+#: replacedialog.cpp:126
+#, kde-format
+msgid "Replace"
+msgstr "Nahradiť"
+
+#: replacedialog.cpp:127
+#, kde-format
+msgid "Item will be replacing the linked version."
+msgstr "Položka nahradí prepojenú verziu."
+
+#: replacedialog.cpp:133
+#, kde-format
+msgid "Replace All"
+msgstr "Nahradiť všetko"
+
+#: replacedialog.cpp:134
+#, kde-format
+msgid ""
+"Items will be replacing the linked version. You will not be prompted again."
+msgstr "Položky nahradia prepojenú verziu. Nebudete znova vyzvaní."
+
+#: replacedialog.cpp:157
+#, kde-format
+msgid "A linked item already exists."
+msgstr "Prepojená položka už existuje."
+
+#: replacedialog.cpp:177
+#, kde-format
+msgid "Destination"
+msgstr "Cieľ"
+
+#: replacedialog.cpp:182
+#, kde-format
+msgid "Source"
+msgstr "Zdroj"
+
+#~ msgid ""
+#~ "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+#~ msgstr ""
+#~ "Súbor s názvom \"%1\" už existuje. Ste si istý, že si ho prajete prepísať?"
+
+#, fuzzy
+#~| msgid "&Export"
+#~ msgid "Picasa Export"
+#~ msgstr "&Exportovať"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Roman Paholík"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "wizzardsk@gmail.com"
+
+#~ msgid "This is the list of images to upload to your Google Drive account."
+#~ msgstr "Toto je zoznam obrázkov na nahranie na váš Google Drive účet."
+
+#, fuzzy
+#~| msgid "This is the list of images to upload to your Google Drive account."
+#~ msgid ""
+#~ "This is the list of images to upload to your Google Photos/PicasaWeb "
+#~ "account."
+#~ msgstr "Toto je zoznam obrázkov na nahranie na váš Google Drive účet."
+
+#~ msgid "This is a clickable link to open Google Drive in a browser."
+#~ msgstr "Toto je klikateľný odkaz na otvorenie Google Drive v prehliadači."
+
+#, fuzzy
+#~| msgid "This is a clickable link to open Google Drive in a browser."
+#~ msgid ""
+#~ "This is a clickable link to open Google Photos/PicasaWeb in a browser."
+#~ msgstr "Toto je klikateľný odkaz na otvorenie Google Drive v prehliadači."
+
+#~ msgid "Account"
+#~ msgstr "Účet"
+
+#~ msgid "This is the Google Drive account that is currently logged in."
+#~ msgstr "Toto je Google Drive účet, ktorý je práve prihlásený."
+
+#, fuzzy
+#~| msgid "This is the Google Drive account that is currently logged in."
+#~ msgid ""
+#~ "This is the Google Photos/PicasaWeb account that is currently logged in."
+#~ msgstr "Toto je Google Drive účet, ktorý je práve prihlásený."
+
+#~ msgctxt "account settings"
+#~ msgid "Name:"
+#~ msgstr "Názov:"
+
+#~ msgid "Change Account"
+#~ msgstr "Zmeniť účet"
+
+#~ msgid "Change Google Drive account for transfer"
+#~ msgstr "Zmeniť účet Google Drive na prenos"
+
+#, fuzzy
+#~| msgid "Change Google Drive account for transfer"
+#~ msgid "Change Google Photos/PicasaWeb account for transfer"
+#~ msgstr "Zmeniť účet Google Drive na prenos"
+
+#, fuzzy
+#~| msgid "Album:"
+#~ msgid "Album"
+#~ msgstr "Album:"
+
+#~ msgid ""
+#~ "This is the Google Drive folder to which selected photos will be uploaded."
+#~ msgstr ""
+#~ "Toto je Google Drive priečinok, do ktorého sa vybrané fotky nahrajú."
+
+#, fuzzy
+#~| msgid ""
+#~| "This is the Google Drive folder to which selected photos will be "
+#~| "uploaded."
+#~ msgid ""
+#~ "This is the Google Photos/PicasaWeb folder to which selected photos will "
+#~ "be uploaded."
+#~ msgstr ""
+#~ "Toto je Google Drive priečinok, do ktorého sa vybrané fotky nahrajú."
+
+#, fuzzy
+#~| msgid ""
+#~| "This is the Google Drive folder to which selected photos will be "
+#~| "uploaded."
+#~ msgid ""
+#~ "This is the Google Photos/PicasaWeb folder from which selected photos "
+#~ "will be downloaded."
+#~ msgstr ""
+#~ "Toto je Google Drive priečinok, do ktorého sa vybrané fotky nahrajú."
+
+#~ msgid "Album:"
+#~ msgstr "Album:"
+
+#~ msgid "New Album"
+#~ msgstr "Nový album"
+
+#~ msgid "Create new Google Drive folder"
+#~ msgstr "Vytvoriť nový priečinok Google Drive"
+
+#, fuzzy
+#~| msgid "Create new Google Drive folder"
+#~ msgid "Create new Google Photos/PicasaWeb folder"
+#~ msgstr "Vytvoriť nový priečinok Google Drive"
+
+#~ msgctxt "album list"
+#~ msgid "Reload"
+#~ msgstr "Znovu načítať"
+
+#~ msgid "Reload album list"
+#~ msgstr "Obnoviť zoznam albumov"
+
+#, fuzzy
+#~| msgid "Maximum Dimension:"
+#~ msgid "Max Dimension"
+#~ msgstr "Maximálne rozmery:"
+
+#, fuzzy
+#~| msgid "This is the title of the folder that will be created."
+#~ msgid ""
+#~ "This is the maximum dimension of the images. Images larger than this will "
+#~ "be scaled down."
+#~ msgstr "Toto je názov priečinka, ktorý bude vytvorený."
+
+#~ msgid "Original Size"
+#~ msgstr "Originálna veľkosť"
+
+#~ msgid "1600 px"
+#~ msgstr "1600 px"
+
+#~ msgid "1440 px"
+#~ msgstr "1440 px"
+
+#~ msgid "1280 px"
+#~ msgstr "1280 px"
+
+#~ msgid "1152 px"
+#~ msgstr "1152 px"
+
+#~ msgid "1024 px"
+#~ msgstr "1024 px"
+
+#, fuzzy
+#~| msgid "This is the title of the folder that will be created."
+#~ msgid ""
+#~ "This is the location where Google Photos/PicasaWeb images will be "
+#~ "downloaded."
+#~ msgstr "Toto je názov priečinka, ktorý bude vytvorený."
+
+#~ msgid "Options"
+#~ msgstr "Voľby"
+
+#~ msgid "These are the options that would be applied to photos before upload."
+#~ msgstr "Toto sú voľby, ktoré sa majú použiť na fotky pred nahraním."
+
+#~ msgid "Resize photos before uploading"
+#~ msgstr "Zmeniť veľkosť fotiek pred nahraním"
+
+#~ msgid "Maximum Dimension:"
+#~ msgstr "Maximálne rozmery:"
+
+#~ msgid "JPEG Quality:"
+#~ msgstr "Kvalita JPEG:"
+
+#, fuzzy
+#~| msgid "This is the title of the folder that will be created."
+#~ msgid "Title of the album that will be created (required)."
+#~ msgstr "Toto je názov priečinka, ktorý bude vytvorený."
+
+#, fuzzy
+#~| msgid "This is the title of the folder that will be created."
+#~ msgid "Date and Time of the album that will be created (optional)."
+#~ msgstr "Toto je názov priečinka, ktorý bude vytvorený."
+
+#, fuzzy
+#~| msgid "This is the title of the folder that will be created."
+#~ msgid "Description of the album that will be created (optional)."
+#~ msgstr "Toto je názov priečinka, ktorý bude vytvorený."
+
+#, fuzzy
+#~| msgid "This is the title of the folder that will be created."
+#~ msgid "Location of the album that will be created (optional)."
+#~ msgstr "Toto je názov priečinka, ktorý bude vytvorený."
+
+#~ msgid "This is the title of the folder that will be created."
+#~ msgstr "Toto je názov priečinka, ktorý bude vytvorený."
+
+#~ msgctxt "folder edit"
+#~ msgid "Title:"
+#~ msgstr "Názov:"
+
+#, fuzzy
+#~| msgctxt "folder edit"
+#~| msgid "Title:"
+#~ msgctxt "new google photos/picasaweb album dialog"
+#~ msgid "Title:"
+#~ msgstr "Názov:"
+
+#, fuzzy
+#~| msgid "Destination"
+#~ msgctxt "new google photos/picasaweb album dialog"
+#~ msgid "Description:"
+#~ msgstr "Cieľ"
+
+#~ msgid ""
+#~ "Failed to upload photo to Google Drive.\n"
+#~ "%1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Zlyhalo nahranie fotky na Google Drive.\n"
+#~ "%1\n"
+#~ "Chcete pokračovať?"
+
+#, fuzzy
+#~| msgid ""
+#~| "Failed to upload photo to Google Drive.\n"
+#~| "%1\n"
+#~| "Do you want to continue?"
+#~ msgid ""
+#~ "Failed to upload photo to Google Photos/PicasaWeb.\n"
+#~ "%1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Zlyhalo nahranie fotky na Google Drive.\n"
+#~ "%1\n"
+#~ "Chcete pokračovať?"
+
+#, fuzzy
+#~| msgctxt "folder edit"
+#~| msgid "Title:"
+#~ msgctxt "new picasaweb album dialog"
+#~ msgid "Title:"
+#~ msgstr "Názov:"
+
+#~ msgid "Google Drive New Album"
+#~ msgstr "Google Drive nový album"
+
+#, fuzzy
+#~| msgid "New Album"
+#~ msgid "Picasaweb New Album"
+#~ msgstr "Nový album"

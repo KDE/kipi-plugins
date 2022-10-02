@@ -1,0 +1,548 @@
+# Translation of kipiplugin_flickr.po to Catalan (Valencian)
+# Copyright (C) 2008-2021 This_file_is_part_of_KDE
+# This file is distributed under the license LGPL version 2.1 or
+# version 3 or later versions approved by the membership of KDE e.V.
+#
+# Josep M. Ferrer <txemaq@gmail.com>, 2008, 2009, 2010, 2011, 2014, 2015, 2016, 2021.
+# Antoni Bella Pérez <antonibella5@yahoo.com>, 2012, 2013, 2014, 2015, 2017, 2018, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipi-plugins\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2021-09-13 11:36+0200\n"
+"Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
+"Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
+"Language: ca@valencia\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 20.12.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Accelerator-Marker: &\n"
+
+#: comboboxintermediate.h:54
+#, kde-format
+msgid "Various"
+msgstr "Miscelània"
+
+#: flickrlist.cpp:420
+#, kde-format
+msgid ""
+"Check if photo should be publicly visible or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"Marqueu-la si la fotografia ha de ser visible públicament o utilitzeu la "
+"pestanya Opcions de la pujada per a especificar-ho per a totes les imatges"
+
+#: flickrlist.cpp:423
+#, kde-format
+msgid ""
+"Check if photo should be visible to family or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"Marqueu-la si la fotografia ha de ser visible per la família o utilitzeu la "
+"pestanya Opcions de la pujada per a especificar-ho per a totes les imatges"
+
+#: flickrlist.cpp:426
+#, kde-format
+msgid ""
+"Check if photo should be visible to friends or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"Marqueu-la si la fotografia ha de ser visible per als amics o utilitzeu la "
+"pestanya Opcions de la pujada per a especificar-ho per a totes les imatges"
+
+#: flickrlist.cpp:429
+#, kde-format
+msgid ""
+"Indicate the safety level for the photo or use Upload Options tab to specify "
+"this for all images"
+msgstr ""
+"Indiqueu el nivell de seguretat de la fotografia o utilitzeu la pestanya "
+"Opcions de la pujada per a especificar-ho per a totes les imatges"
+
+#: flickrlist.cpp:432
+#, kde-format
+msgid ""
+"Indicate what kind of image this is or use Upload Options tab to specify "
+"this for all images"
+msgstr ""
+"Indiqueu quina classe d'imatge és esta o utilitzeu la pestanya Opcions de la "
+"pujada per a especificar-ho per a totes les imatges"
+
+#: flickrlist.cpp:445
+#, kde-format
+msgid ""
+"Add extra tags per image or use Upload Options tab to add tags for all images"
+msgstr ""
+"Afegiu etiquetes extres per a la imatge o utilitzeu la pestanya Opcions de "
+"la pujada per a afegir etiquetes per a totes les imatges"
+
+#: flickrlist.cpp:462
+#, kde-format
+msgid "Enter extra tags, separated by commas."
+msgstr "Introduïu ací les etiquetes extres, separades per comes."
+
+#: flickrtalker.cpp:265
+#, kde-format
+msgid "Getting the maximum allowed file size."
+msgstr "S'està obtenint la mida màxima permesa del fitxer."
+
+#: flickrtalker.cpp:550
+#, kde-format
+msgid "File Size exceeds maximum allowed file size."
+msgstr "La mida del fitxer excedix la mida màxima permesa del fitxer."
+
+#: flickrtalker.cpp:603
+#, kde-format
+msgid "No photo specified"
+msgstr "No s'ha especificat cap fotografia"
+
+#: flickrtalker.cpp:607
+#, kde-format
+msgid "General upload failure"
+msgstr "Error general durant la pujada"
+
+#: flickrtalker.cpp:611
+#, kde-format
+msgid "Filesize was zero"
+msgstr "La mida del fitxer era zero"
+
+#: flickrtalker.cpp:615
+#, kde-format
+msgid "Filetype was not recognized"
+msgstr "No s'ha reconegut el tipus de fitxer"
+
+#: flickrtalker.cpp:619
+#, kde-format
+msgid "User exceeded upload limit"
+msgstr "L'usuari ha excedit el límit de pujada"
+
+#: flickrtalker.cpp:623
+#, kde-format
+msgid "Invalid signature"
+msgstr "Signatura no vàlida"
+
+#: flickrtalker.cpp:627
+#, kde-format
+msgid "Missing signature"
+msgstr "Falta la signatura"
+
+#: flickrtalker.cpp:631
+#, kde-format
+msgid "Login Failed / Invalid auth token"
+msgstr ""
+"No s'ha pogut fer l'inici de la sessió / Testimoni d'autorització no vàlid"
+
+#: flickrtalker.cpp:635
+#, kde-format
+msgid "Invalid API Key"
+msgstr "Clau de la API no vàlida"
+
+#: flickrtalker.cpp:639
+#, kde-format
+msgid "Service currently unavailable"
+msgstr "Servei no disponible actualment"
+
+#: flickrtalker.cpp:643
+#, kde-format
+msgid "Invalid Frob"
+msgstr "«Frob» no vàlid"
+
+#: flickrtalker.cpp:647
+#, kde-format
+msgid "Format \"xxx\" not found"
+msgstr "No s'ha trobat el format «xxx»"
+
+#: flickrtalker.cpp:651
+#, kde-format
+msgid "Method \"xxx\" not found"
+msgstr "No s'ha trobat el mètode «xxx»"
+
+#: flickrtalker.cpp:655
+#, kde-format
+msgid "Invalid SOAP envelope"
+msgstr "Embolcall SOAP no vàlid"
+
+#: flickrtalker.cpp:659
+#, kde-format
+msgid "Invalid XML-RPC Method Call"
+msgstr "Crida no vàlida al mètode XML-RPC"
+
+#: flickrtalker.cpp:663
+#, kde-format
+msgid "The POST method is now required for all setters"
+msgstr "Ara es requerix el mètode POST per a tots els dissenys"
+
+#: flickrtalker.cpp:667
+#, kde-format
+msgid "Unknown error"
+msgstr "S'ha produït un error desconegut"
+
+#: flickrtalker.cpp:672 flickrtalker.cpp:696 flickrtalker.cpp:852
+#: flickrwindow.cpp:416
+#, kde-format
+msgid "Error"
+msgstr "S'ha produït un error"
+
+#: flickrtalker.cpp:673
+#, kde-format
+msgid ""
+"Error Occurred: %1\n"
+"Cannot proceed any further."
+msgstr ""
+"S'ha produït un error: %1\n"
+"No es pot continuar."
+
+#: flickrtalker.cpp:852
+#, kde-format
+msgid "PhotoSet creation failed: "
+msgstr "No s'ha pogut crear el conjunt de fotografies: "
+
+#: flickrtalker.cpp:947
+#, kde-format
+msgid "Failed to fetch list of photo sets."
+msgstr "No s'ha pogut recuperar la llista dels conjunts de fotografies."
+
+#: flickrtalker.cpp:1027
+#, kde-format
+msgid "Failed to upload photo"
+msgstr "No s'ha pogut pujar la fotografia"
+
+#: flickrtalker.cpp:1086
+#, kde-format
+msgid "Failed to query photo information"
+msgstr "No s'ha pogut consultar la informació de la fotografia"
+
+#: flickrwidget.cpp:63
+#, kde-format
+msgid "Remove Account"
+msgstr "Eliminació del compte"
+
+#: flickrwidget.cpp:73 flickrwidget.cpp:77
+#, kde-format
+msgctxt "photo permissions"
+msgid "Public"
+msgstr "Pública"
+
+#: flickrwidget.cpp:76
+#, kde-format
+msgid "This is the list of images to upload to your Flickr account."
+msgstr "Esta és la llista d'imatges a pujar al vostre compte de Flickr."
+
+#: flickrwidget.cpp:81
+#, kde-format
+msgid "Extra tags"
+msgstr "Etiquetes extres"
+
+#: flickrwidget.cpp:87 flickrwidget.cpp:98
+#, kde-format
+msgctxt "photo permissions"
+msgid "Family"
+msgstr "Família"
+
+#: flickrwidget.cpp:92 flickrwidget.cpp:100
+#, kde-format
+msgctxt "photo permissions"
+msgid "Friends"
+msgstr "Amics"
+
+#: flickrwidget.cpp:107
+#, kde-format
+msgid "Safety level"
+msgstr "Nivell de seguretat"
+
+#: flickrwidget.cpp:109
+#, kde-format
+msgid "Content type"
+msgstr "Tipus de contingut"
+
+#: flickrwidget.cpp:112
+#, kde-format
+msgctxt "photo safety level"
+msgid "Safe"
+msgstr "Segur"
+
+#: flickrwidget.cpp:113
+#, kde-format
+msgctxt "photo safety level"
+msgid "Moderate"
+msgstr "Moderat"
+
+#: flickrwidget.cpp:114
+#, kde-format
+msgctxt "photo safety level"
+msgid "Restricted"
+msgstr "Restringit"
+
+#: flickrwidget.cpp:115 flickrwidget.cpp:211
+#, kde-format
+msgctxt "photo content type"
+msgid "Photo"
+msgstr "Fotografia"
+
+#: flickrwidget.cpp:116 flickrwidget.cpp:212
+#, kde-format
+msgctxt "photo content type"
+msgid "Screenshot"
+msgstr "Captura de pantalla"
+
+#: flickrwidget.cpp:117 flickrwidget.cpp:213
+#, kde-format
+msgctxt "photo content type"
+msgid "Other"
+msgstr "Altres"
+
+#: flickrwidget.cpp:134
+#, kde-format
+msgid "Tag options"
+msgstr "Opcions de les etiquetes"
+
+#: flickrwidget.cpp:138
+#, kde-format
+msgid "Use Host Application Tags"
+msgstr "Utilitza les etiquetes d'aplicació del servidor"
+
+#: flickrwidget.cpp:140 flickrwidget.cpp:501
+#, kde-format
+msgid "More tag options"
+msgstr "Més opcions de les etiquetes"
+
+#: flickrwidget.cpp:154
+#, kde-format
+msgid "Added Tags: "
+msgstr "Etiquetes afegides: "
+
+#: flickrwidget.cpp:156
+#, kde-format
+msgid "Enter new tags here, separated by commas."
+msgstr "Introduïu ací les etiquetes noves, separades per comes."
+
+#: flickrwidget.cpp:158
+#, kde-format
+msgid "Add tags per image"
+msgstr "Afig etiquetes per imatge"
+
+#: flickrwidget.cpp:159
+#, kde-format
+msgid "If checked, you can set extra tags for each image in the File List tab"
+msgstr ""
+"Si està marcada, podeu definir etiquetes extres per a cada imatge a la "
+"pestanya de la llista de fitxers"
+
+#: flickrwidget.cpp:163
+#, kde-format
+msgid "Strip Spaces From Tags"
+msgstr "Elimina els espais de les etiquetes"
+
+#: flickrwidget.cpp:176
+#, kde-format
+msgid "Publication Options"
+msgstr "Opcions de publicació"
+
+#: flickrwidget.cpp:181
+#, kde-format
+msgctxt "As in accessible for people"
+msgid "Public (anyone can see them)"
+msgstr "Pública (tothom la pot veure)"
+
+#: flickrwidget.cpp:184
+#, kde-format
+msgid "Visible to Family"
+msgstr "Visible per a la família"
+
+#: flickrwidget.cpp:187
+#, kde-format
+msgid "Visible to Friends"
+msgstr "Visible per als amics"
+
+#: flickrwidget.cpp:190 flickrwidget.cpp:488
+#, kde-format
+msgid "More publication options"
+msgstr "Més opcions de publicació"
+
+#: flickrwidget.cpp:203
+#, kde-format
+msgid "Safety level:"
+msgstr "Nivell de seguretat:"
+
+#: flickrwidget.cpp:205
+#, kde-format
+msgid "Safe"
+msgstr "Segur"
+
+#: flickrwidget.cpp:206
+#, kde-format
+msgid "Moderate"
+msgstr "Moderat"
+
+#: flickrwidget.cpp:207
+#, kde-format
+msgid "Restricted"
+msgstr "Restringit"
+
+#: flickrwidget.cpp:209
+#, kde-format
+msgid "Content type:"
+msgstr "Tipus de contingut:"
+
+#: flickrwidget.cpp:304
+#, kde-format
+msgid ""
+"<b><h2><a href='http://www.23hq.com'><font color=\"#7CD164\">23</font></a> "
+"Export</h2></b>"
+msgstr ""
+"<b><h2>Exportació a <a href='http://www.23hq.com'><font color="
+"\"#7CD164\">23</font></a></h2></b>"
+
+#: flickrwidget.cpp:311
+#, kde-format
+msgid ""
+"<b><h2><a href='http://www.flickr.com'><font color=\"#0065DE\">flick</"
+"font><font color=\"#FF0084\">r</font></a> Export</h2></b>"
+msgstr ""
+"<b><h2>Exportació a <a href='http://www.flickr.com'><font color=\"#0065DE"
+"\">flick</font><font color=\"#FF0084\">r</font></a></h2></b>"
+
+#: flickrwidget.cpp:484
+#, kde-format
+msgid "Fewer publication options"
+msgstr "Menys opcions de publicació"
+
+#: flickrwidget.cpp:506
+#, kde-format
+msgid "Fewer tag options"
+msgstr "Menys opcions d'etiquetes"
+
+#: flickrwindow.cpp:71
+#, kde-format
+msgid "Export to %1 Web Service"
+msgstr "Exporta al servei web %1"
+
+#: flickrwindow.cpp:119
+#, kde-format
+msgid "Start Uploading"
+msgstr "Inici de la pujada"
+
+#: flickrwindow.cpp:131
+#, kde-format
+msgid "Flickr/23 Export"
+msgstr "Exporta a Flickr/23"
+
+#: flickrwindow.cpp:132
+#, kde-format
+msgid "A tool to export an image collection to a Flickr / 23 web service."
+msgstr ""
+"Una eina per a exportar col·leccions d'imatges al servei web Flickr / 23."
+
+#: flickrwindow.cpp:134
+#, kde-format
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2015, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2015, Shourya Singh Gupta"
+msgstr ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2015, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2015, Shourya Singh Gupta"
+
+#: flickrwindow.cpp:139
+#, kde-format
+msgid "Vardhman Jain"
+msgstr "Vardhman Jain"
+
+#: flickrwindow.cpp:139
+#, kde-format
+msgid "Author and maintainer"
+msgstr "Autoria i mantenidor"
+
+#: flickrwindow.cpp:142
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: flickrwindow.cpp:142 flickrwindow.cpp:145
+#, kde-format
+msgid "Developer"
+msgstr "Desenvolupador"
+
+#: flickrwindow.cpp:145
+#, kde-format
+msgid "Shourya Singh Gupta"
+msgstr "Shourya Singh Gupta"
+
+#: flickrwindow.cpp:557
+#, kde-format
+msgid "Photostream Only"
+msgstr "Només per al Photostream"
+
+#: flickrwindow.cpp:741
+#, kde-format
+msgid "Flickr Export"
+msgstr "Exporta a Flickr"
+
+#: flickrwindow.cpp:759
+#, kde-format
+msgid "Failed to Fetch Photoset information from %1. %2\n"
+msgstr ""
+"No s'ha pogut recuperar la informació del conjunt de fotografies des de %1. "
+"%2\n"
+
+#: flickrwindow.cpp:765
+#, kde-format
+msgid "Warning"
+msgstr "Avís"
+
+#: flickrwindow.cpp:766
+#, kde-format
+msgid ""
+"Failed to upload photo into %1. %2\n"
+"Do you want to continue?"
+msgstr ""
+"No s'ha pogut pujar la fotografia a %1. %2\n"
+"Voleu continuar?"
+
+#: flickrwindow.cpp:769
+#, kde-format
+msgid "Continue"
+msgstr "Continua"
+
+#: flickrwindow.cpp:770
+#, kde-format
+msgid "Cancel"
+msgstr "Cancel·la"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_flickrui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Exporta"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_flickrui.rc:14
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Barra d'eines principal"
+
+#: plugin_flickr.cpp:100
+#, kde-format
+msgid "Export to Flick&r..."
+msgstr "Exporta al Flick&r..."
+
+#: selectuserdlg.cpp:47
+#, kde-format
+msgid "Flickr Account Selector"
+msgstr "Selector de comptes de Flickr"
+
+#: selectuserdlg.cpp:52
+#, kde-format
+msgid "Add another account"
+msgstr "Afig un altre compte"
+
+#: selectuserdlg.cpp:75
+#, kde-format
+msgid "Choose the %1 account to use for exporting images:"
+msgstr "Trieu el compte %1 per a exportar les imatges:"

@@ -1,0 +1,491 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Toussis Manolis <manolis@koppermind.homelinux.org>, 2009.
+# Stelios <sstavra@gmail.com>, 2011, 2017.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_fbexport\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2017-10-06 19:24+0200\n"
+"Last-Translator: Stelios <sstavra@gmail.com>\n"
+"Language-Team: Greek <kde-i18n-el@kde.org>\n"
+"Language: el\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: fbalbum.cpp:52
+#, kde-format
+msgid "Privacy setting of the album that will be created (required)."
+msgstr "Ρύθμιση ιδιωτικού απόρρητου του άλμπουμ προς δημιουργία (απαιτείται)."
+
+#: fbalbum.cpp:54
+#, kde-format
+msgid "Only Me"
+msgstr "Μόνο εγώ"
+
+#: fbalbum.cpp:56
+#, kde-format
+msgid "Only Friends"
+msgstr "Μόνο οι φίλοι"
+
+#: fbalbum.cpp:58
+#, kde-format
+msgid "Friends of Friends"
+msgstr "Φίλοι των φίλων"
+
+#: fbalbum.cpp:60
+#, kde-format
+msgid "My Networks and Friends"
+msgstr "Τα δίκτυά μου και οι φίλοι"
+
+#: fbalbum.cpp:62
+#, kde-format
+msgid "Everyone"
+msgstr "Οποιοσδήποτε"
+
+#: fbtalker.cpp:201
+#, kde-format
+msgid "Validate previous session..."
+msgstr "Επαλήθευση προηγούμενης συνεδρίας..."
+
+#: fbtalker.cpp:229
+#, kde-format
+msgid "Upgrading to OAuth..."
+msgstr "Αναβάθμιση σε OAuth..."
+
+#: fbtalker.cpp:279
+#, kde-format
+msgid "Facebook Application Authorization"
+msgstr "Ταυτοποίηση εφαρμογής Facebook"
+
+#: fbtalker.cpp:290
+#, kde-format
+msgid ""
+"Please follow the instructions in the browser window. When done, copy the "
+"Internet address from your browser into the textbox below and press \"OK\"."
+msgstr ""
+"Παρακαλώ ακολουθήστε τις οδηγίες στο παράθυρο περιήγησης. Όταν τελειώσετε, "
+"αντιγράψτε τη διεύθυνση διαδικτύου από τον περιηγητή σας στο παρακάτω "
+"πλαίσιο κειμένου και πιέστε «Εντάξει»."
+
+#: fbtalker.cpp:352
+#, kde-format
+msgid "Canceled by user."
+msgstr "Ακύρωση από χρήστη."
+
+#: fbtalker.cpp:549
+#, kde-format
+msgid "The service is not available at this time."
+msgstr "Η υπηρεσία αυτή δεν είναι διαθέσιμη αυτήν τη στιγμή."
+
+#: fbtalker.cpp:552
+#, kde-format
+msgid "The application has reached the maximum number of requests allowed."
+msgstr "Η εφαρμογή έφτασε το μέγιστο αριθμό επιτρεπόμενων αιτήσεων."
+
+#: fbtalker.cpp:555
+#, kde-format
+msgid "Invalid session key or session expired. Try to log in again."
+msgstr ""
+"Μη έγκυρο κλειδί συνεδρίας ή λήξη συνεδρίας. Προσπαθήστε να συνδεθείτε ξανά."
+
+#: fbtalker.cpp:558
+#, kde-format
+msgid "Invalid album ID."
+msgstr "Μη έγκυρο ID άλμπουμ."
+
+#: fbtalker.cpp:561
+#, kde-format
+msgid "Album is full."
+msgstr "Το λεύκωμα είναι πλήρες."
+
+#: fbtalker.cpp:564
+#, kde-format
+msgid "Missing or invalid file."
+msgstr "Ελλιπές ή μη έγκυρο αρχείο."
+
+#: fbtalker.cpp:567
+#, kde-format
+msgid "Too many unapproved photos pending."
+msgstr "Πάρα πολλές μη εγκεκριμένες φωτογραφίες σε αναμονή."
+
+#: fbtalker.cpp:601
+#, kde-format
+msgid "Error"
+msgstr "Σφάλμα"
+
+#: fbwindow.cpp:109
+#, kde-format
+msgid "Export to Facebook Web Service"
+msgstr "Εξαγωγή στην υπηρεσία ιστού Facebook"
+
+#: fbwindow.cpp:111
+#, kde-format
+msgid "Start Upload"
+msgstr "Εκκίνηση αποστολής"
+
+#: fbwindow.cpp:112
+#, kde-format
+msgid "Start upload to Facebook web service"
+msgstr "Εκκίνηση αποστολής στην υπηρεσία ιστού Facebook"
+
+#: fbwindow.cpp:140
+#, kde-format
+msgid "Facebook Export"
+msgstr "Εξαγωγέας Facebook"
+
+#: fbwindow.cpp:141
+#, kde-format
+msgid "A tool to export image collection to/from Facebook web service."
+msgstr ""
+"Εργαλείο εξαγωγής συλλογής εικόνων από/προς την υπηρεσία ιστού του Facebook."
+
+#: fbwindow.cpp:143
+#, kde-format
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2012, Gilles Caulier\n"
+"(c) 2008-2009, Luka Renko"
+msgstr ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2012, Gilles Caulier\n"
+"(c) 2008-2009, Luka Renko"
+
+#: fbwindow.cpp:147
+#, kde-format
+msgid "Luka Renko"
+msgstr "Luka Renko"
+
+#: fbwindow.cpp:148
+#, kde-format
+msgid "Author and maintainer"
+msgstr "Συγγραφέας και συντηρητής"
+
+#: fbwindow.cpp:361 fbwindow.cpp:395
+#, kde-format
+msgid "<auto create>"
+msgstr "&lt;αυτόματη δημιουργία&gt;"
+
+#: fbwindow.cpp:372 fbwindow.cpp:390
+#, kde-format
+msgid "Facebook Call Failed: %1\n"
+msgstr "Αποτυχία κλήσης Facebook: %1\n"
+
+#: fbwindow.cpp:471
+#, kde-format
+msgid "Warning"
+msgstr "Προειδοποίηση"
+
+#: fbwindow.cpp:472
+#, kde-format
+msgid ""
+"After you have been logged out in the browser, click \"Continue\" to "
+"authenticate for another account"
+msgstr ""
+"Αφού έχετε αποσυνδεθεί στον περιηγητή, κάντε κλικ στο «Συνέχεια» για να "
+"πιστοποιηθείτε για άλλο λογαριασμό"
+
+#: fbwindow.cpp:476
+#, kde-format
+msgid "Continue"
+msgstr "Συνέχεια"
+
+#: fbwindow.cpp:477
+#, kde-format
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+#: fbwindow.cpp:539
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: fbwindow.cpp:543
+#, kde-format
+msgid "Facebook export"
+msgstr "Εξαγωγέας Facebook"
+
+#: fbwindow.cpp:648 fbwindow.cpp:663
+#, kde-format
+msgid "Cannot open file"
+msgstr "Αδυναμία ανοίγματος του αρχείου"
+
+#: fbwindow.cpp:686
+#, kde-format
+msgid "Uploading Failed"
+msgstr "Αποτυχία αποστολής"
+
+#: fbwindow.cpp:687
+#, kde-format
+msgid ""
+"Failed to upload photo into Facebook: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Αποτυχία αποστολής φωτογραφίας στο Facebook: %1\n"
+"Επιθυμείτε τη συνέχεια;"
+
+#: fbwindow.cpp:706
+#, kde-format
+msgid "Facebook Call Failed: %1"
+msgstr "Αποτυχία κλήσης Facebook: %1"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_facebookui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Εξαγωγή"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_facebookui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Κύρια γραμμή εργαλείων"
+
+#: plugin_facebook.cpp:94
+#, kde-format
+msgid "Export to &Facebook..."
+msgstr "Εξαγωγή &στο Facebook..."
+
+#~ msgid "&Import"
+#~ msgstr "Ε&ισαγωγή"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Τούσης Μανώλης, Stelios"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "manolis@koppermind.homelinux.org, sstavra@gmail.com"
+
+#~ msgid "Facebook New Album"
+#~ msgstr "Νέο άλμπουμ Facebook"
+
+#~ msgid "Title of the album that will be created (required)."
+#~ msgstr "Τίτλος του άλμπουμ που θα δημιουργηθεί (απαιτείται)."
+
+#~ msgid "Location of the album that will be created (optional)."
+#~ msgstr "Τοποθεσία του άλμπουμ που θα δημιουργηθεί (προαιρετικό)."
+
+#~ msgid "Description of the album that will be created (optional)."
+#~ msgstr "Περιγραφή του άλμπουμ που θα δημιουργηθεί (προαιρετικό)."
+
+#~ msgctxt "new facebook album"
+#~ msgid "Title:"
+#~ msgstr "Τίτλος:"
+
+#~ msgctxt "new facebook album"
+#~ msgid "Location:"
+#~ msgstr "Τοποθεσία:"
+
+#~ msgctxt "new facebook album"
+#~ msgid "Description:"
+#~ msgstr "Περιγραφή:"
+
+#~ msgctxt "new facebook album"
+#~ msgid "Privacy:"
+#~ msgstr "Ιδιωτικό απόρρητο:"
+
+#~ msgid "This is the list of images to upload to your Facebook account."
+#~ msgstr ""
+#~ "Αυτή είναι η λίστα εικόνων για αποστολή στο λογαριασμό σας Facebook."
+
+#~ msgid ""
+#~ "This is a clickable link to open the Facebook home page in a web browser."
+#~ msgstr ""
+#~ "Αυτός είναι ένας ενεργός δεσμός για το άνοιγμα της σελίδας Facebook στον "
+#~ "περιηγητή."
+
+#~ msgid "Account"
+#~ msgstr "Λογαριασμός"
+
+#~ msgid "This is the Facebook account that is currently logged in."
+#~ msgstr "Αυτός είναι ο λογαριασμός Facebook που είστε συνδεδεμένοι."
+
+#~ msgctxt "facebook account settings"
+#~ msgid "Name:"
+#~ msgstr "Όνομα:"
+
+#~ msgid "Permission:"
+#~ msgstr "Άδεια:"
+
+#~ msgid ""
+#~ "Permission of KIPI Plugin application to upload photos directly. If not, "
+#~ "user will need to manually approve uploaded photos in Facebook."
+#~ msgstr ""
+#~ "Άδεια στο πρόσθετο KIPI για την άμεση αποστολή φωτογραφιών. Αν δεν είναι "
+#~ "ενεργό, ο χρήστης θα πρέπει να εγκρίνει χειροκίνητα την αποστολή "
+#~ "φωτογραφιών στο Facebook."
+
+#~ msgid "Change Account"
+#~ msgstr "Τροποποίηση λογαριασμού"
+
+#~ msgid "Logout and change Facebook Account used for transfer"
+#~ msgstr "Αποσύνδεση και τροποποίηση λογαριασμού Facebook για τη μεταφορά"
+
+#~ msgid "Download Selection"
+#~ msgstr "Επιλογή λήψης"
+
+#~ msgid "This is the selection of Facebook albums/photos to download."
+#~ msgstr "Αυτή είναι η επιλογή άλμπουμ/φωτογραφιών Facebook που θα ληφθούν."
+
+#~ msgid "Destination"
+#~ msgstr "Προορισμός"
+
+#~ msgid ""
+#~ "This is the Facebook album to which selected photos will be uploaded."
+#~ msgstr ""
+#~ "Αυτό είναι το άλμπουμ Facebook όπου θα αποσταλούν οι επιλεγμένες "
+#~ "φωτογραφίες."
+
+#~ msgid "My &Album"
+#~ msgstr "Το ά&λμπουμ μου"
+
+#~ msgid "Download complete album of currently logged in user."
+#~ msgstr "Λήψη πλήρους άλμπουμ του τρέχοντος συνδεδεμένου χρήστη."
+
+#~ msgid "Album &of My Friend"
+#~ msgstr "Άλμπουμ ε&νός φίλου μου"
+
+#~ msgid "Download complete album of selected friend."
+#~ msgstr "Λήψη πλήρους άλμπουμ του επιλεγμένου φίλου."
+
+#~ msgid "Photos of &Me"
+#~ msgstr "Φωτογραφίες &μου"
+
+#~ msgid "Download all photos of currently logged in user."
+#~ msgstr "Λήψη όλων των φωτογραφιών του τρέχοντος συνδεδεμένου χρήστη."
+
+#~ msgid "Photos of My &Friend"
+#~ msgstr "Φωτογραφίες ενός &φίλου μου"
+
+#~ msgid "Download all photos of selected friend."
+#~ msgstr "Λήψη όλων των φωτογραφιών του επιλεγμένου χρήστη."
+
+#~ msgid "Friend:"
+#~ msgstr "Φίλος:"
+
+#~ msgid "Album:"
+#~ msgstr "Άλμπουμ:"
+
+#~ msgid "New Album"
+#~ msgstr "Νέο άλμπουμ"
+
+#~ msgid "Create new Facebook album"
+#~ msgstr "Δημιουργία νέου άλμπουμ Facebook"
+
+#~ msgctxt "facebook album list"
+#~ msgid "Reload"
+#~ msgstr "Επαναφόρτωση"
+
+#~ msgid "Reload album list"
+#~ msgstr "Επαναφόρτωση λίστας άλμπουμ"
+
+#~ msgid "This is the location to which Facebook images will be downloaded."
+#~ msgstr "Αυτή είναι η τοποθεσία λήψης των εικόνων Facebook."
+
+#~ msgid "Options"
+#~ msgstr "Επιλογές"
+
+#~ msgid "These are options that will be applied to photos before upload."
+#~ msgstr "Οι επιλογές που θα εφαρμοστούν στις φωτογραφίες πριν την αποστολή."
+
+#~ msgid "Resize photos before uploading"
+#~ msgstr "Κλιμάκωση φωτογραφιών πριν την αποστολή"
+
+#~ msgid "Maximum dimension:"
+#~ msgstr "Μέγιστη διάσταση:"
+
+#~ msgid "JPEG quality:"
+#~ msgstr "Ποιότητα JPEG:"
+
+#~ msgid "Direct upload"
+#~ msgstr "Άμεση αποστολή"
+
+#~ msgid "Uploaded photos will not need manual approval by user."
+#~ msgstr ""
+#~ "Η αποστολή φωτογραφιών δεν απαιτεί τη χειροκίνητη έγκριση από το χρήστη."
+
+#~ msgid "Manual upload approval"
+#~ msgstr "Χειροκίνητη έγκριση αποστολής"
+
+#~ msgid ""
+#~ "Uploaded photos will wait in pending state until manually approved by "
+#~ "user."
+#~ msgstr ""
+#~ "Η αποστολή φωτογραφιών θα βρίσκεται σε κατάσταση αναμονής μέχρι την "
+#~ "έγκριση από το χρήστη."
+
+#~ msgid "Import from Facebook Web Service"
+#~ msgstr "Εισαγωγή από υπηρεσία ιστού Facebook"
+
+#~ msgid "Start Download"
+#~ msgstr "Εκκίνηση λήψης"
+
+#~ msgid "Start download from Facebook web service"
+#~ msgstr "Εκκίνηση λήψης από την υπηρεσία ιστού Facebook"
+
+#~ msgid "Facebook Import/Export"
+#~ msgstr "Εισαγωγέας/εξαγωγέας Facebook"
+
+#~ msgctxt "name of special Facebook album for profile pictures"
+#~ msgid "Profile Pictures"
+#~ msgstr "Εικόνες προφίλ"
+
+#~ msgid "Facebook import"
+#~ msgstr "Εισαγωγέας Facebook"
+
+#~ msgid ""
+#~ "Failed to save photo: %1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Αποτυχία αποθήκευσης της φωτογραφίας: %1\n"
+#~ "Επιθυμείτε τη συνέχεια;"
+
+#~ msgid ""
+#~ "Failed to download photo: %1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Αποτυχία λήψης της φωτογραφίας: %1\n"
+#~ "Επιθυμείτε τη συνέχεια;"
+
+#~ msgid "Import from &Facebook..."
+#~ msgstr "Εισαγωγή α&πό Facebook..."
+
+#~ msgid ""
+#~ "Please follow the instructions in the browser window. Press \"OK\" when "
+#~ "done."
+#~ msgstr ""
+#~ "Παρακαλώ ακολουθήστε τις οδηγίες στο παράθυρο περιήγησης. Πιέστε \"Εντάξει"
+#~ "\" όταν τελειώσετε."
+
+#~ msgid "Photos taken with KDE"
+#~ msgstr "Φωτογραφίες τραβηγμένες με το KDE"
+
+#~ msgid "Handbook"
+#~ msgstr "Εγχειρίδιο"
+
+#~ msgid "Change Permission"
+#~ msgstr "Τροποποίηση άδειας"
+
+#~ msgid "Change permission for KIPI application for photo upload"
+#~ msgstr "Τροποποίηση της άδειας του KIPI για την αποστολή φωτογραφιών"
+
+#~ msgid "Logging in to Facebook service..."
+#~ msgstr "Σύνδεση με την υπηρεσία Facebook..."
+
+#~ msgid "Facebook Service Web Authorization"
+#~ msgstr "Εξουσιοδότηση υπηρεσιών ιστού Facebook"
+
+#~ msgid "Authentication"
+#~ msgstr "Ταυτοποίηση"
+
+#~ msgid "Transfer Progress"
+#~ msgstr "Πρόοδος μεταφοράς"
+
+#~ msgid "Downloading file %1"
+#~ msgstr "Λήψη αρχείου %1"

@@ -1,0 +1,288 @@
+# translation of kipiplugin_rajceexport.po to Slovak
+# Richard Fric <Richard.Fric@kdemail.net>, 2011.
+# Roman Paholík <wizzardsk@gmail.com>, 2012, 2013, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_rajceexport\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2016-08-26 21:32+0100\n"
+"Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
+"Language-Team: Slovak <kde-sk@linux.sk>\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 2.0\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_rajceui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Exportovať"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_rajceui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Hlavný panel nástrojov"
+
+#: newalbumdialog.cpp:47
+#, kde-format
+msgid "Visibility"
+msgstr "Viditeľnosť"
+
+#: newalbumdialog.cpp:48
+#, kde-format
+msgid "Set the visibility of the album"
+msgstr "Nastaviť viditeľnosť albumu"
+
+#: newalbumdialog.cpp:50
+#, kde-format
+msgid "Public"
+msgstr "Verejné"
+
+#: plugin_rajce.cpp:90
+#, kde-format
+msgid "Export to &Rajce.net..."
+msgstr "Exportovať do &Rajce.net..."
+
+#: rajcewidget.cpp:120
+#, kde-format
+msgid "Not logged in"
+msgstr "Neprihlásený"
+
+#: rajcewidget.cpp:184
+#, kde-format
+msgid "Unknown error"
+msgstr "Neznáma chyba"
+
+#: rajcewidget.cpp:185
+#, kde-format
+msgid "Invalid command"
+msgstr "Neplatný príkaz"
+
+#: rajcewidget.cpp:186
+#, kde-format
+msgid "Invalid login name or password"
+msgstr "Neplatné užívateľské meno alebo heslo"
+
+#: rajcewidget.cpp:187
+#, kde-format
+msgid "Session expired"
+msgstr "Sedenie vypršalo"
+
+#: rajcewidget.cpp:189 rajcewidget.cpp:190
+#, kde-format
+msgid "Unknown album"
+msgstr "Neznámy album"
+
+#: rajcewidget.cpp:191
+#, kde-format
+msgid "Failed to open album"
+msgstr "Otvorenie albumu zlyhalo"
+
+#: rajcewidget.cpp:192
+#, kde-format
+msgid "The album name cannot be empty"
+msgstr "Meno albumu nemôže byť prázdne"
+
+#: rajcewidget.cpp:193
+#, kde-format
+msgid "Failed to create album"
+msgstr "Zlyhalo vytvorenie albumu"
+
+#: rajcewidget.cpp:194
+#, kde-format
+msgid "Album does not exist"
+msgstr "Album neexistuje"
+
+#: rajcewidget.cpp:197 rajcewidget.cpp:199
+#, kde-format
+msgid "File upload failed"
+msgstr "Nahranie súboru zlyhalo"
+
+#: rajcewidget.cpp:200
+#, kde-format
+msgid "Unsupported file extension"
+msgstr "Nepodporovaná koncovka súboru"
+
+#: rajcewidget.cpp:269
+#, kde-format
+msgid "Logging in %v%"
+msgstr "Prihlasujem %v%"
+
+#: rajcewidget.cpp:270
+#, kde-format
+msgid "Logging out %v%"
+msgstr "Odhlasujem %v%"
+
+#: rajcewidget.cpp:271
+#, kde-format
+msgid "Loading albums %v%"
+msgstr "Načítavam albumy %v%"
+
+#: rajcewidget.cpp:272
+#, kde-format
+msgid "Creating album %v%"
+msgstr "Vytváram album %v%"
+
+#: rajcewidget.cpp:273
+#, kde-format
+msgid "Opening album %v%"
+msgstr "Otváram album %v%"
+
+#: rajcewidget.cpp:274
+#, kde-format
+msgid "Closing album %v%"
+msgstr "Zatváram album %v%"
+
+#: rajcewidget.cpp:275
+#, kde-format
+msgid "Adding photos %v%"
+msgstr "Pridávam fotky %v%"
+
+#: rajcewindow.cpp:53
+#, kde-format
+msgid "Export to Rajce.net"
+msgstr "Exportovať do Rajce.net"
+
+#: rajcewindow.cpp:55
+#, kde-format
+msgid "Start Upload"
+msgstr "Spustiť odoslanie"
+
+#: rajcewindow.cpp:56
+#, kde-format
+msgid "Start upload to Rajce.net"
+msgstr "Spustiť nahrávanie na Rajce.net"
+
+#: rajcewindow.cpp:71
+#, kde-format
+msgid "Rajce.net Export"
+msgstr "Export Rajce.net"
+
+#: rajcewindow.cpp:72
+#, kde-format
+msgid "A tool to export image collections to Rajce.net."
+msgstr "Nástroj na export kolekcií obrázkov na Rajce.net."
+
+#: rajcewindow.cpp:74
+#, kde-format
+msgid "(c) 2011-2013, Lukas Krejci"
+msgstr "(c) 2011-2013, Lukas Krejci"
+
+#: rajcewindow.cpp:76
+#, kde-format
+msgid "Lukas Krejci"
+msgstr "Lukas Krejci"
+
+#: rajcewindow.cpp:77
+#, kde-format
+msgid "Author"
+msgstr "Author"
+
+#~ msgid "Login:"
+#~ msgstr "Prihlásenie:"
+
+#~ msgid "Password:"
+#~ msgstr "Heslo:"
+
+#~ msgid "&OK"
+#~ msgstr "&OK"
+
+#~ msgid "&Cancel"
+#~ msgstr "&Zrušiť"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Roman Paholík"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "wizzardsk@gmail.com"
+
+#~ msgid "New Album"
+#~ msgstr "Nový album"
+
+#~ msgid "Name"
+#~ msgstr "Názov"
+
+#~ msgid "Description"
+#~ msgstr "Popis"
+
+#~ msgid "This is the list of images to upload to your Rajce.net account."
+#~ msgstr "Toto je zoznam obrázkov na nahranie na váš účet Rajce.net."
+
+#~ msgid ""
+#~ "This is a clickable link to open the Rajce.net home page in a web browser."
+#~ msgstr ""
+#~ "Toto je klikateľný odnaz na otvorenie domovskej stránky Rajce.net vo "
+#~ "webovom prehliadači."
+
+#~ msgid "Account"
+#~ msgstr "Účet"
+
+#~ msgid "This is the Rajce.net account that will be used to authenticate."
+#~ msgstr "Toto je účet Rajce.net, ktorý sa použije na overenie."
+
+#~ msgctxt "Rajce.net account login"
+#~ msgid "Anonymous"
+#~ msgstr "Anonym"
+
+#~ msgid "Login as anonymous to Rajce.net web service."
+#~ msgstr "Prihlásiť sa anonymne na webovú službu Rajce.net."
+
+#~ msgid "Rajce.net Account"
+#~ msgstr "Účet Rajce.net"
+
+#~ msgid "Login to Rajce.net using username and password."
+#~ msgstr "Prihlásiť sa na Rajce.net pomocou mena a hesla."
+
+#~ msgctxt "Rajce.net account settings"
+#~ msgid "Name:"
+#~ msgstr "Názov:"
+
+#~ msgid "Change Account"
+#~ msgstr "Zmeniť účet"
+
+#~ msgid "Change Rajce.net Account used to authenticate"
+#~ msgstr "Zmeniť účet Rajce.net na overenie"
+
+#~ msgid "Album"
+#~ msgstr "Album"
+
+#~ msgid "This is the Rajce.net album that will be used for transfer."
+#~ msgstr "Toto je album Rajce.net, ktorý sa použije na prenos."
+
+#~ msgid "Create new Rajce.net album"
+#~ msgstr "Vytvoriť nový album Rajce.net"
+
+#~ msgctxt "reload album list"
+#~ msgid "Reload"
+#~ msgstr "Znovu načítať"
+
+#~ msgid "Reload album list"
+#~ msgstr "Obnoviť zoznam albumov"
+
+#~ msgid "Destination"
+#~ msgstr "Cieľ"
+
+#~ msgid "This is the location where Rajce.net images will be downloaded."
+#~ msgstr "Toto je umiestnenie, kam sa stiahnu obrázky Rajce.net."
+
+#~ msgid "Options"
+#~ msgstr "Možnosti"
+
+#~ msgid "These are options that will be applied to images before upload."
+#~ msgstr "Toto sú voľby, ktoré sa použijú na obrázky pred nahraním."
+
+#~ msgid "Maximum dimension:"
+#~ msgstr "Maximálne rozmery:"
+
+#~ msgid "JPEG quality:"
+#~ msgstr "Kvalita JPEG:"
+
+#~ msgid "Author and maintainer"
+#~ msgstr "Autor a správca"

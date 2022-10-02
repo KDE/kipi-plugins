@@ -1,0 +1,275 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Volkan Gezer <volkangezer@gmail.com>, 2013.
+# Emir SARI <emir_sari@icloud.com>, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: extragear-graphics-kde4\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2022-04-11 11:24+0300\n"
+"Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
+"Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 21.12.3\n"
+
+#: imgurapi3.cpp:132
+#, kde-format
+msgid "Could not authorize"
+msgstr "Yetkilendirilemiyor"
+
+#: imgurapi3.cpp:309
+#, kde-format
+msgid "Could not open file"
+msgstr "Dosya açılamadı"
+
+#: imgurimageslist.cpp:59
+#, kde-format
+msgid "Thumbnail"
+msgstr "Küçük görsel"
+
+#: imgurimageslist.cpp:62
+#, kde-format
+msgid "Submission title"
+msgstr "Gönderim başlığı"
+
+#: imgurimageslist.cpp:65
+#, kde-format
+msgid "Submission description"
+msgstr "Gönderim açıklaması"
+
+#: imgurimageslist.cpp:68
+#, kde-format
+msgid "Imgur URL"
+msgstr "Imgur Adresi"
+
+#: imgurimageslist.cpp:71
+#, kde-format
+msgid "Imgur Delete URL"
+msgstr "Imgur Silme Adresi"
+
+#: imgurwindow.cpp:82
+#, kde-format
+msgid "Logged in as:"
+msgstr "Şu olarak giriş yapıldı:"
+
+#: imgurwindow.cpp:90
+#, kde-format
+msgid "Forget"
+msgstr "Unut"
+
+#: imgurwindow.cpp:100
+#, kde-format
+msgid "Upload Anonymously"
+msgstr "Anonim Olarak Yükle"
+
+#: imgurwindow.cpp:116
+#, kde-format
+msgid "Export to imgur.com"
+msgstr "Imgur.com'a Aktar"
+
+#: imgurwindow.cpp:119
+#, kde-format
+msgid "Upload"
+msgstr "Yükle"
+
+#: imgurwindow.cpp:120
+#, kde-format
+msgid "Start upload to Imgur"
+msgstr "Imgur'a gönderimi başlat"
+
+#: imgurwindow.cpp:125
+#, kde-format
+msgid "Imgur Export"
+msgstr "Imgur Aktarımı"
+
+#: imgurwindow.cpp:126
+#, kde-format
+msgid "A tool to export images to Imgur web service"
+msgstr "Görselleri Imgur web hizmetine aktarmak için bir araç"
+
+#: imgurwindow.cpp:127
+#, kde-format
+msgid "(c) 2012-2013, Marius Orcsik"
+msgstr "(c) 2012-2013, Marius Orcsik"
+
+#: imgurwindow.cpp:129
+#, kde-format
+msgid "Marius Orcsik"
+msgstr "Marius Orcsik"
+
+#: imgurwindow.cpp:130
+#, kde-format
+msgid "Author"
+msgstr "Yazar"
+
+#: imgurwindow.cpp:133
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: imgurwindow.cpp:134 imgurwindow.cpp:138
+#, kde-format
+msgid "Developer"
+msgstr "Geliştirici"
+
+#: imgurwindow.cpp:137
+#, kde-format
+msgid "Fabian Vogt"
+msgstr "Fabian Vogt"
+
+#: imgurwindow.cpp:220
+#, kde-format
+msgid "<Not logged in>"
+msgstr "<Not logged in>"
+
+#: imgurwindow.cpp:227
+#, kde-format
+msgid "Authorization Failed"
+msgstr "Yetkilendirme Başarısız"
+
+#: imgurwindow.cpp:228
+#, kde-format
+msgid "Failed to log into Imgur: %1\n"
+msgstr "Imgur'a giriş yapma işlemi başarısız oldu: %1\n"
+
+#: imgurwindow.cpp:254 imgurwindow.cpp:261
+#, kde-format
+msgid "Uploading Failed"
+msgstr "Yükleme Başarısız"
+
+#: imgurwindow.cpp:255
+#, kde-format
+msgid "Failed to upload photo to Imgur: %1\n"
+msgstr "Imgur'a fotoğraf yükleme işlemi başarısız oldu: %1\n"
+
+#: imgurwindow.cpp:262
+#, kde-format
+msgid ""
+"Failed to upload photo to Imgur: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Imgur'a fotoğraf yükleme işlemi başarısız oldu: %1\n"
+"Devam etmek istiyor musunuz?"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_imgurui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Dışarıya Aktar"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_imgurui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Ana Araç Çubuğu"
+
+#: plugin_imgur.cpp:102
+#, kde-format
+msgid "Export to &Imgur..."
+msgstr "&Imgur'a Aktar..."
+
+#~ msgid "Unexpected response from the web service"
+#~ msgstr "Web hizmetinden beklenmeyen yanıt."
+
+#~ msgid "Upload failed"
+#~ msgstr "Gönderme başarısız"
+
+#~ msgid "Parse error"
+#~ msgstr "Ayrıştırma hatası"
+
+#~ msgid "Network error: timeout, cannot connect."
+#~ msgstr "Ağ hatası: zaman aşımı, bağlanılamıyor."
+
+#~ msgid "Request endpoint is not valid."
+#~ msgstr "İstek uç noktası geçerli değil."
+
+#~ msgid "Request is not valid: some parameter missing?"
+#~ msgstr "İstek geçerli değil: eksik parametreler mi var?"
+
+#~ msgid "Authorization error: trying to access a resource without tokens."
+#~ msgstr "Kimlik doğrulama hatası: andaçsız kaynağa erişim isteği."
+
+#~ msgid "The given request is invalid."
+#~ msgstr "Verilen istek geçersiz."
+
+#~ msgid "Manager error, cannot use for sending requests."
+#~ msgstr "Düzenleyici hatası, gönderim istekleri için kullanılamıyor."
+
+#~ msgid "No error"
+#~ msgstr "Hata yok"
+
+#~ msgid "OK"
+#~ msgstr "Tamam"
+
+#~ msgid ""
+#~ "This is a clickable link to open the Imgur home page in a web browser"
+#~ msgstr ""
+#~ "Bu Imgur ana sayfasını bir web tarayıcısında açmak için tıklanabilir bir "
+#~ "bağlantıdır"
+
+#~ msgid ""
+#~ "Requesting Imgur for authorization to upload images with the KIPI Imgur "
+#~ "Exporter plugin."
+#~ msgstr ""
+#~ "KIPI Imgur Dışa Aktarıcı eklentisi ile resim yüklemek için Imgur kimlik "
+#~ "doğrulaması isteniyor."
+
+#~ msgid "Request authorization"
+#~ msgstr "Yetki iste"
+
+#~ msgid ""
+#~ "Set permissions for the current application to upload images to Imgur."
+#~ msgstr ""
+#~ "Resimleri Imgur'a yüklemek için geçerli uygulamada izinleri ayarlayın."
+
+#~ msgid "Processing %1"
+#~ msgstr "%1 işleniyor"
+
+#~ msgid "Authenticated"
+#~ msgstr "Yetkilendirildi"
+
+#~ msgid "%v / %m"
+#~ msgstr "%v / %m"
+
+#~ msgid "Export to Imgur"
+#~ msgstr "Imgur' Aktar..."
+
+#~ msgctxt "%1 is the error string"
+#~ msgid ""
+#~ "Failed to authenticate to Imgur.\n"
+#~ "%1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Imgur ile kimlik doğrulama başarısız oldu.\n"
+#~ "%1\n"
+#~ "Devam etmek istiyor musunuz?"
+
+#~ msgid ""
+#~ "Failed to authenticate to Imgur.\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Imgur ile kimlik doğrulama başarısız oldu.\n"
+#~ "Devam etmek istiyor musunuz?"
+
+#, fuzzy
+#~| msgid "Processing %1"
+#~ msgid "Processing Failed"
+#~ msgstr "%1 işleniyor"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Volkan Gezer"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "volkangezer@gmail.com"
+
+#~ msgid "Author and Maintainer"
+#~ msgstr "Yazar ve Projeyi Yürüten"

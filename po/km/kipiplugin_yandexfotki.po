@@ -1,0 +1,404 @@
+# translation of kipiplugin_yandexfotki.po to Khmer
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_yandexfotki\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-08-08 02:53+0200\n"
+"PO-Revision-Date: 2012-07-06 11:05+0700\n"
+"Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
+"Language-Team: Khmer\n"
+"Language: km\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_yandexfotkiui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr ""
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_yandexfotkiui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr ""
+
+#: plugin_yandexfotki.cpp:91
+#, kde-format
+msgid "Export to &Yandex.Fotki..."
+msgstr "នាំចេញ​ទៅYandex.Fotki..."
+
+#: yfalbumdialog.cpp:60
+#, kde-format
+msgid "Password for the album (optional)."
+msgstr "ពាក្យ​សម្ងាត់​សម្រាប់​អាល់ប៊ុម (ជា​ជម្រើស) ។"
+
+#: yfalbumdialog.cpp:63
+#, kde-format
+msgid "Password:"
+msgstr "ពាក្យ​សម្ងាត់ ៖"
+
+#: yfalbumdialog.cpp:80
+#, kde-format
+msgid "Error"
+msgstr "កំហុស"
+
+#: yfalbumdialog.cpp:80
+#, kde-format
+msgid "Title cannot be empty."
+msgstr "ចំណង​​ជើង​មិនអាច​ទទេ ។"
+
+#: yfwidget.cpp:61
+#, kde-format
+msgid "Update policy:"
+msgstr "គោលនយោបាយ​ធ្វើ​បច្ចុប្បន្នភាព ៖"
+
+#: yfwidget.cpp:63
+#, kde-format
+msgid "Update metadata"
+msgstr "ធ្វើបច្ចុប្បន្ន​ទិន្នន័យ​មេតា "
+
+#: yfwidget.cpp:64
+#, kde-format
+msgid "Update metadata of remote file and merge remote tags with local"
+msgstr ""
+"ធ្វើ​បច្ចុប្បន្ន​ភាព​ទិន្នន័យ​មេតា​នៃ​ឯកសារ​ពី​ចម្ងាយ និង​បញ្ចូល​ស្លាក​ពី​ចម្ងាយ​ចូល​គ្នា​ជា​មួយ​ស្លាក​មូលដ្ឋាន"
+
+#: yfwidget.cpp:66
+#, kde-format
+msgid "Skip photo"
+msgstr "រំលង​រូបថត"
+
+#: yfwidget.cpp:67
+#, kde-format
+msgid "Simple skip photo"
+msgstr "ធម្មតា រំលង​រូបថត"
+
+#: yfwidget.cpp:68
+#, kde-format
+msgid "Upload as new"
+msgstr "ផ្ទុក​ឡើង​ដូច​ថ្មី"
+
+#: yfwidget.cpp:69
+#, kde-format
+msgid "Add photo as new"
+msgstr "បន្ថែម​រូបថត​ជា​ថ្មី"
+
+#: yfwidget.cpp:71
+#, kde-format
+msgid "Privacy settings:"
+msgstr "ការ​កំណត់​ភាព​ឯកជន ៖"
+
+#: yfwidget.cpp:74
+#, kde-format
+msgid "Public access"
+msgstr "ចូល​ជា​សាធារណៈ"
+
+#: yfwidget.cpp:76
+#, kde-format
+msgid "Friends access"
+msgstr "ចូលមើល​មិត្តភក្ដិ"
+
+#: yfwidget.cpp:78
+#, kde-format
+msgid "Private access"
+msgstr "ចូល​ជា​ឯកជន"
+
+#: yfwidget.cpp:80
+#, kde-format
+msgid "Hide original photo"
+msgstr "លាក់​រូបថត​ដើម"
+
+#: yfwidget.cpp:81
+#, kde-format
+msgid "Disable comments"
+msgstr "បិទ​មតិយោបល់"
+
+#: yfwidget.cpp:82
+#, kde-format
+msgid "Adult content"
+msgstr "ខ្លឹម​សារ​​សម្រាប់​មនុស្ស​​ពេញ​វ័យ"
+
+#: yfwindow.cpp:128
+#, kde-format
+msgid "Yandex.Fotki Plugin"
+msgstr "កម្មវិធី​ជំនួយ Yandex.Fotki"
+
+#: yfwindow.cpp:129
+#, fuzzy, kde-format
+#| msgid ""
+#| "A Kipi plugin to export image collections to Yandex.Fotki web service."
+msgid "A tool to export image collections to Yandex.Fotki web service."
+msgstr "កម្មវិធី​ជំនួយ Kipi ត្រូវ​នាំចេញ​​សម្រាំង​រូបភាព​​ទៅ​សេវាកម្ម​បណ្ដាញ Yandex.Fotki ។"
+
+#: yfwindow.cpp:131
+#, fuzzy, kde-format
+#| msgid ""
+#| "(c) 2007-2009, Vardhman Jain\n"
+#| "(c) 2008-2012, Gilles Caulier\n"
+#| "(c) 2009, Luka Renko\n"
+#| "(c) 2010, Roman Tsisyk"
+msgid ""
+"(c) 2007-2009, Vardhman Jain\n"
+"(c) 2008-2015, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2010, Roman Tsisyk"
+msgstr ""
+"រក្សាសិទ្ធិ​ឆ្នាំ ២០០៧-២០០៩ ដោយ Vardhman Jain\n"
+"រក្សាសិទ្ធិ​ឆ្នាំ ២០០៨-២០១២ ដោយ Gilles Caulier\n"
+"រក្សាសិទធិ​ឆ្នាំ ២០០៩ ដោយ Luka Renko\n"
+"រក្សាសិទ្ធិ​ឆ្នាំ ២០១០ ដោយ Roman Tsisyk"
+
+#: yfwindow.cpp:136
+#, kde-format
+msgid "Roman Tsisyk"
+msgstr "Roman Tsisyk"
+
+#: yfwindow.cpp:137
+#, kde-format
+msgid "Author"
+msgstr "អ្នកនិពន្ធ"
+
+#: yfwindow.cpp:249
+#, kde-format
+msgid "Unauthorized"
+msgstr "មិន​បាន​អនុញ្ញាត"
+
+#: yfwindow.cpp:262
+#, kde-format
+msgctxt "Yandex.Fotki"
+msgid "Y"
+msgstr "Y"
+
+#: yfwindow.cpp:263
+#, kde-format
+msgctxt "Yandex.Fotki"
+msgid "andex."
+msgstr "andex."
+
+#: yfwindow.cpp:264
+#, kde-format
+msgctxt "Yandex.Fotki"
+msgid "Fotki"
+msgstr "Fotki"
+
+#: yfwindow.cpp:589
+#, kde-format
+msgid "Processing Failed"
+msgstr ""
+
+#: yfwindow.cpp:590
+#, kde-format
+msgid ""
+"Failed to prepare image %1\n"
+"Do you want to continue?"
+msgstr ""
+"បាន​បរាជ័យ​ក្នុងការ​រៀបចំ​រូបភាព %1\n"
+"តើ​អ្នក​ចង់​បន្ត​ដែរឬទេ ?"
+
+#: yfwindow.cpp:617
+#, fuzzy, kde-format
+#| msgid "Images has been uploaded"
+msgid "Images have been uploaded"
+msgstr "រូបភាព​ត្រូវ​បាន​ផ្ទុក​ឡើង"
+
+#: yfwindow.cpp:647
+#, kde-format
+msgid "Please select album first"
+msgstr "សូម​ជ្រើស​អាល់ប៊ុម​សិន"
+
+#: yfwindow.cpp:669
+#, kde-format
+msgid "Session error"
+msgstr "កំហុស​សម័យ"
+
+#: yfwindow.cpp:672
+#, kde-format
+msgid "Token error"
+msgstr "កំហុស​ថូខឹន"
+
+#: yfwindow.cpp:675
+#, kde-format
+msgid "Invalid credentials"
+msgstr "ព័ត៌មាន​សម្ងាត់​មិន​ត្រឹមត្រូវ"
+
+#: yfwindow.cpp:679
+#, kde-format
+msgid "Cannot get service document"
+msgstr "មិន​អាច​យក​ឯកសារ​សេវាកម្ម​បាន​ទេ"
+
+#: yfwindow.cpp:692
+#, kde-format
+msgid "Cannot list albums"
+msgstr "មិន​អាច​រាយ​អាល់ប៊ុម​បាន​ទេ"
+
+#: yfwindow.cpp:695
+#, kde-format
+msgid "Cannot list photos"
+msgstr "មិន​អាច​រាយ​រូបថត​បាន​ទេ"
+
+#: yfwindow.cpp:698
+#, kde-format
+msgid "Cannot update album info"
+msgstr "មិន​អាច​ធ្វើ​បច្ចុប្បន្ន​ព័ត៌មាន​អាល់ប៊ុម​បាន​ទេ"
+
+#: yfwindow.cpp:704
+#, fuzzy, kde-format
+#| msgid "Upload as new"
+msgid "Uploading Failed"
+msgstr "ផ្ទុក​ឡើង​ដូច​ថ្មី"
+
+#: yfwindow.cpp:705
+#, kde-format
+msgid ""
+"Failed to upload image %1\n"
+"Do you want to continue?"
+msgstr ""
+"បាន​បរាជ័យ​ក្នុងការ​ផ្ទុក​រូបភាព %1 ឡើង\n"
+"តើ​អ្នក​ចង់​បន្ត​ដែរឬទេ ?"
+
+#: yfwindow.cpp:726
+#, kde-format
+msgid "Unknown error"
+msgstr "កំហុស​មិន​ស្គាល់"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "ខឹម សុខែម, ម៉ន ម៉េត, សេង សុត្ថា, ចាន់ សម្បត្តិរតនៈ, សុខ សុភា"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr ""
+#~ "khoemsokhem@khmeros.info,​​mornmet@khmeros.info,sutha@khmeros.info,"
+#~ "ratanak@khmeros.info,sophea@khmeros.info"
+
+#~ msgid "Login:"
+#~ msgstr "ចូល ៖"
+
+#~ msgid "Forgot your password?"
+#~ msgstr "ភ្លេច​ពាក្យ​សម្ងាត់​របស់​អ្នក ?"
+
+#~ msgid "&Login"
+#~ msgstr "ចូល"
+
+#~ msgid "&Skip"
+#~ msgstr "រំលង"
+
+#~ msgid "Yandex User Agreement"
+#~ msgstr "កិច្ច​ព្រមព្រៀង​អ្នក​ប្រើ​របស់ Yandex"
+
+#~ msgid "Password cannot be empty."
+#~ msgstr "ពាក្យ​សម្ងាត់​មិន​អាច​ទទេ​ ។"
+
+#~ msgid "New album"
+#~ msgstr "អាល់ប៊ុម​ថ្មី"
+
+#~ msgid "Album"
+#~ msgstr "អាល់ប៊ុម"
+
+#~ msgid "These are basic settings for the new Yandex album."
+#~ msgstr "ទាំ​ងនេះ​ជា​កា​រកំណត់​មូលដ្ឋាន​សម្រាប់​អាល់ប៊ុម Yandex ថ្មី ។"
+
+#~ msgid "Title of the album that will be created (required)."
+#~ msgstr "ចំណង​ជើង​អាល់ប៊ុម​ដែលនឹង​ត្រូវ​បង្កើត (ទាមទារ) ។"
+
+#~ msgid "Description of the album that will be created (optional)."
+#~ msgstr "សេចក្ដីពណ៌នា​អាល់ប៊ុម​ដែល​នឹង​ត្រូវបាន​បង្កើត (ជា​ជម្រើស) ។"
+
+#~ msgid "Title:"
+#~ msgstr "ចំណងជើង ៖"
+
+#~ msgid "Summary:"
+#~ msgstr "សេចក្ដី​សង្ខេប ៖"
+
+#~ msgid "This is the list of images to upload to your Yandex album."
+#~ msgstr "នេះ​គឺ​ជា​បញ្ជី​រូបភាព​ត្រូវ​ផ្ទុក​ឡើង​ទៅ​អាល់ប៊ុម Yandex របស់​អ្នក ។"
+
+#~ msgid ""
+#~ "This is a clickable link to open the Yandex.Fotki service in a web "
+#~ "browser."
+#~ msgstr ""
+#~ "នេះ​ជា​តំណ​ដែល​អាច​ចុច​បាន ដើម្បី​បើក​​សេវាកម្ម Yandex.Fotki នៅ​ក្នុងកម្មវិធីរុករក​បណ្ដាញ ។"
+
+#~ msgid "Account"
+#~ msgstr "គណនី"
+
+#~ msgid "This account is used for authentication."
+#~ msgstr "គណនី​នេះ​ត្រូវ​បាន​ប្រើ​សម្រាប់​ផ្ទៀងផ្ទាត់ ។"
+
+#~ msgid "Name:"
+#~ msgstr "​"
+
+#~ msgid "Your Yandex login"
+#~ msgstr "កា​រចូល Yandex របស់​អ្នក"
+
+#~ msgid "Change Account"
+#~ msgstr "ផ្លាស់ប្ដូរ​គណនី"
+
+#~ msgid "Change Yandex account used to authenticate"
+#~ msgstr "ផ្លាស់ប្ដូរ​គណនី Yandex ដែល​បាន​ប្រើ​ដើម្បី​ផ្ទៀងផ្ទាត់"
+
+#~ msgid "This is the Yandex.Fotki album that will be used for the transfer."
+#~ msgstr "នេះជា​​អាល់ប៊ុម Yandex.Fotki នឹង​ត្រូវ​បាន​ប្រើ​សម្រាប់​ផ្ទេរ​ ។"
+
+#~ msgid "New Album"
+#~ msgstr "អាល់ប៊ុម​ថ្មី"
+
+#~ msgid "Create new Yandex.Fotki album"
+#~ msgstr "បង្កើត​អាល់ប៊ុម Yandex.Fotki ថ្មី"
+
+#~ msgctxt "reload albums list"
+#~ msgid "Reload"
+#~ msgstr "ផ្ទុក​ឡើង​វិញ"
+
+#~ msgid "Reload albums list"
+#~ msgstr "ផ្ទុក​បញ្ជី​អាល់ប៊ុម​ឡើងវិញ"
+
+#~ msgid "Destination"
+#~ msgstr "ទិសដៅ"
+
+#~ msgid "This is the location where Yandex.Fotki images will be downloaded."
+#~ msgstr "នេះ​ជា​ទីតាំង​ដែល​រូបភាព​របស់ Yandex.Fotki នឹង​ត្រូវ​បាន​ទាញយក ។"
+
+#~ msgid "Options"
+#~ msgstr "ជម្រើស"
+
+#~ msgid "These are options that will be applied to images before upload."
+#~ msgstr "ជម្រើស​ទាំង​នេះ​នឹង​ត្រូវ​បាន​អនុវត្ត​ទៅ​រូបភាព​មុន​នឹង​ផ្ទុក​ឡើង ។"
+
+#~ msgid "Resize photos before uploading"
+#~ msgstr "ផ្លាស់ប្ដូរ​ទំហំ​រូបថង មុន​នឹង​ផ្ទុក​​ឡើង"
+
+#~ msgid "Maximum dimension:"
+#~ msgstr "វិមាត្រ​អតិបរមា ៖"
+
+#~ msgid "JPEG quality:"
+#~ msgstr "គុណភាព JPEG ៖"
+
+#~ msgid "Export to Yandex.Fotki Web Service"
+#~ msgstr "នាំចេញ​ទៅ​សេវាកម្ម​បណ្ដាញ Yandex.Fotki"
+
+#~ msgid "Start Upload"
+#~ msgstr "ចាប់ផ្ដើម​ផ្ទុក​ឡើង"
+
+#~ msgid "Start upload to Yandex.Fotki service"
+#~ msgstr "ចាប់ផ្ដើម​ផ្ទុក​ឡើង​ទៅ​សេវាកម្ម​ Yandex.Fotki"
+
+#~ msgid "Close"
+#~ msgstr "បិទ"
+
+#~ msgid "Close window"
+#~ msgstr "បិទ​បង្អួច"
+
+#~ msgid "Cancel"
+#~ msgstr "បោះបង់"
+
+#~ msgid "Cancel current operation"
+#~ msgstr "បោះបង់​ប្រតិបត្តិការ​បច្ចុប្បន្ន"

@@ -1,0 +1,405 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <megaribi@epn.ba>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_yandexfotki.po\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-08-08 02:53+0200\n"
+"PO-Revision-Date: 2014-10-20 19:35+0000\n"
+"Last-Translator: Mirhat <mbabic1@etf.unsa.ba>\n"
+"Language-Team: bs <bs@kde.org>\n"
+"Language: bs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Launchpad (build 17341)\n"
+"X-Launchpad-Export-Date: 2015-02-15 06:20+0000\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_yandexfotkiui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Izvezi"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_yandexfotkiui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Glavna alatna traka"
+
+#: plugin_yandexfotki.cpp:91
+#, kde-format
+msgid "Export to &Yandex.Fotki..."
+msgstr "Izvoz u &Yandex.Fotki..."
+
+#: yfalbumdialog.cpp:60
+#, kde-format
+msgid "Password for the album (optional)."
+msgstr "Šifra za album (neobavezno)."
+
+#: yfalbumdialog.cpp:63
+#, kde-format
+msgid "Password:"
+msgstr "Lozinka:"
+
+#: yfalbumdialog.cpp:80
+#, kde-format
+msgid "Error"
+msgstr "Greška"
+
+#: yfalbumdialog.cpp:80
+#, kde-format
+msgid "Title cannot be empty."
+msgstr "Naziv ne može biti prazan."
+
+#: yfwidget.cpp:61
+#, kde-format
+msgid "Update policy:"
+msgstr "Pravila učitanja:"
+
+#: yfwidget.cpp:63
+#, kde-format
+msgid "Update metadata"
+msgstr "Metadata učitanja"
+
+#: yfwidget.cpp:64
+#, kde-format
+msgid "Update metadata of remote file and merge remote tags with local"
+msgstr "Učitaj metadata udaljene datoteke i spoji udaljene oznake sa lokalnim"
+
+#: yfwidget.cpp:66
+#, kde-format
+msgid "Skip photo"
+msgstr "Preskoči fotografiju"
+
+#: yfwidget.cpp:67
+#, kde-format
+msgid "Simple skip photo"
+msgstr "Jednostavno preskoči fotografiju"
+
+#: yfwidget.cpp:68
+#, kde-format
+msgid "Upload as new"
+msgstr "Učitaj kao novu"
+
+#: yfwidget.cpp:69
+#, kde-format
+msgid "Add photo as new"
+msgstr "Dodaj fotografiju kao novu"
+
+#: yfwidget.cpp:71
+#, kde-format
+msgid "Privacy settings:"
+msgstr "Postavke privatnosti:"
+
+#: yfwidget.cpp:74
+#, kde-format
+msgid "Public access"
+msgstr "Javni pristup"
+
+#: yfwidget.cpp:76
+#, kde-format
+msgid "Friends access"
+msgstr "Pristup prijatelja"
+
+#: yfwidget.cpp:78
+#, kde-format
+msgid "Private access"
+msgstr "Privatni pristup"
+
+#: yfwidget.cpp:80
+#, kde-format
+msgid "Hide original photo"
+msgstr "Sakrij originalnu sliku"
+
+#: yfwidget.cpp:81
+#, kde-format
+msgid "Disable comments"
+msgstr "Onemogući komentare"
+
+#: yfwidget.cpp:82
+#, kde-format
+msgid "Adult content"
+msgstr "Sadržaj za odrasle"
+
+#: yfwindow.cpp:128
+#, kde-format
+msgid "Yandex.Fotki Plugin"
+msgstr "Yandex.Fotki dodatak"
+
+#: yfwindow.cpp:129
+#, fuzzy, kde-format
+#| msgid ""
+#| "A Kipi plugin to export image collections to Yandex.Fotki web service."
+msgid "A tool to export image collections to Yandex.Fotki web service."
+msgstr "Kipi dodatak za izvoz kolekcije slika u Yandex.Fotki internet servis."
+
+#: yfwindow.cpp:131
+#, fuzzy, kde-format
+#| msgid ""
+#| "(c) 2007-2009, Vardhman Jain\n"
+#| "(c) 2008-2012, Gilles Caulier\n"
+#| "(c) 2009, Luka Renko\n"
+#| "(c) 2010, Roman Tsisyk"
+msgid ""
+"(c) 2007-2009, Vardhman Jain\n"
+"(c) 2008-2015, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2010, Roman Tsisyk"
+msgstr ""
+"(c) 2007-2009, Vardhman Jain\n"
+"(c) 2008-2012, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2010, Roman Tsisyk"
+
+#: yfwindow.cpp:136
+#, kde-format
+msgid "Roman Tsisyk"
+msgstr "Roman Tsisyk"
+
+#: yfwindow.cpp:137
+#, kde-format
+msgid "Author"
+msgstr "Autor"
+
+#: yfwindow.cpp:249
+#, kde-format
+msgid "Unauthorized"
+msgstr "Neovlašten"
+
+#: yfwindow.cpp:262
+#, kde-format
+msgctxt "Yandex.Fotki"
+msgid "Y"
+msgstr "Y"
+
+#: yfwindow.cpp:263
+#, kde-format
+msgctxt "Yandex.Fotki"
+msgid "andex."
+msgstr "andex."
+
+#: yfwindow.cpp:264
+#, kde-format
+msgctxt "Yandex.Fotki"
+msgid "Fotki"
+msgstr "Fotki"
+
+#: yfwindow.cpp:589
+#, kde-format
+msgid "Processing Failed"
+msgstr ""
+
+#: yfwindow.cpp:590
+#, kde-format
+msgid ""
+"Failed to prepare image %1\n"
+"Do you want to continue?"
+msgstr ""
+"Neuspjelo pripremanje slike %1\n"
+"Želite li nastaviti?"
+
+#: yfwindow.cpp:617
+#, fuzzy, kde-format
+#| msgid "Images has been uploaded"
+msgid "Images have been uploaded"
+msgstr "Slike su učitane"
+
+#: yfwindow.cpp:647
+#, kde-format
+msgid "Please select album first"
+msgstr "Molimo prvo odaberite album"
+
+#: yfwindow.cpp:669
+#, kde-format
+msgid "Session error"
+msgstr "Greška sesije"
+
+#: yfwindow.cpp:672
+#, kde-format
+msgid "Token error"
+msgstr "Token greška"
+
+#: yfwindow.cpp:675
+#, kde-format
+msgid "Invalid credentials"
+msgstr "Neispravno uvjerenje"
+
+#: yfwindow.cpp:679
+#, kde-format
+msgid "Cannot get service document"
+msgstr "Ne mogu dobiti servisni dokument"
+
+#: yfwindow.cpp:692
+#, kde-format
+msgid "Cannot list albums"
+msgstr "Ne mogu izlistati albume"
+
+#: yfwindow.cpp:695
+#, kde-format
+msgid "Cannot list photos"
+msgstr "Ne mogu izlistati slike"
+
+#: yfwindow.cpp:698
+#, kde-format
+msgid "Cannot update album info"
+msgstr "Ne mogu učitati informacije albuma"
+
+#: yfwindow.cpp:704
+#, fuzzy, kde-format
+#| msgid "Upload as new"
+msgid "Uploading Failed"
+msgstr "Učitaj kao novu"
+
+#: yfwindow.cpp:705
+#, kde-format
+msgid ""
+"Failed to upload image %1\n"
+"Do you want to continue?"
+msgstr ""
+"Ne mogu učitati sliku %1\n"
+"Želite li nastaviti?"
+
+#: yfwindow.cpp:726
+#, kde-format
+msgid "Unknown error"
+msgstr "Nepoznata greška"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Samir Ribić,Mirhat Babić"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "Samir.ribic@etf.unsa.ba,mbabic1@etf.unsa.ba"
+
+#~ msgid "Login:"
+#~ msgstr "Prijava:"
+
+#~ msgid "Forgot your password?"
+#~ msgstr "Jeste li zaboravili vašu šifru?"
+
+#~ msgid "&Login"
+#~ msgstr "&Prijavi se"
+
+#~ msgid "&Skip"
+#~ msgstr "&Preskoči"
+
+#~ msgid "Yandex User Agreement"
+#~ msgstr "Yandex korisnički sporazum"
+
+#~ msgid "Password cannot be empty."
+#~ msgstr "Šifra ne može biti prazna."
+
+#~ msgid "New album"
+#~ msgstr "Novi album"
+
+#~ msgid "Album"
+#~ msgstr "Album"
+
+#~ msgid "These are basic settings for the new Yandex album."
+#~ msgstr "Ovo su osnovne postavke za novi Yandex album."
+
+#~ msgid "Title of the album that will be created (required)."
+#~ msgstr "Naslov albuma koji će biti kreiran (neophodno)."
+
+#~ msgid "Description of the album that will be created (optional)."
+#~ msgstr "Opis albuma koji ce biti kreiran (neobavezno)."
+
+#~ msgid "Title:"
+#~ msgstr "Naslov:"
+
+#~ msgid "Summary:"
+#~ msgstr "Sažetak:"
+
+#~ msgid "This is the list of images to upload to your Yandex album."
+#~ msgstr "Ovo je lista slika za učitanje u vaš Yandex album."
+
+#~ msgid ""
+#~ "This is a clickable link to open the Yandex.Fotki service in a web "
+#~ "browser."
+#~ msgstr ""
+#~ "Ovo je direktna veza za otvaranje Yandex.Fotki servisa u internet "
+#~ "pretraživaču."
+
+#~ msgid "Account"
+#~ msgstr "Nalog"
+
+#~ msgid "This account is used for authentication."
+#~ msgstr "Ovaj račun je korišten za ovjeru."
+
+#~ msgid "Name:"
+#~ msgstr "Ime:"
+
+#~ msgid "Your Yandex login"
+#~ msgstr "Vaša Yandex prijava"
+
+#~ msgid "Change Account"
+#~ msgstr "Promijeni nalog"
+
+#~ msgid "Change Yandex account used to authenticate"
+#~ msgstr "Promijeni Yandex račun korišten za ovjeru"
+
+#~ msgid "This is the Yandex.Fotki album that will be used for the transfer."
+#~ msgstr "Ovo je Yandex.Fotki album koji će biti korišten za transfer."
+
+#~ msgid "New Album"
+#~ msgstr "Novi Album"
+
+#~ msgid "Create new Yandex.Fotki album"
+#~ msgstr "Napravi svoj Yandex.Fotki album"
+
+#~ msgctxt "reload albums list"
+#~ msgid "Reload"
+#~ msgstr "Učitaj ponovo"
+
+#~ msgid "Reload albums list"
+#~ msgstr "Učitaj ponovo listu albuma"
+
+#~ msgid "Destination"
+#~ msgstr "Odredište"
+
+#~ msgid "This is the location where Yandex.Fotki images will be downloaded."
+#~ msgstr "Ovo je lokacija gdje će Yandex.Fotki slike biti skinute."
+
+#~ msgid "Options"
+#~ msgstr "Opcije"
+
+#~ msgid "These are options that will be applied to images before upload."
+#~ msgstr "Ovo su opcije koje će biti primjenjene na slikama prije učitavanja."
+
+#~ msgid "Resize photos before uploading"
+#~ msgstr "Promijeni veličinu slika prije slanja"
+
+#~ msgid "Maximum dimension:"
+#~ msgstr "Najveća veličina:"
+
+#~ msgid "JPEG quality:"
+#~ msgstr "JPEG kvalitet:"
+
+#~ msgid "Export to Yandex.Fotki Web Service"
+#~ msgstr "Izvezi u Yandex.Fotki internet servis"
+
+#~ msgid "Start Upload"
+#~ msgstr "Počni otpremanje"
+
+#~ msgid "Start upload to Yandex.Fotki service"
+#~ msgstr "Započni učitanje u Yandex.Fotki servis"
+
+#~ msgid "Close"
+#~ msgstr "Zatvori"
+
+# >> Left/right/middle button (does):
+#~ msgid "Close window"
+#~ msgstr "Zatvara prozor"
+
+#~ msgid "Cancel"
+#~ msgstr "Odustani"
+
+#~ msgid "Cancel current operation"
+#~ msgstr "Poništi trenutnu operaciju"

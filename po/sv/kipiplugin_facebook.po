@@ -1,0 +1,495 @@
+# translation of kipiplugin_facebook.po to Swedish
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Stefan Asserhäll <stefan.asserhall@bredband.net>, 2008, 2009.
+# Stefan Asserhall <stefan.asserhall@bredband.net>, 2010, 2011, 2012, 2013, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_facebook\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2016-08-26 17:08+0100\n"
+"Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
+"Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 2.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: fbalbum.cpp:52
+#, kde-format
+msgid "Privacy setting of the album that will be created (required)."
+msgstr "Integritetsinställning för albumet som ska skapas (nödvändig)."
+
+#: fbalbum.cpp:54
+#, kde-format
+msgid "Only Me"
+msgstr "Bara jag själv"
+
+#: fbalbum.cpp:56
+#, kde-format
+msgid "Only Friends"
+msgstr "Bara vänner"
+
+#: fbalbum.cpp:58
+#, kde-format
+msgid "Friends of Friends"
+msgstr "Vänner till vänner"
+
+#: fbalbum.cpp:60
+#, kde-format
+msgid "My Networks and Friends"
+msgstr "Mitt nätverk och mina vänner"
+
+#: fbalbum.cpp:62
+#, kde-format
+msgid "Everyone"
+msgstr "Alla"
+
+#: fbtalker.cpp:201
+#, kde-format
+msgid "Validate previous session..."
+msgstr "Kontrollera föregående session..."
+
+#: fbtalker.cpp:229
+#, kde-format
+msgid "Upgrading to OAuth..."
+msgstr "Uppgradering till OAuth..."
+
+#: fbtalker.cpp:279
+#, kde-format
+msgid "Facebook Application Authorization"
+msgstr "Behörighetskontroll för Facebook-programmet"
+
+#: fbtalker.cpp:290
+#, kde-format
+msgid ""
+"Please follow the instructions in the browser window. When done, copy the "
+"Internet address from your browser into the textbox below and press \"OK\"."
+msgstr ""
+"Följ instruktionerna i webbläsarens fönster. När du är klar, kopiera "
+"Internetadressen från webbläsaren till textrutan nedan och klicka på \"Ok\"."
+
+#: fbtalker.cpp:352
+#, kde-format
+msgid "Canceled by user."
+msgstr "Avbruten av användaren."
+
+#: fbtalker.cpp:549
+#, kde-format
+msgid "The service is not available at this time."
+msgstr "Tjänsten är inte tillgänglig för närvarande."
+
+#: fbtalker.cpp:552
+#, kde-format
+msgid "The application has reached the maximum number of requests allowed."
+msgstr "Programmet har nått det maximala antal begäran som tillåts."
+
+#: fbtalker.cpp:555
+#, kde-format
+msgid "Invalid session key or session expired. Try to log in again."
+msgstr "Felaktig sessionsnyckel eller utgången session. Försök logga in igen."
+
+#: fbtalker.cpp:558
+#, kde-format
+msgid "Invalid album ID."
+msgstr "Ogiltig albumidentifikation."
+
+#: fbtalker.cpp:561
+#, kde-format
+msgid "Album is full."
+msgstr "Albumet är fullt."
+
+#: fbtalker.cpp:564
+#, kde-format
+msgid "Missing or invalid file."
+msgstr "Saknad eller ogiltig fil."
+
+#: fbtalker.cpp:567
+#, kde-format
+msgid "Too many unapproved photos pending."
+msgstr "För många väntande ej godkända foton."
+
+#: fbtalker.cpp:601
+#, kde-format
+msgid "Error"
+msgstr "Fel"
+
+#: fbwindow.cpp:109
+#, kde-format
+msgid "Export to Facebook Web Service"
+msgstr "Exportera till Facebooks webbtjänst"
+
+#: fbwindow.cpp:111
+#, kde-format
+msgid "Start Upload"
+msgstr "Starta uppladdning"
+
+#: fbwindow.cpp:112
+#, kde-format
+msgid "Start upload to Facebook web service"
+msgstr "Starta uppladdning till Facebooks webbtjänst"
+
+#: fbwindow.cpp:140
+#, kde-format
+msgid "Facebook Export"
+msgstr "Facebook export"
+
+#: fbwindow.cpp:141
+#, kde-format
+msgid "A tool to export image collection to/from Facebook web service."
+msgstr ""
+"Ett verktyg för att exportera bildsamlingar till eller från Facebooks "
+"webbtjänst."
+
+#: fbwindow.cpp:143
+#, kde-format
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2012, Gilles Caulier\n"
+"(c) 2008-2009, Luka Renko"
+msgstr ""
+"© 2005-2008, Vardhman Jain\n"
+"© 2008-2012, Gilles Caulier\n"
+"© 2008-2009, Luka Renko"
+
+#: fbwindow.cpp:147
+#, kde-format
+msgid "Luka Renko"
+msgstr "Luka Renko"
+
+#: fbwindow.cpp:148
+#, kde-format
+msgid "Author and maintainer"
+msgstr "Upphovsman och utvecklare"
+
+#: fbwindow.cpp:361 fbwindow.cpp:395
+#, kde-format
+msgid "<auto create>"
+msgstr "<skapa automatiskt>"
+
+#: fbwindow.cpp:372 fbwindow.cpp:390
+#, kde-format
+msgid "Facebook Call Failed: %1\n"
+msgstr "Anrop till Facebook misslyckades: %1\n"
+
+#: fbwindow.cpp:471
+#, kde-format
+msgid "Warning"
+msgstr "Varning"
+
+#: fbwindow.cpp:472
+#, kde-format
+msgid ""
+"After you have been logged out in the browser, click \"Continue\" to "
+"authenticate for another account"
+msgstr ""
+"Efter att du har loggat ut i webbläsaren, klicka på \"Fortsätt\" för att ge "
+"behörighet till ett annat konto"
+
+#: fbwindow.cpp:476
+#, kde-format
+msgid "Continue"
+msgstr "Fortsätt"
+
+#: fbwindow.cpp:477
+#, kde-format
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: fbwindow.cpp:539
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: fbwindow.cpp:543
+#, kde-format
+msgid "Facebook export"
+msgstr "Facebook export"
+
+#: fbwindow.cpp:648 fbwindow.cpp:663
+#, kde-format
+msgid "Cannot open file"
+msgstr "Kan inte öppna fil"
+
+#: fbwindow.cpp:686
+#, kde-format
+msgid "Uploading Failed"
+msgstr "Uppladdning misslyckades"
+
+#: fbwindow.cpp:687
+#, kde-format
+msgid ""
+"Failed to upload photo into Facebook: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Misslyckades ladda upp foto till Facebook: %1\n"
+"Vill du fortsätta?"
+
+#: fbwindow.cpp:706
+#, kde-format
+msgid "Facebook Call Failed: %1"
+msgstr "Anrop till Facebook misslyckades: %1"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_facebookui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Exportera"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_facebookui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Huvudverktygsrad"
+
+#: plugin_facebook.cpp:94
+#, kde-format
+msgid "Export to &Facebook..."
+msgstr "Export till &Facebook..."
+
+#~ msgid "&Import"
+#~ msgstr "&Importera"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Stefan Asserhäll"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "stefan.asserhall@bredband.net"
+
+#~ msgid "Facebook New Album"
+#~ msgstr "Nytt album i Facebook"
+
+#~ msgid "Title of the album that will be created (required)."
+#~ msgstr "Titel på albumet som ska skapas (nödvändig)."
+
+#~ msgid "Location of the album that will be created (optional)."
+#~ msgstr "Plats för albumet som ska skapas (valfri)."
+
+#~ msgid "Description of the album that will be created (optional)."
+#~ msgstr "Beskrivning av albumet som ska skapas (valfri)."
+
+#~ msgctxt "new facebook album"
+#~ msgid "Title:"
+#~ msgstr "Titel:"
+
+#~ msgctxt "new facebook album"
+#~ msgid "Location:"
+#~ msgstr "Plats:"
+
+#~ msgctxt "new facebook album"
+#~ msgid "Description:"
+#~ msgstr "Beskrivning:"
+
+#~ msgctxt "new facebook album"
+#~ msgid "Privacy:"
+#~ msgstr "Integritet:"
+
+#~ msgid "This is the list of images to upload to your Facebook account."
+#~ msgstr "Detta är listan med bilder att ladda upp till Facebook-kontot."
+
+#~ msgid ""
+#~ "This is a clickable link to open the Facebook home page in a web browser."
+#~ msgstr ""
+#~ "Detta är en klickbar länk för att öppna Facebooks hemsida i en webbläsare."
+
+#~ msgid "Account"
+#~ msgstr "Konto"
+
+#~ msgid "This is the Facebook account that is currently logged in."
+#~ msgstr "Detta är Facebook-kontot som för närvarande är inloggat."
+
+#~ msgctxt "facebook account settings"
+#~ msgid "Name:"
+#~ msgstr "Namn:"
+
+#~ msgid "Permission:"
+#~ msgstr "Rättigheter:"
+
+#~ msgid ""
+#~ "Permission of KIPI Plugin application to upload photos directly. If not, "
+#~ "user will need to manually approve uploaded photos in Facebook."
+#~ msgstr ""
+#~ "Rättigheter för KIPI-insticksprogrammet att direkt ladda upp foton. Om "
+#~ "inte, måste användaren manuellt godkänna uppladdade foton i Facebook."
+
+#~ msgid "Change Account"
+#~ msgstr "Ändra konto"
+
+#~ msgid "Logout and change Facebook Account used for transfer"
+#~ msgstr "Logga ut och ändra Facebook-konto använt för uppladdning"
+
+#~ msgid "Download Selection"
+#~ msgstr "Ladda ner markerade"
+
+#~ msgid "This is the selection of Facebook albums/photos to download."
+#~ msgstr "Detta är markerade album och foton på Facebook att ladda ner."
+
+#~ msgid "Destination"
+#~ msgstr "Mål"
+
+#~ msgid ""
+#~ "This is the Facebook album to which selected photos will be uploaded."
+#~ msgstr ""
+#~ "Detta är Facebook-albumet dit markerade foton kommer att laddas upp."
+
+#~ msgid "My &Album"
+#~ msgstr "Mitt &album"
+
+#~ msgid "Download complete album of currently logged in user."
+#~ msgstr ""
+#~ "Ladda ner hela albumet för användaren som för närvarande är inloggad."
+
+#~ msgid "Album &of My Friend"
+#~ msgstr "En &väns album"
+
+#~ msgid "Download complete album of selected friend."
+#~ msgstr "Ladda ner hela albumet för markerad vän."
+
+#~ msgid "Photos of &Me"
+#~ msgstr "Foton av &mig"
+
+#~ msgid "Download all photos of currently logged in user."
+#~ msgstr "Ladda ner alla foton av användaren som för närvarande är inloggad."
+
+#~ msgid "Photos of My &Friend"
+#~ msgstr "Foton av en &vän"
+
+#~ msgid "Download all photos of selected friend."
+#~ msgstr "Ladda ner alla foton av markerad vän."
+
+#~ msgid "Friend:"
+#~ msgstr "Vän:"
+
+#~ msgid "Album:"
+#~ msgstr "Album:"
+
+#~ msgid "New Album"
+#~ msgstr "Nytt album"
+
+#~ msgid "Create new Facebook album"
+#~ msgstr "Skapa nytt album i Facebook"
+
+#~ msgctxt "facebook album list"
+#~ msgid "Reload"
+#~ msgstr "Uppdatera"
+
+#~ msgid "Reload album list"
+#~ msgstr "Uppdatera albumlista"
+
+#~ msgid "This is the location to which Facebook images will be downloaded."
+#~ msgstr "Detta är platsen dit Facebook-bilder kommer att laddas ner."
+
+#~ msgid "Options"
+#~ msgstr "Åtgärder"
+
+#~ msgid "These are options that will be applied to photos before upload."
+#~ msgstr ""
+#~ "Detta är åtgärderna som kommer att utföras med foton innan uppladdning."
+
+#~ msgid "Resize photos before uploading"
+#~ msgstr "Ändra storlek på foton innan uppladdning"
+
+#~ msgid "Maximum dimension:"
+#~ msgstr "Maximal storlek:"
+
+#~ msgid "JPEG quality:"
+#~ msgstr "JPEG-kvalitet:"
+
+#~ msgid "Direct upload"
+#~ msgstr "Direkt uppladdning"
+
+#~ msgid "Uploaded photos will not need manual approval by user."
+#~ msgstr ""
+#~ "Uppladdade foton kommer inte behöva manuellt godkännande av användaren."
+
+#~ msgid "Manual upload approval"
+#~ msgstr "Manuellt godkännande av uppladdning"
+
+#~ msgid ""
+#~ "Uploaded photos will wait in pending state until manually approved by "
+#~ "user."
+#~ msgstr ""
+#~ "Uppladdade foton kommer att hållas i vänteläge till de manuellt godkänns "
+#~ "av användaren."
+
+#~ msgid "Import from Facebook Web Service"
+#~ msgstr "Import från Facebooks webbtjänst"
+
+#~ msgid "Start Download"
+#~ msgstr "Starta nerladdning"
+
+#~ msgid "Start download from Facebook web service"
+#~ msgstr "Starta nerladdning från Facebooks webbtjänst"
+
+#~ msgid "Facebook Import/Export"
+#~ msgstr "Facebook import och export"
+
+#~ msgid "Shourya Singh Gupta"
+#~ msgstr "Shourya Singh Gupta"
+
+#~ msgid "Developer"
+#~ msgstr "Utvecklare"
+
+#~ msgctxt "name of special Facebook album for profile pictures"
+#~ msgid "Profile Pictures"
+#~ msgstr "Profilbilder"
+
+#~ msgid "Facebook import"
+#~ msgstr "Facebook import"
+
+#~ msgid ""
+#~ "Failed to save photo: %1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Misslyckades spara foto: %1\n"
+#~ "Vill du fortsätta?"
+
+#~ msgid ""
+#~ "Failed to download photo: %1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Misslyckades ladda ner foto: %1\n"
+#~ "Vill du fortsätta?"
+
+#~ msgid "Import from &Facebook..."
+#~ msgstr "Import från &Facebook..."
+
+#~ msgid ""
+#~ "Please follow the instructions in the browser window. Press \"OK\" when "
+#~ "done."
+#~ msgstr ""
+#~ "Följ instruktionerna i webbläsarens fönster. Klicka på \"Ok\" när du är "
+#~ "klar."
+
+#~ msgid "Photos taken with KDE"
+#~ msgstr "Foton tagna med KDE"
+
+#~ msgid "Handbook"
+#~ msgstr "Handbok"
+
+#~ msgid "Change Permission"
+#~ msgstr "Ändra rättigheter"
+
+#~ msgid "Change permission for KIPI application for photo upload"
+#~ msgstr "Ändra rättigheter för KIPI-program för uppladdning av foton"
+
+#~ msgid "Logging in to Facebook service..."
+#~ msgstr "Loggar in på Facebook-tjänst..."
+
+#~ msgid "Facebook Service Web Authorization"
+#~ msgstr "Behörighetskontroll för Facebooks webbtjänst"
+
+#~ msgid "Authentication"
+#~ msgstr "Behörighetskontroll"
+
+#~ msgid "Transfer Progress"
+#~ msgstr "Överföringsförlopp"
+
+#~ msgid "Downloading file %1"
+#~ msgstr "Laddar ner filen %1"

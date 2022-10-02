@@ -1,0 +1,483 @@
+# translation of kipiplugin_sendimages.po to Khmer
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2008, 2009, 2010.
+# Auk Piseth <piseth_dv@khmeros.info>, 2008.
+# Sophea <sophea@khmeros.info>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_sendimages\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2012-06-25 14:13+0700\n"
+"Last-Translator: Sophea <sophea@khmeros.info>\n"
+"Language-Team: Khmer <>\n"
+"Language: km\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: WordForge 0.8 RC1\n"
+"X-Language: km-CM\n"
+
+#: imageresize.cpp:116
+#, kde-format
+msgid "Error opening input file"
+msgstr "កំហុស​ក្នុង​កា​របើក​ឯកសារ​បញ្ចូល"
+
+#: imageresize.cpp:127
+#, kde-format
+msgid "Error opening temporary folder"
+msgstr "កំហុស​ក្នុង​កា​របើក​ថត​បណ្ដោះ​អាសន្ន"
+
+#: imageresize.cpp:175
+#, kde-format
+msgid "Cannot resize image. Aborting."
+msgstr "មិន​អាច​ផ្លាស់ប្ដូរ​ទំហំបានទេ ។ បោះបង់ ។"
+
+#: imageresize.cpp:186
+#, kde-format
+msgid "Cannot save resized image (JPEG). Aborting."
+msgstr "មិន​អាច​រក្សាទុក​រូបភាព​ដែល​បាន​ផ្លាស់ប្ដូរ​ទំហំ (JPEG) ។ បោះបង់ ។"
+
+#: imageresize.cpp:194
+#, kde-format
+msgid "Cannot save resized image (PNG). Aborting."
+msgstr "មិន​អាច​រក្សាទុក​រូបភាព​ដែល​បាន​ផ្លាស់ប្ដូរ​ទំហំ (PNG) ។ បោះបង់ ។"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_sendimagesui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr ""
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_sendimagesui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr ""
+
+#: plugin_sendimages.cpp:115
+#, kde-format
+msgid "Email Images..."
+msgstr "រូបភាព​អ៊ីមែល..."
+
+#: sendimages.cpp:133
+#, kde-format
+msgid "Email images"
+msgstr "អ៊ីមែល​រូបភាព"
+
+#: sendimages.cpp:176
+#, kde-format
+msgid "Operation canceled by user"
+msgstr "ប្រតិបត្តិការ​បាន​បោះបង់​ដោយ​អ្នក​ប្រើ"
+
+#: sendimages.cpp:190
+#, kde-format
+msgid "Resizing %1"
+msgstr "ផ្លាស់ប្ដូរ​ទំហំ​រូបភាព %1"
+
+#: sendimages.cpp:203
+#, kde-format
+msgid "%1 resized successfully"
+msgstr "បាន​ផ្លាស់ប្ដូរ​ទំហំ %1 ដោយ​ជោគជ័យ"
+
+#: sendimages.cpp:212
+#, kde-format
+msgid "Failed to resize %1: %2"
+msgstr "បាន​បរាជ័យ​ក្នុយ​ផ្លាស់ប្ដូរទំហំ %1 ៖ %2"
+
+#: sendimages.cpp:240
+#, kde-format
+msgid "There are no files to send"
+msgstr ""
+
+#: sendimages.cpp:258
+#, kde-format
+msgid "Build images properties file"
+msgstr "ស្ថាបនា​ឯកសារ​លក្ខណៈសម្បត្តិ​រូបភាព"
+
+#: sendimages.cpp:271
+#, kde-format
+msgid "no caption"
+msgstr "គ្មាន​ចំណង​ជើង"
+
+#: sendimages.cpp:274
+#, kde-format
+msgid "no keywords"
+msgstr "គ្មាន​ពាក្យ​គន្លឹះ"
+
+#: sendimages.cpp:276
+#, kde-format
+msgid ""
+"file \"%1\":\n"
+"Original images: %2\n"
+msgstr ""
+"ឯកសារ \"%1\" ៖\n"
+"រូបភាព​ដើម ៖ %2\n"
+
+#: sendimages.cpp:279
+#, kde-format
+msgid "Comments: %1\n"
+msgstr "សេចក្ដី​អធិប្បាយ ៖ %1\n"
+
+#: sendimages.cpp:282
+#, kde-format
+msgid "Tags: %1\n"
+msgstr "ស្លាក ៖ %1\n"
+
+#: sendimages.cpp:285
+#, kde-format
+msgid "Rating: %1\n"
+msgstr "អត្រា ៖ %1\n"
+
+#: sendimages.cpp:290 sendimages.cpp:298
+#, kde-format
+msgid "properties.txt"
+msgstr "properties.txt"
+
+#: sendimages.cpp:297
+#, fuzzy, kde-format
+#| msgid "Image properties file done"
+msgid "Image properties file cannot be opened"
+msgstr "បាន​ធ្វើ​ឯកសារ​លក្ខណៈសម្បត្តិ​រូបភាព"
+
+#: sendimages.cpp:306
+#, kde-format
+msgid "Image properties file done"
+msgstr "បាន​ធ្វើ​ឯកសារ​លក្ខណៈសម្បត្តិ​រូបភាព"
+
+#: sendimages.cpp:324
+#, kde-format
+msgid "Processing Failed"
+msgstr ""
+
+#: sendimages.cpp:325
+#, fuzzy, kde-format
+#| msgid ""
+#| "The images listed below cannot be resized.\n"
+#| "Do you want them to be added as attachments (without resizing)?"
+msgid ""
+"Some images cannot be resized.\n"
+"Do you want them to be added as attachments without resizing?"
+msgstr ""
+"រូបភាព​បាន​រាយ​ខាង​ក្រោម​មិន​អាច​ត្រូវ​បាន​ផ្លាស់ប្ដូរ​ទំហំ​ទេ ។\n"
+"តើ​អ្នក​ចង់​ឲ្យបន្ថែម​​ពួកវា​ជា​ឯកសារ​ភ្ជាប់ (ដោយ​មិន​ផ្លាស់ប្ដូរ​ទំហំ) ?"
+
+#: sendimages.cpp:390
+#, kde-format
+msgid ""
+"The file \"%1\" is too big to be sent, please reduce its size or change your "
+"settings"
+msgstr "ឯកសារ​ \"%1\" ​ធំ​ពេក​មិន​អាច​ផ្ញើបាន​ទេ សូម​កាត់​បន្ថយទំហំ​របស់​វា ឬ​ផ្លាស់​ប្តូរ​ការកំណត់​របស់​អ្នក"
+
+#: sendimages.cpp:442
+#, fuzzy, kde-format
+#| msgid "Starting default KDE email program..."
+msgid "Starting default desktop email program..."
+msgstr "កំពុង​ចាប់ផ្ដើម​កម្មវិធី​​អ៊ីមែល​របស់ KDE លំនាំដើម..."
+
+#: sendimages.cpp:674
+#, kde-format
+msgid "Failed to start \"%1\" program. Check your system."
+msgstr "បាន​បរាជ័យ​ក្នុង​កា​រចាប់ផ្ដើម​កម្មវិធី \"%1\" ។ ពិនិត្យមើល​ប្រព័ន្ធ​របស់​អ្នក ។"
+
+#: sendimages.cpp:687
+#, kde-format
+msgid "Starting \"%1\" program..."
+msgstr "កំពុង​ចាប់ផ្ដើម​កម្មវិធី \"%1\"..."
+
+#: sendimages.cpp:697
+#, kde-format
+msgid "After having sent your images by email..."
+msgstr "បន្ទាប់​ពី​ត្រូវ​បាន​ផ្ញើ​រូបភាព​របស់​អ្នក​ដោយ​អ៊ីមែល..."
+
+#: sendimages.cpp:698
+#, kde-format
+msgid "Press 'Close' button to clean up temporary files"
+msgstr "ចុច​ប៊ូតុង 'បិទ' ដើម្បី​ជម្រះ​ឯកសារ​បណ្ដោះ​អាសន្ន"
+
+#: sendimagesdialog.cpp:81
+#, kde-format
+msgid "Email Images Options"
+msgstr "ជម្រើស​រូបភាព​អ៊ីមែល"
+
+#: sendimagesdialog.cpp:84
+#, kde-format
+msgctxt "@action:button"
+msgid "&Send"
+msgstr ""
+
+#: sendimagesdialog.cpp:103
+#, kde-format
+msgid "Send Images"
+msgstr "ផ្ញើ​រូបភាព"
+
+#: sendimagesdialog.cpp:104
+#, fuzzy, kde-format
+#| msgid "A plugin to e-mail items"
+msgid "A tool to e-mail items"
+msgstr "កម្មវិធី​ជំនួយ​​សម្រាប់​ធាតុ​អ៊ីមែល"
+
+#: sendimagesdialog.cpp:105
+#, fuzzy, kde-format
+#| msgid "(c) 2003-2012, Gilles Caulier"
+msgid "(c) 2003-2016, Gilles Caulier"
+msgstr "រក្សាសិទ្ធិ​ឆ្នាំ ២០០៣-២០១២ ដោយ Gilles Caulier"
+
+#: sendimagesdialog.cpp:107
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: sendimagesdialog.cpp:107
+#, kde-format
+msgid "Author and Maintainer"
+msgstr "អ្នក​និពន្ធ និង​អ្នក​ថែទាំ"
+
+#: sendimagesdialog.cpp:110
+#, kde-format
+msgid "Michael Hoechstetter"
+msgstr "Michael Hoechstetter"
+
+#: sendimagesdialog.cpp:110 sendimagesdialog.cpp:113
+#, kde-format
+msgid "Developer"
+msgstr "អ្នក​អភិវឌ្ឍន៍"
+
+#: sendimagesdialog.cpp:113
+#, kde-format
+msgid "Tom Albers"
+msgstr "Tom Albers"
+
+#: settingswidget.cpp:91
+#, kde-format
+msgid "Mail program:"
+msgstr "កម្មវិធី​អ៊ីមែល ៖"
+
+#: settingswidget.cpp:94
+#, fuzzy, kde-format
+#| msgctxt "default mail agent"
+#| msgid "Default"
+msgctxt "default desktop mail agent"
+msgid "Default"
+msgstr "លំនាំដើម"
+
+#: settingswidget.cpp:106
+#, fuzzy, kde-format
+#| msgid ""
+#| "Select your preferred external email program here. <b>Default</b> is the "
+#| "current email program set in KDE System Settings."
+msgid ""
+"Select your preferred external email program here. <b>Default</b> is the "
+"current email program set in desktop system settings."
+msgstr ""
+"នៅ​ទីនេះ​ ជ្រើស​កម្មវិធី​អ៊ីមែល​ខាងក្រៅ​​ដែល​អ្នក​ពេញ​ចិត្ត ។ <b>លំនាំដើម</b> គឺ​ជា​កម្មវិធី​អ៊ីមែល​បច្ចុប្បន្ន​ដែល​"
+"បាន​កំណត់​​នៅ​លើ​បន្ទះ​បញ្ជា​របស់ KDE ។"
+
+#: settingswidget.cpp:112
+#, kde-format
+msgid "Attach a file with image properties from %1"
+msgstr "ភ្ជាប់​ឯកសារ​ជា​មួយ​នឹង​លក្ខណៈសម្បត្តិ​រូបភាព​ពី %1"
+
+#: settingswidget.cpp:115
+#, kde-format
+msgid ""
+"If you enable this option, all image properties set by %1 as Comments, "
+"Rating, or Tags, will be added as an attached file."
+msgstr ""
+"ប្រសិនបើ​បើក​ជម្រើស​នេះ លក្ខណៈសម្បត្តិ​រូបភាព​ទាំង​អស់​ដែល​បានកំណត់ដោយ %1 ជា​មតិយោបល់ ការ​វាយតម្លៃ ឬ​"
+"ស្លាក នឹង​ត្រូវ​បាន​បន្ថែម​ជា​ឯកសារ​ភ្ជាប់ ។"
+
+#: settingswidget.cpp:125
+#, kde-format
+msgid " MB"
+msgstr "មេកាបៃ​"
+
+#: settingswidget.cpp:127
+#, kde-format
+msgid "Maximum email size limit:"
+msgstr "ដែន​កំណត់​ទំហំ​អ៊ីមែល​អតិបរមា ៖"
+
+#: settingswidget.cpp:132
+#, kde-format
+msgid "Adjust image properties"
+msgstr "លៃតម្រូវ​លក្ខណៈសម្បត្តិ​រូបភាព"
+
+#: settingswidget.cpp:134
+#, kde-format
+msgid ""
+"If you enable this option, all images to be sent can be resized and "
+"recompressed."
+msgstr "ប្រសិន​បើអ្នក​អនុញ្ញាត​ជម្រើស​នេះ រូបភាព​​ទាំងអស់​ត្រូវ​ផ្ញើ​អាច​ត្រូវ​បាន​ផ្លាស់ប្ដូរ​ទំហំ និង​បង្ហាប់ ។"
+
+#: settingswidget.cpp:137
+#, kde-format
+msgid "Image Properties"
+msgstr "លក្ខណៈសម្បត្តិ​រូបភាព"
+
+#: settingswidget.cpp:141 settingswidget.cpp:167
+#, kde-format
+msgid "Very Small (320 pixels)"
+msgstr "តូច​បំផុត (៣២០ ភីកសែល)"
+
+#: settingswidget.cpp:142 settingswidget.cpp:168
+#, kde-format
+msgid "Small (640 pixels)"
+msgstr "តូច (៦៤០ ភីកសែល)"
+
+#: settingswidget.cpp:143 settingswidget.cpp:169
+#, kde-format
+msgid "Medium (800 pixels)"
+msgstr "មធ្យម (៨០០ ភីកសែល)"
+
+#: settingswidget.cpp:144 settingswidget.cpp:170
+#, kde-format
+msgid "Big (1024 pixels)"
+msgstr "ធំ (១០២៤ ភីកសែល)"
+
+#: settingswidget.cpp:145 settingswidget.cpp:171
+#, kde-format
+msgid "Very Big (1280 pixels)"
+msgstr "ធំណាស់ (១២៨០ ភីកសែល)"
+
+#: settingswidget.cpp:146 settingswidget.cpp:172
+#, fuzzy, kde-format
+#| msgid "Huge - for printing (1600 pixels)"
+msgid "Large - for printing (1600 pixels)"
+msgstr "ធំសម្បើម - សម្រាប់បោះពុម្ព (១៦០០ ភីកសែល)"
+
+#: settingswidget.cpp:147 settingswidget.cpp:173
+#, fuzzy, kde-format
+#| msgid "Small (640 pixels)"
+msgid "Full HD (1920 pixels)"
+msgstr "តូច (៦៤០ ភីកសែល)"
+
+#: settingswidget.cpp:148 settingswidget.cpp:174
+#, fuzzy, kde-format
+#| msgid "Small (640 pixels)"
+msgid "Ultra HD (3840 pixels)"
+msgstr "តូច (៦៤០ ភីកសែល)"
+
+#: settingswidget.cpp:150
+#, fuzzy, kde-format
+#| msgid ""
+#| "<p>Select the size of the images that are to be sent:</p><p><b>%1</b>: "
+#| "use this if you have a very slow Internet connection or the target "
+#| "mailbox size is very limited.</p><p><b>%2</b>: use this if you have a "
+#| "slow Internet connection and the target mailbox size is limited.</p><p><b>"
+#| "%3</b>: this is the default value for medium Internet connection speed "
+#| "and target mailbox size.</p><p><b>%4</b>: use this if you have a high-"
+#| "speed Internet connection and the target mailbox size is not limited.</"
+#| "p><p><b>%5</b>: use this if you have no size or speed restrictions.</"
+#| "p><p><b>%6</b>: use this only for printing purposes.</p>"
+msgid ""
+"<p>Select the size of the images that are to be sent:</p><p><b>%1</b>: use "
+"this if you have a very slow Internet connection or the target mailbox size "
+"is very limited.</p><p><b>%2</b>: use this if you have a slow Internet "
+"connection and the target mailbox size is limited.</p><p><b>%3</b>: this is "
+"the default value for medium Internet connection speed and target mailbox "
+"size.</p><p><b>%4</b>: use this if you have a high-speed Internet connection "
+"and the target mailbox size is not limited.</p><p><b>%5</b>: use this if you "
+"have no size or speed restrictions.</p><p><b>%6</b>: use this only for "
+"printing purposes.</p><p><b>%7</b>: use this for optimal viewing on Full HD "
+"displays. Only if you have a high-speed Internet connection and the target "
+"mailbox size is not limited.</p><p><b>%8</b>: use this for optimal viewing "
+"on Ultra HD displays. Only if you have a high-speed Internet connection and "
+"the target mailbox size is not limited.</p>"
+msgstr ""
+"<p>នៅ​ទីនេះ ជ្រើស​ទំហំ​រូបភាព​ត្រូវ​ផ្ញើ ៖</p><p><b>%1</b> ៖ ប្រើ​វា ប្រសិន​បើ​អ្នក​មាន​អ៊ីនធឺណិត​យឺត ឬ​"
+"ប្រសិន​បើ​ទំហំ​ប្រអប់​សំបុត្រ​គោលដៅ​ត្រូ​វបាន​កំណត់​យ៉ាង​ច្បាស់លាស់ ។</p><p><b>%2</b> ៖ ប្រើ​វា ប្រសិន​បើ​អ្នក​"
+"មានអ៊ីនធឺណិត​យឺត​ និង​ប្រសិន​បើ​ទំហំ​ប្រអប់​សំបុត្រ​គោលដៅ​ត្រូវ​បាន​កំណត់ ។</p><p><b>%3</b> ៖ នេះ​គឺ​ជា​តម្លៃ​"
+"លំនាំដើម សម្រាប់​អ៊ីនធឺណិត​ដែល​មានល្បឿន​មធ្យម​ និង​ទំហំ​ប្រអប់​សំបុត្រ​គោលដៅ ។</p><p><b>%4</b> ៖ ប្រើ​វា "
+"ប្រសិន​បើ​អ្នក​មានអ៊ីនធឺណិតលឿន និង​ប្រសិន​បើ​ទំហំ​ប្រអប់សំបុត្រ​គៅ​ដៅ​មិន​ត្រូវ​បាន​កំណត់ ។</p><p><b>%5</b> ៖ "
+"ប្រើ​វា ប្រសិន​បើអ្នក​គ្មាន​ការ​ដាក់កម្រិត​ទំហំ ឬ​ល្បឿន ។</p><p><b>%6</b> ៖ ប្រើ​វា​ ​​សម្រាប់តែ​"
+"បោះពុម្ព ។</p>"
+
+#: settingswidget.cpp:177
+#, kde-format
+msgid "Image size:"
+msgstr "ទំហំ​រូបភាព ៖"
+
+#: settingswidget.cpp:186
+#, kde-format
+msgid "<p>Select the file format of the image files to be sent.</p>"
+msgstr "<p>ជ្រើស​ទ្រង់ទ្រាយ​ឯកសារ​រូបភាព​ត្រូវ​ផ្ញើ ។</p>"
+
+#: settingswidget.cpp:187
+#, kde-format
+msgid ""
+"<p><b>JPEG</b>: The Joint Photographic Experts Group file format is a good "
+"web file format but it uses lossy compression.</p><p><b>PNG</b>: the "
+"Portable Network Graphics format is an extensible file format for the "
+"lossless, portable, well-compressed storage of raster images. PNG provides a "
+"patent-free replacement for GIF and can also replace many common uses of "
+"TIFF. PNG is designed to work well in online viewing applications, such as "
+"the World Wide Web, so it is fully streamable with a progressive display "
+"option. Also, PNG can store gamma and chromaticity data for improved color-"
+"matching on heterogeneous platforms.</p>"
+msgstr ""
+"<p><b>JPEG</b> ៖ ទ្រង់ទ្រាយ​ឯកសារ​របស់ក្រុម​អ្នក​ជំនាញ​រូបភាព​គឺ​ជា​ទ្រង់ទ្រាយ​ឯកសារ​បណ្ដាញ​ដ៏​ល្អ ប៉ុន្តែ​វា​"
+"ប្រើ​ការបង្ហាប់​ដែល​គ្មានការ​បាត់បង់ ។</p><p><b>PNG</b> ៖ទ្រង់ទ្រាយ​ក្រាហ្វិក​បណ្ដាញ​ចល័ត​គឺ​ជា​"
+"ទ្រង់ទ្រាយ​ឯកសារ​​ពង្រីក​សម្រាប់​គ្មានកា​របាត់បង់ ចល័ត ឧបករណ៍​ផ្ទុក​ដែលបានបង្ហាប់​យ៉ាង​ល្អរបស់​រូបភាព​ ។ PNG "
+"ផ្ដល់​នូវ​កា​រជំនួស​ដោយសេរី​ជាក់ស្ដែង​សម្រាប់ GIF និង​ក៏​អាច​ជំនួស​ការ​ប្រើធម្មតា​ជា​ច្រើន​របស់ TIFF ។ PNG "
+"ត្រូវ​បាន​រចនា​ដើម្បីដំណើរការ​យ៉ាង​ល្អ​នៅ​ក្នុង​កម្មវិធី​មើល​លើ​បណ្ដាញ ដូច​ជា​វើលវ៉ាយវេប ដូច្នេះ​វា​ហូរ​"
+"បានពេញលេញ​ជាមួយ​នឹងជម្រើស​បង្ហាញ​វឌ្ឍនភាព ។ PNG ក៏​អាច​ផ្ទុក​​ទិន្នន័យ​ហ្គាំម៉ា និង​ក្រូម​សម្រាប់​កា​រផ្គូផ្គង​ពណ៌​"
+"ដែល​បាន​បង្កើននៅ​លើ​វេទិកា​​ដូចគ្នា ។</p>"
+
+#: settingswidget.cpp:197
+#, kde-format
+msgid "Image format:"
+msgstr "ទ្រង់ទ្រាយ​រូបភាព ៖"
+
+#: settingswidget.cpp:206
+#, kde-format
+msgid "<p>The new compression value of JPEG images to be sent:</p>"
+msgstr "<p>តម្លៃ​បង្ហាប់​ថ្មី​របស់​រូបភាព JPEG ត្រូវ​ផ្ញើ ៖</p>"
+
+#: settingswidget.cpp:207
+#, kde-format
+msgid ""
+"<p><b>1</b>: very high compression<br/><b>25</b>: high compression<br/"
+"><b>50</b>: medium compression<br/><b>75</b>: low compression (default "
+"value)<br/><b>100</b>: no compression</p>"
+msgstr ""
+"<p><b>១</b> ៖ កា​បង្ហាប់​ខ្ពស់​បំផុត<br/><b>២៥</b> ៖ កា​របង្ហាប់​ខ្ពស់<br/><b>៥០</b> ៖ កា​"
+"របង្ហាប់​មធ្យម<br/><b>៧៥</b> ៖ កា​របង្ហាប់ទាប (តម្លៃ​លំនាំដើម)<br/><b>១០០</b> ៖ គ្មាន​ការ​"
+"បង្ហាប់</p>"
+
+#: settingswidget.cpp:215
+#, kde-format
+msgid "Image quality:"
+msgstr "គុណភាព​រូបភាព ៖"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "ខឹម សុខែម, ម៉ន ម៉េត, សេង សុត្ថា, ចាន់ សម្បត្តិរតនៈ, សុខ សុភា"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr ""
+#~ "khoemsokhem@khmeros.info,​​mornmet@khmeros.info,sutha@khmeros.info,"
+#~ "ratanak@khmeros.info,sophea@khmeros.info"
+
+#~ msgid "Failed to resize images"
+#~ msgstr "បាន​បរាជ័យ​ក្នុងការ​ផ្លាស់ប្ដូរ​ទំហំ​រូបភាព"
+
+#~ msgid "Huge - for printing (1600 pixels)"
+#~ msgstr "ធំសម្បើម - សម្រាប់បោះពុម្ព (១៦០០ ភីកសែល)"
+
+#~ msgid "Handbook"
+#~ msgstr "សៀវភៅ​ដៃ"
+
+#~ msgid "Images"
+#~ msgstr "រូបភាព"
+
+#~ msgid "Image List"
+#~ msgstr "បញ្ជី​រូបភាព"
+
+#~ msgid "Mail"
+#~ msgstr "សំបុត្រ"
+
+#~ msgid "Mail Options"
+#~ msgstr "ជម្រើស​សំបុត្រ"

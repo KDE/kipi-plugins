@@ -1,0 +1,207 @@
+# Lithuanian translations for kipiplugin_kioexportimport package.
+# Copyright (C) 2009 This_file_is_part_of_KDE
+# This file is distributed under the same license as the kipiplugin_kioexportimport package.
+#
+# Andrius Štikonas <andrius@stikonas.eu>, 2009.
+# Liudas Ališauskas <liudas.alisauskas@gmail.com>, 2011.
+# Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>, 2015.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_kioexportimport\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2015-12-29 21:15+0200\n"
+"Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
+"Language-Team: lt <kde-i18n-lt@kde.org>\n"
+"Language: lt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n%10>=2 && (n%100<10 || n"
+"%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3);\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: KioExportWidget.cpp:61
+#, kde-format
+msgid "Target location: "
+msgstr "Tikslo vieta:"
+
+#: KioExportWidget.cpp:62
+#, kde-format
+msgid ""
+"Sets the target address to upload the images to. This can be any address as "
+"used in Dolphin or Konqueror, e.g. ftp://my.server.org/sub/folder."
+msgstr ""
+"Nustato tikslo, į kur įkelti paveikslėlius, adresą. Tai gali būti bet koks "
+"adresas naudojamas Dolphin ar Konqueror programose. Pvz.: ftp://mano."
+"serveris.org/paveiksleliai/poaplankis."
+
+#: KioExportWidget.cpp:66
+#, kde-format
+msgid "Select target location..."
+msgstr "Parinkite tikslo vietą..."
+
+#: KioExportWidget.cpp:72
+#, kde-format
+msgid "This is the list of images to upload to the specified target."
+msgstr "Sąrašas paveikslėlių įkėlimui į nurodytą tikslą."
+
+#: KioExportWidget.cpp:134
+#, kde-format
+msgid "Select target..."
+msgstr "Parinkite tikslą..."
+
+#: KioExportWidget.cpp:135
+#, kde-format
+msgid "All Files (*)"
+msgstr ""
+
+#: KioExportWidget.cpp:155
+#, fuzzy, kde-format
+#| msgid "not selected"
+msgid "<not selected>"
+msgstr "nepažymėti"
+
+#: KioExportWindow.cpp:64
+#, fuzzy, kde-format
+#| msgid "Export to Remote Computer"
+msgid "Export to Remote Storage"
+msgstr "Eksportuoti į nutolusį kompiuterį"
+
+#: KioExportWindow.cpp:67
+#, kde-format
+msgid "Start export"
+msgstr "Pradėti eksportavimą"
+
+#: KioExportWindow.cpp:68
+#, kde-format
+msgid "Start export to the specified target"
+msgstr "Pradėti eksportavimą į nurodytą tikslą"
+
+#: KioExportWindow.cpp:84
+#, fuzzy, kde-format
+#| msgid "Export to remote computer"
+msgid "Export to remote storage"
+msgstr "Eksportuoti į nutolusį kompiuterį"
+
+#: KioExportWindow.cpp:85
+#, fuzzy, kde-format
+#| msgid "A Kipi plugin to export images over network using KIO-Slave"
+msgid "A tool to export images over network using KIO-Slave"
+msgstr ""
+"Kipi papildinys eksportuoti paveikslėlius per tinklą naudojant KIO-Slave"
+
+#: KioExportWindow.cpp:86 KioImportWindow.cpp:83
+#, kde-format
+msgid "(c) 2009, Johannes Wienke"
+msgstr "(c) 2009, Johannes Wienke"
+
+#: KioExportWindow.cpp:88 KioImportWindow.cpp:85
+#, kde-format
+msgid "Johannes Wienke"
+msgstr "Johannes Wienke"
+
+#: KioExportWindow.cpp:89 KioImportWindow.cpp:86
+#, kde-format
+msgid "Developer and maintainer"
+msgstr "Programuotojas ir prižiūrėtojas"
+
+#: KioExportWindow.cpp:198
+#, kde-format
+msgid "Upload not completed"
+msgstr "Eksportavimas neužbaigtas"
+
+#: KioExportWindow.cpp:199
+#, kde-format
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to export these images now."
+msgstr ""
+"Kai kurie paveikslėliai nebuvo perkelti ir vis dar yra sąraše. Galite "
+"pamėginti dar kartą eksportuoti šiuos paveikslėlius."
+
+#: KioImportWidget.cpp:52
+#, kde-format
+msgid "This is the list of images to import into the current album."
+msgstr "Sąrašas paveikslėlių, kuriuos importuoti į dabartinį albumą."
+
+#: KioImportWindow.cpp:60
+#, fuzzy, kde-format
+#| msgid "Import from Remote Computer"
+msgid "Import from Remote Storage"
+msgstr "Importuoti iš nutolusio kompiuterio"
+
+#: KioImportWindow.cpp:64
+#, kde-format
+msgid "Start import"
+msgstr "Pradėti importavimą..."
+
+#: KioImportWindow.cpp:65
+#, kde-format
+msgid "Start importing the specified images into the currently selected album."
+msgstr "Pradėti nurodytų paveikslėlių importavimą į pažymėtą albumą."
+
+#: KioImportWindow.cpp:81
+#, fuzzy, kde-format
+#| msgid "Import from remote computer"
+msgid "Import from remote storage"
+msgstr "Importuoti iš nutolusio kompiuterio"
+
+#: KioImportWindow.cpp:82
+#, fuzzy, kde-format
+#| msgid "A Kipi plugin to import images over network using KIO-Slave"
+msgid "A tool to import images over network"
+msgstr ""
+"Kipi papildinys importuoti paveikslėlius per tinklą naudojant KIO-Slave"
+
+#: KioImportWindow.cpp:137
+#, kde-format
+msgid "Import not completed"
+msgstr "Importavimas neužbaigtas"
+
+#: KioImportWindow.cpp:138
+#, kde-format
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to import these images now."
+msgstr ""
+"Kai kurie paveikslėliai nebuvo perkelti ir vis dar yra sąraše. Galite "
+"pamėginti dar kartą importuoti šiuos paveikslėlius."
+
+#. i18n: ectx: Menu (Import)
+#: kipiplugin_remotestorageui.rc:7
+#, kde-format
+msgid "&Import"
+msgstr ""
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_remotestorageui.rc:11
+#, kde-format
+msgid "&Export"
+msgstr ""
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_remotestorageui.rc:17
+#, kde-format
+msgid "Main Toolbar"
+msgstr ""
+
+#: plugin_remotestorage.cpp:93
+#, fuzzy, kde-format
+#| msgid "Export to remote computer..."
+msgid "Export to remote storage..."
+msgstr "Eksportuoti į nutolusį kompiuterį..."
+
+#: plugin_remotestorage.cpp:105
+#, fuzzy, kde-format
+#| msgid "Import from remote computer..."
+msgid "Import from remote storage..."
+msgstr "Importuoti iš nutolusio kompiuterio..."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Liudas Ališauskas"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "liudas@akmc.lt"

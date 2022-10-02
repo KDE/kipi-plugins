@@ -1,0 +1,460 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Ozan Çağlayan <ozan@pardus.org.tr>, 2010-2011.
+# obsoleteman <tulliana@gmail.com>, 2008-2009,2012.
+# Volkan Gezer <volkangezer@gmail.com>, 2013.
+# Emir SARI <emir_sari@icloud.com>, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: extragear-graphics-kde4\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2022-04-11 11:11+0300\n"
+"Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
+"Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 21.12.3\n"
+
+#: imageresize.cpp:116
+#, kde-format
+msgid "Error opening input file"
+msgstr "Girdi dosyası açılamadı"
+
+#: imageresize.cpp:127
+#, kde-format
+msgid "Error opening temporary folder"
+msgstr "Geçici dizin açılamadı"
+
+#: imageresize.cpp:175
+#, kde-format
+msgid "Cannot resize image. Aborting."
+msgstr "Görsel yeniden boyutlandırılamıyor. İptal ediliyor."
+
+#: imageresize.cpp:186
+#, kde-format
+msgid "Cannot save resized image (JPEG). Aborting."
+msgstr "Yeniden boyutlandırılan görsel (JPEG) kaydedilemedi. İptal ediliyor."
+
+#: imageresize.cpp:194
+#, kde-format
+msgid "Cannot save resized image (PNG). Aborting."
+msgstr "Yeniden boyutlandırılan görsel (PNG) kaydedilemedi. İptal ediliyor."
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_sendimagesui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Dışarıya Aktar"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_sendimagesui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Ana Araç Çubuğu"
+
+#: plugin_sendimages.cpp:115
+#, kde-format
+msgid "Email Images..."
+msgstr "Görselleri E-posta ile Gönder..."
+
+#: sendimages.cpp:133
+#, kde-format
+msgid "Email images"
+msgstr "Görselleri e-posta ile gönder"
+
+#: sendimages.cpp:176
+#, kde-format
+msgid "Operation canceled by user"
+msgstr "İşlem kullanıcı tarafından kesildi"
+
+#: sendimages.cpp:190
+#, kde-format
+msgid "Resizing %1"
+msgstr "%1 Yeniden Boyutlandırılıyor"
+
+#: sendimages.cpp:203
+#, kde-format
+msgid "%1 resized successfully"
+msgstr "%1 başarılı bir şekilde yeniden boyutlandırıldı"
+
+#: sendimages.cpp:212
+#, kde-format
+msgid "Failed to resize %1: %2"
+msgstr "%1 yeniden boyutlandırılamadı: %2"
+
+#: sendimages.cpp:240
+#, kde-format
+msgid "There are no files to send"
+msgstr "Gönderilecek dosya yok"
+
+#: sendimages.cpp:258
+#, kde-format
+msgid "Build images properties file"
+msgstr "Görsel özellikleri dosyayı oluştur"
+
+#: sendimages.cpp:271
+#, kde-format
+msgid "no caption"
+msgstr "başlık yok"
+
+#: sendimages.cpp:274
+#, kde-format
+msgid "no keywords"
+msgstr "anahtar sözcük yok"
+
+#: sendimages.cpp:276
+#, kde-format
+msgid ""
+"file \"%1\":\n"
+"Original images: %2\n"
+msgstr ""
+"dosya \"%1\":\n"
+"Özgün görseller: %2\n"
+
+#: sendimages.cpp:279
+#, kde-format
+msgid "Comments: %1\n"
+msgstr "Açıklamalar: %1\n"
+
+#: sendimages.cpp:282
+#, kde-format
+msgid "Tags: %1\n"
+msgstr "Etiketler: %1\n"
+
+#: sendimages.cpp:285
+#, kde-format
+msgid "Rating: %1\n"
+msgstr "Beğeni: %1\n"
+
+#: sendimages.cpp:290 sendimages.cpp:298
+#, kde-format
+msgid "properties.txt"
+msgstr "özellikler.txt"
+
+#: sendimages.cpp:297
+#, kde-format
+msgid "Image properties file cannot be opened"
+msgstr "Görsel özellikleri dosyası oluşturulamadı"
+
+#: sendimages.cpp:306
+#, kde-format
+msgid "Image properties file done"
+msgstr "Görsel özellikleri dosyası oluşturuldu"
+
+#: sendimages.cpp:324
+#, kde-format
+msgid "Processing Failed"
+msgstr "İşleme Başarısız"
+
+#: sendimages.cpp:325
+#, kde-format
+msgid ""
+"Some images cannot be resized.\n"
+"Do you want them to be added as attachments without resizing?"
+msgstr ""
+"Aşağıda listelenmiş görseller yeniden boyutlandırılamazlar.\n"
+"Görsellerin yeniden boyutlandırmadan ek olarak eklenmesini ister misiniz?"
+
+#: sendimages.cpp:390
+#, kde-format
+msgid ""
+"The file \"%1\" is too big to be sent, please reduce its size or change your "
+"settings"
+msgstr ""
+"\"%1\"  dosyası gönderilmek için çok büyük, lütfen resmin boyutunu küçültün "
+"veya ayarlarınızı değiştirin"
+
+#: sendimages.cpp:442
+#, kde-format
+msgid "Starting default desktop email program..."
+msgstr "Öntanımlı e-posta uygulaması başlatılıyor..."
+
+#: sendimages.cpp:674
+#, kde-format
+msgid "Failed to start \"%1\" program. Check your system."
+msgstr "\"%1\" uygulaması başlatılamadı. Lütfen sisteminizi kontrol edin."
+
+#: sendimages.cpp:687
+#, kde-format
+msgid "Starting \"%1\" program..."
+msgstr "\"%1\" uygulaması başlatılıyor..."
+
+#: sendimages.cpp:697
+#, kde-format
+msgid "After having sent your images by email..."
+msgstr "Görselleriniz e-postayla gönderildikten sonra..."
+
+#: sendimages.cpp:698
+#, kde-format
+msgid "Press 'Close' button to clean up temporary files"
+msgstr "Geçici dosyaları temizlemek için 'Kapat' düğmesine basın"
+
+#: sendimagesdialog.cpp:81
+#, kde-format
+msgid "Email Images Options"
+msgstr "Görselleri E-postalama Seçenekleri"
+
+#: sendimagesdialog.cpp:84
+#, kde-format
+msgctxt "@action:button"
+msgid "&Send"
+msgstr "&Gönder"
+
+#: sendimagesdialog.cpp:103
+#, kde-format
+msgid "Send Images"
+msgstr "Görselleri Gönder"
+
+#: sendimagesdialog.cpp:104
+#, kde-format
+msgid "A tool to e-mail items"
+msgstr "Ögeleri e-posta ile göndermek için bir araç"
+
+#: sendimagesdialog.cpp:105
+#, kde-format
+msgid "(c) 2003-2016, Gilles Caulier"
+msgstr "(c) 2003-2016, Gilles Caulier"
+
+#: sendimagesdialog.cpp:107
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: sendimagesdialog.cpp:107
+#, kde-format
+msgid "Author and Maintainer"
+msgstr "Yazar ve Projeyi Yürüten"
+
+#: sendimagesdialog.cpp:110
+#, kde-format
+msgid "Michael Hoechstetter"
+msgstr "Michael Hoechstetter"
+
+#: sendimagesdialog.cpp:110 sendimagesdialog.cpp:113
+#, kde-format
+msgid "Developer"
+msgstr "Geliştirici"
+
+#: sendimagesdialog.cpp:113
+#, kde-format
+msgid "Tom Albers"
+msgstr "Tom Albers"
+
+#: settingswidget.cpp:91
+#, kde-format
+msgid "Mail program:"
+msgstr "E-posta uygulaması:"
+
+#: settingswidget.cpp:94
+#, kde-format
+msgctxt "default desktop mail agent"
+msgid "Default"
+msgstr "Öntanımlı"
+
+#: settingswidget.cpp:106
+#, kde-format
+msgid ""
+"Select your preferred external email program here. <b>Default</b> is the "
+"current email program set in desktop system settings."
+msgstr ""
+"Buradan tercih ettiğiniz harici e-posta uygulamasını seçin. <b>Öntanımlı</"
+"b>uygulama masaüstü sistem ayarlarında belirlenmiş olandır."
+
+#: settingswidget.cpp:112
+#, kde-format
+msgid "Attach a file with image properties from %1"
+msgstr "%1 konumundan görsel özelliklerine sahip bir dosya iliştir"
+
+#: settingswidget.cpp:115
+#, kde-format
+msgid ""
+"If you enable this option, all image properties set by %1 as Comments, "
+"Rating, or Tags, will be added as an attached file."
+msgstr ""
+"Bu seçeneği etkinleştirirseniz Yorumlar, Derece, veya Etiketler gibi %1 "
+"tarafından belirlenen tüm görsel özellikleri iliştirilmiş bir dosya olarak "
+"eklenecektir."
+
+#: settingswidget.cpp:125
+#, kde-format
+msgid " MB"
+msgstr " MB"
+
+#: settingswidget.cpp:127
+#, kde-format
+msgid "Maximum email size limit:"
+msgstr "En büyük e-posta boyutu sınırı:"
+
+#: settingswidget.cpp:132
+#, kde-format
+msgid "Adjust image properties"
+msgstr "Görsel özelliklerini ayarla"
+
+#: settingswidget.cpp:134
+#, kde-format
+msgid ""
+"If you enable this option, all images to be sent can be resized and "
+"recompressed."
+msgstr ""
+"Bu seçeneği etkinleştirirseniz gönderilecek tüm görseller yeniden "
+"boyutlandırılabilir ve yeniden sıkıştırılabilir."
+
+#: settingswidget.cpp:137
+#, kde-format
+msgid "Image Properties"
+msgstr "Görsel Özellikleri"
+
+#: settingswidget.cpp:141 settingswidget.cpp:167
+#, kde-format
+msgid "Very Small (320 pixels)"
+msgstr "Çok Küçük (320 piksel)"
+
+#: settingswidget.cpp:142 settingswidget.cpp:168
+#, kde-format
+msgid "Small (640 pixels)"
+msgstr "Küçük (640 piksel)"
+
+#: settingswidget.cpp:143 settingswidget.cpp:169
+#, kde-format
+msgid "Medium (800 pixels)"
+msgstr "Orta (800 piksel)"
+
+#: settingswidget.cpp:144 settingswidget.cpp:170
+#, kde-format
+msgid "Big (1024 pixels)"
+msgstr "Büyük (1024 piksel)"
+
+#: settingswidget.cpp:145 settingswidget.cpp:171
+#, kde-format
+msgid "Very Big (1280 pixels)"
+msgstr "Çok Büyük (1280 piksel)"
+
+#: settingswidget.cpp:146 settingswidget.cpp:172
+#, kde-format
+msgid "Large - for printing (1600 pixels)"
+msgstr "Büyük - yazdırmak için (1600 piksel)"
+
+#: settingswidget.cpp:147 settingswidget.cpp:173
+#, kde-format
+msgid "Full HD (1920 pixels)"
+msgstr "Tam Yüksek Belirginlikli (1920 piksel)"
+
+#: settingswidget.cpp:148 settingswidget.cpp:174
+#, kde-format
+msgid "Ultra HD (3840 pixels)"
+msgstr "Ultra Yüksek Belirginlikli (3840 piksel)"
+
+#: settingswidget.cpp:150
+#, kde-format
+msgid ""
+"<p>Select the size of the images that are to be sent:</p><p><b>%1</b>: use "
+"this if you have a very slow Internet connection or the target mailbox size "
+"is very limited.</p><p><b>%2</b>: use this if you have a slow Internet "
+"connection and the target mailbox size is limited.</p><p><b>%3</b>: this is "
+"the default value for medium Internet connection speed and target mailbox "
+"size.</p><p><b>%4</b>: use this if you have a high-speed Internet connection "
+"and the target mailbox size is not limited.</p><p><b>%5</b>: use this if you "
+"have no size or speed restrictions.</p><p><b>%6</b>: use this only for "
+"printing purposes.</p><p><b>%7</b>: use this for optimal viewing on Full HD "
+"displays. Only if you have a high-speed Internet connection and the target "
+"mailbox size is not limited.</p><p><b>%8</b>: use this for optimal viewing "
+"on Ultra HD displays. Only if you have a high-speed Internet connection and "
+"the target mailbox size is not limited.</p>"
+msgstr ""
+"<p>Gönderilecek görsel boyutunu buradan seçin:</p><p><b>%1</b>: Eğer çok "
+"yavaş bir İnternet bağlantınız varsa veya hedef posta kutusunun boyutu "
+"sınırlıysa bunu kullanın.</p><p><b>%2</b>: Eğer çok yavaş bir İnternet "
+"bağlantınız varsa veya hedef posta kutusunun boyutu sınırlıysa bunu kullanın."
+"</p><p><b>%3</b>: Ortalama bir İnternet bağlantısı ve hedef posta kutusu "
+"boyutu için öntanımlı değer budur.</p><p><b>%4</b>: Yüksek hızlı İnternet "
+"bağlantınız varsa ve hedef posta kutusunun boyutu sınırsızsa bunu kullanın.</"
+"p><p><b>%5</b>: Eğer hiçbir boyut ve hız kısıtlamanız yoksa bunu kullanın.</"
+"p><p><b>%6</b>: Yalnızca yazdırma amacı için bunu kullanın.</p><p><b>%7</b>: "
+"Full HD ekranlarda ideal görüntü için bunu kullanın. Sadece yüksek hızlı "
+"internetiniz varsa ve hedef posta kutusunun boyutu sınırsızsa kullanın.</"
+"p><p><b>%8</b>: Ultra YB ekranlarda ideal görüntü için bunu kullanın. "
+"Yalnızcayüksek hızlı internetiniz varsa ve hedef posta kutusunun boyutu "
+"sınırsızsa kullanın.</p>"
+
+#: settingswidget.cpp:177
+#, kde-format
+msgid "Image size:"
+msgstr "Görsel boyutu:"
+
+#: settingswidget.cpp:186
+#, kde-format
+msgid "<p>Select the file format of the image files to be sent.</p>"
+msgstr "<p>Gönderilecek görsel dosyalarının biçimini buradan seçin.</p>"
+
+#: settingswidget.cpp:187
+#, kde-format
+msgid ""
+"<p><b>JPEG</b>: The Joint Photographic Experts Group file format is a good "
+"web file format but it uses lossy compression.</p><p><b>PNG</b>: the "
+"Portable Network Graphics format is an extensible file format for the "
+"lossless, portable, well-compressed storage of raster images. PNG provides a "
+"patent-free replacement for GIF and can also replace many common uses of "
+"TIFF. PNG is designed to work well in online viewing applications, such as "
+"the World Wide Web, so it is fully streamable with a progressive display "
+"option. Also, PNG can store gamma and chromaticity data for improved color-"
+"matching on heterogeneous platforms.</p>"
+msgstr ""
+"<p><b>JPEG</b>: Joint Photographic Experts Group dosya biçimi iyi bir Web "
+"dosya biçimidir ancak kayıplı sıkıştırma kullanır.</p><p><b>PNG</b>: "
+"Portable Network Graphics biçimi ham görsellerin kayıpsız, taşınabilir, iyi "
+"sıkıştırılmış depolaması için esnek bir dosya biçimidir. PNG, GIF için "
+"patentsiz bir alternatif sağlar ve ayrıca TIFF biçiminin genel kullanımının "
+"yerini alabilir. PNG, World Wide Web gibi çevrimiçi görüntüleme "
+"uygulamalarında iyi bir şekilde çalışmak için tasarlandı, bu yüzden gelişen "
+"görüntü seçeneğiyle birlikte ilerleyebilir. Ayrıca, PNG, farklı yapıda "
+"platformlardaki gelişmiş renk eşleşmesi için gama ve boyanabilirlik verisi "
+"depolayabilir.</p>"
+
+#: settingswidget.cpp:197
+#, kde-format
+msgid "Image format:"
+msgstr "Görsel biçimi:"
+
+#: settingswidget.cpp:206
+#, kde-format
+msgid "<p>The new compression value of JPEG images to be sent:</p>"
+msgstr "<p>Gönderilecek JPEG görsellerinin yeni sıkıştırma değeri:</p>"
+
+#: settingswidget.cpp:207
+#, kde-format
+msgid ""
+"<p><b>1</b>: very high compression<br/><b>25</b>: high compression<br/"
+"><b>50</b>: medium compression<br/><b>75</b>: low compression (default "
+"value)<br/><b>100</b>: no compression</p>"
+msgstr ""
+"<p><b>1</b>: çok yüksek sıkıştırma<br/><b>25</b>: yüksek sıkıştırma<br/"
+"><b>50</b>: ortalama sıkıştırma<br/><b>75</b>: düşük sıkıştırmaa (öntanımlı "
+"değer)<br/><b>100</b>: sıkıştırma yok</p>"
+
+#: settingswidget.cpp:215
+#, kde-format
+msgid "Image quality:"
+msgstr "Görsel kalitesi:"
+
+#~ msgid "&Tools"
+#~ msgstr "&Araçlar"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Serdar Soytetir"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "tulliana@gmail.com"
+
+#~ msgid "Failed to resize images"
+#~ msgstr "Resimler yeniden boyutlandırılamadı"
+
+#~ msgid "Huge - for printing (1600 pixels)"
+#~ msgstr "Çok Büyük - yazdırmak için (1600 piksel)"

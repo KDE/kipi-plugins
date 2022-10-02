@@ -1,0 +1,471 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Ozan Çağlayan <ozan@pardus.org.tr>, 2010-2011.
+# obsoleteman <tulliana@gmail.com>, 2009,2012.
+# Volkan Gezer <volkangezer@gmail.com>, 2013.
+# Emir SARI <emir_sari@icloud.com>, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: extragear-graphics-kde4\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2022-04-11 11:30+0300\n"
+"Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
+"Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 21.12.3\n"
+
+#: fbalbum.cpp:52
+#, kde-format
+msgid "Privacy setting of the album that will be created (required)."
+msgstr "Oluşturulacak albümün kişisel gizlilik ayarları (gerekli)."
+
+#: fbalbum.cpp:54
+#, kde-format
+msgid "Only Me"
+msgstr "Yalnızca Ben"
+
+#: fbalbum.cpp:56
+#, kde-format
+msgid "Only Friends"
+msgstr "Yalnızca Arkadaşlar"
+
+#: fbalbum.cpp:58
+#, kde-format
+msgid "Friends of Friends"
+msgstr "Arkadaşlarımın Arkadaşları"
+
+#: fbalbum.cpp:60
+#, kde-format
+msgid "My Networks and Friends"
+msgstr "Benim Ağım ve Arkadaşlarım"
+
+#: fbalbum.cpp:62
+#, kde-format
+msgid "Everyone"
+msgstr "Herkes"
+
+#: fbtalker.cpp:201
+#, kde-format
+msgid "Validate previous session..."
+msgstr "Önceki oturumun geçerliliğini doğrula..."
+
+#: fbtalker.cpp:229
+#, kde-format
+msgid "Upgrading to OAuth..."
+msgstr "OAuth'ye yükseltiliyor..."
+
+#: fbtalker.cpp:279
+#, kde-format
+msgid "Facebook Application Authorization"
+msgstr "Facebook Uygulama Yetkilendirmesi"
+
+#: fbtalker.cpp:290
+#, kde-format
+msgid ""
+"Please follow the instructions in the browser window. When done, copy the "
+"Internet address from your browser into the textbox below and press \"OK\"."
+msgstr ""
+"Lütfen tarayıcı penceresindeki talimatları takip edin. Tamamladığınızda "
+"tarayıcınızdaki adresi kopyalayın ve aşağıdaki metin kutusuna yapıştırın, "
+"ardından \"Tamam\" düğmesine tıklayın."
+
+#: fbtalker.cpp:352
+#, kde-format
+msgid "Canceled by user."
+msgstr "Kullanıcı tarafından iptal edildi."
+
+#: fbtalker.cpp:549
+#, kde-format
+msgid "The service is not available at this time."
+msgstr "Servis şu anda kullanılabilir değil."
+
+#: fbtalker.cpp:552
+#, kde-format
+msgid "The application has reached the maximum number of requests allowed."
+msgstr "Uygulama izin verilen azami talep sayısına ulaştı."
+
+#: fbtalker.cpp:555
+#, kde-format
+msgid "Invalid session key or session expired. Try to log in again."
+msgstr ""
+"Geçersiz oturum anahtarı girildi ya da oturum zamanaşımına uğradı. Yeniden "
+"giriş yapmayı deneyin."
+
+#: fbtalker.cpp:558
+#, kde-format
+msgid "Invalid album ID."
+msgstr "Geçersiz albüm kimliği."
+
+#: fbtalker.cpp:561
+#, kde-format
+msgid "Album is full."
+msgstr "Albüm dolu."
+
+#: fbtalker.cpp:564
+#, kde-format
+msgid "Missing or invalid file."
+msgstr "Kayıp ya da geçersiz dosya."
+
+#: fbtalker.cpp:567
+#, kde-format
+msgid "Too many unapproved photos pending."
+msgstr "Çok sayıda onaylanmamış fotoğraf askıda bekliyor."
+
+#: fbtalker.cpp:601
+#, kde-format
+msgid "Error"
+msgstr "Hata"
+
+#: fbwindow.cpp:109
+#, kde-format
+msgid "Export to Facebook Web Service"
+msgstr "Facebook Web Servisine Aktar"
+
+#: fbwindow.cpp:111
+#, kde-format
+msgid "Start Upload"
+msgstr "Göndermeye Başla"
+
+#: fbwindow.cpp:112
+#, kde-format
+msgid "Start upload to Facebook web service"
+msgstr "Facebook Web servisine gönderimi başlat"
+
+#: fbwindow.cpp:140
+#, kde-format
+msgid "Facebook Export"
+msgstr "Facebook'a Dışa Aktar"
+
+#: fbwindow.cpp:141
+#, kde-format
+msgid "A tool to export image collection to/from Facebook web service."
+msgstr ""
+"Facebook Web servisine görsel koleksiyonlarını aktarmaya ve oradan indirmeye "
+"yarayan bir araç."
+
+#: fbwindow.cpp:143
+#, kde-format
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2012, Gilles Caulier\n"
+"(c) 2008-2009, Luka Renko"
+msgstr ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2012, Gilles Caulier\n"
+"(c) 2008-2009, Luka Renko"
+
+#: fbwindow.cpp:147
+#, kde-format
+msgid "Luka Renko"
+msgstr "Luka Renko"
+
+#: fbwindow.cpp:148
+#, kde-format
+msgid "Author and maintainer"
+msgstr "Geliştiren ve projeyi sürdüren"
+
+#: fbwindow.cpp:361 fbwindow.cpp:395
+#, kde-format
+msgid "<auto create>"
+msgstr "<auto create>"
+
+#: fbwindow.cpp:372 fbwindow.cpp:390
+#, kde-format
+msgid "Facebook Call Failed: %1\n"
+msgstr "Facebook çağrısı başarısız: %1\n"
+
+#: fbwindow.cpp:471
+#, kde-format
+msgid "Warning"
+msgstr "Uyarı"
+
+#: fbwindow.cpp:472
+#, kde-format
+msgid ""
+"After you have been logged out in the browser, click \"Continue\" to "
+"authenticate for another account"
+msgstr ""
+"Tarayıcıda çıkış yaptıktan sonra, başka bir hesapla kimlik doğrulamak için "
+"\"Devam et\" butonuna tıklayın"
+
+#: fbwindow.cpp:476
+#, kde-format
+msgid "Continue"
+msgstr "Devam et"
+
+#: fbwindow.cpp:477
+#, kde-format
+msgid "Cancel"
+msgstr "İptal"
+
+#: fbwindow.cpp:539
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: fbwindow.cpp:543
+#, kde-format
+msgid "Facebook export"
+msgstr "Facebook'a dışa aktar"
+
+#: fbwindow.cpp:648 fbwindow.cpp:663
+#, kde-format
+msgid "Cannot open file"
+msgstr "Dosya açılamadı"
+
+#: fbwindow.cpp:686
+#, kde-format
+msgid "Uploading Failed"
+msgstr "Yükleme Başarısız"
+
+#: fbwindow.cpp:687
+#, kde-format
+msgid ""
+"Failed to upload photo into Facebook: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Facebook'a fotoğraf yükleme işlemi başarısız oldu: %1\n"
+"Devam etmek istiyor musunuz?"
+
+#: fbwindow.cpp:706
+#, kde-format
+msgid "Facebook Call Failed: %1"
+msgstr "Facebook Çağrısı Başarısız Oldu: %1"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_facebookui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Dışa Aktar"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_facebookui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Ana Araç Çubuğu"
+
+#: plugin_facebook.cpp:94
+#, kde-format
+msgid "Export to &Facebook..."
+msgstr "Facebook'a &Gönder..."
+
+#~ msgid "&Import"
+#~ msgstr "&İçeriye Aktar"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Serdar Soytetir"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "tulliana@gmail.com"
+
+#~ msgid "Facebook New Album"
+#~ msgstr "Yeni Facebook Albümü"
+
+#~ msgid "Title of the album that will be created (required)."
+#~ msgstr "Oluşturulacak albümün başlığı (zorunlu)."
+
+#~ msgid "Location of the album that will be created (optional)."
+#~ msgstr "Oluşturulacak albümün konumu (isteğe bağlı)."
+
+#~ msgid "Description of the album that will be created (optional)."
+#~ msgstr "Oluşturulacak albümün tanımı (isteğe bağlı)."
+
+#~ msgctxt "new facebook album"
+#~ msgid "Title:"
+#~ msgstr "Başlık:"
+
+#~ msgctxt "new facebook album"
+#~ msgid "Location:"
+#~ msgstr "Yer:"
+
+#~ msgctxt "new facebook album"
+#~ msgid "Description:"
+#~ msgstr "Açıklama:"
+
+#~ msgctxt "new facebook album"
+#~ msgid "Privacy:"
+#~ msgstr "Gizlilik:"
+
+#~ msgid "This is the list of images to upload to your Facebook account."
+#~ msgstr "Facebook hesabınıza yükleyeceğiniz resimlerin listesi."
+
+#~ msgid ""
+#~ "This is a clickable link to open the Facebook home page in a web browser."
+#~ msgstr ""
+#~ "Tarayıcınızda Facebook ana sayfasını açmak için tıklanabilir bir bağlantı."
+
+#~ msgid "Account"
+#~ msgstr "Hesap"
+
+#~ msgid "This is the Facebook account that is currently logged in."
+#~ msgstr "Bu, şimgi giriş yapılmış olan Facebook hesabıdır."
+
+#~ msgctxt "facebook account settings"
+#~ msgid "Name:"
+#~ msgstr "İsim:"
+
+#~ msgid "Permission:"
+#~ msgstr "İzin:"
+
+#~ msgid ""
+#~ "Permission of KIPI Plugin application to upload photos directly. If not, "
+#~ "user will need to manually approve uploaded photos in Facebook."
+#~ msgstr ""
+#~ "Fotoğrafları doğrudan yüklemek için KIPI Eklenti uygulama izni. İzin "
+#~ "yoksa, kullanıcının yüklenmiş fotoğrafları Facebook'ta el ile onaylaması "
+#~ "gerekecek."
+
+#~ msgid "Change Account"
+#~ msgstr "Hesabı Değiştir"
+
+#~ msgid "Logout and change Facebook Account used for transfer"
+#~ msgstr ""
+#~ "Yükleme için kullanılacak Facebook Hesabını değiştirmek için çıkış yapın"
+
+#~ msgid "Download Selection"
+#~ msgstr "Seçimi İndir"
+
+#~ msgid "This is the selection of Facebook albums/photos to download."
+#~ msgstr ""
+#~ "İndirilmek üzere seçilen Facebook albümlerinin/fotoğraflarının listesi."
+
+#~ msgid "Destination"
+#~ msgstr "Hedef"
+
+#~ msgid ""
+#~ "This is the Facebook album to which selected photos will be uploaded."
+#~ msgstr "Seçili fotoğrafların yükleneceği Facebook albümü."
+
+#~ msgid "My &Album"
+#~ msgstr "&Albümüm"
+
+#~ msgid "Download complete album of currently logged in user."
+#~ msgstr "Şimdi giriş yapan kullanıcının tüm albümünü indir."
+
+#~ msgid "Album &of My Friend"
+#~ msgstr "Arkadaşı&mın Albümü"
+
+#~ msgid "Download complete album of selected friend."
+#~ msgstr "Seçilen arkadaşının albümünün tümünü indir."
+
+#~ msgid "Photos of &Me"
+#~ msgstr "&Benim Fotoğraflarım"
+
+#~ msgid "Download all photos of currently logged in user."
+#~ msgstr "Şimdi giriş yapan kullanıcının tüm fotoğraflarını indir."
+
+#~ msgid "Photos of My &Friend"
+#~ msgstr "&Arkadaşımın Fotoğrafları"
+
+#~ msgid "Download all photos of selected friend."
+#~ msgstr "Seçilen arkadaşının fotoğraflarının tümünü indir."
+
+#~ msgid "Friend:"
+#~ msgstr "Arkadaş:"
+
+#~ msgid "Album:"
+#~ msgstr "Albüm:"
+
+#~ msgid "New Album"
+#~ msgstr "Yeni Albüm"
+
+#~ msgid "Create new Facebook album"
+#~ msgstr "Yeni Facebook Albümü Oluştur"
+
+#~ msgctxt "facebook album list"
+#~ msgid "Reload"
+#~ msgstr "Yeniden Yükle "
+
+#~ msgid "Reload album list"
+#~ msgstr "Albüm listesini yeniden yükle"
+
+#~ msgid "This is the location to which Facebook images will be downloaded."
+#~ msgstr "Facebook fotoğraflarının indirileceği konum."
+
+#~ msgid "Options"
+#~ msgstr "Seçenekler"
+
+#~ msgid "These are options that will be applied to photos before upload."
+#~ msgstr "Yüklemeden önce fotoğraflara uygulanacak seçenekler."
+
+#~ msgid "Resize photos before uploading"
+#~ msgstr "Resimleri yüklemeden önce yeniden boyutlandır"
+
+#~ msgid "Maximum dimension:"
+#~ msgstr "En büyük boyut:"
+
+#~ msgid "JPEG quality:"
+#~ msgstr "JPEG kalitesi:"
+
+#~ msgid "Direct upload"
+#~ msgstr "Doğrudan gönder"
+
+#~ msgid "Uploaded photos will not need manual approval by user."
+#~ msgstr ""
+#~ "Yüklenmiş fotoğrafların kullanıcı tarafından el ile onaylanması "
+#~ "gerekmeyecek."
+
+#~ msgid "Manual upload approval"
+#~ msgstr "Elle yükleme onaylaması"
+
+#~ msgid ""
+#~ "Uploaded photos will wait in pending state until manually approved by "
+#~ "user."
+#~ msgstr ""
+#~ "Karşıya yüklenmiş fotoğraflar kullanıcı tarafından el ile onaylanana "
+#~ "kadar askıda bekleyecek."
+
+#~ msgid "Import from Facebook Web Service"
+#~ msgstr "Facebook Web Servisinden İçeriye Aktar"
+
+#~ msgid "Start Download"
+#~ msgstr "İndirmeye Başla"
+
+#~ msgid "Start download from Facebook web service"
+#~ msgstr "Facebook Web servisinden indirmeyi başlat"
+
+#~ msgid "Facebook Import/Export"
+#~ msgstr "Facebook İçeriye/Dışarıya Aktar"
+
+#~ msgctxt "name of special Facebook album for profile pictures"
+#~ msgid "Profile Pictures"
+#~ msgstr "Profil Resimleri"
+
+#~ msgid "Facebook import"
+#~ msgstr "Facebook içeriye aktar"
+
+#~ msgid ""
+#~ "Failed to save photo: %1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Fotoğraf kaydedilemedi: %1\n"
+#~ "Devam etmek istiyor musunuz?"
+
+#~ msgid ""
+#~ "Failed to download photo: %1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Fotoğraf indirilemedi: %1\n"
+#~ "Devam etmek istiyor musunuz?"
+
+#~ msgid "Import from &Facebook..."
+#~ msgstr "Facebook'tan &İçeriye Aktar...."
+
+#~ msgid ""
+#~ "Please follow the instructions in the browser window. Press \"OK\" when "
+#~ "done."
+#~ msgstr ""
+#~ "Lütfen tarayıcı penceresindeki talimatları takip edin. Bitirdiğinizde "
+#~ "\"Tamam\" düğmesine basın."
+
+#~ msgid "Photos taken with KDE"
+#~ msgstr "KDE ile çekilmiş fotoğraflar"

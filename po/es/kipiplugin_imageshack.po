@@ -1,0 +1,306 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Eloy Cuadra <ecuadra@eloihr.net>, 2013, 2014, 2015, 2016.
+# Aitor Morant <fromhell091@gmail.com>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2016-08-27 20:31+0200\n"
+"Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
+"Language-Team: Spanish <kde-l10n-es@kde.org>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: imageshacktalker.cpp:173
+#, kde-format
+msgid "Authenticating the user"
+msgstr "Autenticación del usuario..."
+
+#: imageshacktalker.cpp:199
+#, kde-format
+msgid "Getting galleries from server"
+msgstr "Obteniendo galerías del servidor"
+
+#: imageshacktalker.cpp:289
+#, kde-format
+msgid "Successfully retrieved galleries"
+msgstr "Galerías obtenidas con éxito"
+
+#: imageshackwidget.cpp:82
+#, kde-format
+msgid "Make private"
+msgstr "Hacer privada"
+
+#: imageshackwidget.cpp:86
+#, kde-format
+msgid "Tags (optional):"
+msgstr "Etiquetas (opcional):"
+
+#: imageshackwidget.cpp:88
+#, kde-format
+msgid "Remove information bar on thumbnails"
+msgstr "Eliminar la barra de información de las miniaturas"
+
+#: imageshackwidget.cpp:125
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Add to root folder"
+msgstr "Añadir a la carpeta raíz"
+
+#: imageshackwidget.cpp:128
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Create new gallery"
+msgstr "Crear nueva galería"
+
+#: imageshackwindow.cpp:81
+#, kde-format
+msgid "Export to Imageshack"
+msgstr "Exportar a Imageshack"
+
+#: imageshackwindow.cpp:89
+#, kde-format
+msgid "Upload"
+msgstr "Enviar"
+
+#: imageshackwindow.cpp:90
+#, kde-format
+msgid "Start upload to Imageshack web service"
+msgstr "Iniciar el envío a servicio Web Imageshack"
+
+#: imageshackwindow.cpp:98
+#, kde-format
+msgid "Imageshack Export"
+msgstr "Exportación a Imageshack"
+
+#: imageshackwindow.cpp:99
+#, kde-format
+msgid "A tool to export images to Imageshack web service."
+msgstr "Una herramienta para exportar imágenes al servicio web Imageshack."
+
+#: imageshackwindow.cpp:100
+#, kde-format
+msgid "(c) 2012, Dodon Victor\n"
+msgstr "© 2012, Dodon Victor\n"
+
+#: imageshackwindow.cpp:102
+#, kde-format
+msgid "Dodon Victor"
+msgstr "Dodon Victor"
+
+#: imageshackwindow.cpp:103
+#, kde-format
+msgid "Author"
+msgstr "Autor"
+
+#: imageshackwindow.cpp:230
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: imageshackwindow.cpp:234
+#, kde-format
+msgid "Image Shack Export"
+msgstr "Exportar a Image Shack"
+
+#: imageshackwindow.cpp:261
+#, kde-format
+msgid "Authenticating..."
+msgstr "Autenticando..."
+
+#: imageshackwindow.cpp:318
+#, kde-format
+msgid "Login failed: %1\n"
+msgstr "El inicio de sesión ha fallado: %1\n"
+
+#: imageshackwindow.cpp:332
+#, kde-format
+msgid "Failed to get galleries list: %1\n"
+msgstr "La obtención de la lista de galerías ha fallado: %1\n"
+
+#: imageshackwindow.cpp:404
+#, kde-format
+msgid "Uploading Failed"
+msgstr "El envío ha fallado"
+
+#: imageshackwindow.cpp:405
+#, kde-format
+msgid ""
+"Failed to upload photo into Imageshack: %1\n"
+"Do you want to continue?"
+msgstr ""
+"El envío de la foto a Imageshack ha fallado: %1\n"
+"¿Desea continuar?"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_imageshackui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Exportar"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_imageshackui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Barra de herramientas principal"
+
+#: plugin_imageshack.cpp:103
+#, kde-format
+msgid "Export to &Imageshack..."
+msgstr "Exportar a &Imageshack..."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Eloy Cuadra"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "ecuadra@eloihr.net"
+
+#~ msgid "Checking the registration code"
+#~ msgstr "Comprobando el código de registro"
+
+#~ msgid "Checking the web server"
+#~ msgstr "Comprobando el servidor Web"
+
+#~ msgid "Server does not respond. Please check you internet connection!"
+#~ msgstr ""
+#~ "El servidor no responde. Por favor, compruebe su conexión a Internet."
+
+#~ msgid "Registration code successfully verified"
+#~ msgstr "Código de registro comprobado con éxito"
+
+#~ msgid "Registration code not valid!"
+#~ msgstr "El código de registro no es válido."
+
+#~ msgid "Images to upload to Imageshack web service"
+#~ msgstr "Imágenes a enviar al servicio Web Imageshack"
+
+#~ msgid ""
+#~ "This is a clickable link to open the Imageshack home page in a web browser"
+#~ msgstr ""
+#~ "Esto es un enlace en el que puede pulsar para abrir la página de "
+#~ "Imageshack en un navegador Web"
+
+#~ msgid "ImageShack"
+#~ msgstr "ImageShack"
+
+#~ msgid "Account"
+#~ msgstr "Cuenta"
+
+#~ msgid "Imageshack account info"
+#~ msgstr "Información de la cuenta de Imageshack"
+
+#~ msgctxt "Account info"
+#~ msgid "Name:"
+#~ msgstr "Nombre:"
+
+#~ msgctxt "Account info"
+#~ msgid "Email:"
+#~ msgstr "Correo electrónico:"
+
+#~ msgid "Change account"
+#~ msgstr "Cambiar la cuenta"
+
+#~ msgid ""
+#~ "Change the registration code for the Imageshack account used to upload "
+#~ "images"
+#~ msgstr ""
+#~ "Cambiar el código de registro para la cuenta de Imageshack usado para "
+#~ "enviar imágenes"
+
+#~ msgid "Destination"
+#~ msgstr "Destino"
+
+#~ msgid ""
+#~ "This is the ImageShack gallery to which selected items will be uploaded"
+#~ msgstr ""
+#~ "Esta es la galería de ImageShack a la que se enviarán los elementos "
+#~ "seleccionados"
+
+#~ msgid "Upload to galleries"
+#~ msgstr "Enviar a las galerías"
+
+#~ msgid "Gallery:"
+#~ msgstr "Galería:"
+
+#~ msgid "Name:"
+#~ msgstr "Nombre:"
+
+#~ msgctxt "ImageShack galleries list"
+#~ msgid "Reload"
+#~ msgstr "Volver a cargar"
+
+#~ msgid "Reload ImageShack galleries list"
+#~ msgstr "Volver a cargar la lista de galerías de ImageShack"
+
+#~ msgid "Options"
+#~ msgstr "Opciones"
+
+#~ msgid "These are the options that will be applied to photos"
+#~ msgstr "Estas son las opciones que se aplicarán a las fotos"
+
+#~ msgid "Resize options"
+#~ msgstr "Opciones de cambio de tamaño"
+
+#~ msgid "Do not resize photos"
+#~ msgstr "No cambiar el tamaño de las fotos"
+
+#~ msgid "Predefined templates"
+#~ msgstr "Plantillas predefinidas"
+
+#~ msgid "Custom resize dimensions"
+#~ msgstr "Cambio de dimensiones personalizado"
+
+#~ msgid "Width:"
+#~ msgstr "Anchura:"
+
+#~ msgid "Height:"
+#~ msgstr "Altura:"
+
+#~ msgid "100x75 (avatar)"
+#~ msgstr "100x75 (avatar)"
+
+#~ msgid "150x122 (thumbnail)"
+#~ msgstr "150x122 (miniatura)"
+
+#~ msgid "320x240 (for websites and email)"
+#~ msgstr "320x240 (para la web y correo electrónico)"
+
+#~ msgid "640x480 (for message boards)"
+#~ msgstr "640x480 (para foros de discusión)"
+
+#~ msgid "800x600 (15-inch monitor)"
+#~ msgstr "800x600 (monitor de 15 pulgadas)"
+
+#~ msgid "1024x768 (17-inch monitor)"
+#~ msgstr "1024x768 (monitor de 17 pulgadas)"
+
+#~ msgid "1280x1024 (19-inch monitor)"
+#~ msgstr "1280x1024 (monitor de 19 pulgadas)"
+
+#~ msgid "1600x1200 (21-inch monitor)"
+#~ msgstr "1600x1200 (monitor de 21 pulgadas)"
+
+#~ msgid "optimize without resizing"
+#~ msgstr "optimizar sin cambiar el tamaño"
+
+#~ msgid "Create new gallery."
+#~ msgstr "Crear nueva galería."
+
+#~ msgid "Imageshack authorization"
+#~ msgstr "Autorización de Imageshack"
+
+#~ msgid ""
+#~ "Please paste the registration code for your ImageShack account into the "
+#~ "textbox below and press \"OK\"."
+#~ msgstr ""
+#~ "Por favor, pegue el código de registro de su cuenta de ImageShack en el "
+#~ "cuadro de texto inferior y pulse «Aceptar»."

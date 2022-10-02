@@ -1,0 +1,521 @@
+# translation of kipiplugin_sendimages.po to Low Saxon
+# Translation of kipiplugin_sendimages.po to Low Saxon
+#
+# Sönke Dibbern <s_dibbern@web.de>, 2007, 2008.
+# Manfred Wiese <m.j.wiese@web.de>, 2008, 2009, 2010, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_sendimages\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2011-04-16 05:37+0200\n"
+"Last-Translator: Manfred Wiese <m.j.wiese@web.de>\n"
+"Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
+"Language: nds\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: imageresize.cpp:116
+#, kde-format
+msgid "Error opening input file"
+msgstr "Ingaavdatei lett sik nich opmaken."
+
+#: imageresize.cpp:127
+#, kde-format
+msgid "Error opening temporary folder"
+msgstr "Temporeerorner lett sik nich opmaken."
+
+#: imageresize.cpp:175
+#, kde-format
+msgid "Cannot resize image. Aborting."
+msgstr "De Bildgrött lett sik nich ännern. Afbraken."
+
+#: imageresize.cpp:186
+#, kde-format
+msgid "Cannot save resized image (JPEG). Aborting."
+msgstr "Bild (JPEG) lett sik na Grött-Ännern nich sekern. Afbrook."
+
+#: imageresize.cpp:194
+#, kde-format
+msgid "Cannot save resized image (PNG). Aborting."
+msgstr "Bild (PNG) lett sik na Grött-Ännern nich sekern. Afbrook."
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_sendimagesui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr ""
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_sendimagesui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr ""
+
+#: plugin_sendimages.cpp:115
+#, kde-format
+msgid "Email Images..."
+msgstr "Biller mit Nettpost loosstüern..."
+
+#: sendimages.cpp:133
+#, kde-format
+msgid "Email images"
+msgstr "Biller mit Nettpost loosstüern"
+
+#: sendimages.cpp:176
+#, kde-format
+msgid "Operation canceled by user"
+msgstr "Akschoon vun Bruker afbraken"
+
+#: sendimages.cpp:190
+#, kde-format
+msgid "Resizing %1"
+msgstr "Grött vun %1 warrt ännert"
+
+#: sendimages.cpp:203
+#, kde-format
+msgid "%1 resized successfully"
+msgstr "Grött vun %1 wöör mit Spood ännert."
+
+#: sendimages.cpp:212
+#, kde-format
+msgid "Failed to resize %1: %2"
+msgstr "Grött vun %1 lett sik nich ännern: %2"
+
+#: sendimages.cpp:240
+#, kde-format
+msgid "There are no files to send"
+msgstr ""
+
+#: sendimages.cpp:258
+#, kde-format
+msgid "Build images properties file"
+msgstr "Bildegenschappen-Datei opstellen"
+
+#: sendimages.cpp:271
+#, kde-format
+msgid "no caption"
+msgstr "Keen Titeltext"
+
+#: sendimages.cpp:274
+#, kde-format
+msgid "no keywords"
+msgstr "keen Slötelwöör"
+
+#: sendimages.cpp:276
+#, kde-format
+msgid ""
+"file \"%1\":\n"
+"Original images: %2\n"
+msgstr ""
+"Datei \"%1\":\n"
+"Orginaalbiller: %2\n"
+
+#: sendimages.cpp:279
+#, kde-format
+msgid "Comments: %1\n"
+msgstr "Kommentaren: %1\n"
+
+#: sendimages.cpp:282
+#, kde-format
+msgid "Tags: %1\n"
+msgstr "Steekwöör: %1\n"
+
+#: sendimages.cpp:285
+#, kde-format
+msgid "Rating: %1\n"
+msgstr "Beweerten: %1\n"
+
+#: sendimages.cpp:290 sendimages.cpp:298
+#, kde-format
+msgid "properties.txt"
+msgstr "egenschappen.txt"
+
+#: sendimages.cpp:297
+#, fuzzy, kde-format
+#| msgid "Image properties file done"
+msgid "Image properties file cannot be opened"
+msgstr "Bildegenschappen-Datei opstellt"
+
+#: sendimages.cpp:306
+#, kde-format
+msgid "Image properties file done"
+msgstr "Bildegenschappen-Datei opstellt"
+
+#: sendimages.cpp:324
+#, kde-format
+msgid "Processing Failed"
+msgstr ""
+
+#: sendimages.cpp:325
+#, fuzzy, kde-format
+#| msgid ""
+#| "The images listed below cannot be resized.\n"
+#| "Do you want them to be added as attachments (without resizing)?"
+msgid ""
+"Some images cannot be resized.\n"
+"Do you want them to be added as attachments without resizing?"
+msgstr ""
+"De Grötten vun de nerrn oplist Biller laat sik nich ännern. Wullt Du se as "
+"Bilagen (in Orginaalgrött) tofögen?"
+
+#: sendimages.cpp:390
+#, kde-format
+msgid ""
+"The file \"%1\" is too big to be sent, please reduce its size or change your "
+"settings"
+msgstr ""
+"De Datei \"%1\" is to groot för't Loosstüern. Bitte maak ehr lütter oder "
+"änner Dien Instellen."
+
+#: sendimages.cpp:442
+#, fuzzy, kde-format
+#| msgid "Starting default KDE email program..."
+msgid "Starting default desktop email program..."
+msgstr "Standard-Nettpostprogramm vun KDE warrt start..."
+
+#: sendimages.cpp:674
+#, kde-format
+msgid "Failed to start \"%1\" program. Check your system."
+msgstr ""
+"Dat Programm \"%1\" lett sik nich starten.\n"
+"Prööv bitte Dien Installatschoon."
+
+#: sendimages.cpp:687
+#, kde-format
+msgid "Starting \"%1\" program..."
+msgstr "Programm \"%1\" warrt start..."
+
+#: sendimages.cpp:697
+#, kde-format
+msgid "After having sent your images by email..."
+msgstr "Na't Loosstüern vun Dien Biller mit Nettpost..."
+
+#: sendimages.cpp:698
+#, kde-format
+msgid "Press 'Close' button to clean up temporary files"
+msgstr "Klick för't Oprümen vun Temporeerdateien op den Knoop \"Tomaken\"."
+
+#: sendimagesdialog.cpp:81
+#, kde-format
+msgid "Email Images Options"
+msgstr "Optschonen för't Loosstüern vun Biller"
+
+#: sendimagesdialog.cpp:84
+#, kde-format
+msgctxt "@action:button"
+msgid "&Send"
+msgstr ""
+
+#: sendimagesdialog.cpp:103
+#, kde-format
+msgid "Send Images"
+msgstr "Biller loosstüern"
+
+#: sendimagesdialog.cpp:104
+#, fuzzy, kde-format
+#| msgid "A plugin to email pictures"
+msgid "A tool to e-mail items"
+msgstr "En Moduul för't Loosstüern vun Biller mit Nettpost"
+
+#: sendimagesdialog.cpp:105
+#, fuzzy, kde-format
+#| msgid "(c) 2003-2011, Gilles Caulier"
+msgid "(c) 2003-2016, Gilles Caulier"
+msgstr "© 2003-2011: Gilles Caulier"
+
+#: sendimagesdialog.cpp:107
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: sendimagesdialog.cpp:107
+#, kde-format
+msgid "Author and Maintainer"
+msgstr "Autor un Pleger"
+
+#: sendimagesdialog.cpp:110
+#, kde-format
+msgid "Michael Hoechstetter"
+msgstr "Michael Hoechstetter"
+
+#: sendimagesdialog.cpp:110 sendimagesdialog.cpp:113
+#, kde-format
+msgid "Developer"
+msgstr "Schriever"
+
+#: sendimagesdialog.cpp:113
+#, kde-format
+msgid "Tom Albers"
+msgstr "Tom Albers"
+
+#: settingswidget.cpp:91
+#, kde-format
+msgid "Mail program:"
+msgstr "Nettpostprogramm:"
+
+#: settingswidget.cpp:94
+#, fuzzy, kde-format
+#| msgctxt "default mail agent"
+#| msgid "Default"
+msgctxt "default desktop mail agent"
+msgid "Default"
+msgstr "Standard"
+
+#: settingswidget.cpp:106
+#, fuzzy, kde-format
+#| msgid ""
+#| "Select your preferred external email program here. <b>Default</b> is the "
+#| "current email program set in KDE System Settings."
+msgid ""
+"Select your preferred external email program here. <b>Default</b> is the "
+"current email program set in desktop system settings."
+msgstr ""
+"Hier kannst Du Dien vörtrocken extern Nettpostprogramm utsöken.<b>Standard</"
+"b> is dat aktuelle Nettpostprogramm, dat in de KDE-Instellen fastleggt is."
+
+#: settingswidget.cpp:112
+#, kde-format
+msgid "Attach a file with image properties from %1"
+msgstr "En Datei mit de Bildegenschappen vun \"%1\" bileggen"
+
+#: settingswidget.cpp:115
+#, kde-format
+msgid ""
+"If you enable this option, all image properties set by %1 as Comments, "
+"Rating, or Tags, will be added as an attached file."
+msgstr ""
+"Maakst Du dit an, warrt all Bildegenschappen as Datei bileggt, de \"%1\" "
+"fastleggt (a.B. Kommentaren oder Slötelwöör)."
+
+#: settingswidget.cpp:125
+#, kde-format
+msgid " MB"
+msgstr " MB"
+
+#: settingswidget.cpp:127
+#, kde-format
+msgid "Maximum email size limit:"
+msgstr "Hööchst Nettbreefgrött:"
+
+#: settingswidget.cpp:132
+#, kde-format
+msgid "Adjust image properties"
+msgstr "Bildegenschappen topassen"
+
+#: settingswidget.cpp:134
+#, kde-format
+msgid ""
+"If you enable this option, all images to be sent can be resized and "
+"recompressed."
+msgstr ""
+"Wenn Du dit anmaakst, kannst Du de Grött un Komprimeren vun all Biller "
+"ännern, de Du loosstüern wullt."
+
+#: settingswidget.cpp:137
+#, kde-format
+msgid "Image Properties"
+msgstr "Bildegenschappen"
+
+#: settingswidget.cpp:141 settingswidget.cpp:167
+#, kde-format
+msgid "Very Small (320 pixels)"
+msgstr "Lierlütt (320 Pixels)"
+
+#: settingswidget.cpp:142 settingswidget.cpp:168
+#, kde-format
+msgid "Small (640 pixels)"
+msgstr "Lütt (640 Pixels)"
+
+#: settingswidget.cpp:143 settingswidget.cpp:169
+#, kde-format
+msgid "Medium (800 pixels)"
+msgstr "Middelgroot (800 Pixels)"
+
+#: settingswidget.cpp:144 settingswidget.cpp:170
+#, kde-format
+msgid "Big (1024 pixels)"
+msgstr "Groot (1024 Pixels)"
+
+#: settingswidget.cpp:145 settingswidget.cpp:171
+#, kde-format
+msgid "Very Big (1280 pixels)"
+msgstr "Bannig groot (1280 Pixels)"
+
+#: settingswidget.cpp:146 settingswidget.cpp:172
+#, fuzzy, kde-format
+#| msgid "Huge - for printing (1600 pixels)"
+msgid "Large - for printing (1600 pixels)"
+msgstr "Övergroot - Druckgööd (1600 Pixels)"
+
+#: settingswidget.cpp:147 settingswidget.cpp:173
+#, fuzzy, kde-format
+#| msgid "Small (640 pixels)"
+msgid "Full HD (1920 pixels)"
+msgstr "Lütt (640 Pixels)"
+
+#: settingswidget.cpp:148 settingswidget.cpp:174
+#, fuzzy, kde-format
+#| msgid "Small (640 pixels)"
+msgid "Ultra HD (3840 pixels)"
+msgstr "Lütt (640 Pixels)"
+
+#: settingswidget.cpp:150
+#, fuzzy, kde-format
+#| msgid ""
+#| "<p>Select the size of the images that are to be sent:</p><p><b>%1</b>: "
+#| "use this if you have a very slow Internet connection or the target "
+#| "mailbox size is very limited.</p><p><b>%2</b>: use this if you have a "
+#| "slow Internet connection and the target mailbox size is limited.</p><p><b>"
+#| "%3</b>: this is the default value for medium Internet connection speed "
+#| "and target mailbox size.</p><p><b>%4</b>: use this if you have a high-"
+#| "speed Internet connection and the target mailbox size is not limited.</"
+#| "p><p><b>%5</b>: use this if you have no size or speed restrictions.</"
+#| "p><p><b>%6</b>: use this only for printing purposes.</p>"
+msgid ""
+"<p>Select the size of the images that are to be sent:</p><p><b>%1</b>: use "
+"this if you have a very slow Internet connection or the target mailbox size "
+"is very limited.</p><p><b>%2</b>: use this if you have a slow Internet "
+"connection and the target mailbox size is limited.</p><p><b>%3</b>: this is "
+"the default value for medium Internet connection speed and target mailbox "
+"size.</p><p><b>%4</b>: use this if you have a high-speed Internet connection "
+"and the target mailbox size is not limited.</p><p><b>%5</b>: use this if you "
+"have no size or speed restrictions.</p><p><b>%6</b>: use this only for "
+"printing purposes.</p><p><b>%7</b>: use this for optimal viewing on Full HD "
+"displays. Only if you have a high-speed Internet connection and the target "
+"mailbox size is not limited.</p><p><b>%8</b>: use this for optimal viewing "
+"on Ultra HD displays. Only if you have a high-speed Internet connection and "
+"the target mailbox size is not limited.</p>"
+msgstr ""
+"<p>Hier kannst Du de Grött fastleggen, mit de de Biller loosstüert warrt.</"
+"p><p><b>%1</b>: Bruuk dit bi bannig langsam Internet-Verbinnen oder wenn dat "
+"Teel-Postfach bannig lütt is.</p><p><b>%2</b>: För langsam Internet-"
+"Verbinnen oder lütt Teel-Postfachen.</p><p><b>%3</b>: De Standard för "
+"normaal Internet-Verbinnen un normaal Teel-Postfachen.</p><p><b>%4</b>: "
+"Bruuk dit bi gaue Internet-Verbinnen un wenn dat Teel-Postfach keen "
+"Gröttgrenz hett.</p><p><b>%5</b>: Bruuk dit, wenn Du Di nich an Gauheit oder "
+"Grött kehren bruukst.</p><p><b>%6</b>: Bruuk dit bloots för't Drucken.</p>"
+
+#: settingswidget.cpp:177
+#, kde-format
+msgid "Image size:"
+msgstr "Bildgrött:"
+
+#: settingswidget.cpp:186
+#, kde-format
+msgid "<p>Select the file format of the image files to be sent.</p>"
+msgstr ""
+"<p>Hier kannst Du dat Dateiformaat för de Biller fastleggen, de Du "
+"loosstüern wullt.</p>"
+
+#: settingswidget.cpp:187
+#, kde-format
+msgid ""
+"<p><b>JPEG</b>: The Joint Photographic Experts Group file format is a good "
+"web file format but it uses lossy compression.</p><p><b>PNG</b>: the "
+"Portable Network Graphics format is an extensible file format for the "
+"lossless, portable, well-compressed storage of raster images. PNG provides a "
+"patent-free replacement for GIF and can also replace many common uses of "
+"TIFF. PNG is designed to work well in online viewing applications, such as "
+"the World Wide Web, so it is fully streamable with a progressive display "
+"option. Also, PNG can store gamma and chromaticity data for improved color-"
+"matching on heterogeneous platforms.</p>"
+msgstr ""
+"<p><b>JPEG</b>: Dat Dateiformaat vun den Gemeen fotograafsch Koppel vun "
+"Experten (engl. \"Joint Photographic Experts' Group\") lett sik goot in't "
+"Nett bruken, man bruukt en Formaat mit Verlusten.</p><p><b>PNG</b>: Dat "
+"Överdreegbor Nettwarkgrafik-Formaat (engl. \"Portable Network Graphics\") is "
+"en Dateiformaat ahn Verlusten, wat sik goot komprimeren, överdregen un ok "
+"verwiedern lett. PNG-Biller brickt keen Patenten un laat sik faken ok dor "
+"bruken, wo Een sünst TIFF-Biller bruken deit. Dat Formaat lett sik mit "
+"Strööm över Nettwarken överdregen un bargt en Optschoon för't Dorstellen "
+"na't Vörankamen; dat is so opbuut, dat Kiekers dat goot in't WWW bruken "
+"köönt. PNG-Biller köönt ok Gamma- un Klöörweerten bargen, se laat sik op "
+"verscheden Reedschappen liek wiesen.</p>"
+
+#: settingswidget.cpp:197
+#, fuzzy, kde-format
+#| msgid "Image file format:"
+msgid "Image format:"
+msgstr "Bilddatei-Formaat:"
+
+#: settingswidget.cpp:206
+#, kde-format
+msgid "<p>The new compression value of JPEG images to be sent:</p>"
+msgstr ""
+"<p>De nieg Komprimerenweert vun de JPEG-Biller, de Du loosstüern wullt:</p>"
+
+#: settingswidget.cpp:207
+#, kde-format
+msgid ""
+"<p><b>1</b>: very high compression<br/><b>25</b>: high compression<br/"
+"><b>50</b>: medium compression<br/><b>75</b>: low compression (default "
+"value)<br/><b>100</b>: no compression</p>"
+msgstr ""
+"<p><b>1</b>: bannig hooch komprimeert<br/><b>25</b>: hooch komprimeert<br/"
+"><b>50</b>: middelhooch komprimeert<br/><b>75</b>: siet komprimeert "
+"(Standardweert)<br/><b>100</b>: nich komprimeert</p>"
+
+#: settingswidget.cpp:215
+#, kde-format
+msgid "Image quality:"
+msgstr "Bildgööd:"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Sönke Dibbern, Manfred Wiese"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "s_dibbern@web.de, m.j.wiese@web.de"
+
+#~ msgid "Failed to resize images"
+#~ msgstr "Billergrötten laat sik nich ännern"
+
+#~ msgid "Huge - for printing (1600 pixels)"
+#~ msgstr "Övergroot - Druckgööd (1600 Pixels)"
+
+#~ msgid "Handbook"
+#~ msgstr "Handbook"
+
+#~ msgid "Images"
+#~ msgstr "Biller"
+
+#~ msgid "Image List"
+#~ msgstr "Bildlist"
+
+#~ msgid "Mail"
+#~ msgstr "Nettpost"
+
+#~ msgid "Mail Options"
+#~ msgstr "Nettpost-Optschonen"
+
+#~ msgid "very small (320 pixels)"
+#~ msgstr "bannig lütt (320 Pixels)"
+
+#~ msgid "small (640 pixels)"
+#~ msgstr "lütt (640 Pixels)"
+
+#~ msgid "medium (800 pixels)"
+#~ msgstr "middelgroot (800 Pixels)"
+
+#~ msgid "big (1024 pixels)"
+#~ msgstr "groot (1024 Pixels)"
+
+#~ msgid "very big (1280 pixels)"
+#~ msgstr "bannig groot (1280 Pixels)"
+
+#~ msgid "huge - for printing (1600 pixels)"
+#~ msgstr "övergroot - Druckgööd (1600 Pixels)"
+
+#~ msgid "This is the list of images to e-mail."
+#~ msgstr "Dit is de List vun Biller, de Du loosstüern wullt."
+
+#~ msgid "&Add"
+#~ msgstr "&Tofögen"
+
+#~ msgid "&Remove"
+#~ msgstr "&Wegmaken"

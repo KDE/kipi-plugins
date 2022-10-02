@@ -1,0 +1,242 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Sergiu Bivol <sergiu@cip.md>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2013-02-01 01:06+0200\n"
+"Last-Translator: Sergiu Bivol <sergiu@ase.md>\n"
+"Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2;\n"
+
+#: imageshacktalker.cpp:173
+#, fuzzy, kde-format
+#| msgid "Checking the web server"
+msgid "Authenticating the user"
+msgstr "Se verifică serverul web"
+
+#: imageshacktalker.cpp:199
+#, kde-format
+msgid "Getting galleries from server"
+msgstr "Se obțin galeriile de pe server"
+
+#: imageshacktalker.cpp:289
+#, kde-format
+msgid "Successfully retrieved galleries"
+msgstr "Galeriile au fost preluate cu succes"
+
+#: imageshackwidget.cpp:82
+#, kde-format
+msgid "Make private"
+msgstr "Fă privat"
+
+#: imageshackwidget.cpp:86
+#, kde-format
+msgid "Tags (optional):"
+msgstr "Marcaje (opțional):"
+
+#: imageshackwidget.cpp:88
+#, kde-format
+msgid "Remove information bar on thumbnails"
+msgstr "Elimină bara de informații de pe miniaturi"
+
+#: imageshackwidget.cpp:125
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Add to root folder"
+msgstr ""
+
+#: imageshackwidget.cpp:128
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Create new gallery"
+msgstr ""
+
+#: imageshackwindow.cpp:81
+#, kde-format
+msgid "Export to Imageshack"
+msgstr "Exportă către ImageShack"
+
+#: imageshackwindow.cpp:89
+#, kde-format
+msgid "Upload"
+msgstr "Încarcă"
+
+#: imageshackwindow.cpp:90
+#, kde-format
+msgid "Start upload to Imageshack web service"
+msgstr "Începe încărcarea spre serviciul web ImageShack"
+
+#: imageshackwindow.cpp:98
+#, kde-format
+msgid "Imageshack Export"
+msgstr "Export către ImageShack"
+
+#: imageshackwindow.cpp:99
+#, fuzzy, kde-format
+#| msgid "Start upload to Imageshack web service"
+msgid "A tool to export images to Imageshack web service."
+msgstr "Începe încărcarea spre serviciul web ImageShack"
+
+#: imageshackwindow.cpp:100
+#, kde-format
+msgid "(c) 2012, Dodon Victor\n"
+msgstr "(c) 2012, Dodon Victor\n"
+
+#: imageshackwindow.cpp:102
+#, kde-format
+msgid "Dodon Victor"
+msgstr "Dodon Victor"
+
+#: imageshackwindow.cpp:103
+#, kde-format
+msgid "Author"
+msgstr "Autor"
+
+#: imageshackwindow.cpp:230
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: imageshackwindow.cpp:234
+#, kde-format
+msgid "Image Shack Export"
+msgstr "Export către Image Shack"
+
+#: imageshackwindow.cpp:261
+#, kde-format
+msgid "Authenticating..."
+msgstr ""
+
+#: imageshackwindow.cpp:318
+#, kde-format
+msgid "Login failed: %1\n"
+msgstr "Autentificare eșuată: %1\n"
+
+#: imageshackwindow.cpp:332
+#, kde-format
+msgid "Failed to get galleries list: %1\n"
+msgstr ""
+
+#: imageshackwindow.cpp:404
+#, kde-format
+msgid "Uploading Failed"
+msgstr ""
+
+#: imageshackwindow.cpp:405
+#, kde-format
+msgid ""
+"Failed to upload photo into Imageshack: %1\n"
+"Do you want to continue?"
+msgstr ""
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_imageshackui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Export"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_imageshackui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Bara de unelte principală"
+
+#: plugin_imageshack.cpp:103
+#, kde-format
+msgid "Export to &Imageshack..."
+msgstr "Exportă către &ImageShack..."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Sergiu Bivol"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "sergiu@ase.md"
+
+#~ msgid "Checking the registration code"
+#~ msgstr "Se verifică codul de înregistrare"
+
+#~ msgid "Server does not respond. Please check you internet connection!"
+#~ msgstr "Serverul nu răspunde. Verificați conexiunea la Internet!"
+
+#~ msgid "Registration code successfully verified"
+#~ msgstr "Codul de înregistrare a fost verificat cu succes"
+
+#~ msgid "Registration code not valid!"
+#~ msgstr "Codul de înregistrare nu este valid!"
+
+#, fuzzy
+#~| msgid "Start upload to Imageshack web service"
+#~ msgid "Images to upload to Imageshack web service"
+#~ msgstr "Începe încărcarea spre serviciul web ImageShack"
+
+#, fuzzy
+#~| msgid "Image Shack Export"
+#~ msgid "ImageShack"
+#~ msgstr "Export către Image Shack"
+
+#~ msgid "Account"
+#~ msgstr "Cont"
+
+#~ msgctxt "Account info"
+#~ msgid "Name:"
+#~ msgstr "Denumire:"
+
+#~ msgctxt "Account info"
+#~ msgid "Email:"
+#~ msgstr "E-mail:"
+
+#~ msgid "Change account"
+#~ msgstr "Schimbă contul"
+
+#~ msgid "Destination"
+#~ msgstr "Destinație"
+
+#~ msgid "Gallery:"
+#~ msgstr "Galerie:"
+
+#, fuzzy
+#~| msgctxt "Account info"
+#~| msgid "Name:"
+#~ msgid "Name:"
+#~ msgstr "Denumire:"
+
+#~ msgctxt "ImageShack galleries list"
+#~ msgid "Reload"
+#~ msgstr "Reîncarcă"
+
+#~ msgid "Reload ImageShack galleries list"
+#~ msgstr "Reîncarcă lista de galerii ImageShack"
+
+#~ msgid "Options"
+#~ msgstr "Opțiuni"
+
+#~ msgid "Resize options"
+#~ msgstr "Opțiuni de redimensionare"
+
+#~ msgid "Do not resize photos"
+#~ msgstr "Nu redimensiona fotografiile"
+
+#~ msgid "Predefined templates"
+#~ msgstr "Șabloane predefinite"
+
+#~ msgid "Width:"
+#~ msgstr "Lățime:"
+
+#, fuzzy
+#~| msgid "Height"
+#~ msgid "Height:"
+#~ msgstr "Înălțime"
+
+#~ msgid "Imageshack authorization"
+#~ msgstr "Autorizare ImageShack"

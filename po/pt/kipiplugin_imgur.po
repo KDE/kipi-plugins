@@ -1,0 +1,171 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_imgurexport\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2016-07-20 09:54+0100\n"
+"Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
+"Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-POFile-SpellExtra: Caulier Gilles KIPI imgur Imgur Orcsik Marius Vogt\n"
+"X-POFile-SpellExtra: Fabian\n"
+
+#: imgurapi3.cpp:132
+#, kde-format
+msgid "Could not authorize"
+msgstr "Não foi possível autorizar"
+
+#: imgurapi3.cpp:309
+#, kde-format
+msgid "Could not open file"
+msgstr "Não foi possível aceder ao ficheiro"
+
+#: imgurimageslist.cpp:59
+#, kde-format
+msgid "Thumbnail"
+msgstr "Miniatura"
+
+#: imgurimageslist.cpp:62
+#, kde-format
+msgid "Submission title"
+msgstr "Título do envio"
+
+#: imgurimageslist.cpp:65
+#, kde-format
+msgid "Submission description"
+msgstr "Descrição do envio"
+
+#: imgurimageslist.cpp:68
+#, kde-format
+msgid "Imgur URL"
+msgstr "URL do Imgur"
+
+#: imgurimageslist.cpp:71
+#, kde-format
+msgid "Imgur Delete URL"
+msgstr "URL de Remoção do Imgur"
+
+#: imgurwindow.cpp:82
+#, kde-format
+msgid "Logged in as:"
+msgstr "Autenticado como:"
+
+#: imgurwindow.cpp:90
+#, kde-format
+msgid "Forget"
+msgstr "Esquecer"
+
+#: imgurwindow.cpp:100
+#, kde-format
+msgid "Upload Anonymously"
+msgstr "Enviar como Anónimo"
+
+#: imgurwindow.cpp:116
+#, kde-format
+msgid "Export to imgur.com"
+msgstr "Exportar para o imgur.com"
+
+#: imgurwindow.cpp:119
+#, kde-format
+msgid "Upload"
+msgstr "Enviar"
+
+#: imgurwindow.cpp:120
+#, kde-format
+msgid "Start upload to Imgur"
+msgstr "Iniciar o envio para o Imgur"
+
+#: imgurwindow.cpp:125
+#, kde-format
+msgid "Imgur Export"
+msgstr "Exportação para o Imgur"
+
+#: imgurwindow.cpp:126
+#, kde-format
+msgid "A tool to export images to Imgur web service"
+msgstr "Uma ferramenta para exportar imagens para o serviço Web do Imgur"
+
+#: imgurwindow.cpp:127
+#, kde-format
+msgid "(c) 2012-2013, Marius Orcsik"
+msgstr "(C) 2012-2013, Marius Orcsik"
+
+#: imgurwindow.cpp:129
+#, kde-format
+msgid "Marius Orcsik"
+msgstr "Marius Orcsik"
+
+#: imgurwindow.cpp:130
+#, kde-format
+msgid "Author"
+msgstr "Autoria"
+
+#: imgurwindow.cpp:133
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: imgurwindow.cpp:134 imgurwindow.cpp:138
+#, kde-format
+msgid "Developer"
+msgstr "Desenvolvimento"
+
+#: imgurwindow.cpp:137
+#, kde-format
+msgid "Fabian Vogt"
+msgstr "Fabian Vogt"
+
+#: imgurwindow.cpp:220
+#, kde-format
+msgid "<Not logged in>"
+msgstr "<Não autenticado>"
+
+#: imgurwindow.cpp:227
+#, kde-format
+msgid "Authorization Failed"
+msgstr "Autorização sem Sucesso"
+
+#: imgurwindow.cpp:228
+#, kde-format
+msgid "Failed to log into Imgur: %1\n"
+msgstr "Não foi possível autenticar-se no Imgur: %1\n"
+
+#: imgurwindow.cpp:254 imgurwindow.cpp:261
+#, kde-format
+msgid "Uploading Failed"
+msgstr "O Envio Foi Mal-Sucedido"
+
+#: imgurwindow.cpp:255
+#, kde-format
+msgid "Failed to upload photo to Imgur: %1\n"
+msgstr "Não foi possível enviar a fotografia para o Imgur: %1\n"
+
+#: imgurwindow.cpp:262
+#, kde-format
+msgid ""
+"Failed to upload photo to Imgur: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Não foi possível enviar a fotografia para o Imgur: %1\n"
+"Deseja continuar?"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_imgurui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Exportar"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_imgurui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Barra Principal"
+
+#: plugin_imgur.cpp:102
+#, kde-format
+msgid "Export to &Imgur..."
+msgstr "Exportar para o &Imgur..."

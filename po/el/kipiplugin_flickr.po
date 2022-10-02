@@ -1,0 +1,729 @@
+# translation of kipiplugin_flickrexport.po to Greek
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Spiros Georgaras <sng@hellug.gr>, 2008.
+# Toussis Manolis <manolis@koppermind.homelinux.org>, 2008, 2009.
+# Stelios <sstavra@gmail.com>, 2011, 2017, 2019.
+# Dimitrios Glentadakis <dglent@gmail.com>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_flickrexport\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2019-08-06 11:07+0300\n"
+"Last-Translator: Stelios <sstavra@gmail.com>\n"
+"Language-Team: Greek <kde-i18n-el@kde.org>\n"
+"Language: el\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 18.12.3\n"
+
+#: comboboxintermediate.h:54
+#, kde-format
+msgid "Various"
+msgstr "Διάφορα"
+
+#: flickrlist.cpp:420
+#, kde-format
+msgid ""
+"Check if photo should be publicly visible or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"Επιλέξτε αν η φωτογραφία θα είναι δημόσια ορατή ή χρησιμοποιήστε την καρτέλα "
+"με τις επιλογές αποστολής για να το ρυθμίσετε αυτό για όλες τις εικόνες"
+
+#: flickrlist.cpp:423
+#, kde-format
+msgid ""
+"Check if photo should be visible to family or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"Επιλέξτε αν η φωτογραφία θα είναι ορατή στην οικογένεια ή χρησιμοποιήστε την "
+"καρτέλα με τις επιλογές αποστολής για να το ρυθμίσετε αυτό για όλες τις "
+"εικόνες"
+
+#: flickrlist.cpp:426
+#, kde-format
+msgid ""
+"Check if photo should be visible to friends or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"Επιλέξτε αν η φωτογραφία θα είναι ορατή στους φίλους ή χρησιμοποιήστε την "
+"καρτέλα με τις επιλογές αποστολής για να το ρυθμίσετε αυτό για όλες τις "
+"εικόνες"
+
+#: flickrlist.cpp:429
+#, kde-format
+msgid ""
+"Indicate the safety level for the photo or use Upload Options tab to specify "
+"this for all images"
+msgstr ""
+"Υπόδειξη του επιπέδου ασφάλειας για τη φωτογραφία ή χρήση της καρτέλας με "
+"τις επιλογές αποστολής για να ρυθμιστεί αυτό για όλες τις εικόνες"
+
+#: flickrlist.cpp:432
+#, kde-format
+msgid ""
+"Indicate what kind of image this is or use Upload Options tab to specify "
+"this for all images"
+msgstr ""
+"Υπόδειξη του είδους της εικόνας ή χρήση της καρτέλας με τις επιλογές "
+"αποστολής για να ρυθμιστεί αυτό για όλες τις εικόνες"
+
+#: flickrlist.cpp:445
+#, kde-format
+msgid ""
+"Add extra tags per image or use Upload Options tab to add tags for all images"
+msgstr ""
+"Προσθήκη επιπλέον ετικετών ή χρήση της καρτέλας με τις επιλογές αποστολής "
+"για προσθήκη ετικετών για όλες τις εικόνες"
+
+#: flickrlist.cpp:462
+#, kde-format
+msgid "Enter extra tags, separated by commas."
+msgstr "Εισαγάγετε επιπλέον ετικέτες διαχωρισμένες με κόμμα."
+
+#: flickrtalker.cpp:265
+#, kde-format
+msgid "Getting the maximum allowed file size."
+msgstr "Ανάκτηση του μέγιστου επιτρεπόμενου μεγέθους αρχείου."
+
+#: flickrtalker.cpp:550
+#, kde-format
+msgid "File Size exceeds maximum allowed file size."
+msgstr "Το μέγεθος του αρχείου υπερβαίνει το μέγιστο."
+
+#: flickrtalker.cpp:603
+#, kde-format
+msgid "No photo specified"
+msgstr "Δεν καθορίστηκε φωτογραφία"
+
+#: flickrtalker.cpp:607
+#, kde-format
+msgid "General upload failure"
+msgstr "Γενική αποτυχία αποστολής"
+
+#: flickrtalker.cpp:611
+#, kde-format
+msgid "Filesize was zero"
+msgstr "Μηδενικό μέγεθος αρχείου"
+
+#: flickrtalker.cpp:615
+#, kde-format
+msgid "Filetype was not recognized"
+msgstr "Ο τύπος αρχείου δεν αναγνωρίζεται"
+
+#: flickrtalker.cpp:619
+#, kde-format
+msgid "User exceeded upload limit"
+msgstr "Υπέρβαση ορίου αποστολής του χρήστη"
+
+#: flickrtalker.cpp:623
+#, kde-format
+msgid "Invalid signature"
+msgstr "Μη έγκυρη υπογραφή"
+
+#: flickrtalker.cpp:627
+#, kde-format
+msgid "Missing signature"
+msgstr "Λείπει υπογραφή"
+
+#: flickrtalker.cpp:631
+#, kde-format
+msgid "Login Failed / Invalid auth token"
+msgstr "Αποτυχία σύνδεσης / μη έγκυρο αναγνωριστικό"
+
+#: flickrtalker.cpp:635
+#, kde-format
+msgid "Invalid API Key"
+msgstr "Μη έγκυρο κλειδί API"
+
+#: flickrtalker.cpp:639
+#, kde-format
+msgid "Service currently unavailable"
+msgstr "Μη διαθέσιμη υπηρεσία αυτήν τη στιγμή"
+
+#: flickrtalker.cpp:643
+#, kde-format
+msgid "Invalid Frob"
+msgstr "Μη έγκυρο αντικείμενο"
+
+#: flickrtalker.cpp:647
+#, kde-format
+msgid "Format \"xxx\" not found"
+msgstr "Δε βρέθηκε μορφή \"xxx\""
+
+#: flickrtalker.cpp:651
+#, kde-format
+msgid "Method \"xxx\" not found"
+msgstr "Δε βρέθηκε μέθοδος \"xxx\""
+
+#: flickrtalker.cpp:655
+#, kde-format
+msgid "Invalid SOAP envelope"
+msgstr "Μη έγκυρος φάκελος SOAP"
+
+#: flickrtalker.cpp:659
+#, kde-format
+msgid "Invalid XML-RPC Method Call"
+msgstr "Μη έγκυρη κλήση μεθόδου XML-RPC"
+
+#: flickrtalker.cpp:663
+#, kde-format
+msgid "The POST method is now required for all setters"
+msgstr "Η μέθοδος POST απαιτείται τώρα για όλους τους ρυθμιστές"
+
+#: flickrtalker.cpp:667
+#, kde-format
+msgid "Unknown error"
+msgstr "Άγνωστο σφάλμα"
+
+#: flickrtalker.cpp:672 flickrtalker.cpp:696 flickrtalker.cpp:852
+#: flickrwindow.cpp:416
+#, kde-format
+msgid "Error"
+msgstr "Σφάλμα"
+
+#: flickrtalker.cpp:673
+#, kde-format
+msgid ""
+"Error Occurred: %1\n"
+"Cannot proceed any further."
+msgstr ""
+"Εμφάνιση σφάλματος: %1\n"
+"Αδύνατη η συνέχεια."
+
+#: flickrtalker.cpp:852
+#, kde-format
+msgid "PhotoSet creation failed: "
+msgstr "Αποτυχία δημιουργίας συνόλου φωτογραφιών: "
+
+#: flickrtalker.cpp:947
+#, kde-format
+msgid "Failed to fetch list of photo sets."
+msgstr "Αποτυχία προσκόμισης λίστας συνόλων φωτογραφιών."
+
+#: flickrtalker.cpp:1027
+#, kde-format
+msgid "Failed to upload photo"
+msgstr "Αποτυχία αποστολής φωτογραφίας"
+
+#: flickrtalker.cpp:1086
+#, kde-format
+msgid "Failed to query photo information"
+msgstr "Αποτυχία υποβολής ερώτησης για πληροφορίες φωτογραφίας"
+
+#: flickrwidget.cpp:63
+#, kde-format
+msgid "Remove Account"
+msgstr "Διαγραφή λογαριασμού"
+
+#: flickrwidget.cpp:73 flickrwidget.cpp:77
+#, kde-format
+msgctxt "photo permissions"
+msgid "Public"
+msgstr "Δημόσια"
+
+#: flickrwidget.cpp:76
+#, kde-format
+msgid "This is the list of images to upload to your Flickr account."
+msgstr "Αυτή είναι η λίστα εικόνων που θα αποσταλεί στο λογαριασμό σας Flickr."
+
+#: flickrwidget.cpp:81
+#, kde-format
+msgid "Extra tags"
+msgstr "επιπλέον ετικέτες"
+
+#: flickrwidget.cpp:87 flickrwidget.cpp:98
+#, kde-format
+msgctxt "photo permissions"
+msgid "Family"
+msgstr "Οικογένεια"
+
+#: flickrwidget.cpp:92 flickrwidget.cpp:100
+#, kde-format
+msgctxt "photo permissions"
+msgid "Friends"
+msgstr "Φίλοι"
+
+#: flickrwidget.cpp:107
+#, kde-format
+msgid "Safety level"
+msgstr "Επίπεδο ασφάλειας"
+
+#: flickrwidget.cpp:109
+#, kde-format
+msgid "Content type"
+msgstr "Τύπος περιεχομένου"
+
+#: flickrwidget.cpp:112
+#, kde-format
+msgctxt "photo safety level"
+msgid "Safe"
+msgstr "Ασφαλές"
+
+#: flickrwidget.cpp:113
+#, kde-format
+msgctxt "photo safety level"
+msgid "Moderate"
+msgstr "Μέτριο"
+
+#: flickrwidget.cpp:114
+#, kde-format
+msgctxt "photo safety level"
+msgid "Restricted"
+msgstr "Περιορισμένο"
+
+#: flickrwidget.cpp:115 flickrwidget.cpp:211
+#, kde-format
+msgctxt "photo content type"
+msgid "Photo"
+msgstr "Φωτογραφία"
+
+#: flickrwidget.cpp:116 flickrwidget.cpp:212
+#, kde-format
+msgctxt "photo content type"
+msgid "Screenshot"
+msgstr "Στιγμιότυπο"
+
+#: flickrwidget.cpp:117 flickrwidget.cpp:213
+#, kde-format
+msgctxt "photo content type"
+msgid "Other"
+msgstr "Άλλο"
+
+#: flickrwidget.cpp:134
+#, kde-format
+msgid "Tag options"
+msgstr "Επιλογές ετικετών"
+
+#: flickrwidget.cpp:138
+#, kde-format
+msgid "Use Host Application Tags"
+msgstr "Χρήση ετικετών εφαρμογής υπολογιστή"
+
+#: flickrwidget.cpp:140 flickrwidget.cpp:501
+#, kde-format
+msgid "More tag options"
+msgstr "Περισσότερες επιλογές ετικετών"
+
+#: flickrwidget.cpp:154
+#, kde-format
+msgid "Added Tags: "
+msgstr "Ετικέτες που προστέθηκαν: "
+
+#: flickrwidget.cpp:156
+#, kde-format
+msgid "Enter new tags here, separated by commas."
+msgstr "Εισαγάγετε εδώ νέες ετικέτες διαχωρισμένες με κόμμα."
+
+#: flickrwidget.cpp:158
+#, kde-format
+msgid "Add tags per image"
+msgstr "Προσθήκη ετικετών ανά εικόνα"
+
+#: flickrwidget.cpp:159
+#, kde-format
+msgid "If checked, you can set extra tags for each image in the File List tab"
+msgstr ""
+"Αν επιλεγεί, σάς επιτρέπει να θέσετε επιπλέον ετικέτες για κάθε εικόνα στην "
+"καρτέλα με τη λίστα αρχείων"
+
+#: flickrwidget.cpp:163
+#, kde-format
+msgid "Strip Spaces From Tags"
+msgstr "Αφαίρεση κενών από ετικέτες"
+
+#: flickrwidget.cpp:176
+#, kde-format
+msgid "Publication Options"
+msgstr "Επιλογές δημοσίευσης"
+
+#: flickrwidget.cpp:181
+#, kde-format
+msgctxt "As in accessible for people"
+msgid "Public (anyone can see them)"
+msgstr "Δημόσιο (οποιοσδήποτε μπορεί να το δει)"
+
+#: flickrwidget.cpp:184
+#, kde-format
+msgid "Visible to Family"
+msgstr "Ορατό στην οικογένεια"
+
+#: flickrwidget.cpp:187
+#, kde-format
+msgid "Visible to Friends"
+msgstr "Ορατό σε φίλους"
+
+#: flickrwidget.cpp:190 flickrwidget.cpp:488
+#, kde-format
+msgid "More publication options"
+msgstr "Περισσότερες επιλογές δημοσίευσης"
+
+#: flickrwidget.cpp:203
+#, kde-format
+msgid "Safety level:"
+msgstr "Επίπεδο ασφάλειας:"
+
+#: flickrwidget.cpp:205
+#, kde-format
+msgid "Safe"
+msgstr "Ασφαλές"
+
+#: flickrwidget.cpp:206
+#, kde-format
+msgid "Moderate"
+msgstr "Μέτριο"
+
+#: flickrwidget.cpp:207
+#, kde-format
+msgid "Restricted"
+msgstr "Περιορισμένο"
+
+#: flickrwidget.cpp:209
+#, kde-format
+msgid "Content type:"
+msgstr "τύπος περιεχομένου:"
+
+#: flickrwidget.cpp:304
+#, kde-format
+msgid ""
+"<b><h2><a href='http://www.23hq.com'><font color=\"#7CD164\">23</font></a> "
+"Export</h2></b>"
+msgstr ""
+"<b><h2><a href='http://www.23hq.com'><font color=\"#7CD164\">23</font></a> "
+"Εξαγωγή</h2></b>"
+
+#: flickrwidget.cpp:311
+#, kde-format
+msgid ""
+"<b><h2><a href='http://www.flickr.com'><font color=\"#0065DE\">flick</"
+"font><font color=\"#FF0084\">r</font></a> Export</h2></b>"
+msgstr ""
+"<b><h2><a href='http://www.flickr.com'><font color=\"#0065DE\">flick</"
+"font><font color=\"#FF0084\">r</font></a> Εξαγωγή</h2></b>"
+
+#: flickrwidget.cpp:484
+#, kde-format
+msgid "Fewer publication options"
+msgstr "Λιγότερες επιλογές δημοσίευσης"
+
+#: flickrwidget.cpp:506
+#, kde-format
+msgid "Fewer tag options"
+msgstr "Λιγότερες επιλογές ετικετών"
+
+#: flickrwindow.cpp:71
+#, kde-format
+msgid "Export to %1 Web Service"
+msgstr "Εξαγωγή στην υπηρεσία ιστού %1"
+
+#: flickrwindow.cpp:119
+#, kde-format
+msgid "Start Uploading"
+msgstr "Έναρξη αποστολής"
+
+#: flickrwindow.cpp:131
+#, kde-format
+msgid "Flickr/23 Export"
+msgstr "Εξαγωγή Flickr/23"
+
+#: flickrwindow.cpp:132
+#, kde-format
+msgid "A tool to export an image collection to a Flickr / 23 web service."
+msgstr "Ένα εργαλείο εξαγωγής συλλογής εικόνων στην υπηρεσία ιστού Flickr/ 23."
+
+#: flickrwindow.cpp:134
+#, kde-format
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2015, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2015, Shourya Singh Gupta"
+msgstr ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2015, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2015, Shourya Singh Gupta"
+
+#: flickrwindow.cpp:139
+#, kde-format
+msgid "Vardhman Jain"
+msgstr "Vardhman Jain"
+
+#: flickrwindow.cpp:139
+#, kde-format
+msgid "Author and maintainer"
+msgstr "Συγγραφέας και συντηρητής"
+
+#: flickrwindow.cpp:142
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: flickrwindow.cpp:142 flickrwindow.cpp:145
+#, kde-format
+msgid "Developer"
+msgstr "Προγραμματιστής"
+
+#: flickrwindow.cpp:145
+#, kde-format
+msgid "Shourya Singh Gupta"
+msgstr "Shourya Singh Gupta"
+
+#: flickrwindow.cpp:557
+#, kde-format
+msgid "Photostream Only"
+msgstr "Photostream μόνο"
+
+#: flickrwindow.cpp:741
+#, kde-format
+msgid "Flickr Export"
+msgstr "Εξαγωγή Flickr"
+
+#: flickrwindow.cpp:759
+#, kde-format
+msgid "Failed to Fetch Photoset information from %1. %2\n"
+msgstr "Αποτυχία προσκόμισης πληροφοριών συνόλου φωτογραφιών από το %1. %2\n"
+
+#: flickrwindow.cpp:765
+#, kde-format
+msgid "Warning"
+msgstr "Προειδοποίηση"
+
+#: flickrwindow.cpp:766
+#, kde-format
+msgid ""
+"Failed to upload photo into %1. %2\n"
+"Do you want to continue?"
+msgstr ""
+"Αποτυχία αποστολής φωτογραφίας στο %1. %2\n"
+"Επιθυμείτε τη συνέχεια;"
+
+#: flickrwindow.cpp:769
+#, kde-format
+msgid "Continue"
+msgstr "Συνέχεια"
+
+#: flickrwindow.cpp:770
+#, kde-format
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_flickrui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Εξαγωγή"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_flickrui.rc:14
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Κύρια γραμμή εργαλείων"
+
+#: plugin_flickr.cpp:100
+#, kde-format
+msgid "Export to Flick&r..."
+msgstr "Εξαγωγή στο Flick&r..."
+
+#: selectuserdlg.cpp:47
+#, kde-format
+msgid "Flickr Account Selector"
+msgstr "Επιλογέας λογαριασμού Flickr"
+
+#: selectuserdlg.cpp:52
+#, kde-format
+msgid "Add another account"
+msgstr "Προσθήκη και άλλου λογαριασμού"
+
+#: selectuserdlg.cpp:75
+#, kde-format
+msgid "Choose the %1 account to use for exporting images:"
+msgstr "Επιλέξτε τον %1 λογαριασμό για την εξαγωγή εικόνων:"
+
+#~ msgid ""
+#~ "<b><h2><a href='http://www.zooomr.com'><font color=\"#7CD164\">zooomr</"
+#~ "font></a> Export</h2></b>"
+#~ msgstr ""
+#~ "<b><h2><a href='http://www.zooomr.com'><font color=\"#7CD164\">zooomr</"
+#~ "font></a> Εξαγωγή</h2></b>"
+
+#~ msgctxt "flickr login"
+#~ msgid "Username:"
+#~ msgstr "Όνομα χρήστη:"
+
+#~ msgid "Password:"
+#~ msgstr "Κωδικός πρόσβασης:"
+
+#~ msgid "Getting the Frob"
+#~ msgstr "Λήψη του αντικειμένου"
+
+#~ msgid "Checking if previous token is still valid"
+#~ msgstr "Έλεγχος εγκυρότητας προηγούμενου ενδεικτικού"
+
+#~ msgid "%1 Service Web Authorization"
+#~ msgstr "Εξουσιοδότηση ιστού υπηρεσίας %1"
+
+#~ msgid ""
+#~ "Please follow the instructions in the browser window, then return to "
+#~ "press corresponding button."
+#~ msgstr ""
+#~ "Παρακαλώ ακολουθήστε τις οδηγίες στο παράθυρο περιήγησης και έπειτα "
+#~ "επιστρέψτε για να πιέσετε το κατάλληλο κουμπί."
+
+#~ msgid "I am authenticated"
+#~ msgstr "Είμαι ταυτοποιημένος"
+
+#~ msgid "I am not authenticated"
+#~ msgstr "Δεν είμαι ταυτοποιημένος"
+
+#~ msgid "Authenticating the User on web"
+#~ msgstr "Ταυτοποίηση του χρήστη στο διαδίκτυο"
+
+#~ msgid "Getting the Token from the server"
+#~ msgstr "Λήψη ενδεικτικού από τον εξυπηρετητή"
+
+#~ msgctxt "As in the permission to"
+#~ msgid "write"
+#~ msgstr "εγγραφής"
+
+#~ msgctxt "As in the permission to"
+#~ msgid "read"
+#~ msgstr "ανάγνωσης"
+
+#~ msgctxt "As in the permission to"
+#~ msgid "delete"
+#~ msgstr "διαγραφής"
+
+#, fuzzy
+#~| msgid "Invalid Frob"
+#~ msgid "Invalid Token"
+#~ msgstr "Μη έγκυρο αντικείμενο"
+
+#~ msgid ""
+#~ "Your token is invalid. Would you like to get a new token to proceed?\n"
+#~ msgstr ""
+#~ "Το αναγνωριστικό σας δεν είναι έγκυρο. Επιθυμείτε να λάβετε ένα νέο "
+#~ "αναγνωριστικό για τη συνέχεια;\n"
+
+#~ msgid "Flickr/23/Zooomr Export"
+#~ msgstr "Εξαγωγή Flickr/23/Zooomr"
+
+#~ msgid "Export to &23..."
+#~ msgstr "Εξαγωγή στο &23..."
+
+#~ msgid "Export to &Zooomr..."
+#~ msgstr "Εξαγωγή στο &Zoomr..."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Τούσης Μανώλης,Stelios"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "manolis@koppermind.homelinux.org,sstavra@gmail.com"
+
+#~ msgid "New PhotoSet"
+#~ msgstr "Νέο σύνολο φωτογραφιών"
+
+#~ msgid "<h3>Create New PhotoSet </h3>"
+#~ msgstr "<h3>Δημιουργία νέου συνόλου φωτογραφιών </h3>"
+
+#~ msgid "&OK"
+#~ msgstr "&Εντάξει"
+
+#~ msgid "Title (required):"
+#~ msgstr "Τίτλος (απαιτείται):"
+
+#~ msgid "Description (optional)"
+#~ msgstr "Περιγραφή (προαιρετικό):"
+
+#~ msgid "Account"
+#~ msgstr "Λογαριασμός"
+
+#~ msgctxt "account settings"
+#~ msgid "Username: "
+#~ msgstr "Όνομα χρήστη: "
+
+#~ msgid "Use a different account"
+#~ msgstr "Χρήση ενός διαφορετικού λογαριασμού"
+
+#~ msgid "PhotoSet:"
+#~ msgstr "Σύνολο φωτογραφιών:"
+
+#~ msgid "&New PhotoSet"
+#~ msgstr "&Νέο σύνολο φωτογραφιών"
+
+#~ msgid "&Reload"
+#~ msgstr "Επαναφό&ρτωση"
+
+#~ msgid "Resizing Options"
+#~ msgstr "Επιλογές αλλαγής μεγέθους"
+
+#~ msgid "Send original file (no resizing)"
+#~ msgstr "Αποστολή του αρχικού αρχείου (χωρίς αλλαγή μεγέθους)"
+
+#~ msgid "Resize photos before uploading"
+#~ msgstr "Αλλαγή μεγέθους εικόνων πριν την αποστολή"
+
+#~ msgid "Maximum dimension (pixels):"
+#~ msgstr "Μέγιστη διάσταση (εικονοστοιχεία):"
+
+#~ msgid "JPEG Image Quality (higher is better):"
+#~ msgstr "Ποιότητα εικόνας JPEG (η υψηλότερη είναι η καλύτερη):"
+
+#~ msgid "File List"
+#~ msgstr "Λίστα αρχείων"
+
+#~ msgid "Upload Options"
+#~ msgstr "Επιλογές αποστολής"
+
+#~ msgid "Handbook"
+#~ msgstr "Εγχειρίδιο"
+
+#~ msgid "Uploading file %1"
+#~ msgstr "Αποστολή αρχείου %1"
+
+#, fuzzy
+#~| msgid "Upload Options"
+#~ msgid "Less tag options"
+#~ msgstr "Επιλογές αποστολής"
+
+#, fuzzy
+#~| msgid "Upload Options"
+#~ msgid "Less publication options"
+#~ msgstr "Επιλογές αποστολής"
+
+#~ msgid "Override Default Options"
+#~ msgstr "Αντικατάσταση προκαθορισμένων επιλογών"
+
+#~ msgid "PhotoSet created successfully"
+#~ msgstr "Το σύνολο φωτογραφιών δημιουργήθηκε με επιτυχία"
+
+#~ msgid "Name (optional):"
+#~ msgstr "Όνομα (προαιρετικό):"
+
+#~ msgid "Primary Photo Id"
+#~ msgstr "Κύριο id φωτογραφίας"
+
+#~ msgid "User Name: "
+#~ msgstr "Όνομα χρήστη:"
+
+#~ msgid "Title (optional):"
+#~ msgstr "Τίτλος (προαιρετικό):"
+
+#~ msgid "Thumbnail"
+#~ msgstr "Εικόνα επισκόπησης"
+
+#~ msgid "File Name"
+#~ msgstr "Όνομα αρχείου"
+
+#~ msgid "&Add"
+#~ msgstr "&Προσθήκη"
+
+#~ msgid "&Remove"
+#~ msgstr "&Αφαίρεση"

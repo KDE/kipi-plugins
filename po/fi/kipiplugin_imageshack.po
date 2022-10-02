@@ -1,0 +1,298 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Tommi Nieminen <translator@legisign.org>, 2014, 2018.
+# Lasse Liehu <lasse.liehu@gmail.com>, 2014, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2018-08-01 20:57+0200\n"
+"Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
+"Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: imageshacktalker.cpp:173
+#, kde-format
+msgid "Authenticating the user"
+msgstr "Valtuutetaan käyttäjää"
+
+#: imageshacktalker.cpp:199
+#, kde-format
+msgid "Getting galleries from server"
+msgstr "Noudetaan gallerioita palvelimelta"
+
+#: imageshacktalker.cpp:289
+#, kde-format
+msgid "Successfully retrieved galleries"
+msgstr "Noudettiin galleriat onnistuneesti"
+
+#: imageshackwidget.cpp:82
+#, kde-format
+msgid "Make private"
+msgstr "Merkitse yksityiseksi"
+
+#: imageshackwidget.cpp:86
+#, kde-format
+msgid "Tags (optional):"
+msgstr "Tunnisteet (valinnainen):"
+
+#: imageshackwidget.cpp:88
+#, kde-format
+msgid "Remove information bar on thumbnails"
+msgstr "Poista pikkukuvien tietorivi"
+
+#: imageshackwidget.cpp:125
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Add to root folder"
+msgstr "Lisää juurikansioon"
+
+#: imageshackwidget.cpp:128
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Create new gallery"
+msgstr "Luo uusi galleria"
+
+#: imageshackwindow.cpp:81
+#, kde-format
+msgid "Export to Imageshack"
+msgstr "Vie ImageShackiin"
+
+#: imageshackwindow.cpp:89
+#, kde-format
+msgid "Upload"
+msgstr "Lähetä"
+
+#: imageshackwindow.cpp:90
+#, kde-format
+msgid "Start upload to Imageshack web service"
+msgstr "Aloita lähetys ImageShack-verkkopalveluun"
+
+#: imageshackwindow.cpp:98
+#, kde-format
+msgid "Imageshack Export"
+msgstr "ImageShack-vienti"
+
+#: imageshackwindow.cpp:99
+#, kde-format
+msgid "A tool to export images to Imageshack web service."
+msgstr "Työkalu kuvien viemiseksi Imageshack-verkkopalveluun."
+
+#: imageshackwindow.cpp:100
+#, kde-format
+msgid "(c) 2012, Dodon Victor\n"
+msgstr "© 2012 Dodon Victor\n"
+
+#: imageshackwindow.cpp:102
+#, kde-format
+msgid "Dodon Victor"
+msgstr "Dodon Victor"
+
+#: imageshackwindow.cpp:103
+#, kde-format
+msgid "Author"
+msgstr "Tekijä"
+
+#: imageshackwindow.cpp:230
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: imageshackwindow.cpp:234
+#, kde-format
+msgid "Image Shack Export"
+msgstr "ImageShack-vienti"
+
+#: imageshackwindow.cpp:261
+#, kde-format
+msgid "Authenticating..."
+msgstr "Valtuutetaan…"
+
+#: imageshackwindow.cpp:318
+#, kde-format
+msgid "Login failed: %1\n"
+msgstr "Kirjautuminen epäonnistui: %1\n"
+
+#: imageshackwindow.cpp:332
+#, kde-format
+msgid "Failed to get galleries list: %1\n"
+msgstr "Gallerialuettelon nouto epäonnistui: %1\n"
+
+#: imageshackwindow.cpp:404
+#, kde-format
+msgid "Uploading Failed"
+msgstr "Lähetys epäonnistui"
+
+#: imageshackwindow.cpp:405
+#, kde-format
+msgid ""
+"Failed to upload photo into Imageshack: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Kuvan lähetys ImageShackiin epäonnistui: %1\n"
+"Haluatko jatkaa?"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_imageshackui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Vie"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_imageshackui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Päätyökalurivi"
+
+#: plugin_imageshack.cpp:103
+#, kde-format
+msgid "Export to &Imageshack..."
+msgstr "Vie &ImageShackiin…"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Tommi Nieminen"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "translator@legisign.org"
+
+#~ msgid "Checking the registration code"
+#~ msgstr "Tarkistetaan rekisteröintikoodia"
+
+#~ msgid "Checking the web server"
+#~ msgstr "Tarkistetaan verkkopalvelinta"
+
+#~ msgid "Server does not respond. Please check you internet connection!"
+#~ msgstr "Palvelin ei vastaa. Tarkista internetyhteytesi!"
+
+#~ msgid "Registration code successfully verified"
+#~ msgstr "Rekisteröintikoodi tarkistettiin onnistuneesti"
+
+#~ msgid "Registration code not valid!"
+#~ msgstr "Rekisteröintikoodi ei kelpaa!"
+
+#~ msgid "Images to upload to Imageshack web service"
+#~ msgstr "ImageShack-verkkopalveluun lähetettävät kuvat"
+
+#~ msgid ""
+#~ "This is a clickable link to open the Imageshack home page in a web browser"
+#~ msgstr ""
+#~ "Tästä linkistä voit napsauttaa selaimeen auki ImageShackin kotisivun"
+
+#~ msgid "ImageShack"
+#~ msgstr "ImageShack"
+
+#~ msgid "Account"
+#~ msgstr "Tili"
+
+#~ msgid "Imageshack account info"
+#~ msgstr "ImageShack-tilin tiedot"
+
+#~ msgctxt "Account info"
+#~ msgid "Name:"
+#~ msgstr "Nimi:"
+
+#~ msgctxt "Account info"
+#~ msgid "Email:"
+#~ msgstr "Sähköposti:"
+
+#~ msgid "Change account"
+#~ msgstr "Vaihda tiliä"
+
+#~ msgid ""
+#~ "Change the registration code for the Imageshack account used to upload "
+#~ "images"
+#~ msgstr ""
+#~ "Vaihda kuvien lähetyksen käytetyn ImageShack-tilin rekisteröintikoodia"
+
+#~ msgid "Destination"
+#~ msgstr "Kohde"
+
+#~ msgid ""
+#~ "This is the ImageShack gallery to which selected items will be uploaded"
+#~ msgstr "Tämä on ImageShack-galleria, johon kuvat lähetetään"
+
+#~ msgid "Upload to galleries"
+#~ msgstr "Lähetä gallerioihin"
+
+#~ msgid "Gallery:"
+#~ msgstr "Galleria:"
+
+#~ msgid "Name:"
+#~ msgstr "Nimi:"
+
+#~ msgctxt "ImageShack galleries list"
+#~ msgid "Reload"
+#~ msgstr "Päivitä"
+
+#~ msgid "Reload ImageShack galleries list"
+#~ msgstr "Päivitä ImageShack-gallerialuettelo"
+
+#~ msgid "Options"
+#~ msgstr "Asetukset"
+
+#~ msgid "These are the options that will be applied to photos"
+#~ msgstr "Kuviin käytetään näitä asetuksia"
+
+#~ msgid "Resize options"
+#~ msgstr "Koonmuutosasetukset"
+
+#~ msgid "Do not resize photos"
+#~ msgstr "Älä muuta kuvien kokoa"
+
+#~ msgid "Predefined templates"
+#~ msgstr "Esimääritetyt mallit"
+
+#~ msgid "Width:"
+#~ msgstr "Leveys:"
+
+#~ msgid "Height:"
+#~ msgstr "Korkeus:"
+
+#~ msgid "100x75 (avatar)"
+#~ msgstr "100×75 (avatar)"
+
+#~ msgid "150x122 (thumbnail)"
+#~ msgstr "150×122 (pikkukuva)"
+
+#~ msgid "320x240 (for websites and email)"
+#~ msgstr "320×240 (verkkosivuille tai sähköpostiin)"
+
+#~ msgid "640x480 (for message boards)"
+#~ msgstr "640×480 (foorumeille)"
+
+#~ msgid "800x600 (15-inch monitor)"
+#~ msgstr "800×600 (15\" näyttö)"
+
+#~ msgid "1024x768 (17-inch monitor)"
+#~ msgstr "1024×768 (17\" näyttö)"
+
+#~ msgid "1280x1024 (19-inch monitor)"
+#~ msgstr "1280×1024 (19\" näyttö)"
+
+#~ msgid "1600x1200 (21-inch monitor)"
+#~ msgstr "1600×1200 (21\" näyttö)"
+
+#~ msgid "optimize without resizing"
+#~ msgstr "optimoi muuttamatta kokoa"
+
+#~ msgid "Create new gallery."
+#~ msgstr "Luo uusi galleria."
+
+#~ msgid "Imageshack authorization"
+#~ msgstr "ImageShack-valtuutus"
+
+#~ msgid ""
+#~ "Please paste the registration code for your ImageShack account into the "
+#~ "textbox below and press \"OK\"."
+#~ msgstr ""
+#~ "Liitä ImageShack-tilisi rekisteröintikoodi alla olevaan tekstikenttään ja "
+#~ "paina ”OK”."

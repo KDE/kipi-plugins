@@ -1,0 +1,898 @@
+# translation of kipiplugin_picasawebexport.po to Khmer
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2010.
+#  Seng Sutha <Sutha@khmeros.info>, 2010.
+# Sophea <sophea@khmeros.info>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_picasawebexport\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2012-06-25 12:00+0700\n"
+"Last-Translator: Sophea <sophea@khmeros.info>\n"
+"Language-Team: Khmer <>\n"
+"Language: km\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: WordForge 0.8 RC1\n"
+"X-Language: km-KH\n"
+
+#: authorize.cpp:116
+#, kde-format
+msgid "Google Drive Authorization"
+msgstr ""
+
+#: authorize.cpp:129
+#, kde-format
+msgid ""
+"Please follow the instructions in the browser. After logging in and "
+"authorizing the application, copy the code from the browser, paste it in the "
+"textbox below, and click OK."
+msgstr ""
+
+#: authorize.cpp:249 gdtalker.cpp:272 gptalker.cpp:644
+#, kde-format
+msgid "Error"
+msgstr ""
+
+#: gdtalker.cpp:337
+#, kde-format
+msgid "Failed to list folders"
+msgstr ""
+
+#: gdtalker.cpp:385
+#, fuzzy, kde-format
+#| msgid "Failed to create album"
+msgid "Failed to create folder"
+msgstr "បាន​បរាជ័យ​ដើម្បី​បង្កើត​​អាល់ប៊ុម​"
+
+#: gdtalker.cpp:416 gptalker.cpp:937
+#, kde-format
+msgid "Failed to upload photo"
+msgstr "បាន​បរាជ័យ​ដើម្បី​ផ្ទុក​អាល់ប៊ុម​"
+
+#: gptalker.cpp:569
+#, kde-format
+msgid "No photo specified"
+msgstr "គ្មាន​រូបថត​ដែល​បាន​បញ្ជាក់​ឡើយ​"
+
+#: gptalker.cpp:572
+#, kde-format
+msgid "General upload failure"
+msgstr "ភាព​បរាជ័យ​ផ្ទុក​ឡើង​ទូទៅ​​"
+
+#: gptalker.cpp:575
+#, kde-format
+msgid "File-size was zero"
+msgstr "ទំហំ​ឯកសារ​គឺ​សូន្យ​​"
+
+#: gptalker.cpp:578
+#, kde-format
+msgid "File-type was not recognized"
+msgstr "មិន​ស្គាល់​ប្រភេទ​ឯកសារ​​ឡើយ​"
+
+#: gptalker.cpp:581
+#, kde-format
+msgid "User exceeded upload limit"
+msgstr "អ្នក​ប្រើ​បាន​កំណត់​ផ្ទុក​លើស​"
+
+#: gptalker.cpp:584
+#, kde-format
+msgid "Invalid signature"
+msgstr "ហត្ថលេខា​មិន​ត្រឹមត្រូវ​"
+
+#: gptalker.cpp:587
+#, kde-format
+msgid "Missing signature"
+msgstr "បាត់​ហត្ថលេខា​"
+
+#: gptalker.cpp:590
+#, kde-format
+msgid "Login failed / Invalid auth token"
+msgstr "ចូល​បាន​បរាជ័យ​ / ថូខឹន​ការ​ផ្ទៀង​ផ្ទាត់​ភាព​ត្រឹមត្រូវ​មិន​ត្រឹមត្រូវ​​"
+
+#: gptalker.cpp:593
+#, kde-format
+msgid "Invalid API Key"
+msgstr "សោ​ API មិន​ត្រឹមត្រូវ​"
+
+#: gptalker.cpp:596
+#, kde-format
+msgid "Service currently unavailable"
+msgstr "បច្ចុប្បន្ន គ្មាន​សេវា​"
+
+#: gptalker.cpp:599
+#, kde-format
+msgid "Invalid Frob"
+msgstr "Frob មិន​ត្រឹមត្រូវ​"
+
+#: gptalker.cpp:602
+#, kde-format
+msgid "Format \"xxx\" not found"
+msgstr "រក​មិន​ឃើញ​ទ្រង់ទ្រាយ​ \"xxx\" ឡើយ​"
+
+#: gptalker.cpp:605
+#, kde-format
+msgid "Method \"xxx\" not found"
+msgstr "រក​មិន​ឃើញ​​វិធីសាស្ត្រ \"xxx\" ឡើយ​"
+
+#: gptalker.cpp:608
+#, kde-format
+msgid "Invalid SOAP envelope"
+msgstr "ស្រោម​សំបុត្រ​ SOAP មិន​ត្រឹមត្រូវ​​"
+
+#: gptalker.cpp:611
+#, kde-format
+msgid "Invalid XML-RPC Method Call"
+msgstr "ហៅ​វិធីសាស្ត្រ​ XML-RPC មិន​ត្រឹមត្រូវ​​"
+
+#: gptalker.cpp:614
+#, kde-format
+msgid "The POST method is now required for all setters."
+msgstr "ឥឡូវ វិធីសាស្ត្រ​ POST ត្រូវ​បាន​ទាមទារ​ សម្រាប់​គ្រប់​កម្មវិធី​កំណត់​ទាំងអស់​ ។"
+
+#: gptalker.cpp:617
+#, kde-format
+msgid "Unknown error"
+msgstr "មិន​ស្គាល់​កំហុស​"
+
+#: gptalker.cpp:620 gswindow.cpp:427 gswindow.cpp:466 gswindow.cpp:548
+#: gswindow.cpp:576 gswindow.cpp:652 gswindow.cpp:668 gswindow.cpp:1078
+#: gswindow.cpp:1198 gswindow.cpp:1241 gswindow.cpp:1249
+#, kde-format
+msgctxt "@title:window"
+msgid "Error"
+msgstr ""
+
+#: gptalker.cpp:621
+#, kde-format
+msgid ""
+"Error occurred: %1\n"
+"Unable to proceed further."
+msgstr ""
+"កំហុស​បាន​កើត​ឡើង​ ៖ %1\n"
+"បើក​ធ្វើ​បន្ត​ទៀត​ ។​"
+
+#: gptalker.cpp:691 gptalker.cpp:758
+#, kde-format
+msgid "Failed to fetch photo-set list"
+msgstr "បាន​បរាជ័យ​ទៅ​ប្រមូល​យក​បញ្ជី​កំណត់​រូបថត​"
+
+#: gptalker.cpp:894 gptalker.cpp:927
+#, kde-format
+msgid "Failed to create album"
+msgstr "បាន​បរាជ័យ​ដើម្បី​បង្កើត​​អាល់ប៊ុម​"
+
+#: gswidget.cpp:60
+#, fuzzy, kde-format
+#| msgid "Tag path behavior:"
+msgid "Tag path behavior :"
+msgstr "ឥរិយាបថ​ផ្លូវ​ស្លាក ៖"
+
+#: gswidget.cpp:62
+#, kde-format
+msgid "Leaf tags only"
+msgstr "តែ​ស្លាក​សន្លឹក​ប៉ុណ្ណោះ"
+
+#: gswidget.cpp:63
+#, kde-format
+msgid "Export only the leaf tags of tag hierarchies"
+msgstr "នាំចេញ​តែ​ស្លាក​សន្លឹក​ប៉ុណ្ណោះ​នៃ​ឋានានុក្រម​ស្លាក​"
+
+#: gswidget.cpp:64
+#, kde-format
+msgid "Split tags"
+msgstr "ពុះស្លាក​"
+
+#: gswidget.cpp:65
+#, kde-format
+msgid "Export the leaf tag and all ancestors as single tags."
+msgstr "នាំចេញ​ស្លាក​សន្លឹក​ និង​ស្លាក់​ចាស់​ៗ​ទាំងអស់​ជា​ស្លាក​តែ​មួយ ។"
+
+#: gswidget.cpp:66
+#, kde-format
+msgid "Combined String"
+msgstr "ខ្សែ​អក្សរ​ដែល​បាន​​​បញ្ចូល​គ្នា​"
+
+#: gswidget.cpp:67
+#, kde-format
+msgid "Build a combined tag string."
+msgstr "ស្ថាបនា​​ខ្សែ​អក្សរ​ស្លាក​ដែល​បាន​បញ្ចូល​គ្នា​ ។​"
+
+#: gswindow.cpp:116
+#, kde-format
+msgid "Google Drive Export"
+msgstr ""
+
+#: gswindow.cpp:117
+#, fuzzy, kde-format
+#| msgid "A Kipi plugin to export image collections to PicasaWeb web service."
+msgid "A tool to export images to Google Drive"
+msgstr "កម្មវិធី​ជំនួយ​របស់​ Kipi ​ត្រូវ​នាំ​រូបភាព​សម្រាំង​ចេញ​ទៅកាន់​សេវា​បណ្ដាញ​ PicasaWeb ។"
+
+#: gswindow.cpp:119
+#, kde-format
+msgid ""
+"(c) 2013, Saurabh Patel\n"
+"(c) 2015, Shourya Singh Gupta"
+msgstr ""
+
+#: gswindow.cpp:122
+#, kde-format
+msgid "Saurabh Patel"
+msgstr ""
+
+#: gswindow.cpp:122 gswindow.cpp:195
+#, kde-format
+msgid "Author and maintainer"
+msgstr "Author and maintainer"
+
+#: gswindow.cpp:125 gswindow.cpp:207
+#, kde-format
+msgid "Shourya Singh Gupta"
+msgstr ""
+
+#: gswindow.cpp:125 gswindow.cpp:198 gswindow.cpp:201 gswindow.cpp:204
+#: gswindow.cpp:207
+#, kde-format
+msgid "Developer"
+msgstr "អ្នក​អភិវឌ្ឍន៍"
+
+#: gswindow.cpp:132
+#, fuzzy, kde-format
+#| msgid "Export to Picasa Web Service"
+msgid "Export to Google Drive"
+msgstr "នាំចេញ​ទៅកាន់​សេវា​បណ្ដាញ​របស់​ Picasa​"
+
+#: gswindow.cpp:134 gswindow.cpp:219
+#, kde-format
+msgid "Start Upload"
+msgstr "ចាប់ផ្ដើម​ផ្ទុក​"
+
+#: gswindow.cpp:135
+#, fuzzy, kde-format
+#| msgid "Start upload to Picasaweb service"
+msgid "Start upload to Google Drive"
+msgstr "ចាប់ផ្ដើម​ផ្ទុក​ទៅកាន់​សេវា​របស់​ Picasaweb"
+
+#: gswindow.cpp:186
+#, fuzzy, kde-format
+#| msgid "PicasaWeb Export"
+msgid "Google Photos/PicasaWeb Export"
+msgstr "នាំចេញ PicasaWeb"
+
+#: gswindow.cpp:187
+#, fuzzy, kde-format
+#| msgid "A Kipi plugin to export image collections to PicasaWeb web service."
+msgid "A tool to export image collections to Google Photos/Picasa web service."
+msgstr "កម្មវិធី​ជំនួយ​របស់​ Kipi ​ត្រូវ​នាំ​រូបភាព​សម្រាំង​ចេញ​ទៅកាន់​សេវា​បណ្ដាញ​ PicasaWeb ។"
+
+#: gswindow.cpp:189
+#, fuzzy, kde-format
+#| msgid ""
+#| "(c) 2007-2009, Vardhman Jain\n"
+#| "(c) 2008-2012, Gilles Caulier\n"
+#| "(c) 2009, Luka Renko\n"
+#| "(c) 2010, Jens Mueller"
+msgid ""
+"(c) 2007-2009, Vardhman Jain\n"
+"(c) 2008-2016, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2010, Jens Mueller\n"
+"(c) 2015, Shourya Singh Gupta"
+msgstr ""
+"រក្សាសិទ្ធិ​ឆ្នាំ​ ២០០៧-២០០៩ ដោយ Vardhman Jain\n"
+"រក្សាសិទ្ធិ​ឆ្នាំ ២០០៨-២០១២ ដោយ Gilles Caulier\n"
+"រក្សា​ឆ្នាំ ២០០៩ ដោយ​Luka Renko\n"
+"រក្សាសិទ្ធិ​ឆ្នាំ ២០១០ ដោយ Jens Mueller"
+
+#: gswindow.cpp:195
+#, kde-format
+msgid "Vardhman Jain"
+msgstr "Vardhman Jain"
+
+#: gswindow.cpp:198
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: gswindow.cpp:201
+#, kde-format
+msgid "Luka Renko"
+msgstr "Luka Renko"
+
+#: gswindow.cpp:204
+#, kde-format
+msgid "Jens Mueller"
+msgstr "Jens Mueller"
+
+#: gswindow.cpp:217
+#, fuzzy, kde-format
+#| msgid "Export to Picasa Web Service"
+msgid "Export to Google Photos/PicasaWeb Service"
+msgstr "នាំចេញ​ទៅកាន់​សេវា​បណ្ដាញ​របស់​ Picasa​"
+
+#: gswindow.cpp:220
+#, fuzzy, kde-format
+#| msgid "Start upload to Picasaweb service"
+msgid "Start upload to Google Photos/PicasaWeb Service"
+msgstr "ចាប់ផ្ដើម​ផ្ទុក​ទៅកាន់​សេវា​របស់​ Picasaweb"
+
+#: gswindow.cpp:226
+#, fuzzy, kde-format
+#| msgid "Import from Picasa Web Service"
+msgid "Import from Google Photos/PicasaWeb Service"
+msgstr "នាំចូល​​ពី​សេវា​បណ្ដាញ​ Picasa"
+
+#: gswindow.cpp:228
+#, kde-format
+msgid "Start Download"
+msgstr "ចាប់ផ្ដើម​ទាញ​យក​"
+
+#: gswindow.cpp:229
+#, fuzzy, kde-format
+#| msgid "Start download from Picasaweb service"
+msgid "Start download from Google Photos/PicasaWeb service"
+msgstr "ចាប់ផ្ដើម​ទាញ​យក​ពី​សេវា​របស់​ Picasaweb"
+
+#: gswindow.cpp:428 gswindow.cpp:467 gswindow.cpp:577
+#, fuzzy, kde-format
+#| msgid "Picasaweb Call Failed: %1\n"
+msgid "Google Photos/PicasaWeb Call Failed: %1\n"
+msgstr "បាន​បរាជ័យ​ហៅ​ Picasaweb ៖ %1\n"
+
+#: gswindow.cpp:448 gswindow.cpp:527 gswindow.cpp:758
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: gswindow.cpp:531
+#, fuzzy, kde-format
+#| msgid "PicasaWeb Export"
+msgid "Google Photo Export"
+msgstr "នាំចេញ PicasaWeb"
+
+#: gswindow.cpp:549
+#, fuzzy, kde-format
+#| msgid "Picasaweb Call Failed: %1\n"
+msgid "Google Drive Call Failed: %1\n"
+msgstr "បាន​បរាជ័យ​ហៅ​ Picasaweb ៖ %1\n"
+
+#: gswindow.cpp:653
+#, kde-format
+msgid ""
+"The textbox is empty, please enter the code from the browser in the textbox. "
+"To complete the authentication click \"Change Account\", or \"Start Upload\" "
+"to authenticate again."
+msgstr ""
+
+#: gswindow.cpp:669
+#, kde-format
+msgid "No image selected. Please select which images should be uploaded."
+msgstr ""
+
+#: gswindow.cpp:683 gswindow.cpp:706 gswindow.cpp:1014 gswindow.cpp:1032
+#: gswindow.cpp:1105
+#, kde-format
+msgid "Warning"
+msgstr ""
+
+#: gswindow.cpp:684 gswindow.cpp:707
+#, kde-format
+msgid "Authentication failed. Click \"Continue\" to authenticate."
+msgstr ""
+
+#: gswindow.cpp:687 gswindow.cpp:710 gswindow.cpp:1019 gswindow.cpp:1037
+#: gswindow.cpp:1109 gswindow.cpp:1288
+#, kde-format
+msgid "Continue"
+msgstr ""
+
+#: gswindow.cpp:688 gswindow.cpp:711 gswindow.cpp:1020 gswindow.cpp:1038
+#: gswindow.cpp:1110 gswindow.cpp:1289
+#, fuzzy, kde-format
+#| msgid "&Cancel"
+msgid "Cancel"
+msgstr "បោះបង់"
+
+#: gswindow.cpp:762
+#, kde-format
+msgid "Google Drive export"
+msgstr ""
+
+#: gswindow.cpp:1015
+#, kde-format
+msgid ""
+"Failed to save photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"បាន​បរាជ័យ​រក្សាទុក​រូបថត​ ៖​ %1\n"
+"តើ​អ្នក​ចង់​បន្ត​ឬ​ ?"
+
+#: gswindow.cpp:1033
+#, kde-format
+msgid ""
+"Failed to download photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"បាន​បរាជ័យ​ដើម្បី​ទាញ​យក​រូបថត​ ៖​ %1\n"
+"តើ​អ្នក​ចង់​បន្ត​ឬ​ ?"
+
+#: gswindow.cpp:1079
+#, kde-format
+msgid "Failed to save image to %1"
+msgstr "បាន​បរាជ័យ​ដើម្បី​រក្សាទុក​រូបភាព​ទៅកាន់​​ %1"
+
+#: gswindow.cpp:1106
+#, fuzzy, kde-format
+#| msgid ""
+#| "Failed to download photo: %1\n"
+#| "Do you want to continue?"
+msgid ""
+"Failed to upload photo to %1.\n"
+"%2\n"
+"Do you want to continue?"
+msgstr ""
+"បាន​បរាជ័យ​ដើម្បី​ទាញ​យក​រូបថត​ ៖​ %1\n"
+"តើ​អ្នក​ចង់​បន្ត​ឬ​ ?"
+
+#: gswindow.cpp:1200
+#, kde-format
+msgctxt "%1 is the error string, %2 is the error code"
+msgid "An authentication error occurred: %1 (%2)"
+msgstr ""
+
+#: gswindow.cpp:1242
+#, kde-format
+msgid ""
+"Google Drive call failed:\n"
+"%1"
+msgstr ""
+
+#: gswindow.cpp:1250
+#, fuzzy, kde-format
+#| msgid "Picasaweb Call Failed: %1\n"
+msgid ""
+"Google Photos/PicasaWeb call failed:\n"
+"%1"
+msgstr "បាន​បរាជ័យ​ហៅ​ Picasaweb ៖ %1\n"
+
+#: gswindow.cpp:1283
+#, kde-format
+msgctxt "@title:window"
+msgid "Warning"
+msgstr ""
+
+#: gswindow.cpp:1284
+#, kde-format
+msgid ""
+"After you have been logged out in the browser, click \"Continue\" to "
+"authenticate for another account"
+msgstr ""
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_googleservicesui.rc:7 kipiplugin_googleservicesui.rc:15
+#, fuzzy, kde-format
+#| msgid "Picasa Export"
+msgid "&Export"
+msgstr "ការ​នាំចេញ Picasa"
+
+#. i18n: ectx: Menu (Import)
+#: kipiplugin_googleservicesui.rc:11
+#, fuzzy, kde-format
+#| msgid "Picasa Export"
+msgid "&Import"
+msgstr "ការ​នាំចេញ Picasa"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_googleservicesui.rc:21
+#, kde-format
+msgid "Main Toolbar"
+msgstr ""
+
+#: newalbumdlg.cpp:54
+#, kde-format
+msgid "Access Level"
+msgstr "កម្រិត​ចូល​ដំណើរការ"
+
+#: newalbumdlg.cpp:55
+#, fuzzy, kde-format
+#| msgid "These are security and privacy settings for the new Picasaweb album."
+msgid ""
+"These are security and privacy settings for the new Google Photos/PicasaWeb "
+"album."
+msgstr "មូលប័ត្រ និង​សុវត្ថិភាព​ទាំងនេះ​កំណត់​សម្រាប់​អាល់ប៊ុម​របស់​ Picasaweb ថ្មី ។​"
+
+#: newalbumdlg.cpp:57
+#, fuzzy, kde-format
+#| msgctxt "picasaweb album privacy"
+#| msgid "Public"
+msgctxt "google photos/picasaweb album privacy"
+msgid "Public"
+msgstr "សាធារណៈ"
+
+#: newalbumdlg.cpp:59
+#, fuzzy, kde-format
+#| msgid "Public album is listed on your public Picasaweb page."
+msgid "Public album is listed on your public Google Photos/PicasaWeb page."
+msgstr "អាល់ប៊ុម​សាធារណៈ​​ត្រូវ​បាន​រាយ​បញ្ជី​លើ​​ទំព័រ​របស់​ Picasaweb សាធារណៈ​របស់​អ្នក ។​"
+
+#: newalbumdlg.cpp:60
+#, fuzzy, kde-format
+#| msgctxt "picasaweb album privacy"
+#| msgid "Unlisted / Private"
+msgctxt "google photos/picasaweb album privacy"
+msgid "Unlisted / Private"
+msgstr "មិន​បាន​រាយ​បញ្ជី​ / ឯកជន​"
+
+#: newalbumdlg.cpp:61
+#, kde-format
+msgid "Unlisted album is only accessible via URL."
+msgstr "អាល់ប៊ុម​ដែល​មិន​បាន​រាយ​បញ្ជី​​​​អាច​ចូល​ដំណើរការ​បាន​តាម​ URL ។"
+
+#: newalbumdlg.cpp:62
+#, fuzzy, kde-format
+#| msgctxt "picasaweb album privacy"
+#| msgid "Sign-In Required to View"
+msgctxt "google photos/picasaweb album privacy"
+msgid "Sign-In Required to View"
+msgstr "បាន​ទាមទារ​ចូល​ដើម្បី​មើល​"
+
+#: newalbumdlg.cpp:63
+#, kde-format
+msgid "Unlisted album require Sign-In to View"
+msgstr "អាល់ប៊ុម​មិន​បាន​​រាយ​ទាម​ទារ​ចូល​ដើម្បី​មើល"
+
+#: newalbumdlg.cpp:71
+#, kde-format
+msgid "Privacy:"
+msgstr "ភាព​ឯកជន ៖"
+
+#: plugin_googleservices.cpp:100
+#, fuzzy, kde-format
+#| msgid "Export to &PicasaWeb..."
+msgid "Export to &Google Drive..."
+msgstr "នាំចេញ​ទៅកាន់​ PicasaWeb..."
+
+#: plugin_googleservices.cpp:110
+#, fuzzy, kde-format
+#| msgid "Export to &PicasaWeb..."
+msgid "Export to &Google Photos/PicasaWeb..."
+msgstr "នាំចេញ​ទៅកាន់​ PicasaWeb..."
+
+#: plugin_googleservices.cpp:120
+#, fuzzy, kde-format
+#| msgid "Import from &PicasaWeb..."
+msgid "Import from &Google Photos/PicasaWeb..."
+msgstr "នាំចេញ​ពី​ PicasaWeb..."
+
+#: replacedialog.cpp:112
+#, fuzzy, kde-format
+#| msgid "&Add As New"
+msgid "Add As New"
+msgstr "បន្ថែម​ថ្មី"
+
+#: replacedialog.cpp:113
+#, kde-format
+msgid "Item will be added alongside the linked version."
+msgstr "ធាតុ​នឹង​ត្រូវ​បាន​បន្ថែម​តាម​​កំណែ​ដែល​បាន​ភ្ជាប់ ។"
+
+#: replacedialog.cpp:119
+#, fuzzy, kde-format
+#| msgid "&Add All"
+msgid "Add All"
+msgstr "បន្ថែម​ទាំងអស់​"
+
+#: replacedialog.cpp:120
+#, kde-format
+msgid ""
+"Items will be added alongside the linked version. You will not be prompted "
+"again."
+msgstr ""
+"ធាតុ​នឹង​ត្រូវ​បាន​បន្ថែម​​តាម​កំណែ​ដែល​បាន​ភ្ជាប់​ ។ អ្នក​នឹង​មិន​​អាច​ដាក់​ក្នុង​ប្រអប់​បញ្ចូល​ម្ដងទៀត​បាន​ឡើយ ។"
+
+#: replacedialog.cpp:126
+#, fuzzy, kde-format
+#| msgid "&Replace"
+msgid "Replace"
+msgstr "ជំនួស​"
+
+#: replacedialog.cpp:127
+#, kde-format
+msgid "Item will be replacing the linked version."
+msgstr "ធាតុ​នឹង​ត្រូវ​បាន​ជំនួស​កំណែ​ដែល​បាន​ភ្ជាប់ ។"
+
+#: replacedialog.cpp:133
+#, fuzzy, kde-format
+#| msgid "&Replace All"
+msgid "Replace All"
+msgstr "ជំនួស​ទាំងអស់​"
+
+#: replacedialog.cpp:134
+#, kde-format
+msgid ""
+"Items will be replacing the linked version. You will not be prompted again."
+msgstr "ធាតុ​នឹង​ត្រូវ​បាន​ជំនួស​កំណែ​ដែល​ភ្ជាប់ ។​ អ្នក​នឹង​មិន​អាច​ដាក់​ក្នុង​ប្រអប់​បញ្ចូល​ម្ដងទៀត​បាន​ឡើយ ។"
+
+#: replacedialog.cpp:157
+#, kde-format
+msgid "A linked item already exists."
+msgstr "មាន​ធាតុ​ដែល​បាន​ភ្ជាប់​ហើយ ។"
+
+#: replacedialog.cpp:177
+#, kde-format
+msgid "Destination"
+msgstr "ទិសដៅ"
+
+#: replacedialog.cpp:182
+#, kde-format
+msgid "Source"
+msgstr "ប្រភព"
+
+#~ msgid ""
+#~ "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+#~ msgstr "បាន​ដាក់​ឈ្មោះ​ឯកសារ​ \"%1\" ហើយ ។ តើ​អ្នក​ប្រាកដ​ជា​ចង់​សរសេរ​ជាន់​លើ​វា​ឬ ?"
+
+#~ msgid "Picasa Export"
+#~ msgstr "ការ​នាំចេញ Picasa"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "ខឹម សុខែម, ម៉ន ម៉េត, សេង សុត្ថា, ចាន់ សម្បត្តិរតនៈ, សុខ សុភា"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr ""
+#~ "khoemsokhem@khmeros.info,​​mornmet@khmeros.info,sutha@khmeros.info,"
+#~ "ratanak@khmeros.info,sophea@khmeros.info"
+
+#, fuzzy
+#~| msgid "This is the list of images to upload to your Picasaweb account."
+#~ msgid "This is the list of images to upload to your Google Drive account."
+#~ msgstr "នេះ​ជា​បញ្ជី​រូបភាព​ដែល​ត្រូវ​ផ្ទុក​ឡើង​ទៅ​កាន់​គណនី​ Picasaweb របស់​អ្នក ។"
+
+#, fuzzy
+#~| msgid "This is the list of images to upload to your Picasaweb account."
+#~ msgid ""
+#~ "This is the list of images to upload to your Google Photos/PicasaWeb "
+#~ "account."
+#~ msgstr "នេះ​ជា​បញ្ជី​រូបភាព​ដែល​ត្រូវ​ផ្ទុក​ឡើង​ទៅ​កាន់​គណនី​ Picasaweb របស់​អ្នក ។"
+
+#, fuzzy
+#~| msgid ""
+#~| "This is a clickable link to open the Picasaweb home page in a web "
+#~| "browser."
+#~ msgid "This is a clickable link to open Google Drive in a browser."
+#~ msgstr "វា​ជា​តំណ​ដែល​អាច​ចុច​បាន​ដើម្បី​បើក​ទំព័រ​ផ្ទះ​របស់​ Picasaweb នៅ​ក្នុង​កម្មវិធី​រុករក​បណ្ដាញ ។​"
+
+#, fuzzy
+#~| msgid ""
+#~| "This is a clickable link to open the Picasaweb home page in a web "
+#~| "browser."
+#~ msgid ""
+#~ "This is a clickable link to open Google Photos/PicasaWeb in a browser."
+#~ msgstr "វា​ជា​តំណ​ដែល​អាច​ចុច​បាន​ដើម្បី​បើក​ទំព័រ​ផ្ទះ​របស់​ Picasaweb នៅ​ក្នុង​កម្មវិធី​រុករក​បណ្ដាញ ។​"
+
+#~ msgid "Account"
+#~ msgstr "គណនី​"
+
+#, fuzzy
+#~| msgid "This is the Picasaweb account that will be used to authenticate."
+#~ msgid ""
+#~ "This is the Google Photos/PicasaWeb account that is currently logged in."
+#~ msgstr "នេះ​ជា​គណនី​របស់​ Picasaweb ​ដែល​នឹង​ត្រូវ​បាន​ប្រើ​ដើម្បី​​ផ្ទៀងផ្ទាត់​ភាព​ត្រឹមត្រូវ​ ។"
+
+#, fuzzy
+#~| msgctxt "Picasaweb account settings"
+#~| msgid "Name:"
+#~ msgctxt "account settings"
+#~ msgid "Name:"
+#~ msgstr "ឈ្មោះ​ ៖"
+
+#~ msgid "Change Account"
+#~ msgstr "ប្ដូរ​គណនី​"
+
+#~ msgid "Album"
+#~ msgstr "អាល់ប៊ុម​"
+
+#, fuzzy
+#~| msgid "This is the location where Picasaweb images will be downloaded."
+#~ msgid ""
+#~ "This is the Google Photos/PicasaWeb folder from which selected photos "
+#~ "will be downloaded."
+#~ msgstr "នេះ​ជា​ទីតាំង​ដែល​រូបភាព​របស់​ Picasaweb នឹង​ត្រូវ​បាន​ទាញ​យក ។"
+
+#, fuzzy
+#~| msgid "Album"
+#~ msgid "Album:"
+#~ msgstr "អាល់ប៊ុម​"
+
+#~ msgid "New Album"
+#~ msgstr "អាល់ប៊ុម​ថ្មី​"
+
+#, fuzzy
+#~| msgid "Create new Picasaweb album"
+#~ msgid "Create new Google Photos/PicasaWeb folder"
+#~ msgstr "បង្កើត​អាល់ប៊ុម​របស់​ Picasaweb ថ្មី​"
+
+#, fuzzy
+#~| msgctxt "reload album list"
+#~| msgid "Reload"
+#~ msgctxt "album list"
+#~ msgid "Reload"
+#~ msgstr "ផ្ទុក​ឡើង​វិញ​"
+
+#~ msgid "Reload album list"
+#~ msgstr "ផ្ទុក​បញ្ជី​អាល់ប៊ុម​ឡើង​វិញ​"
+
+#~ msgid "Max Dimension"
+#~ msgstr "វិមាត្រ​អតិ.​"
+
+#~ msgid ""
+#~ "This is the maximum dimension of the images. Images larger than this will "
+#~ "be scaled down."
+#~ msgstr "នេះ​ជា​វិមាត្រ​អតិបរមា​របស់​រូបភាព ។ រូបភាព​ដែល​មាន​ទំហំ​ធំ​ជាង​នេះ​នឹង​ត្រូវ​បាន​បង្រួម ។"
+
+#, fuzzy
+#~| msgid "This is the location where Picasaweb images will be downloaded."
+#~ msgid ""
+#~ "This is the location where Google Photos/PicasaWeb images will be "
+#~ "downloaded."
+#~ msgstr "នេះ​ជា​ទីតាំង​ដែល​រូបភាព​របស់​ Picasaweb នឹង​ត្រូវ​បាន​ទាញ​យក ។"
+
+#~ msgid "Options"
+#~ msgstr "ជម្រើស"
+
+#, fuzzy
+#~| msgid "These are options that will be applied to images before upload."
+#~ msgid "These are the options that would be applied to photos before upload."
+#~ msgstr "ជម្រើស​ទាំងនេះ​ដែល​នឹង​ត្រូវ​បាន​អនុវត្ត​ទៅកាន់​រូបភាព​មុន​ពេល​ផ្ទុក​ ។"
+
+#~ msgid "Resize photos before uploading"
+#~ msgstr "ប្ដូរ​ទំហំ​រូបថត​មុន​ពេល​ផ្ទុក​"
+
+#, fuzzy
+#~| msgid "Maximum dimension:"
+#~ msgid "Maximum Dimension:"
+#~ msgstr "វិមាត្រ​អតិបរមា ៖​"
+
+#, fuzzy
+#~| msgid "JPEG quality:"
+#~ msgid "JPEG Quality:"
+#~ msgstr "គុណភាព​របស់​ JPEG ៖"
+
+#~ msgid "Title of the album that will be created (required)."
+#~ msgstr "ចំណង​​នៃ​អាល់ប៊ុម​ដែល​នឹង​ត្រូវ​បាន​បង្កើត (បាន​ទាមទារ) ។"
+
+#, fuzzy
+#~| msgid "These are basic settings for the new Picasaweb album."
+#~ msgid "These are basic settings for the new Google Photos/Picasaweb album."
+#~ msgstr "ការ​កំណត់​សម្រាប់​អាល់ប៊ុម​មូលដ្ឋាន​​របស់​​ Picasaweb ថ្មី ។"
+
+#~ msgid "Date and Time of the album that will be created (optional)."
+#~ msgstr "កាលបរិច្ឆេទ និង​ពេលវេលា​​នៃ​អាល់ប៊ុម​​ដែល​ត្រូវ​បាន​បង្កើត​ (​ជា​ជម្រើស) ។"
+
+#~ msgid "Description of the album that will be created (optional)."
+#~ msgstr "សេចក្ដី​ពិពណ៌នា​អំពី​អាល់ប៊ុម​ដែល​​នឹង​ត្រូវ​​បាន​បង្កើត​​ (ជម្រើស) ។"
+
+#~ msgid "Location of the album that will be created (optional)."
+#~ msgstr "ទីតាំង​នៃ​អាល់ប៊ុម​ដែល​នឹង​ត្រូវ​បាន​បង្កើត​​ (​ជា​ជម្រើស​) ។"
+
+#, fuzzy
+#~| msgid "Title of the album that will be created (required)."
+#~ msgid "This is the title of the folder that will be created."
+#~ msgstr "ចំណង​​នៃ​អាល់ប៊ុម​ដែល​នឹង​ត្រូវ​បាន​បង្កើត (បាន​ទាមទារ) ។"
+
+#, fuzzy
+#~| msgctxt "new picasaweb album dialog"
+#~| msgid "Title:"
+#~ msgctxt "folder edit"
+#~ msgid "Title:"
+#~ msgstr "ចំណងជើង ៖​"
+
+#, fuzzy
+#~| msgctxt "new picasaweb album dialog"
+#~| msgid "Title:"
+#~ msgctxt "new google photos/picasaweb album dialog"
+#~ msgid "Title:"
+#~ msgstr "ចំណងជើង ៖​"
+
+#, fuzzy
+#~| msgctxt "new picasaweb album dialog"
+#~| msgid "Date & Time:"
+#~ msgctxt "new google photos/picasaweb album dialog"
+#~ msgid "Date & Time:"
+#~ msgstr "ពេលវេលា និង​កាលបរិច្ឆេទ ៖"
+
+#, fuzzy
+#~| msgctxt "new picasaweb album dialog"
+#~| msgid "Description:"
+#~ msgctxt "new google photos/picasaweb album dialog"
+#~ msgid "Description:"
+#~ msgstr "សេចក្ដី​ពិពណ៌នា ៖"
+
+#, fuzzy
+#~| msgctxt "new picasaweb album dialog"
+#~| msgid "Location:"
+#~ msgctxt "new google photos/picasaweb album dialog"
+#~ msgid "Location:"
+#~ msgstr "ទីតាំង ៖"
+
+#, fuzzy
+#~| msgid ""
+#~| "Failed to upload photo into Picasaweb: %1\n"
+#~| "Do you want to continue?"
+#~ msgid ""
+#~ "Failed to upload photo to Google Drive.\n"
+#~ "%1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "បាន​បរាជ័យ​ផ្ទុក​រូបថត​ទៅកាន់​ Picasaweb ៖ %1\n"
+#~ "​តើ​អ្នក​ចង់​បន្ត​ឬ​ ?"
+
+#, fuzzy
+#~| msgid ""
+#~| "Failed to upload photo into Picasaweb: %1\n"
+#~| "Do you want to continue?"
+#~ msgid ""
+#~ "Failed to upload photo to Google Photos/PicasaWeb.\n"
+#~ "%1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "បាន​បរាជ័យ​ផ្ទុក​រូបថត​ទៅកាន់​ Picasaweb ៖ %1\n"
+#~ "​តើ​អ្នក​ចង់​បន្ត​ឬ​ ?"
+
+#~ msgid "Picasaweb New Album"
+#~ msgstr "អាល់ប៊ុម​ថ្មី​របស់​ Picasaweb"
+
+#~ msgid "%1|All supported files"
+#~ msgstr "%1|​ឯកសារ​ដែល​បាន​គាំទ្រ​ទាំងអស់"
+
+#~ msgid "%1|Camera RAW files"
+#~ msgstr "%1|ឯកសារ​ដើម​របស់​ម៉ាស៊ីន​ថតរូប​"
+
+#~ msgid "%1|Video files"
+#~ msgstr "%1|ឯកសារ​វីដេអូ​"
+
+#~ msgid "Select Images"
+#~ msgstr "ជ្រើស​រូបភាព​"
+
+#~ msgid "Google Login:"
+#~ msgstr "ចូល​ហ្គូហ្គល ៖"
+
+#~ msgid "Password:"
+#~ msgstr "ពាក្យ​សម្ងាត់ ៖"
+
+#~ msgid "&OK"
+#~ msgstr "យល់ព្រម"
+
+#~ msgid "Login"
+#~ msgstr "ចូល​"
+
+#~ msgctxt "Picasaweb account login"
+#~ msgid "Anonymous"
+#~ msgstr "អានាមិក​"
+
+#~ msgid "Login as anonymous to Picasaweb web service."
+#~ msgstr "ចូល​ជា​អានាមិក​​ទៅកាន់​សេវា​បណ្ដាញ​ Picasaweb ។​"
+
+#~ msgid "Picasaweb Account"
+#~ msgstr "គណនី​របស់​ Picasaweb"
+
+#~ msgid "Login to Picasaweb web service using username and password."
+#~ msgstr "ចូល​ទៅកាន់​សេវា​បណ្ដាញ​របស់​ Picasaweb ​ដោយ​ប្រើ​ពាក្យ​សម្ងាត់​ និង​ឈ្មោះ​អ្នក​ប្រើ ។​"
+
+#~ msgid "Change Picasaweb Account used to authenticate"
+#~ msgstr "ប្ដូរ​គណនី​ Picasaweb ដែល​បាន​ប្រើ​ដើម្បី​ផ្ទៀងផ្ទាត់​ភាព​ត្រឹមត្រូវ"
+
+#~ msgid "This is the Picasaweb album that will be used for transfer."
+#~ msgstr "នេះ​ជា​អាល់ប៊ុម​របស់​ Picasaweb ដែល​នឹង​ត្រូវ​បាន​ប្រើ​សម្រាប់​ផ្ទេរ ។​"
+
+#~ msgid "Cannot open file"
+#~ msgstr "មិន​អាច​បើក​ឯកសារ​បាន​ទេ​"
+
+#~ msgid "Handbook"
+#~ msgstr "សៀវភៅ​ដៃ"

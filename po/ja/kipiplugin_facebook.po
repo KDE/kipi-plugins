@@ -1,0 +1,264 @@
+# Translation of kipiplugin_facebook into Japanese.
+# Yukiko Bando <ybando@k6.dion.ne.jp>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_facebook\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2009-02-06 00:52+0900\n"
+"Last-Translator: Yukiko Bando <ybando@k6.dion.ne.jp>\n"
+"Language-Team: Japanese <kde-jp@kde.org>\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#: fbalbum.cpp:52
+#, kde-format
+msgid "Privacy setting of the album that will be created (required)."
+msgstr "作成するアルバムのプライバシーに関する設定 (必須)"
+
+#: fbalbum.cpp:54
+#, fuzzy, kde-format
+#| msgid "Only Friends"
+msgid "Only Me"
+msgstr "友達だけ"
+
+#: fbalbum.cpp:56
+#, kde-format
+msgid "Only Friends"
+msgstr "友達だけ"
+
+#: fbalbum.cpp:58
+#, kde-format
+msgid "Friends of Friends"
+msgstr "友達の友達"
+
+#: fbalbum.cpp:60
+#, kde-format
+msgid "My Networks and Friends"
+msgstr "自分のネットワークと友達"
+
+#: fbalbum.cpp:62
+#, kde-format
+msgid "Everyone"
+msgstr "制限なし"
+
+#: fbtalker.cpp:201
+#, kde-format
+msgid "Validate previous session..."
+msgstr "前回のセッションの有効性を確認..."
+
+#: fbtalker.cpp:229
+#, kde-format
+msgid "Upgrading to OAuth..."
+msgstr ""
+
+#: fbtalker.cpp:279
+#, kde-format
+msgid "Facebook Application Authorization"
+msgstr "Facebook アプリケーションへの権限付与"
+
+#: fbtalker.cpp:290
+#, fuzzy, kde-format
+#| msgid ""
+#| "Please follow the instructions in the browser window. Press \"Yes\" if "
+#| "you have authenticated and \"No\" if you failed."
+msgid ""
+"Please follow the instructions in the browser window. When done, copy the "
+"Internet address from your browser into the textbox below and press \"OK\"."
+msgstr ""
+"ブラウザに表示されている指示に従ってください。認証に成功したら<interface>はい"
+"</interface>を、失敗した場合は<interface>いいえ</interface>を押してください。"
+
+#: fbtalker.cpp:352
+#, kde-format
+msgid "Canceled by user."
+msgstr "ユーザによってキャンセルされました。"
+
+#: fbtalker.cpp:549
+#, kde-format
+msgid "The service is not available at this time."
+msgstr "サービスは現在利用できません。"
+
+#: fbtalker.cpp:552
+#, fuzzy, kde-format
+#| msgid "The application has reached maximum number of requests allowed."
+msgid "The application has reached the maximum number of requests allowed."
+msgstr "アプリケーションは許可されている要求の最大数に達しました。"
+
+#: fbtalker.cpp:555
+#, kde-format
+msgid "Invalid session key or session expired. Try to log in again."
+msgstr ""
+"セッションキーが無効か、セッションが期限切れになりました。ログインし直してく"
+"ださい。"
+
+#: fbtalker.cpp:558
+#, kde-format
+msgid "Invalid album ID."
+msgstr "アルバム ID が無効です。"
+
+#: fbtalker.cpp:561
+#, kde-format
+msgid "Album is full."
+msgstr "アルバムがいっぱいです。"
+
+#: fbtalker.cpp:564
+#, kde-format
+msgid "Missing or invalid file."
+msgstr "ファイルが不足しているか無効です。"
+
+#: fbtalker.cpp:567
+#, kde-format
+msgid "Too many unapproved photos pending."
+msgstr "承認待ちの写真が多すぎます。"
+
+#: fbtalker.cpp:601
+#, kde-format
+msgid "Error"
+msgstr ""
+
+#: fbwindow.cpp:109
+#, kde-format
+msgid "Export to Facebook Web Service"
+msgstr "Facebook ウェブサービスにエクスポート"
+
+#: fbwindow.cpp:111
+#, kde-format
+msgid "Start Upload"
+msgstr "アップロードを開始"
+
+#: fbwindow.cpp:112
+#, kde-format
+msgid "Start upload to Facebook web service"
+msgstr "Facebook ウェブサービスへのアップロードを開始"
+
+#: fbwindow.cpp:140
+#, fuzzy, kde-format
+#| msgid "Fb Import/Export"
+msgid "Facebook Export"
+msgstr "Facebook インポート/エクスポート"
+
+#: fbwindow.cpp:141
+#, fuzzy, kde-format
+#| msgid ""
+#| "A Kipi plugin to import/export image collection to/from Facebook web "
+#| "service."
+msgid "A tool to export image collection to/from Facebook web service."
+msgstr ""
+"Facebook ウェブサービスに画像コレクションをエクスポート/からインポートする "
+"Kipi プラグイン"
+
+#: fbwindow.cpp:143
+#, fuzzy, kde-format
+#| msgid ""
+#| "(c) 2005-2008, Vardhman Jain\n"
+#| "(c) 2008, Gilles Caulier\n"
+#| "(c) 2008-2009, Luka Renko"
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2012, Gilles Caulier\n"
+"(c) 2008-2009, Luka Renko"
+msgstr ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008, Gilles Caulier\n"
+"(c) 2008-2009, Luka Renko"
+
+#: fbwindow.cpp:147
+#, kde-format
+msgid "Luka Renko"
+msgstr "Luka Renko"
+
+#: fbwindow.cpp:148
+#, kde-format
+msgid "Author and maintainer"
+msgstr "作者およびメンテナ"
+
+#: fbwindow.cpp:361 fbwindow.cpp:395
+#, fuzzy, kde-format
+#| msgid "<auto create>"
+msgid "<auto create>"
+msgstr "(自動作成)"
+
+#: fbwindow.cpp:372 fbwindow.cpp:390
+#, kde-format
+msgid "Facebook Call Failed: %1\n"
+msgstr "Facebook の呼び出しに失敗しました: %1\n"
+
+#: fbwindow.cpp:471
+#, kde-format
+msgid "Warning"
+msgstr ""
+
+#: fbwindow.cpp:472
+#, kde-format
+msgid ""
+"After you have been logged out in the browser, click \"Continue\" to "
+"authenticate for another account"
+msgstr ""
+
+#: fbwindow.cpp:476
+#, kde-format
+msgid "Continue"
+msgstr ""
+
+#: fbwindow.cpp:477
+#, kde-format
+msgid "Cancel"
+msgstr ""
+
+#: fbwindow.cpp:539
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: fbwindow.cpp:543
+#, fuzzy, kde-format
+#| msgid "Fb Import/Export"
+msgid "Facebook export"
+msgstr "Facebook インポート/エクスポート"
+
+#: fbwindow.cpp:648 fbwindow.cpp:663
+#, kde-format
+msgid "Cannot open file"
+msgstr "ファイルを開けません"
+
+#: fbwindow.cpp:686
+#, kde-format
+msgid "Uploading Failed"
+msgstr ""
+
+#: fbwindow.cpp:687
+#, kde-format
+msgid ""
+"Failed to upload photo into Facebook: %1\n"
+"Do you want to continue?"
+msgstr ""
+"写真を Facebook にアップロードできませんでした: %1\n"
+"続けますか？"
+
+#: fbwindow.cpp:706
+#, kde-format
+msgid "Facebook Call Failed: %1"
+msgstr "Facebook の呼び出しに失敗しました: %1"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_facebookui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr ""
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_facebookui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr ""
+
+#: plugin_facebook.cpp:94
+#, kde-format
+msgid "Export to &Facebook..."
+msgstr "Facebook にエクスポート(&F)..."

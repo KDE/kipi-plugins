@@ -1,0 +1,310 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Joëlle Cornavin <jcorn@free.fr>, 2013.
+# xavier <xavier.besnard@neuf.fr>, 2013.
+# Peter Potrowl <peter.potrowl@gmail.com>, 2014, 2015, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2016-11-20 23:17+0100\n"
+"Last-Translator: Peter Potrowl <peter.potrowl@gmail.com>\n"
+"Language-Team: French <kde-i18n-doc@kde.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 1.5\n"
+"X-Environment: kde\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#: imageshacktalker.cpp:173
+#, kde-format
+msgid "Authenticating the user"
+msgstr "Authentification en cours..."
+
+#: imageshacktalker.cpp:199
+#, kde-format
+msgid "Getting galleries from server"
+msgstr "Obtention de galeries depuis le serveur"
+
+#: imageshacktalker.cpp:289
+#, kde-format
+msgid "Successfully retrieved galleries"
+msgstr "Galeries réceptionnées avec succès"
+
+#: imageshackwidget.cpp:82
+#, kde-format
+msgid "Make private"
+msgstr "Rendre privé"
+
+#: imageshackwidget.cpp:86
+#, kde-format
+msgid "Tags (optional):"
+msgstr "Étiquettes (optionnel) :"
+
+#: imageshackwidget.cpp:88
+#, kde-format
+msgid "Remove information bar on thumbnails"
+msgstr "Supprimer la barre d'informations sur les vignettes"
+
+#: imageshackwidget.cpp:125
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Add to root folder"
+msgstr "Ajouter au dossier racine"
+
+#: imageshackwidget.cpp:128
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Create new gallery"
+msgstr "Créer une nouvelle galerie"
+
+#: imageshackwindow.cpp:81
+#, kde-format
+msgid "Export to Imageshack"
+msgstr "Exporter vers « Imageshack »"
+
+#: imageshackwindow.cpp:89
+#, kde-format
+msgid "Upload"
+msgstr "Envoyer"
+
+#: imageshackwindow.cpp:90
+#, kde-format
+msgid "Start upload to Imageshack web service"
+msgstr "Démarrer l'envoi vers le service Web « Imageshack »"
+
+#: imageshackwindow.cpp:98
+#, kde-format
+msgid "Imageshack Export"
+msgstr "Exportation « Imageshack »"
+
+#: imageshackwindow.cpp:99
+#, kde-format
+msgid "A tool to export images to Imageshack web service."
+msgstr "Un outil pour exporter des images vers le service Web « Imageshack »."
+
+#: imageshackwindow.cpp:100
+#, kde-format
+msgid "(c) 2012, Dodon Victor\n"
+msgstr "(c) 2012, Dodon Victor\n"
+
+#: imageshackwindow.cpp:102
+#, kde-format
+msgid "Dodon Victor"
+msgstr "Dodon Victor"
+
+#: imageshackwindow.cpp:103
+#, kde-format
+msgid "Author"
+msgstr "Auteur"
+
+#: imageshackwindow.cpp:230
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: imageshackwindow.cpp:234
+#, kde-format
+msgid "Image Shack Export"
+msgstr "Exportation d'images « Shack »"
+
+#: imageshackwindow.cpp:261
+#, kde-format
+msgid "Authenticating..."
+msgstr "Authentification en cours..."
+
+#: imageshackwindow.cpp:318
+#, kde-format
+msgid "Login failed: %1\n"
+msgstr "La connexion a échoué : %1\n"
+
+#: imageshackwindow.cpp:332
+#, kde-format
+msgid "Failed to get galleries list: %1\n"
+msgstr "Impossible d'obtenir la liste des galeries : %1\n"
+
+#: imageshackwindow.cpp:404
+#, kde-format
+msgid "Uploading Failed"
+msgstr "L'envoi a échoué"
+
+#: imageshackwindow.cpp:405
+#, kde-format
+msgid ""
+"Failed to upload photo into Imageshack: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Impossible d'envoyer une photo vers « Imageshack »: %1\n"
+"Voulez-vous continuer ?"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_imageshackui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Exporter"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_imageshackui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Barre principale d'outils"
+
+#: plugin_imageshack.cpp:103
+#, kde-format
+msgid "Export to &Imageshack..."
+msgstr "Exporter vers « &Imageshack »..."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Joëlle Cornavin, Peter Potrowl"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "jcorn@free.fr, peter.potrowl@gmail.com"
+
+#~ msgid "Checking the registration code"
+#~ msgstr "Vérification du code d'enregistrement"
+
+#~ msgid "Checking the web server"
+#~ msgstr "Vérification du serveur Web"
+
+#~ msgid "Server does not respond. Please check you internet connection!"
+#~ msgstr ""
+#~ "Le serveur ne répond pas. Veuillez vérifier votre connexion Internet !"
+
+#~ msgid "Registration code successfully verified"
+#~ msgstr "Code d'enregistrement vérifié avec succès"
+
+#~ msgid "Registration code not valid!"
+#~ msgstr "Code d'enregistrement non valable !"
+
+#~ msgid "Images to upload to Imageshack web service"
+#~ msgstr "Démarrer l'envoi vers le service Web Imageshack"
+
+#~ msgid ""
+#~ "This is a clickable link to open the Imageshack home page in a web browser"
+#~ msgstr ""
+#~ "Ceci est un lien cliquable pour ouvrir la page d'accueil de Imageshack "
+#~ "dans un navigateur Web"
+
+#~ msgid "ImageShack"
+#~ msgstr "ImageShack"
+
+#~ msgid "Account"
+#~ msgstr "Compte"
+
+#~ msgid "Imageshack account info"
+#~ msgstr "Informations sur le compte « Imageshack »"
+
+#~ msgctxt "Account info"
+#~ msgid "Name:"
+#~ msgstr "Nom :"
+
+#~ msgctxt "Account info"
+#~ msgid "Email:"
+#~ msgstr "Courrier électronique :"
+
+#~ msgid "Change account"
+#~ msgstr "Changer de compte"
+
+#~ msgid ""
+#~ "Change the registration code for the Imageshack account used to upload "
+#~ "images"
+#~ msgstr ""
+#~ "Changer le code d'enregistrement pour le compte « Imageshack » utilisé "
+#~ "pour envoyer des images sur le serveur"
+
+#~ msgid "Destination"
+#~ msgstr "Destination"
+
+#~ msgid ""
+#~ "This is the ImageShack gallery to which selected items will be uploaded"
+#~ msgstr ""
+#~ "Il s'agit de la galerie « Imageshack » vers laquelle les éléments "
+#~ "sélectionnés seront envoyés"
+
+#~ msgid "Upload to galleries"
+#~ msgstr "Importer dans des galeries"
+
+#~ msgid "Gallery:"
+#~ msgstr "Galerie :"
+
+#~ msgid "Name:"
+#~ msgstr "Nom :"
+
+#~ msgctxt "ImageShack galleries list"
+#~ msgid "Reload"
+#~ msgstr "Recharger"
+
+#~ msgid "Reload ImageShack galleries list"
+#~ msgstr "Recharger la liste des galeries « Imageshack »"
+
+#~ msgid "Options"
+#~ msgstr "Options"
+
+#~ msgid "These are the options that will be applied to photos"
+#~ msgstr "Voici les options qui seront appliquées aux photos"
+
+#~ msgid "Resize options"
+#~ msgstr "Options de redimensionnement"
+
+#~ msgid "Do not resize photos"
+#~ msgstr "Ne pas redimensionner les photos"
+
+#~ msgid "Predefined templates"
+#~ msgstr "Modèles prédéfinis"
+
+#~ msgid "Custom resize dimensions"
+#~ msgstr "Dimensions de redimensionnement personnalisées"
+
+#~ msgid "Width:"
+#~ msgstr "Largeur :"
+
+#~ msgid "Height:"
+#~ msgstr "Hauteur :"
+
+#~ msgid "100x75 (avatar)"
+#~ msgstr "100x75 (avatar)"
+
+#~ msgid "150x122 (thumbnail)"
+#~ msgstr "150x122 (vignette)"
+
+#~ msgid "320x240 (for websites and email)"
+#~ msgstr "320x240 (pour les sites web et le courriers électroniques)"
+
+#~ msgid "640x480 (for message boards)"
+#~ msgstr "640x480 (pour les panneaux d'affichage)"
+
+#~ msgid "800x600 (15-inch monitor)"
+#~ msgstr "800x600 (écran 15 pouces)"
+
+#~ msgid "1024x768 (17-inch monitor)"
+#~ msgstr "1024x768 (écran 17 pouces)"
+
+#~ msgid "1280x1024 (19-inch monitor)"
+#~ msgstr "1280x1024 (écran 19 pouces)"
+
+#~ msgid "1600x1200 (21-inch monitor)"
+#~ msgstr "1600x1200 (écran 21 pouces)"
+
+#~ msgid "optimize without resizing"
+#~ msgstr "optimiser dans redimensionner"
+
+#~ msgid "Create new gallery."
+#~ msgstr "Créer une nouvelle galerie."
+
+#~ msgid "Imageshack authorization"
+#~ msgstr "Autorisation « Imageshack »"
+
+#~ msgid ""
+#~ "Please paste the registration code for your ImageShack account into the "
+#~ "textbox below and press \"OK\"."
+#~ msgstr ""
+#~ "Veuillez coller le code d'enregistrement de votre compte « Imageshack » "
+#~ "dans la zone de texte ci-dessous et cliquer sur « Ok »."

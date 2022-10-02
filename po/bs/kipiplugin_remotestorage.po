@@ -1,0 +1,203 @@
+# Bosnian translation (converted from Serbian) for kipi-plugins
+# Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
+# This file is distributed under the same license as the kipi-plugins package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kipi-plugins\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2014-10-20 19:58+0000\n"
+"Last-Translator: Samir Ribić <Unknown>\n"
+"Language-Team: Bosnian <bs@li.org>\n"
+"Language: bs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Launchpad (build 17341)\n"
+"X-Launchpad-Export-Date: 2015-02-15 06:23+0000\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#: KioExportWidget.cpp:61
+#, kde-format
+msgid "Target location: "
+msgstr "Odredišna lokacija: "
+
+#: KioExportWidget.cpp:62
+#, kde-format
+msgid ""
+"Sets the target address to upload the images to. This can be any address as "
+"used in Dolphin or Konqueror, e.g. ftp://my.server.org/sub/folder."
+msgstr ""
+"Postavlja odredišnu adresu za slanje slike. To može biti bilo koja adresa "
+"koja se koristi u Dolphin ili Konqueror, npr. ftp://my.server.org/sub/folder."
+
+#: KioExportWidget.cpp:66
+#, kde-format
+msgid "Select target location..."
+msgstr "Izaberi odredišnu lokaciju..."
+
+#: KioExportWidget.cpp:72
+#, kde-format
+msgid "This is the list of images to upload to the specified target."
+msgstr "Ovo je popis slika za slanje na navedeno odredište."
+
+#: KioExportWidget.cpp:134
+#, kde-format
+msgid "Select target..."
+msgstr "Izaberi odredište..."
+
+#: KioExportWidget.cpp:135
+#, kde-format
+msgid "All Files (*)"
+msgstr ""
+
+#: KioExportWidget.cpp:155
+#, fuzzy, kde-format
+#| msgid "not selected"
+msgid "<not selected>"
+msgstr "nije selektovana"
+
+#: KioExportWindow.cpp:64
+#, fuzzy, kde-format
+#| msgid "Export to Remote Computer"
+msgid "Export to Remote Storage"
+msgstr "Izvoz na udaljeni računar"
+
+#: KioExportWindow.cpp:67
+#, kde-format
+msgid "Start export"
+msgstr "Pokreni izvoz"
+
+#: KioExportWindow.cpp:68
+#, kde-format
+msgid "Start export to the specified target"
+msgstr "Pokreni izvoz na navedeno odredište"
+
+#: KioExportWindow.cpp:84
+#, fuzzy, kde-format
+#| msgid "Export to remote computer"
+msgid "Export to remote storage"
+msgstr "Izvoz na udaljeni računar"
+
+#: KioExportWindow.cpp:85
+#, fuzzy, kde-format
+#| msgid "A Kipi plugin to export images over network using KIO-Slave"
+msgid "A tool to export images over network using KIO-Slave"
+msgstr "Kipi dodatak za izvoz slika preko mreže koristeći KIO Slave"
+
+#: KioExportWindow.cpp:86 KioImportWindow.cpp:83
+#, kde-format
+msgid "(c) 2009, Johannes Wienke"
+msgstr "(c) 2009, Johannes Wienke"
+
+#: KioExportWindow.cpp:88 KioImportWindow.cpp:85
+#, kde-format
+msgid "Johannes Wienke"
+msgstr "Johannes Wienke"
+
+#: KioExportWindow.cpp:89 KioImportWindow.cpp:86
+#, kde-format
+msgid "Developer and maintainer"
+msgstr "Programer i održavalac"
+
+#: KioExportWindow.cpp:198
+#, kde-format
+msgid "Upload not completed"
+msgstr "Slanje nije završeno"
+
+#: KioExportWindow.cpp:199
+#, kde-format
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to export these images now."
+msgstr ""
+"Neke od slika nisu prenesena, i još uvijek su na popisu. Možete pokušati "
+"ponovno izvesti ove slike sada."
+
+#: KioImportWidget.cpp:52
+#, kde-format
+msgid "This is the list of images to import into the current album."
+msgstr "Ovo je popis slika za uvesti u trenutni album."
+
+#: KioImportWindow.cpp:60
+#, fuzzy, kde-format
+#| msgid "Import from Remote Computer"
+msgid "Import from Remote Storage"
+msgstr "Uvoz iz  udaljenog računara"
+
+#: KioImportWindow.cpp:64
+#, kde-format
+msgid "Start import"
+msgstr "Započni uvoz"
+
+#: KioImportWindow.cpp:65
+#, kde-format
+msgid "Start importing the specified images into the currently selected album."
+msgstr "Započni uvoz navedenih slika u trenutno odabranom albumu."
+
+#: KioImportWindow.cpp:81
+#, fuzzy, kde-format
+#| msgid "Import from remote computer"
+msgid "Import from remote storage"
+msgstr "Uvoz iz  udaljenog računara"
+
+#: KioImportWindow.cpp:82
+#, fuzzy, kde-format
+#| msgid "A Kipi plugin to import images over network using KIO-Slave"
+msgid "A tool to import images over network"
+msgstr "Kipi dodatak za uvoz slika preko mreže koristeći KIO Slave-"
+
+#: KioImportWindow.cpp:137
+#, kde-format
+msgid "Import not completed"
+msgstr "Uvoz nije završen"
+
+#: KioImportWindow.cpp:138
+#, kde-format
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to import these images now."
+msgstr ""
+"Neke od slika nisu prenesene, i još uvijek su na popisu. Možete ponovo "
+"pokušati uvesti ove slike sada."
+
+#. i18n: ectx: Menu (Import)
+#: kipiplugin_remotestorageui.rc:7
+#, kde-format
+msgid "&Import"
+msgstr "&Uvezi"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_remotestorageui.rc:11
+#, kde-format
+msgid "&Export"
+msgstr "&Izvezi"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_remotestorageui.rc:17
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Glavna alatna traka"
+
+#: plugin_remotestorage.cpp:93
+#, fuzzy, kde-format
+#| msgid "Export to remote computer..."
+msgid "Export to remote storage..."
+msgstr "Izvoz na udaljeni računar..."
+
+#: plugin_remotestorage.cpp:105
+#, fuzzy, kde-format
+#| msgid "Import from remote computer..."
+msgid "Import from remote storage..."
+msgstr "Uvoz s udaljenog računara..."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Samir Ribić"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "Samir.ribic@etf.unsa.ba"

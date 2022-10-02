@@ -1,0 +1,308 @@
+# Translation of kipiplugin_imageshack.po to Ukrainian
+# Copyright (C) 2013-2016 This_file_is_part_of_KDE
+# This file is distributed under the license LGPL version 2.1 or
+# version 3 or later versions approved by the membership of KDE e.V.
+#
+# Yuri Chornoivan <yurchor@ukr.net>, 2013, 2014, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_imageshack\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2016-08-26 14:20+0300\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: imageshacktalker.cpp:173
+#, kde-format
+msgid "Authenticating the user"
+msgstr "Розпізнавання користувача"
+
+#: imageshacktalker.cpp:199
+#, kde-format
+msgid "Getting galleries from server"
+msgstr "Отримуємо список галерей з сервера"
+
+#: imageshacktalker.cpp:289
+#, kde-format
+msgid "Successfully retrieved galleries"
+msgstr "Список галерей отримано"
+
+#: imageshackwidget.cpp:82
+#, kde-format
+msgid "Make private"
+msgstr "Зробити конфіденційною"
+
+#: imageshackwidget.cpp:86
+#, kde-format
+msgid "Tags (optional):"
+msgstr "Мітки (необов’язкові):"
+
+#: imageshackwidget.cpp:88
+#, kde-format
+msgid "Remove information bar on thumbnails"
+msgstr "Вилучити смужку даних з мініатюр"
+
+#: imageshackwidget.cpp:125
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Add to root folder"
+msgstr "Додати до кореневої теки"
+
+#: imageshackwidget.cpp:128
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Create new gallery"
+msgstr "Створити галерею"
+
+#: imageshackwindow.cpp:81
+#, kde-format
+msgid "Export to Imageshack"
+msgstr "Експорт до Imageshack"
+
+#: imageshackwindow.cpp:89
+#, kde-format
+msgid "Upload"
+msgstr "Вивантажити"
+
+#: imageshackwindow.cpp:90
+#, kde-format
+msgid "Start upload to Imageshack web service"
+msgstr "Розпочати вивантаження даних до вебслужби Imageshack"
+
+#: imageshackwindow.cpp:98
+#, kde-format
+msgid "Imageshack Export"
+msgstr "Експорт до Imageshack"
+
+#: imageshackwindow.cpp:99
+#, kde-format
+msgid "A tool to export images to Imageshack web service."
+msgstr "Засіб для експортування зображення до служби Imageshack."
+
+#: imageshackwindow.cpp:100
+#, kde-format
+msgid "(c) 2012, Dodon Victor\n"
+msgstr "© Dodon Victor, 2012\n"
+
+#: imageshackwindow.cpp:102
+#, kde-format
+msgid "Dodon Victor"
+msgstr "Dodon Victor"
+
+#: imageshackwindow.cpp:103
+#, kde-format
+msgid "Author"
+msgstr "Автор"
+
+#: imageshackwindow.cpp:230
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: imageshackwindow.cpp:234
+#, kde-format
+msgid "Image Shack Export"
+msgstr "Експорт до ImageShack"
+
+#: imageshackwindow.cpp:261
+#, kde-format
+msgid "Authenticating..."
+msgstr "Розпізнавання…"
+
+#: imageshackwindow.cpp:318
+#, kde-format
+msgid "Login failed: %1\n"
+msgstr "Помилка під час спроби увійти: %1\n"
+
+#: imageshackwindow.cpp:332
+#, kde-format
+msgid "Failed to get galleries list: %1\n"
+msgstr "Не вдалося отримати список галерей: %1\n"
+
+#: imageshackwindow.cpp:404
+#, kde-format
+msgid "Uploading Failed"
+msgstr "Невдала спроба вивантаження"
+
+#: imageshackwindow.cpp:405
+#, kde-format
+msgid ""
+"Failed to upload photo into Imageshack: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Не вдалося вивантажити фотографію до Imageshack: %1\n"
+"Продовжити обробку?"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_imageshackui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Експорт"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_imageshackui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Головна панель"
+
+#: plugin_imageshack.cpp:103
+#, kde-format
+msgid "Export to &Imageshack..."
+msgstr "Експортувати до &Imageshack…"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Юрій Чорноіван"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "yurchor@ukr.net"
+
+#~ msgid "Checking the registration code"
+#~ msgstr "Перевіряємо реєстраційний код"
+
+#~ msgid "Checking the web server"
+#~ msgstr "Перевіряємо вебсервер"
+
+#~ msgid "Server does not respond. Please check you internet connection!"
+#~ msgstr ""
+#~ "Сервер не відповідає. Будь ласка, перевірте, чи є працездатним з’єднання "
+#~ "з інтернетом."
+
+#~ msgid "Registration code successfully verified"
+#~ msgstr "Перевірку реєстраційного коду виконано успішно"
+
+#~ msgid "Registration code not valid!"
+#~ msgstr "Нечинний реєстраційний код!"
+
+#~ msgid "Images to upload to Imageshack web service"
+#~ msgstr "Зображення, які слід вивантажити до вебслужби Imageshack"
+
+#~ msgid ""
+#~ "This is a clickable link to open the Imageshack home page in a web browser"
+#~ msgstr ""
+#~ "Ви можете натиснути це посилання, щоб відкрити домашню сторінку "
+#~ "Imageshack у програмі для перегляду сторінок інтернету"
+
+#~ msgid "ImageShack"
+#~ msgstr "ImageShack"
+
+#~ msgid "Account"
+#~ msgstr "Обліковий запис"
+
+#~ msgid "Imageshack account info"
+#~ msgstr "Дані щодо облікового запису Imageshack"
+
+#~ msgctxt "Account info"
+#~ msgid "Name:"
+#~ msgstr "Назва:"
+
+#~ msgctxt "Account info"
+#~ msgid "Email:"
+#~ msgstr "Ел. пошта:"
+
+#~ msgid "Change account"
+#~ msgstr "Змінити обліковий запис"
+
+#~ msgid ""
+#~ "Change the registration code for the Imageshack account used to upload "
+#~ "images"
+#~ msgstr ""
+#~ "Змінити реєстраційний код, що використовується для вивантаження зображень "
+#~ "на обліковий запис Imageshack"
+
+#~ msgid "Destination"
+#~ msgstr "Призначення"
+
+#~ msgid ""
+#~ "This is the ImageShack gallery to which selected items will be uploaded"
+#~ msgstr ""
+#~ "Це галерея на ImageShack, до якої буде вивантажено позначені зображення"
+
+#~ msgid "Upload to galleries"
+#~ msgstr "Вивантажити до галерей"
+
+#~ msgid "Gallery:"
+#~ msgstr "Галерея:"
+
+#~ msgid "Name:"
+#~ msgstr "Назва:"
+
+#~ msgctxt "ImageShack galleries list"
+#~ msgid "Reload"
+#~ msgstr "Перезавантажити"
+
+#~ msgid "Reload ImageShack galleries list"
+#~ msgstr "Перезавантажити список галерей ImageShack"
+
+#~ msgid "Options"
+#~ msgstr "Параметри"
+
+#~ msgid "These are the options that will be applied to photos"
+#~ msgstr "Це параметри обробки, які буде застосовано до фотографій"
+
+#~ msgid "Resize options"
+#~ msgstr "Параметри зміни розмірів"
+
+#~ msgid "Do not resize photos"
+#~ msgstr "Не змінювати розміри фотографій"
+
+#~ msgid "Predefined templates"
+#~ msgstr "Наперед визначені шаблони"
+
+#~ msgid "Custom resize dimensions"
+#~ msgstr "Нетипові параметри зміни розмірів"
+
+#~ msgid "Width:"
+#~ msgstr "Ширина:"
+
+#~ msgid "Height:"
+#~ msgstr "Висота:"
+
+#~ msgid "100x75 (avatar)"
+#~ msgstr "100⨯75 (аватар)"
+
+#~ msgid "150x122 (thumbnail)"
+#~ msgstr "150⨯122 (мініатюра)"
+
+#~ msgid "320x240 (for websites and email)"
+#~ msgstr "320⨯240 (для сайтів та електронної пошти)"
+
+#~ msgid "640x480 (for message boards)"
+#~ msgstr "640⨯480 (для дощок обміну повідомленнями)"
+
+#~ msgid "800x600 (15-inch monitor)"
+#~ msgstr "800⨯600 (15-дюймовий монітор)"
+
+#~ msgid "1024x768 (17-inch monitor)"
+#~ msgstr "1024⨯768 (17-дюймовий монітор)"
+
+#~ msgid "1280x1024 (19-inch monitor)"
+#~ msgstr "1280⨯1024 (19-дюймовий монітор)"
+
+#~ msgid "1600x1200 (21-inch monitor)"
+#~ msgstr "1600⨯1200 (21-дюймовий монітор)"
+
+#~ msgid "optimize without resizing"
+#~ msgstr "оптимізувати без зміни розмірів"
+
+#~ msgid "Create new gallery."
+#~ msgstr "Створити галерею."
+
+#~ msgid "Imageshack authorization"
+#~ msgstr "Розпізнавання на Imageshack"
+
+#~ msgid ""
+#~ "Please paste the registration code for your ImageShack account into the "
+#~ "textbox below and press \"OK\"."
+#~ msgstr ""
+#~ "Будь ласка, вставте реєстраційний код вашого облікового запису ImageShack "
+#~ "до поля для введення тексту і натисніть кнопку «Гаразд»."

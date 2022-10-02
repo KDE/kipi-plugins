@@ -1,0 +1,278 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Balázs Úr <urbalazs@gmail.com>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2013-07-20 22:19+0200\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
+"Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: imgurapi3.cpp:132
+#, kde-format
+msgid "Could not authorize"
+msgstr ""
+
+#: imgurapi3.cpp:309
+#, kde-format
+msgid "Could not open file"
+msgstr ""
+
+#: imgurimageslist.cpp:59
+#, kde-format
+msgid "Thumbnail"
+msgstr "Bélyegkép"
+
+#: imgurimageslist.cpp:62
+#, kde-format
+msgid "Submission title"
+msgstr "Beküldés címe"
+
+#: imgurimageslist.cpp:65
+#, kde-format
+msgid "Submission description"
+msgstr "Beküldés leírása"
+
+#: imgurimageslist.cpp:68
+#, kde-format
+msgid "Imgur URL"
+msgstr "Imgur URL"
+
+#: imgurimageslist.cpp:71
+#, kde-format
+msgid "Imgur Delete URL"
+msgstr "Imgur URL törlés"
+
+#: imgurwindow.cpp:82
+#, kde-format
+msgid "Logged in as:"
+msgstr ""
+
+#: imgurwindow.cpp:90
+#, kde-format
+msgid "Forget"
+msgstr ""
+
+#: imgurwindow.cpp:100
+#, kde-format
+msgid "Upload Anonymously"
+msgstr ""
+
+#: imgurwindow.cpp:116
+#, kde-format
+msgid "Export to imgur.com"
+msgstr "Exportálás az imgur.com oldalra"
+
+#: imgurwindow.cpp:119
+#, kde-format
+msgid "Upload"
+msgstr "Feltöltés"
+
+#: imgurwindow.cpp:120
+#, kde-format
+msgid "Start upload to Imgur"
+msgstr "Feltöltés indítása az Imgurba"
+
+#: imgurwindow.cpp:125
+#, kde-format
+msgid "Imgur Export"
+msgstr "Imgur exportálás"
+
+#: imgurwindow.cpp:126
+#, kde-format
+msgid "A tool to export images to Imgur web service"
+msgstr "Egy eszköz képek exportálásához az Imgur webszolgáltatásba"
+
+#: imgurwindow.cpp:127
+#, kde-format
+msgid "(c) 2012-2013, Marius Orcsik"
+msgstr "© Marius Orcsik, 2012-2013."
+
+#: imgurwindow.cpp:129
+#, kde-format
+msgid "Marius Orcsik"
+msgstr "Marius Orcsik"
+
+#: imgurwindow.cpp:130
+#, kde-format
+msgid "Author"
+msgstr ""
+
+#: imgurwindow.cpp:133
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: imgurwindow.cpp:134 imgurwindow.cpp:138
+#, kde-format
+msgid "Developer"
+msgstr "Fejlesztő"
+
+#: imgurwindow.cpp:137
+#, kde-format
+msgid "Fabian Vogt"
+msgstr ""
+
+#: imgurwindow.cpp:220
+#, kde-format
+msgid "<Not logged in>"
+msgstr ""
+
+#: imgurwindow.cpp:227
+#, fuzzy, kde-format
+#| msgid "Imgur authorization"
+msgid "Authorization Failed"
+msgstr "Imgur felhatalmazás"
+
+#: imgurwindow.cpp:228
+#, fuzzy, kde-format
+#| msgid "Failed to upload photo to Imgur: %1\n"
+msgid "Failed to log into Imgur: %1\n"
+msgstr "Nem sikerült feltölteni a fényképet az Imgurba: %1\n"
+
+#: imgurwindow.cpp:254 imgurwindow.cpp:261
+#, fuzzy, kde-format
+#| msgid "Upload failed"
+msgid "Uploading Failed"
+msgstr "A feltöltés nem sikerült"
+
+#: imgurwindow.cpp:255
+#, kde-format
+msgid "Failed to upload photo to Imgur: %1\n"
+msgstr "Nem sikerült feltölteni a fényképet az Imgurba: %1\n"
+
+#: imgurwindow.cpp:262
+#, kde-format
+msgid ""
+"Failed to upload photo to Imgur: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Nem sikerült feltölteni a fényképet az Imgurba: %1\n"
+"Szeretné folytatni?"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_imgurui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Exportálás"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_imgurui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Fő eszköztár"
+
+#: plugin_imgur.cpp:102
+#, kde-format
+msgid "Export to &Imgur..."
+msgstr "Exportálás az &Imgurba…"
+
+#~ msgid "Unexpected response from the web service"
+#~ msgstr "Nem várt válasz a webszolgáltatástól"
+
+#~ msgid "Upload failed"
+#~ msgstr "A feltöltés nem sikerült"
+
+#~ msgid "Parse error"
+#~ msgstr "Feldolgozási hiba"
+
+#~ msgid "Network error: timeout, cannot connect."
+#~ msgstr "Hálózati hiba: időtúllépés, nem lehet csatlakozni."
+
+#~ msgid "Request endpoint is not valid."
+#~ msgstr "A kért végpont nem érvényes."
+
+#~ msgid "Request is not valid: some parameter missing?"
+#~ msgstr "A kérés nem érvényes: hiányzik néhány paraméter?"
+
+#~ msgid "Authorization error: trying to access a resource without tokens."
+#~ msgstr ""
+#~ "Hitelesítési hiba: tokenek nélküli hozzáférés kísérlete egy erőforráshoz."
+
+#~ msgid "The given request is invalid."
+#~ msgstr "A megadott kérés érvénytelen."
+
+#~ msgid "Manager error, cannot use for sending requests."
+#~ msgstr "Kezelő hiba, nem használható kérések küldéséhez."
+
+#~ msgid "No error"
+#~ msgstr "Nincs hiba"
+
+#~ msgid "OK"
+#~ msgstr "OK"
+
+#~ msgid ""
+#~ "This is a clickable link to open the Imgur home page in a web browser"
+#~ msgstr ""
+#~ "Ez egy kattintható hivatkozás, amely megnyitja az Imgur kezdőlapot a "
+#~ "webböngészőben"
+
+#~ msgid ""
+#~ "Requesting Imgur for authorization to upload images with the KIPI Imgur "
+#~ "Exporter plugin."
+#~ msgstr ""
+#~ "Az Imgur hitelesítésének kérése képek feltöltéséhez a KIPI Imgur "
+#~ "exportáló bővítménnyel."
+
+#~ msgid "Request authorization"
+#~ msgstr "Hitelesítés kérése"
+
+#~ msgid ""
+#~ "Set permissions for the current application to upload images to Imgur."
+#~ msgstr ""
+#~ "Jogosultságok beállítása a jelenlegi alkalmazáshoz képek feltöltéséhez az "
+#~ "Imgurba."
+
+#~ msgid "Processing %1"
+#~ msgstr "%1 feldolgozása"
+
+#~ msgid "Authenticated"
+#~ msgstr "Hitelesítve"
+
+#~ msgid "%v / %m"
+#~ msgstr "%v / %m"
+
+#~ msgid "Export to Imgur"
+#~ msgstr "Exportálás az Imgurba"
+
+#~ msgctxt "%1 is the error string"
+#~ msgid ""
+#~ "Failed to authenticate to Imgur.\n"
+#~ "%1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Nem sikerült bejelentkezni az Imgurba.\n"
+#~ "%1\n"
+#~ "Szeretné folytatni?"
+
+#~ msgid ""
+#~ "Failed to authenticate to Imgur.\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Nem sikerült bejelentkezni az Imgurba.\n"
+#~ "Szeretné folytatni?"
+
+#, fuzzy
+#~| msgid "Processing %1"
+#~ msgid "Processing Failed"
+#~ msgstr "%1 feldolgozása"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Úr Balázs"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "urbalazs@gmail.com"
+
+#~ msgid "Author and Maintainer"
+#~ msgstr "Szerző és karbantartó"

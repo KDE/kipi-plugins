@@ -1,0 +1,894 @@
+# Bosnian translations for PACKAGE package
+# engleski prevodi za paket PACKAGE.
+# Copyright (C) 2014 This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Automatically generated, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: $2\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2014-12-18 05:23+0000\n"
+"Last-Translator: Mirza Bulbulusic <mbulbulusic@gmail.com>\n"
+"Language-Team: none\n"
+"Language: bs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Launchpad (build 17341)\n"
+"X-Launchpad-Export-Date: 2015-02-15 06:27+0000\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#: authorize.cpp:116
+#, kde-format
+msgid "Google Drive Authorization"
+msgstr "Google Drive Autorizacija"
+
+#: authorize.cpp:129
+#, kde-format
+msgid ""
+"Please follow the instructions in the browser. After logging in and "
+"authorizing the application, copy the code from the browser, paste it in the "
+"textbox below, and click OK."
+msgstr ""
+"Molimo slijedite upute u pretraživaču. Poslije prijave i autorizacije "
+"aplikacije, kopirajte kod iz pretraživača, zalijepite ga u tekstualni okvir "
+"ispod, i kliknite na OK."
+
+#: authorize.cpp:249 gdtalker.cpp:272 gptalker.cpp:644
+#, kde-format
+msgid "Error"
+msgstr ""
+
+#: gdtalker.cpp:337
+#, kde-format
+msgid "Failed to list folders"
+msgstr "Nisam uspio da preuzmem listu direktoroka"
+
+#: gdtalker.cpp:385
+#, kde-format
+msgid "Failed to create folder"
+msgstr "Kreiranje fascikle nije uspjelo"
+
+#: gdtalker.cpp:416 gptalker.cpp:937
+#, kde-format
+msgid "Failed to upload photo"
+msgstr "Učitavanje slike nije uspjelo"
+
+#: gptalker.cpp:569
+#, kde-format
+msgid "No photo specified"
+msgstr "Nije navedena slika"
+
+#: gptalker.cpp:572
+#, kde-format
+msgid "General upload failure"
+msgstr "Opšta greška slanja"
+
+#: gptalker.cpp:575
+#, kde-format
+msgid "File-size was zero"
+msgstr "Veličina-datoteke je bila nula"
+
+#: gptalker.cpp:578
+#, kde-format
+msgid "File-type was not recognized"
+msgstr "Tip-datoteke nije prepoznat"
+
+#: gptalker.cpp:581
+#, kde-format
+msgid "User exceeded upload limit"
+msgstr "Korisnik je ispunio ograničenje slanja"
+
+#: gptalker.cpp:584
+#, kde-format
+msgid "Invalid signature"
+msgstr "Neispravan potpis"
+
+#: gptalker.cpp:587
+#, kde-format
+msgid "Missing signature"
+msgstr "Nedostaje potpis"
+
+#: gptalker.cpp:590
+#, kde-format
+msgid "Login failed / Invalid auth token"
+msgstr "Prijava nije uspjela / nevažeći autorizacijski token"
+
+#: gptalker.cpp:593
+#, kde-format
+msgid "Invalid API Key"
+msgstr "Neispravan API ključ"
+
+#: gptalker.cpp:596
+#, kde-format
+msgid "Service currently unavailable"
+msgstr "Servis je trenutno nedostupan"
+
+#: gptalker.cpp:599
+#, kde-format
+msgid "Invalid Frob"
+msgstr "Neispravan Frob"
+
+#: gptalker.cpp:602
+#, kde-format
+msgid "Format \"xxx\" not found"
+msgstr "Format „xxx“ nije nađen"
+
+#: gptalker.cpp:605
+#, kde-format
+msgid "Method \"xxx\" not found"
+msgstr "Način „xxx“ nije nađen"
+
+#: gptalker.cpp:608
+#, kde-format
+msgid "Invalid SOAP envelope"
+msgstr "Neispravna SOAP koverta"
+
+#: gptalker.cpp:611
+#, kde-format
+msgid "Invalid XML-RPC Method Call"
+msgstr "Neispravan poziv XML-RPC načina"
+
+#: gptalker.cpp:614
+#, kde-format
+msgid "The POST method is now required for all setters."
+msgstr "POST metoda je sada obavezna za sve setere."
+
+#: gptalker.cpp:617
+#, kde-format
+msgid "Unknown error"
+msgstr "Nepoznata greška"
+
+#: gptalker.cpp:620 gswindow.cpp:427 gswindow.cpp:466 gswindow.cpp:548
+#: gswindow.cpp:576 gswindow.cpp:652 gswindow.cpp:668 gswindow.cpp:1078
+#: gswindow.cpp:1198 gswindow.cpp:1241 gswindow.cpp:1249
+#, kde-format
+msgctxt "@title:window"
+msgid "Error"
+msgstr ""
+
+#: gptalker.cpp:621
+#, kde-format
+msgid ""
+"Error occurred: %1\n"
+"Unable to proceed further."
+msgstr ""
+"Javila se greška: %1\n"
+"Nije moguće dalje nastaviti."
+
+#: gptalker.cpp:691 gptalker.cpp:758
+#, fuzzy, kde-format
+#| msgid "Failed to upload photo"
+msgid "Failed to fetch photo-set list"
+msgstr "Učitavanje slike nije uspjelo"
+
+#: gptalker.cpp:894 gptalker.cpp:927
+#, fuzzy, kde-format
+#| msgid "Failed to create folder"
+msgid "Failed to create album"
+msgstr "Kreiranje fascikle nije uspjelo"
+
+#: gswidget.cpp:60
+#, kde-format
+msgid "Tag path behavior :"
+msgstr ""
+
+#: gswidget.cpp:62
+#, kde-format
+msgid "Leaf tags only"
+msgstr "List oznake samo"
+
+#: gswidget.cpp:63
+#, kde-format
+msgid "Export only the leaf tags of tag hierarchies"
+msgstr "Eksportuj samo list oznake od oznaka hijerarhije"
+
+#: gswidget.cpp:64
+#, kde-format
+msgid "Split tags"
+msgstr "Razdvoji oznake"
+
+#: gswidget.cpp:65
+#, kde-format
+msgid "Export the leaf tag and all ancestors as single tags."
+msgstr "Eksportuj list oznake i sve prethodne oznake kao pojedinačne oznake."
+
+#: gswidget.cpp:66
+#, kde-format
+msgid "Combined String"
+msgstr "Kombinirani String"
+
+#: gswidget.cpp:67
+#, kde-format
+msgid "Build a combined tag string."
+msgstr "Napravi kombinirani string oznake."
+
+#: gswindow.cpp:116
+#, kde-format
+msgid "Google Drive Export"
+msgstr "Google Drive izvoz"
+
+#: gswindow.cpp:117
+#, fuzzy, kde-format
+#| msgid "A Kipi-plugin to export images to Google Drive"
+msgid "A tool to export images to Google Drive"
+msgstr "Kipi plugin za izvoz slika u Google Drive"
+
+#: gswindow.cpp:119
+#, fuzzy, kde-format
+#| msgid "(c) 2013, Saurabh Patel"
+msgid ""
+"(c) 2013, Saurabh Patel\n"
+"(c) 2015, Shourya Singh Gupta"
+msgstr "(c) 2013, Saurabh Patel"
+
+#: gswindow.cpp:122
+#, kde-format
+msgid "Saurabh Patel"
+msgstr "Saurabh Patel"
+
+#: gswindow.cpp:122 gswindow.cpp:195
+#, kde-format
+msgid "Author and maintainer"
+msgstr "Autor i održavalac"
+
+#: gswindow.cpp:125 gswindow.cpp:207
+#, kde-format
+msgid "Shourya Singh Gupta"
+msgstr ""
+
+#: gswindow.cpp:125 gswindow.cpp:198 gswindow.cpp:201 gswindow.cpp:204
+#: gswindow.cpp:207
+#, kde-format
+msgid "Developer"
+msgstr "Programer"
+
+#: gswindow.cpp:132
+#, kde-format
+msgid "Export to Google Drive"
+msgstr "Izvezite u Google Drive"
+
+#: gswindow.cpp:134 gswindow.cpp:219
+#, kde-format
+msgid "Start Upload"
+msgstr "Počni otpremanje"
+
+#: gswindow.cpp:135
+#, kde-format
+msgid "Start upload to Google Drive"
+msgstr "Počnite učitavanje za Google Drive"
+
+#: gswindow.cpp:186
+#, fuzzy, kde-format
+#| msgid "Google Drive Export"
+msgid "Google Photos/PicasaWeb Export"
+msgstr "Google Drive izvoz"
+
+#: gswindow.cpp:187
+#, fuzzy, kde-format
+#| msgid "A Kipi-plugin to export images to Google Drive"
+msgid "A tool to export image collections to Google Photos/Picasa web service."
+msgstr "Kipi plugin za izvoz slika u Google Drive"
+
+#: gswindow.cpp:189
+#, kde-format
+msgid ""
+"(c) 2007-2009, Vardhman Jain\n"
+"(c) 2008-2016, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2010, Jens Mueller\n"
+"(c) 2015, Shourya Singh Gupta"
+msgstr ""
+
+#: gswindow.cpp:195
+#, kde-format
+msgid "Vardhman Jain"
+msgstr "Vardhman Jain"
+
+#: gswindow.cpp:198
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: gswindow.cpp:201
+#, kde-format
+msgid "Luka Renko"
+msgstr "Luka Renko"
+
+#: gswindow.cpp:204
+#, kde-format
+msgid "Jens Mueller"
+msgstr "Jens Mueller"
+
+#: gswindow.cpp:217
+#, fuzzy, kde-format
+#| msgid "Export to Google Drive"
+msgid "Export to Google Photos/PicasaWeb Service"
+msgstr "Izvezite u Google Drive"
+
+#: gswindow.cpp:220
+#, fuzzy, kde-format
+#| msgid "Start upload to Google Drive"
+msgid "Start upload to Google Photos/PicasaWeb Service"
+msgstr "Počnite učitavanje za Google Drive"
+
+#: gswindow.cpp:226
+#, fuzzy, kde-format
+#| msgid "Export to Google Drive"
+msgid "Import from Google Photos/PicasaWeb Service"
+msgstr "Izvezite u Google Drive"
+
+#: gswindow.cpp:228
+#, fuzzy, kde-format
+#| msgid "Start Upload"
+msgid "Start Download"
+msgstr "Počni otpremanje"
+
+#: gswindow.cpp:229
+#, fuzzy, kde-format
+#| msgid "Start upload to Google Drive"
+msgid "Start download from Google Photos/PicasaWeb service"
+msgstr "Počnite učitavanje za Google Drive"
+
+#: gswindow.cpp:428 gswindow.cpp:467 gswindow.cpp:577
+#, fuzzy, kde-format
+#| msgid ""
+#| "Google Drive call failed:\n"
+#| "%1"
+msgid "Google Photos/PicasaWeb Call Failed: %1\n"
+msgstr ""
+"Google Drive poziv neuspješan:\n"
+"%1"
+
+#: gswindow.cpp:448 gswindow.cpp:527 gswindow.cpp:758
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: gswindow.cpp:531
+#, fuzzy, kde-format
+#| msgid "Google Drive Export"
+msgid "Google Photo Export"
+msgstr "Google Drive izvoz"
+
+#: gswindow.cpp:549
+#, fuzzy, kde-format
+#| msgid ""
+#| "Google Drive call failed:\n"
+#| "%1"
+msgid "Google Drive Call Failed: %1\n"
+msgstr ""
+"Google Drive poziv neuspješan:\n"
+"%1"
+
+#: gswindow.cpp:653
+#, kde-format
+msgid ""
+"The textbox is empty, please enter the code from the browser in the textbox. "
+"To complete the authentication click \"Change Account\", or \"Start Upload\" "
+"to authenticate again."
+msgstr ""
+"Tekstualni okvir je prazan, molimo vas da unesete kod iz pretraživača u "
+"tekstualni okvir. Da bi potvrdili ispravnost kliknite \"Promjena Računa\" "
+"ili \"Započni Učitavanje\" da potvrdite opet."
+
+#: gswindow.cpp:669
+#, kde-format
+msgid "No image selected. Please select which images should be uploaded."
+msgstr ""
+"Ni jedna slika nije odabrana. Molimo odaberite koje slike će biti učitane."
+
+#: gswindow.cpp:683 gswindow.cpp:706 gswindow.cpp:1014 gswindow.cpp:1032
+#: gswindow.cpp:1105
+#, kde-format
+msgid "Warning"
+msgstr ""
+
+#: gswindow.cpp:684 gswindow.cpp:707
+#, kde-format
+msgid "Authentication failed. Click \"Continue\" to authenticate."
+msgstr "Ovjera neuspjela. Kliknite \"Nastavi\" da ovjerite ponovo."
+
+#: gswindow.cpp:687 gswindow.cpp:710 gswindow.cpp:1019 gswindow.cpp:1037
+#: gswindow.cpp:1109 gswindow.cpp:1288
+#, kde-format
+msgid "Continue"
+msgstr ""
+
+#: gswindow.cpp:688 gswindow.cpp:711 gswindow.cpp:1020 gswindow.cpp:1038
+#: gswindow.cpp:1110 gswindow.cpp:1289
+#, kde-format
+msgid "Cancel"
+msgstr ""
+
+#: gswindow.cpp:762
+#, kde-format
+msgid "Google Drive export"
+msgstr "Google Drive izvoz"
+
+#: gswindow.cpp:1015
+#, fuzzy, kde-format
+#| msgid ""
+#| "Failed to upload photo to Google Drive.\n"
+#| "%1\n"
+#| "Do you want to continue?"
+msgid ""
+"Failed to save photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Neuspjelo učitavanje slike na Google Drive.\n"
+"%1?"
+
+#: gswindow.cpp:1033
+#, fuzzy, kde-format
+#| msgid ""
+#| "Failed to upload photo to Google Drive.\n"
+#| "%1\n"
+#| "Do you want to continue?"
+msgid ""
+"Failed to download photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Neuspjelo učitavanje slike na Google Drive.\n"
+"%1?"
+
+#: gswindow.cpp:1079
+#, fuzzy, kde-format
+#| msgid "Failed to create folder"
+msgid "Failed to save image to %1"
+msgstr "Kreiranje fascikle nije uspjelo"
+
+#: gswindow.cpp:1106
+#, fuzzy, kde-format
+#| msgid ""
+#| "Failed to upload photo to Google Drive.\n"
+#| "%1\n"
+#| "Do you want to continue?"
+msgid ""
+"Failed to upload photo to %1.\n"
+"%2\n"
+"Do you want to continue?"
+msgstr ""
+"Neuspjelo učitavanje slike na Google Drive.\n"
+"%1?"
+
+#: gswindow.cpp:1200
+#, kde-format
+msgctxt "%1 is the error string, %2 is the error code"
+msgid "An authentication error occurred: %1 (%2)"
+msgstr "Došlo je do greške provjere autentičnosit: %1 (%2)"
+
+#: gswindow.cpp:1242
+#, kde-format
+msgid ""
+"Google Drive call failed:\n"
+"%1"
+msgstr ""
+"Google Drive poziv neuspješan:\n"
+"%1"
+
+#: gswindow.cpp:1250
+#, fuzzy, kde-format
+#| msgid ""
+#| "Google Drive call failed:\n"
+#| "%1"
+msgid ""
+"Google Photos/PicasaWeb call failed:\n"
+"%1"
+msgstr ""
+"Google Drive poziv neuspješan:\n"
+"%1"
+
+#: gswindow.cpp:1283
+#, kde-format
+msgctxt "@title:window"
+msgid "Warning"
+msgstr ""
+
+#: gswindow.cpp:1284
+#, kde-format
+msgid ""
+"After you have been logged out in the browser, click \"Continue\" to "
+"authenticate for another account"
+msgstr ""
+"Nakon što ste se odjavili sa pretraživača, kliknite na \"Nastavi\" za ovjeru "
+"drugog računa"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_googleservicesui.rc:7 kipiplugin_googleservicesui.rc:15
+#, kde-format
+msgid "&Export"
+msgstr "&Izvezi"
+
+#. i18n: ectx: Menu (Import)
+#: kipiplugin_googleservicesui.rc:11
+#, fuzzy, kde-format
+#| msgid "&Export"
+msgid "&Import"
+msgstr "&Izvezi"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_googleservicesui.rc:21
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Glavna traka alata"
+
+#: newalbumdlg.cpp:54
+#, kde-format
+msgid "Access Level"
+msgstr "Nivo Pristupa"
+
+#: newalbumdlg.cpp:55
+#, kde-format
+msgid ""
+"These are security and privacy settings for the new Google Photos/PicasaWeb "
+"album."
+msgstr ""
+
+#: newalbumdlg.cpp:57
+#, kde-format
+msgctxt "google photos/picasaweb album privacy"
+msgid "Public"
+msgstr ""
+
+#: newalbumdlg.cpp:59
+#, kde-format
+msgid "Public album is listed on your public Google Photos/PicasaWeb page."
+msgstr ""
+
+#: newalbumdlg.cpp:60
+#, kde-format
+msgctxt "google photos/picasaweb album privacy"
+msgid "Unlisted / Private"
+msgstr ""
+
+#: newalbumdlg.cpp:61
+#, kde-format
+msgid "Unlisted album is only accessible via URL."
+msgstr "Nenavedeni album je dostupan samo preko URL-a."
+
+#: newalbumdlg.cpp:62
+#, kde-format
+msgctxt "google photos/picasaweb album privacy"
+msgid "Sign-In Required to View"
+msgstr ""
+
+#: newalbumdlg.cpp:63
+#, kde-format
+msgid "Unlisted album require Sign-In to View"
+msgstr "Nenavedeni album zahtjeva da se Prijavite za Pregled"
+
+#: newalbumdlg.cpp:71
+#, kde-format
+msgid "Privacy:"
+msgstr "Privatnost:"
+
+#: plugin_googleservices.cpp:100
+#, kde-format
+msgid "Export to &Google Drive..."
+msgstr "Izvoz za &Google Drive..."
+
+#: plugin_googleservices.cpp:110
+#, fuzzy, kde-format
+#| msgid "Export to &Google Drive..."
+msgid "Export to &Google Photos/PicasaWeb..."
+msgstr "Izvoz za &Google Drive..."
+
+#: plugin_googleservices.cpp:120
+#, fuzzy, kde-format
+#| msgid "Export to &Google Drive..."
+msgid "Import from &Google Photos/PicasaWeb..."
+msgstr "Izvoz za &Google Drive..."
+
+#: replacedialog.cpp:112
+#, fuzzy, kde-format
+#| msgid "&Add As New"
+msgid "Add As New"
+msgstr "&Dodaj Kao Novo"
+
+#: replacedialog.cpp:113
+#, kde-format
+msgid "Item will be added alongside the linked version."
+msgstr "Stavka će biti dodana pored linkovane verzije."
+
+#: replacedialog.cpp:119
+#, fuzzy, kde-format
+#| msgid "&Add All"
+msgid "Add All"
+msgstr "&Dodaj Sve"
+
+#: replacedialog.cpp:120
+#, kde-format
+msgid ""
+"Items will be added alongside the linked version. You will not be prompted "
+"again."
+msgstr ""
+"Stavka će biti dodana pored linkovane verzije. Neće biti upitani ponovo."
+
+#: replacedialog.cpp:126
+#, fuzzy, kde-format
+#| msgid "&Replace"
+msgid "Replace"
+msgstr "&Zamijeni"
+
+#: replacedialog.cpp:127
+#, kde-format
+msgid "Item will be replacing the linked version."
+msgstr "Stavka će zamijeniti linkovanu verziju."
+
+#: replacedialog.cpp:133
+#, fuzzy, kde-format
+#| msgid "&Replace All"
+msgid "Replace All"
+msgstr "&Zamijeni Sve"
+
+#: replacedialog.cpp:134
+#, kde-format
+msgid ""
+"Items will be replacing the linked version. You will not be prompted again."
+msgstr "Stavke će zamijeniti povezane verziju. Nećete biti upitani ponovo."
+
+#: replacedialog.cpp:157
+#, kde-format
+msgid "A linked item already exists."
+msgstr "Linkovana stavka već postoji."
+
+#: replacedialog.cpp:177
+#, kde-format
+msgid "Destination"
+msgstr "Odredište"
+
+#: replacedialog.cpp:182
+#, kde-format
+msgid "Source"
+msgstr "Izvor"
+
+#~ msgid ""
+#~ "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+#~ msgstr ""
+#~ "Datoteka po imenu \"%1\" već postoji. Želite li zaista da je prebrišete?"
+
+#, fuzzy
+#~| msgid "&Export"
+#~ msgid "Picasa Export"
+#~ msgstr "&Izvezi"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Samir Ribić, Mirza Bulbulusic"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "Samir.ribic@etf.unsa.ba,mbulbulusic@gmail.com"
+
+#~ msgid "This is the list of images to upload to your Google Drive account."
+#~ msgstr "Ovo je lista slika za učitavanje na vaš Google Drive račun."
+
+#, fuzzy
+#~| msgid "This is the list of images to upload to your Google Drive account."
+#~ msgid ""
+#~ "This is the list of images to upload to your Google Photos/PicasaWeb "
+#~ "account."
+#~ msgstr "Ovo je lista slika za učitavanje na vaš Google Drive račun."
+
+#~ msgid "This is a clickable link to open Google Drive in a browser."
+#~ msgstr ""
+#~ "Ovo je  link na koji se može kliknuti za otvaranje Google Drive-a u "
+#~ "pretraživaču."
+
+#, fuzzy
+#~| msgid "This is a clickable link to open Google Drive in a browser."
+#~ msgid ""
+#~ "This is a clickable link to open Google Photos/PicasaWeb in a browser."
+#~ msgstr ""
+#~ "Ovo je  link na koji se može kliknuti za otvaranje Google Drive-a u "
+#~ "pretraživaču."
+
+#~ msgid "Account"
+#~ msgstr "Nalog"
+
+#~ msgid "This is the Google Drive account that is currently logged in."
+#~ msgstr "Ovo je Google Drive račun koji je trenutno prijavljen."
+
+#, fuzzy
+#~| msgid "This is the Google Drive account that is currently logged in."
+#~ msgid ""
+#~ "This is the Google Photos/PicasaWeb account that is currently logged in."
+#~ msgstr "Ovo je Google Drive račun koji je trenutno prijavljen."
+
+#~ msgctxt "account settings"
+#~ msgid "Name:"
+#~ msgstr "Ime:"
+
+#~ msgid "Change Account"
+#~ msgstr "Promijeni račun"
+
+#~ msgid "Change Google Drive account for transfer"
+#~ msgstr "Promijenite Google Drive račun za prijenos"
+
+#, fuzzy
+#~| msgid "Change Google Drive account for transfer"
+#~ msgid "Change Google Photos/PicasaWeb account for transfer"
+#~ msgstr "Promijenite Google Drive račun za prijenos"
+
+#, fuzzy
+#~| msgid "Album:"
+#~ msgid "Album"
+#~ msgstr "Album:"
+
+#~ msgid ""
+#~ "This is the Google Drive folder to which selected photos will be uploaded."
+#~ msgstr ""
+#~ "Ovo je Google Drive fascikla za koju će odabrane slike biti učitane."
+
+#, fuzzy
+#~| msgid ""
+#~| "This is the Google Drive folder to which selected photos will be "
+#~| "uploaded."
+#~ msgid ""
+#~ "This is the Google Photos/PicasaWeb folder to which selected photos will "
+#~ "be uploaded."
+#~ msgstr ""
+#~ "Ovo je Google Drive fascikla za koju će odabrane slike biti učitane."
+
+#, fuzzy
+#~| msgid ""
+#~| "This is the Google Drive folder to which selected photos will be "
+#~| "uploaded."
+#~ msgid ""
+#~ "This is the Google Photos/PicasaWeb folder from which selected photos "
+#~ "will be downloaded."
+#~ msgstr ""
+#~ "Ovo je Google Drive fascikla za koju će odabrane slike biti učitane."
+
+#~ msgid "Album:"
+#~ msgstr "Album:"
+
+#~ msgid "New Album"
+#~ msgstr "Novi album"
+
+#~ msgid "Create new Google Drive folder"
+#~ msgstr "Kreirajte novu Google Drive fasciklu"
+
+#, fuzzy
+#~| msgid "Create new Google Drive folder"
+#~ msgid "Create new Google Photos/PicasaWeb folder"
+#~ msgstr "Kreirajte novu Google Drive fasciklu"
+
+#~ msgctxt "album list"
+#~ msgid "Reload"
+#~ msgstr "Ponovo učitaj"
+
+#~ msgid "Reload album list"
+#~ msgstr "Ponovo učitaj popis albuma"
+
+#, fuzzy
+#~| msgid "Maximum Dimension:"
+#~ msgid "Max Dimension"
+#~ msgstr "Maksimalna dimenzija:"
+
+#, fuzzy
+#~| msgid "This is the title of the folder that will be created."
+#~ msgid ""
+#~ "This is the maximum dimension of the images. Images larger than this will "
+#~ "be scaled down."
+#~ msgstr "Ovo je naslov za fasciklu koja će biti kreirana."
+
+#~ msgid "Original Size"
+#~ msgstr "Originalna veličina"
+
+#~ msgid "1600 px"
+#~ msgstr "1600 px"
+
+#~ msgid "1440 px"
+#~ msgstr "1440 px"
+
+#~ msgid "1280 px"
+#~ msgstr "1280 px"
+
+#~ msgid "1152 px"
+#~ msgstr "1152 px"
+
+#~ msgid "1024 px"
+#~ msgstr "1024 px"
+
+#, fuzzy
+#~| msgid "This is the title of the folder that will be created."
+#~ msgid ""
+#~ "This is the location where Google Photos/PicasaWeb images will be "
+#~ "downloaded."
+#~ msgstr "Ovo je naslov za fasciklu koja će biti kreirana."
+
+#~ msgid "Options"
+#~ msgstr "Opcije"
+
+#~ msgid "These are the options that would be applied to photos before upload."
+#~ msgstr "Ovo su opcije koje će biti prihvaćene za slike prije učitavanja."
+
+#~ msgid "Resize photos before uploading"
+#~ msgstr "Promjeni veličinu slika prije učitavanja"
+
+#~ msgid "Maximum Dimension:"
+#~ msgstr "Maksimalna dimenzija:"
+
+#~ msgid "JPEG Quality:"
+#~ msgstr "JPEG kvalitet:"
+
+#, fuzzy
+#~| msgid "This is the title of the folder that will be created."
+#~ msgid "Title of the album that will be created (required)."
+#~ msgstr "Ovo je naslov za fasciklu koja će biti kreirana."
+
+#, fuzzy
+#~| msgid "This is the title of the folder that will be created."
+#~ msgid "Date and Time of the album that will be created (optional)."
+#~ msgstr "Ovo je naslov za fasciklu koja će biti kreirana."
+
+#, fuzzy
+#~| msgid "This is the title of the folder that will be created."
+#~ msgid "Description of the album that will be created (optional)."
+#~ msgstr "Ovo je naslov za fasciklu koja će biti kreirana."
+
+#, fuzzy
+#~| msgid "This is the title of the folder that will be created."
+#~ msgid "Location of the album that will be created (optional)."
+#~ msgstr "Ovo je naslov za fasciklu koja će biti kreirana."
+
+#~ msgid "This is the title of the folder that will be created."
+#~ msgstr "Ovo je naslov za fasciklu koja će biti kreirana."
+
+#~ msgctxt "folder edit"
+#~ msgid "Title:"
+#~ msgstr "Naslov:"
+
+#, fuzzy
+#~| msgctxt "folder edit"
+#~| msgid "Title:"
+#~ msgctxt "new google photos/picasaweb album dialog"
+#~ msgid "Title:"
+#~ msgstr "Naslov:"
+
+#, fuzzy
+#~| msgid "Destination"
+#~ msgctxt "new google photos/picasaweb album dialog"
+#~ msgid "Description:"
+#~ msgstr "Odredište"
+
+#~ msgid ""
+#~ "Failed to upload photo to Google Drive.\n"
+#~ "%1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Neuspjelo učitavanje slike na Google Drive.\n"
+#~ "%1?"
+
+#, fuzzy
+#~| msgid ""
+#~| "Failed to upload photo to Google Drive.\n"
+#~| "%1\n"
+#~| "Do you want to continue?"
+#~ msgid ""
+#~ "Failed to upload photo to Google Photos/PicasaWeb.\n"
+#~ "%1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Neuspjelo učitavanje slike na Google Drive.\n"
+#~ "%1?"
+
+#, fuzzy
+#~| msgctxt "folder edit"
+#~| msgid "Title:"
+#~ msgctxt "new picasaweb album dialog"
+#~ msgid "Title:"
+#~ msgstr "Naslov:"
+
+#~ msgid "Google Drive New Album"
+#~ msgstr "Google Drive Novi Album"
+
+#, fuzzy
+#~| msgid "New Album"
+#~ msgid "Picasaweb New Album"
+#~ msgstr "Novi album"

@@ -1,0 +1,256 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Shinjo Park <peremen@gmail.com>, 2015, 2017, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2020-10-04 18:17+0200\n"
+"Last-Translator: Shinjo Park <kde@peremen.name>\n"
+"Language-Team: Korean <kde-kr@kde.org>\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 19.12.3\n"
+
+#: imgurapi3.cpp:132
+#, kde-format
+msgid "Could not authorize"
+msgstr "인증할 수 없음"
+
+#: imgurapi3.cpp:309
+#, kde-format
+msgid "Could not open file"
+msgstr "파일을 열 수 없음"
+
+#: imgurimageslist.cpp:59
+#, kde-format
+msgid "Thumbnail"
+msgstr "축소판"
+
+#: imgurimageslist.cpp:62
+#, kde-format
+msgid "Submission title"
+msgstr "제출 제목"
+
+#: imgurimageslist.cpp:65
+#, kde-format
+msgid "Submission description"
+msgstr "제출 설명"
+
+#: imgurimageslist.cpp:68
+#, kde-format
+msgid "Imgur URL"
+msgstr "Imgur URL"
+
+#: imgurimageslist.cpp:71
+#, kde-format
+msgid "Imgur Delete URL"
+msgstr "Imgur 삭제 URL"
+
+#: imgurwindow.cpp:82
+#, kde-format
+msgid "Logged in as:"
+msgstr "다음으로 로그인:"
+
+#: imgurwindow.cpp:90
+#, kde-format
+msgid "Forget"
+msgstr "잊어버리기"
+
+#: imgurwindow.cpp:100
+#, kde-format
+msgid "Upload Anonymously"
+msgstr "익명 업로드"
+
+#: imgurwindow.cpp:116
+#, kde-format
+msgid "Export to imgur.com"
+msgstr "imgur.com으로 내보내기"
+
+#: imgurwindow.cpp:119
+#, kde-format
+msgid "Upload"
+msgstr "업로드"
+
+#: imgurwindow.cpp:120
+#, kde-format
+msgid "Start upload to Imgur"
+msgstr "Imgur로 업로드 시작"
+
+#: imgurwindow.cpp:125
+#, kde-format
+msgid "Imgur Export"
+msgstr "Imgur 내보내기"
+
+#: imgurwindow.cpp:126
+#, kde-format
+msgid "A tool to export images to Imgur web service"
+msgstr "Imgur 웹 서비스로 사진을 내보내는 도구"
+
+#: imgurwindow.cpp:127
+#, kde-format
+msgid "(c) 2012-2013, Marius Orcsik"
+msgstr "(c) 2012-2013, Marius Orcsik"
+
+#: imgurwindow.cpp:129
+#, kde-format
+msgid "Marius Orcsik"
+msgstr "Marius Orcsik"
+
+#: imgurwindow.cpp:130
+#, kde-format
+msgid "Author"
+msgstr "작성자"
+
+#: imgurwindow.cpp:133
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: imgurwindow.cpp:134 imgurwindow.cpp:138
+#, kde-format
+msgid "Developer"
+msgstr "개발자"
+
+#: imgurwindow.cpp:137
+#, kde-format
+msgid "Fabian Vogt"
+msgstr "Fabian Vogt"
+
+#: imgurwindow.cpp:220
+#, kde-format
+msgid "<Not logged in>"
+msgstr "<로그인되지 않음>"
+
+#: imgurwindow.cpp:227
+#, kde-format
+msgid "Authorization Failed"
+msgstr "인증 실패"
+
+#: imgurwindow.cpp:228
+#, kde-format
+msgid "Failed to log into Imgur: %1\n"
+msgstr "Imgur에 로그인할 수 없음: %1\n"
+
+#: imgurwindow.cpp:254 imgurwindow.cpp:261
+#, kde-format
+msgid "Uploading Failed"
+msgstr "업로드 실패"
+
+#: imgurwindow.cpp:255
+#, kde-format
+msgid "Failed to upload photo to Imgur: %1\n"
+msgstr "Imgur에 사진을 업로드할 수 없음: %1\n"
+
+#: imgurwindow.cpp:262
+#, kde-format
+msgid ""
+"Failed to upload photo to Imgur: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Imgur에 사진을 업로드할 수 없습니다: %1\n"
+"계속 진행하시겠습니까?"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_imgurui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "내보내기(&E)"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_imgurui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "주 도구 모음"
+
+#: plugin_imgur.cpp:102
+#, kde-format
+msgid "Export to &Imgur..."
+msgstr "Imgur로 내보내기(&I)..."
+
+#~ msgid "Unexpected response from the web service"
+#~ msgstr "웹 서비스에서 예상하지 못한 응답 받음"
+
+#~ msgid "Upload failed"
+#~ msgstr "업로드 실패"
+
+#~ msgid "Parse error"
+#~ msgstr "처리 오류"
+
+#~ msgid "Network error: timeout, cannot connect."
+#~ msgstr "네트워크 오류: 시간 초과, 연결할 수 없음."
+
+#~ msgid "Request endpoint is not valid."
+#~ msgstr "요청 끝점이 올바르지 않습니다."
+
+#~ msgid "Request is not valid: some parameter missing?"
+#~ msgstr "요청이 올바르지 않습니다: 인자가 빠졌는지 확인하십시오"
+
+#~ msgid "Authorization error: trying to access a resource without tokens."
+#~ msgstr "인증 오류: 토큰 없이 자원에 접근하려고 하고 있습니다."
+
+#~ msgid "The given request is invalid."
+#~ msgstr "전송한 요청이 올바르지 않습니다."
+
+#~ msgid "Manager error, cannot use for sending requests."
+#~ msgstr "관리자 오류, 요청을 보내는 데 사용할 수 없습니다."
+
+#~ msgid "No error"
+#~ msgstr "오류 없음"
+
+#~ msgid "OK"
+#~ msgstr "확인"
+
+#~ msgid ""
+#~ "This is a clickable link to open the Imgur home page in a web browser"
+#~ msgstr "Imgur 홈 페이지를 브라우저에서 여는 누를 수 있는 링크입니다"
+
+#~ msgid ""
+#~ "Requesting Imgur for authorization to upload images with the KIPI Imgur "
+#~ "Exporter plugin."
+#~ msgstr ""
+#~ "KIPI Imgur 내보내기 플러그인으로 사진을 업로드할 수 있는 권한 요청입니다."
+
+#~ msgid "Request authorization"
+#~ msgstr "인증 요청"
+
+#~ msgid ""
+#~ "Set permissions for the current application to upload images to Imgur."
+#~ msgstr "현재 프로그램에서 Imgur로 사진을 업로드할 수 있는 권한 요청입니다."
+
+#~ msgid "Processing %1"
+#~ msgstr "%1 처리 중"
+
+#~ msgid "Authenticated"
+#~ msgstr "인증됨"
+
+#~ msgid "%v / %m"
+#~ msgstr "%v / %m"
+
+#~ msgid "Export to Imgur"
+#~ msgstr "Imgur로 내보내기"
+
+#~ msgctxt "%1 is the error string"
+#~ msgid ""
+#~ "Failed to authenticate to Imgur.\n"
+#~ "%1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Imgur에 인증할 수 없습니다.\n"
+#~ "%1\n"
+#~ "계속 진행하시겠습니까?"
+
+#~ msgid ""
+#~ "Failed to authenticate to Imgur.\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Imgur에 인증할 수 없습니다.\n"
+#~ "계속 진행하시겠습니까?"
+
+#~ msgid "Processing Failed"
+#~ msgstr "처리 실패"

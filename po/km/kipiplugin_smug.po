@@ -1,0 +1,519 @@
+# translation of kipiplugin_smug.po to Khmer
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2010.
+# Sophea <sophea@khmeros.info>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_smug\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2012-06-25 14:17+0700\n"
+"Last-Translator: Sophea <sophea@khmeros.info>\n"
+"Language-Team: Khmer <>\n"
+"Language: km\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: WordForge 0.8 RC1\n"
+"X-Language: km-CM\n"
+
+#. i18n: ectx: Menu (Import)
+#: kipiplugin_smugui.rc:7
+#, fuzzy, kde-format
+#| msgid "Smug Import"
+msgid "&Import"
+msgstr "ការ​នាំ​ចូល​ Smug"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_smugui.rc:11
+#, fuzzy, kde-format
+#| msgid "Smug Export"
+msgid "&Export"
+msgstr "ការ​នាំ​ចេញ Smug"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_smugui.rc:17
+#, kde-format
+msgid "Main Toolbar"
+msgstr ""
+
+#: plugin_smug.cpp:98
+#, kde-format
+msgid "Export to &SmugMug..."
+msgstr "នាំចេញ​ទៅកាន់​ SmugMug..."
+
+#: plugin_smug.cpp:109
+#, kde-format
+msgid "Import from &SmugMug..."
+msgstr "នាំចូល​ពី​ SmugMug..."
+
+#: smugalbum.cpp:54
+#, kde-format
+msgid "SmugMug New Album"
+msgstr "អាល់ប៊ុម SmugMug"
+
+#: smugalbum.cpp:64 smugwidget.cpp:117
+#, kde-format
+msgid "Album"
+msgstr "អាល់ប៊ុម​"
+
+#: smugalbum.cpp:65
+#, kde-format
+msgid "These are basic settings for the new SmugMug album."
+msgstr "កំណត់​មូលដ្ឋាន​ទាំង​នេះ​សម្រាប់​អាល់ប៊ុម​​របស់​​ SmugMug ថ្មី ។​"
+
+#: smugalbum.cpp:68
+#, kde-format
+msgid "Title of the album that will be created (required)."
+msgstr "ចំណង​ជើង​អាល់ប៊ុម​ដែល​នឹង​ត្រូវ​បាន​បង្កើត​ (​​បាន​ទាមទារ) ។​"
+
+#: smugalbum.cpp:72
+#, kde-format
+msgid "Category of the album that will be created (required)."
+msgstr "ប្រភេទ​នៃ​អាល់ប៊ុម​ដែល​នឹង​​ត្រូវ​បាន​បង្កើត​​ (​បាន​ទាមទារ​​) ។"
+
+#: smugalbum.cpp:76
+#, kde-format
+msgid "Subcategory of the album that will be created (optional)."
+msgstr "ប្រភេទ​រង​នៃ​អាល់ប៊ុម​ដែល​ត្រូវ​បាន​បង្កើត​​ (​ជា​ជម្រើស) ។"
+
+#: smugalbum.cpp:79
+#, kde-format
+msgid "Description of the album that will be created (optional)."
+msgstr "សេចក្ដី​ពិពណ៌នា​នៃ​អាល់ប៊ុម​ដែល​នឹង​ត្រូវ​បាន​បង្កើត​ (ជា​ជម្រើស) ។​"
+
+#: smugalbum.cpp:83
+#, kde-format
+msgid "Album template for the new album (optional)."
+msgstr "ពុម្ព​អាល់ប៊ុម​សម្រាប់​អាល់ប៊ុម​ថ្មី​ (​ជា​ជម្រើស) ។"
+
+#: smugalbum.cpp:86
+#, kde-format
+msgctxt "new smug album dialog"
+msgid "Title:"
+msgstr "ចំណងជើង ៖"
+
+#: smugalbum.cpp:87
+#, kde-format
+msgctxt "new smug album dialog"
+msgid "Category:"
+msgstr "ប្រភេទ ៖"
+
+#: smugalbum.cpp:88
+#, kde-format
+msgctxt "new smug album dialog"
+msgid "Subcategory:"
+msgstr "ប្រភេទ​រង ៖"
+
+#: smugalbum.cpp:89
+#, kde-format
+msgctxt "new smug album dialog"
+msgid "Description:"
+msgstr "សេចក្ដី​ពិពណ៌នា ៖"
+
+#: smugalbum.cpp:90
+#, kde-format
+msgctxt "new smug album dialog"
+msgid "Template:"
+msgstr "ពុម្ព​ ៖"
+
+#: smugalbum.cpp:98
+#, kde-format
+msgid "Security && Privacy"
+msgstr "សុវត្ថិភាព និង​ភាព​ឯកជន"
+
+#: smugalbum.cpp:99
+#, kde-format
+msgid "These are security and privacy settings for the new SmugMug album."
+msgstr "ទាំង​នេះ​គឺ​ជា​ការ​កំណត់​សុវត្ថិភាព និង​ភាព​ឯកជន​សម្រាប់​អាល់ប៊ុម​ SmugMug ថ្មី ។"
+
+#: smugalbum.cpp:101
+#, kde-format
+msgctxt "smug album privacy"
+msgid "Public"
+msgstr "សាធារណៈ"
+
+#: smugalbum.cpp:103
+#, kde-format
+msgid "Public album is listed on your public SmugMug page."
+msgstr "អាល់ប៊ុម​សាធារណៈ​ត្រូវ​បាន​រាយ​បញ្ជី​លើ​ទំព័រ​ SmugMug សាធារណៈ​របស់​អ្នក ។"
+
+#: smugalbum.cpp:104
+#, kde-format
+msgctxt "smug album privacy"
+msgid "Unlisted"
+msgstr "មិន​រាយ​បញ្ជី​ឡើយ"
+
+#: smugalbum.cpp:105
+#, kde-format
+msgid "Unlisted album is only accessible via URL."
+msgstr "អាល់ប៊ុម​ដែល​រាយ​បញ្ជី​អាច​ចូល​ដំណើរការ​​បាន​តាម URL ។"
+
+#: smugalbum.cpp:112
+#, kde-format
+msgid "Require password to access the album (optional)."
+msgstr "ទាមទារ​ពាក្យ​សម្ងាត់​ដើម្បី​ចូល​ដំណើរការ​អាល់ប៊ុម​ (ជា​ជម្រើស) ។"
+
+#: smugalbum.cpp:115
+#, kde-format
+msgid "Password hint to present to users in the password prompt (optional)."
+msgstr "ជំនួយ​ពាក្យ​សម្ងាត់​ត្រូវ​បង្ហាញ​ទៅកាន់​អ្នក​ប្រើ​​នៅ​ក្នុង​ប្រអប់​បញ្ចូល​ពាក្យ​សម្ងាត់​ (​ជា​ជម្រើស) ។"
+
+#: smugalbum.cpp:118
+#, kde-format
+msgid "Privacy:"
+msgstr "ភាព​ជា​ឯកជន ៖"
+
+#: smugalbum.cpp:119
+#, kde-format
+msgid "Password:"
+msgstr "ពាក្យ​សម្ងាត់ ៖"
+
+#: smugalbum.cpp:120
+#, kde-format
+msgid "Password Hint:"
+msgstr "ជំនួយ​ពាក្យ​សម្ងាត់ ៖"
+
+#: smugtalker.cpp:111
+#, kde-format
+msgid "Logging in to SmugMug service..."
+msgstr "កំពុង​ចូល​ទៅកាន់​សេវា​ SmugMug ..."
+
+#: smugtalker.cpp:464
+#, kde-format
+msgid "Login failed"
+msgstr "ចូល​បាន​បរាជ័យ"
+
+#: smugtalker.cpp:467
+#, kde-format
+msgid "Invalid user/nick/password"
+msgstr "អ្នក​ប្រើ​/​សម្មតិនាម​/​ពាក្យ​សម្ងាត់​ មិន​ត្រឹមត្រូវ"
+
+#: smugtalker.cpp:470
+#, kde-format
+msgid "Invalid API key"
+msgstr "សោ API មិន​ត្រឹមត្រូវ​"
+
+#: smugtalker.cpp:512 smugwindow.cpp:412 smugwindow.cpp:421 smugwindow.cpp:451
+#: smugwindow.cpp:484 smugwindow.cpp:516 smugwindow.cpp:546 smugwindow.cpp:920
+#, kde-format
+msgid "Error"
+msgstr ""
+
+#: smugwidget.cpp:73
+#, kde-format
+msgid "This is the list of images to upload to your SmugMug account."
+msgstr "វា​ជា​បញ្ជី​នៃ​រូបភាព​ត្រូវ​ផ្ទុក​ទៅកាន់​គណនី​ SmugMug របស់​អ្នក ។​"
+
+#: smugwidget.cpp:79
+#, kde-format
+msgid ""
+"This is a clickable link to open the SmugMug home page in a web browser."
+msgstr "នេះ​ជា​តំណ​ដែល​អាច​ចុច​បាន​ដើម្បី​បើក​គេហទំព័រ​ SmugMug នៅ​ក្នុង​កម្មវិធី​រុក​រក​បណ្ដាញ ។"
+
+#: smugwidget.cpp:85
+#, kde-format
+msgid "Account"
+msgstr "គណនី"
+
+#: smugwidget.cpp:86
+#, kde-format
+msgid "This is the SmugMug account that will be used to authenticate."
+msgstr "នេះ​ជា​គណនី​ SmugMug ​ដែល​នឹង​ត្រូវ​បាន​ប្រើ​​ដើម្បី​ផ្ទៀងផ្ទាត់​ភាព​ត្រឹមត្រូវ ។"
+
+#: smugwidget.cpp:89
+#, kde-format
+msgctxt "smug account login"
+msgid "Anonymous"
+msgstr "អនាមិក​"
+
+#: smugwidget.cpp:90
+#, kde-format
+msgid "Login as anonymous to SmugMug web service."
+msgstr "ចូល​ជា​​អនាមិក​ទៅកាន់​សេវា​បណ្ដាញ​ SmugMug ។"
+
+#: smugwidget.cpp:92
+#, kde-format
+msgid "SmugMug Account"
+msgstr "គណនី​ SmugMug"
+
+#: smugwidget.cpp:93
+#, kde-format
+msgid "Login to SmugMug web service using email and password."
+msgstr "ចូល​ទៅកាន់​សេវា​បណ្ដាញ​ SmugMug ​ដោយ​ប្រើ​អ៊ីមែល​ និង​ពាក្យ​សម្ងាត់ ។"
+
+#: smugwidget.cpp:95
+#, kde-format
+msgctxt "smug account settings"
+msgid "Name:"
+msgstr "ឈ្មោះ​ ៖"
+
+#: smugwidget.cpp:97
+#, kde-format
+msgctxt "smug account settings"
+msgid "Email:"
+msgstr "អ៊ីមែល ៖"
+
+#: smugwidget.cpp:101
+#, kde-format
+msgid "Change Account"
+msgstr "ប្ដូរ​គណនី"
+
+#: smugwidget.cpp:103
+#, kde-format
+msgid "Change SmugMug Account used to authenticate"
+msgstr "ប្ដូរ​គណនី​ SmugMug ដែល​បាន​ប្រើ​សម្រាប់​ផ្ទៀង​ផ្ទាត់​ភាព​ត្រឹម​ត្រូវ"
+
+#: smugwidget.cpp:118
+#, kde-format
+msgid "This is the SmugMug album that will be used for transfer."
+msgstr "នេះ​ជា​អាល់ប៊ុម​ SmugMug ដែល​នឹង​ត្រូវ​បាន​ប្រើ​សម្រាប់​ផ្ទេរ ។"
+
+#: smugwidget.cpp:123
+#, kde-format
+msgid "Nickname:"
+msgstr "សម្មតិនាម ៖"
+
+#: smugwidget.cpp:125
+#, kde-format
+msgid "Nickname of SmugMug user to list albums."
+msgstr "សម្មតិនាម​របស់​អ្នក​ប្រើ​ SmugMug សម្រាប់​រាយ​អាល់ប៊ុម​ ។"
+
+#: smugwidget.cpp:126
+#, kde-format
+msgid "Site Password:"
+msgstr "ពាក្យសម្ងាត់​តំបន់បណ្ដាញ ៖"
+
+#: smugwidget.cpp:128
+#, kde-format
+msgid "Site-wide password for specified SmugMug nick/user."
+msgstr "ពាក្យ​សម្ងាត់​ទូទាំង​តំបន់​បណ្ដាញ​សម្រាប់​សម្មតិនាម​/អ្នក​ប្រើ​ SmugMug ដែល​បាន​បញ្ជាក់ ។"
+
+#: smugwidget.cpp:129
+#, kde-format
+msgid "Album Password:"
+msgstr "ពាក្យ​សម្ងាត់​អាល់ប៊ុម ៖"
+
+#: smugwidget.cpp:131
+#, kde-format
+msgid "Password for SmugMug album."
+msgstr "ពាក្យសម្ងាត់​សម្រាប់​អាល់ប៊ុម​​ SmugMug ។"
+
+#: smugwidget.cpp:134
+#, kde-format
+msgid "New Album"
+msgstr "អាល់ប៊ុម​ថ្មី​"
+
+#: smugwidget.cpp:136
+#, kde-format
+msgid "Create new SmugMug album"
+msgstr "បង្កើត​អាល់ប៊ុម SmugMug ថ្មី​"
+
+#: smugwidget.cpp:139
+#, kde-format
+msgctxt "reload album list"
+msgid "Reload"
+msgstr "ផ្ទុក​ឡើងវិញ​"
+
+#: smugwidget.cpp:141
+#, kde-format
+msgid "Reload album list"
+msgstr "ផ្ទុក​បញ្ជី​អាល់ប៊ុម​​ឡើងវិញ​"
+
+#: smugwidget.cpp:155
+#, kde-format
+msgid "Destination"
+msgstr "ទិសដៅ"
+
+#: smugwidget.cpp:156
+#, kde-format
+msgid "This is the location where SmugMug images will be downloaded."
+msgstr "វា​ជា​ទីតាំង​ដែល​រូបភាព​ SmugMug នឹង​ត្រូវ​បាន​ទាញ​យក ។"
+
+#: smugwidget.cpp:163
+#, kde-format
+msgid "Options"
+msgstr "ជម្រើស​"
+
+#: smugwidget.cpp:164
+#, kde-format
+msgid "These are options that will be applied to images before upload."
+msgstr "ជម្រើស​ដែល​នឹង​ត្រូវ​បាន​អនុវត្ត​ទៅកាន់​រូបភាព​មុន​ពេល​ផ្ទុក​ឡើង ។"
+
+#: smugwidget.cpp:168
+#, kde-format
+msgid "Resize photos before uploading"
+msgstr "ប្ដូរ​ទំហំ​រូបថត​មុន​ពេល​ផ្ទុក​ឡើង​​"
+
+#: smugwidget.cpp:178
+#, kde-format
+msgid "Maximum dimension:"
+msgstr "វិមាត្រ​អតិបរមា ៖"
+
+#: smugwidget.cpp:186
+#, kde-format
+msgid "JPEG quality:"
+msgstr "គុណភាព​ JPEG ៖"
+
+#: smugwindow.cpp:86
+#, kde-format
+msgid "Import from SmugMug Web Service"
+msgstr "នាំចូល​ពី​សេវា​បណ្ដាញ​ SmugMug​"
+
+#: smugwindow.cpp:88
+#, kde-format
+msgid "Start Download"
+msgstr "ចាប់ផ្ដើម​ទាញ​យក​"
+
+#: smugwindow.cpp:89
+#, kde-format
+msgid "Start download from SmugMug web service"
+msgstr "ចាប់ផ្ដើម​ទាញ​យក​ពី​សេវា​បណ្ដាញ​​ SmugMug"
+
+#: smugwindow.cpp:95
+#, kde-format
+msgid "Export to SmugMug Web Service"
+msgstr "នាំចេញ​ទៅ​កាន់​សេវា​បណ្ដាញ​ SmugMug"
+
+#: smugwindow.cpp:97
+#, kde-format
+msgid "Start Upload"
+msgstr "ចាប់​ផ្ដើម​ផ្ទុក​ឡើង​"
+
+#: smugwindow.cpp:98
+#, kde-format
+msgid "Start upload to SmugMug web service"
+msgstr "ចាប់ផ្ដើម​ផ្ទុក​ឡើង​ទៅ​កាន់​សេវា​បណ្ដាញ​ SmugMug"
+
+#: smugwindow.cpp:127
+#, kde-format
+msgid "Smug Import/Export"
+msgstr "នាំ​ចូល​​/​នាំ​ចេញ​ Smug "
+
+#: smugwindow.cpp:128
+#, fuzzy, kde-format
+#| msgid ""
+#| "A Kipi plugin to import/export image collections from/to the SmugMug web "
+#| "service."
+msgid ""
+"A tool to import/export image collections from/to the SmugMug web service."
+msgstr "កម្មវិធី​ជំនួយ​ Kipi សម្រាប់​នាំ​ចូល​/នាំ​ចេញ​សម្រាំង​រូបភាព​ពី/ទៅ​សេវា​បណ្ដាញ​ SmugMug ។"
+
+#: smugwindow.cpp:130
+#, kde-format
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2012, Gilles Caulier\n"
+"(c) 2008-2009, Luka Renko"
+msgstr ""
+"រក្សា​សិទ្ធិ​ឆ្នាំ​ ២០០៥-២០០៨ ដោយ Vardhman Jain\n"
+"រក្សា​សិទ្ធិ​ ២០០៨-២០១២ ដោយ Gilles Caulier\n"
+"រក្សា​សិទ្ធិ​ឆ្នាំ​ ២០០៨-២០០៩ ដោយ Luka Renko"
+
+#: smugwindow.cpp:134
+#, kde-format
+msgid "Luka Renko"
+msgstr "Luka Renko"
+
+#: smugwindow.cpp:135
+#, kde-format
+msgid "Author and maintainer"
+msgstr "អ្នក​និពន្ធ និង​អ្នក​ថែទាំ​"
+
+#: smugwindow.cpp:144
+#, kde-format
+msgid ""
+"<qt>Enter the <b>email address</b> and <b>password</b> for your <a href="
+"\"http://www.smugmug.com\">SmugMug</a> account</qt>"
+msgstr ""
+"<qt>បញ្ចូល​ <b>​អាសយដ្ឋាន​អ៊ីមែល​​</b> និង​ <b>ពាក្យសម្ងាត់​</b> សម្រាប់​ <a href=\"http://www."
+"smugmug.com\">SmugMug</a> គណនី</qt> របស់​អ្នក​"
+
+#: smugwindow.cpp:412 smugwindow.cpp:421 smugwindow.cpp:451 smugwindow.cpp:484
+#: smugwindow.cpp:516 smugwindow.cpp:546 smugwindow.cpp:920
+#, kde-format
+msgid "SmugMug Call Failed: %1\n"
+msgstr "បាន​បរាជ័យ​ហៅ​ SmugMug ៖ %1\n"
+
+#: smugwindow.cpp:480 smugwindow.cpp:542
+#, kde-format
+msgid "&lt;none&gt;"
+msgstr "&lt;none&gt;"
+
+#: smugwindow.cpp:668 smugwindow.cpp:701
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: smugwindow.cpp:671
+#, kde-format
+msgid "Smug Import"
+msgstr "ការ​នាំ​ចូល​ Smug"
+
+#: smugwindow.cpp:704
+#, kde-format
+msgid "Smug Export"
+msgstr "ការ​នាំ​ចេញ Smug"
+
+#: smugwindow.cpp:789 smugwindow.cpp:803
+#, kde-format
+msgid "Cannot open file"
+msgstr "មិន​អាច​បើក​​ឯកសារ​បាន​ឡើយ"
+
+#: smugwindow.cpp:826
+#, fuzzy, kde-format
+#| msgid "Login failed"
+msgid "Uploading Failed"
+msgstr "ចូល​បាន​បរាជ័យ"
+
+#: smugwindow.cpp:827
+#, fuzzy, kde-format
+#| msgid ""
+#| "Failed to upload photo into SmugMug: %1\n"
+#| "Do you want to continue?"
+msgid ""
+"Failed to upload photo to SmugMug.\n"
+"%1\n"
+"Do you want to continue?"
+msgstr ""
+"បាន​បរាជ័យ​ដើម្បី​ផ្ទុក​រូបថត​ទៅ​កាន់​​ SmugMug: %1\n"
+"តើ​អ្នក​ចង់​បន្ត​ឬ​ ?​"
+
+#: smugwindow.cpp:888 smugwindow.cpp:901
+#, fuzzy, kde-format
+#| msgid "Login failed"
+msgid "Processing Failed"
+msgstr "ចូល​បាន​បរាជ័យ"
+
+#: smugwindow.cpp:889
+#, kde-format
+msgid ""
+"Failed to save photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"បាន​បរាជ័យ​ដើម្បី​រក្សាទុក​រូបថត​ ៖ %1\n"
+"តើ​អ្នក​ចង់​បន្ត​ឬ ?​"
+
+#: smugwindow.cpp:902
+#, kde-format
+msgid ""
+"Failed to download photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"បាន​បរាជ័យ​ដើម្បី​ទាញ​យក​រូបភាព​ ៖ %1\n"
+"តើ​អ្នក​ចង់​​បន្ត​ឬ​ ?"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "ខឹម សុខែម, ម៉ន ម៉េត, សេង សុត្ថា, ចាន់ សម្បត្តិរតនៈ, សុខ សុភា"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr ""
+#~ "khoemsokhem@khmeros.info,​​mornmet@khmeros.info,sutha@khmeros.info,"
+#~ "ratanak@khmeros.info,sophea@khmeros.info"
+
+#~ msgid "Handbook"
+#~ msgstr "សៀវភៅ​ដៃ​"

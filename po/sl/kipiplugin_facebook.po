@@ -1,0 +1,472 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Andrej Mernik <andrejm@ubuntu.si>, 2012, 2013, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2016-08-29 20:37+0200\n"
+"Last-Translator: Andrej Mernik <andrejm@ubuntu.si>\n"
+"Language-Team: Slovenian <lugos-slo@lugos.si>\n"
+"Language: sl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
+"%100==4 ? 3 : 0);\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: fbalbum.cpp:52
+#, kde-format
+msgid "Privacy setting of the album that will be created (required)."
+msgstr "Nastavitve zasebnosti albuma, ki bo ustvarjen (zahtevano)."
+
+#: fbalbum.cpp:54
+#, kde-format
+msgid "Only Me"
+msgstr "Samo jaz"
+
+#: fbalbum.cpp:56
+#, kde-format
+msgid "Only Friends"
+msgstr "Samo prijatelji"
+
+#: fbalbum.cpp:58
+#, kde-format
+msgid "Friends of Friends"
+msgstr "Prijatelji prijateljev"
+
+#: fbalbum.cpp:60
+#, kde-format
+msgid "My Networks and Friends"
+msgstr "Moja omrežja in prijatelji"
+
+#: fbalbum.cpp:62
+#, kde-format
+msgid "Everyone"
+msgstr "Vsi"
+
+#: fbtalker.cpp:201
+#, kde-format
+msgid "Validate previous session..."
+msgstr "Potrdi veljavnost predhodne seje ..."
+
+#: fbtalker.cpp:229
+#, kde-format
+msgid "Upgrading to OAuth..."
+msgstr "Posodabljanje na OAuth ..."
+
+#: fbtalker.cpp:279
+#, kde-format
+msgid "Facebook Application Authorization"
+msgstr "Pooblastitev programa za Facebook"
+
+#: fbtalker.cpp:290
+#, kde-format
+msgid ""
+"Please follow the instructions in the browser window. When done, copy the "
+"Internet address from your browser into the textbox below and press \"OK\"."
+msgstr ""
+"Sledite navodilom v oknu brskalnika. Ko boste končali, kopirajte spletni "
+"naslov iz vašega brskalnika v spodnje besedilno polje in pritisnite \"V redu"
+"\"."
+
+#: fbtalker.cpp:352
+#, kde-format
+msgid "Canceled by user."
+msgstr "Prekinjeno s strani uporabnika."
+
+#: fbtalker.cpp:549
+#, kde-format
+msgid "The service is not available at this time."
+msgstr "Storitev trenutno ni na voljo."
+
+#: fbtalker.cpp:552
+#, kde-format
+msgid "The application has reached the maximum number of requests allowed."
+msgstr "Program je dosegel največje dovoljeno število zahtev."
+
+#: fbtalker.cpp:555
+#, kde-format
+msgid "Invalid session key or session expired. Try to log in again."
+msgstr ""
+"Neveljaven ključ seje ali pa je seja pretekla. Poskusite se znova prijaviti."
+
+#: fbtalker.cpp:558
+#, kde-format
+msgid "Invalid album ID."
+msgstr "Neveljaven ID albuma."
+
+#: fbtalker.cpp:561
+#, kde-format
+msgid "Album is full."
+msgstr "Album je poln."
+
+#: fbtalker.cpp:564
+#, kde-format
+msgid "Missing or invalid file."
+msgstr "Manjkajoča ali neveljavna datoteka."
+
+#: fbtalker.cpp:567
+#, kde-format
+msgid "Too many unapproved photos pending."
+msgstr "Na čakanju je preveč nepotrjenih fotografij."
+
+#: fbtalker.cpp:601
+#, kde-format
+msgid "Error"
+msgstr "Napaka"
+
+#: fbwindow.cpp:109
+#, kde-format
+msgid "Export to Facebook Web Service"
+msgstr "Izvozi v spletno storitev Facebook"
+
+#: fbwindow.cpp:111
+#, kde-format
+msgid "Start Upload"
+msgstr "Začni pošiljanje"
+
+#: fbwindow.cpp:112
+#, kde-format
+msgid "Start upload to Facebook web service"
+msgstr "Začni pošiljanje na spletno storitev Facebook"
+
+#: fbwindow.cpp:140
+#, kde-format
+msgid "Facebook Export"
+msgstr "Izvoz v Facebook"
+
+#: fbwindow.cpp:141
+#, kde-format
+msgid "A tool to export image collection to/from Facebook web service."
+msgstr "Orodje za izvoz zbirke slik iz/v spletno storitev Facebook."
+
+#: fbwindow.cpp:143
+#, kde-format
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2012, Gilles Caulier\n"
+"(c) 2008-2009, Luka Renko"
+msgstr ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2012, Gilles Caulier\n"
+"(c) 2008-2009, Luka Renko"
+
+#: fbwindow.cpp:147
+#, kde-format
+msgid "Luka Renko"
+msgstr "Luka Renko"
+
+#: fbwindow.cpp:148
+#, kde-format
+msgid "Author and maintainer"
+msgstr "Avtor in vzdrževalec"
+
+#: fbwindow.cpp:361 fbwindow.cpp:395
+#, kde-format
+msgid "<auto create>"
+msgstr "<samodejno ustvari>"
+
+#: fbwindow.cpp:372 fbwindow.cpp:390
+#, kde-format
+msgid "Facebook Call Failed: %1\n"
+msgstr "Klic v Facebook je spodletel: %1\n"
+
+#: fbwindow.cpp:471
+#, kde-format
+msgid "Warning"
+msgstr "Opozorilo"
+
+#: fbwindow.cpp:472
+#, kde-format
+msgid ""
+"After you have been logged out in the browser, click \"Continue\" to "
+"authenticate for another account"
+msgstr ""
+"Potem ko se boste odjavili iz brskalnika, kliknite »Nadaljuj«, da se overite "
+"v drugem računu"
+
+#: fbwindow.cpp:476
+#, kde-format
+msgid "Continue"
+msgstr "Nadaljuj"
+
+#: fbwindow.cpp:477
+#, kde-format
+msgid "Cancel"
+msgstr "Prekliči"
+
+#: fbwindow.cpp:539
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: fbwindow.cpp:543
+#, kde-format
+msgid "Facebook export"
+msgstr "Izvoz v Facebook"
+
+#: fbwindow.cpp:648 fbwindow.cpp:663
+#, kde-format
+msgid "Cannot open file"
+msgstr "Ni mogoče odpreti datoteke"
+
+#: fbwindow.cpp:686
+#, kde-format
+msgid "Uploading Failed"
+msgstr "Pošiljanje ni uspelo"
+
+#: fbwindow.cpp:687
+#, kde-format
+msgid ""
+"Failed to upload photo into Facebook: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Fotografije ni bilo mogoče poslati v Facebook: %1\n"
+"Ali želite nadaljevati?"
+
+#: fbwindow.cpp:706
+#, kde-format
+msgid "Facebook Call Failed: %1"
+msgstr "Klic v Facebook je spodletel: %1"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_facebookui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Izvozi"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_facebookui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Glavna orodna vrstica"
+
+#: plugin_facebook.cpp:94
+#, kde-format
+msgid "Export to &Facebook..."
+msgstr "Izvozi v &Facebook ..."
+
+#~ msgid "&Import"
+#~ msgstr "&Uvozi"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Andrej Mernik"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "andrejm@ubuntu.si"
+
+#~ msgid "Facebook New Album"
+#~ msgstr "Nov album v Facebooku"
+
+#~ msgid "Title of the album that will be created (required)."
+#~ msgstr "Naslov albuma, ki bo ustvarjen (zahtevano)."
+
+#~ msgid "Location of the album that will be created (optional)."
+#~ msgstr "Mesto albuma, ki bo ustvarjen (izbirno)."
+
+#~ msgid "Description of the album that will be created (optional)."
+#~ msgstr "Opis albuma, ki bo ustvarjen (izbirno)."
+
+#~ msgctxt "new facebook album"
+#~ msgid "Title:"
+#~ msgstr "Naslov:"
+
+#~ msgctxt "new facebook album"
+#~ msgid "Location:"
+#~ msgstr "Mesto:"
+
+#~ msgctxt "new facebook album"
+#~ msgid "Description:"
+#~ msgstr "Opis:"
+
+#~ msgctxt "new facebook album"
+#~ msgid "Privacy:"
+#~ msgstr "Zasebnost:"
+
+#~ msgid "This is the list of images to upload to your Facebook account."
+#~ msgstr "To je seznam slik, ki bodo poslane na vaš račun Facebook."
+
+#~ msgid ""
+#~ "This is a clickable link to open the Facebook home page in a web browser."
+#~ msgstr ""
+#~ "To je povezava, ki jo lahko kliknete. Odpre domačo stran Facebook v "
+#~ "spletnem brskalniku."
+
+#~ msgid "Account"
+#~ msgstr "Račun"
+
+#~ msgid "This is the Facebook account that is currently logged in."
+#~ msgstr "To je Facebook račun v katerega ste trenutno prijavljeni."
+
+#~ msgctxt "facebook account settings"
+#~ msgid "Name:"
+#~ msgstr "Ime:"
+
+#~ msgid "Permission:"
+#~ msgstr "Dovoljenje:"
+
+#~ msgid ""
+#~ "Permission of KIPI Plugin application to upload photos directly. If not, "
+#~ "user will need to manually approve uploaded photos in Facebook."
+#~ msgstr ""
+#~ "Dovoljenje programa vstavka KIPI za neposredno pošiljanje. Če ga nima, bo "
+#~ "moral uporabnik ročno odobriti poslane fotografije v Facebooku."
+
+#~ msgid "Change Account"
+#~ msgstr "Spremeni račun"
+
+#~ msgid "Logout and change Facebook Account used for transfer"
+#~ msgstr ""
+#~ "Odjavite se in spremenite račun Facebook, ki bo uporabljen za prenos"
+
+#~ msgid "Download Selection"
+#~ msgstr "Prejmi izbor"
+
+#~ msgid "This is the selection of Facebook albums/photos to download."
+#~ msgstr ""
+#~ "To je izbor Facebookovih albumov/fotografij, ki bodo prejeti/prejete."
+
+#~ msgid "Destination"
+#~ msgstr "Cilj"
+
+#~ msgid ""
+#~ "This is the Facebook album to which selected photos will be uploaded."
+#~ msgstr "To je album Facebook v katerega bodo poslane izbrane fotografije."
+
+#~ msgid "My &Album"
+#~ msgstr "Moj &Album"
+
+#~ msgid "Download complete album of currently logged in user."
+#~ msgstr "Prejmi celoten album trenutno prijavljenega uporabnika."
+
+#~ msgid "Album &of My Friend"
+#~ msgstr "Album mojega &prijatelja"
+
+#~ msgid "Download complete album of selected friend."
+#~ msgstr "Prejmi celoten album izbranega prijatelja."
+
+#~ msgid "Photos of &Me"
+#~ msgstr "&Moje fotografije"
+
+#~ msgid "Download all photos of currently logged in user."
+#~ msgstr "Prejmi vse fotografije trenutno prijavljenega uporabnika."
+
+#~ msgid "Photos of My &Friend"
+#~ msgstr "Fotografije mojega p&rijatelja"
+
+#~ msgid "Download all photos of selected friend."
+#~ msgstr "Prejmi vse fotografije izbranega prijatelja."
+
+#~ msgid "Friend:"
+#~ msgstr "Prijatelj:"
+
+#~ msgid "Album:"
+#~ msgstr "Album:"
+
+#~ msgid "New Album"
+#~ msgstr "Nov album"
+
+#~ msgid "Create new Facebook album"
+#~ msgstr "Ustvari nov album na Facebooku"
+
+#~ msgctxt "facebook album list"
+#~ msgid "Reload"
+#~ msgstr "Znova naloži"
+
+#~ msgid "Reload album list"
+#~ msgstr "Znova naloži seznam albumov"
+
+#~ msgid "This is the location to which Facebook images will be downloaded."
+#~ msgstr "To je mesto kamor bodo prejete slike iz Facebooka."
+
+#~ msgid "Options"
+#~ msgstr "Možnosti"
+
+#~ msgid "These are options that will be applied to photos before upload."
+#~ msgstr ""
+#~ "To so možnosti, ki bodo uveljavljene za fotografije pred pošiljanjem."
+
+#~ msgid "Resize photos before uploading"
+#~ msgstr "Spremeni velikost fotografij pred pošiljanjem"
+
+#~ msgid "Maximum dimension:"
+#~ msgstr "Največja mera:"
+
+#~ msgid "JPEG quality:"
+#~ msgstr "Kakovost JPEG:"
+
+#~ msgid "Direct upload"
+#~ msgstr "Neposredno pošlji"
+
+#~ msgid "Uploaded photos will not need manual approval by user."
+#~ msgstr ""
+#~ "Poslane fotografije ne bodo potrebovale ročne odobritve s strani "
+#~ "uporabnika."
+
+#~ msgid "Manual upload approval"
+#~ msgstr "Odobritev ročnega pošiljanja"
+
+#~ msgid ""
+#~ "Uploaded photos will wait in pending state until manually approved by "
+#~ "user."
+#~ msgstr ""
+#~ "Poslane fotografije bodo v čakalni vrsti dokler jih ne uporabnik ročno "
+#~ "odobri."
+
+#~ msgid "Import from Facebook Web Service"
+#~ msgstr "Uvozi iz spletne storitve Facebook"
+
+#~ msgid "Start Download"
+#~ msgstr "Začni prejem"
+
+#~ msgid "Start download from Facebook web service"
+#~ msgstr "Začni prejem iz spletne storitve Facebook"
+
+#~ msgid "Facebook Import/Export"
+#~ msgstr "Uvoz/izvoz za Facebook"
+
+#~ msgid "Shourya Singh Gupta"
+#~ msgstr "Shourya Singh Gupta"
+
+#~ msgid "Developer"
+#~ msgstr "Razvijalec"
+
+#~ msgctxt "name of special Facebook album for profile pictures"
+#~ msgid "Profile Pictures"
+#~ msgstr "Slike profila"
+
+#~ msgid "Facebook import"
+#~ msgstr "Uvoz iz Facebooka"
+
+#~ msgid ""
+#~ "Failed to save photo: %1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Fotografije ni bilo mogoče shraniti: %1\n"
+#~ "Ali želite nadaljevati?"
+
+#~ msgid ""
+#~ "Failed to download photo: %1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Fotografije ni bilo mogoče prejeti: %1\n"
+#~ "Ali želite nadaljevati?"
+
+#~ msgid "Import from &Facebook..."
+#~ msgstr "Uvozi iz &Facebooka ..."
+
+#~ msgid ""
+#~ "Please follow the instructions in the browser window. Press \"OK\" when "
+#~ "done."
+#~ msgstr ""
+#~ "Sledite navodilom v oknu brskalnika. Ko boste končali, pritisnite \"V redu"
+#~ "\"."
+
+#~ msgid "Photos taken with KDE"
+#~ msgstr "Fotografije posnete s KDE"

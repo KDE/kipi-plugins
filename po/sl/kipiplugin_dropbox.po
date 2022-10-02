@@ -1,0 +1,262 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Andrej Mernik <andrejm@ubuntu.si>, 2013, 2014, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2016-08-29 20:37+0200\n"
+"Last-Translator: Andrej Mernik <andrejm@ubuntu.si>\n"
+"Language-Team: Slovenian <lugos-slo@lugos.si>\n"
+"Language: sl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
+"%100==4 ? 3 : 0);\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: dbtalker.cpp:317
+#, kde-format
+msgid "Error"
+msgstr "Napaka"
+
+#: dbtalker.cpp:360
+#, kde-format
+msgid "Failed to upload photo"
+msgstr "Ni bilo mogoče poslati fotografije"
+
+#: dbtalker.cpp:387
+#, kde-format
+msgid "Failed to list folders"
+msgstr "Map ni bilo mogoče izpisati"
+
+#: dbwindow.cpp:70
+#, kde-format
+msgid "Export to Dropbox"
+msgstr "Izvozi v Dropbox"
+
+#: dbwindow.cpp:72
+#, kde-format
+msgid "Start Upload"
+msgstr "Začni pošiljanje"
+
+#: dbwindow.cpp:73
+#, kde-format
+msgid "Start upload to Dropbox"
+msgstr "Začni pošiljanje v Dropbox"
+
+#: dbwindow.cpp:92
+#, kde-format
+msgid "Dropbox Export"
+msgstr "Izvoz v Dropbox"
+
+#: dbwindow.cpp:93
+#, kde-format
+msgid "A tool to export images to Dropbox"
+msgstr "Orodje za izvoz slik v Dropbox"
+
+#: dbwindow.cpp:95
+#, kde-format
+msgid "(c) 2013, Saurabh Patel"
+msgstr "(c) 2013, Saurabh Patel"
+
+#: dbwindow.cpp:97
+#, kde-format
+msgid "Saurabh Patel"
+msgstr "Saurabh Patel"
+
+#: dbwindow.cpp:98
+#, kde-format
+msgid "Author"
+msgstr "Avtor"
+
+#: dbwindow.cpp:259
+#, kde-format
+msgctxt "@title:window"
+msgid "Error"
+msgstr "Napaka"
+
+#: dbwindow.cpp:260
+#, kde-format
+msgid "No image selected. Please select which images should be uploaded."
+msgstr "Ni izbranih slik. Izberite slike, ki bi jih radi poslali."
+
+#: dbwindow.cpp:266 dbwindow.cpp:386
+#, kde-format
+msgid "Login Failed"
+msgstr "Neuspešna prijava"
+
+#: dbwindow.cpp:267 dbwindow.cpp:387
+#, kde-format
+msgid "Authentication failed. Do you want to try again?"
+msgstr "Overitev ni uspela. Ali želite poskusiti znova?"
+
+#: dbwindow.cpp:291
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: dbwindow.cpp:295
+#, kde-format
+msgid "Dropbox export"
+msgstr "Izvoz v Dropbox"
+
+#: dbwindow.cpp:328
+#, kde-format
+msgid "Uploading Failed"
+msgstr "Pošiljanje ni uspelo"
+
+#: dbwindow.cpp:329
+#, kde-format
+msgid ""
+"Failed to upload photo to Dropbox.\n"
+"%1\n"
+"Do you want to continue?"
+msgstr ""
+"Fotografije ni bilo mogoče poslati v Dropbox.\n"
+"%1\n"
+"Ali želite nadaljevati?"
+
+#: dbwindow.cpp:401 dbwindow.cpp:406
+#, kde-format
+msgid ""
+"Dropbox call failed:\n"
+"%1"
+msgstr ""
+"Klic Dropbox je spodletel: \n"
+"%1"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_dropboxui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Izvozi"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_dropboxui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Glavna orodna vrstica"
+
+#: plugin_dropbox.cpp:90
+#, kde-format
+msgid "Export to &Dropbox..."
+msgstr "Izvozi v &Dropbox ..."
+
+#~ msgid "Authorize Dropbox"
+#~ msgstr "Pooblasti Dropbox"
+
+#~ msgid ""
+#~ "Please follow the instructions in the browser. After logging in and "
+#~ "authorizing the application, press OK."
+#~ msgstr ""
+#~ "Sledite navodilom v brskalniku. Po prijavi in pooblastitvi programa, "
+#~ "kliknite V redu."
+
+#~ msgid ""
+#~ "The textbox is empty, please enter the code from the browser in the "
+#~ "textbox. To complete the authentication click \"Change Account\", or "
+#~ "\"Start Upload\" to authenticate again."
+#~ msgstr ""
+#~ "Besedilno polje je prazno. Vanj vnesite kodo iz brskalnika. Da zaključite "
+#~ "z overitvijo kliknite \"Začni pošiljanje\", da jo znova opravite kliknite "
+#~ "\"Spremeni račun\"."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Andrej Mernik"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "andrejm@ubuntu.si"
+
+#~ msgid "Dropbox New Folder"
+#~ msgstr "Nova mapa za Dropbox"
+
+#~ msgid "The name of the folder that will be created"
+#~ msgstr "Ime mape, ki bo ustvarjena"
+
+#~ msgctxt "album edit"
+#~ msgid "Title:"
+#~ msgstr "Naslov:"
+
+#~ msgid "This is the list of images to upload to your Dropbox account."
+#~ msgstr "To je seznam slik, ki bodo poslane na vaš račun Dropbox."
+
+#~ msgid "This is a clickable link to open Dropbox in a browser."
+#~ msgstr ""
+#~ "To je povezava, ki jo lahko kliknete. Odpre Dropbox v spletnem brskalniku."
+
+#~ msgid "Account"
+#~ msgstr "Račun"
+
+#~ msgid "This is the Dropbox account that is currently logged in."
+#~ msgstr "To je račun Dropbox v katerega ste trenutno prijavljeni."
+
+#~ msgctxt "account settings"
+#~ msgid "Name:"
+#~ msgstr "Ime:"
+
+#~ msgid "Change Account"
+#~ msgstr "Spremeni račun"
+
+#~ msgid "Change Dropbox account for transfer"
+#~ msgstr "Spremenite račun Dropbox za prenos"
+
+#~ msgid "Destination"
+#~ msgstr "Cilj"
+
+#~ msgid ""
+#~ "This is the Dropbox folder to which selected photos will be uploaded."
+#~ msgstr "To je mapa Dropbox v katero bodo poslane izbrane fotografije."
+
+#~ msgid "Folder:"
+#~ msgstr "Mapa:"
+
+#~ msgid "New Folder"
+#~ msgstr "Nova mapa"
+
+#~ msgid "Create new Dropbox folder"
+#~ msgstr "Ustvari novo mapo v Dropboxu"
+
+#~ msgctxt "album list"
+#~ msgid "Reload"
+#~ msgstr "Znova naloži"
+
+#~ msgid "Reload album list"
+#~ msgstr "Znova naloži seznam albumov"
+
+#~ msgid "Options"
+#~ msgstr "Možnosti"
+
+#~ msgid "These are the options that would be applied to photos before upload."
+#~ msgstr ""
+#~ "To so možnosti, ki bodo uveljavljene za fotografije pred pošiljanjem."
+
+#~ msgid "Resize photos before uploading"
+#~ msgstr "Spremeni velikost fotografij pred pošiljanjem"
+
+#~ msgid "Maximum Dimension:"
+#~ msgstr "Največja mera:"
+
+#~ msgid "JPEG Quality:"
+#~ msgstr "Kakovost JPEG:"
+
+#~ msgid ""
+#~ "(c) 2013, Saurabh Patel\n"
+#~ "(c) 2015, Shourya Singh Gupta"
+#~ msgstr ""
+#~ "(c) 2013, Saurabh Patel\n"
+#~ "(c) 2015, Shourya Singh Gupta"
+
+#~ msgid "Author and maintainer"
+#~ msgstr "Avtor in vzdrževalec"
+
+#~ msgid "Shourya Singh Gupta"
+#~ msgstr "Shourya Singh Gupta"
+
+#~ msgid "Developer"
+#~ msgstr "Razvijalec"

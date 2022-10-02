@@ -1,0 +1,689 @@
+# translation of kipiplugin_flickrexport.po to Bosnian
+#
+# Slobodan Simic <simicsl@verat.net>, 2005, 2007, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_flickrexport\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2014-10-20 20:09+0000\n"
+"Last-Translator: Nermina Ahmić <nahmic1@etf.unsa.ba>\n"
+"Language-Team: Bosnian <bs@li.org>\n"
+"Language: bs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Launchpad (build 17341)\n"
+"X-Launchpad-Export-Date: 2015-02-15 06:22+0000\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#: comboboxintermediate.h:54
+#, kde-format
+msgid "Various"
+msgstr "Različito"
+
+#: flickrlist.cpp:420
+#, kde-format
+msgid ""
+"Check if photo should be publicly visible or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"Provjeri da li fotografija treba biti javno vidljiva ili koristi tab Opcije "
+"Slanja da odrediš ovo za sve slike"
+
+#: flickrlist.cpp:423
+#, kde-format
+msgid ""
+"Check if photo should be visible to family or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"Provjeri ako slika treba biti vidljiva skupini ili koristite Opcije "
+"Učitavanje da ovo odredite za sve slike"
+
+#: flickrlist.cpp:426
+#, kde-format
+msgid ""
+"Check if photo should be visible to friends or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"Provjeri da li fotografija treba biti vidljiva prijateljima ili koristi tab "
+"Opcije Slanja da odrediš ovo za sve slike"
+
+#: flickrlist.cpp:429
+#, kde-format
+msgid ""
+"Indicate the safety level for the photo or use Upload Options tab to specify "
+"this for all images"
+msgstr ""
+"Označi nivo sigurnosti za fotografiju ili koristi tab Opcije Slanja da "
+"odrediš ovo za sve slike"
+
+#: flickrlist.cpp:432
+#, kde-format
+msgid ""
+"Indicate what kind of image this is or use Upload Options tab to specify "
+"this for all images"
+msgstr ""
+"Označi koja je ovo vrsta slike ili koristi tab Opcije Slanja da odrediš ovo "
+"za sve slike"
+
+#: flickrlist.cpp:445
+#, kde-format
+msgid ""
+"Add extra tags per image or use Upload Options tab to add tags for all images"
+msgstr ""
+"Dodaj dodatne oznake za sliku ili koristi tab Opcije Slanja da dodaš oznake "
+"za sve slike"
+
+#: flickrlist.cpp:462
+#, kde-format
+msgid "Enter extra tags, separated by commas."
+msgstr "Unesi dodatne oznake, razdvojene zarezima."
+
+#: flickrtalker.cpp:265
+#, kde-format
+msgid "Getting the maximum allowed file size."
+msgstr ""
+
+#: flickrtalker.cpp:550
+#, kde-format
+msgid "File Size exceeds maximum allowed file size."
+msgstr ""
+
+#: flickrtalker.cpp:603
+#, kde-format
+msgid "No photo specified"
+msgstr "Nije navedena slika"
+
+#: flickrtalker.cpp:607
+#, kde-format
+msgid "General upload failure"
+msgstr "Opšta greška slanja"
+
+#: flickrtalker.cpp:611
+#, kde-format
+msgid "Filesize was zero"
+msgstr "Veličina datoteke je nula"
+
+#: flickrtalker.cpp:615
+#, kde-format
+msgid "Filetype was not recognized"
+msgstr "Tip datoteke nije prepoznat"
+
+#: flickrtalker.cpp:619
+#, kde-format
+msgid "User exceeded upload limit"
+msgstr "Korisnik je ispunio ograničenje slanja"
+
+#: flickrtalker.cpp:623
+#, kde-format
+msgid "Invalid signature"
+msgstr "Neispravan potpis"
+
+#: flickrtalker.cpp:627
+#, kde-format
+msgid "Missing signature"
+msgstr "Nedostaje potpis"
+
+#: flickrtalker.cpp:631
+#, kde-format
+msgid "Login Failed / Invalid auth token"
+msgstr "Neuspjelo prijavljivanje / Loše obeležje autentifikacije"
+
+#: flickrtalker.cpp:635
+#, kde-format
+msgid "Invalid API Key"
+msgstr "Neispravan API ključ"
+
+#: flickrtalker.cpp:639
+#, kde-format
+msgid "Service currently unavailable"
+msgstr "Servis je trenutno nedostupan"
+
+#: flickrtalker.cpp:643
+#, kde-format
+msgid "Invalid Frob"
+msgstr "Neispravan Frob"
+
+#: flickrtalker.cpp:647
+#, kde-format
+msgid "Format \"xxx\" not found"
+msgstr "Format „xxx“ nije nađen"
+
+#: flickrtalker.cpp:651
+#, kde-format
+msgid "Method \"xxx\" not found"
+msgstr "Način „xxx“ nije nađen"
+
+#: flickrtalker.cpp:655
+#, kde-format
+msgid "Invalid SOAP envelope"
+msgstr "Neispravna SOAP koverta"
+
+#: flickrtalker.cpp:659
+#, kde-format
+msgid "Invalid XML-RPC Method Call"
+msgstr "Neispravan poziv XML-RPC načina"
+
+#: flickrtalker.cpp:663
+#, kde-format
+msgid "The POST method is now required for all setters"
+msgstr "POST način je sada obavezan za sve postavljače"
+
+#: flickrtalker.cpp:667
+#, kde-format
+msgid "Unknown error"
+msgstr "Nepoznata greška"
+
+#: flickrtalker.cpp:672 flickrtalker.cpp:696 flickrtalker.cpp:852
+#: flickrwindow.cpp:416
+#, kde-format
+msgid "Error"
+msgstr ""
+
+#: flickrtalker.cpp:673
+#, kde-format
+msgid ""
+"Error Occurred: %1\n"
+"Cannot proceed any further."
+msgstr ""
+"Desila se greška: %1\n"
+"Ne može se dalje nastaviti."
+
+#: flickrtalker.cpp:852
+#, kde-format
+msgid "PhotoSet creation failed: "
+msgstr "PhotoSet kreiranje nije uspjelo: "
+
+#: flickrtalker.cpp:947
+#, kde-format
+msgid "Failed to fetch list of photo sets."
+msgstr "Neuspjelo dostavljanje liste postavki fotografije."
+
+#: flickrtalker.cpp:1027
+#, kde-format
+msgid "Failed to upload photo"
+msgstr "Nisam uspio da pošaljem sliku"
+
+#: flickrtalker.cpp:1086
+#, kde-format
+msgid "Failed to query photo information"
+msgstr "Neuspio upit za podacima slike"
+
+#: flickrwidget.cpp:63
+#, fuzzy, kde-format
+#| msgid "Account"
+msgid "Remove Account"
+msgstr "Račun"
+
+#: flickrwidget.cpp:73 flickrwidget.cpp:77
+#, kde-format
+msgctxt "photo permissions"
+msgid "Public"
+msgstr "Javno"
+
+#: flickrwidget.cpp:76
+#, kde-format
+msgid "This is the list of images to upload to your Flickr account."
+msgstr "Ovo je lista slika za učitavanje na Vaš Flickr račun."
+
+#: flickrwidget.cpp:81
+#, kde-format
+msgid "Extra tags"
+msgstr "Dodatne oznake"
+
+#: flickrwidget.cpp:87 flickrwidget.cpp:98
+#, kde-format
+msgctxt "photo permissions"
+msgid "Family"
+msgstr "Porodica"
+
+#: flickrwidget.cpp:92 flickrwidget.cpp:100
+#, kde-format
+msgctxt "photo permissions"
+msgid "Friends"
+msgstr "Prijatelji"
+
+#: flickrwidget.cpp:107
+#, kde-format
+msgid "Safety level"
+msgstr "Nivo sigurnosti"
+
+#: flickrwidget.cpp:109
+#, kde-format
+msgid "Content type"
+msgstr "Vrsta sadržaja"
+
+#: flickrwidget.cpp:112
+#, kde-format
+msgctxt "photo safety level"
+msgid "Safe"
+msgstr "Siguran"
+
+#: flickrwidget.cpp:113
+#, kde-format
+msgctxt "photo safety level"
+msgid "Moderate"
+msgstr "Umjerena"
+
+#: flickrwidget.cpp:114
+#, kde-format
+msgctxt "photo safety level"
+msgid "Restricted"
+msgstr "Ograničeno"
+
+#: flickrwidget.cpp:115 flickrwidget.cpp:211
+#, kde-format
+msgctxt "photo content type"
+msgid "Photo"
+msgstr "Fotografija"
+
+#: flickrwidget.cpp:116 flickrwidget.cpp:212
+#, kde-format
+msgctxt "photo content type"
+msgid "Screenshot"
+msgstr "Slika ekrana"
+
+#: flickrwidget.cpp:117 flickrwidget.cpp:213
+#, kde-format
+msgctxt "photo content type"
+msgid "Other"
+msgstr "Ostalo"
+
+#: flickrwidget.cpp:134
+#, kde-format
+msgid "Tag options"
+msgstr "Opcije označavanja"
+
+#: flickrwidget.cpp:138
+#, kde-format
+msgid "Use Host Application Tags"
+msgstr "Koristi oznake domaćinske aplikacije"
+
+#: flickrwidget.cpp:140 flickrwidget.cpp:501
+#, kde-format
+msgid "More tag options"
+msgstr "Više opcija označavanja"
+
+#: flickrwidget.cpp:154
+#, kde-format
+msgid "Added Tags: "
+msgstr "Dodane Oznake: "
+
+#: flickrwidget.cpp:156
+#, kde-format
+msgid "Enter new tags here, separated by commas."
+msgstr "Unesite ovdje nove oznake, odvojene zarezima."
+
+#: flickrwidget.cpp:158
+#, kde-format
+msgid "Add tags per image"
+msgstr "Dodaj oznake za sliku"
+
+#: flickrwidget.cpp:159
+#, kde-format
+msgid "If checked, you can set extra tags for each image in the File List tab"
+msgstr ""
+"Ako je označeno, možete postaviti dodatne oznake za svaku sliku u tabu Lista "
+"Datoteka"
+
+#: flickrwidget.cpp:163
+#, kde-format
+msgid "Strip Spaces From Tags"
+msgstr "Ukloni razmake iz oznaka"
+
+#: flickrwidget.cpp:176
+#, kde-format
+msgid "Publication Options"
+msgstr "Opcije Objavljivanja"
+
+#: flickrwidget.cpp:181
+#, kde-format
+msgctxt "As in accessible for people"
+msgid "Public (anyone can see them)"
+msgstr "Javno (svi mogu vidjeti)"
+
+#: flickrwidget.cpp:184
+#, kde-format
+msgid "Visible to Family"
+msgstr "Vidljivo Porodici"
+
+#: flickrwidget.cpp:187
+#, kde-format
+msgid "Visible to Friends"
+msgstr "Vidljivo Prijateljima"
+
+#: flickrwidget.cpp:190 flickrwidget.cpp:488
+#, kde-format
+msgid "More publication options"
+msgstr "Više opcija objavljivanja"
+
+#: flickrwidget.cpp:203
+#, kde-format
+msgid "Safety level:"
+msgstr "Nivo sigurnosti:"
+
+#: flickrwidget.cpp:205
+#, kde-format
+msgid "Safe"
+msgstr "Siguran"
+
+#: flickrwidget.cpp:206
+#, kde-format
+msgid "Moderate"
+msgstr "Umjereno"
+
+#: flickrwidget.cpp:207
+#, kde-format
+msgid "Restricted"
+msgstr "Ograničeno"
+
+#: flickrwidget.cpp:209
+#, kde-format
+msgid "Content type:"
+msgstr "Tip sadržaja:"
+
+#: flickrwidget.cpp:304
+#, kde-format
+msgid ""
+"<b><h2><a href='http://www.23hq.com'><font color=\"#7CD164\">23</font></a> "
+"Export</h2></b>"
+msgstr ""
+"<b><h2><a href='http://www.23hq.com'><font color=\"#7CD164\">23</font></a> "
+"Eksport</h2></b>"
+
+#: flickrwidget.cpp:311
+#, kde-format
+msgid ""
+"<b><h2><a href='http://www.flickr.com'><font color=\"#0065DE\">flick</"
+"font><font color=\"#FF0084\">r</font></a> Export</h2></b>"
+msgstr ""
+"<b><h2><a href='http://www.flickr.com'><font color=\"#0065DE\">flik</"
+"font><font color=\"#FF0084\">r</font></a> Eksport</h2></b>"
+
+#: flickrwidget.cpp:484
+#, kde-format
+msgid "Fewer publication options"
+msgstr "Manje opcija objavljivanja"
+
+#: flickrwidget.cpp:506
+#, kde-format
+msgid "Fewer tag options"
+msgstr "Manje opcija oznaka"
+
+#: flickrwindow.cpp:71
+#, kde-format
+msgid "Export to %1 Web Service"
+msgstr "Eksport %1 na Web Servis"
+
+#: flickrwindow.cpp:119
+#, kde-format
+msgid "Start Uploading"
+msgstr "Pokreni slanje"
+
+#: flickrwindow.cpp:131
+#, fuzzy, kde-format
+#| msgid "Flickr Export"
+msgid "Flickr/23 Export"
+msgstr "Flickr izvoz"
+
+#: flickrwindow.cpp:132
+#, fuzzy, kde-format
+#| msgid ""
+#| "A Kipi plugin to export an image collection to a Flickr / 23 / Zooomr web "
+#| "service."
+msgid "A tool to export an image collection to a Flickr / 23 web service."
+msgstr ""
+"Kipi priključak za eksport kolekcija slika na Flickr / 23 / Zooomr web "
+"servis."
+
+#: flickrwindow.cpp:134
+#, fuzzy, kde-format
+#| msgid ""
+#| "(c) 2005-2008, Vardhman Jain\n"
+#| "(c) 2008-2013, Gilles Caulier\n"
+#| "(c) 2009, Luka Renko"
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2015, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2015, Shourya Singh Gupta"
+msgstr ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2013, Gilles Caulier\n"
+"(c) 2009, Luka Renko"
+
+#: flickrwindow.cpp:139
+#, kde-format
+msgid "Vardhman Jain"
+msgstr "Vardhman Jain"
+
+#: flickrwindow.cpp:139
+#, kde-format
+msgid "Author and maintainer"
+msgstr "Autor i održavalac"
+
+#: flickrwindow.cpp:142
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: flickrwindow.cpp:142 flickrwindow.cpp:145
+#, kde-format
+msgid "Developer"
+msgstr "Programer"
+
+#: flickrwindow.cpp:145
+#, kde-format
+msgid "Shourya Singh Gupta"
+msgstr ""
+
+#: flickrwindow.cpp:557
+#, fuzzy, kde-format
+#| msgid "&lt;Photostream Only&gt;"
+msgid "Photostream Only"
+msgstr "&lt;Samo fotografski tok podataka&gt;"
+
+#: flickrwindow.cpp:741
+#, kde-format
+msgid "Flickr Export"
+msgstr "Flickr izvoz"
+
+#: flickrwindow.cpp:759
+#, kde-format
+msgid "Failed to Fetch Photoset information from %1. %2\n"
+msgstr "Neuspjelo donošenje Photoset informacija iz %1. %2\n"
+
+#: flickrwindow.cpp:765
+#, kde-format
+msgid "Warning"
+msgstr ""
+
+#: flickrwindow.cpp:766
+#, kde-format
+msgid ""
+"Failed to upload photo into %1. %2\n"
+"Do you want to continue?"
+msgstr ""
+"Neuspjelo  učitavanje slike iz %1. %2\n"
+"Do you want to continue?"
+
+#: flickrwindow.cpp:769
+#, fuzzy, kde-format
+#| msgid "Content type"
+msgid "Continue"
+msgstr "Vrsta sadržaja"
+
+#: flickrwindow.cpp:770
+#, fuzzy, kde-format
+#| msgid "&Cancel"
+msgid "Cancel"
+msgstr "&Odustani"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_flickrui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Izvoz"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_flickrui.rc:14
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Glavna alatna traka"
+
+#: plugin_flickr.cpp:100
+#, kde-format
+msgid "Export to Flick&r..."
+msgstr "Eksport na Flick&r..."
+
+#: selectuserdlg.cpp:47
+#, kde-format
+msgid "Flickr Account Selector"
+msgstr ""
+
+#: selectuserdlg.cpp:52
+#, kde-format
+msgid "Add another account"
+msgstr ""
+
+#: selectuserdlg.cpp:75
+#, kde-format
+msgid "Choose the %1 account to use for exporting images:"
+msgstr ""
+
+#~ msgid ""
+#~ "<b><h2><a href='http://www.zooomr.com'><font color=\"#7CD164\">zooomr</"
+#~ "font></a> Export</h2></b>"
+#~ msgstr ""
+#~ "<b><h2><a href='http://www.zooomr.com'><font color=\"#7CD164\">zooomr</"
+#~ "font></a> Eksport</h2></b>"
+
+#~ msgctxt "flickr login"
+#~ msgid "Username:"
+#~ msgstr "Korisničko ime:"
+
+#~ msgid "Password:"
+#~ msgstr "Lozinka:"
+
+#~ msgid "Getting the Frob"
+#~ msgstr "Uzimam Frob"
+
+#~ msgid "Checking if previous token is still valid"
+#~ msgstr "Provjeravam da li je prethodno obeležje još važeće"
+
+#~ msgid "%1 Service Web Authorization"
+#~ msgstr "%1 Servis Web Autorizacija"
+
+#~ msgid ""
+#~ "Please follow the instructions in the browser window, then return to "
+#~ "press corresponding button."
+#~ msgstr ""
+#~ "Molimo Vas da slijedite instrukcije date u prozoru preglednika, a potom "
+#~ "se vratite da pritisnete odgovarajuće dugme."
+
+#~ msgid "I am authenticated"
+#~ msgstr "Ovjeren sam"
+
+#~ msgid "I am not authenticated"
+#~ msgstr "Nisam ovjeren"
+
+#~ msgid "Authenticating the User on web"
+#~ msgstr "Autentifikujem korisnika na mreži"
+
+#~ msgid "Getting the Token from the server"
+#~ msgstr "Uzimam obeležje sa servera"
+
+#~ msgctxt "As in the permission to"
+#~ msgid "write"
+#~ msgstr "pisati"
+
+#~ msgctxt "As in the permission to"
+#~ msgid "read"
+#~ msgstr "čitanje"
+
+#~ msgctxt "As in the permission to"
+#~ msgid "delete"
+#~ msgstr "brisanje"
+
+#, fuzzy
+#~| msgid "Invalid Frob"
+#~ msgid "Invalid Token"
+#~ msgstr "Neispravan Frob"
+
+#~ msgid ""
+#~ "Your token is invalid. Would you like to get a new token to proceed?\n"
+#~ msgstr "Vaša oznaka je nevažeća. Želite li novu oznaku da nastavite?\n"
+
+#~ msgid "Flickr/23/Zooomr Export"
+#~ msgstr "Flickr/23/Zooomr Eksport"
+
+#~ msgid "Export to &23..."
+#~ msgstr "Eksport na &23..."
+
+#~ msgid "Export to &Zooomr..."
+#~ msgstr "Eksport na &Zooomr..."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Elmedina Fejzagic,Samir Ribić,Nermina Ahmić"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "Ef@etf.ba,samir.ribic@etf.unsa.ba,nahmic1@etf.unsa.ba"
+
+#~ msgid "New PhotoSet"
+#~ msgstr "Novi komplet slika"
+
+#~ msgid "<h3>Create New PhotoSet </h3>"
+#~ msgstr "<h3>Napravi novi komplet slika </h3>"
+
+#~ msgid "&OK"
+#~ msgstr "&OK"
+
+#~ msgid "Title (required):"
+#~ msgstr "Naslov (neophodno):"
+
+#~ msgid "Description (optional)"
+#~ msgstr "Opis (neobavezno)"
+
+#~ msgid "Account"
+#~ msgstr "Račun"
+
+#~ msgctxt "account settings"
+#~ msgid "Username: "
+#~ msgstr "Korisničko ime: "
+
+#~ msgid "Use a different account"
+#~ msgstr "Koristi drugi račun"
+
+#~ msgid "PhotoSet:"
+#~ msgstr "Postavke fotografije:"
+
+#~ msgid "&New PhotoSet"
+#~ msgstr "&Nove postavke fotografije"
+
+#~ msgid "&Reload"
+#~ msgstr "&Ponovo učitaj"
+
+#~ msgid "Resizing Options"
+#~ msgstr "Opcije Promjene Veličine"
+
+#~ msgid "Send original file (no resizing)"
+#~ msgstr "Pošalji originalnu datoteku (bez promjena dimenzija)"
+
+#~ msgid "Resize photos before uploading"
+#~ msgstr "Promijeni veličinu slika prije slanja"
+
+#~ msgid "Maximum dimension (pixels):"
+#~ msgstr "Maksimalne dimenzije (u pikselima):"
+
+#~ msgid "JPEG Image Quality (higher is better):"
+#~ msgstr "JPEG Kvaliteta Slike (više je bolje):"
+
+#~ msgid "File List"
+#~ msgstr "Spisak Datoteka"
+
+#~ msgid "Upload Options"
+#~ msgstr "Upload Opcije"

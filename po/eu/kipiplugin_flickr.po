@@ -1,0 +1,714 @@
+# Translation of kipiplugin_flickr.po to Euskara/Basque (eu).
+# Copyright (C) 2010-2019, This file is copyright:
+# This file is distributed under the same license as the kipi-plugins package.
+# KDE euskaratzeko proiektuaren arduraduna <xalba@euskalnet.net>.
+#
+# Translators:
+# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2010.
+# Iñigo Salvador Azurmendi <xalba@euskalnet.net>, 2019.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipi-plugins\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2019-08-19 19:46+0200\n"
+"Last-Translator: Iñigo Salvador Azurmendi <xalba@euskalnet.net>\n"
+"Language-Team: Basque <kde-i18n-eu@kde.org>\n"
+"Language: eu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 19.08.0\n"
+
+#: comboboxintermediate.h:54
+#, kde-format
+msgid "Various"
+msgstr "Hainbat"
+
+#: flickrlist.cpp:420
+#, kde-format
+msgid ""
+"Check if photo should be publicly visible or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"Markatu argazkia publikoki ikusgai egon behar badu edo erabili 'Zama-"
+"igotzeko Aukerak' fitxa irudi guztientzako hau zehazteko"
+
+#: flickrlist.cpp:423
+#, kde-format
+msgid ""
+"Check if photo should be visible to family or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"Markatu argazkia sendikoentzat ikusgai egon behar badu edo erabili 'Zama-"
+"igotzeko Aukerak' fitxa irudi guztientzako hau zehazteko"
+
+#: flickrlist.cpp:426
+#, kde-format
+msgid ""
+"Check if photo should be visible to friends or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"Markatu argazkia lagunentzat ikusgai egon behar badu edo erabili 'Zama-"
+"igotzeko Aukerak' fitxa irudi guztientzako hau zehazteko"
+
+#: flickrlist.cpp:429
+#, kde-format
+msgid ""
+"Indicate the safety level for the photo or use Upload Options tab to specify "
+"this for all images"
+msgstr ""
+"Adierazi argazkiaren segurtasun maila edo erabili 'Zama-igotzeko Aukerak' "
+"fitxa irudi guztientzako hau zehazteko"
+
+#: flickrlist.cpp:432
+#, kde-format
+msgid ""
+"Indicate what kind of image this is or use Upload Options tab to specify "
+"this for all images"
+msgstr ""
+"Adierazi hau zein irudi mota den edo erabili 'Zama-igotzeko Aukerak' fitxa "
+"irudi guztientzako hau zehazteko"
+
+#: flickrlist.cpp:445
+#, kde-format
+msgid ""
+"Add extra tags per image or use Upload Options tab to add tags for all images"
+msgstr ""
+"Gehitu etiketa gehigarriak irudiko edo erabili 'Zama-igotzeko Aukerak' fitxa "
+"irudi guztientzako etiketak gehitzeko"
+
+#: flickrlist.cpp:462
+#, kde-format
+msgid "Enter extra tags, separated by commas."
+msgstr "Sartu etiketa gehigarriak, komaz bereizita."
+
+#: flickrtalker.cpp:265
+#, kde-format
+msgid "Getting the maximum allowed file size."
+msgstr "Baimendutako fitxategi neurri handiera lortzen."
+
+#: flickrtalker.cpp:550
+#, kde-format
+msgid "File Size exceeds maximum allowed file size."
+msgstr "Fitxategiaren neurriak baimendutako neurri handiena gainditzen du."
+
+#: flickrtalker.cpp:603
+#, kde-format
+msgid "No photo specified"
+msgstr "Ez da argazkirik zehaztu"
+
+#: flickrtalker.cpp:607
+#, kde-format
+msgid "General upload failure"
+msgstr "Zama-igotzearen hutsegite orokorra"
+
+#: flickrtalker.cpp:611
+#, kde-format
+msgid "Filesize was zero"
+msgstr "Fitxategiaren neurria zero da"
+
+#: flickrtalker.cpp:615
+#, kde-format
+msgid "Filetype was not recognized"
+msgstr "Fitxategi mota ez da ezagutu"
+
+#: flickrtalker.cpp:619
+#, kde-format
+msgid "User exceeded upload limit"
+msgstr "Erabiltzaileak zama-igotzeko muga gainditu du"
+
+#: flickrtalker.cpp:623
+#, kde-format
+msgid "Invalid signature"
+msgstr "Sinadura baliogabea"
+
+#: flickrtalker.cpp:627
+#, kde-format
+msgid "Missing signature"
+msgstr "Sinadura falta da"
+
+#: flickrtalker.cpp:631
+#, kde-format
+msgid "Login Failed / Invalid auth token"
+msgstr "Saio-hastea huts egin du / autentifikazioko tokena baliogabea da"
+
+#: flickrtalker.cpp:635
+#, kde-format
+msgid "Invalid API Key"
+msgstr "API gako baliogabea"
+
+#: flickrtalker.cpp:639
+#, kde-format
+msgid "Service currently unavailable"
+msgstr "Zerbitzua une honetan ez dago erabilgarri"
+
+#: flickrtalker.cpp:643
+#, kde-format
+msgid "Invalid Frob"
+msgstr "«Frob» baliogabea"
+
+#: flickrtalker.cpp:647
+#, kde-format
+msgid "Format \"xxx\" not found"
+msgstr "'xxx' formatua ez da aurkitu"
+
+#: flickrtalker.cpp:651
+#, kde-format
+msgid "Method \"xxx\" not found"
+msgstr "'xxx' metodoa ez da aurkitu"
+
+#: flickrtalker.cpp:655
+#, kde-format
+msgid "Invalid SOAP envelope"
+msgstr "SOAP inguratzaile baliogabea"
+
+#: flickrtalker.cpp:659
+#, kde-format
+msgid "Invalid XML-RPC Method Call"
+msgstr "XML-RPC metodoaren dei baliogabea"
+
+#: flickrtalker.cpp:663
+#, kde-format
+msgid "The POST method is now required for all setters"
+msgstr "POST metodoa derrigorrezkoa da orain ezartzaile guztientzako"
+
+#: flickrtalker.cpp:667
+#, kde-format
+msgid "Unknown error"
+msgstr "Errore ezezaguna"
+
+#: flickrtalker.cpp:672 flickrtalker.cpp:696 flickrtalker.cpp:852
+#: flickrwindow.cpp:416
+#, kde-format
+msgid "Error"
+msgstr "Errorea"
+
+#: flickrtalker.cpp:673
+#, kde-format
+msgid ""
+"Error Occurred: %1\n"
+"Cannot proceed any further."
+msgstr ""
+"Errorea gertatu da: %1\n"
+"Ezin da aurrera jarraitu."
+
+#: flickrtalker.cpp:852
+#, kde-format
+msgid "PhotoSet creation failed: "
+msgstr "Argazki multzoa sortzea huts egin du:"
+
+#: flickrtalker.cpp:947
+#, kde-format
+msgid "Failed to fetch list of photo sets."
+msgstr "Huts egin du argazki multzoen zerrenda eskuratzea."
+
+#: flickrtalker.cpp:1027
+#, kde-format
+msgid "Failed to upload photo"
+msgstr "Huts egin du argazkia zama-igotzea"
+
+#: flickrtalker.cpp:1086
+#, kde-format
+msgid "Failed to query photo information"
+msgstr "Huts egin du argazkiaren informazioa kontsultatzea"
+
+#: flickrwidget.cpp:63
+#, kde-format
+msgid "Remove Account"
+msgstr "Kendu kontua"
+
+#: flickrwidget.cpp:73 flickrwidget.cpp:77
+#, kde-format
+msgctxt "photo permissions"
+msgid "Public"
+msgstr "Publikoa"
+
+#: flickrwidget.cpp:76
+#, kde-format
+msgid "This is the list of images to upload to your Flickr account."
+msgstr "Hau da zure Flickr kontura zama-igo beharreko irudien zerrenda."
+
+#: flickrwidget.cpp:81
+#, kde-format
+msgid "Extra tags"
+msgstr "Etiketa gehigarriak"
+
+#: flickrwidget.cpp:87 flickrwidget.cpp:98
+#, kde-format
+msgctxt "photo permissions"
+msgid "Family"
+msgstr "Senideak"
+
+#: flickrwidget.cpp:92 flickrwidget.cpp:100
+#, kde-format
+msgctxt "photo permissions"
+msgid "Friends"
+msgstr "Lagunak"
+
+#: flickrwidget.cpp:107
+#, kde-format
+msgid "Safety level"
+msgstr "Segurtasun maila"
+
+#: flickrwidget.cpp:109
+#, kde-format
+msgid "Content type"
+msgstr "Eduki mota"
+
+#: flickrwidget.cpp:112
+#, kde-format
+msgctxt "photo safety level"
+msgid "Safe"
+msgstr "Segurua"
+
+#: flickrwidget.cpp:113
+#, kde-format
+msgctxt "photo safety level"
+msgid "Moderate"
+msgstr "Ertaina"
+
+#: flickrwidget.cpp:114
+#, kde-format
+msgctxt "photo safety level"
+msgid "Restricted"
+msgstr "Murriztua"
+
+#: flickrwidget.cpp:115 flickrwidget.cpp:211
+#, kde-format
+msgctxt "photo content type"
+msgid "Photo"
+msgstr "Argazkia"
+
+#: flickrwidget.cpp:116 flickrwidget.cpp:212
+#, kde-format
+msgctxt "photo content type"
+msgid "Screenshot"
+msgstr "Pantailako argazkia"
+
+#: flickrwidget.cpp:117 flickrwidget.cpp:213
+#, kde-format
+msgctxt "photo content type"
+msgid "Other"
+msgstr "Bestelakoa"
+
+#: flickrwidget.cpp:134
+#, kde-format
+msgid "Tag options"
+msgstr "Etiketen aukerak"
+
+#: flickrwidget.cpp:138
+#, kde-format
+msgid "Use Host Application Tags"
+msgstr "Erabili ostalari aplikazioaren etiketak"
+
+#: flickrwidget.cpp:140 flickrwidget.cpp:501
+#, kde-format
+msgid "More tag options"
+msgstr "Etiketen aukera gehiago"
+
+#: flickrwidget.cpp:154
+#, kde-format
+msgid "Added Tags: "
+msgstr "Gehitutako etiketak: "
+
+#: flickrwidget.cpp:156
+#, kde-format
+msgid "Enter new tags here, separated by commas."
+msgstr "Sartu etiketa berriak hemen, komaz bereizita."
+
+#: flickrwidget.cpp:158
+#, kde-format
+msgid "Add tags per image"
+msgstr "Gehitu etiketak irudiko"
+
+#: flickrwidget.cpp:159
+#, kde-format
+msgid "If checked, you can set extra tags for each image in the File List tab"
+msgstr ""
+"Markatuta badago, 'Fitxategi Zerrenda' fitxan irudi bakoitzari etiketa "
+"gehigarriak ezartzea daukazu"
+
+#: flickrwidget.cpp:163
+#, kde-format
+msgid "Strip Spaces From Tags"
+msgstr "Kendu zuriuneak etiketetatik"
+
+#: flickrwidget.cpp:176
+#, kde-format
+msgid "Publication Options"
+msgstr "Argitalpen aukerak"
+
+#: flickrwidget.cpp:181
+#, kde-format
+msgctxt "As in accessible for people"
+msgid "Public (anyone can see them)"
+msgstr "Publikoa (edonork ikus ditzake)"
+
+#: flickrwidget.cpp:184
+#, kde-format
+msgid "Visible to Family"
+msgstr "Ikusgai senideentzako"
+
+#: flickrwidget.cpp:187
+#, kde-format
+msgid "Visible to Friends"
+msgstr "Ikusgai lagunentzako"
+
+#: flickrwidget.cpp:190 flickrwidget.cpp:488
+#, kde-format
+msgid "More publication options"
+msgstr "Argitalpen aukera gehiago"
+
+#: flickrwidget.cpp:203
+#, kde-format
+msgid "Safety level:"
+msgstr "Segurtasun maila:"
+
+#: flickrwidget.cpp:205
+#, kde-format
+msgid "Safe"
+msgstr "Segurua"
+
+#: flickrwidget.cpp:206
+#, kde-format
+msgid "Moderate"
+msgstr "Ertaina"
+
+#: flickrwidget.cpp:207
+#, kde-format
+msgid "Restricted"
+msgstr "Murriztua"
+
+#: flickrwidget.cpp:209
+#, kde-format
+msgid "Content type:"
+msgstr "Eduki mota:"
+
+#: flickrwidget.cpp:304
+#, kde-format
+msgid ""
+"<b><h2><a href='http://www.23hq.com'><font color=\"#7CD164\">23</font></a> "
+"Export</h2></b>"
+msgstr ""
+"<b><h2><a href='http://www.23hq.com'><font color=\"#7CD164\">23</font></a> "
+"Esportatu</h2></b>"
+
+#: flickrwidget.cpp:311
+#, kde-format
+msgid ""
+"<b><h2><a href='http://www.flickr.com'><font color=\"#0065DE\">flick</"
+"font><font color=\"#FF0084\">r</font></a> Export</h2></b>"
+msgstr ""
+"<b><h2><a href='http://www.flickr.com'><font color=\"#0065DE\">flick</"
+"font><font color=\"#FF0084\">r</font></a> Esportatu</h2></b>"
+
+#: flickrwidget.cpp:484
+#, kde-format
+msgid "Fewer publication options"
+msgstr "Argitalpen aukera gutxiago"
+
+#: flickrwidget.cpp:506
+#, kde-format
+msgid "Fewer tag options"
+msgstr "Etiketen aukera gutxiago"
+
+#: flickrwindow.cpp:71
+#, kde-format
+msgid "Export to %1 Web Service"
+msgstr "Esportatu %1 Web zerbitzura"
+
+#: flickrwindow.cpp:119
+#, kde-format
+msgid "Start Uploading"
+msgstr "Hasi zama-igotzen"
+
+#: flickrwindow.cpp:131
+#, kde-format
+msgid "Flickr/23 Export"
+msgstr "Flickr/23 Esportatu"
+
+#: flickrwindow.cpp:132
+#, kde-format
+msgid "A tool to export an image collection to a Flickr / 23 web service."
+msgstr "Irudi bilduma bat Flickr / 23 web zerbitzu batera igotzeko tresna bat."
+
+#: flickrwindow.cpp:134
+#, kde-format
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2015, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2015, Shourya Singh Gupta"
+msgstr ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2015, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2015, Shourya Singh Gupta"
+
+#: flickrwindow.cpp:139
+#, kde-format
+msgid "Vardhman Jain"
+msgstr "Vardhman Jain"
+
+#: flickrwindow.cpp:139
+#, kde-format
+msgid "Author and maintainer"
+msgstr "Egile eta arduraduna"
+
+#: flickrwindow.cpp:142
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: flickrwindow.cpp:142 flickrwindow.cpp:145
+#, kde-format
+msgid "Developer"
+msgstr "Garatzailea"
+
+#: flickrwindow.cpp:145
+#, kde-format
+msgid "Shourya Singh Gupta"
+msgstr "Shourya Singh Gupta"
+
+#: flickrwindow.cpp:557
+#, kde-format
+msgid "Photostream Only"
+msgstr "Photostream soilik"
+
+#: flickrwindow.cpp:741
+#, kde-format
+msgid "Flickr Export"
+msgstr "Flickr Esportatu"
+
+#: flickrwindow.cpp:759
+#, kde-format
+msgid "Failed to Fetch Photoset information from %1. %2\n"
+msgstr ""
+"Huts egin du argazki multzoaren informazioa %1 gunetik eskuratzea. %2\n"
+
+#: flickrwindow.cpp:765
+#, kde-format
+msgid "Warning"
+msgstr "Abisua"
+
+#: flickrwindow.cpp:766
+#, kde-format
+msgid ""
+"Failed to upload photo into %1. %2\n"
+"Do you want to continue?"
+msgstr ""
+"Huts egin du argazkia %1 gunera zama-igotzea. %2\n"
+"Jarraitu nahi duzu?"
+
+#: flickrwindow.cpp:769
+#, kde-format
+msgid "Continue"
+msgstr "Jarraitu"
+
+#: flickrwindow.cpp:770
+#, kde-format
+msgid "Cancel"
+msgstr "Utzi"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_flickrui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Esportatu"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_flickrui.rc:14
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Tresna-barra nagusia"
+
+#: plugin_flickr.cpp:100
+#, kde-format
+msgid "Export to Flick&r..."
+msgstr "Esportatu &Flickr-era..."
+
+#: selectuserdlg.cpp:47
+#, kde-format
+msgid "Flickr Account Selector"
+msgstr "Flickr kontu hautatzailea"
+
+#: selectuserdlg.cpp:52
+#, kde-format
+msgid "Add another account"
+msgstr "Gehitu beste kontu bat"
+
+#: selectuserdlg.cpp:75
+#, kde-format
+msgid "Choose the %1 account to use for exporting images:"
+msgstr "Hautatu irudiak esportatzeko erabili beharreko %1 kontua:"
+
+#~ msgid ""
+#~ "<b><h2><a href='http://www.zooomr.com'><font color=\"#7CD164\">zooomr</"
+#~ "font></a> Export</h2></b>"
+#~ msgstr ""
+#~ "<b><h2><a href='http://www.zooomr.com'><font color=\"#7CD164\">zooomr</"
+#~ "font></a> Esportatu</h2></b>"
+
+#~ msgctxt "flickr login"
+#~ msgid "Username:"
+#~ msgstr "Erabiltzaile-izena:"
+
+#~ msgid "Password:"
+#~ msgstr "Pasahitza:"
+
+#~ msgid "Getting the Frob"
+#~ msgstr "Frob-etik eskuratzen"
+
+#~ msgid "Checking if previous token is still valid"
+#~ msgstr "Begiratu aurreko tokena oraindik baliozkoa den"
+
+#~ msgid "%1 Service Web Authorization"
+#~ msgstr "%1 zerbitzuaren web-autentifikazioa"
+
+#, fuzzy
+#~| msgid ""
+#~| "Please follow the instructions in the browser window, then return to "
+#~| "press Yes if you are authenticated, or No otherwise."
+#~ msgid ""
+#~ "Please follow the instructions in the browser window, then return to "
+#~ "press corresponding button."
+#~ msgstr ""
+#~ "Jarraitu web arakatzaileko instrukzioak, gero egin klik \"Bai\" botoian "
+#~ "autentifikatu bazara, edo bestela \"Ez\"."
+
+#~ msgid "Authenticating the User on web"
+#~ msgstr "Erabiltzailea webean autentifikatzea"
+
+#~ msgid "Getting the Token from the server"
+#~ msgstr "Eskuratu tokena zerbitzaritik"
+
+#~ msgctxt "As in the permission to"
+#~ msgid "write"
+#~ msgstr "idatzi"
+
+#~ msgctxt "As in the permission to"
+#~ msgid "read"
+#~ msgstr "irakurri"
+
+#~ msgctxt "As in the permission to"
+#~ msgid "delete"
+#~ msgstr "ezabatu"
+
+#, fuzzy
+#~| msgid "Invalid Frob"
+#~ msgid "Invalid Token"
+#~ msgstr "Baliogabeko Frob"
+
+#~ msgid ""
+#~ "Your token is invalid. Would you like to get a new token to proceed?\n"
+#~ msgstr ""
+#~ "Zure tokena ez da baliozkoa. Token berri bat lortzea nahi duzu aurrera "
+#~ "jarraitzeko?\n"
+
+#~ msgid "Flickr/23/Zooomr Export"
+#~ msgstr "Flickr/23/Zooomr esportatzea"
+
+#~ msgid "Export to &23..."
+#~ msgstr "Esportatu &23 webgunera..."
+
+#~ msgid "Export to &Zooomr..."
+#~ msgstr "Esportatu &Zooomr webgunera..."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Iñaki Larrañaga Murgoitio"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "dooteo@euskalgnu.org"
+
+#~ msgid "New PhotoSet"
+#~ msgstr "Argazkien multzo berria"
+
+#~ msgid "<h3>Create New PhotoSet </h3>"
+#~ msgstr "<h3>Sortu argazkien multzo berria</h3>"
+
+#~ msgid "&OK"
+#~ msgstr "&Ados"
+
+#~ msgid "Title (required):"
+#~ msgstr "Titulua (beharrezkoa):"
+
+#~ msgid "Description (optional)"
+#~ msgstr "Azalpena (aukerakoa)"
+
+#~ msgid "Account"
+#~ msgstr "Kontua"
+
+#~ msgctxt "account settings"
+#~ msgid "Username: "
+#~ msgstr "Erabiltzaile-izena: "
+
+#~ msgid "Use a different account"
+#~ msgstr "Erabili beste kontu bat"
+
+#~ msgid "PhotoSet:"
+#~ msgstr "Argazkien multzoa:"
+
+#~ msgid "&New PhotoSet"
+#~ msgstr "Argazkien multzo &berria:"
+
+#~ msgid "Resizing Options"
+#~ msgstr "Tamaina aldatzeko aukerak"
+
+#~ msgid "Resize photos before uploading"
+#~ msgstr "Aldatu argazkien tamainak igo aurretik"
+
+#~ msgid "Maximum dimension (pixels):"
+#~ msgstr "Gehienezko dimentsioak (pixeletan):"
+
+#~ msgid "JPEG Image Quality (higher is better):"
+#~ msgstr "JPEG irudiaren kalitatea (altuagoa hobeagoa):"
+
+#~ msgid "File List"
+#~ msgstr "Fitxategien zerrenda"
+
+#~ msgid "Upload Options"
+#~ msgstr "Igotzeko aukerak"
+
+#~ msgid "Handbook"
+#~ msgstr "Eskuliburua"
+
+#~ msgid "Uploading file %1"
+#~ msgstr "%1 fitxategia igotzen"
+
+#, fuzzy
+#~| msgid "More tag options"
+#~ msgid "Less tag options"
+#~ msgstr "Etiketen aukera gehiago"
+
+#, fuzzy
+#~| msgid "More publication options"
+#~ msgid "Less publication options"
+#~ msgstr "Argitalpenaren aukera gehiago"
+
+#~ msgid "Override Default Options"
+#~ msgstr "Écraser les options par défaut"
+
+#~ msgid "Name (optional):"
+#~ msgstr "Nom (facultatif) :"
+
+#~ msgid "User Name: "
+#~ msgstr "Nom d'utilisateur :"
+
+#~ msgid "Title (optional):"
+#~ msgstr "Titre (facultatif) :"
+
+#~ msgid "Thumbnail"
+#~ msgstr "Miniature"
+
+#~ msgid "File Name"
+#~ msgstr "Nom de fichier"
+
+#~ msgid "&Add"
+#~ msgstr "&Ajouter"
+
+#~ msgid "&Remove"
+#~ msgstr "Enleve&r"

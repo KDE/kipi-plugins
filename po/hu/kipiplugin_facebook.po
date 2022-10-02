@@ -1,0 +1,471 @@
+# Copyright (C) 2012 This_file_is_part_of_KDE
+# This file is distributed under the same license as the KDE package.
+#
+# Balázs Úr <urbalazs@gmail.com>, 2012, 2013.
+# Kiszel Kristóf <ulysses@kubuntu.org>, 2016.
+# Kristof Kiszel <kiszel.kristof@gmail.com>, 2021.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2021-10-29 13:59+0200\n"
+"Last-Translator: Kristof Kiszel <kiszel.kristof@gmail.com>\n"
+"Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 21.08.2\n"
+
+#: fbalbum.cpp:52
+#, kde-format
+msgid "Privacy setting of the album that will be created (required)."
+msgstr "A létrehozásra kerülő album adatvédelmi beállítása (kötelező)."
+
+#: fbalbum.cpp:54
+#, kde-format
+msgid "Only Me"
+msgstr "Csak én"
+
+#: fbalbum.cpp:56
+#, kde-format
+msgid "Only Friends"
+msgstr "Csak ismerősök"
+
+#: fbalbum.cpp:58
+#, kde-format
+msgid "Friends of Friends"
+msgstr "Ismerősök ismerősei"
+
+#: fbalbum.cpp:60
+#, kde-format
+msgid "My Networks and Friends"
+msgstr "Kapcsolati hálóm és ismerősök"
+
+#: fbalbum.cpp:62
+#, kde-format
+msgid "Everyone"
+msgstr "Mindenki"
+
+#: fbtalker.cpp:201
+#, kde-format
+msgid "Validate previous session..."
+msgstr "Előző munkamenet érvényesítése…"
+
+#: fbtalker.cpp:229
+#, kde-format
+msgid "Upgrading to OAuth..."
+msgstr "Frissítés OAuth-ra…"
+
+#: fbtalker.cpp:279
+#, kde-format
+msgid "Facebook Application Authorization"
+msgstr "Facebook alkalmazás felhatalmazás"
+
+#: fbtalker.cpp:290
+#, kde-format
+msgid ""
+"Please follow the instructions in the browser window. When done, copy the "
+"Internet address from your browser into the textbox below and press \"OK\"."
+msgstr ""
+"Kérjük kövesse a böngészőablakban lévő utasításokat. Ha végzett, másolja az "
+"internetcímet a böngészőből a lenti szövegdobozba és nyomja meg az „OK” "
+"gombot."
+
+#: fbtalker.cpp:352
+#, kde-format
+msgid "Canceled by user."
+msgstr "Megszakítva a felhasználó által."
+
+#: fbtalker.cpp:549
+#, kde-format
+msgid "The service is not available at this time."
+msgstr "A szolgáltatás jelenleg nem elérhető."
+
+#: fbtalker.cpp:552
+#, kde-format
+msgid "The application has reached the maximum number of requests allowed."
+msgstr "Az alkalmazás elérte a megengedett kérések maximális számát."
+
+#: fbtalker.cpp:555
+#, kde-format
+msgid "Invalid session key or session expired. Try to log in again."
+msgstr ""
+"Érvénytelen munkamenetkulcs vagy a munkamenet lejárt. Próbáljon meg újra "
+"belépni."
+
+#: fbtalker.cpp:558
+#, kde-format
+msgid "Invalid album ID."
+msgstr "Érvénytelen albumazonosító."
+
+#: fbtalker.cpp:561
+#, kde-format
+msgid "Album is full."
+msgstr "Az album tele van."
+
+#: fbtalker.cpp:564
+#, kde-format
+msgid "Missing or invalid file."
+msgstr "Hiányzó vagy érvénytelen fájl."
+
+#: fbtalker.cpp:567
+#, kde-format
+msgid "Too many unapproved photos pending."
+msgstr "Túl sok jóváhagyás nélküli fénykép van függőben."
+
+#: fbtalker.cpp:601
+#, kde-format
+msgid "Error"
+msgstr "Hiba"
+
+#: fbwindow.cpp:109
+#, kde-format
+msgid "Export to Facebook Web Service"
+msgstr "Exportálás a Facebook webszolgáltatásba"
+
+#: fbwindow.cpp:111
+#, kde-format
+msgid "Start Upload"
+msgstr "Feltöltés indítása"
+
+#: fbwindow.cpp:112
+#, kde-format
+msgid "Start upload to Facebook web service"
+msgstr "Feltöltés indítása a Facebook webszolgáltatásba"
+
+#: fbwindow.cpp:140
+#, kde-format
+msgid "Facebook Export"
+msgstr "Facebook exportálás"
+
+#: fbwindow.cpp:141
+#, kde-format
+msgid "A tool to export image collection to/from Facebook web service."
+msgstr ""
+"Segédprogram képgyűjtemények importálásához/exportálásához a Facebook "
+"webszolgáltatásba/webszolgáltatásból."
+
+#: fbwindow.cpp:143
+#, kde-format
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2012, Gilles Caulier\n"
+"(c) 2008-2009, Luka Renko"
+msgstr ""
+"© Vardhman Jain, 2005-2008.\n"
+"© Gilles Caulier, 2008-2012.\n"
+"© Luka Renko, 2008-2009."
+
+#: fbwindow.cpp:147
+#, kde-format
+msgid "Luka Renko"
+msgstr "Luka Renko"
+
+#: fbwindow.cpp:148
+#, kde-format
+msgid "Author and maintainer"
+msgstr "Szerző és karbantartó"
+
+#: fbwindow.cpp:361 fbwindow.cpp:395
+#, kde-format
+msgid "<auto create>"
+msgstr "<automatikus létrehozás>"
+
+#: fbwindow.cpp:372 fbwindow.cpp:390
+#, kde-format
+msgid "Facebook Call Failed: %1\n"
+msgstr "A Facebook-hívás nem sikerült: %1\n"
+
+#: fbwindow.cpp:471
+#, kde-format
+msgid "Warning"
+msgstr "Figyelmeztetés"
+
+#: fbwindow.cpp:472
+#, kde-format
+msgid ""
+"After you have been logged out in the browser, click \"Continue\" to "
+"authenticate for another account"
+msgstr ""
+"Miután kijelentkezett a böngészőben, kattintson a „Folytatás” gombra másik "
+"fiók hitelesítéséhez"
+
+#: fbwindow.cpp:476
+#, kde-format
+msgid "Continue"
+msgstr "Folytatás"
+
+#: fbwindow.cpp:477
+#, kde-format
+msgid "Cancel"
+msgstr "Mégsem"
+
+#: fbwindow.cpp:539
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: fbwindow.cpp:543
+#, kde-format
+msgid "Facebook export"
+msgstr "Facebook exportálás"
+
+#: fbwindow.cpp:648 fbwindow.cpp:663
+#, kde-format
+msgid "Cannot open file"
+msgstr "Nem nyitható meg a fájl"
+
+#: fbwindow.cpp:686
+#, kde-format
+msgid "Uploading Failed"
+msgstr "Sikertelen feltöltés"
+
+#: fbwindow.cpp:687
+#, kde-format
+msgid ""
+"Failed to upload photo into Facebook: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Nem sikerült feltölteni a fényképeket a Facebookba: %1\n"
+"Szeretné folytatni?"
+
+#: fbwindow.cpp:706
+#, kde-format
+msgid "Facebook Call Failed: %1"
+msgstr "A Facebook-hívás nem sikerült: %1"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_facebookui.rc:7
+#, kde-format
+msgid "&Export"
+msgstr "&Exportálás"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_facebookui.rc:13
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Fő eszköztár"
+
+#: plugin_facebook.cpp:94
+#, kde-format
+msgid "Export to &Facebook..."
+msgstr "Exportálás a &Facebookra…"
+
+#~ msgid "&Import"
+#~ msgstr "&Importálás"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Úr Balázs"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "urbalazs@gmail.com"
+
+#~ msgid "Facebook New Album"
+#~ msgstr "Facebook új album"
+
+#~ msgid "Title of the album that will be created (required)."
+#~ msgstr "A létrehozásra kerülő album címe (kötelező)."
+
+#~ msgid "Location of the album that will be created (optional)."
+#~ msgstr "A létrehozásra kerülő album helye (opcionális)."
+
+#~ msgid "Description of the album that will be created (optional)."
+#~ msgstr "A létrehozásra kerülő album leírása (opcionális)."
+
+#~ msgctxt "new facebook album"
+#~ msgid "Title:"
+#~ msgstr "Cím:"
+
+#~ msgctxt "new facebook album"
+#~ msgid "Location:"
+#~ msgstr "Hely:"
+
+#~ msgctxt "new facebook album"
+#~ msgid "Description:"
+#~ msgstr "Leírás:"
+
+#~ msgctxt "new facebook album"
+#~ msgid "Privacy:"
+#~ msgstr "Adatvédelem:"
+
+#~ msgid "This is the list of images to upload to your Facebook account."
+#~ msgstr "Ez a Facebook-fiókjába feltöltendő képek listája."
+
+#~ msgid ""
+#~ "This is a clickable link to open the Facebook home page in a web browser."
+#~ msgstr ""
+#~ "Ez egy kattintható hivatkozás, amely megnyitja a Facebook kezdőlapot a "
+#~ "webböngészőben."
+
+#~ msgid "Account"
+#~ msgstr "Fiók"
+
+#~ msgid "This is the Facebook account that is currently logged in."
+#~ msgstr "Ez az a Facebook-fiók, amellyel jelenleg be van jelentkezve."
+
+#~ msgctxt "facebook account settings"
+#~ msgid "Name:"
+#~ msgstr "Név:"
+
+#~ msgid "Permission:"
+#~ msgstr "Jogosultság:"
+
+#~ msgid ""
+#~ "Permission of KIPI Plugin application to upload photos directly. If not, "
+#~ "user will need to manually approve uploaded photos in Facebook."
+#~ msgstr ""
+#~ "A KIPI-bővítmény alkalmazás jogosultsága a fényképek közvetlen "
+#~ "feltöltéséhez. Ha nincs, a felhasználónak saját kezűleg kell elfogadnia a "
+#~ "feltöltött képeket a Facebookon."
+
+#~ msgid "Change Account"
+#~ msgstr "Fiók változtatása"
+
+#~ msgid "Logout and change Facebook Account used for transfer"
+#~ msgstr "Kijelentkezés és az átvitelhez használt Facebook-fiók változtatása"
+
+#~ msgid "Download Selection"
+#~ msgstr "Kijelölés letöltése"
+
+#~ msgid "This is the selection of Facebook albums/photos to download."
+#~ msgstr "Ez a letöltendő Facebook albumok/fényképek kijelölése."
+
+#~ msgid "Destination"
+#~ msgstr "Cél"
+
+#~ msgid ""
+#~ "This is the Facebook album to which selected photos will be uploaded."
+#~ msgstr ""
+#~ "Ez az a Facebook album, amelybe a kijelölt fényképek feltöltésre kerülnek."
+
+#~ msgid "My &Album"
+#~ msgstr "Saját &album"
+
+#~ msgid "Download complete album of currently logged in user."
+#~ msgstr "A jelenleg bejelentkezett felhasználó teljes albumának letöltése."
+
+#~ msgid "Album &of My Friend"
+#~ msgstr "Is&merősöm albuma"
+
+#~ msgid "Download complete album of selected friend."
+#~ msgstr "A kiválasztott ismerős teljes albumának letöltése."
+
+#~ msgid "Photos of &Me"
+#~ msgstr "Az én fé&nyképeim"
+
+#~ msgid "Download all photos of currently logged in user."
+#~ msgstr "A jelenleg bejelentkezett felhasználó összes fényképének letöltése."
+
+#~ msgid "Photos of My &Friend"
+#~ msgstr "I&smerősöm fényképei"
+
+#~ msgid "Download all photos of selected friend."
+#~ msgstr "A kiválasztott ismerős összes fényképének letöltése."
+
+#~ msgid "Friend:"
+#~ msgstr "Ismerős:"
+
+#~ msgid "Album:"
+#~ msgstr "Album:"
+
+#~ msgid "New Album"
+#~ msgstr "Új album"
+
+#~ msgid "Create new Facebook album"
+#~ msgstr "Új Facebook album létrehozása"
+
+#~ msgctxt "facebook album list"
+#~ msgid "Reload"
+#~ msgstr "Újratöltés"
+
+#~ msgid "Reload album list"
+#~ msgstr "Albumlista újratöltése"
+
+#~ msgid "This is the location to which Facebook images will be downloaded."
+#~ msgstr "Ez az a hely, ahova a Facebook képek letöltésre kerülnek."
+
+#~ msgid "Options"
+#~ msgstr "Beállítások"
+
+#~ msgid "These are options that will be applied to photos before upload."
+#~ msgstr ""
+#~ "Ezek azok a beállítások, amelyek alkalmazva lesznek a képekre feltöltés "
+#~ "előtt."
+
+#~ msgid "Resize photos before uploading"
+#~ msgstr "Fényképek átméretezése feltöltés előtt"
+
+#~ msgid "Maximum dimension:"
+#~ msgstr "Maximum dimenzió:"
+
+#~ msgid "JPEG quality:"
+#~ msgstr "JPEG minőség:"
+
+#~ msgid "Direct upload"
+#~ msgstr "Közvetlen feltöltés"
+
+#~ msgid "Uploaded photos will not need manual approval by user."
+#~ msgstr ""
+#~ "A feltöltött fényképekhez nem lesz szükség a felhasználó saját kezű "
+#~ "elfogadására."
+
+#~ msgid "Manual upload approval"
+#~ msgstr "Saját kezű feltöltés elfogadás"
+
+#~ msgid ""
+#~ "Uploaded photos will wait in pending state until manually approved by "
+#~ "user."
+#~ msgstr ""
+#~ "A feltöltött fényképek függő állapotban lesznek a felhasználó saját kezű "
+#~ "elfogadásáig."
+
+#~ msgid "Import from Facebook Web Service"
+#~ msgstr "Importálás a Facebook webszolgáltatásból"
+
+#~ msgid "Start Download"
+#~ msgstr "Letöltés indítása"
+
+#~ msgid "Start download from Facebook web service"
+#~ msgstr "Letöltés indítása a Facebook webszolgáltatásból"
+
+#~ msgid "Facebook Import/Export"
+#~ msgstr "Facebook Importálás/Exportálás"
+
+#~ msgctxt "name of special Facebook album for profile pictures"
+#~ msgid "Profile Pictures"
+#~ msgstr "Profilképek"
+
+#~ msgid "Facebook import"
+#~ msgstr "Facebook importálás"
+
+#~ msgid ""
+#~ "Failed to save photo: %1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Nem sikerült elmenteni a fényképet: %1\n"
+#~ "Szeretné folytatni?"
+
+#~ msgid ""
+#~ "Failed to download photo: %1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Nem sikerült letölteni a fényképet: %1\n"
+#~ "Szeretné folytatni?"
+
+#~ msgid "Import from &Facebook..."
+#~ msgstr "Importálás a &Facebookról…"
+
+#~ msgid ""
+#~ "Please follow the instructions in the browser window. Press \"OK\" when "
+#~ "done."
+#~ msgstr ""
+#~ "Kérjük kövesse a böngészőablakban lévő utasításokat. Nyomja meg az „OK” "
+#~ "gombot, ha végzett."
+
+#~ msgid "Photos taken with KDE"
+#~ msgstr "KDE-vel készített fényképek"

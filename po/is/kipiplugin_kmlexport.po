@@ -1,0 +1,503 @@
+# translation of kipiplugin_kmlexport.po to Icelandic
+# Copyright (C) 2011is_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Sveinn í Felli <sveinki@nett.is>, 2011, 2015, 2016, 2018.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_kmlexport\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2018-01-04 12:15+0000\n"
+"Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
+"Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
+"Language: is\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: Plural-Forms: nplurals=2; plural=n != 1;\n"
+"\n"
+"\n"
+"\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: kmlexport.cpp:90
+#, kde-format
+msgid "Generating KML file..."
+msgstr "Bý til KML skrá..."
+
+#: kmlexport.cpp:180 kmlexport.cpp:197
+#, kde-format
+msgid "Could not read image '%1'"
+msgstr "Gat ekki lesið myndina '%1'"
+
+#: kmlexport.cpp:189
+#, kde-format
+msgid "Format of image '%1' is unknown"
+msgstr "Snið myndarinnar '%1' er óþekkjanlegt"
+
+#: kmlexport.cpp:207
+#, kde-format
+msgid "Error loading image '%1'"
+msgstr "Villa við hleðslu myndarinnar '%1'"
+
+#: kmlexport.cpp:245
+#, kde-format
+msgid "Could not save image '%1' to '%2'"
+msgstr "Gat ekki vistað myndina '%1' sem '%2'"
+
+#: kmlexport.cpp:350
+#, kde-format
+msgid "Creation of placemark '%1'"
+msgstr "Bjó til staðarmerkið '%1'"
+
+#: kmlexport.cpp:358
+#, kde-format
+msgid "Could not save icon for image '%1' to '%2'"
+msgstr "Gat ekki vistað táknmynd fyrir myndina '%1' í '%2'"
+
+#: kmlexport.cpp:390
+#, kde-format
+msgid "No GPX file chosen."
+msgstr "Engin GPX skrá valin."
+
+#: kmlexport.cpp:399
+#, kde-format
+msgid "Cannot parse %1 GPX file."
+msgstr "Get ekki lesið %1 GPX skrá."
+
+#: kmlexport.cpp:405
+#, kde-format
+msgid "The %1 GPX file do not have a date-time track to use."
+msgstr "GPX skráin %1 inniheldur ekki nothæfan tímastimplaðan feril."
+
+#: kmlexport.cpp:412
+#, kde-format
+msgid "Tracks"
+msgstr "Ferlar"
+
+#: kmlexport.cpp:504
+#, kde-format
+msgid "No position data for '%1'"
+msgstr "Engin staðsetningargögn fyrir '%1'"
+
+#: kmlexport.cpp:516
+#, kde-format
+msgid "Missing position"
+msgstr "Vantar staðsetningu"
+
+#: kmlexport.cpp:517
+#, kde-format
+msgid "No position data for 1 picture"
+msgid_plural "No position data for %1 pictures"
+msgstr[0] "Engin staðsetningargögn fyrir eina mynd"
+msgstr[1] "Engin staðsetningargögn fyrir %1 myndir"
+
+#: kmlexport.cpp:526
+#, kde-format
+msgid "Cannot open file for writing"
+msgstr "Get ekki opnað skrá til skrifunar"
+
+#: kmlexport.cpp:539
+#, kde-format
+msgid "Move to final directory"
+msgstr "Færa í endanlega möppu"
+
+#: kmlexport.cpp:543
+#, kde-format
+msgid "Cannot move data to destination directory"
+msgstr "Get ekki fært gögn í möttökumöppu"
+
+#: kmlgpsdataparser.cpp:63
+#, kde-format
+msgid "Track"
+msgstr "Ferill"
+
+#: kmlgpsdataparser.cpp:89
+#, kde-format
+msgid "Points"
+msgstr "Punktar"
+
+#: kmlgpsdataparser.cpp:100
+#, kde-format
+msgid "Point"
+msgstr "Punktur"
+
+#: kmlwindow.cpp:68 kmlwindow.cpp:284
+#, kde-format
+msgid "KML Export"
+msgstr "KML útflutningur"
+
+#: kmlwindow.cpp:71
+#, kde-format
+msgctxt "@action:button"
+msgid "&Export"
+msgstr "&Flytja út"
+
+#: kmlwindow.cpp:82
+#, kde-format
+msgid "Target Preferences"
+msgstr "Eiginleikar úttaks"
+
+#: kmlwindow.cpp:86
+#, kde-format
+msgid "Target Type"
+msgstr "Gerð úttaks"
+
+#: kmlwindow.cpp:89
+#, kde-format
+msgid "&Local or web target used by GoogleEarth"
+msgstr "&Staðvært eða vefúttak notað af GoogleEarth"
+
+#: kmlwindow.cpp:92
+#, kde-format
+msgid "Web target used by GoogleMaps"
+msgstr "Vefúttak notað af GoogleMap"
+
+#: kmlwindow.cpp:93
+#, kde-format
+msgid ""
+"When using GoogleMaps, all images must have complete URLs, icons are "
+"squared, and when drawing a track, only line track is exported."
+msgstr ""
+"Þegar stuðst er við GoogleMaps, verða allar myndir að eiga sér heilar slóðir "
+"(fullt URL), táknmyndir verða að vera ferningar, og við teikningu ferla "
+"verða einungis linuferlar fluttir út."
+
+#: kmlwindow.cpp:104
+#, kde-format
+msgid "Picture Altitude:"
+msgstr "Hæð ljósmyndunar:"
+
+#: kmlwindow.cpp:106 kmlwindow.cpp:230
+#, kde-format
+msgid "clamp to ground"
+msgstr "límt við jörð"
+
+#: kmlwindow.cpp:107 kmlwindow.cpp:231
+#, kde-format
+msgid "relative to ground"
+msgstr "miðað við jörð"
+
+#: kmlwindow.cpp:108 kmlwindow.cpp:232
+#, kde-format
+msgid "absolute"
+msgstr "algilt"
+
+#: kmlwindow.cpp:109
+#, kde-format
+msgid ""
+"<p>Specifies how pictures are displayed<dl><dt>clamp to ground (default)</"
+"dt><dd>Indicates to ignore an altitude specification</dd><dt>relative to "
+"ground</dt><dd>Sets the altitude of the element relative to the actual "
+"ground elevation of a particular location.</dd><dt>absolute</dt><dd>Sets the "
+"altitude of the coordinate relative to sea level, regardless of the actual "
+"elevation of the terrain beneath the element.</dd></dl>"
+msgstr ""
+"<p>Tiltekur hvernig myndir eru sýndar<dl><dt>límt við jörð (sjálfgefið)</"
+"dt><dd>Hundsar aðrar hæðarupplýsingar</dd><dt>afstætt miðað við jörð</"
+"dt><dd>Setur hæð hlutar miðað við raunverulega hæð jarðar á tilteknum stað.</"
+"dd><dt>algilt</dt><dd>Setur hæð hlutar miðað við sjávarmál, hver svo sem hæð "
+"jarðar er á þeim stað.</dd></dl>"
+
+#: kmlwindow.cpp:119
+#, kde-format
+msgid "Destination Directory:"
+msgstr "Móttökumappa:"
+
+#: kmlwindow.cpp:123
+#, kde-format
+msgid "Select a directory in which to save the kml file and pictures"
+msgstr "Veldu möppu til að vista í kml skrána og myndirnar"
+
+#: kmlwindow.cpp:125
+#, kde-format
+msgid "Destination Path:"
+msgstr "Úttaksslóð:"
+
+#: kmlwindow.cpp:127
+#, kde-format
+msgid "Filename:"
+msgstr "Skráarheiti:"
+
+#: kmlwindow.cpp:145
+#, kde-format
+msgid "Sizes"
+msgstr "Stærðir"
+
+#: kmlwindow.cpp:147
+#, kde-format
+msgid "Icon Size:"
+msgstr "Táknmyndastærð:"
+
+#: kmlwindow.cpp:152
+#, kde-format
+msgid "Image Size:"
+msgstr "Stærð myndar:"
+
+#: kmlwindow.cpp:167
+#, kde-format
+msgid "GPX Tracks"
+msgstr "GPX ferlar"
+
+#: kmlwindow.cpp:171
+#, kde-format
+msgid "Draw GPX Track"
+msgstr "Teikna GPX feril"
+
+#: kmlwindow.cpp:174
+#, kde-format
+msgid "GPX file:"
+msgstr "GPX skrá:"
+
+#: kmlwindow.cpp:177
+#, kde-format
+msgid "%1|GPS Exchange Format"
+msgstr "%1|GPS samskiptasnið"
+
+#: kmlwindow.cpp:178
+#, kde-format
+msgid "Select GPX File to Load"
+msgstr "Velja GPX skrá til að hlaða inn"
+
+#: kmlwindow.cpp:181
+#, kde-format
+msgid "Time Zone:"
+msgstr "Tímabelti:"
+
+#: kmlwindow.cpp:183
+#, kde-format
+msgid "GMT-12:00"
+msgstr "GMT-12:00"
+
+#: kmlwindow.cpp:184
+#, kde-format
+msgid "GMT-11:00"
+msgstr "GMT-11:00"
+
+#: kmlwindow.cpp:185
+#, kde-format
+msgid "GMT-10:00"
+msgstr "GMT-10:00"
+
+#: kmlwindow.cpp:186
+#, kde-format
+msgid "GMT-09:00"
+msgstr "GMT-09:00"
+
+#: kmlwindow.cpp:187
+#, kde-format
+msgid "GMT-08:00"
+msgstr "GMT-08:00"
+
+#: kmlwindow.cpp:188
+#, kde-format
+msgid "GMT-07:00"
+msgstr "GMT-07:00"
+
+#: kmlwindow.cpp:189
+#, kde-format
+msgid "GMT-06:00"
+msgstr "GMT-06:00"
+
+#: kmlwindow.cpp:190
+#, kde-format
+msgid "GMT-05:00"
+msgstr "GMT-05:00"
+
+#: kmlwindow.cpp:191
+#, kde-format
+msgid "GMT-04:00"
+msgstr "GMT-04:00"
+
+#: kmlwindow.cpp:192
+#, kde-format
+msgid "GMT-03:00"
+msgstr "GMT-03:00"
+
+#: kmlwindow.cpp:193
+#, kde-format
+msgid "GMT-02:00"
+msgstr "GMT-02:00"
+
+#: kmlwindow.cpp:194
+#, kde-format
+msgid "GMT-01:00"
+msgstr "GMT-01:00"
+
+#: kmlwindow.cpp:195
+#, kde-format
+msgid "GMT"
+msgstr "GMT"
+
+#: kmlwindow.cpp:196
+#, kde-format
+msgid "GMT+01:00"
+msgstr "GMT+01:00"
+
+#: kmlwindow.cpp:197
+#, kde-format
+msgid "GMT+02:00"
+msgstr "GMT+02:00"
+
+#: kmlwindow.cpp:198
+#, kde-format
+msgid "GMT+03:00"
+msgstr "GMT+03:00"
+
+#: kmlwindow.cpp:199
+#, kde-format
+msgid "GMT+04:00"
+msgstr "GMT+04:00"
+
+#: kmlwindow.cpp:200
+#, kde-format
+msgid "GMT+05:00"
+msgstr "GMT+05:00"
+
+#: kmlwindow.cpp:201
+#, kde-format
+msgid "GMT+06:00"
+msgstr "GMT+06:00"
+
+#: kmlwindow.cpp:202
+#, kde-format
+msgid "GMT+07:00"
+msgstr "GMT+07:00"
+
+#: kmlwindow.cpp:203
+#, kde-format
+msgid "GMT+08:00"
+msgstr "GMT+08:00"
+
+#: kmlwindow.cpp:204
+#, kde-format
+msgid "GMT+09:00"
+msgstr "GMT+09:00"
+
+#: kmlwindow.cpp:205
+#, kde-format
+msgid "GMT+10:00"
+msgstr "GMT+10:00"
+
+#: kmlwindow.cpp:206
+#, kde-format
+msgid "GMT+11:00"
+msgstr "GMT+11:00"
+
+#: kmlwindow.cpp:207
+#, kde-format
+msgid "GMT+12:00"
+msgstr "GMT+12:00"
+
+#: kmlwindow.cpp:208
+#, kde-format
+msgid "GMT+13:00"
+msgstr "GMT+13:00"
+
+#: kmlwindow.cpp:209
+#, kde-format
+msgid "GMT+14:00"
+msgstr "GMT+14:00"
+
+#: kmlwindow.cpp:210
+#, kde-format
+msgid ""
+"Sets the time zone of the camera during picture shooting, so that the time "
+"stamps of the GPS can be converted to match the local time"
+msgstr ""
+"Stillir tímabelti myndavélar á meðan myndataka fór fram, svo að hægt sé að "
+"breyta tímamerki GPS hnita til að samsvara staðartíma"
+
+#: kmlwindow.cpp:214
+#, kde-format
+msgid "Track Width:"
+msgstr "Breidd ferils:"
+
+#: kmlwindow.cpp:218
+#, kde-format
+msgid "Track Color:"
+msgstr "Litur ferils:"
+
+#: kmlwindow.cpp:222
+#, kde-format
+msgid "Opacity (%):"
+msgstr "Ógegnsæi (%):"
+
+#: kmlwindow.cpp:228
+#, kde-format
+msgid "Track Altitude:"
+msgstr "Hæð ferils:"
+
+#: kmlwindow.cpp:233
+#, kde-format
+msgid ""
+"<p>Specifies how the points are displayed<dl><dt>clamp to ground (default)</"
+"dt><dd>Indicates to ignore an altitude specification</dd><dt>relative to "
+"ground</dt><dd>Sets the altitude of the element relative to the actual "
+"ground elevation of a particular location.</dd><dt>absolute</dt><dd>Sets the "
+"altitude of the coordinate relative to sea level, regardless of the actual "
+"elevation of the terrain beneath the element.</dd></dl>"
+msgstr ""
+"<p>Tiltekur hvernig punktar eru sýndir<dl><dt>límt við jörð (sjálfgefið)</"
+"dt><dd>Hundsar aðrar hæðarupplýsingar</dd><dt>miðað við jörð</dt><dd>Setur "
+"hæð hlutar miðað við raunverulega hæð jarðar á tilteknum stað.</"
+"dd><dt>algilt</dt><dd>Setur hæð hlutar miðað við sjávarmál, hver svo sem hæð "
+"jarðar er á þeim stað.</dd></dl>"
+
+#: kmlwindow.cpp:285
+#, kde-format
+msgid "A tool to export to KML"
+msgstr "Verkfæri til að flytja út í KML"
+
+#: kmlwindow.cpp:286
+#, kde-format
+msgid "(c) 2006-2007, Stéphane Pontier"
+msgstr "(c) 2006-2007, Stéphane Pontier"
+
+#: kmlwindow.cpp:288
+#, kde-format
+msgid "Stéphane Pontier"
+msgstr "Stéphane Pontier"
+
+#: kmlwindow.cpp:289 kmlwindow.cpp:293
+#, kde-format
+msgid "Developer and maintainer"
+msgstr "Forritun og viðhald"
+
+#: kmlwindow.cpp:292
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: kmlwindow.cpp:296
+#, kde-format
+msgid "Michael G. Hansen"
+msgstr "Michael G. Hansen"
+
+#: kmlwindow.cpp:297
+#, kde-format
+msgid "Maintainer"
+msgstr "Umsjónarmaður"
+
+#: plugin_kmlexport.cpp:92
+#, kde-format
+msgid "Export to KML..."
+msgstr "KML útflutningur..."
+
+#~ msgid "A Kipi plugin for KML exporting"
+#~ msgstr "KIPI-viðbót til KML útflutnings"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Sveinn í Felli"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "sv1@fellsnet.is"
+
+#~ msgid "Could not create '%1'"
+#~ msgstr "Gat ekki búið til '%1'"
+
+#~ msgid "Handbook"
+#~ msgstr "Handbók"

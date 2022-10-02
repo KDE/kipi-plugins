@@ -1,0 +1,679 @@
+# translation of kipiplugin_flickrexport.po to Khmer
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2010, 2011, 2012.
+# Sophea <sophea@khmeros.info>, 2012.
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_flickrexport\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2012-07-09 11:16+0700\n"
+"Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
+"Language-Team: Khmer <support@khmeros.info>\n"
+"Language: km\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: KBabel 1.11.4\n"
+"X-Language: km-KH\n"
+
+#: comboboxintermediate.h:54
+#, kde-format
+msgid "Various"
+msgstr "ផ្សេងៗ​"
+
+#: flickrlist.cpp:420
+#, kde-format
+msgid ""
+"Check if photo should be publicly visible or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"គូស​ធីក បើ​សិន​ជា​ចង់​ឲ្យ​រូប​ថត​នេះ​មើល​ឃើញ​ជា​សាធារណៈ ឬ​ប្រើ​ផ្ទាំង​ជម្រើស​ ផ្ទុក​ឡើង​ ដើម្បី​បញ្ជាក់​វា​សម្រាប់​រូប​"
+"ភាព​​ទាំង​អស់"
+
+#: flickrlist.cpp:423
+#, kde-format
+msgid ""
+"Check if photo should be visible to family or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"គូស​ធីក​ បើ​សិន​ជា​អ្នក​ចង់​ឲ្យ​ក្រុម​គ្រួសារ​របស់​អ្នក​មើល​ឃើញ​រូប​​ថត​នេះ ឬ​ប្រើ​ផ្ទាំង​ជម្រើស​ ផ្ទុក​ឡើង ដើម្បី​បញ្ជាក់​"
+"វា​សម្រាប់​រូបភាព​ទាំង​អស់ ។"
+
+#: flickrlist.cpp:426
+#, kde-format
+msgid ""
+"Check if photo should be visible to friends or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"គូស​ធីក បើ​សិនជា​អ្នក​ចង់​ឲ្យ​មិត្តភ័ក្ដិ​របស់​អ្នក​មើល​ឃើញ​រូប​ថត​នេះ ឬ​ប្រើ​ផ្ទាំង​ជម្រើស ផ្ទុក​ឡើង ដើម្បី​បញ្ជាក់​វា​"
+"សម្រាប់​រូបភាព​ទាំង​អស់"
+
+#: flickrlist.cpp:429
+#, kde-format
+msgid ""
+"Indicate the safety level for the photo or use Upload Options tab to specify "
+"this for all images"
+msgstr ""
+"បង្ហាញ​​កម្រិត​សុវត្ថិភាព​ សម្រាប់​រូបថត​ ឬ​​ប្រើ​​​​ផ្ទាំង​ជម្រើស​ផ្ទុក​ឡើង​ ដើម្បី​បញ្ជាក់​វា​ សម្រាប់​រូបភាព​ទាំង​អស់​​"
+
+#: flickrlist.cpp:432
+#, kde-format
+msgid ""
+"Indicate what kind of image this is or use Upload Options tab to specify "
+"this for all images"
+msgstr "បង្ហាញ​ប្រភេទ​រូបភាព ឬ​ប្រើ​ផ្ទាំង​ជម្រើស​ ផ្ទុក​ឡើង ដើម្បី​បញ្ជាក់​វា​សម្រាប់​រូបភាព​ទាំង​អស់"
+
+#: flickrlist.cpp:445
+#, kde-format
+msgid ""
+"Add extra tags per image or use Upload Options tab to add tags for all images"
+msgstr "បន្ថែម​ស្លាក​ខាងក្រៅ​ចំ​ពោះ​រូប​ថត​ ឬ​ប្រើ​ផ្ទាំង​ជម្រើស​ផ្ទុក​ឡើង​ សម្រាប់​រូបភាព​ទាំងអស់​​"
+
+#: flickrlist.cpp:462
+#, kde-format
+msgid "Enter extra tags, separated by commas."
+msgstr "បញ្ចូល​ស្លាក់​បន្ថែម​​ ដោយ​សញ្ញា​ក្បៀស​ដែល​​បំបែក​ដោយ​ឡែក​ ។​​"
+
+#: flickrtalker.cpp:265
+#, kde-format
+msgid "Getting the maximum allowed file size."
+msgstr ""
+
+#: flickrtalker.cpp:550
+#, kde-format
+msgid "File Size exceeds maximum allowed file size."
+msgstr ""
+
+#: flickrtalker.cpp:603
+#, kde-format
+msgid "No photo specified"
+msgstr "គ្មាន​រូបថត​ដែល​បាន​បញ្ជាក់​​ឡើយ​"
+
+#: flickrtalker.cpp:607
+#, kde-format
+msgid "General upload failure"
+msgstr "ភាព​បរាជ័យ​ផ្ទុក​ឡើង​ទូទៅ​​"
+
+#: flickrtalker.cpp:611
+#, kde-format
+msgid "Filesize was zero"
+msgstr "ទំហំ​ឯកសារ​សូន្យ​"
+
+#: flickrtalker.cpp:615
+#, kde-format
+msgid "Filetype was not recognized"
+msgstr "ប្រភេទ​ឯកសារ​មិន​ត្រូវ​បាន​ទទួល​ស្គាល់​​"
+
+#: flickrtalker.cpp:619
+#, kde-format
+msgid "User exceeded upload limit"
+msgstr "ព្រំដែន​ផ្ទុក​ឡើង​លើស​អ្នក​ប្រើ​"
+
+#: flickrtalker.cpp:623
+#, kde-format
+msgid "Invalid signature"
+msgstr "ហត្ថលេខា​មិន​ត្រឹមត្រូវ​"
+
+#: flickrtalker.cpp:627
+#, kde-format
+msgid "Missing signature"
+msgstr "បាត់​ហត្ថលេខា​"
+
+#: flickrtalker.cpp:631
+#, kde-format
+msgid "Login Failed / Invalid auth token"
+msgstr "ចូល​បាន​បរាជ័យ​​ / ផ្ទៀង​ផ្ទាត់​​ថូខឹន​មិន​ត្រឹមត្រូវ​"
+
+#: flickrtalker.cpp:635
+#, kde-format
+msgid "Invalid API Key"
+msgstr "សោ​​ API ​មិន​ត្រឹមត្រូវ​"
+
+#: flickrtalker.cpp:639
+#, kde-format
+msgid "Service currently unavailable"
+msgstr "គ្មាន​សេវា​ពេល​បច្ចុប្បន្ន​​"
+
+#: flickrtalker.cpp:643
+#, kde-format
+msgid "Invalid Frob"
+msgstr "Frob មិន​ត្រឹមត្រូវ​"
+
+#: flickrtalker.cpp:647
+#, kde-format
+msgid "Format \"xxx\" not found"
+msgstr "រក​មិន​ឃើញ​​ទ្រង់ទ្រាយ​​ \"xxx\" ​"
+
+#: flickrtalker.cpp:651
+#, kde-format
+msgid "Method \"xxx\" not found"
+msgstr "រក​មិន​ឃើញ​​វិធីសាស្ត្រ​ \"xxx\"​"
+
+#: flickrtalker.cpp:655
+#, kde-format
+msgid "Invalid SOAP envelope"
+msgstr "​SOAP envelope មិន​ត្រឹមត្រូវ​"
+
+#: flickrtalker.cpp:659
+#, kde-format
+msgid "Invalid XML-RPC Method Call"
+msgstr "ហៅ​វិធីសាស្ត្រ​ XML-RPC មិន​ត្រឹមត្រូវ​"
+
+#: flickrtalker.cpp:663
+#, kde-format
+msgid "The POST method is now required for all setters"
+msgstr "ឥឡូវ​ វិធីសាស្ត្រ​ POST ត្រូវ​បាន​ទាមទារ​ សម្រាប់ setters ទាំងអស់​"
+
+#: flickrtalker.cpp:667
+#, kde-format
+msgid "Unknown error"
+msgstr "មិន​ស្គាល់​កំហុស​"
+
+#: flickrtalker.cpp:672 flickrtalker.cpp:696 flickrtalker.cpp:852
+#: flickrwindow.cpp:416
+#, kde-format
+msgid "Error"
+msgstr ""
+
+#: flickrtalker.cpp:673
+#, kde-format
+msgid ""
+"Error Occurred: %1\n"
+"Cannot proceed any further."
+msgstr ""
+"កំហុស​បាន​កើត​ឡើង​ ៖​​ %1\n"
+"មិន​អាច​ធ្វើ​បន្ត​ទៀត​ឡើយ​ ។"
+
+#: flickrtalker.cpp:852
+#, kde-format
+msgid "PhotoSet creation failed: "
+msgstr "បាន​បរាជ័យ​​ការ​បង្កើត​ PhotoSet ៖"
+
+#: flickrtalker.cpp:947
+#, kde-format
+msgid "Failed to fetch list of photo sets."
+msgstr "បាន​បរាជ័យ​ ដើម្បី​ប្រ​មូល​យក​​បញ្ជី​សំណុំ​រូប​ថត​ ។​"
+
+#: flickrtalker.cpp:1027
+#, kde-format
+msgid "Failed to upload photo"
+msgstr "បាន​បរាជ័យ​ ដើម្បី​ផ្ទុក​រូបថត​ឡើង​​"
+
+#: flickrtalker.cpp:1086
+#, kde-format
+msgid "Failed to query photo information"
+msgstr "បាន​បរាជ័យ​ ដើម្បី​សួរ​ព័ត៌មាន​រូបថត​"
+
+#: flickrwidget.cpp:63
+#, fuzzy, kde-format
+#| msgid "Account"
+msgid "Remove Account"
+msgstr "គណនី​"
+
+#: flickrwidget.cpp:73 flickrwidget.cpp:77
+#, kde-format
+msgctxt "photo permissions"
+msgid "Public"
+msgstr "សាធារណៈ"
+
+#: flickrwidget.cpp:76
+#, kde-format
+msgid "This is the list of images to upload to your Flickr account."
+msgstr "នេះ​ជា​បញ្ជី​រូបថត​ត្រូវ​ផ្ទុក​ឡើង​ ទៅកាន់​គណនី Flickr របស់​អ្នក​ ។​"
+
+#: flickrwidget.cpp:81
+#, kde-format
+msgid "Extra tags"
+msgstr "ស្លាក់​បន្ថែម"
+
+#: flickrwidget.cpp:87 flickrwidget.cpp:98
+#, kde-format
+msgctxt "photo permissions"
+msgid "Family"
+msgstr "គ្រួសារ​"
+
+#: flickrwidget.cpp:92 flickrwidget.cpp:100
+#, kde-format
+msgctxt "photo permissions"
+msgid "Friends"
+msgstr "មិត្តភ័ក្ដិ​"
+
+#: flickrwidget.cpp:107
+#, kde-format
+msgid "Safety level"
+msgstr "កម្រិត​សុវត្ថិភាព​"
+
+#: flickrwidget.cpp:109
+#, kde-format
+msgid "Content type"
+msgstr "ប្រភេទ​មាតិកា​"
+
+#: flickrwidget.cpp:112
+#, kde-format
+msgctxt "photo safety level"
+msgid "Safe"
+msgstr "សុវត្ថិភាព​"
+
+#: flickrwidget.cpp:113
+#, kde-format
+msgctxt "photo safety level"
+msgid "Moderate"
+msgstr "ល្មម​"
+
+#: flickrwidget.cpp:114
+#, kde-format
+msgctxt "photo safety level"
+msgid "Restricted"
+msgstr "ដែល​ត្រូវ​បាន​កម្រិត​"
+
+#: flickrwidget.cpp:115 flickrwidget.cpp:211
+#, kde-format
+msgctxt "photo content type"
+msgid "Photo"
+msgstr "រូបថត​"
+
+#: flickrwidget.cpp:116 flickrwidget.cpp:212
+#, kde-format
+msgctxt "photo content type"
+msgid "Screenshot"
+msgstr "រូបថត​អេក្រង់​"
+
+#: flickrwidget.cpp:117 flickrwidget.cpp:213
+#, kde-format
+msgctxt "photo content type"
+msgid "Other"
+msgstr "ផ្សេងទៀត​"
+
+#: flickrwidget.cpp:134
+#, kde-format
+msgid "Tag options"
+msgstr "ជម្រើស​ស្លាក​"
+
+#: flickrwidget.cpp:138
+#, kde-format
+msgid "Use Host Application Tags"
+msgstr "ប្រើ​ស្លាក​កម្មវិធី​ម៉ាស៊ីន​"
+
+#: flickrwidget.cpp:140 flickrwidget.cpp:501
+#, kde-format
+msgid "More tag options"
+msgstr "ជម្រើស​ស្លាក​បន្ថែម​"
+
+#: flickrwidget.cpp:154
+#, kde-format
+msgid "Added Tags: "
+msgstr "ស្លាក​ដែល​បាន​បន្ថែម​ ៖"
+
+#: flickrwidget.cpp:156
+#, kde-format
+msgid "Enter new tags here, separated by commas."
+msgstr "បញ្ចូល​ស្លាក​​ថ្មី​ទីនេះ​ បំបែក​ដោយ​​សញ្ញា​ក្បៀស​ ។​"
+
+#: flickrwidget.cpp:158
+#, kde-format
+msgid "Add tags per image"
+msgstr "បន្ថែម​ស្លាក​​លើ​រូប​ភាព​"
+
+#: flickrwidget.cpp:159
+#, kde-format
+msgid "If checked, you can set extra tags for each image in the File List tab"
+msgstr "ប្រ​សិន​បើ​ធីក ​អ្នក​អាច​កំណត់​ស្លា​បន្ថែម​ ​សម្រាប់​រូបភាព​នីមួយៗ​​ក្នុង​ផ្ទាំង​បញ្ជី​ឯកសារ​​"
+
+#: flickrwidget.cpp:163
+#, kde-format
+msgid "Strip Spaces From Tags"
+msgstr "ច្បូត​ទំហំ​ពីស្លាក"
+
+#: flickrwidget.cpp:176
+#, kde-format
+msgid "Publication Options"
+msgstr "ជម្រើស​ការ​បោះពុម្ពផ្សាយ​"
+
+#: flickrwidget.cpp:181
+#, kde-format
+msgctxt "As in accessible for people"
+msgid "Public (anyone can see them)"
+msgstr "សាធារណៈ​​ (អ្នករាល់គ្នា​អាច​មើល​វា​​ឃើញ​)"
+
+#: flickrwidget.cpp:184
+#, kde-format
+msgid "Visible to Family"
+msgstr "គ្រួសារ​អាច​មើល​ឃើញ​​"
+
+#: flickrwidget.cpp:187
+#, kde-format
+msgid "Visible to Friends"
+msgstr "មិត្តភ័ក្ដិ​អាច​មើល​ឃើញ​​"
+
+#: flickrwidget.cpp:190 flickrwidget.cpp:488
+#, kde-format
+msgid "More publication options"
+msgstr "ជម្រើស​ការ​បោះពុម្ពផ្សាយ​បន្ថែម​"
+
+#: flickrwidget.cpp:203
+#, kde-format
+msgid "Safety level:"
+msgstr "កម្រិត​សុវត្ថិភាព​ ៖​"
+
+#: flickrwidget.cpp:205
+#, kde-format
+msgid "Safe"
+msgstr "សុវត្ថិភាព​"
+
+#: flickrwidget.cpp:206
+#, kde-format
+msgid "Moderate"
+msgstr "ល្មម​"
+
+#: flickrwidget.cpp:207
+#, kde-format
+msgid "Restricted"
+msgstr "ដែល​ត្រូវ​បាន​កម្រិត​"
+
+#: flickrwidget.cpp:209
+#, kde-format
+msgid "Content type:"
+msgstr "ប្រភេទ​មាតិកា ៖"
+
+#: flickrwidget.cpp:304
+#, kde-format
+msgid ""
+"<b><h2><a href='http://www.23hq.com'><font color=\"#7CD164\">23</font></a> "
+"Export</h2></b>"
+msgstr ""
+"<b><h2><a href='http://www.23hq.com'><font color=\"#7CD164\">២៣</font></a> "
+"នាំចេញ​</h2></b>"
+
+#: flickrwidget.cpp:311
+#, kde-format
+msgid ""
+"<b><h2><a href='http://www.flickr.com'><font color=\"#0065DE\">flick</"
+"font><font color=\"#FF0084\">r</font></a> Export</h2></b>"
+msgstr ""
+"<b><h2><a href='http://www.flickr.com'><font color=\"#0065DE\">flick</"
+"font><font color=\"#FF0084\">r</font></a> នាំចេញ​</h2></b>"
+
+#: flickrwidget.cpp:484
+#, kde-format
+msgid "Fewer publication options"
+msgstr "ជម្រើស​ការ​បោះពុម្ពផ្សាយ​តិច​ជាង​"
+
+#: flickrwidget.cpp:506
+#, kde-format
+msgid "Fewer tag options"
+msgstr "ជម្រើស​ស្លាក​​តិច​ជាង​"
+
+#: flickrwindow.cpp:71
+#, kde-format
+msgid "Export to %1 Web Service"
+msgstr "នាំចេញ​ទៅ​ជា​សេវា​បណ្ដាញ %1"
+
+#: flickrwindow.cpp:119
+#, kde-format
+msgid "Start Uploading"
+msgstr "ចាប់​ផ្ដើម​ការ​ផ្ទុក​ឡើង​"
+
+#: flickrwindow.cpp:131
+#, fuzzy, kde-format
+#| msgid "Flickr Export"
+msgid "Flickr/23 Export"
+msgstr "ការ​នាំចេញ​ Flickr"
+
+#: flickrwindow.cpp:132
+#, fuzzy, kde-format
+#| msgid ""
+#| "A Kipi plugin to export an image collection to a Flickr / 23 / Zooomr web "
+#| "service."
+msgid "A tool to export an image collection to a Flickr / 23 web service."
+msgstr ""
+"កម្មវិធី​ជំនួយ​ Kipi សម្រាប់​នាំ​ចេញ​សម្រាំង​រូបភាព​ទៅ​កាន់​សេវា​បណ្ដាញ Flickr / 23 / Zooomr​ ។"
+
+#: flickrwindow.cpp:134
+#, fuzzy, kde-format
+#| msgid ""
+#| "(c) 2005-2008, Vardhman Jain\n"
+#| "(c) 2008-2012, Gilles Caulier\n"
+#| "(c) 2009, Luka Renko"
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2015, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2015, Shourya Singh Gupta"
+msgstr ""
+"រក្សា​សិទ្ធិ​​ឆ្នាំ​ ២០០៥​-២០០៨ ដោយ​ Vardhman Jain\n"
+"រក្សាសិទ្ធិ​ឆ្នាំ​ ២០០៨​-២០១២​​ ដោយ Gilles Caulier\n"
+"រក្សាសិទ្ធិ​ឆ្នាំ​ ២០០៩ ដោយ​ Luka Renko"
+
+#: flickrwindow.cpp:139
+#, kde-format
+msgid "Vardhman Jain"
+msgstr "Vardhman Jain"
+
+#: flickrwindow.cpp:139
+#, kde-format
+msgid "Author and maintainer"
+msgstr "អ្នក​និពន្ធ​ និង​អ្នក​ថែទាំ​​"
+
+#: flickrwindow.cpp:142
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: flickrwindow.cpp:142 flickrwindow.cpp:145
+#, kde-format
+msgid "Developer"
+msgstr "អ្នក​អភិវឌ្ឍន៍​​​"
+
+#: flickrwindow.cpp:145
+#, kde-format
+msgid "Shourya Singh Gupta"
+msgstr ""
+
+#: flickrwindow.cpp:557
+#, fuzzy, kde-format
+#| msgid "&lt;Photostream Only&gt;"
+msgid "Photostream Only"
+msgstr "&lt;ស្ទ្រីម​រូប​ថត​តែ​ប៉ុណ្ណោះ​​&gt;​"
+
+#: flickrwindow.cpp:741
+#, kde-format
+msgid "Flickr Export"
+msgstr "ការ​នាំចេញ​ Flickr"
+
+#: flickrwindow.cpp:759
+#, kde-format
+msgid "Failed to Fetch Photoset information from %1. %2\n"
+msgstr "Failed to Fetch Photoset information from %1. %2\n"
+
+#: flickrwindow.cpp:765
+#, kde-format
+msgid "Warning"
+msgstr ""
+
+#: flickrwindow.cpp:766
+#, kde-format
+msgid ""
+"Failed to upload photo into %1. %2\n"
+"Do you want to continue?"
+msgstr ""
+"%1Failed to upload photo into %1. %2\n"
+"Do you want to continue?"
+
+#: flickrwindow.cpp:769
+#, fuzzy, kde-format
+#| msgid "Content type"
+msgid "Continue"
+msgstr "ប្រភេទ​មាតិកា​"
+
+#: flickrwindow.cpp:770
+#, fuzzy, kde-format
+#| msgid "&Cancel"
+msgid "Cancel"
+msgstr "បោះបង់​"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_flickrui.rc:7
+#, fuzzy, kde-format
+#| msgid "Flickr Export"
+msgid "&Export"
+msgstr "ការ​នាំចេញ​ Flickr"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_flickrui.rc:14
+#, kde-format
+msgid "Main Toolbar"
+msgstr ""
+
+#: plugin_flickr.cpp:100
+#, kde-format
+msgid "Export to Flick&r..."
+msgstr "នាំចេញ​ទៅកាន់​​ Flick&r..."
+
+#: selectuserdlg.cpp:47
+#, kde-format
+msgid "Flickr Account Selector"
+msgstr ""
+
+#: selectuserdlg.cpp:52
+#, kde-format
+msgid "Add another account"
+msgstr ""
+
+#: selectuserdlg.cpp:75
+#, kde-format
+msgid "Choose the %1 account to use for exporting images:"
+msgstr ""
+
+#~ msgid ""
+#~ "<b><h2><a href='http://www.zooomr.com'><font color=\"#7CD164\">zooomr</"
+#~ "font></a> Export</h2></b>"
+#~ msgstr ""
+#~ "<b><h2><a href='http://www.zooomr.com'><font color=\"#7CD164\">zooomr</"
+#~ "font></a> នាំចេញ​</h2></b>"
+
+#~ msgctxt "flickr login"
+#~ msgid "Username:"
+#~ msgstr "ឈ្មោះ​អ្នក​ប្រើ​ ៖​"
+
+#~ msgid "Password:"
+#~ msgstr "ពាក្យ​សម្ងាត់​ ៖​"
+
+#~ msgid "Getting the Frob"
+#~ msgstr "បាន​យក​​ Frob​"
+
+#~ msgid "Checking if previous token is still valid"
+#~ msgstr "ធីក​ បើ​ថូខឹន​មុន​នៅ​តែ​ត្រឹមត្រូវ​​"
+
+#~ msgid "%1 Service Web Authorization"
+#~ msgstr "សេចក្ដី​អនុញ្ញាត​បណ្ដាញ​សេវា​ %1 ​​"
+
+#~ msgid ""
+#~ "Please follow the instructions in the browser window, then return to "
+#~ "press corresponding button."
+#~ msgstr "សូម​អនុវត្ត​តាម​សេចក្ដីណែនាំ​នៅ​ក្នុង​បង្អួច​កម្មវិធី​រុក​រក​ បន្ទាប់​មក​ត្រឡប់​ទៅ​ចុច​ប៊ូតុង​ដែល​ត្រូវគ្នា ។"
+
+#~ msgid "I am authenticated"
+#~ msgstr "ខ្ញុំ​ត្រូវ​បាន​ផ្ទៀងផ្ទាត់​ភាព​ត្រឹមត្រូវ"
+
+#~ msgid "I am not authenticated"
+#~ msgstr "ខ្ញុំ​មិន​ត្រូវ​បាន​ផ្ទៀងផ្ទាត់​ភាព​ត្រឹមត្រូវ"
+
+#~ msgid "Authenticating the User on web"
+#~ msgstr "ផ្ទៀង​ផ្ទាត់​ភាព​ត្រឹមត្រូវ​អ្នកប្រើ​លើ​បណ្ដាញ​​"
+
+#~ msgid "Getting the Token from the server"
+#~ msgstr "ទទួល​យក​ថូខឹន​ពី​ម៉ាស៊ីន​បម្រើ​​"
+
+#~ msgctxt "As in the permission to"
+#~ msgid "write"
+#~ msgstr "សរសេរ​"
+
+#~ msgctxt "As in the permission to"
+#~ msgid "read"
+#~ msgstr "អាន​"
+
+#~ msgctxt "As in the permission to"
+#~ msgid "delete"
+#~ msgstr "លុប​"
+
+#, fuzzy
+#~| msgid "Invalid Frob"
+#~ msgid "Invalid Token"
+#~ msgstr "Frob មិន​ត្រឹមត្រូវ​"
+
+#~ msgid ""
+#~ "Your token is invalid. Would you like to get a new token to proceed?\n"
+#~ msgstr ""
+#~ "Your token is invalid. Would you like to get a new token to proceed?\n"
+
+#~ msgid "Flickr/23/Zooomr Export"
+#~ msgstr "នាំចេញ​ Flickr/23/Zooomr ​"
+
+#~ msgid "Export to &23..."
+#~ msgstr "នាំចេញ​ទៅកាន់​ &23..."
+
+#~ msgid "Export to &Zooomr..."
+#~ msgstr "នាំចេញ​ទៅកាន់​​ &Zooomr..."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "ខឹម សុខែម, ម៉ន ម៉េត, សេង សុត្ថា"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "khoemsokhem@khmeros.info,​​mornmet@khmeros.info,sutha@khmeros.info"
+
+#~ msgid "New PhotoSet"
+#~ msgstr "PhotoSet ថ្មី​"
+
+#~ msgid "<h3>Create New PhotoSet </h3>"
+#~ msgstr "<h3>បង្កើត​ PhotoSet ថ្មី​ </h3>"
+
+#~ msgid "&OK"
+#~ msgstr "យល់​ព្រម​"
+
+#~ msgid "Title (required):"
+#~ msgstr "ចំណងជើង​​ (បាន​ទាមទារ​​) ៖​"
+
+#~ msgid "Description (optional)"
+#~ msgstr "សេចក្ដី​ពិពណ៌នា​​ (ជា​ជម្រើស​)​"
+
+#~ msgid "Account"
+#~ msgstr "គណនី​"
+
+#~ msgctxt "account settings"
+#~ msgid "Username: "
+#~ msgstr "ឈ្មោះ​អ្នក​ប្រើ​ ៖​"
+
+#~ msgid "Use a different account"
+#~ msgstr "ប្រើ​គណនី​ខុស​គ្នា​"
+
+#~ msgid "PhotoSet:"
+#~ msgstr "PhotoSet:"
+
+#~ msgid "&New PhotoSet"
+#~ msgstr "PhotoSet ថ្មី​"
+
+#~ msgid "Resizing Options"
+#~ msgstr "ជម្រើស​ប្ដូរ​ទំហំ​"
+
+#~ msgid "Send original file (no resizing)"
+#~ msgstr "ផ្ញើ​ឯកសារ​ដើម (មិន​ប្ដូរ​ទំហំ)"
+
+#~ msgid "Resize photos before uploading"
+#~ msgstr "ប្ដូរ​ទំហំ​រូបថត​ មុន​ពេល​ការ​ផ្ទុក​ឡើង​​"
+
+#~ msgid "Maximum dimension (pixels):"
+#~ msgstr "វិមាត្រ​អតិបរមា​ (ភីកសែល​​) ៖"
+
+#~ msgid "JPEG Image Quality (higher is better):"
+#~ msgstr "គុណភាព​រូបភាព​របស់​ JPEG ​(ល្អ​ប្រសើរ​ជាង​) ៖​"
+
+#~ msgid "File List"
+#~ msgstr "បញ្ជី​ឯកសារ​"
+
+#~ msgid "Upload Options"
+#~ msgstr "ជម្រើស​ផ្ទុក​ឡើង​"

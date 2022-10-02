@@ -1,0 +1,506 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Balázs Úr <urbalazs@gmail.com>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2013-07-22 14:26+0200\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
+"Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: kmlexport.cpp:90
+#, kde-format
+msgid "Generating KML file..."
+msgstr "KML fájl előállítása…"
+
+#: kmlexport.cpp:180 kmlexport.cpp:197
+#, kde-format
+msgid "Could not read image '%1'"
+msgstr "Nem olvasható a kép: „%1”"
+
+#: kmlexport.cpp:189
+#, kde-format
+msgid "Format of image '%1' is unknown"
+msgstr "A(z) „%1” kép formátuma ismeretlen"
+
+#: kmlexport.cpp:207
+#, kde-format
+msgid "Error loading image '%1'"
+msgstr "Hiba a kép betöltésekor: „%1”"
+
+#: kmlexport.cpp:245
+#, kde-format
+msgid "Could not save image '%1' to '%2'"
+msgstr "Nem sikerült a(z) „%1” kép mentése ide: „%2”"
+
+#: kmlexport.cpp:350
+#, kde-format
+msgid "Creation of placemark '%1'"
+msgstr "A(z) „%1” helyjelző létrehozása"
+
+#: kmlexport.cpp:358
+#, kde-format
+msgid "Could not save icon for image '%1' to '%2'"
+msgstr "Nem sikerült a(z) „%1” kép ikonjának mentése ide: „%2”"
+
+#: kmlexport.cpp:390
+#, kde-format
+msgid "No GPX file chosen."
+msgstr "Nincs GPX fájl kiválasztva."
+
+#: kmlexport.cpp:399
+#, kde-format
+msgid "Cannot parse %1 GPX file."
+msgstr "Nem sikerült feldolgozni a(z) %1 GPX fájlt."
+
+#: kmlexport.cpp:405
+#, kde-format
+msgid "The %1 GPX file do not have a date-time track to use."
+msgstr "A(z) %1 GPX fájlnak nincs használandó dátum-idő nyomvonala."
+
+#: kmlexport.cpp:412
+#, kde-format
+msgid "Tracks"
+msgstr "Nyomvonalak"
+
+#: kmlexport.cpp:504
+#, kde-format
+msgid "No position data for '%1'"
+msgstr "Nincs pozícióadat ehhez: „%1”"
+
+#: kmlexport.cpp:516
+#, kde-format
+msgid "Missing position"
+msgstr ""
+
+#: kmlexport.cpp:517
+#, kde-format
+msgid "No position data for 1 picture"
+msgid_plural "No position data for %1 pictures"
+msgstr[0] "Nincs pozícióadat 1 képhez"
+msgstr[1] "Nincs pozícióadat %1 képhez"
+
+#: kmlexport.cpp:526
+#, kde-format
+msgid "Cannot open file for writing"
+msgstr ""
+
+#: kmlexport.cpp:539
+#, kde-format
+msgid "Move to final directory"
+msgstr "Áthelyezés a végső könyvtárba"
+
+#: kmlexport.cpp:543
+#, fuzzy, kde-format
+#| msgid "Move to final directory"
+msgid "Cannot move data to destination directory"
+msgstr "Áthelyezés a végső könyvtárba"
+
+#: kmlgpsdataparser.cpp:63
+#, kde-format
+msgid "Track"
+msgstr "Nyomvonal"
+
+#: kmlgpsdataparser.cpp:89
+#, kde-format
+msgid "Points"
+msgstr "Pontok"
+
+#: kmlgpsdataparser.cpp:100
+#, kde-format
+msgid "Point"
+msgstr "Pont"
+
+#: kmlwindow.cpp:68 kmlwindow.cpp:284
+#, kde-format
+msgid "KML Export"
+msgstr "KML exportálás"
+
+#: kmlwindow.cpp:71
+#, fuzzy, kde-format
+#| msgid "KML Export"
+msgctxt "@action:button"
+msgid "&Export"
+msgstr "KML exportálás"
+
+#: kmlwindow.cpp:82
+#, kde-format
+msgid "Target Preferences"
+msgstr "Cél beállításai"
+
+#: kmlwindow.cpp:86
+#, kde-format
+msgid "Target Type"
+msgstr "Cél típusa"
+
+#: kmlwindow.cpp:89
+#, kde-format
+msgid "&Local or web target used by GoogleEarth"
+msgstr "&Helyi vagy web cél a Google Föld használatával"
+
+#: kmlwindow.cpp:92
+#, kde-format
+msgid "Web target used by GoogleMaps"
+msgstr "Web cél a Google Térkép használatával"
+
+#: kmlwindow.cpp:93
+#, kde-format
+msgid ""
+"When using GoogleMaps, all images must have complete URLs, icons are "
+"squared, and when drawing a track, only line track is exported."
+msgstr ""
+"A Google Térkép használatakor minden képnek teljes URL-lel kell "
+"rendelkeznie, az ikonok négyzet alakúak és a nyomvonal rajzolásakor csak a "
+"nyomvonal vonala lesz exportálva."
+
+#: kmlwindow.cpp:104
+#, kde-format
+msgid "Picture Altitude:"
+msgstr "Kép magassága:"
+
+#: kmlwindow.cpp:106 kmlwindow.cpp:230
+#, kde-format
+msgid "clamp to ground"
+msgstr "rögzítés a földhöz"
+
+#: kmlwindow.cpp:107 kmlwindow.cpp:231
+#, kde-format
+msgid "relative to ground"
+msgstr "relatív a földtől"
+
+#: kmlwindow.cpp:108 kmlwindow.cpp:232
+#, kde-format
+msgid "absolute"
+msgstr "abszolút"
+
+#: kmlwindow.cpp:109
+#, kde-format
+msgid ""
+"<p>Specifies how pictures are displayed<dl><dt>clamp to ground (default)</"
+"dt><dd>Indicates to ignore an altitude specification</dd><dt>relative to "
+"ground</dt><dd>Sets the altitude of the element relative to the actual "
+"ground elevation of a particular location.</dd><dt>absolute</dt><dd>Sets the "
+"altitude of the coordinate relative to sea level, regardless of the actual "
+"elevation of the terrain beneath the element.</dd></dl>"
+msgstr ""
+"<p>Megadja, hogy hogyan jelenjenek meg a képek<dl><dt>rögzítés a földhöz "
+"(alapértelmezett)</dt><dd>Azt jelzi, hogy figyelmen kívül hagyja a magassági "
+"specifikációt</dd><dt>relatív a földtől</dt><dd>Beállítja az elem magasságát "
+"az egyes helyek aktuális tengerszint feletti magasságához viszonyítva.</"
+"dd><dt>abszolút</dt><dd>Beállítja a koordináta magasságát a tenger "
+"szintjéhez képest függetlenül az elem alatti terep a tényleges magasságától."
+"</dd></dl>"
+
+#: kmlwindow.cpp:119
+#, kde-format
+msgid "Destination Directory:"
+msgstr "Célkönyvtár:"
+
+#: kmlwindow.cpp:123
+#, kde-format
+msgid "Select a directory in which to save the kml file and pictures"
+msgstr ""
+"Válassza ki azt a könyvtárat, amelybe a kml fájlok és képek mentésre kerülnek"
+
+#: kmlwindow.cpp:125
+#, fuzzy, kde-format
+#| msgid "Destination URL:"
+msgid "Destination Path:"
+msgstr "Cél URL:"
+
+#: kmlwindow.cpp:127
+#, kde-format
+msgid "Filename:"
+msgstr "Fájlnév:"
+
+#: kmlwindow.cpp:145
+#, kde-format
+msgid "Sizes"
+msgstr "Méretek"
+
+#: kmlwindow.cpp:147
+#, kde-format
+msgid "Icon Size:"
+msgstr "Ikonméret:"
+
+#: kmlwindow.cpp:152
+#, kde-format
+msgid "Image Size:"
+msgstr "Képméret:"
+
+#: kmlwindow.cpp:167
+#, kde-format
+msgid "GPX Tracks"
+msgstr "GPX nyomvonalak"
+
+#: kmlwindow.cpp:171
+#, kde-format
+msgid "Draw GPX Track"
+msgstr "GPX nyomvonal rajzolása"
+
+#: kmlwindow.cpp:174
+#, kde-format
+msgid "GPX file:"
+msgstr "GPX fájl:"
+
+#: kmlwindow.cpp:177
+#, kde-format
+msgid "%1|GPS Exchange Format"
+msgstr "%1|GPS Exchange Format"
+
+#: kmlwindow.cpp:178
+#, kde-format
+msgid "Select GPX File to Load"
+msgstr "A betöltendő GPX fájl kiválasztása"
+
+#: kmlwindow.cpp:181
+#, kde-format
+msgid "Time Zone:"
+msgstr "Időzóna:"
+
+#: kmlwindow.cpp:183
+#, kde-format
+msgid "GMT-12:00"
+msgstr "GMT-12:00"
+
+#: kmlwindow.cpp:184
+#, kde-format
+msgid "GMT-11:00"
+msgstr "GMT-11:00"
+
+#: kmlwindow.cpp:185
+#, kde-format
+msgid "GMT-10:00"
+msgstr "GMT-10:00"
+
+#: kmlwindow.cpp:186
+#, kde-format
+msgid "GMT-09:00"
+msgstr "GMT-09:00"
+
+#: kmlwindow.cpp:187
+#, kde-format
+msgid "GMT-08:00"
+msgstr "GMT-08:00"
+
+#: kmlwindow.cpp:188
+#, kde-format
+msgid "GMT-07:00"
+msgstr "GMT-07:00"
+
+#: kmlwindow.cpp:189
+#, kde-format
+msgid "GMT-06:00"
+msgstr "GMT-06:00"
+
+#: kmlwindow.cpp:190
+#, kde-format
+msgid "GMT-05:00"
+msgstr "GMT-05:00"
+
+#: kmlwindow.cpp:191
+#, kde-format
+msgid "GMT-04:00"
+msgstr "GMT-04:00"
+
+#: kmlwindow.cpp:192
+#, kde-format
+msgid "GMT-03:00"
+msgstr "GMT-03:00"
+
+#: kmlwindow.cpp:193
+#, kde-format
+msgid "GMT-02:00"
+msgstr "GMT-02:00"
+
+#: kmlwindow.cpp:194
+#, kde-format
+msgid "GMT-01:00"
+msgstr "GMT-01:00"
+
+#: kmlwindow.cpp:195
+#, kde-format
+msgid "GMT"
+msgstr "GMT"
+
+#: kmlwindow.cpp:196
+#, kde-format
+msgid "GMT+01:00"
+msgstr "GMT+01:00"
+
+#: kmlwindow.cpp:197
+#, kde-format
+msgid "GMT+02:00"
+msgstr "GMT+02:00"
+
+#: kmlwindow.cpp:198
+#, kde-format
+msgid "GMT+03:00"
+msgstr "GMT+03:00"
+
+#: kmlwindow.cpp:199
+#, kde-format
+msgid "GMT+04:00"
+msgstr "GMT+04:00"
+
+#: kmlwindow.cpp:200
+#, kde-format
+msgid "GMT+05:00"
+msgstr "GMT+05:00"
+
+#: kmlwindow.cpp:201
+#, kde-format
+msgid "GMT+06:00"
+msgstr "GMT+06:00"
+
+#: kmlwindow.cpp:202
+#, kde-format
+msgid "GMT+07:00"
+msgstr "GMT+07:00"
+
+#: kmlwindow.cpp:203
+#, kde-format
+msgid "GMT+08:00"
+msgstr "GMT+08:00"
+
+#: kmlwindow.cpp:204
+#, kde-format
+msgid "GMT+09:00"
+msgstr "GMT+09:00"
+
+#: kmlwindow.cpp:205
+#, kde-format
+msgid "GMT+10:00"
+msgstr "GMT+10:00"
+
+#: kmlwindow.cpp:206
+#, kde-format
+msgid "GMT+11:00"
+msgstr "GMT+11:00"
+
+#: kmlwindow.cpp:207
+#, kde-format
+msgid "GMT+12:00"
+msgstr "GMT+12:00"
+
+#: kmlwindow.cpp:208
+#, kde-format
+msgid "GMT+13:00"
+msgstr "GMT+13:00"
+
+#: kmlwindow.cpp:209
+#, kde-format
+msgid "GMT+14:00"
+msgstr "GMT+14:00"
+
+#: kmlwindow.cpp:210
+#, kde-format
+msgid ""
+"Sets the time zone of the camera during picture shooting, so that the time "
+"stamps of the GPS can be converted to match the local time"
+msgstr ""
+"Beállítja fényképkészítés közben a fényképező időzónáját, így a GPS "
+"időbélyegei átalakíthatók a helyi idő szerint"
+
+#: kmlwindow.cpp:214
+#, kde-format
+msgid "Track Width:"
+msgstr "Nyomvonal szélessége:"
+
+#: kmlwindow.cpp:218
+#, kde-format
+msgid "Track Color:"
+msgstr "Nyomvonal színe:"
+
+#: kmlwindow.cpp:222
+#, fuzzy, kde-format
+#| msgid "Opacity:"
+msgid "Opacity (%):"
+msgstr "Átlátszatlanság:"
+
+#: kmlwindow.cpp:228
+#, kde-format
+msgid "Track Altitude:"
+msgstr "Nyomvonal magassága:"
+
+#: kmlwindow.cpp:233
+#, kde-format
+msgid ""
+"<p>Specifies how the points are displayed<dl><dt>clamp to ground (default)</"
+"dt><dd>Indicates to ignore an altitude specification</dd><dt>relative to "
+"ground</dt><dd>Sets the altitude of the element relative to the actual "
+"ground elevation of a particular location.</dd><dt>absolute</dt><dd>Sets the "
+"altitude of the coordinate relative to sea level, regardless of the actual "
+"elevation of the terrain beneath the element.</dd></dl>"
+msgstr ""
+"<p>Megadja, hogy hogyan jelenjenek meg a pontok<dl><dt>rögzítés a földhöz "
+"(alapértelmezett)</dt><dd>Azt jelzi, hogy figyelmen kívül hagyja a magassági "
+"specifikációt</dd><dt>relatív a földtől</dt><dd>Beállítja az elem magasságát "
+"az egyes helyek aktuális tengerszint feletti magasságához viszonyítva.</"
+"dd><dt>abszolút</dt><dd>Beállítja a koordináta magasságát a tenger "
+"szintjéhez képest függetlenül az elem alatti terep a tényleges magasságától."
+"</dd></dl>"
+
+#: kmlwindow.cpp:285
+#, fuzzy, kde-format
+#| msgid "Export to KML..."
+msgid "A tool to export to KML"
+msgstr "Exportálás KML-be…"
+
+#: kmlwindow.cpp:286
+#, kde-format
+msgid "(c) 2006-2007, Stéphane Pontier"
+msgstr "© Stéphane Pontier, 2006-2007."
+
+#: kmlwindow.cpp:288
+#, kde-format
+msgid "Stéphane Pontier"
+msgstr "Stéphane Pontier"
+
+#: kmlwindow.cpp:289 kmlwindow.cpp:293
+#, kde-format
+msgid "Developer and maintainer"
+msgstr "Fejlesztő és karbantartó"
+
+#: kmlwindow.cpp:292
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: kmlwindow.cpp:296
+#, kde-format
+msgid "Michael G. Hansen"
+msgstr "Michael G. Hansen"
+
+#: kmlwindow.cpp:297
+#, kde-format
+msgid "Maintainer"
+msgstr "Karbantartó"
+
+#: plugin_kmlexport.cpp:92
+#, kde-format
+msgid "Export to KML..."
+msgstr "Exportálás KML-be…"
+
+#~ msgid "A Kipi plugin for KML exporting"
+#~ msgstr "Egy Kipi-bővítmény KML exportáláshoz"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Úr Balázs"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "urbalazs@gmail.com"
+
+#~ msgid "Could not create '%1'"
+#~ msgstr "Nem sikerült létrehozni: „%1”"

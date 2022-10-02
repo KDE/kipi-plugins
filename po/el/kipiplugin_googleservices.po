@@ -1,0 +1,1006 @@
+# translation of kipiplugin_picasawebexport.po to greek
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Toussis Manolis <manolis@koppermind.homelinux.org>, 2008, 2009.
+# Dimitrios Glentadakis <dglent@gmail.com>, 2010, 2011, 2013.
+# Stelios <sstavra@gmail.com>, 2017.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_picasawebexport\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:07+0200\n"
+"PO-Revision-Date: 2017-10-11 14:00+0200\n"
+"Last-Translator: Stelios <sstavra@gmail.com>\n"
+"Language-Team: Greek <kde-i18n-el@kde.org>\n"
+"Language: el\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 2.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: authorize.cpp:116
+#, kde-format
+msgid "Google Drive Authorization"
+msgstr "Εξουσιοδότηση Google Drive"
+
+#: authorize.cpp:129
+#, kde-format
+msgid ""
+"Please follow the instructions in the browser. After logging in and "
+"authorizing the application, copy the code from the browser, paste it in the "
+"textbox below, and click OK."
+msgstr ""
+"Ακολουθήστε τις οδηγίες στον περιηγητή. Αφού συνδεθείτε και εξουσιοδοτήσετε "
+"την εφαρμογή, αντιγράψτε τον κώδικα από τον περιηγητή, επικολλήστε τον στο "
+"παρακάτω πλαίσιο κειμένου και κάντε κλικ στο Εντάξει."
+
+#: authorize.cpp:249 gdtalker.cpp:272 gptalker.cpp:644
+#, kde-format
+msgid "Error"
+msgstr "Σφάλμα"
+
+#: gdtalker.cpp:337
+#, kde-format
+msgid "Failed to list folders"
+msgstr "Αποτυχία εμφάνισης της λίστας φακέλων"
+
+#: gdtalker.cpp:385
+#, kde-format
+msgid "Failed to create folder"
+msgstr "Αποτυχία δημιουργίας φακέλου"
+
+#: gdtalker.cpp:416 gptalker.cpp:937
+#, kde-format
+msgid "Failed to upload photo"
+msgstr "Αποτυχία αποστολής φωτογραφίας"
+
+#: gptalker.cpp:569
+#, kde-format
+msgid "No photo specified"
+msgstr "Δεν καθορίστηκε φωτογραφία"
+
+#: gptalker.cpp:572
+#, kde-format
+msgid "General upload failure"
+msgstr "Γενική αποτυχία αποστολής"
+
+#: gptalker.cpp:575
+#, kde-format
+msgid "File-size was zero"
+msgstr "Μηδενικό μέγεθος αρχείου"
+
+#: gptalker.cpp:578
+#, kde-format
+msgid "File-type was not recognized"
+msgstr "Ο τύπος αρχείου δεν αναγνωρίζεται"
+
+#: gptalker.cpp:581
+#, kde-format
+msgid "User exceeded upload limit"
+msgstr "Υπέρβαση ορίου αποστολής του χρήστη"
+
+#: gptalker.cpp:584
+#, kde-format
+msgid "Invalid signature"
+msgstr "Μη έγκυρη υπογραφή"
+
+#: gptalker.cpp:587
+#, kde-format
+msgid "Missing signature"
+msgstr "Λείπει υπογραφή"
+
+#: gptalker.cpp:590
+#, kde-format
+msgid "Login failed / Invalid auth token"
+msgstr "Αποτυχία σύνδεσης / μη έγκυρο ενδεικτικό ταυτοποίησης"
+
+#: gptalker.cpp:593
+#, kde-format
+msgid "Invalid API Key"
+msgstr "Μη έγκυρο κλειδί API"
+
+#: gptalker.cpp:596
+#, kde-format
+msgid "Service currently unavailable"
+msgstr "Μη διαθέσιμη υπηρεσία αυτήν τη στιγμή"
+
+#: gptalker.cpp:599
+#, kde-format
+msgid "Invalid Frob"
+msgstr "Μη έγκυρο αντικείμενο"
+
+#: gptalker.cpp:602
+#, kde-format
+msgid "Format \"xxx\" not found"
+msgstr "Δε βρέθηκε μορφή \"xxx\""
+
+#: gptalker.cpp:605
+#, kde-format
+msgid "Method \"xxx\" not found"
+msgstr "Δε βρέθηκε μέθοδος \"xxx\""
+
+#: gptalker.cpp:608
+#, kde-format
+msgid "Invalid SOAP envelope"
+msgstr "Μη έγκυρος φάκελος SOAP"
+
+#: gptalker.cpp:611
+#, kde-format
+msgid "Invalid XML-RPC Method Call"
+msgstr "Μη έγκυρη κλήση μεθόδου XML-RPC"
+
+#: gptalker.cpp:614
+#, kde-format
+msgid "The POST method is now required for all setters."
+msgstr "Η μέθοδος POST απαιτείται τώρα για όλους τους ρυθμιστές."
+
+#: gptalker.cpp:617
+#, kde-format
+msgid "Unknown error"
+msgstr "Άγνωστο σφάλμα"
+
+#: gptalker.cpp:620 gswindow.cpp:427 gswindow.cpp:466 gswindow.cpp:548
+#: gswindow.cpp:576 gswindow.cpp:652 gswindow.cpp:668 gswindow.cpp:1078
+#: gswindow.cpp:1198 gswindow.cpp:1241 gswindow.cpp:1249
+#, kde-format
+msgctxt "@title:window"
+msgid "Error"
+msgstr "Σφάλμα"
+
+#: gptalker.cpp:621
+#, kde-format
+msgid ""
+"Error occurred: %1\n"
+"Unable to proceed further."
+msgstr ""
+"Συνέβη ένα σφάλμα: %1\n"
+"Αδύνατη η συνέχεια."
+
+#: gptalker.cpp:691 gptalker.cpp:758
+#, kde-format
+msgid "Failed to fetch photo-set list"
+msgstr "Αποτυχία ανάκτησης λίστας συνόλων φωτογραφιών"
+
+#: gptalker.cpp:894 gptalker.cpp:927
+#, kde-format
+msgid "Failed to create album"
+msgstr "Η δημιουργία του άλμπουμ απέτυχε"
+
+#: gswidget.cpp:60
+#, kde-format
+msgid "Tag path behavior :"
+msgstr "Συμπεριφορά διαδρομής ετικετών :"
+
+#: gswidget.cpp:62
+#, kde-format
+msgid "Leaf tags only"
+msgstr "Μόνο οι ετικέτες φύλλου (leaf tags)"
+
+#: gswidget.cpp:63
+#, kde-format
+msgid "Export only the leaf tags of tag hierarchies"
+msgstr ""
+"Εξαγωγή μόνο των ετικετών φύλλου (leaf tags) από τις ιεραρχίες ετικετών"
+
+#: gswidget.cpp:64
+#, kde-format
+msgid "Split tags"
+msgstr "Διαχωρισμός ετικετών"
+
+#: gswidget.cpp:65
+#, kde-format
+msgid "Export the leaf tag and all ancestors as single tags."
+msgstr "Εξαγωγή της ετικέτας φύλλου και όλων των προγόνων ως απλές ετικέτες. "
+
+#: gswidget.cpp:66
+#, kde-format
+msgid "Combined String"
+msgstr "Συνδυασμένη συμβολοσειρά"
+
+#: gswidget.cpp:67
+#, kde-format
+msgid "Build a combined tag string."
+msgstr "Δημιουργεί μια συνδυασμένη συμβολοσειρά."
+
+#: gswindow.cpp:116
+#, kde-format
+msgid "Google Drive Export"
+msgstr "Εξαγωγή σε Google Drive"
+
+#: gswindow.cpp:117
+#, kde-format
+msgid "A tool to export images to Google Drive"
+msgstr "Ένα εργαλείο εξαγωγής εικόνων στο Google Drive"
+
+#: gswindow.cpp:119
+#, kde-format
+msgid ""
+"(c) 2013, Saurabh Patel\n"
+"(c) 2015, Shourya Singh Gupta"
+msgstr ""
+"(c) 2013, Saurabh Patel\n"
+"(c) 2015, Shourya Singh Gupta"
+
+#: gswindow.cpp:122
+#, kde-format
+msgid "Saurabh Patel"
+msgstr "Saurabh Patel"
+
+#: gswindow.cpp:122 gswindow.cpp:195
+#, kde-format
+msgid "Author and maintainer"
+msgstr "Συγγραφέας και συντηρητής"
+
+#: gswindow.cpp:125 gswindow.cpp:207
+#, kde-format
+msgid "Shourya Singh Gupta"
+msgstr "Shourya Singh Gupta"
+
+#: gswindow.cpp:125 gswindow.cpp:198 gswindow.cpp:201 gswindow.cpp:204
+#: gswindow.cpp:207
+#, kde-format
+msgid "Developer"
+msgstr "Προγραμματιστής"
+
+#: gswindow.cpp:132
+#, kde-format
+msgid "Export to Google Drive"
+msgstr "Εξαγωγή στο Google Drive"
+
+#: gswindow.cpp:134 gswindow.cpp:219
+#, kde-format
+msgid "Start Upload"
+msgstr "Έναρξη αποστολής"
+
+#: gswindow.cpp:135
+#, kde-format
+msgid "Start upload to Google Drive"
+msgstr "Έναρξη αποστολής στο Google Drive"
+
+#: gswindow.cpp:186
+#, kde-format
+msgid "Google Photos/PicasaWeb Export"
+msgstr "Εξαγωγή Google Photos/PicasaWeb"
+
+#: gswindow.cpp:187
+#, kde-format
+msgid "A tool to export image collections to Google Photos/Picasa web service."
+msgstr ""
+"Ένα εργαλείο εξαγωγής συλλογής εικόνων στην υπηρεσία ιστού Google Photos/"
+"PicasaWeb."
+
+#: gswindow.cpp:189
+#, kde-format
+msgid ""
+"(c) 2007-2009, Vardhman Jain\n"
+"(c) 2008-2016, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2010, Jens Mueller\n"
+"(c) 2015, Shourya Singh Gupta"
+msgstr ""
+"(c) 2007-2009, Vardhman Jain\n"
+"(c) 2008-2016, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2010, Jens Mueller\n"
+"(c) 2015, Shourya Singh Gupta"
+
+#: gswindow.cpp:195
+#, kde-format
+msgid "Vardhman Jain"
+msgstr "Vardhman Jain"
+
+#: gswindow.cpp:198
+#, kde-format
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: gswindow.cpp:201
+#, kde-format
+msgid "Luka Renko"
+msgstr "Luka Renko"
+
+#: gswindow.cpp:204
+#, kde-format
+msgid "Jens Mueller"
+msgstr "Jens Mueller"
+
+#: gswindow.cpp:217
+#, kde-format
+msgid "Export to Google Photos/PicasaWeb Service"
+msgstr "Εξαγωγή στην υπηρεσία Google Photos/PicasaWeb"
+
+#: gswindow.cpp:220
+#, kde-format
+msgid "Start upload to Google Photos/PicasaWeb Service"
+msgstr "Έναρξη αποστολής στην υπηρεσία Google Photos/PicasaWeb"
+
+#: gswindow.cpp:226
+#, kde-format
+msgid "Import from Google Photos/PicasaWeb Service"
+msgstr "Εισαγωγή από την υπηρεσία Google Photos/PicasaWeb"
+
+#: gswindow.cpp:228
+#, kde-format
+msgid "Start Download"
+msgstr "Έναρξη λήψης"
+
+#: gswindow.cpp:229
+#, kde-format
+msgid "Start download from Google Photos/PicasaWeb service"
+msgstr "Έναρξη λήψης από την υπηρεσία Google Photos/PicasaWeb"
+
+#: gswindow.cpp:428 gswindow.cpp:467 gswindow.cpp:577
+#, kde-format
+msgid "Google Photos/PicasaWeb Call Failed: %1\n"
+msgstr "Αποτυχία επικοινωνίας με το Google Photos/PicasaWeb: %1\n"
+
+#: gswindow.cpp:448 gswindow.cpp:527 gswindow.cpp:758
+#, kde-format
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: gswindow.cpp:531
+#, kde-format
+msgid "Google Photo Export"
+msgstr "Εξαγωγή Google Photo"
+
+#: gswindow.cpp:549
+#, kde-format
+msgid "Google Drive Call Failed: %1\n"
+msgstr "Αποτυχία επικοινωνίας με το Google Drive: %1\n"
+
+#: gswindow.cpp:653
+#, kde-format
+msgid ""
+"The textbox is empty, please enter the code from the browser in the textbox. "
+"To complete the authentication click \"Change Account\", or \"Start Upload\" "
+"to authenticate again."
+msgstr ""
+"Το πλαίσιο κειμένου είναι κενό, δώστε τον κωδικό από τον περιηγητή στο "
+"πλαίοιο κειμένου. Για να ολοκληρωθεί η ταυτοποίηση κάντε κλικ στο «Αλλαγή "
+"λογαριασμού» ή στο «Έναρξη αποστολής» για να ξαναγίνει η ταυτοποίηση."
+
+#: gswindow.cpp:669
+#, kde-format
+msgid "No image selected. Please select which images should be uploaded."
+msgstr "Δεν επιλέχθηκε εικόνα. Επιλέξτε τις εικόνες προς αποστολή."
+
+#: gswindow.cpp:683 gswindow.cpp:706 gswindow.cpp:1014 gswindow.cpp:1032
+#: gswindow.cpp:1105
+#, kde-format
+msgid "Warning"
+msgstr "Προειδοποίηση"
+
+#: gswindow.cpp:684 gswindow.cpp:707
+#, kde-format
+msgid "Authentication failed. Click \"Continue\" to authenticate."
+msgstr "Αποτυχία πιστοποίησης. Κλικ στο »Συνέχεια» για πιστοποίηση."
+
+#: gswindow.cpp:687 gswindow.cpp:710 gswindow.cpp:1019 gswindow.cpp:1037
+#: gswindow.cpp:1109 gswindow.cpp:1288
+#, kde-format
+msgid "Continue"
+msgstr "Συνέχεια"
+
+#: gswindow.cpp:688 gswindow.cpp:711 gswindow.cpp:1020 gswindow.cpp:1038
+#: gswindow.cpp:1110 gswindow.cpp:1289
+#, kde-format
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+#: gswindow.cpp:762
+#, kde-format
+msgid "Google Drive export"
+msgstr "Εξαγωγή Google Drive"
+
+#: gswindow.cpp:1015
+#, kde-format
+msgid ""
+"Failed to save photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Αποτυχία αποθήκευσης της φωτογραφίας: %1\n"
+"Επιθυμείτε τη συνέχεια;"
+
+#: gswindow.cpp:1033
+#, kde-format
+msgid ""
+"Failed to download photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Αποτυχία λήψης της φωτογραφίας: %1\n"
+"Επιθυμείτε τη συνέχεια;"
+
+#: gswindow.cpp:1079
+#, kde-format
+msgid "Failed to save image to %1"
+msgstr "Η αποθήκευση της εικόνας στο %1 απέτυχε"
+
+#: gswindow.cpp:1106
+#, kde-format
+msgid ""
+"Failed to upload photo to %1.\n"
+"%2\n"
+"Do you want to continue?"
+msgstr ""
+"Αποτυχία αποστολής της φωτογραφίας στο %1\n"
+"%2\n"
+"Επιθυμείτε να συνεχίσετε;"
+
+#: gswindow.cpp:1200
+#, kde-format
+msgctxt "%1 is the error string, %2 is the error code"
+msgid "An authentication error occurred: %1 (%2)"
+msgstr "Παρουσιάστηκε σφάλμα πιστοποίησης: %1 (%2)"
+
+#: gswindow.cpp:1242
+#, kde-format
+msgid ""
+"Google Drive call failed:\n"
+"%1"
+msgstr ""
+"Αποτυχία επικοινωνίας με το Google Drive:\n"
+"%1"
+
+#: gswindow.cpp:1250
+#, kde-format
+msgid ""
+"Google Photos/PicasaWeb call failed:\n"
+"%1"
+msgstr ""
+"Αποτυχία επικοινωνίας με το Google Photos/PicasaWeb:\n"
+"%1"
+
+#: gswindow.cpp:1283
+#, kde-format
+msgctxt "@title:window"
+msgid "Warning"
+msgstr "Προειδοποίηση"
+
+#: gswindow.cpp:1284
+#, kde-format
+msgid ""
+"After you have been logged out in the browser, click \"Continue\" to "
+"authenticate for another account"
+msgstr ""
+"Αφού έχετε αποσυνδεθεί στον περιηγητή, κάντε κλικ στο «Συνέχεια» για να "
+"πιστοποιηθείτε για άλλο λογαριασμό"
+
+#. i18n: ectx: Menu (Export)
+#: kipiplugin_googleservicesui.rc:7 kipiplugin_googleservicesui.rc:15
+#, kde-format
+msgid "&Export"
+msgstr "&Εξαγωγή"
+
+#. i18n: ectx: Menu (Import)
+#: kipiplugin_googleservicesui.rc:11
+#, kde-format
+msgid "&Import"
+msgstr "Ε&ισαγωγή"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kipiplugin_googleservicesui.rc:21
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Κύρια γραμμή εργαλείων"
+
+#: newalbumdlg.cpp:54
+#, kde-format
+msgid "Access Level"
+msgstr "Επίπεδο πρόσβασης"
+
+#: newalbumdlg.cpp:55
+#, kde-format
+msgid ""
+"These are security and privacy settings for the new Google Photos/PicasaWeb "
+"album."
+msgstr ""
+"Αυτές είναι οι ρυθμίσεις ασφαλείας και ιδιωτικού απορρήτου για το νέο "
+"λεύκωμα Google Photos/Picasaweb."
+
+#: newalbumdlg.cpp:57
+#, kde-format
+msgctxt "google photos/picasaweb album privacy"
+msgid "Public"
+msgstr "Δημόσιο"
+
+#: newalbumdlg.cpp:59
+#, kde-format
+msgid "Public album is listed on your public Google Photos/PicasaWeb page."
+msgstr ""
+"Το δημόσιο λεύκωμα εμφανίζεται στη δημόσια σελίδα σας Google Photos/"
+"Picasaweb."
+
+#: newalbumdlg.cpp:60
+#, kde-format
+msgctxt "google photos/picasaweb album privacy"
+msgid "Unlisted / Private"
+msgstr "Εκτός λίστας / ιδιωτικό"
+
+#: newalbumdlg.cpp:61
+#, kde-format
+msgid "Unlisted album is only accessible via URL."
+msgstr "Το μη εμφανιζόμενο άλμπουμ είναι προσπελάσιμο μόνο μέσω του URL."
+
+#: newalbumdlg.cpp:62
+#, kde-format
+msgctxt "google photos/picasaweb album privacy"
+msgid "Sign-In Required to View"
+msgstr "Απαιτείται σύνδεση για την προβολή"
+
+#: newalbumdlg.cpp:63
+#, kde-format
+msgid "Unlisted album require Sign-In to View"
+msgstr "Για την προβολή ενός άλμπουμ εκτός λίστας απαιτείται σύνδεση"
+
+#: newalbumdlg.cpp:71
+#, kde-format
+msgid "Privacy:"
+msgstr "Ιδιωτικό απόρρητο:"
+
+#: plugin_googleservices.cpp:100
+#, kde-format
+msgid "Export to &Google Drive..."
+msgstr "Εξαγωγή στο &Google Drive..."
+
+#: plugin_googleservices.cpp:110
+#, kde-format
+msgid "Export to &Google Photos/PicasaWeb..."
+msgstr "Εξαγωγή στο &Google Photos/PicasaWeb..."
+
+#: plugin_googleservices.cpp:120
+#, kde-format
+msgid "Import from &Google Photos/PicasaWeb..."
+msgstr "Εισαγωγή από το &Google Photos/PicasaWeb..."
+
+#: replacedialog.cpp:112
+#, kde-format
+msgid "Add As New"
+msgstr "Προσθήκη ως νέο"
+
+#: replacedialog.cpp:113
+#, kde-format
+msgid "Item will be added alongside the linked version."
+msgstr "Το αντικείμενο θα προστεθεί παράλληλα με την έκδοση στο διαδίκτυο."
+
+#: replacedialog.cpp:119
+#, kde-format
+msgid "Add All"
+msgstr "Προσθήκη όλων"
+
+#: replacedialog.cpp:120
+#, kde-format
+msgid ""
+"Items will be added alongside the linked version. You will not be prompted "
+"again."
+msgstr ""
+"Τα αντικείμενα θα προστεθούν παράλληλα με την έκδοση στο διαδίκτυο. Δεν θα "
+"ερωτηθείτε ξανά."
+
+#: replacedialog.cpp:126
+#, kde-format
+msgid "Replace"
+msgstr "Αντικατάσταση"
+
+#: replacedialog.cpp:127
+#, kde-format
+msgid "Item will be replacing the linked version."
+msgstr "Το αντικείμενο θα αντικαταστήσει την έκδοση από το διαδίκτυο."
+
+#: replacedialog.cpp:133
+#, kde-format
+msgid "Replace All"
+msgstr "Αντικατάσταση όλων"
+
+#: replacedialog.cpp:134
+#, kde-format
+msgid ""
+"Items will be replacing the linked version. You will not be prompted again."
+msgstr ""
+"Τα αντικείμενα θα αντικαταστήσουν την έκδοση στο διαδίκτυο. Δεν θα "
+"ερωτηθείτε ξανά."
+
+#: replacedialog.cpp:157
+#, kde-format
+msgid "A linked item already exists."
+msgstr "Υπάρχει ήδη ένα συνδεδεμένο αντικείμενο."
+
+#: replacedialog.cpp:177
+#, kde-format
+msgid "Destination"
+msgstr "Προορισμός"
+
+#: replacedialog.cpp:182
+#, kde-format
+msgid "Source"
+msgstr "Πηγή"
+
+#~ msgid ""
+#~ "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+#~ msgstr ""
+#~ "Ένα αρχείο με όνομα « %1 » υπάρχει ήδη. Σίγουρα θέλετε να αντικατασταθεί;"
+
+#~ msgid "Picasa Export"
+#~ msgstr "Εξαγωγή Picasa"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Τούσης Μανώλης, Δημήτριος Γλενταδάκης"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "manolis@koppermind.homelinux.org, dglent@gmail.com"
+
+#, fuzzy
+#~| msgid "This is the list of images to upload to your Picasaweb account."
+#~ msgid "This is the list of images to upload to your Google Drive account."
+#~ msgstr ""
+#~ "Αυτή είναι η λίστα με τις εικόνες προς αποστολή στο λογαριασμό σας "
+#~ "Picasaweb."
+
+#, fuzzy
+#~| msgid "This is the list of images to upload to your Picasaweb account."
+#~ msgid ""
+#~ "This is the list of images to upload to your Google Photos/PicasaWeb "
+#~ "account."
+#~ msgstr ""
+#~ "Αυτή είναι η λίστα με τις εικόνες προς αποστολή στο λογαριασμό σας "
+#~ "Picasaweb."
+
+#, fuzzy
+#~| msgid ""
+#~| "This is a clickable link to open the Picasaweb home page in a web "
+#~| "browser."
+#~ msgid "This is a clickable link to open Google Drive in a browser."
+#~ msgstr ""
+#~ "Αυτός είναι ο δεσμός για το άνοιγμα της αρχικής σελίδας Picasaweb στον "
+#~ "περιηγητή ιστού."
+
+#, fuzzy
+#~| msgid ""
+#~| "This is a clickable link to open the Picasaweb home page in a web "
+#~| "browser."
+#~ msgid ""
+#~ "This is a clickable link to open Google Photos/PicasaWeb in a browser."
+#~ msgstr ""
+#~ "Αυτός είναι ο δεσμός για το άνοιγμα της αρχικής σελίδας Picasaweb στον "
+#~ "περιηγητή ιστού."
+
+#~ msgid "Account"
+#~ msgstr "Λογαριασμός"
+
+#, fuzzy
+#~| msgid "This is the Picasaweb account that will be used to authenticate."
+#~ msgid ""
+#~ "This is the Google Photos/PicasaWeb account that is currently logged in."
+#~ msgstr ""
+#~ "Αυτός είναι ο λογαριασμός Picasaweb που θα χρησιμοποιηθεί για την "
+#~ "ταυτοποίηση."
+
+#, fuzzy
+#~| msgctxt "Picasaweb account settings"
+#~| msgid "Name:"
+#~ msgctxt "account settings"
+#~ msgid "Name:"
+#~ msgstr "Όνομα:"
+
+#~ msgid "Change Account"
+#~ msgstr "Αλλαγή λογαριασμού"
+
+#~ msgid "Album"
+#~ msgstr "Άλμπουμ"
+
+#, fuzzy
+#~| msgid "This is the location where Picasaweb images will be downloaded."
+#~ msgid ""
+#~ "This is the Google Photos/PicasaWeb folder from which selected photos "
+#~ "will be downloaded."
+#~ msgstr ""
+#~ "Αυτή είναι η τοποθεσία όπου γίνεται η λήψη των εικόνων του Picasaweb."
+
+#, fuzzy
+#~| msgid "Album"
+#~ msgid "Album:"
+#~ msgstr "Άλμπουμ"
+
+#~ msgid "New Album"
+#~ msgstr "Νέο άλμπουμ"
+
+#, fuzzy
+#~| msgid "Create new Picasaweb album"
+#~ msgid "Create new Google Photos/PicasaWeb folder"
+#~ msgstr "Δημιουργία νέου άλμπουμ Picasaweb"
+
+#, fuzzy
+#~| msgctxt "reload album list"
+#~| msgid "Reload"
+#~ msgctxt "album list"
+#~ msgid "Reload"
+#~ msgstr "Επαναφόρτωση"
+
+#~ msgid "Reload album list"
+#~ msgstr "Επαναφόρτωση της λίστας των άλμπουμ"
+
+#~ msgid "Max Dimension"
+#~ msgstr "Μέγιστες διαστάσεις:"
+
+#~ msgid ""
+#~ "This is the maximum dimension of the images. Images larger than this will "
+#~ "be scaled down."
+#~ msgstr ""
+#~ "Αυτές είναι οι μέγιστες διαστάσεις των εικόνων. Οι εικόνες που "
+#~ "υπερβαίνουν τις διαστάσεις θα μετατρέπονται σε μικρότερη κλίμακα."
+
+#~ msgid "Original Size"
+#~ msgstr "Αρχικό μέγεθος"
+
+#~ msgid "1600 px"
+#~ msgstr "1600 px"
+
+#~ msgid "1440 px"
+#~ msgstr "1440 px"
+
+#~ msgid "1280 px"
+#~ msgstr "1280 px"
+
+#~ msgid "1152 px"
+#~ msgstr "1152 px"
+
+#~ msgid "1024 px"
+#~ msgstr "1024 px"
+
+#, fuzzy
+#~| msgid "This is the location where Picasaweb images will be downloaded."
+#~ msgid ""
+#~ "This is the location where Google Photos/PicasaWeb images will be "
+#~ "downloaded."
+#~ msgstr ""
+#~ "Αυτή είναι η τοποθεσία όπου γίνεται η λήψη των εικόνων του Picasaweb."
+
+#~ msgid "Options"
+#~ msgstr "Επιλογές"
+
+#, fuzzy
+#~| msgid "These are options that will be applied to images before upload."
+#~ msgid "These are the options that would be applied to photos before upload."
+#~ msgstr "Αυτές οι επιλογές θα εφαρμοστούν στις εικόνες πριν την αποστολή."
+
+#~ msgid "Resize photos before uploading"
+#~ msgstr "Αλλαγή μεγέθους φωτογραφιών πριν την αποστολή"
+
+#, fuzzy
+#~| msgid "Maximum dimension:"
+#~ msgid "Maximum Dimension:"
+#~ msgstr "Μέγιστη διάσταση:"
+
+#, fuzzy
+#~| msgid "JPEG quality:"
+#~ msgid "JPEG Quality:"
+#~ msgstr "Ποιότητα JPEG:"
+
+#~ msgid "Title of the album that will be created (required)."
+#~ msgstr "Τίτλος του άλμπουμ που θα δημιουργηθεί (απαιτείται)."
+
+#, fuzzy
+#~| msgid "These are basic settings for the new Picasaweb album."
+#~ msgid "These are basic settings for the new Google Photos/Picasaweb album."
+#~ msgstr "Αυτές είναι οι βασικές ρυθμίσεις για το νέο άλμπουμ Picasaweb."
+
+#~ msgid "Date and Time of the album that will be created (optional)."
+#~ msgstr "Ημερομηνία και ώρα του άλμπουμ που θα δημιουργηθεί (προαιρετικό)."
+
+#~ msgid "Description of the album that will be created (optional)."
+#~ msgstr "Περιγραφή του άλμπουμ που θα δημιουργηθεί (προαιρετικό)."
+
+#~ msgid "Location of the album that will be created (optional)."
+#~ msgstr "Η τοποθεσία του άλμπουμ που θα δημιουργηθεί (προαιρετικό)."
+
+#, fuzzy
+#~| msgid "Title of the album that will be created (required)."
+#~ msgid "This is the title of the folder that will be created."
+#~ msgstr "Τίτλος του άλμπουμ που θα δημιουργηθεί (απαιτείται)."
+
+#, fuzzy
+#~| msgctxt "new picasaweb album dialog"
+#~| msgid "Title:"
+#~ msgctxt "folder edit"
+#~ msgid "Title:"
+#~ msgstr "Τίτλος:"
+
+#, fuzzy
+#~| msgctxt "new picasaweb album dialog"
+#~| msgid "Title:"
+#~ msgctxt "new google photos/picasaweb album dialog"
+#~ msgid "Title:"
+#~ msgstr "Τίτλος:"
+
+#, fuzzy
+#~| msgctxt "new picasaweb album dialog"
+#~| msgid "Date & Time:"
+#~ msgctxt "new google photos/picasaweb album dialog"
+#~ msgid "Date & Time:"
+#~ msgstr "Ημερομηνία & Ώρα:"
+
+#, fuzzy
+#~| msgctxt "new picasaweb album dialog"
+#~| msgid "Description:"
+#~ msgctxt "new google photos/picasaweb album dialog"
+#~ msgid "Description:"
+#~ msgstr "Περιγραφή:"
+
+#, fuzzy
+#~| msgctxt "new picasaweb album dialog"
+#~| msgid "Location:"
+#~ msgctxt "new google photos/picasaweb album dialog"
+#~ msgid "Location:"
+#~ msgstr "Τοποθεσία:"
+
+#, fuzzy
+#~| msgid ""
+#~| "Failed to upload photo into Picasaweb: %1\n"
+#~| "Do you want to continue?"
+#~ msgid ""
+#~ "Failed to upload photo to Google Drive.\n"
+#~ "%1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Αποτυχία αποστολής της φωτογραφίας στο PicasaWeb: %1\n"
+#~ "Επιθυμείτε τη συνέχεια;"
+
+#, fuzzy
+#~| msgid ""
+#~| "Failed to upload photo into Picasaweb: %1\n"
+#~| "Do you want to continue?"
+#~ msgid ""
+#~ "Failed to upload photo to Google Photos/PicasaWeb.\n"
+#~ "%1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Αποτυχία αποστολής της φωτογραφίας στο PicasaWeb: %1\n"
+#~ "Επιθυμείτε τη συνέχεια;"
+
+#~ msgid "Picasaweb New Album"
+#~ msgstr "Νέο άλμπουμ Picasaweb"
+
+#~ msgid "%1|All supported files"
+#~ msgstr "%1|Όλα τα υποστηριζόμενα αρχεία"
+
+#~ msgid "%1|Camera RAW files"
+#~ msgstr "%1|Αρχεία RAW της φωτογραφικής μηχανής"
+
+#~ msgid "%1|Video files"
+#~ msgstr "%1|Αρχεία βίντεο"
+
+#~ msgid "Select Images"
+#~ msgstr "Επιλέξτε εικόνες"
+
+#~ msgid "Google Login:"
+#~ msgstr "Όνομα χρήστη Google:"
+
+#~ msgid "Password:"
+#~ msgstr "Κωδικός πρόσβασης:"
+
+#~ msgid "&OK"
+#~ msgstr "&Εντάξει"
+
+#~ msgid "&Cancel"
+#~ msgstr "&Ακύρωση"
+
+#~ msgid "Login"
+#~ msgstr "Σύνδεση"
+
+#~ msgctxt "Picasaweb account login"
+#~ msgid "Anonymous"
+#~ msgstr "Ανώνυμος"
+
+#~ msgid "Login as anonymous to Picasaweb web service."
+#~ msgstr "Σύνδεση ως ανώνυμος στην δικτυακή υπηρεσία Picasaweb."
+
+#~ msgid "Picasaweb Account"
+#~ msgstr "Λογαριασμός PicasaWeb"
+
+#~ msgid "Login to Picasaweb web service using username and password."
+#~ msgstr ""
+#~ "Σύνδεση στην διαδικτυακή υπηρεσία Picasaweb χρησιμοποιώντας όνομα χρήστη "
+#~ "και κωδικό πρόσβασης."
+
+#~ msgid "Change Picasaweb Account used to authenticate"
+#~ msgstr ""
+#~ "Αλλαγή του λογαριασμού Picasaweb που θα χρησιμοποιηθεί για την ταυτοποίηση"
+
+#~ msgid "This is the Picasaweb album that will be used for transfer."
+#~ msgstr ""
+#~ "Αυτό είναι το άλμπουμ Picasaweb που θα χρησιμοποιηθεί για τη μεταφορά."
+
+#~ msgid "Cannot open file"
+#~ msgstr "Αδυναμία ανοίγματος του αρχείου"
+
+#~ msgid "Handbook"
+#~ msgstr "Εγχειρίδιο"
+
+#, fuzzy
+#~| msgid "Password:"
+#~ msgid "Site Password:"
+#~ msgstr "Κωδικός πρόσβασης:"
+
+#, fuzzy
+#~| msgid "Password:"
+#~ msgid "Album Password:"
+#~ msgstr "Κωδικός πρόσβασης:"
+
+#~ msgid "Getting the token"
+#~ msgstr "Λήψη του ενδεικτικού"
+
+#~ msgid "Checking if previous token is still valid"
+#~ msgstr "Έλεγχος εγκυρότητας προηγούμενου ενδεικτικού"
+
+#~ msgid "Failed to query photo information"
+#~ msgstr "Αποτυχία ερωτήματος πληροφοριών φωτογραφίας"
+
+#~ msgid "No album selected - please create and select album."
+#~ msgstr ""
+#~ "Δεν επιλέχθηκε άλμπουμ - παρακαλώ δημιουργήστε και επιλέξτε άλμπουμ."
+
+#~ msgid "Nothing to upload - please select photos to upload."
+#~ msgstr ""
+#~ "Κανένα αντικείμενο προς αποστολή - παρακαλώ επιλέξτε φωτογραφίες για "
+#~ "αποστολή."
+
+#~ msgid "Uploading file %1 "
+#~ msgstr "Αποστολή αρχείου %1 "
+
+#~ msgid "New Album Dialog"
+#~ msgstr "Διάλογος νέου άλμπουμ"
+
+#~ msgid "Place Taken"
+#~ msgstr "Κατάληψη θέσης"
+
+#~ msgid "Create"
+#~ msgstr "Δημιουργία"
+
+#~ msgid "Date"
+#~ msgstr "Ημερομηνία"
+
+#~ msgid "PicasaWeb Exporter Upload"
+#~ msgstr "Αποστολή εξαγωγέα PicasaWeb"
+
+#~ msgid "PicasaWeb Uploader"
+#~ msgstr "Αποστολέας PicasaWeb"
+
+#~ msgid "Tags:<p align=\"center\"></p>"
+#~ msgstr "Ετικέτες:<p align=\"center\"></p>"
+
+#~ msgid "E&xport Application Tags"
+#~ msgstr "Ε&ξαγωγή ετικετών εφαρμογής"
+
+#~ msgid "Resi&ze"
+#~ msgstr "Αλλαγή μεγέ&θους"
+
+#~ msgid "Size (pixels):"
+#~ msgstr "Μέγεθος (εικονοστοιχεία):"
+
+#~ msgid "Compression:"
+#~ msgstr "Συμπίεση:"
+
+#~ msgid "Images to upload"
+#~ msgstr "Εικόνες για αποστολή"
+
+#~ msgid "Currentl&y Selected Images"
+#~ msgstr "&Τρέχουσες επιλεγμένες εικόνες"
+
+#~ msgid "Select Photos"
+#~ msgstr "Επιλογή φωτογραφιών"
+
+#~ msgid "Username:"
+#~ msgstr "Όνομα χρήστη:"
+
+#~ msgid "Change User"
+#~ msgstr "Τροποποίηση χρήστη"
+
+#~ msgid "Alt+X"
+#~ msgstr "Alt+Ξ"
+
+#~ msgid "Alt+Z"
+#~ msgstr "Alt+Θ"
