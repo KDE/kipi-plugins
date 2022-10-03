@@ -74,7 +74,7 @@ msgstr "Inicia l'exportació"
 #: KioExportWindow.cpp:68
 #, kde-format
 msgid "Start export to the specified target"
-msgstr "Inicia l'exportació a la destinació especificada"
+msgstr "Inicia l'exportació cap a la destinació especificada"
 
 #: KioExportWindow.cpp:84
 #, kde-format

@@ -328,7 +328,7 @@ msgstr "Afig etiquetes per imatge"
 #, kde-format
 msgid "If checked, you can set extra tags for each image in the File List tab"
 msgstr ""
-"Si està marcada, podeu definir etiquetes extres per a cada imatge a la "
+"Si està marcada, podeu establir etiquetes extres per a cada imatge en la "
 "pestanya de la llista de fitxers"
 
 #: flickrwidget.cpp:163

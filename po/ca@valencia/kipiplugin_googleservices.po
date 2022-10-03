@@ -515,7 +515,7 @@ msgstr "Públic"
 #, kde-format
 msgid "Public album is listed on your public Google Photos/PicasaWeb page."
 msgstr ""
-"Un àlbum públic es llista a la vostra pàgina pública de Google Photos/"
+"Un àlbum públic es llista en la vostra pàgina pública de Google Photos/"
 "PicasaWeb."
 
 #: newalbumdlg.cpp:60

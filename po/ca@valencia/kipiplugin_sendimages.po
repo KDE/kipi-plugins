@@ -268,7 +268,7 @@ msgid ""
 "current email program set in desktop system settings."
 msgstr ""
 "Seleccioneu ací el vostre programa extern de correu preferit. <b>De manera "
-"predeterminada,</b> és el programa de correu electrònic indicat a la "
+"predeterminada,</b> és el programa de correu electrònic indicat en la "
 "configuració del sistema d'escriptori."
 
 #: settingswidget.cpp:112
