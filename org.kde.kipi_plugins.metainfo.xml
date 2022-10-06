@@ -21,6 +21,7 @@
   <name xml:lang="id">KIPI Plugins</name>
   <name xml:lang="is">KIPI Plugins viðbætur</name>
   <name xml:lang="it">Estensioni KIPI</name>
+  <name xml:lang="ka">KIPI -ის დამატებები</name>
   <name xml:lang="ko">KIPI 플러그인</name>
   <name xml:lang="nl">KIPI-plug-ins</name>
   <name xml:lang="nn">KIPI-tillegg</name>
@@ -53,6 +54,7 @@
   <summary xml:lang="id">Plugin untuk aplikasi KDE untuk mengekspor citra gambar</summary>
   <summary xml:lang="is">Viðbætur fyrir KDE-forrit til útflutnings á myndum</summary>
   <summary xml:lang="it">Estensioni per far esportare le immagini alle applicazioni di KDE</summary>
+  <summary xml:lang="ka">KDE -ის აპლიკაციის დამატებები სურათების გასატანად</summary>
   <summary xml:lang="ko">KDE 프로그램에서 그림을 내보내는 플러그인</summary>
   <summary xml:lang="nl">Plug-ins voor KDE toepassingen om afbeeldingen te exporteren</summary>
   <summary xml:lang="pl">Wtyczki dla aplikacji KDE do eksportowania obrazów</summary>
@@ -114,6 +116,7 @@
     <p xml:lang="id">Dia fitur-fitur ekspor tambahan untuk Gwenview dan Spectacle.</p>
     <p xml:lang="is">Þær bæta við útflutningseiginleikum í Gwenview og Spectacle.</p>
     <p xml:lang="it">Aggiungono funzionalità di esportazione a Gwenview e Spectacle.</p>
+    <p xml:lang="ka">სურათის გატანის დამატება ისეთი პროგრამებისთვის, როგორიცაა Gwenvew და Spectacle.</p>
     <p xml:lang="ko">Gwenview 및 Spectacle에 내보내기 기능을 추가합니다.</p>
     <p xml:lang="nl">Ze voegen exportfuncties toe aan Gwenview en Spectacle.</p>
     <p xml:lang="pl">Dodają możliwość eksportu do Gwenview oraz Spectacle.</p>
@@ -150,6 +153,7 @@
       <caption xml:lang="id">KIPI Plugins sebagaimana digunakan di Gwenview.</caption>
       <caption xml:lang="is">KIPI Plugins viðbætur eins og notaðar eru í Gwenview.</caption>
       <caption xml:lang="it">Le estensioni di KIPI come usate in Gwenview.</caption>
+      <caption xml:lang="ka">Gwenview-ში გამოყენებული KIPI დამატებები.</caption>
       <caption xml:lang="ko">Gwenview에서 KIPI 플러그인을 사용하는 방법입니다.</caption>
       <caption xml:lang="nl">KIPI-plug-ins zoals gebruikt in Gwenview.</caption>
       <caption xml:lang="pl">Wtyczki KIPI używane w Gewnview.</caption>
