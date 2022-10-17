@@ -44,7 +44,8 @@ msgstr "Seleccioneu la ubicació de la destinació..."
 #: KioExportWidget.cpp:72
 #, kde-format
 msgid "This is the list of images to upload to the specified target."
-msgstr "Esta és la llista de les imatges a pujar a la destinació especificada."
+msgstr ""
+"Esta és la llista de les imatges que es pujaran a la destinació especificada."
 
 #: KioExportWidget.cpp:134
 #, kde-format
@@ -118,7 +119,7 @@ msgstr ""
 #: KioImportWidget.cpp:52
 #, kde-format
 msgid "This is the list of images to import into the current album."
-msgstr "Esta és la llista de les imatges a importar a l'àlbum actual."
+msgstr "Esta és la llista de les imatges que s'importaran a l'àlbum actual."
 
 #: KioImportWindow.cpp:60
 #, kde-format

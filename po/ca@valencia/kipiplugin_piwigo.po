@@ -266,7 +266,7 @@ msgstr "Imatge"
 #: piwigowindow.cpp:538
 #, kde-format
 msgid "Nothing to upload - please select photos to upload."
-msgstr "Res a pujar: seleccioneu les fotografies a pujar."
+msgstr "Res que s'haja de pujar: seleccioneu les fotografies que es pujaran."
 
 #: piwigowindow.cpp:576
 #, kde-format

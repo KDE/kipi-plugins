@@ -260,7 +260,7 @@ msgstr "%1|Format d'intercanvi GPS"
 #: kmlwindow.cpp:178
 #, kde-format
 msgid "Select GPX File to Load"
-msgstr "Seleccioneu el fitxer GPX a carregar"
+msgstr "Seleccioneu el fitxer GPX que s'ha de carregar"
 
 #: kmlwindow.cpp:181
 #, kde-format

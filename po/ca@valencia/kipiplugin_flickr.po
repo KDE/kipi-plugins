@@ -229,7 +229,8 @@ msgstr "Pública"
 #: flickrwidget.cpp:76
 #, kde-format
 msgid "This is the list of images to upload to your Flickr account."
-msgstr "Esta és la llista d'imatges a pujar al vostre compte de Flickr."
+msgstr ""
+"Esta és la llista de les imatges que es pujaran al vostre compte de Flickr."
 
 #: flickrwidget.cpp:81
 #, kde-format

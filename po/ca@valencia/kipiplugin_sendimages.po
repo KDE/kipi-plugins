@@ -93,7 +93,7 @@ msgstr "No s'ha pogut redimensionar %1: %2"
 #: sendimages.cpp:240
 #, kde-format
 msgid "There are no files to send"
-msgstr "No hi ha cap fitxer que s'haja d'enviar"
+msgstr "No hi ha cap fitxer per a enviar"
 
 #: sendimages.cpp:258
 #, kde-format
@@ -306,8 +306,8 @@ msgid ""
 "If you enable this option, all images to be sent can be resized and "
 "recompressed."
 msgstr ""
-"Si activeu esta opció, totes les imatges a enviar es podran redimensionar i "
-"tornar a comprimir."
+"Si activeu esta opció, totes les imatges que calga enviar es podran "
+"redimensionar i tornar a comprimir."
 
 #: settingswidget.cpp:137
 #, kde-format
@@ -371,22 +371,22 @@ msgid ""
 "on Ultra HD displays. Only if you have a high-speed Internet connection and "
 "the target mailbox size is not limited.</p>"
 msgstr ""
-"<p>Seleccioneu la mida de les imatges a enviar:</p><p><b>%1</b>: utilitzeu "
-"esta si teniu una connexió a Internet molt lenta o la mida de la bústia de "
-"correu de destinació és molt limitada.</p><p><b>%2</b>: utilitzeu esta si "
-"teniu una connexió a Internet lenta o si la mida de la bústia de correu de "
-"destinació és limitada.</p><p><b>%3</b>: este és el valor predeterminat per "
-"a una connexió a Internet i una mida de bústia de correu de destinació "
-"mitjanes.</p><p><b>%4</b>: utilitzeu esta si teniu una connexió a Internet "
-"d'alta velocitat i la mida de la bústia de correu de destinació no està "
-"limitada.</p> <p><b>%5</b>: utilitzeu esta si no teniu restriccions de mida "
-"o velocitat.</p> <p><b>%6</b>: utilitzeu esta només quan vulgueu imprimir-"
-"les.</p><p><b>%7</b>: utilitzeu-ho per a una òptima visualització en "
-"pantalles Full HD. Només si teniu una connexió a Internet d'alta velocitat i "
-"la mida de la bústia de destinació no està limitada.</p><p><b>%8</b>: "
-"utilitzeu-ho per a una òptima visualització en pantalles Ultra HD. Només si "
-"teniu una connexió a Internet d'alta velocitat i la mida de la bústia de "
-"destinació no està limitada.</p>"
+"<p>Seleccioneu la mida de les imatges que s'han d'enviar:</p><p><b>%1</b>: "
+"utilitzeu esta si teniu una connexió a Internet molt lenta o la mida de la "
+"bústia de correu de destinació és molt limitada.</p><p><b>%2</b>: utilitzeu "
+"esta si teniu una connexió a Internet lenta o si la mida de la bústia de "
+"correu de destinació és limitada.</p><p><b>%3</b>: este és el valor "
+"predeterminat per a una connexió a Internet i una mida de bústia de correu "
+"de destinació mitjanes.</p><p><b>%4</b>: utilitzeu esta si teniu una "
+"connexió a Internet d'alta velocitat i la mida de la bústia de correu de "
+"destinació no està limitada.</p> <p><b>%5</b>: utilitzeu esta si no teniu "
+"restriccions de mida o velocitat.</p> <p><b>%6</b>: utilitzeu esta només "
+"quan vulgueu imprimir-les.</p><p><b>%7</b>: utilitzeu-ho per a una òptima "
+"visualització en pantalles Full HD. Només si teniu una connexió a Internet "
+"d'alta velocitat i la mida de la bústia de destinació no està limitada.</"
+"p><p><b>%8</b>: utilitzeu-ho per a una òptima visualització en pantalles "
+"Ultra HD. Només si teniu una connexió a Internet d'alta velocitat i la mida "
+"de la bústia de destinació no està limitada.</p>"
 
 #: settingswidget.cpp:177
 #, kde-format
@@ -396,7 +396,7 @@ msgstr "Mida de la imatge:"
 #: settingswidget.cpp:186
 #, kde-format
 msgid "<p>Select the file format of the image files to be sent.</p>"
-msgstr "<p>Seleccioneu el format dels fitxers d'imatge a enviar.</p>"
+msgstr "<p>Seleccioneu el format dels fitxers d'imatge que s'enviaran.</p>"
 
 #: settingswidget.cpp:187
 #, kde-format

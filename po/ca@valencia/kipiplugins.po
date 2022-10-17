@@ -318,7 +318,7 @@ msgstr "Guarda la llista."
 #: libkipiplugins/widgets/kpimageslist.cpp:972
 #, kde-format
 msgid "Select the image file list to load"
-msgstr "Seleccioneu la llista de fitxers d'imatge a carregar"
+msgstr "Seleccioneu la llista de fitxers d'imatge que s'ha de carregar"
 
 #: libkipiplugins/widgets/kpimageslist.cpp:974
 #: libkipiplugins/widgets/kpimageslist.cpp:1041
@@ -329,7 +329,7 @@ msgstr "Tots els fitxers (*)"
 #: libkipiplugins/widgets/kpimageslist.cpp:1039
 #, kde-format
 msgid "Select the image file list to save"
-msgstr "Seleccioneu la llista de fitxers d'imatge a guardar"
+msgstr "Seleccioneu la llista de fitxers d'imatge que s'ha de guardar"
 
 #: libkipiplugins/widgets/kpsavesettingswidget.cpp:81
 #, kde-format
@@ -399,7 +399,8 @@ msgstr "Opcions"
 #: libkipiplugins/widgets/kpsettingswidget.cpp:148
 #, kde-format
 msgid "This is the list of images to upload to your %1 account."
-msgstr "Esta és la llista d'imatges a pujar al vostre compte de %1."
+msgstr ""
+"Esta és la llista de les imatges que es pujaran al vostre compte de %1."
 
 #: libkipiplugins/widgets/kpsettingswidget.cpp:156
 #, kde-format

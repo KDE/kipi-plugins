@@ -74,7 +74,7 @@ msgstr ""
 #: wmwidget.cpp:189
 #, kde-format
 msgid "This is the list of images to upload to the wiki."
-msgstr "Esta és la llista de les imatges a pujar al wiki."
+msgstr "Esta és la llista de les imatges que es pujaran al wiki."
 
 #: wmwidget.cpp:214 wmwidget.cpp:387
 #, kde-format

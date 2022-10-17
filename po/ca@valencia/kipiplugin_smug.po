@@ -208,7 +208,8 @@ msgstr "S'ha produït un error"
 #: smugwidget.cpp:73
 #, kde-format
 msgid "This is the list of images to upload to your SmugMug account."
-msgstr "Esta és la llista d'imatges a pujar al vostre compte de SmugMug."
+msgstr ""
+"Esta és la llista de les imatges que es pujaran al vostre compte de SmugMug."
 
 #: smugwidget.cpp:79
 #, kde-format
