@@ -193,7 +193,7 @@ msgid ""
 "After you have been logged out in the browser, click \"Continue\" to "
 "authenticate for another account"
 msgstr ""
-"Després de finalitzar la sessió en el navegador, cliqueu a «Continua» per a "
+"Després de finalitzar la sessió en el navegador, cliqueu en «Continua» per a "
 "autenticar-vos en un altre compte"
 
 #: fbwindow.cpp:476

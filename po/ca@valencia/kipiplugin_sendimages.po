@@ -93,7 +93,7 @@ msgstr "No s'ha pogut redimensionar %1: %2"
 #: sendimages.cpp:240
 #, kde-format
 msgid "There are no files to send"
-msgstr "No hi ha cap fitxer per a enviar"
+msgstr "No hi ha cap fitxer que s'haja d'enviar"
 
 #: sendimages.cpp:258
 #, kde-format
@@ -306,7 +306,7 @@ msgid ""
 "If you enable this option, all images to be sent can be resized and "
 "recompressed."
 msgstr ""
-"Si activeu esta opció, totes les imatges que calga enviar es podran "
+"Si activeu esta opció, totes les imatges que s'enviaran es podran "
 "redimensionar i tornar a comprimir."
 
 #: settingswidget.cpp:137
@@ -431,7 +431,8 @@ msgstr "Format de la imatge:"
 #: settingswidget.cpp:206
 #, kde-format
 msgid "<p>The new compression value of JPEG images to be sent:</p>"
-msgstr "<p>El valor nou de compressió de les imatges JPEG a enviar:</p>"
+msgstr ""
+"<p>El valor nou de compressió de les imatges JPEG que s'han d'enviar:</p>"
 
 #: settingswidget.cpp:207
 #, kde-format

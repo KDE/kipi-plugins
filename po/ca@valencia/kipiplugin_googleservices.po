@@ -381,7 +381,7 @@ msgstr "Avís"
 #, kde-format
 msgid "Authentication failed. Click \"Continue\" to authenticate."
 msgstr ""
-"No s'ha pogut fer l'autenticació. Cliqueu a «Continua» per a autenticar."
+"No s'ha pogut fer l'autenticació. Cliqueu en «Continua» per a autenticar."
 
 #: gswindow.cpp:687 gswindow.cpp:710 gswindow.cpp:1019 gswindow.cpp:1037
 #: gswindow.cpp:1109 gswindow.cpp:1288
@@ -470,7 +470,7 @@ msgid ""
 "After you have been logged out in the browser, click \"Continue\" to "
 "authenticate for another account"
 msgstr ""
-"Després de finalitzar la sessió en el navegador, cliqueu a «Continua» per a "
+"Després de finalitzar la sessió en el navegador, cliqueu en «Continua» per a "
 "autenticar-vos en un altre compte"
 
 #. i18n: ectx: Menu (Export)
