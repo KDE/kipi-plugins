@@ -618,12 +618,3 @@ msgstr "Destinació"
 #, kde-format
 msgid "Source"
 msgstr "Origen"
-
-#~ msgid ""
-#~ "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
-#~ msgstr ""
-#~ "Ja existeix un fitxer anomenat «%1». Esteu segur que el voleu "
-#~ "sobreescriure?"
-
-#~ msgid "Picasa Export"
-#~ msgstr "Exporta a Picasa"

@@ -449,6 +449,3 @@ msgstr ""
 #, kde-format
 msgid "Image quality:"
 msgstr "Qualitat de la imatge:"
-
-#~ msgid "&Tools"
-#~ msgstr "&Eines"
