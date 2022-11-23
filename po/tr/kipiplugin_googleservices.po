@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: extragear-graphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2022-04-11 11:27+0300\n"
+"PO-Revision-Date: 2022-11-22 16:46+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 22.08.3\n"
 
 #: authorize.cpp:116
 #, kde-format
@@ -541,17 +541,17 @@ msgstr "Gizlilik:"
 #: plugin_googleservices.cpp:100
 #, kde-format
 msgid "Export to &Google Drive..."
-msgstr "&Google Drive'a Aktar..."
+msgstr "&Google Drive'a Dışa Aktar..."
 
 #: plugin_googleservices.cpp:110
 #, kde-format
 msgid "Export to &Google Photos/PicasaWeb..."
-msgstr "&Google Fotoğraflar/PicasaWeb'e Aktar..."
+msgstr "&Google Fotoğraflar'a Dışa Aktar..."
 
 #: plugin_googleservices.cpp:120
 #, kde-format
 msgid "Import from &Google Photos/PicasaWeb..."
-msgstr "&Google Fotoğraflar/PicasaWeb'den Aktar..."
+msgstr "&Google Fotoğraflar'dan İçe Aktar..."
 
 #: replacedialog.cpp:112
 #, kde-format
