@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kipi-plugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2022-10-05 06:58+0200\n"
+"PO-Revision-Date: 2022-12-08 23:29+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: kmlexport.cpp:90
 #, kde-format
@@ -157,6 +157,8 @@ msgid ""
 "When using GoogleMaps, all images must have complete URLs, icons are "
 "squared, and when drawing a track, only line track is exported."
 msgstr ""
+"GoogleMaps-ის გამოყენებისას ყველა გამოსახულება სრული ბმული უნდა ჰქონდეს, "
+"ხატულები მართკუთხედია და ბილიკის დახაზვისას მხოლოდ ერთი ტრეკი გამოიყენება."
 
 #: kmlwindow.cpp:104
 #, kde-format
@@ -197,7 +199,7 @@ msgstr "სამიზნე საქაღალდე:"
 #: kmlwindow.cpp:123
 #, kde-format
 msgid "Select a directory in which to save the kml file and pictures"
-msgstr ""
+msgstr "KML ფაილისა და სურათების შესანახი საქაღალდის არჩევა"
 
 #: kmlwindow.cpp:125
 #, kde-format

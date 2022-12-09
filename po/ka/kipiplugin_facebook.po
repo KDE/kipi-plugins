@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kipi-plugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2022-10-04 08:19+0200\n"
+"PO-Revision-Date: 2022-12-08 23:21+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,12 +16,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: fbalbum.cpp:52
 #, kde-format
 msgid "Privacy setting of the album that will be created (required)."
-msgstr ""
+msgstr "შექმნილი ალბომის კონფიდენციალობის პარამეტრები (აუცილებელია)."
 
 #: fbalbum.cpp:54
 #, kde-format
@@ -69,6 +69,8 @@ msgid ""
 "Please follow the instructions in the browser window. When done, copy the "
 "Internet address from your browser into the textbox below and press \"OK\"."
 msgstr ""
+"მიყევით ბრაუზერს ფანჯრის ინსტრუქციებს. როცა დაასრულებთ, დააკოპირეთ ინტერნეტ-"
+"მისამართი თქვენი ბრაუზერიდან ქვემო ველში და დააწექით ღილაკს \"დიახ\"."
 
 #: fbtalker.cpp:352
 #, kde-format
@@ -83,12 +85,13 @@ msgstr "სერვისი ახლა მიუწვდომელია.
 #: fbtalker.cpp:552
 #, kde-format
 msgid "The application has reached the maximum number of requests allowed."
-msgstr ""
+msgstr "აპლიკაციამ დასაშვები შეერთებების მაქსიმალურ რაოდენობას მიაღწია."
 
 #: fbtalker.cpp:555
 #, kde-format
 msgid "Invalid session key or session expired. Try to log in again."
 msgstr ""
+"სესიის გასაღები არასწორია ან სესიის ვადა გავიდა. სცადეთ, თავიდან შეხვიდეთ."
 
 #: fbtalker.cpp:558
 #, kde-format
@@ -108,7 +111,7 @@ msgstr "ფალი აკლია ან არასწორია."
 #: fbtalker.cpp:567
 #, kde-format
 msgid "Too many unapproved photos pending."
-msgstr ""
+msgstr "რიგში მეტისმეტად ბევრი დაუდასტურებელი სურათია."
 
 #: fbtalker.cpp:601
 #, kde-format
@@ -139,6 +142,8 @@ msgstr "Facebook -ზე გატანა"
 #, kde-format
 msgid "A tool to export image collection to/from Facebook web service."
 msgstr ""
+"პროგრამა სურათების კოლექციების Facebook-ის ვებსერვისიდან გამოსატანად/"
+"შესატანად."
 
 #: fbwindow.cpp:143
 #, kde-format
@@ -182,6 +187,8 @@ msgid ""
 "After you have been logged out in the browser, click \"Continue\" to "
 "authenticate for another account"
 msgstr ""
+"მას შემდეგ, რაც თქვენ გახვალთ თქვენი ბრაუზერიდან, სხვა ანგარიშით შესასვლელად "
+"დააწექით ღილაკს \"გაგრძელება\""
 
 #: fbwindow.cpp:476
 #, kde-format
@@ -219,6 +226,8 @@ msgid ""
 "Failed to upload photo into Facebook: %1\n"
 "Do you want to continue?"
 msgstr ""
+"შეცდომა სურათის Facebook-ზე ატვირთვისას: %1\n"
+"გნებავთ, გავაგრძელო?"
 
 #: fbwindow.cpp:706
 #, kde-format

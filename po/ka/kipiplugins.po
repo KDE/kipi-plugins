@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kipi-plugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2020-01-18 03:13+0100\n"
-"PO-Revision-Date: 2022-10-05 11:33+0200\n"
+"PO-Revision-Date: 2022-12-08 23:30+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: libkipiplugins/dialogs/kpbatchprogressdialog.cpp:113
 #, kde-format
@@ -67,7 +67,7 @@ msgstr "<i>შექმნის თარიღი</i>"
 #: libkipiplugins/dialogs/kpimagedialog.cpp:239
 #, kde-format
 msgid "<i>Aperture:</i>"
-msgstr ""
+msgstr "<i>დიაფრაგმა:</i>"
 
 #: libkipiplugins/dialogs/kpimagedialog.cpp:240
 #, kde-format
@@ -77,7 +77,7 @@ msgstr "<i>ფოკალი:</i>"
 #: libkipiplugins/dialogs/kpimagedialog.cpp:241
 #, kde-format
 msgid "<i>Exposure:</i>"
-msgstr ""
+msgstr "<i>ექსპოზიცია:</i>"
 
 #: libkipiplugins/dialogs/kpimagedialog.cpp:242
 #, kde-format
