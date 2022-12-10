@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kipi-plugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2020-01-18 03:13+0100\n"
-"PO-Revision-Date: 2022-12-08 23:30+0100\n"
+"PO-Revision-Date: 2022-12-09 10:38+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -163,7 +163,7 @@ msgstr "მდებარეობა: "
 #: libkipiplugins/dialogs/kpnewalbumdialog.cpp:116
 #, kde-format
 msgid "These are basic settings for the new %1 album."
-msgstr ""
+msgstr "ეს ახალი %1-ის ალბომის საბაზისო პარამეტრებია."
 
 #: libkipiplugins/dialogs/kpnewalbumdialog.cpp:118
 #, kde-format
@@ -173,7 +173,7 @@ msgstr "SmugMug -ის ახალი ალბომის სახელი
 #: libkipiplugins/dialogs/kpnewalbumdialog.cpp:121
 #, kde-format
 msgid "Date and Time of the album that will be created (optional)."
-msgstr ""
+msgstr "ახლად შექმნილი ალბომის თარიღი და დრო (არასავალდებულო)."
 
 #: libkipiplugins/dialogs/kpnewalbumdialog.cpp:123
 #, kde-format
@@ -183,7 +183,7 @@ msgstr "SmugMug -ის ახალი ალბომის აღწერა
 #: libkipiplugins/dialogs/kpnewalbumdialog.cpp:125
 #, kde-format
 msgid "Location of the album that will be created (optional)."
-msgstr ""
+msgstr "შესაქმნელი ალბომის მდებარეობა (არასავალდებულო)."
 
 #: libkipiplugins/dialogs/kptooldialog.cpp:167
 #, kde-format
@@ -314,7 +314,7 @@ msgstr "სიის შენახვა."
 #: libkipiplugins/widgets/kpimageslist.cpp:972
 #, kde-format
 msgid "Select the image file list to load"
-msgstr ""
+msgstr "აირჩიეთ ჩასატვირთი სურათების სია"
 
 #: libkipiplugins/widgets/kpimageslist.cpp:974
 #: libkipiplugins/widgets/kpimageslist.cpp:1041
@@ -384,17 +384,17 @@ msgstr "პარამეტრები"
 #: libkipiplugins/widgets/kpsettingswidget.cpp:148
 #, kde-format
 msgid "This is the list of images to upload to your %1 account."
-msgstr ""
+msgstr "ეს სურათების სიაა, რომელიც %1-ის თქვენს ანგარიშზე აიტვირთება."
 
 #: libkipiplugins/widgets/kpsettingswidget.cpp:156
 #, kde-format
 msgid "This is a clickable link to open %1 in a browser."
-msgstr ""
+msgstr "ეს დაწკაპუნებადი ბმულია, %1-ის ბრაუზერში გასახსნელად."
 
 #: libkipiplugins/widgets/kpsettingswidget.cpp:162
 #, kde-format
 msgid "This is the %1 account that is currently logged in."
-msgstr ""
+msgstr "ეს %1-ის ანგარიშია, რომლითაც ამჟამად შესული ბრძანდებით."
 
 #: libkipiplugins/widgets/kpsettingswidget.cpp:164
 #, kde-format
@@ -410,7 +410,7 @@ msgstr "ანგარიშის შეცვლა"
 #: libkipiplugins/widgets/kpsettingswidget.cpp:167
 #, kde-format
 msgid "Change %1 account for transfer"
-msgstr ""
+msgstr "გადასაცემად %1-ის ანგარიშის შეცვლა"
 
 #: libkipiplugins/widgets/kpsettingswidget.cpp:177
 #, kde-format
@@ -418,6 +418,8 @@ msgid ""
 "This is the %1 folder to/from which selected photos will be uploaded/"
 "downloaded."
 msgstr ""
+"ეს %1-ის საქაღალდეა, საიდანაც/სადაც მონიშნული სურათები აიტვირთება/"
+"გადმოიწერება."
 
 #: libkipiplugins/widgets/kpsettingswidget.cpp:179
 #, kde-format
@@ -451,6 +453,7 @@ msgid ""
 "This is the maximum dimension of the images. Images larger than this will be "
 "scaled down."
 msgstr ""
+"ეს სურათების მაქსიმალური ზომებია. ამ ზომებზე დიდი სურათები დაპატარავდება."
 
 #: libkipiplugins/widgets/kpsettingswidget.cpp:199
 #, kde-format
@@ -485,12 +488,12 @@ msgstr "1024 px"
 #: libkipiplugins/widgets/kpsettingswidget.cpp:210
 #, kde-format
 msgid "This is the location where %1 images will be downloaded."
-msgstr ""
+msgstr "ეს მდებარეობაა, სადაც %1-დან სურათების გადმოწერა მოხდება."
 
 #: libkipiplugins/widgets/kpsettingswidget.cpp:215
 #, kde-format
 msgid "These are the options that would be applied to photos before upload."
-msgstr ""
+msgstr "ეს ის პარამეტრებია, რომლებიც ატვირთვამდე სურათებზე გადატარდება."
 
 #: libkipiplugins/widgets/kpsettingswidget.cpp:217
 #, kde-format
@@ -505,7 +508,7 @@ msgstr "ატვირთვამდე სურათების ზომ�
 #: libkipiplugins/widgets/kpsettingswidget.cpp:231
 #, kde-format
 msgid "Maximum Dimension:"
-msgstr ""
+msgstr "მაქსიმალური განზომილებები:"
 
 #: libkipiplugins/widgets/kpsettingswidget.cpp:239
 #, kde-format

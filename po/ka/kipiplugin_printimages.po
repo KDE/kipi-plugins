@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kipi-plugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2021-03-28 16:08+0000\n"
-"PO-Revision-Date: 2022-10-05 10:27+0200\n"
+"PO-Revision-Date: 2022-12-09 10:00+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #. i18n: ectx: Menu (Image)
 #: plugin/kipiplugin_printimagesui.rc:7
@@ -147,6 +147,12 @@ msgid ""
 "setting for each photo.\n"
 "Enable \"Do not crop\" to avoid cropping all of the photos."
 msgstr ""
+"სურათების ამოსაჭრელად ეს ოთხკუთხედი გადაათრიეთ ზედ ისე, რომ თქვენთვის "
+"სასურველი ადგილი შიგნით მოხვდეს.  \n"
+"შეგიძლიათ თითოეული სურათი სხვადასხვანაირად ამოჭრათ ან, ყველა სურათზე "
+"ნაგულისხმებად ამოსაჭრელად, \n"
+"უბრალოდ დააწკაპუნეთ ღილაკზე 'შემდეგი'.\n"
+"ჩართეთ 'არ ამოჭრა', რომ ყველა სურათის ამოჭრა თავიდან აიცილოთ."
 
 #. i18n: ectx: property (text), widget (QPushButton, BtnSaveAs)
 #: ui/croppage.ui:167
@@ -361,6 +367,8 @@ msgid ""
 "%f  filename, %t exposure time, %c comment, %i ISO, %d date-time, %r "
 "resolution, %a aperture, %l focal length, \\n newline"
 msgstr ""
+"%f  ფაილის სახელი, %t ექსპოზიციის დრო, %c კომენტარი, %I ISO, %d თარიღი-დრო, "
+"%r გაფართოება, %a აპერტურა, %l ფოკალური სიგრძე, \\n ხაზის გადატანა"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_sameCaption)
 #: ui/photopage.ui:532

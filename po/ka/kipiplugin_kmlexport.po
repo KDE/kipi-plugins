@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kipi-plugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2022-12-08 23:29+0100\n"
+"PO-Revision-Date: 2022-12-09 09:48+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -168,12 +168,12 @@ msgstr "სურათის სიმაღლე:"
 #: kmlwindow.cpp:106 kmlwindow.cpp:230
 #, kde-format
 msgid "clamp to ground"
-msgstr ""
+msgstr "მიწაზე დამაგრება"
 
 #: kmlwindow.cpp:107 kmlwindow.cpp:231
 #, kde-format
 msgid "relative to ground"
-msgstr ""
+msgstr "მიწასთან შეფარდებით"
 
 #: kmlwindow.cpp:108 kmlwindow.cpp:232
 #, kde-format
@@ -190,6 +190,12 @@ msgid ""
 "altitude of the coordinate relative to sea level, regardless of the actual "
 "elevation of the terrain beneath the element.</dd></dl>"
 msgstr ""
+"<p>მიუთითებს, როგორ ხდება სურათების ჩვენება <dl><dt>მიწაზე დამაგრებული "
+"(ნაგულისხმები)</dt><dd>ნიშნავს, რომ მოხდება სიმაღლის სპეციფიკაცის "
+"იგნორირება</dd><dt>მიწიდან შედარებით</dt><dd>დააყენებს ელემენტს მითითებული "
+"მდებარეობაზე მიწის რეალური სიმაღლიდან.</dd><dt>აბსოლუტური</dt><dd>დააყენებს "
+"სიმაღლის კოორდინატებს იმის მიუხედავად, რა სიმაღლეზეა ზღვის დონიდან მიწა "
+"მოცემული ელემენტის ქვეშ.</dd></dl>"
 
 #: kmlwindow.cpp:119
 #, kde-format
@@ -397,6 +403,8 @@ msgid ""
 "Sets the time zone of the camera during picture shooting, so that the time "
 "stamps of the GPS can be converted to match the local time"
 msgstr ""
+"დააყენებს კამერის დროის სარტყელს სურათების გადაღების დროს. ასე რომ GPS-ის "
+"დრის შტამპი ლოკალურ დროს შეგეძლებათ, დაამთხვიოთ"
 
 #: kmlwindow.cpp:214
 #, kde-format
@@ -428,6 +436,12 @@ msgid ""
 "altitude of the coordinate relative to sea level, regardless of the actual "
 "elevation of the terrain beneath the element.</dd></dl>"
 msgstr ""
+"<p>მიუთითებს, როგორ ხდება წერტილების ჩვენება <dl><dt>მიწაზე დამაგრებული "
+"(ნაგულისხმები)</dt><dd>ნიშნავს, რომ მოხდება სიმაღლის სპეციფიკაცის "
+"იგნორირება</dd><dt>მიწიდან შედარებით</dt><dd>დააყენებს ელემენტს მითითებული "
+"მდებარეობაზე მიწის რეალური სიმაღლიდან.</dd><dt>აბსოლუტური</dt><dd>დააყენებს "
+"სიმაღლის კოორდინატებს იმის მიუხედავად, რა სიმაღლეზეა ზღვის დონიდან მიწა "
+"მოცემული ელემენტის ქვეშ.</dd></dl>"
 
 #: kmlwindow.cpp:285
 #, kde-format

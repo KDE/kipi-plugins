@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kipi-plugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2022-10-05 07:24+0200\n"
+"PO-Revision-Date: 2022-12-09 09:52+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #. i18n: ectx: Menu (Export)
 #: kipiplugin_wikimediaui.rc:7
@@ -315,6 +315,8 @@ msgstr "ავტორი 100 წელზე მეტი ხნის წი�
 msgid ""
 "Photo of a two-dimensional work whose author died more than 100 years ago"
 msgstr ""
+"ორგანზომილებიანი ნამუშევრის სურათი, რომლის ავტორიც 100 წელზე მეტი ხნის წინ "
+"გარდაიცვალა"
 
 #: wmwidget.cpp:418
 #, kde-format
@@ -329,17 +331,17 @@ msgstr "აშშ სამთავრობო სააგენტოს ნ
 #: wmwidget.cpp:422
 #, kde-format
 msgid "Simple typefaces, individual words or geometric shapes"
-msgstr ""
+msgstr "მარტივი ზედაპირები, ცალკე სიტყვები ან გეომეტრიული ფიგურები"
 
 #: wmwidget.cpp:424
 #, kde-format
 msgid "Logos with only simple typefaces, individual words or geometric shapes"
-msgstr ""
+msgstr "ლოგოები მარტივი ზედაპირებით, ცალკე სიტყვებით ან გეომეტრიული ფიგურებით"
 
 #: wmwidget.cpp:426
 #, kde-format
 msgid "No license specified (not recommended for public wiki sites)"
-msgstr ""
+msgstr "ლიცენზია მითითებული არაა (საჯარო ვიკისთვის რეკომენდებული არაა)"
 
 #: wmwidget.cpp:429
 #, kde-format
@@ -350,7 +352,7 @@ msgstr "ზოგადი კატეგორიები:"
 #, kde-format
 msgid ""
 "This is a place to enter categories that will be added to all the files."
-msgstr ""
+msgstr "ეს ადგილია კატეგორიების დასამატებლად, რომელიც ყველა ფაილს დაემატება."
 
 #: wmwidget.cpp:435
 #, kde-format
@@ -363,6 +365,8 @@ msgid ""
 "This is a place to enter text that will be added to all the files, below the "
 "Information template."
 msgstr ""
+"ეს ადგილია ტექსტის შესაყვანად, რომელიც ყველა ფაილს, ინფორმაციის ნიმუშის ქვეშ "
+"დაემატება."
 
 #: wmwidget.cpp:442
 #, kde-format
@@ -375,6 +379,8 @@ msgid ""
 "This is a place to enter text that will be used as upload comments. The "
 "default of 'Uploaded via KIPI uploader' will be used if empty."
 msgstr ""
+"ეს ადგილია, სადაც ატვირთვის კომენტარების შეყვანა შეგიძლიათ. თუ არ მიუთითებთ, "
+"ნაგულისხმები მნიშვნელობაა 'ატვირთულია KIPI-ის ამტვირთველის მიერ'."
 
 #: wmwidget.cpp:467
 #, kde-format
@@ -384,7 +390,7 @@ msgstr "გამართვა"
 #: wmwidget.cpp:468
 #, kde-format
 msgid "These are options that will be applied to photos before upload."
-msgstr ""
+msgstr "ეს ის პარამეტრებია, რომლებიც ატვირთვამდე სურათებზე გადატარდება."
 
 #: wmwidget.cpp:474
 #, kde-format
@@ -447,6 +453,8 @@ msgid ""
 "A tool to export image collection to a MediaWiki installation.\n"
 "Using libmediawiki version %1"
 msgstr ""
+"პროგრამა სურათების კოლექციის MediaWiki-ზე გასატანად.\n"
+"გამოიყენება libmediawiki ვერსია %1"
 
 #: wmwindow.cpp:128
 #, kde-format

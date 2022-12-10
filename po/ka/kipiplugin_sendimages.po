@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kipi-plugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2022-10-05 10:42+0200\n"
+"PO-Revision-Date: 2022-12-09 10:15+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: imageresize.cpp:116
 #, kde-format
@@ -261,6 +261,8 @@ msgid ""
 "Select your preferred external email program here. <b>Default</b> is the "
 "current email program set in desktop system settings."
 msgstr ""
+"აირჩიეთ თქვენი რჩეული გარე ელფოსტის პროგრამა. <b>ნაგულისხმებად</b>სამუშაო "
+"მაგიდის სისტემის პარამეტრებში არჩეული ელფოსტის პროგრამა გამოიყენება."
 
 #: settingswidget.cpp:112
 #, kde-format
@@ -273,6 +275,8 @@ msgid ""
 "If you enable this option, all image properties set by %1 as Comments, "
 "Rating, or Tags, will be added as an attached file."
 msgstr ""
+"თუ ამ პარამეტრს ჩართავთ, %1-ის მიერ დაყენებული თვისებები, რეიტინგი და ჭდეები "
+"მიმაგრებული ფაილის სახით დაემატებათ."
 
 #: settingswidget.cpp:125
 #, kde-format
@@ -369,7 +373,7 @@ msgstr "Სურათის ზომა:"
 #: settingswidget.cpp:186
 #, kde-format
 msgid "<p>Select the file format of the image files to be sent.</p>"
-msgstr ""
+msgstr "<p>არჩიეთ გასაგზავნი ფაილების ფორმატი.</p>"
 
 #: settingswidget.cpp:187
 #, kde-format
@@ -393,7 +397,7 @@ msgstr "გამოსახულების ფორმატი:"
 #: settingswidget.cpp:206
 #, kde-format
 msgid "<p>The new compression value of JPEG images to be sent:</p>"
-msgstr ""
+msgstr "<p>გასაგზავნი ფაილების JPEG შეკუმშვის ახალი მნიშვნელობა:</p>"
 
 #: settingswidget.cpp:207
 #, kde-format
@@ -402,6 +406,9 @@ msgid ""
 "><b>50</b>: medium compression<br/><b>75</b>: low compression (default "
 "value)<br/><b>100</b>: no compression</p>"
 msgstr ""
+"<p><b>1</b>: საუკეთესო შეკუმშვა<br/><b>25</b>: კარგი შეკუმშვა<br/><b>50</b>: "
+"საშუალო შეკუმშვა<br/><b>75</b>: დაბალი შეკუმშვა (ნაგულისხმები)<br/><b>100</"
+"b>: შეკუმშვის გარეშე</p>"
 
 #: settingswidget.cpp:215
 #, kde-format
