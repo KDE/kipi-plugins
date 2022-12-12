@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: extragear-graphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2022-04-11 11:29+0300\n"
+"PO-Revision-Date: 2022-12-11 20:15+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 22.12.0\n"
 
 #: comboboxintermediate.h:54
 #, kde-format
@@ -192,7 +192,7 @@ msgid ""
 "Cannot proceed any further."
 msgstr ""
 "Hata Oluştu: %1\n"
-"Daha ileri devam edemiyoruz."
+"Daha ileri sürdüremiyoruz."
 
 #: flickrtalker.cpp:852
 #, kde-format
@@ -500,13 +500,13 @@ msgid ""
 "Failed to upload photo into %1. %2\n"
 "Do you want to continue?"
 msgstr ""
-"%1 servisine fotoğraf yükleme işlemi başarısız oldu. %2\n"
-"Devam etmek istiyor musunuz?"
+"%1 hizmetine fotoğraf yükleme işlemi başarısız oldu. %2\n"
+"Sürdürmek istiyor musunuz?"
 
 #: flickrwindow.cpp:769
 #, kde-format
 msgid "Continue"
-msgstr "Devam et"
+msgstr "Sürdür"
 
 #: flickrwindow.cpp:770
 #, kde-format
