@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: extragear-graphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2022-04-11 11:11+0300\n"
+"PO-Revision-Date: 2022-12-17 18:55+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 22.12.0\n"
 
 #: imageresize.cpp:116
 #, kde-format
@@ -50,7 +50,7 @@ msgstr "Yeniden boyutlandırılan görsel (PNG) kaydedilemedi. İptal ediliyor."
 #: kipiplugin_sendimagesui.rc:7
 #, kde-format
 msgid "&Export"
-msgstr "&Dışarıya Aktar"
+msgstr "&Dışa Aktar"
 
 #. i18n: ectx: ToolBar (mainToolBar)
 #: kipiplugin_sendimagesui.rc:13
