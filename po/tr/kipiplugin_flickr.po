@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: extragear-graphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2022-12-11 20:15+0300\n"
+"PO-Revision-Date: 2022-12-17 18:54+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -393,7 +393,7 @@ msgid ""
 "Export</h2></b>"
 msgstr ""
 "<b><h2><a href='http://www.23hq.com'><font color=\"#7CD164\">23</font></a> "
-"Dışarıya Aktar</h2></b>"
+"Dışa Aktar</h2></b>"
 
 #: flickrwidget.cpp:311
 #, kde-format
@@ -517,7 +517,7 @@ msgstr "İptal"
 #: kipiplugin_flickrui.rc:7
 #, kde-format
 msgid "&Export"
-msgstr "&Dışarıya Aktar"
+msgstr "&Dışa Aktar"
 
 #. i18n: ectx: ToolBar (mainToolBar)
 #: kipiplugin_flickrui.rc:14

@@ -165,7 +165,7 @@ msgstr "Alçària màxima:"
 #: piwigowindow.cpp:179
 #, kde-format
 msgid "Resized JPEG quality:"
-msgstr "Canvia de mida amb la qualitat del JPEG:"
+msgstr "Canvia de mida amb la qualitat de JPEG:"
 
 #: piwigowindow.cpp:231 piwigowindow.cpp:235
 #, kde-format
