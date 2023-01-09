@@ -1,5 +1,8 @@
 # Translation of kipiplugins into esperanto.
+# Copyright (C) 2009 Free Software Foundation, Inc.
+# This file is distributed under the same license as the kipi-plugins package.
 # Axel Rousseau <axel@esperanto-jeunes.org>, 2009.
+# Oliver Kellogg <okellogg@users.sourceforge.net>, 2023.
 #
 msgid ""
 msgstr ""
@@ -19,12 +22,12 @@ msgstr ""
 #: libkipiplugins/dialogs/kpbatchprogressdialog.cpp:113
 #, kde-format
 msgid "<p>This is the current processing status.</p>"
-msgstr ""
+msgstr "<p>Tiu estas la aktuala stato de traktado."
 
 #: libkipiplugins/dialogs/kpbatchprogressdialog.cpp:120
 #, kde-format
 msgid "<p>This is the batch job progress as a percentage.</p>"
-msgstr ""
+msgstr "<p>Tiu estas la staplotaska progreso kiel elcentaĵo.</p>"
 
 #: libkipiplugins/dialogs/kpbatchprogressdialog.cpp:189
 #, kde-format
@@ -35,12 +38,12 @@ msgstr "Kopii al la poŝo"
 #: libkipiplugins/dialogs/kptooldialog.cpp:210
 #, kde-format
 msgid "Close"
-msgstr ""
+msgstr "Fermi"
 
 #: libkipiplugins/dialogs/kpimagedialog.cpp:149
 #, kde-format
 msgid "<i>unavailable</i>"
-msgstr ""
+msgstr "<i>nedisponebla</i>"
 
 #: libkipiplugins/dialogs/kpimagedialog.cpp:228
 #, kde-format
@@ -50,17 +53,17 @@ msgstr "%1 ISO"
 #: libkipiplugins/dialogs/kpimagedialog.cpp:236
 #, kde-format
 msgid "<i>Make:</i>"
-msgstr ""
+msgstr "<i>Produktanto:</i>"
 
 #: libkipiplugins/dialogs/kpimagedialog.cpp:237
 #, kde-format
 msgid "<i>Model:</i>"
-msgstr ""
+msgstr "<i>Modelo:</i>"
 
 #: libkipiplugins/dialogs/kpimagedialog.cpp:238
 #, kde-format
 msgid "<i>Created:</i>"
-msgstr ""
+msgstr "<i>Kreita:</i>"
 
 #: libkipiplugins/dialogs/kpimagedialog.cpp:239
 #, kde-format
@@ -92,69 +95,69 @@ msgstr ""
 #: libkipiplugins/dialogs/kpimagedialog.cpp:358
 #, kde-format
 msgid "Select an Image"
-msgstr ""
+msgstr "Elekti Bildon"
 
 #: libkipiplugins/dialogs/kpimagedialog.cpp:365
 #, kde-format
 msgid "Select Images"
-msgstr ""
+msgstr "Elekti Bildojn"
 
 #: libkipiplugins/dialogs/kplogindialog.cpp:76
 #, kde-format
 msgid "Login:"
-msgstr ""
+msgstr "Ensaluto:"
 
 #: libkipiplugins/dialogs/kplogindialog.cpp:79
 #, kde-format
 msgid "Password:"
-msgstr ""
+msgstr "Pasvorto:"
 
 #: libkipiplugins/dialogs/kplogindialog.cpp:90
 #, kde-format
 msgid "&Login"
-msgstr ""
+msgstr "Ensa&luto"
 
 #: libkipiplugins/dialogs/kplogindialog.cpp:93
 #, kde-format
 msgid "&Skip"
-msgstr ""
+msgstr "&Transpaŝi"
 
 #: libkipiplugins/dialogs/kplogindialog.cpp:153
 #, kde-format
 msgctxt "@title:window"
 msgid "Error"
-msgstr ""
+msgstr "Eraro"
 
 #: libkipiplugins/dialogs/kplogindialog.cpp:154
 #, kde-format
 msgid "Password cannot be empty."
-msgstr ""
+msgstr "Passwordo ne povas esti malplena."
 
 #: libkipiplugins/dialogs/kpnewalbumdialog.cpp:57
 #: libkipiplugins/widgets/kpsettingswidget.cpp:72
 #, kde-format
 msgid "Album"
-msgstr ""
+msgstr "Albumo"
 
 #: libkipiplugins/dialogs/kpnewalbumdialog.cpp:60
 #, kde-format
 msgid "Title: "
-msgstr ""
+msgstr "Titolo: "
 
 #: libkipiplugins/dialogs/kpnewalbumdialog.cpp:61
 #, kde-format
 msgid "Time Stamp: "
-msgstr ""
+msgstr "Tempindiko: "
 
 #: libkipiplugins/dialogs/kpnewalbumdialog.cpp:62
 #, kde-format
 msgid "Description: "
-msgstr ""
+msgstr "Priskribo: "
 
 #: libkipiplugins/dialogs/kpnewalbumdialog.cpp:63
 #, kde-format
 msgid "Location: "
-msgstr ""
+msgstr "Loko: "
 
 #: libkipiplugins/dialogs/kpnewalbumdialog.cpp:116
 #, kde-format
@@ -185,22 +188,22 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button"
 msgid "&Start"
-msgstr ""
+msgstr "&Startigi"
 
 #: libkipiplugins/dialogs/kptooldialog.cpp:212
 #, kde-format
 msgid "Close window"
-msgstr ""
+msgstr "Fermi fenestron"
 
 #: libkipiplugins/dialogs/kptooldialog.cpp:217
 #, kde-format
 msgid "Cancel"
-msgstr ""
+msgstr "Nuligi"
 
 #: libkipiplugins/dialogs/kptooldialog.cpp:219
 #, kde-format
 msgid "Cancel current operation"
-msgstr ""
+msgstr "Nuligi aktualan operacoin"
 
 #: libkipiplugins/tools/kpaboutdata.cpp:79
 #, kde-format
@@ -210,28 +213,27 @@ msgstr "Manlibro"
 #: libkipiplugins/tools/kpaboutdata.cpp:84
 #, kde-format
 msgid "About..."
-msgstr ""
+msgstr "Pri..."
 
 #: libkipiplugins/tools/kpaboutdata.cpp:120
-#, fuzzy, kde-format
-#| msgid "Version"
+#, kde-format
 msgid "Version: %1"
-msgstr "Versio"
+msgstr "Versio: %1"
 
 #: libkipiplugins/tools/kpaboutdata.cpp:133
 #, kde-format
 msgid "About %1"
-msgstr ""
+msgstr "Pri %1"
 
 #: libkipiplugins/tools/kpaboutdata.h:54
 #, kde-format
 msgid "Copyright 2003-2016, KDE developers team"
-msgstr ""
+msgstr "Kpirajto 2003-2016, KDE-programistoteamo"
 
 #: libkipiplugins/tools/kputil.cpp:299
 #, kde-format
 msgid "Browse..."
-msgstr ""
+msgstr "Foliumi..."
 
 #: libkipiplugins/widgets/kpimageslist.cpp:292
 #, kde-format
@@ -246,32 +248,32 @@ msgstr "Dosiernomo"
 #: libkipiplugins/widgets/kpimageslist.cpp:294
 #, kde-format
 msgid "User1"
-msgstr ""
+msgstr "Uzanto1"
 
 #: libkipiplugins/widgets/kpimageslist.cpp:295
 #, kde-format
 msgid "User2"
-msgstr ""
+msgstr "Uzanto2"
 
 #: libkipiplugins/widgets/kpimageslist.cpp:296
 #, kde-format
 msgid "User3"
-msgstr ""
+msgstr "Uzanto3"
 
 #: libkipiplugins/widgets/kpimageslist.cpp:297
 #, kde-format
 msgid "User4"
-msgstr ""
+msgstr "Uzanto4"
 
 #: libkipiplugins/widgets/kpimageslist.cpp:298
 #, kde-format
 msgid "User5"
-msgstr ""
+msgstr "Uzanto5"
 
 #: libkipiplugins/widgets/kpimageslist.cpp:299
 #, kde-format
 msgid "User6"
-msgstr ""
+msgstr "Uzanto6"
 
 #: libkipiplugins/widgets/kpimageslist.cpp:557
 #, kde-format
@@ -361,22 +363,22 @@ msgstr ""
 #: libkipiplugins/widgets/kpsettingswidget.cpp:68
 #, kde-format
 msgid "Account"
-msgstr ""
+msgstr "Konto"
 
 #: libkipiplugins/widgets/kpsettingswidget.cpp:77
 #, kde-format
 msgid "Max Dimension"
-msgstr ""
+msgstr "Maks. Dimensio"
 
 #: libkipiplugins/widgets/kpsettingswidget.cpp:80
 #, kde-format
 msgid "Destination"
-msgstr ""
+msgstr "Celo"
 
 #: libkipiplugins/widgets/kpsettingswidget.cpp:83
 #, kde-format
 msgid "Options"
-msgstr ""
+msgstr "Opcioj"
 
 #: libkipiplugins/widgets/kpsettingswidget.cpp:148
 #, kde-format
@@ -397,13 +399,12 @@ msgstr ""
 #, kde-format
 msgctxt "account settings"
 msgid "Name:"
-msgstr ""
+msgstr "Nomo:"
 
 #: libkipiplugins/widgets/kpsettingswidget.cpp:165
-#, fuzzy, kde-format
-#| msgid "Change"
+#, kde-format
 msgid "Change Account"
-msgstr "Ŝanĝi"
+msgstr "Ŝanĝi Konton"
 
 #: libkipiplugins/widgets/kpsettingswidget.cpp:167
 #, kde-format
@@ -420,12 +421,12 @@ msgstr ""
 #: libkipiplugins/widgets/kpsettingswidget.cpp:179
 #, kde-format
 msgid "Album:"
-msgstr ""
+msgstr "Albumo:"
 
 #: libkipiplugins/widgets/kpsettingswidget.cpp:183
 #, kde-format
 msgid "New Album"
-msgstr ""
+msgstr "Nova Albumo"
 
 #: libkipiplugins/widgets/kpsettingswidget.cpp:185
 #, kde-format
@@ -436,7 +437,7 @@ msgstr ""
 #, kde-format
 msgctxt "album list"
 msgid "Reload"
-msgstr ""
+msgstr "Reŝargi"
 
 #: libkipiplugins/widgets/kpsettingswidget.cpp:189
 #, kde-format
@@ -509,23 +510,3 @@ msgstr ""
 #, kde-format
 msgid "JPEG Quality:"
 msgstr ""
-
-#~ msgid "Binary"
-#~ msgstr "Duuma"
-
-#~ msgid "Find"
-#~ msgstr "Trovi"
-
-#~ msgid "Change"
-#~ msgstr "Ŝanĝi"
-
-#~ msgid "Zoom In"
-#~ msgstr "Enzomi"
-
-#~ msgid "Zoom Out"
-#~ msgstr "Elzomi"
-
-#, fuzzy
-#~| msgid "Zoom To Fit"
-#~ msgid "Zoom to Fit"
-#~ msgstr "Zomi por adapti"

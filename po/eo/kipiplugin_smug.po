@@ -1,13 +1,16 @@
 # Translation of kipiplugin_smug into esperanto.
+# Copyright (C) 2009 Free Software Foundation, Inc.
+# This file is distributed under the same license as the kipi-plugins package.
 # Axel Rousseau <axel@esperanto-jeunes.org>, 2009.
+# Oliver Kellogg <okellogg@users.sourceforge.net>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kipiplugin_smug\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2009-11-15 12:06+0100\n"
-"Last-Translator: Axel Rousseau <axel@esperanto-jeunes.org>\n"
+"PO-Revision-Date: 2023-01-08 12:30+0100\n"
+"Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
@@ -37,17 +40,17 @@ msgstr "Ĉefa ilobreto"
 #: plugin_smug.cpp:98
 #, kde-format
 msgid "Export to &SmugMug..."
-msgstr ""
+msgstr "Eksporti al &SmugMug..."
 
 #: plugin_smug.cpp:109
 #, kde-format
 msgid "Import from &SmugMug..."
-msgstr ""
+msgstr "Import de &SmugMug..."
 
 #: smugalbum.cpp:54
 #, kde-format
 msgid "SmugMug New Album"
-msgstr ""
+msgstr "SmugMug Nova Albumo"
 
 #: smugalbum.cpp:64 smugwidget.cpp:117
 #, kde-format
@@ -100,7 +103,7 @@ msgstr "Kategorio:"
 #, kde-format
 msgctxt "new smug album dialog"
 msgid "Subcategory:"
-msgstr ""
+msgstr "Subkategorio:"
 
 #: smugalbum.cpp:89
 #, kde-format
@@ -117,7 +120,7 @@ msgstr "Ŝablono:"
 #: smugalbum.cpp:98
 #, kde-format
 msgid "Security && Privacy"
-msgstr ""
+msgstr "Sekureco && Privateco"
 
 #: smugalbum.cpp:99
 #, kde-format
@@ -139,7 +142,7 @@ msgstr ""
 #, kde-format
 msgctxt "smug album privacy"
 msgid "Unlisted"
-msgstr ""
+msgstr "Nelistigita"
 
 #: smugalbum.cpp:105
 #, kde-format
@@ -159,7 +162,7 @@ msgstr ""
 #: smugalbum.cpp:118
 #, kde-format
 msgid "Privacy:"
-msgstr ""
+msgstr "Privateco:"
 
 #: smugalbum.cpp:119
 #, kde-format
@@ -169,12 +172,12 @@ msgstr "Pasvorto:"
 #: smugalbum.cpp:120
 #, kde-format
 msgid "Password Hint:"
-msgstr ""
+msgstr "Pasvorta Helpeto:"
 
 #: smugtalker.cpp:111
 #, kde-format
 msgid "Logging in to SmugMug service..."
-msgstr ""
+msgstr "Ensalutanta al SmugMug servo..."
 
 #: smugtalker.cpp:464
 #, kde-format
@@ -195,7 +198,7 @@ msgstr ""
 #: smugwindow.cpp:484 smugwindow.cpp:516 smugwindow.cpp:546 smugwindow.cpp:920
 #, kde-format
 msgid "Error"
-msgstr ""
+msgstr "Eraro"
 
 #: smugwidget.cpp:73
 #, kde-format
@@ -232,7 +235,7 @@ msgstr ""
 #: smugwidget.cpp:92
 #, kde-format
 msgid "SmugMug Account"
-msgstr ""
+msgstr "SmugMug-Konto"
 
 #: smugwidget.cpp:93
 #, kde-format
@@ -254,7 +257,7 @@ msgstr "Retpoŝto:"
 #: smugwidget.cpp:101
 #, kde-format
 msgid "Change Account"
-msgstr ""
+msgstr "Ŝanĝi Konton"
 
 #: smugwidget.cpp:103
 #, kde-format
@@ -279,7 +282,7 @@ msgstr ""
 #: smugwidget.cpp:126
 #, kde-format
 msgid "Site Password:"
-msgstr ""
+msgstr "Reteja Pasvorto:"
 
 #: smugwidget.cpp:128
 #, kde-format
@@ -289,7 +292,7 @@ msgstr ""
 #: smugwidget.cpp:129
 #, kde-format
 msgid "Album Password:"
-msgstr ""
+msgstr "Albuma Pasvorto:"
 
 #: smugwidget.cpp:131
 #, kde-format
@@ -304,7 +307,7 @@ msgstr "Nova Albumo"
 #: smugwidget.cpp:136
 #, kde-format
 msgid "Create new SmugMug album"
-msgstr ""
+msgstr "Krei novan SmugMug-albumon"
 
 #: smugwidget.cpp:139
 #, kde-format
@@ -315,7 +318,7 @@ msgstr "Reŝargi"
 #: smugwidget.cpp:141
 #, kde-format
 msgid "Reload album list"
-msgstr ""
+msgstr "Reŝargi albumliston"
 
 #: smugwidget.cpp:155
 #, kde-format
@@ -360,7 +363,7 @@ msgstr ""
 #: smugwindow.cpp:88
 #, kde-format
 msgid "Start Download"
-msgstr ""
+msgstr "Startigi Elŝuton"
 
 #: smugwindow.cpp:89
 #, kde-format
@@ -370,12 +373,12 @@ msgstr ""
 #: smugwindow.cpp:95
 #, kde-format
 msgid "Export to SmugMug Web Service"
-msgstr ""
+msgstr "Eksporti al SmugMug TTT-Servo"
 
 #: smugwindow.cpp:97
 #, kde-format
 msgid "Start Upload"
-msgstr ""
+msgstr "Startigi Alŝuton"
 
 #: smugwindow.cpp:98
 #, kde-format
@@ -450,10 +453,9 @@ msgid "Cannot open file"
 msgstr ""
 
 #: smugwindow.cpp:826
-#, fuzzy, kde-format
-#| msgid "Login failed"
+#, kde-format
 msgid "Uploading Failed"
-msgstr "Ensaluto malsukcesis"
+msgstr "Alŝuto Malsukcesis"
 
 #: smugwindow.cpp:827
 #, kde-format
@@ -464,10 +466,9 @@ msgid ""
 msgstr ""
 
 #: smugwindow.cpp:888 smugwindow.cpp:901
-#, fuzzy, kde-format
-#| msgid "Login failed"
+#, kde-format
 msgid "Processing Failed"
-msgstr "Ensaluto malsukcesis"
+msgstr "Traktado Malsukcesis"
 
 #: smugwindow.cpp:889
 #, kde-format
@@ -482,17 +483,3 @@ msgid ""
 "Failed to download photo: %1\n"
 "Do you want to continue?"
 msgstr ""
-
-#~ msgctxt "NAME OF TRANSLATORS"
-#~ msgid "Your names"
-#~ msgstr "Axel Rousseau"
-
-#~ msgctxt "EMAIL OF TRANSLATORS"
-#~ msgid "Your emails"
-#~ msgstr "axel@esperanto-jeunes.org"
-
-#~ msgid "Handbook"
-#~ msgstr "Manlibro"
-
-#~ msgid "Authentication"
-#~ msgstr "Aŭtentigo"

@@ -1,13 +1,16 @@
-# Translation of kipiplugin_flickrexport into esperanto.
+# Translation of kipiplugin_flickr.pot into esperanto.
+# Copyright (C) 2009 Free Software Foundation, Inc.
+# This file is distributed under the same license as the kipi-plugins package.
 # Axel Rousseau <axel@esperanto-jeunes.org>, 2009.
+# Oliver Kellogg <okellogg@users.sourceforge.net>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kipiplugin_flickrexport\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2009-11-15 12:06+0100\n"
-"Last-Translator: Axel Rousseau <axel@esperanto-jeunes.org>\n"
+"PO-Revision-Date: 2023-01-08 12:30+0100\n"
+"Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +22,7 @@ msgstr ""
 #: comboboxintermediate.h:54
 #, kde-format
 msgid "Various"
-msgstr ""
+msgstr "Diversaj"
 
 #: flickrlist.cpp:420
 #, kde-format
@@ -196,10 +199,9 @@ msgid "Failed to query photo information"
 msgstr ""
 
 #: flickrwidget.cpp:63
-#, fuzzy, kde-format
-#| msgid "Account"
+#, kde-format
 msgid "Remove Account"
-msgstr "Konto"
+msgstr "Forigi Konton"
 
 #: flickrwidget.cpp:73 flickrwidget.cpp:77
 #, kde-format
@@ -215,7 +217,7 @@ msgstr ""
 #: flickrwidget.cpp:81
 #, kde-format
 msgid "Extra tags"
-msgstr ""
+msgstr "Pluaj etikedoj"
 
 #: flickrwidget.cpp:87 flickrwidget.cpp:98
 #, kde-format
@@ -227,35 +229,35 @@ msgstr "Familio"
 #, kde-format
 msgctxt "photo permissions"
 msgid "Friends"
-msgstr ""
+msgstr "Amikoj"
 
 #: flickrwidget.cpp:107
 #, kde-format
 msgid "Safety level"
-msgstr ""
+msgstr "Sekurecnivelo"
 
 #: flickrwidget.cpp:109
 #, kde-format
 msgid "Content type"
-msgstr ""
+msgstr "Enhavotipo"
 
 #: flickrwidget.cpp:112
 #, kde-format
 msgctxt "photo safety level"
 msgid "Safe"
-msgstr ""
+msgstr "Sekura"
 
 #: flickrwidget.cpp:113
 #, kde-format
 msgctxt "photo safety level"
 msgid "Moderate"
-msgstr ""
+msgstr "Modera"
 
 #: flickrwidget.cpp:114
 #, kde-format
 msgctxt "photo safety level"
 msgid "Restricted"
-msgstr ""
+msgstr "Restriktita"
 
 #: flickrwidget.cpp:115 flickrwidget.cpp:211
 #, kde-format
@@ -267,7 +269,7 @@ msgstr "Foto"
 #, kde-format
 msgctxt "photo content type"
 msgid "Screenshot"
-msgstr ""
+msgstr "Ekrankopio"
 
 #: flickrwidget.cpp:117 flickrwidget.cpp:213
 #, kde-format
@@ -278,22 +280,22 @@ msgstr "Alia"
 #: flickrwidget.cpp:134
 #, kde-format
 msgid "Tag options"
-msgstr ""
+msgstr "Etikedopcioj"
 
 #: flickrwidget.cpp:138
 #, kde-format
 msgid "Use Host Application Tags"
-msgstr ""
+msgstr "Uzi Aplikaĵetikedojn de Gastiganto"
 
 #: flickrwidget.cpp:140 flickrwidget.cpp:501
 #, kde-format
 msgid "More tag options"
-msgstr ""
+msgstr "Plua etikedopcioj"
 
 #: flickrwidget.cpp:154
 #, kde-format
 msgid "Added Tags: "
-msgstr ""
+msgstr "Aldonataj Etikedoj:"
 
 #: flickrwidget.cpp:156
 #, kde-format
@@ -313,58 +315,58 @@ msgstr ""
 #: flickrwidget.cpp:163
 #, kde-format
 msgid "Strip Spaces From Tags"
-msgstr ""
+msgstr "Forigi Blankspacojn de Etikedoj"
 
 #: flickrwidget.cpp:176
 #, kde-format
 msgid "Publication Options"
-msgstr ""
+msgstr "Publikigopcioj"
 
 #: flickrwidget.cpp:181
 #, kde-format
 msgctxt "As in accessible for people"
 msgid "Public (anyone can see them)"
-msgstr ""
+msgstr "Publika (videblas al ĉiuj)"
 
 #: flickrwidget.cpp:184
 #, kde-format
 msgid "Visible to Family"
-msgstr ""
+msgstr "Videblaj al Familio"
 
 #: flickrwidget.cpp:187
 #, kde-format
 msgid "Visible to Friends"
-msgstr ""
+msgstr "Videblaj al Amikoj"
 
 #: flickrwidget.cpp:190 flickrwidget.cpp:488
 #, kde-format
 msgid "More publication options"
-msgstr ""
+msgstr "Pluaj publikigopcioj"
 
 #: flickrwidget.cpp:203
 #, kde-format
 msgid "Safety level:"
-msgstr ""
+msgstr "Sekurecnivelo:"
 
 #: flickrwidget.cpp:205
 #, kde-format
 msgid "Safe"
-msgstr ""
+msgstr "Sekura"
 
 #: flickrwidget.cpp:206
 #, kde-format
 msgid "Moderate"
-msgstr ""
+msgstr "Modera"
 
 #: flickrwidget.cpp:207
 #, kde-format
 msgid "Restricted"
-msgstr ""
+msgstr "Restriktita"
 
 #: flickrwidget.cpp:209
 #, kde-format
 msgid "Content type:"
-msgstr ""
+msgstr "Enhavtipo:"
 
 #: flickrwidget.cpp:304
 #, kde-format
@@ -474,13 +476,12 @@ msgstr ""
 #: flickrwindow.cpp:769
 #, kde-format
 msgid "Continue"
-msgstr ""
+msgstr "Daŭrigi"
 
 #: flickrwindow.cpp:770
-#, fuzzy, kde-format
-#| msgid "&Cancel"
+#, kde-format
 msgid "Cancel"
-msgstr "&Rezigni"
+msgstr "Rezigni"
 
 #. i18n: ectx: Menu (Export)
 #: kipiplugin_flickrui.rc:7
@@ -497,53 +498,19 @@ msgstr "Ĉefa ilobreto"
 #: plugin_flickr.cpp:100
 #, kde-format
 msgid "Export to Flick&r..."
-msgstr ""
+msgstr "Eksporti al Flick&r..."
 
 #: selectuserdlg.cpp:47
 #, kde-format
 msgid "Flickr Account Selector"
-msgstr ""
+msgstr "Flickr-Kontoelektilo"
 
 #: selectuserdlg.cpp:52
 #, kde-format
 msgid "Add another account"
-msgstr ""
+msgstr "Aldoni pluan konton"
 
 #: selectuserdlg.cpp:75
 #, kde-format
 msgid "Choose the %1 account to use for exporting images:"
 msgstr ""
-
-#~ msgctxt "flickr login"
-#~ msgid "Username:"
-#~ msgstr "Uzantnomo:"
-
-#~ msgid "Password:"
-#~ msgstr "Pasvorto:"
-
-#~ msgctxt "NAME OF TRANSLATORS"
-#~ msgid "Your names"
-#~ msgstr "Axel Rousseau"
-
-#~ msgctxt "EMAIL OF TRANSLATORS"
-#~ msgid "Your emails"
-#~ msgstr "axel@esperanto-jeunes.org"
-
-#~ msgid "&OK"
-#~ msgstr "&Bone"
-
-#~ msgid "Account"
-#~ msgstr "Konto"
-
-#~ msgctxt "account settings"
-#~ msgid "Username: "
-#~ msgstr "Uzantnomo: "
-
-#~ msgid "&Reload"
-#~ msgstr "&Reŝargi"
-
-#~ msgid "File List"
-#~ msgstr "Dosierlisto"
-
-#~ msgid "Handbook"
-#~ msgstr "Manlibro"

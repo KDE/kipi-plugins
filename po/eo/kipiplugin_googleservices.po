@@ -1,13 +1,16 @@
 # Translation of kipiplugin_picasawebexport into esperanto.
+# Copyright (C) 2009 Free Software Foundation, Inc.
+# This file is distributed under the same license as the kipi-plugins package.
 # Axel Rousseau <axel@esperanto-jeunes.org>, 2009.
+# Oliver Kellogg <okellogg@users.sourceforge.net>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kipiplugin_picasawebexport\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2009-11-15 12:06+0100\n"
-"Last-Translator: Axel Rousseau <axel@esperanto-jeunes.org>\n"
+"PO-Revision-Date: 2023-01-08 12:30+0100\n"
+"Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +22,7 @@ msgstr ""
 #: authorize.cpp:116
 #, kde-format
 msgid "Google Drive Authorization"
-msgstr ""
+msgstr "Rajtigoj por Google Drive"
 
 #: authorize.cpp:129
 #, kde-format
@@ -32,7 +35,7 @@ msgstr ""
 #: authorize.cpp:249 gdtalker.cpp:272 gptalker.cpp:644
 #, kde-format
 msgid "Error"
-msgstr ""
+msgstr "Eraro"
 
 #: gdtalker.cpp:337
 #, kde-format
@@ -235,12 +238,12 @@ msgstr "Kreinto"
 #: gswindow.cpp:132
 #, kde-format
 msgid "Export to Google Drive"
-msgstr ""
+msgstr "Eksporto al Google Drive"
 
 #: gswindow.cpp:134 gswindow.cpp:219
 #, kde-format
 msgid "Start Upload"
-msgstr ""
+msgstr "Startigi Alŝuton"
 
 #: gswindow.cpp:135
 #, kde-format
@@ -305,7 +308,7 @@ msgstr ""
 #: gswindow.cpp:228
 #, kde-format
 msgid "Start Download"
-msgstr ""
+msgstr "Startigi Elŝuton"
 
 #: gswindow.cpp:229
 #, kde-format
@@ -325,7 +328,7 @@ msgstr ""
 #: gswindow.cpp:531
 #, kde-format
 msgid "Google Photo Export"
-msgstr ""
+msgstr "Google Photo eksporto"
 
 #: gswindow.cpp:549
 #, kde-format
@@ -349,7 +352,7 @@ msgstr ""
 #: gswindow.cpp:1105
 #, kde-format
 msgid "Warning"
-msgstr ""
+msgstr "Averto"
 
 #: gswindow.cpp:684 gswindow.cpp:707
 #, kde-format
@@ -360,7 +363,7 @@ msgstr ""
 #: gswindow.cpp:1109 gswindow.cpp:1288
 #, kde-format
 msgid "Continue"
-msgstr ""
+msgstr "Daŭrigi"
 
 #: gswindow.cpp:688 gswindow.cpp:711 gswindow.cpp:1020 gswindow.cpp:1038
 #: gswindow.cpp:1110 gswindow.cpp:1289
@@ -371,7 +374,7 @@ msgstr "Rezigni"
 #: gswindow.cpp:762
 #, kde-format
 msgid "Google Drive export"
-msgstr ""
+msgstr "Google Drive eksporto"
 
 #: gswindow.cpp:1015
 #, kde-format
@@ -519,7 +522,7 @@ msgstr ""
 #: replacedialog.cpp:112
 #, kde-format
 msgid "Add As New"
-msgstr ""
+msgstr "Aldoni Kiel Nova"
 
 #: replacedialog.cpp:113
 #, kde-format
@@ -529,7 +532,7 @@ msgstr ""
 #: replacedialog.cpp:119
 #, kde-format
 msgid "Add All"
-msgstr ""
+msgstr "Aldoni Ĉiujn"
 
 #: replacedialog.cpp:120
 #, kde-format
@@ -539,10 +542,9 @@ msgid ""
 msgstr ""
 
 #: replacedialog.cpp:126
-#, fuzzy, kde-format
-#| msgid "&Replace"
+#, kde-format
 msgid "Replace"
-msgstr "&Anstataŭigi"
+msgstr "Anstataŭigi"
 
 #: replacedialog.cpp:127
 #, kde-format
@@ -550,10 +552,9 @@ msgid "Item will be replacing the linked version."
 msgstr ""
 
 #: replacedialog.cpp:133
-#, fuzzy, kde-format
-#| msgid "&Replace"
+#, kde-format
 msgid "Replace All"
-msgstr "&Anstataŭigi"
+msgstr "Anstataŭigi Ĉiujn"
 
 #: replacedialog.cpp:134
 #, kde-format
@@ -575,100 +576,3 @@ msgstr "Celo"
 #, kde-format
 msgid "Source"
 msgstr "Fonto"
-
-#~ msgid ""
-#~ "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
-#~ msgstr ""
-#~ "Dosiero nomita \"%1\" jam ekzistas. Ĉu vi vere volas anstataŭigi ĝin?"
-
-#~ msgctxt "NAME OF TRANSLATORS"
-#~ msgid "Your names"
-#~ msgstr "Axel Rousseau"
-
-#~ msgctxt "EMAIL OF TRANSLATORS"
-#~ msgid "Your emails"
-#~ msgstr "axel@esperanto-jeunes.org"
-
-#~ msgid "Account"
-#~ msgstr "Konto"
-
-#~| msgid "Name:"
-#~ msgctxt "account settings"
-#~ msgid "Name:"
-#~ msgstr "Nomo:"
-
-#~ msgid "Album"
-#~ msgstr "Albumo"
-
-#, fuzzy
-#~| msgid "Album"
-#~ msgid "Album:"
-#~ msgstr "Albumo"
-
-#~ msgid "New Album"
-#~ msgstr "Nova Albumo"
-
-#~ msgctxt "album list"
-#~ msgid "Reload"
-#~ msgstr "Reŝargi"
-
-#~ msgid "Options"
-#~ msgstr "Opcioj"
-
-#~| msgid "Title:"
-#~ msgctxt "folder edit"
-#~ msgid "Title:"
-#~ msgstr "Titolo:"
-
-#~| msgid "Title:"
-#~ msgctxt "new google photos/picasaweb album dialog"
-#~ msgid "Title:"
-#~ msgstr "Titolo:"
-
-#~| msgid "Description:"
-#~ msgctxt "new google photos/picasaweb album dialog"
-#~ msgid "Description:"
-#~ msgstr "Priskribo:"
-
-#~| msgid "Location:"
-#~ msgctxt "new google photos/picasaweb album dialog"
-#~ msgid "Location:"
-#~ msgstr "Loko:"
-
-#~ msgid "Password:"
-#~ msgstr "Pasvorto:"
-
-#~ msgid "&OK"
-#~ msgstr "&Bone"
-
-#~ msgid "&Cancel"
-#~ msgstr "&Rezigni"
-
-#~ msgid "Login"
-#~ msgstr "Ensaluti"
-
-#~ msgctxt "Picasaweb account login"
-#~ msgid "Anonymous"
-#~ msgstr "Anonimulo"
-
-#~ msgid "Handbook"
-#~ msgstr "Manlibro"
-
-#, fuzzy
-#~| msgid "Password:"
-#~ msgid "Site Password:"
-#~ msgstr "Pasvorto:"
-
-#, fuzzy
-#~| msgid "Password:"
-#~ msgid "Album Password:"
-#~ msgstr "Pasvorto:"
-
-#~ msgid "Create"
-#~ msgstr "Krei"
-
-#~ msgid "Date"
-#~ msgstr "Dato"
-
-#~ msgid "Username:"
-#~ msgstr "Uzantnomo:"
