@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kipi-plugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2022-10-05 06:36+0200\n"
+"PO-Revision-Date: 2023-01-09 09:50+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: authorize.cpp:116
 #, kde-format
@@ -178,7 +178,7 @@ msgstr "მხოლოდ ფოთლოვანი ჭდეები"
 #: gswidget.cpp:63
 #, kde-format
 msgid "Export only the leaf tags of tag hierarchies"
-msgstr ""
+msgstr "ჭდეების იერარქიიდან მხოლოდ ფოთოლი ჭდეების გატანა"
 
 #: gswidget.cpp:64
 #, kde-format
@@ -188,7 +188,7 @@ msgstr "ჭდეების დაყოფა"
 #: gswidget.cpp:65
 #, kde-format
 msgid "Export the leaf tag and all ancestors as single tags."
-msgstr ""
+msgstr "ფოთოლი ჭდეებისა და ყველა წინარების ერთი ჭდით გატანა."
 
 #: gswidget.cpp:66
 #, kde-format
@@ -263,7 +263,7 @@ msgstr "Google Photos/PicasaWeb -ზე გატანა"
 #: gswindow.cpp:187
 #, kde-format
 msgid "A tool to export image collections to Google Photos/Picasa web service."
-msgstr ""
+msgstr "პროგრამა სურათების კოლექციების Google Photos/Picasa-ზე გასატანად."
 
 #: gswindow.cpp:189
 #, kde-format
@@ -274,6 +274,11 @@ msgid ""
 "(c) 2010, Jens Mueller\n"
 "(c) 2015, Shourya Singh Gupta"
 msgstr ""
+"(c) 2007-2009, Vardhman Jain\n"
+"(c) 2008-2016, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2010, Jens Mueller\n"
+"(c) 2015, Shourya Singh Gupta"
 
 #: gswindow.cpp:195
 #, kde-format
@@ -347,6 +352,9 @@ msgid ""
 "To complete the authentication click \"Change Account\", or \"Start Upload\" "
 "to authenticate again."
 msgstr ""
+"ეს ველი ცარიელია. შეიყვანეთ კოდი ბრაუზერის ფანჯრიდან. ავთენტიკაციის "
+"დასასრულებლად დააწექით \"ანგარიშის შეცვლას\" ან \"ატვირთვის დაწყებას,\", "
+"თავიდან ავტორიზაციისთვის."
 
 #: gswindow.cpp:669
 #, kde-format
@@ -451,6 +459,8 @@ msgid ""
 "After you have been logged out in the browser, click \"Continue\" to "
 "authenticate for another account"
 msgstr ""
+"მას შემდეგ, რაც თქვენ გახვალთ თქვენი ბრაუზერიდან, სხვა ანგარიშით შესასვლელად "
+"დააწექით ღილაკს \"გაგრძელება\""
 
 #. i18n: ectx: Menu (Export)
 #: kipiplugin_googleservicesui.rc:7 kipiplugin_googleservicesui.rc:15
@@ -481,6 +491,7 @@ msgid ""
 "These are security and privacy settings for the new Google Photos/PicasaWeb "
 "album."
 msgstr ""
+"ეს ახალი Google Photos/PicasaWeb-ის ალბომის კონფიდენციალობის პარამეტრებია."
 
 #: newalbumdlg.cpp:57
 #, kde-format
@@ -491,7 +502,7 @@ msgstr "საჯარო"
 #: newalbumdlg.cpp:59
 #, kde-format
 msgid "Public album is listed on your public Google Photos/PicasaWeb page."
-msgstr ""
+msgstr "საჯარო ალბომები თქვენს Google Photos/PicasaWeb-ის გვერდზეა ნაჩვენები."
 
 #: newalbumdlg.cpp:60
 #, kde-format
@@ -502,7 +513,7 @@ msgstr "სიაში არაა / პირადი"
 #: newalbumdlg.cpp:61
 #, kde-format
 msgid "Unlisted album is only accessible via URL."
-msgstr ""
+msgstr "სიაში არ-ნაჩვენები ალბომი მხოლოდ URL-ითაა ხელმისაწვდომი."
 
 #: newalbumdlg.cpp:62
 #, kde-format
@@ -513,7 +524,7 @@ msgstr "სანახავად შესვლაა საჭირო"
 #: newalbumdlg.cpp:63
 #, kde-format
 msgid "Unlisted album require Sign-In to View"
-msgstr ""
+msgstr "სიაში არ-ნაჩვენები ალბომის სანახავად შესვლაა საჭირო"
 
 #: newalbumdlg.cpp:71
 #, kde-format
@@ -543,7 +554,7 @@ msgstr "როგორც ახლის დამატება"
 #: replacedialog.cpp:113
 #, kde-format
 msgid "Item will be added alongside the linked version."
-msgstr ""
+msgstr "ელემენტები მიბმულ ვერსიასთან ერთად დაემატება."
 
 #: replacedialog.cpp:119
 #, kde-format
@@ -556,6 +567,8 @@ msgid ""
 "Items will be added alongside the linked version. You will not be prompted "
 "again."
 msgstr ""
+"ელემენტები მიბმულ ვერსიებთან ერთად დაემატება. თქვენ ამის შესახებ აღარ "
+"გკითხავთ."
 
 #: replacedialog.cpp:126
 #, kde-format
@@ -565,7 +578,7 @@ msgstr "ჩანაცვლება"
 #: replacedialog.cpp:127
 #, kde-format
 msgid "Item will be replacing the linked version."
-msgstr ""
+msgstr "ელემენტები მიბმულ ვერსიებს ჩაანაცვლებს."
 
 #: replacedialog.cpp:133
 #, kde-format
@@ -576,7 +589,7 @@ msgstr "ყველას ჩანაცვლება"
 #, kde-format
 msgid ""
 "Items will be replacing the linked version. You will not be prompted again."
-msgstr ""
+msgstr "ელემენტები მიბმულ ვერსიებს შეცვლიან. თქვენ ამის შესახებ აღარ გკითხავთ."
 
 #: replacedialog.cpp:157
 #, kde-format

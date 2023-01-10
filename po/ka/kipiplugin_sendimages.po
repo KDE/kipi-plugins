@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kipi-plugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2022-10-05 10:42+0200\n"
+"PO-Revision-Date: 2023-01-09 09:51+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: imageresize.cpp:116
 #, kde-format
@@ -261,6 +261,8 @@ msgid ""
 "Select your preferred external email program here. <b>Default</b> is the "
 "current email program set in desktop system settings."
 msgstr ""
+"აირჩიეთ თქვენი რჩეული გარე ელფოსტის პროგრამა. <b>ნაგულისხმებად</b>სამუშაო "
+"მაგიდის სისტემის პარამეტრებში არჩეული ელფოსტის პროგრამა გამოიყენება."
 
 #: settingswidget.cpp:112
 #, kde-format
@@ -273,6 +275,8 @@ msgid ""
 "If you enable this option, all image properties set by %1 as Comments, "
 "Rating, or Tags, will be added as an attached file."
 msgstr ""
+"თუ ამ პარამეტრს ჩართავთ, %1-ის მიერ დაყენებული თვისებები, რეიტინგი და ჭდეები "
+"მიმაგრებული ფაილის სახით დაემატებათ."
 
 #: settingswidget.cpp:125
 #, kde-format
@@ -360,6 +364,21 @@ msgid ""
 "on Ultra HD displays. Only if you have a high-speed Internet connection and "
 "the target mailbox size is not limited.</p>"
 msgstr ""
+"<p>აირჩიეთ სურათების ზომა, რომლებიც უნდა გაიგზავნოს:</p><p><b>%1</b>: "
+"გამოიყენეთ ეს, თუ თქვენ გაქვთ ძალიან ნელი ინტერნეტ კავშირი ან სამიზნე "
+"საფოსტო ყუთის ზომა ძალიან შეზღუდულია.</p><p><b>%2</b>: გამოიყენეთ ეს, თუ "
+"თქვენ გაქვთ ნელი ინტერნეტ კავშირი და მიზნობრივი საფოსტო ყუთის ზომა "
+"შეზღუდულია.</p><p><b>%3</b>: ეს არის ნაგულისხმევი ღირებულება ინტერნეტ "
+"კავშირის საშუალო სიჩქარისა და მიზნობრივი საფოსტო ყუთის ზომისთვის.</p><p><b>"
+"%4</b>: გამოიყენეთ ეს, თუ თქვენ გაქვთ მაღალსიჩქარიანი ინტერნეტ კავშირი და "
+"მიზნობრივი საფოსტო ყუთის ზომა შეზღუდული არ არის.</p><p><b>%5</b>: გამოიყენეთ "
+"ეს, თუ არ გაქვთ ზომა ან სიჩქარის შეზღუდვა.</p><p><b>%6</b>: გამოიყენეთ ეს "
+"მხოლოდ ბეჭდვის მიზნით.</p><p><b>%7</b>: გამოიყენეთ ეს სრული HD მონიტორებზე "
+"ოპტიმალური ნახვისთვის. მხოლოდ იმ შემთხვევაში, თუ თქვენ გაქვთ მაღალსიჩქარიანი "
+"ინტერნეტ კავშირი და სამიზნე საფოსტო ყუთის ზომა არ არის შეზღუდული.</p><p><b>"
+"%8</b>: გამოიყენეთ ეს ულტრა HD მონიტორებზე ოპტიმალური სანახავად. მხოლოდ იმ "
+"შემთხვევაში, თუ თქვენ გაქვთ მაღალსიჩქარიანი ინტერნეტ კავშირი და სამიზნე "
+"საფოსტო ყუთის ზომა არ არის შეზღუდული.</p>"
 
 #: settingswidget.cpp:177
 #, kde-format
@@ -369,7 +388,7 @@ msgstr "Სურათის ზომა:"
 #: settingswidget.cpp:186
 #, kde-format
 msgid "<p>Select the file format of the image files to be sent.</p>"
-msgstr ""
+msgstr "<p>არჩიეთ გასაგზავნი ფაილების ფორმატი.</p>"
 
 #: settingswidget.cpp:187
 #, kde-format
@@ -384,6 +403,16 @@ msgid ""
 "option. Also, PNG can store gamma and chromaticity data for improved color-"
 "matching on heterogeneous platforms.</p>"
 msgstr ""
+"<p><b>JPEG</b>: ერთობლივი ფოტოგრაფიული ექსპერტების ჯგუფის ფაილის ფორმატი "
+"არის ვებ ფაილის კარგი ფორმატი, მაგრამ ის იყენებს დაკარგვის შეკუმშვას.</"
+"p><p><b>PNG</b>: პორტატული ქსელის გრაფიკული ფორმატი არის ფაილური ფორმატი "
+"უპასო, პორტატული, კარგად შეკუმშული შენახვისთვის raster სურათები. PNG "
+"უზრუნველყოფს პატენტის გარეშე ჩანაცვლებას GIF– სთვის და ასევე შეუძლია "
+"შეცვალოს TIFF– ის მრავალი საერთო გამოყენება. PNG შექმნილია იმისთვის, რომ "
+"კარგად იმუშაოს ონლაინ ნახვის პროგრამებში, როგორიცაა World Wide Web, ასე რომ, "
+"ის სრულად იტრივდება პროგრესული ჩვენების ვარიანტით. ასევე, PNG- ს შეუძლია "
+"შეინახოს გამა და ქრომატიულობის მონაცემები ჰეტეროგენულ პლატფორმებზე "
+"გაუმჯობესებული ფერის შესატყვისი.</p>"
 
 #: settingswidget.cpp:197
 #, kde-format
@@ -393,7 +422,7 @@ msgstr "გამოსახულების ფორმატი:"
 #: settingswidget.cpp:206
 #, kde-format
 msgid "<p>The new compression value of JPEG images to be sent:</p>"
-msgstr ""
+msgstr "<p>გასაგზავნი ფაილების JPEG შეკუმშვის ახალი მნიშვნელობა:</p>"
 
 #: settingswidget.cpp:207
 #, kde-format
@@ -402,6 +431,9 @@ msgid ""
 "><b>50</b>: medium compression<br/><b>75</b>: low compression (default "
 "value)<br/><b>100</b>: no compression</p>"
 msgstr ""
+"<p><b>1</b>: საუკეთესო შეკუმშვა<br/><b>25</b>: კარგი შეკუმშვა<br/><b>50</b>: "
+"საშუალო შეკუმშვა<br/><b>75</b>: დაბალი შეკუმშვა (ნაგულისხმები)<br/><b>100</"
+"b>: შეკუმშვის გარეშე</p>"
 
 #: settingswidget.cpp:215
 #, kde-format

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kipi-plugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2022-10-05 10:34+0200\n"
+"PO-Revision-Date: 2023-01-09 09:51+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: KioExportWidget.cpp:61
 #, kde-format
@@ -110,6 +110,8 @@ msgid ""
 "Some of the images have not been transferred and are still in the list. You "
 "can retry to export these images now."
 msgstr ""
+"ზოგიერთი სურათი არ გადაცემულა და ჯერ კიდევ ჩამონათვალშია. შეგიძლიათ ამ "
+"სურათების გატანა ახლა სცადოთ."
 
 #: KioImportWidget.cpp:52
 #, kde-format
@@ -131,7 +133,7 @@ msgstr "შემოტანის დაწყება"
 #: KioImportWindow.cpp:65
 #, kde-format
 msgid "Start importing the specified images into the currently selected album."
-msgstr ""
+msgstr "მითითებული სურათების ამჟამად მონიშნულ ალბომში შემოტანის დაწყება."
 
 #: KioImportWindow.cpp:81
 #, kde-format
@@ -154,6 +156,8 @@ msgid ""
 "Some of the images have not been transferred and are still in the list. You "
 "can retry to import these images now."
 msgstr ""
+"ზოგიერთი სურათი არ მიღებულა და ჯერ კიდევ ჩამონათვალშია. შეგიძლიათ ამ "
+"სურათების შემოტანა ახლა სცადოთ."
 
 #. i18n: ectx: Menu (Import)
 #: kipiplugin_remotestorageui.rc:7
