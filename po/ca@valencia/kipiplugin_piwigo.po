@@ -64,7 +64,7 @@ msgstr "S'ha produït un error"
 #: piwigotalker.cpp:440
 #, kde-format
 msgid "Piwigo URL probably incorrect"
-msgstr "L'URL del Piwigo probablement és incorrecte"
+msgstr "L'URL de Piwigo probablement és incorrecte"
 
 #: piwigotalker.cpp:446
 #, kde-format
@@ -74,13 +74,13 @@ msgstr "S'han indicat un nom d'usuari o contrasenya incorrectes"
 #: piwigotalker.cpp:489 piwigotalker.cpp:663
 #, kde-format
 msgid "Upload to Piwigo version < 2.4 is no longer supported"
-msgstr "La pujada al Piwigo versió < 2.4 no està admesa"
+msgstr "La pujada a Piwigo versió < 2.4 no està admesa"
 
 #: piwigotalker.cpp:561 piwigotalker.cpp:639 piwigotalker.cpp:708
 #: piwigotalker.cpp:779
 #, kde-format
 msgid "Invalid response received from remote Piwigo"
-msgstr "S'ha rebut una resposta no vàlida del Piwigo remot"
+msgstr "S'ha rebut una resposta no vàlida de Piwigo remot"
 
 #: piwigotalker.cpp:567
 #, kde-format
@@ -125,12 +125,12 @@ msgstr "Puja les metadades de %1"
 #: piwigotalker.cpp:939
 #, kde-format
 msgid "Invalid response received from remote Piwigo (%1)"
-msgstr "S'ha rebut una resposta no vàlida des del Piwigo remot (%1)"
+msgstr "S'ha rebut una resposta no vàlida des de Piwigo remot (%1)"
 
 #: piwigowindow.cpp:128
 #, kde-format
 msgid "Visit Piwigo website"
-msgstr "Visiteu la pàgina del Piwigo"
+msgstr "Visiteu la pàgina de Piwigo"
 
 #: piwigowindow.cpp:145
 #, kde-format
@@ -170,13 +170,14 @@ msgstr "Canvia de mida amb la qualitat de JPEG:"
 #: piwigowindow.cpp:231 piwigowindow.cpp:235
 #, kde-format
 msgid "Piwigo Export"
-msgstr "Exportació al Piwigo"
+msgstr "Exporteu cap a Piwigo"
 
 #: piwigowindow.cpp:236
 #, kde-format
 msgid "A tool to export image collections to a remote Piwigo server."
 msgstr ""
-"Una eina per a exportar col·leccions d'imatges a un servidor Piwigo remot."
+"Una eina per a exportar col·leccions d'imatges cap a un servidor Piwigo "
+"remot."
 
 #: piwigowindow.cpp:237
 #, kde-format
@@ -251,7 +252,7 @@ msgstr ""
 #: piwigowindow.cpp:404 piwigowindow.cpp:644 plugin_piwigo.cpp:117
 #, kde-format
 msgid "Edit Piwigo Data"
-msgstr "Edita les dades del Piwigo"
+msgstr "Edita les dades de Piwigo"
 
 #: piwigowindow.cpp:464 piwigowindow.cpp:488
 #, kde-format
@@ -286,7 +287,7 @@ msgstr "Ha fallat la pujada"
 #: piwigowindow.cpp:599
 #, kde-format
 msgid "Failed to upload media into remote Piwigo. "
-msgstr "No s'ha pogut pujar el suport al Piwigo remot. "
+msgstr "No s'ha pogut pujar el suport a Piwigo remot. "
 
 #: piwigowindow.cpp:600
 #, kde-format
@@ -300,4 +301,4 @@ msgstr ""
 #: plugin_piwigo.cpp:97
 #, kde-format
 msgid "Export to &Piwigo..."
-msgstr "Exporta al &Piwigo..."
+msgstr "Exporta cap a &Piwigo..."

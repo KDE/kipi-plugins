@@ -216,7 +216,7 @@ msgstr ""
 msgid ""
 "This is a clickable link to open the SmugMug home page in a web browser."
 msgstr ""
-"Este és un enllaç que podeu clicar per a obrir la pàgina inicial del "
+"Este és un enllaç que podeu clicar per a obrir la pàgina inicial de "
 "MediaWiki en un navegador web."
 
 #: smugwidget.cpp:85
@@ -384,7 +384,7 @@ msgstr "Comença la baixada des del servei web de SmugMug"
 #: smugwindow.cpp:95
 #, kde-format
 msgid "Export to SmugMug Web Service"
-msgstr "Exporta al servei web de SmugMug"
+msgstr "Exporta cap al servei web de SmugMug"
 
 #: smugwindow.cpp:97
 #, kde-format

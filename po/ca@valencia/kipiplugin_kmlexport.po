@@ -49,7 +49,7 @@ msgstr "No s'ha pogut guardar la imatge «%1» a «%2»"
 #: kmlexport.cpp:350
 #, kde-format
 msgid "Creation of placemark '%1'"
-msgstr "Creació de la marca de lloc «%1»"
+msgstr "Creeu la marca de lloc «%1»"
 
 #: kmlexport.cpp:358
 #, kde-format

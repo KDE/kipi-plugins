@@ -36,7 +36,7 @@ msgstr "Barra d'eines principal"
 #: plugin_wikimedia.cpp:105
 #, kde-format
 msgid "Export to MediaWiki..."
-msgstr "Exporta al MediaWiki..."
+msgstr "Exporta cap a MediaWiki..."
 
 #: wmtalker.cpp:125
 #, kde-format
@@ -68,7 +68,7 @@ msgstr "Selecciona una imatge"
 msgid ""
 "This is a clickable link to open the MediaWiki home page in a web browser."
 msgstr ""
-"Este és un enllaç que podeu clicar per a obrir la pàgina inicial del "
+"Este és un enllaç que podeu clicar per a obrir la pàgina inicial de "
 "MediaWiki en un navegador web."
 
 #: wmwidget.cpp:189
@@ -79,7 +79,8 @@ msgstr "Esta és la llista de les imatges que es pujaran al wiki."
 #: wmwidget.cpp:214 wmwidget.cpp:387
 #, kde-format
 msgid "This is the login form to your account on the chosen wiki."
-msgstr "Este és el formulari de connexió al vostre compte al wiki escollit."
+msgstr ""
+"Este és el formulari de connexió amb el vostre compte al wiki escollit."
 
 #: wmwidget.cpp:235
 #, kde-format
@@ -119,7 +120,7 @@ msgstr "Compte"
 #: wmwidget.cpp:274
 #, kde-format
 msgid "This is the login form to your MediaWiki account."
-msgstr "Este és el formulari de connexió al vostre compte del MediaWiki."
+msgstr "Este és el formulari de connexió amb el vostre compte de MediaWiki."
 
 #: wmwidget.cpp:281
 #, kde-format
@@ -436,12 +437,12 @@ msgstr "Propietats dels elements"
 #: wmwidget.cpp:517
 #, kde-format
 msgid "Upload Settings"
-msgstr "Configuració de la pujada"
+msgstr "Configureu la pujada"
 
 #: wmwindow.cpp:114
 #, kde-format
 msgid "Export to MediaWiki"
-msgstr "Exporta al MediaWiki"
+msgstr "Exporta cap a MediaWiki"
 
 #: wmwindow.cpp:116
 #, kde-format
@@ -451,12 +452,12 @@ msgstr "Comença la pujada"
 #: wmwindow.cpp:117
 #, kde-format
 msgid "Start upload to MediaWiki"
-msgstr "Comença la pujada al MediaWiki"
+msgstr "Comença la pujada a MediaWiki"
 
 #: wmwindow.cpp:124 wmwindow.cpp:354
 #, kde-format
 msgid "MediaWiki export"
-msgstr "Exportador al MediaWiki"
+msgstr "Exportador cap a MediaWiki"
 
 #: wmwindow.cpp:125
 #, kde-format
@@ -464,7 +465,7 @@ msgid ""
 "A tool to export image collection to a MediaWiki installation.\n"
 "Using libmediawiki version %1"
 msgstr ""
-"Una eina per a exportar col·leccions d'imatges a una instal·lació del "
+"Una eina per a exportar col·leccions d'imatges cap a una instal·lació de "
 "MediaWiki.\n"
 "S'utilitza la versió %1 de la «libmediawiki»"
 

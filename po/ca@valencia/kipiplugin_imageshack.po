@@ -111,7 +111,7 @@ msgstr "%v / %m"
 #: imageshackwindow.cpp:234
 #, kde-format
 msgid "Image Shack Export"
-msgstr "Exportació a l'Image Shack"
+msgstr "Exporteu cap a Image Shack"
 
 #: imageshackwindow.cpp:261
 #, kde-format

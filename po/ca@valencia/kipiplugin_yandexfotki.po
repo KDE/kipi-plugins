@@ -98,7 +98,7 @@ msgstr "Afig una fotografia com a nova"
 #: yfwidget.cpp:71
 #, kde-format
 msgid "Privacy settings:"
-msgstr "Configuració de la privadesa:"
+msgstr "Configureu la privadesa:"
 
 #: yfwidget.cpp:74
 #, kde-format
@@ -139,7 +139,8 @@ msgstr "Connector del Yandex.Fotki"
 #, kde-format
 msgid "A tool to export image collections to Yandex.Fotki web service."
 msgstr ""
-"Una eina per a exportar col·leccions d'imatges al servei web Yandex.Fotki."
+"Una eina per a exportar col·leccions d'imatges cap al servei web Yandex."
+"Fotki."
 
 #: yfwindow.cpp:131
 #, kde-format

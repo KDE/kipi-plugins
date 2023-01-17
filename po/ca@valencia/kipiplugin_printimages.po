@@ -299,7 +299,7 @@ msgstr "Imprimix a «gimp»"
 #: ui/photopage.ui:209
 #, kde-format
 msgid "Page settings"
-msgstr "Configuració de la pàgina"
+msgstr "Configureu la pàgina"
 
 #. i18n: ectx: property (text), widget (QPushButton, mLeftButton)
 #. i18n: ectx: property (text), widget (QToolButton, BtnPreviewPageDown)

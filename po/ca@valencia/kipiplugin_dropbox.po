@@ -39,7 +39,7 @@ msgstr "No s'han pogut llistar les carpetes"
 #: dbwindow.cpp:70
 #, kde-format
 msgid "Export to Dropbox"
-msgstr "Exporta a Dropbox"
+msgstr "Exporta cap a Dropbox"
 
 #: dbwindow.cpp:72
 #, kde-format
@@ -54,7 +54,7 @@ msgstr "Comença la pujada a Dropbox"
 #: dbwindow.cpp:92
 #, kde-format
 msgid "Dropbox Export"
-msgstr "Exportació a Dropbox"
+msgstr "Exporteu cap a Dropbox"
 
 #: dbwindow.cpp:93
 #, kde-format
@@ -107,7 +107,7 @@ msgstr "%v / %m"
 #: dbwindow.cpp:295
 #, kde-format
 msgid "Dropbox export"
-msgstr "Exportació a Dropbox"
+msgstr "Exporteu cap a Dropbox"
 
 #: dbwindow.cpp:328
 #, kde-format
@@ -149,4 +149,4 @@ msgstr "Barra d'eines principal"
 #: plugin_dropbox.cpp:90
 #, kde-format
 msgid "Export to &Dropbox..."
-msgstr "Exporta a &Dropbox..."
+msgstr "Exporta cap a &Dropbox..."
