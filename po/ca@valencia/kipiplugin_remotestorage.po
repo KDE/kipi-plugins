@@ -65,7 +65,7 @@ msgstr "<no seleccionat>"
 #: KioExportWindow.cpp:64
 #, kde-format
 msgid "Export to Remote Storage"
-msgstr "Exportació a un emmagatzematge remot"
+msgstr "Exporteu cap a un emmagatzematge remot"
 
 #: KioExportWindow.cpp:67
 #, kde-format

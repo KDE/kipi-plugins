@@ -105,7 +105,7 @@ msgstr "Seleccioneu una imatge"
 #: libkipiplugins/dialogs/kpimagedialog.cpp:365
 #, kde-format
 msgid "Select Images"
-msgstr "Selecció d'imatges"
+msgstr "Seleccioneu les imatges"
 
 #: libkipiplugins/dialogs/kplogindialog.cpp:76
 #, kde-format

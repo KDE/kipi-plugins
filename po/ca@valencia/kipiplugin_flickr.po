@@ -394,7 +394,7 @@ msgid ""
 "<b><h2><a href='http://www.23hq.com'><font color=\"#7CD164\">23</font></a> "
 "Export</h2></b>"
 msgstr ""
-"<b><h2>Exportació a <a href='http://www.23hq.com'><font color="
+"<b><h2>Exporteu cap a <a href='http://www.23hq.com'><font color="
 "\"#7CD164\">23</font></a></h2></b>"
 
 #: flickrwidget.cpp:311
@@ -403,7 +403,7 @@ msgid ""
 "<b><h2><a href='http://www.flickr.com'><font color=\"#0065DE\">flick</"
 "font><font color=\"#FF0084\">r</font></a> Export</h2></b>"
 msgstr ""
-"<b><h2>Exportació a <a href='http://www.flickr.com'><font color=\"#0065DE"
+"<b><h2>Exporteu cap a <a href='http://www.flickr.com'><font color=\"#0065DE"
 "\">flick</font><font color=\"#FF0084\">r</font></a></h2></b>"
 
 #: flickrwidget.cpp:484
@@ -419,7 +419,7 @@ msgstr "Menys opcions d'etiquetes"
 #: flickrwindow.cpp:71
 #, kde-format
 msgid "Export to %1 Web Service"
-msgstr "Exporta al servei web %1"
+msgstr "Exporta cap al servei web %1"
 
 #: flickrwindow.cpp:119
 #, kde-format
@@ -429,13 +429,13 @@ msgstr "Inici de la pujada"
 #: flickrwindow.cpp:131
 #, kde-format
 msgid "Flickr/23 Export"
-msgstr "Exporta a Flickr/23"
+msgstr "Exporta cap a Flickr/23"
 
 #: flickrwindow.cpp:132
 #, kde-format
 msgid "A tool to export an image collection to a Flickr / 23 web service."
 msgstr ""
-"Una eina per a exportar col·leccions d'imatges al servei web Flickr / 23."
+"Una eina per a exportar col·leccions d'imatges cap al servei web Flickr / 23."
 
 #: flickrwindow.cpp:134
 #, kde-format
@@ -483,7 +483,7 @@ msgstr "Només per al Photostream"
 #: flickrwindow.cpp:741
 #, kde-format
 msgid "Flickr Export"
-msgstr "Exporta a Flickr"
+msgstr "Exporta cap a Flickr"
 
 #: flickrwindow.cpp:759
 #, kde-format
@@ -531,7 +531,7 @@ msgstr "Barra d'eines principal"
 #: plugin_flickr.cpp:100
 #, kde-format
 msgid "Export to Flick&r..."
-msgstr "Exporta al Flick&r..."
+msgstr "Exporta cap al Flick&r..."
 
 #: selectuserdlg.cpp:47
 #, kde-format

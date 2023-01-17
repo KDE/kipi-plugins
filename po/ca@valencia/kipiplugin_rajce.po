@@ -51,7 +51,7 @@ msgstr "Públic"
 #: plugin_rajce.cpp:90
 #, kde-format
 msgid "Export to &Rajce.net..."
-msgstr "Exporta al &Rajce.net..."
+msgstr "Exporta cap a &Rajce.net..."
 
 #: rajcewidget.cpp:120
 #, kde-format
@@ -151,7 +151,7 @@ msgstr "S'estan afegint les fotografies %v%"
 #: rajcewindow.cpp:53
 #, kde-format
 msgid "Export to Rajce.net"
-msgstr "Exporta al Rajce.net"
+msgstr "Exporta cap a Rajce.net"
 
 #: rajcewindow.cpp:55
 #, kde-format
@@ -161,17 +161,17 @@ msgstr "Comença la pujada"
 #: rajcewindow.cpp:56
 #, kde-format
 msgid "Start upload to Rajce.net"
-msgstr "Comença la pujada al Rajce.net"
+msgstr "Comença la pujada a Rajce.net"
 
 #: rajcewindow.cpp:71
 #, kde-format
 msgid "Rajce.net Export"
-msgstr "Exporta al Rajce.net"
+msgstr "Exporta cap a Rajce.net"
 
 #: rajcewindow.cpp:72
 #, kde-format
 msgid "A tool to export image collections to Rajce.net."
-msgstr "Una eina per a exportar col·leccions d'imatges al Rajce.net."
+msgstr "Una eina per a exportar col·leccions d'imatges cap a Rajce.net."
 
 #: rajcewindow.cpp:74
 #, kde-format
