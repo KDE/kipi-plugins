@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kipi-plugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2022-12-08 23:28+0100\n"
+"PO-Revision-Date: 2023-02-03 16:44+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -86,7 +86,7 @@ msgstr "jAlbum -ზე გატანა"
 #: jalbumwindow.cpp:128
 #, kde-format
 msgid "A Kipi plugin to launch jAlbum using selected images."
-msgstr "Kipi_ის დამატება jAlbum-ის მითითებული გამოსახულებებით გასაშვებად."
+msgstr "Kipi-ის დამატება jAlbum-ის მითითებული გამოსახულებებით გასაშვებად."
 
 #: jalbumwindow.cpp:129
 #, kde-format
