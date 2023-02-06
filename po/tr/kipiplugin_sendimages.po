@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: extragear-graphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2023-01-19 22:30+0300\n"
+"PO-Revision-Date: 2023-02-05 12:26+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.1\n"
+"X-Generator: Lokalize 22.12.2\n"
 
 #: imageresize.cpp:116
 #, kde-format
@@ -130,7 +130,7 @@ msgstr "Etiketler: %1\n"
 #: sendimages.cpp:285
 #, kde-format
 msgid "Rating: %1\n"
-msgstr "Beğeni: %1\n"
+msgstr "Derecelendirme: %1\n"
 
 #: sendimages.cpp:290 sendimages.cpp:298
 #, kde-format
