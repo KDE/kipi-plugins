@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: extragear-graphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2023-01-18 22:29+0300\n"
+"PO-Revision-Date: 2023-02-08 20:55+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.1\n"
+"X-Generator: Lokalize 22.12.2\n"
 
 #. i18n: ectx: Menu (Export)
 #: kipiplugin_wikimediaui.rc:7
@@ -233,7 +233,7 @@ msgstr "&Oturum aç"
 #: wmwidget.cpp:360
 #, kde-format
 msgid "Login Information"
-msgstr "Giriş Bilgileri"
+msgstr "Oturum Açma Bilgisi"
 
 #: wmwidget.cpp:366
 #, kde-format
@@ -255,7 +255,7 @@ msgstr "Hesabı Değiştir"
 #: wmwidget.cpp:374
 #, kde-format
 msgid "Logout and change the account used for transfer"
-msgstr "Çıkış yap ve aktarım için kullanılan hesabı değiştir"
+msgstr "Oturumu kapat ve aktarım için kullanılan hesabı değiştir"
 
 #: wmwidget.cpp:386
 #, kde-format
@@ -494,7 +494,7 @@ msgstr "Peter Potrowl"
 #: wmwindow.cpp:389
 #, kde-format
 msgid "Login Error"
-msgstr "Giriş Hatası"
+msgstr "Oturum Açma Hatası"
 
 #: wmwindow.cpp:389
 #, kde-format
