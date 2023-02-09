@@ -5,13 +5,13 @@
 # Ozan Çağlayan <ozan@pardus.org.tr>, 2010-2011.
 # obsoleteman <tulliana@gmail.com>, 2009,2012.
 # Volkan Gezer <volkangezer@gmail.com>, 2013.
-# Emir SARI <emir_sari@icloud.com>, 2022.
+# Emir SARI <emir_sari@icloud.com>, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: extragear-graphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2022-12-11 20:13+0300\n"
+"PO-Revision-Date: 2023-02-08 20:55+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.0\n"
+"X-Generator: Lokalize 22.12.2\n"
 
 #: fbalbum.cpp:52
 #, kde-format
@@ -95,8 +95,8 @@ msgstr "Uygulama izin verilen azami talep sayısına ulaştı."
 #, kde-format
 msgid "Invalid session key or session expired. Try to log in again."
 msgstr ""
-"Geçersiz oturum anahtarı girildi ya da oturum zamanaşımına uğradı. Yeniden "
-"giriş yapmayı deneyin."
+"Geçersiz oturum anahtarı girildi veya oturum zaman aşımına uğradı. Yeniden "
+"oturum açmayı deneyin."
 
 #: fbtalker.cpp:558
 #, kde-format
@@ -192,8 +192,8 @@ msgid ""
 "After you have been logged out in the browser, click \"Continue\" to "
 "authenticate for another account"
 msgstr ""
-"Tarayıcıda çıkış yaptıktan sonra, başka bir hesapla kimlik doğrulamak için "
-"\"Sürdür\" düğmesine tıklayın"
+"Tarayıcıda oturumu kapattıktan sonra, başka bir hesapla kimlik doğrulamak "
+"için \"Sürdür\" düğmesine tıklayın"
 
 #: fbwindow.cpp:476
 #, kde-format

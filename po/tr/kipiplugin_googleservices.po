@@ -3,13 +3,13 @@
 #
 # Translators:
 # Volkan Gezer, 2013-2014.
-# Emir SARI <emir_sari@icloud.com>, 2022.
+# Emir SARI <emir_sari@icloud.com>, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: extragear-graphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2022-12-17 19:03+0300\n"
+"PO-Revision-Date: 2023-02-08 19:50+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.0\n"
+"X-Generator: Lokalize 22.12.2\n"
 
 #: authorize.cpp:116
 #, kde-format
@@ -93,7 +93,7 @@ msgstr "İmza yok"
 #: gptalker.cpp:590
 #, kde-format
 msgid "Login failed / Invalid auth token"
-msgstr "Giriş başarısız oldu / Geçersiz kimlik doğrulama ifadesi"
+msgstr "Oturum açma başarısız oldu / Geçersiz kimlik doğrulama ifadesi"
 
 #: gptalker.cpp:593
 #, kde-format
@@ -526,12 +526,12 @@ msgstr "Listelenmemiş albüm sadece bir adres ile ulaşılabilir."
 #, kde-format
 msgctxt "google photos/picasaweb album privacy"
 msgid "Sign-In Required to View"
-msgstr "Görüntülemek için Giriş Yapmak Gerekli"
+msgstr "Görüntülemek için Oturum Açma Gerekli"
 
 #: newalbumdlg.cpp:63
 #, kde-format
 msgid "Unlisted album require Sign-In to View"
-msgstr "Listelenmemiş albüm için giriş yapmak gerekli"
+msgstr "Listelenmemiş albüm için oturum açmak gereklidir"
 
 #: newalbumdlg.cpp:71
 #, kde-format

@@ -3,13 +3,13 @@
 #
 # Translators:
 # Volkan Gezer <volkangezer@gmail.com>, 2013.
-# Emir SARI <emir_sari@icloud.com>, 2022.
+# Emir SARI <emir_sari@icloud.com>, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: extragear-graphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2022-12-17 18:55+0300\n"
+"PO-Revision-Date: 2023-02-08 19:50+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.0\n"
+"X-Generator: Lokalize 22.12.2\n"
 
 #: imgurapi3.cpp:132
 #, kde-format
@@ -57,7 +57,7 @@ msgstr "Imgur Silme Adresi"
 #: imgurwindow.cpp:82
 #, kde-format
 msgid "Logged in as:"
-msgstr "Şu olarak giriş yapıldı:"
+msgstr "Şu olarak oturum açıldı:"
 
 #: imgurwindow.cpp:90
 #, kde-format
@@ -137,7 +137,7 @@ msgstr "Yetkilendirme Başarısız"
 #: imgurwindow.cpp:228
 #, kde-format
 msgid "Failed to log into Imgur: %1\n"
-msgstr "Imgur'a giriş yapma işlemi başarısız oldu: %1\n"
+msgstr "Imgur'a oturum açma işlemi başarısız oldu: %1\n"
 
 #: imgurwindow.cpp:254 imgurwindow.cpp:261
 #, kde-format

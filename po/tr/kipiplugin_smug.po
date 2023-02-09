@@ -5,13 +5,13 @@
 # Ozan Çağlayan <ozan@pardus.org.tr>, 2011,2013.
 # obsoleteman <tulliana@gmail.com>, 2009,2012.
 # Volkan Gezer <volkangezer@gmail.com>, 2013.
-# Emir SARI <emir_sari@icloud.com>, 2022.
+# Emir SARI <emir_sari@icloud.com>, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: extragear-graphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2022-04-11 11:08+0300\n"
+"PO-Revision-Date: 2023-02-08 19:51+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 22.12.2\n"
 
 #. i18n: ectx: Menu (Import)
 #: kipiplugin_smugui.rc:7
@@ -179,12 +179,12 @@ msgstr "Parola İpucu:"
 #: smugtalker.cpp:111
 #, kde-format
 msgid "Logging in to SmugMug service..."
-msgstr "SmugMug servisine giriş yapılıyor..."
+msgstr "SmugMug hizmetine oturum açılıyor..."
 
 #: smugtalker.cpp:464
 #, kde-format
 msgid "Login failed"
-msgstr "Giriş başarısız oldu"
+msgstr "Oturum açma başarısız"
 
 #: smugtalker.cpp:467
 #, kde-format
@@ -233,7 +233,7 @@ msgstr "Anonim"
 #: smugwidget.cpp:90
 #, kde-format
 msgid "Login as anonymous to SmugMug web service."
-msgstr "SmugMug servisine anonim kullanıcı olarak giriş yap."
+msgstr "SmugMug hizmetine anonim kullanıcı olarak oturum aç."
 
 #: smugwidget.cpp:92
 #, kde-format
@@ -243,7 +243,7 @@ msgstr "SmugMug Hesabı"
 #: smugwidget.cpp:93
 #, kde-format
 msgid "Login to SmugMug web service using email and password."
-msgstr "SmugMug servisine e-posta ve parola ile giriş yap."
+msgstr "SmugMug hizmetine e-posta ve parola ile oturum aç."
 
 #: smugwidget.cpp:95
 #, kde-format
