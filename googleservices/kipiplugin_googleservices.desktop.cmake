@@ -2,8 +2,8 @@
 UntranslatedGenericName=Google Services
 Name=Google Services
 Name[bg]=Услуги на Google
-Name[ca]=Google Services
-Name[ca@valencia]=Google Services
+Name[ca]=Serveis de Google
+Name[ca@valencia]=Serveis de Google
 Name[cs]=Služby Google
 Name[da]=Google-tjenester
 Name[de]=Google Services
