@@ -4,20 +4,20 @@
 # version 3 or later versions approved by the membership of KDE e.V.
 #
 # Josep M. Ferrer <txemaq@gmail.com>, 2008, 2009, 2010, 2011, 2014, 2015, 2016, 2021.
-# Antoni Bella Pérez <antonibella5@yahoo.com>, 2012, 2013, 2014, 2015, 2017, 2018, 2020.
+# Antoni Bella Pérez <antonibella5@yahoo.com>, 2012, 2013, 2014, 2015, 2017, 2018, 2020, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: kipi-plugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2021-09-13 11:36+0200\n"
-"Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
+"PO-Revision-Date: 2023-02-22 21:34+0100\n"
+"Last-Translator: Antoni Bella Pérez <antonibella5@yahoo.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 20.12.0\n"
+"X-Generator: Lokalize 22.12.2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -228,7 +228,8 @@ msgstr "Pública"
 #: flickrwidget.cpp:76
 #, kde-format
 msgid "This is the list of images to upload to your Flickr account."
-msgstr "Aquesta és la llista d'imatges a pujar al vostre compte de Flickr."
+msgstr ""
+"Aquesta és la llista d'imatges que es pujaran al vostre compte de Flickr."
 
 #: flickrwidget.cpp:81
 #, kde-format
@@ -401,7 +402,7 @@ msgid ""
 "<b><h2><a href='http://www.flickr.com'><font color=\"#0065DE\">flick</"
 "font><font color=\"#FF0084\">r</font></a> Export</h2></b>"
 msgstr ""
-"<b><h2>Exportació a <a href='http://www.flickr.com'><font color=\"#0065DE"
+"<b><h2>Exportació cap a <a href='http://www.flickr.com'><font color=\"#0065DE"
 "\">flick</font><font color=\"#FF0084\">r</font></a></h2></b>"
 
 #: flickrwidget.cpp:484
@@ -427,13 +428,13 @@ msgstr "Inici de la pujada"
 #: flickrwindow.cpp:131
 #, kde-format
 msgid "Flickr/23 Export"
-msgstr "Exporta al Flickr/23"
+msgstr "Exporta cap a Flickr/23"
 
 #: flickrwindow.cpp:132
 #, kde-format
 msgid "A tool to export an image collection to a Flickr / 23 web service."
 msgstr ""
-"Una eina per a exportar col·leccions d'imatges al servei web Flickr / 23."
+"Una eina per a exportar col·leccions d'imatges al servei web de Flickr / 23."
 
 #: flickrwindow.cpp:134
 #, kde-format
@@ -481,7 +482,7 @@ msgstr "Només per al Photostream"
 #: flickrwindow.cpp:741
 #, kde-format
 msgid "Flickr Export"
-msgstr "Exporta al Flickr"
+msgstr "Exporta cap a Flickr"
 
 #: flickrwindow.cpp:759
 #, kde-format
@@ -534,7 +535,7 @@ msgstr "Exporta al Flick&r..."
 #: selectuserdlg.cpp:47
 #, kde-format
 msgid "Flickr Account Selector"
-msgstr "Selector de comptes del Flickr"
+msgstr "Selector de comptes de Flickr"
 
 #: selectuserdlg.cpp:52
 #, kde-format

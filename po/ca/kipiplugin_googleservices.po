@@ -4,14 +4,14 @@
 # version 3 or later versions approved by the membership of KDE e.V.
 #
 # Josep M. Ferrer <txemaq@gmail.com>, 2014, 2015, 2016, 2021.
-# Antoni Bella Pérez <antonibella5@yahoo.com>, 2015, 2017, 2020.
+# Antoni Bella Pérez <antonibella5@yahoo.com>, 2015, 2017, 2020, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: kipi-plugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2021-10-31 22:17+0100\n"
-"Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
+"PO-Revision-Date: 2023-02-22 21:38+0100\n"
+"Last-Translator: Antoni Bella Pérez <antonibella5@yahoo.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
@@ -19,12 +19,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
-"X-Generator: Lokalize 20.12.0\n"
+"X-Generator: Lokalize 22.12.2\n"
 
 #: authorize.cpp:116
 #, kde-format
 msgid "Google Drive Authorization"
-msgstr "Autorització del Google Drive"
+msgstr "Autorització de Google Drive"
 
 #: authorize.cpp:129
 #, kde-format
@@ -208,12 +208,12 @@ msgstr "Construeix una cadena d'etiquetes combinades."
 #: gswindow.cpp:116
 #, kde-format
 msgid "Google Drive Export"
-msgstr "Exportador al Google Drive"
+msgstr "Exportador cap a Google Drive"
 
 #: gswindow.cpp:117
 #, kde-format
 msgid "A tool to export images to Google Drive"
-msgstr "Una eina per a exportar les imatges al Google Drive"
+msgstr "Una eina per a exportar les imatges a Google Drive"
 
 #: gswindow.cpp:119
 #, kde-format
@@ -248,7 +248,7 @@ msgstr "Desenvolupador"
 #: gswindow.cpp:132
 #, kde-format
 msgid "Export to Google Drive"
-msgstr "Exporta al Google Drive"
+msgstr "Exporta cap a Google Drive"
 
 #: gswindow.cpp:134 gswindow.cpp:219
 #, kde-format
@@ -258,18 +258,18 @@ msgstr "Comença la pujada"
 #: gswindow.cpp:135
 #, kde-format
 msgid "Start upload to Google Drive"
-msgstr "Comença la pujada al Google Drive"
+msgstr "Comença la pujada a Google Drive"
 
 #: gswindow.cpp:186
 #, kde-format
 msgid "Google Photos/PicasaWeb Export"
-msgstr "Exporta al Google Photos/PicasaWeb"
+msgstr "Exporta cap a Google Photos/PicasaWeb"
 
 #: gswindow.cpp:187
 #, kde-format
 msgid "A tool to export image collections to Google Photos/Picasa web service."
 msgstr ""
-"Una eina per a exportar les col·leccions d'imatges al servei web del Google "
+"Una eina per a exportar les col·leccions d'imatges al servei web de Google "
 "Photos/Picasa."
 
 #: gswindow.cpp:189
@@ -310,17 +310,17 @@ msgstr "Jens Mueller"
 #: gswindow.cpp:217
 #, kde-format
 msgid "Export to Google Photos/PicasaWeb Service"
-msgstr "Exporta al servei web del Google Photos/PicasaWeb"
+msgstr "Exporta cap al servei web de Google Photos/PicasaWeb"
 
 #: gswindow.cpp:220
 #, kde-format
 msgid "Start upload to Google Photos/PicasaWeb Service"
-msgstr "Comença la pujada al servei web del Google Photos/PicasaWeb"
+msgstr "Comença la pujada al servei web de Google Photos/PicasaWeb"
 
 #: gswindow.cpp:226
 #, kde-format
 msgid "Import from Google Photos/PicasaWeb Service"
-msgstr "Importa des del servei web del Google Photos/PicasaWeb"
+msgstr "Importa des del servei web de Google Photos/PicasaWeb"
 
 #: gswindow.cpp:228
 #, kde-format
@@ -330,12 +330,12 @@ msgstr "Comença la baixada"
 #: gswindow.cpp:229
 #, kde-format
 msgid "Start download from Google Photos/PicasaWeb service"
-msgstr "Comença la baixada des del servei web del Google Photos/PicasaWeb"
+msgstr "Comença la baixada des del servei web de Google Photos/PicasaWeb"
 
 #: gswindow.cpp:428 gswindow.cpp:467 gswindow.cpp:577
 #, kde-format
 msgid "Google Photos/PicasaWeb Call Failed: %1\n"
-msgstr "La crida al Google Photos/PicasaWeb ha fallat: %1\n"
+msgstr "La crida a Google Photos/PicasaWeb ha fallat: %1\n"
 
 #: gswindow.cpp:448 gswindow.cpp:527 gswindow.cpp:758
 #, kde-format
@@ -345,12 +345,12 @@ msgstr "%v / %m"
 #: gswindow.cpp:531
 #, kde-format
 msgid "Google Photo Export"
-msgstr "Exporta al Google Photo"
+msgstr "Exporta cap a Google Photo"
 
 #: gswindow.cpp:549
 #, kde-format
 msgid "Google Drive Call Failed: %1\n"
-msgstr "La crida al Google Drive ha fallat: %1\n"
+msgstr "La crida a Google Drive ha fallat: %1\n"
 
 #: gswindow.cpp:653
 #, kde-format
@@ -396,7 +396,7 @@ msgstr "Cancel·la"
 #: gswindow.cpp:762
 #, kde-format
 msgid "Google Drive export"
-msgstr "Exportador al Google Drive"
+msgstr "Exportador cap a Google Drive"
 
 #: gswindow.cpp:1015
 #, kde-format
@@ -444,7 +444,7 @@ msgid ""
 "Google Drive call failed:\n"
 "%1"
 msgstr ""
-"La crida al Google Drive ha fallat:\n"
+"La crida a Google Drive ha fallat:\n"
 "%1"
 
 #: gswindow.cpp:1250
@@ -453,7 +453,7 @@ msgid ""
 "Google Photos/PicasaWeb call failed:\n"
 "%1"
 msgstr ""
-"La crida al Google Photos/PicasaWeb ha fallat:\n"
+"La crida a Google Photos/PicasaWeb ha fallat:\n"
 "%1"
 
 #: gswindow.cpp:1283
@@ -500,7 +500,7 @@ msgid ""
 "These are security and privacy settings for the new Google Photos/PicasaWeb "
 "album."
 msgstr ""
-"Aquest és l'arranjament de seguretat i privadesa del nou àlbum del Google "
+"Aquesta és la configuració de seguretat i privadesa de l'àlbum nou de Google "
 "Photos/PicasaWeb."
 
 #: newalbumdlg.cpp:57
@@ -513,7 +513,7 @@ msgstr "Públic"
 #, kde-format
 msgid "Public album is listed on your public Google Photos/PicasaWeb page."
 msgstr ""
-"Un àlbum públic es llista a la vostra pàgina pública del Google Photos/"
+"Un àlbum públic es llista a la vostra pàgina pública de Google Photos/"
 "PicasaWeb."
 
 #: newalbumdlg.cpp:60
@@ -546,17 +546,17 @@ msgstr "Privadesa:"
 #: plugin_googleservices.cpp:100
 #, kde-format
 msgid "Export to &Google Drive..."
-msgstr "Exporta al &Google Drive..."
+msgstr "Exporta cap a &Google Drive..."
 
 #: plugin_googleservices.cpp:110
 #, kde-format
 msgid "Export to &Google Photos/PicasaWeb..."
-msgstr "Exporta al &Google Photos/PicasaWeb..."
+msgstr "Exporta cap a &Google Photos/PicasaWeb..."
 
 #: plugin_googleservices.cpp:120
 #, kde-format
 msgid "Import from &Google Photos/PicasaWeb..."
-msgstr "Importa des del &Google Photos/PicasaWeb..."
+msgstr "Importa des de &Google Photos/PicasaWeb..."
 
 #: replacedialog.cpp:112
 #, kde-format

@@ -4,14 +4,14 @@
 # version 3 or later versions approved by the membership of KDE e.V.
 #
 # Josep M. Ferrer <txemaq@gmail.com>, 2014, 2015, 2016, 2021.
-# Antoni Bella Pérez <antonibella5@yahoo.com>, 2015, 2017, 2020.
+# Antoni Bella Pérez <antonibella5@yahoo.com>, 2015, 2017, 2020, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: kipi-plugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2021-10-31 22:17+0100\n"
-"Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
+"PO-Revision-Date: 2023-02-22 21:38+0100\n"
+"Last-Translator: Antoni Bella Pérez <antonibella5@yahoo.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
-"X-Generator: Lokalize 20.12.0\n"
+"X-Generator: Lokalize 22.12.2\n"
 
 #: authorize.cpp:116
 #, kde-format
@@ -209,7 +209,7 @@ msgstr "Construïx una cadena d'etiquetes combinades."
 #: gswindow.cpp:116
 #, kde-format
 msgid "Google Drive Export"
-msgstr "Exportador a Google Drive"
+msgstr "Exportador cap a Google Drive"
 
 #: gswindow.cpp:117
 #, kde-format
@@ -249,7 +249,7 @@ msgstr "Desenvolupador"
 #: gswindow.cpp:132
 #, kde-format
 msgid "Export to Google Drive"
-msgstr "Exporta a Google Drive"
+msgstr "Exporta cap a Google Drive"
 
 #: gswindow.cpp:134 gswindow.cpp:219
 #, kde-format
@@ -264,7 +264,7 @@ msgstr "Comença la pujada a Google Drive"
 #: gswindow.cpp:186
 #, kde-format
 msgid "Google Photos/PicasaWeb Export"
-msgstr "Exporta a Google Photos/PicasaWeb"
+msgstr "Exporta cap a Google Photos/PicasaWeb"
 
 #: gswindow.cpp:187
 #, kde-format
@@ -311,7 +311,7 @@ msgstr "Jens Mueller"
 #: gswindow.cpp:217
 #, kde-format
 msgid "Export to Google Photos/PicasaWeb Service"
-msgstr "Exporta al servei web de Google Photos/PicasaWeb"
+msgstr "Exporta cap al servei web de Google Photos/PicasaWeb"
 
 #: gswindow.cpp:220
 #, kde-format
@@ -346,7 +346,7 @@ msgstr "%v / %m"
 #: gswindow.cpp:531
 #, kde-format
 msgid "Google Photo Export"
-msgstr "Exporta a Google Photo"
+msgstr "Exporta cap a Google Photo"
 
 #: gswindow.cpp:549
 #, kde-format
@@ -398,7 +398,7 @@ msgstr "Cancel·la"
 #: gswindow.cpp:762
 #, kde-format
 msgid "Google Drive export"
-msgstr "Exportador a Google Drive"
+msgstr "Exportador cap a Google Drive"
 
 #: gswindow.cpp:1015
 #, kde-format
@@ -502,7 +502,7 @@ msgid ""
 "These are security and privacy settings for the new Google Photos/PicasaWeb "
 "album."
 msgstr ""
-"Este és la configuració de seguretat i privadesa del nou àlbum de Google "
+"Esta és la configuració de seguretat i privadesa de l'àlbum nou de Google "
 "Photos/PicasaWeb."
 
 #: newalbumdlg.cpp:57
@@ -548,12 +548,12 @@ msgstr "Privadesa:"
 #: plugin_googleservices.cpp:100
 #, kde-format
 msgid "Export to &Google Drive..."
-msgstr "Exporta a &Google Drive..."
+msgstr "Exporta cap a &Google Drive..."
 
 #: plugin_googleservices.cpp:110
 #, kde-format
 msgid "Export to &Google Photos/PicasaWeb..."
-msgstr "Exporta a &Google Photos/PicasaWeb..."
+msgstr "Exporta cap a &Google Photos/PicasaWeb..."
 
 #: plugin_googleservices.cpp:120
 #, kde-format

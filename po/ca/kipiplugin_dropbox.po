@@ -4,13 +4,13 @@
 # version 3 or later versions approved by the membership of KDE e.V.
 #
 # Josep M. Ferrer <txemaq@gmail.com>, 2013, 2014, 2015, 2016.
-# Antoni Bella Pérez <antonibella5@yahoo.com>, 2015, 2017, 2020.
+# Antoni Bella Pérez <antonibella5@yahoo.com>, 2015, 2017, 2020, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: kipi-plugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2020-07-21 14:18+0200\n"
+"PO-Revision-Date: 2023-02-22 21:30+0100\n"
 "Last-Translator: Antoni Bella Pérez <antonibella5@yahoo.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
-"X-Generator: Lokalize 20.04.3\n"
+"X-Generator: Lokalize 22.12.2\n"
 
 #: dbtalker.cpp:317
 #, kde-format
@@ -39,7 +39,7 @@ msgstr "Ha fallat en llistar les carpetes"
 #: dbwindow.cpp:70
 #, kde-format
 msgid "Export to Dropbox"
-msgstr "Exporta al Dropbox"
+msgstr "Exporta cap a Dropbox"
 
 #: dbwindow.cpp:72
 #, kde-format
@@ -49,17 +49,17 @@ msgstr "Comença la pujada"
 #: dbwindow.cpp:73
 #, kde-format
 msgid "Start upload to Dropbox"
-msgstr "Comença la pujada al Dropbox"
+msgstr "Comença la pujada a Dropbox"
 
 #: dbwindow.cpp:92
 #, kde-format
 msgid "Dropbox Export"
-msgstr "Exportació al Dropbox"
+msgstr "Exportació cap a Dropbox"
 
 #: dbwindow.cpp:93
 #, kde-format
 msgid "A tool to export images to Dropbox"
-msgstr "Una eina per a exportar imatges al Dropbox"
+msgstr "Una eina per a exportar imatges cap a Dropbox"
 
 #: dbwindow.cpp:95
 #, kde-format
@@ -107,7 +107,7 @@ msgstr "%v / %m"
 #: dbwindow.cpp:295
 #, kde-format
 msgid "Dropbox export"
-msgstr "Exportació al Dropbox"
+msgstr "Exportació cap a Dropbox"
 
 #: dbwindow.cpp:328
 #, kde-format
@@ -121,7 +121,7 @@ msgid ""
 "%1\n"
 "Do you want to continue?"
 msgstr ""
-"Ha fallat en pujar la fotografia al Dropbox.\n"
+"Ha fallat en pujar la fotografia a Dropbox.\n"
 "%1\n"
 "Voleu continuar?"
 
@@ -131,7 +131,7 @@ msgid ""
 "Dropbox call failed:\n"
 "%1"
 msgstr ""
-"La crida al Dropbox ha fallat:\n"
+"La crida a Dropbox ha fallat:\n"
 "%1"
 
 #. i18n: ectx: Menu (Export)
@@ -149,7 +149,7 @@ msgstr "Barra d'eines principal"
 #: plugin_dropbox.cpp:90
 #, kde-format
 msgid "Export to &Dropbox..."
-msgstr "Exporta al &Dropbox..."
+msgstr "Exporta cap a &Dropbox..."
 
 #~ msgid "Authorize Dropbox"
 #~ msgstr "Autoritza al Dropbox"

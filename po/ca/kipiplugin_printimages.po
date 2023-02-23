@@ -5,20 +5,20 @@
 #
 # Joan Maspons <joanmaspons@gmail.com>, 2009.
 # Josep M. Ferrer <txemaq@gmail.com>, 2010, 2012, 2014, 2015, 2016, 2017, 2019.
-# Antoni Bella Pérez <antonibella5@yahoo.com>, 2012, 2013, 2014, 2015, 2017, 2020.
+# Antoni Bella Pérez <antonibella5@yahoo.com>, 2012, 2013, 2014, 2015, 2017, 2020, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: kipi-plugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2021-03-28 16:08+0000\n"
-"PO-Revision-Date: 2020-07-21 14:28+0200\n"
+"PO-Revision-Date: 2023-02-22 21:50+0100\n"
 "Last-Translator: Antoni Bella Pérez <antonibella5@yahoo.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 20.04.3\n"
+"X-Generator: Lokalize 22.12.2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -119,7 +119,7 @@ msgstr "Fotografia anterior"
 #: ui/croppage.ui:90
 #, kde-format
 msgid "<< Pr&evious"
-msgstr "<<Ant&erior"
+msgstr "<< Ant&erior"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, BtnCropNext)
 #. i18n: ectx: property (whatsThis), widget (QPushButton, BtnCropNext)
@@ -299,7 +299,7 @@ msgstr "Imprimeix a «gimp»"
 #: ui/photopage.ui:209
 #, kde-format
 msgid "Page settings"
-msgstr "Arranjament de la pàgina"
+msgstr "Configuració de la pàgina"
 
 #. i18n: ectx: property (text), widget (QPushButton, mLeftButton)
 #. i18n: ectx: property (text), widget (QToolButton, BtnPreviewPageDown)
@@ -350,7 +350,7 @@ msgstr "Noms dels fitxers d'imatge"
 #: ui/photopage.ui:457
 #, kde-format
 msgid "Exif date-time"
-msgstr "Data-hora EXIF"
+msgstr "Data-hora Exif"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_captions)
 #: ui/photopage.ui:462
@@ -409,7 +409,7 @@ msgstr "Mida:"
 #: ui/printoptionspage.ui:14
 #, kde-format
 msgid "Image Settings"
-msgstr "Paràmetres de la imatge"
+msgstr "Configuració de la imatge"
 
 #. i18n: ectx: property (title), widget (QGroupBox, mGroupImage)
 #: ui/printoptionspage.ui:83

@@ -4,20 +4,20 @@
 # version 3 or later versions approved by the membership of KDE e.V.
 #
 # Josep M. Ferrer <txemaq@gmail.com>, 2011, 2013, 2015, 2016, 2020.
-# Antoni Bella Pérez <antonibella5@yahoo.com>, 2012, 2014, 2015, 2017, 2020.
+# Antoni Bella Pérez <antonibella5@yahoo.com>, 2012, 2014, 2015, 2017, 2020, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: kipi-plugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2020-11-28 19:17+0100\n"
-"Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
+"PO-Revision-Date: 2023-02-22 21:44+0100\n"
+"Last-Translator: Antoni Bella Pérez <antonibella5@yahoo.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Lokalize 22.12.2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -36,7 +36,7 @@ msgstr "Barra d'eines principal"
 #: plugin_wikimedia.cpp:105
 #, kde-format
 msgid "Export to MediaWiki..."
-msgstr "Exporta al MediaWiki..."
+msgstr "Exporta cap a MediaWiki..."
 
 #: wmtalker.cpp:125
 #, kde-format
@@ -68,7 +68,7 @@ msgstr "Selecciona una imatge"
 msgid ""
 "This is a clickable link to open the MediaWiki home page in a web browser."
 msgstr ""
-"Aquest és un enllaç que podeu clicar per a obrir la pàgina inicial del "
+"Aquest és un enllaç que podeu clicar per a obrir la pàgina inicial de "
 "MediaWiki en un navegador web."
 
 #: wmwidget.cpp:189
@@ -119,7 +119,7 @@ msgstr "Compte"
 #: wmwidget.cpp:274
 #, kde-format
 msgid "This is the login form to your MediaWiki account."
-msgstr "Aquest és el formulari de connexió al vostre compte del MediaWiki."
+msgstr "Aquest és el formulari de connexió al vostre compte de MediaWiki."
 
 #: wmwidget.cpp:281
 #, kde-format
@@ -442,7 +442,7 @@ msgstr "Configuració de la pujada"
 #: wmwindow.cpp:114
 #, kde-format
 msgid "Export to MediaWiki"
-msgstr "Exporta al MediaWiki"
+msgstr "Exporta cap a MediaWiki"
 
 #: wmwindow.cpp:116
 #, kde-format
@@ -452,12 +452,12 @@ msgstr "Comença la pujada"
 #: wmwindow.cpp:117
 #, kde-format
 msgid "Start upload to MediaWiki"
-msgstr "Comença la pujada al MediaWiki"
+msgstr "Comença la pujada a MediaWiki"
 
 #: wmwindow.cpp:124 wmwindow.cpp:354
 #, kde-format
 msgid "MediaWiki export"
-msgstr "Exportador al MediaWiki"
+msgstr "Exportador cap a MediaWiki"
 
 #: wmwindow.cpp:125
 #, kde-format
@@ -465,7 +465,7 @@ msgid ""
 "A tool to export image collection to a MediaWiki installation.\n"
 "Using libmediawiki version %1"
 msgstr ""
-"Una eina per a exportar col·leccions d'imatges a una instal·lació del "
+"Una eina per a exportar col·leccions d'imatges a una instal·lació de "
 "MediaWiki.\n"
 "S'empra la versió %1 de la «libmediawiki»"
 
