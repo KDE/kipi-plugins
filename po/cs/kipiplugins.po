@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: kipiplugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2020-01-18 03:13+0100\n"
-"PO-Revision-Date: 2023-01-25 09:12+0100\n"
+"PO-Revision-Date: 2023-02-24 11:07+0100\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 22.12.1\n"
+"X-Generator: Lokalize 22.12.2\n"
 
 #: libkipiplugins/dialogs/kpbatchprogressdialog.cpp:113
 #, kde-format
@@ -230,7 +230,7 @@ msgstr "O aplikaci %1"
 #: libkipiplugins/tools/kpaboutdata.h:54
 #, kde-format
 msgid "Copyright 2003-2016, KDE developers team"
-msgstr "Copyright 2003-2016, Tým vývojářů KDE"
+msgstr "Autorská práva 2003-2016, Tým vývojářů KDE"
 
 #: libkipiplugins/tools/kputil.cpp:299
 #, kde-format
