@@ -42,7 +42,7 @@ msgstr "Barra d'eines principal"
 #: plugin_smug.cpp:98
 #, kde-format
 msgid "Export to &SmugMug..."
-msgstr "Exporta cap a &SmugMug..."
+msgstr "Exporta a &SmugMug..."
 
 #: plugin_smug.cpp:109
 #, kde-format
@@ -384,7 +384,7 @@ msgstr "Comença la baixada des del servei web de SmugMug"
 #: smugwindow.cpp:95
 #, kde-format
 msgid "Export to SmugMug Web Service"
-msgstr "Exporta cap al servei web de SmugMug"
+msgstr "Exporta al servei web de SmugMug"
 
 #: smugwindow.cpp:97
 #, kde-format
@@ -463,7 +463,7 @@ msgstr "Importa des de Smug"
 #: smugwindow.cpp:704
 #, kde-format
 msgid "Smug Export"
-msgstr "Exporta cap a Smug"
+msgstr "Exporta a Smug"
 
 #: smugwindow.cpp:789 smugwindow.cpp:803
 #, kde-format

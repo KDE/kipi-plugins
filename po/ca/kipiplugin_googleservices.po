@@ -248,7 +248,7 @@ msgstr "Desenvolupador"
 #: gswindow.cpp:132
 #, kde-format
 msgid "Export to Google Drive"
-msgstr "Exporta cap a Google Drive"
+msgstr "Exporta a Google Drive"
 
 #: gswindow.cpp:134 gswindow.cpp:219
 #, kde-format
@@ -263,7 +263,7 @@ msgstr "Comença la pujada a Google Drive"
 #: gswindow.cpp:186
 #, kde-format
 msgid "Google Photos/PicasaWeb Export"
-msgstr "Exporta cap a Google Photos/PicasaWeb"
+msgstr "Exporta a Google Photos/PicasaWeb"
 
 #: gswindow.cpp:187
 #, kde-format
@@ -310,7 +310,7 @@ msgstr "Jens Mueller"
 #: gswindow.cpp:217
 #, kde-format
 msgid "Export to Google Photos/PicasaWeb Service"
-msgstr "Exporta cap al servei web de Google Photos/PicasaWeb"
+msgstr "Exporta al servei web de Google Photos/PicasaWeb"
 
 #: gswindow.cpp:220
 #, kde-format
@@ -345,7 +345,7 @@ msgstr "%v / %m"
 #: gswindow.cpp:531
 #, kde-format
 msgid "Google Photo Export"
-msgstr "Exporta cap a Google Photo"
+msgstr "Exporta a Google Photo"
 
 #: gswindow.cpp:549
 #, kde-format
@@ -546,12 +546,12 @@ msgstr "Privadesa:"
 #: plugin_googleservices.cpp:100
 #, kde-format
 msgid "Export to &Google Drive..."
-msgstr "Exporta cap a &Google Drive..."
+msgstr "Exporta a &Google Drive..."
 
 #: plugin_googleservices.cpp:110
 #, kde-format
 msgid "Export to &Google Photos/PicasaWeb..."
-msgstr "Exporta cap a &Google Photos/PicasaWeb..."
+msgstr "Exporta a &Google Photos/PicasaWeb..."
 
 #: plugin_googleservices.cpp:120
 #, kde-format

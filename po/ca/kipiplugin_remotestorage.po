@@ -65,7 +65,7 @@ msgstr "<no seleccionat>"
 #: KioExportWindow.cpp:64
 #, kde-format
 msgid "Export to Remote Storage"
-msgstr "Exportació cap a un emmagatzematge remot"
+msgstr "Exportació a un emmagatzematge remot"
 
 #: KioExportWindow.cpp:67
 #, kde-format
@@ -80,7 +80,7 @@ msgstr "Inicia l'exportació a la destinació especificada"
 #: KioExportWindow.cpp:84
 #, kde-format
 msgid "Export to remote storage"
-msgstr "Exporta cap a un emmagatzematge remot"
+msgstr "Exporta a un emmagatzematge remot"
 
 #: KioExportWindow.cpp:85
 #, kde-format
@@ -183,7 +183,7 @@ msgstr "Barra d'eines principal"
 #: plugin_remotestorage.cpp:93
 #, kde-format
 msgid "Export to remote storage..."
-msgstr "Exporta cap a un emmagatzematge remot..."
+msgstr "Exporta a un emmagatzematge remot..."
 
 #: plugin_remotestorage.cpp:105
 #, kde-format

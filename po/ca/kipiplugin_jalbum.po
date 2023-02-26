@@ -82,7 +82,7 @@ msgstr "Arranjament"
 #: jalbumwindow.cpp:124 jalbumwindow.cpp:127
 #, kde-format
 msgid "jAlbum Export"
-msgstr "Exporta cap al jAlbum"
+msgstr "Exporta al jAlbum"
 
 #: jalbumwindow.cpp:128
 #, kde-format
@@ -155,4 +155,4 @@ msgstr "Barra d'eines principal"
 #: plugin_jalbum.cpp:105
 #, kde-format
 msgid "Export to &jAlbum"
-msgstr "Exporta cap al &jAlbum"
+msgstr "Exporta al &jAlbum"

@@ -402,7 +402,7 @@ msgid ""
 "<b><h2><a href='http://www.flickr.com'><font color=\"#0065DE\">flick</"
 "font><font color=\"#FF0084\">r</font></a> Export</h2></b>"
 msgstr ""
-"<b><h2>Exportació cap a <a href='http://www.flickr.com'><font color=\"#0065DE"
+"<b><h2>Exportació a <a href='http://www.flickr.com'><font color=\"#0065DE"
 "\">flick</font><font color=\"#FF0084\">r</font></a></h2></b>"
 
 #: flickrwidget.cpp:484
@@ -428,7 +428,7 @@ msgstr "Inici de la pujada"
 #: flickrwindow.cpp:131
 #, kde-format
 msgid "Flickr/23 Export"
-msgstr "Exporta cap a Flickr/23"
+msgstr "Exporta a Flickr/23"
 
 #: flickrwindow.cpp:132
 #, kde-format
@@ -482,7 +482,7 @@ msgstr "Només per al Photostream"
 #: flickrwindow.cpp:741
 #, kde-format
 msgid "Flickr Export"
-msgstr "Exporta cap a Flickr"
+msgstr "Exporta a Flickr"
 
 #: flickrwindow.cpp:759
 #, kde-format

@@ -170,7 +170,7 @@ msgstr "Canvia de mida amb la qualitat del JPEG:"
 #: piwigowindow.cpp:231 piwigowindow.cpp:235
 #, kde-format
 msgid "Piwigo Export"
-msgstr "Exportació cap a Piwigo"
+msgstr "Exportació a Piwigo"
 
 #: piwigowindow.cpp:236
 #, kde-format
@@ -300,4 +300,4 @@ msgstr ""
 #: plugin_piwigo.cpp:97
 #, kde-format
 msgid "Export to &Piwigo..."
-msgstr "Exporta cap a &Piwigo..."
+msgstr "Exporta a &Piwigo..."

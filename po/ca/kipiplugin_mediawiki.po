@@ -36,7 +36,7 @@ msgstr "Barra d'eines principal"
 #: plugin_wikimedia.cpp:105
 #, kde-format
 msgid "Export to MediaWiki..."
-msgstr "Exporta cap a MediaWiki..."
+msgstr "Exporta a MediaWiki..."
 
 #: wmtalker.cpp:125
 #, kde-format
@@ -442,7 +442,7 @@ msgstr "Configuració de la pujada"
 #: wmwindow.cpp:114
 #, kde-format
 msgid "Export to MediaWiki"
-msgstr "Exporta cap a MediaWiki"
+msgstr "Exporta a MediaWiki"
 
 #: wmwindow.cpp:116
 #, kde-format

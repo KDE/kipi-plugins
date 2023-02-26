@@ -36,7 +36,7 @@ msgstr "Barra d'eines principal"
 #: plugin_yandexfotki.cpp:91
 #, kde-format
 msgid "Export to &Yandex.Fotki..."
-msgstr "Exporta cap a &Yandex.Fotki..."
+msgstr "Exporta a &Yandex.Fotki..."
 
 #: yfalbumdialog.cpp:60
 #, kde-format
