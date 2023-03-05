@@ -22,7 +22,7 @@ msgstr ""
 #: authorize.cpp:116
 #, kde-format
 msgid "Google Drive Authorization"
-msgstr "الاستيثاق مع «غوغل درايڤ»"
+msgstr "الاستيثاق مع «غوغل درايف»"
 
 #: authorize.cpp:129
 #, kde-format
@@ -202,13 +202,13 @@ msgstr ""
 #: gswindow.cpp:116
 #, kde-format
 msgid "Google Drive Export"
-msgstr "مصدّر «غوغل درايڤ»"
+msgstr "مصدّر «غوغل درايف»"
 
 #: gswindow.cpp:117
 #, fuzzy, kde-format
 #| msgid "A Kipi-plugin to export images to Google Drive"
 msgid "A tool to export images to Google Drive"
-msgstr "ملحقة «وك‌م‌ص» لتصدير الصّور إلى غوغل درايڤ"
+msgstr "ملحقة «وك‌م‌ص» لتصدير الصّور إلى غوغل درايف"
 
 #: gswindow.cpp:119
 #, kde-format
@@ -251,7 +251,7 @@ msgstr "ابدأ الرّفع"
 #: gswindow.cpp:135
 #, kde-format
 msgid "Start upload to Google Drive"
-msgstr "ابدأ الرّفع إلى «غوغل درايڤ»"
+msgstr "ابدأ الرّفع إلى «غوغل درايف»"
 
 #: gswindow.cpp:186
 #, kde-format
@@ -332,7 +332,7 @@ msgstr "%v / %m"
 #, fuzzy, kde-format
 #| msgid "Google Drive Export"
 msgid "Google Photo Export"
-msgstr "مصدّر «غوغل درايڤ»"
+msgstr "مصدّر «غوغل درايف»"
 
 #: gswindow.cpp:549
 #, kde-format
@@ -380,7 +380,7 @@ msgstr "ألغِ"
 #: gswindow.cpp:762
 #, kde-format
 msgid "Google Drive export"
-msgstr "مصدّر «غوغل درايڤ»"
+msgstr "مصدّر «غوغل درايف»"
 
 #: gswindow.cpp:1015
 #, kde-format
@@ -520,7 +520,7 @@ msgstr "الخصوصيّة:"
 #: plugin_googleservices.cpp:100
 #, kde-format
 msgid "Export to &Google Drive..."
-msgstr "صدّر إلى «&غوغل درايڤ»..."
+msgstr "صدّر إلى «&غوغل درايف»..."
 
 #: plugin_googleservices.cpp:110
 #, kde-format
