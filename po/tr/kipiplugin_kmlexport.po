@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: extragear-graphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2023-01-18 22:32+0300\n"
+"PO-Revision-Date: 2023-03-07 20:30+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.1\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #: kmlexport.cpp:90
 #, kde-format
@@ -150,7 +150,7 @@ msgstr "GoogleEar&th tarafından kullanılan yerel veya web hedefi"
 #: kmlwindow.cpp:92
 #, kde-format
 msgid "Web target used by GoogleMaps"
-msgstr "GoogleMaps tarafından kullanılan web hedefleri"
+msgstr "Google Haritalar tarafından kullanılan web hedefleri"
 
 #: kmlwindow.cpp:93
 #, kde-format
@@ -158,8 +158,9 @@ msgid ""
 "When using GoogleMaps, all images must have complete URLs, icons are "
 "squared, and when drawing a track, only line track is exported."
 msgstr ""
-"GoogleMaps kullanırken, tüm görseller tam adres içermelidir. Simgeler kare "
-"olur ve bir yol çizerken yalnızca çizgi yol aktarılır."
+"Google Haritalar kullanırken, tüm görsellerin tam URL'leri olmalıdır, "
+"simgeler kare şeklinde olmalıdır ve bir iz çizilirken yalnızca çizgi izi "
+"dışa aktarılır."
 
 #: kmlwindow.cpp:104
 #, kde-format
