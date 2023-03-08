@@ -126,7 +126,7 @@ msgstr "Punt"
 #: kmlwindow.cpp:68 kmlwindow.cpp:284
 #, kde-format
 msgid "KML Export"
-msgstr "Exporta a KML"
+msgstr "Exporta cap a KML"
 
 #: kmlwindow.cpp:71
 #, kde-format
@@ -488,4 +488,4 @@ msgstr "Mantenidor"
 #: plugin_kmlexport.cpp:92
 #, kde-format
 msgid "Export to KML..."
-msgstr "Exporta a KML..."
+msgstr "Exporta cap a KML..."

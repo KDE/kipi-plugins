@@ -74,7 +74,7 @@ msgstr "Puja anònimament"
 #: imgurwindow.cpp:116
 #, kde-format
 msgid "Export to imgur.com"
-msgstr "Exporta a imgur.com"
+msgstr "Exporta cap a imgur.com"
 
 #: imgurwindow.cpp:119
 #, kde-format
@@ -175,4 +175,4 @@ msgstr "Barra d'eines principal"
 #: plugin_imgur.cpp:102
 #, kde-format
 msgid "Export to &Imgur..."
-msgstr "Exporta a &Imgur..."
+msgstr "Exporta cap a &Imgur..."

@@ -66,7 +66,7 @@ msgstr "Crea una galeria nova"
 #: imageshackwindow.cpp:81
 #, kde-format
 msgid "Export to Imageshack"
-msgstr "Exporta a Imageshack"
+msgstr "Exporta cap a Imageshack"
 
 #: imageshackwindow.cpp:89
 #, kde-format
@@ -157,4 +157,4 @@ msgstr "Barra d'eines principal"
 #: plugin_imageshack.cpp:103
 #, kde-format
 msgid "Export to &Imageshack..."
-msgstr "Exporta a &Imageshack..."
+msgstr "Exporta cap a &Imageshack..."

@@ -42,7 +42,7 @@ msgstr "Barra d'eines principal"
 #: plugin_smug.cpp:98
 #, kde-format
 msgid "Export to &SmugMug..."
-msgstr "Exporta a &SmugMug..."
+msgstr "Exporta cap a &SmugMug..."
 
 #: plugin_smug.cpp:109
 #, kde-format
@@ -463,7 +463,7 @@ msgstr "Importa a Smug"
 #: smugwindow.cpp:704
 #, kde-format
 msgid "Smug Export"
-msgstr "Exporta a Smug"
+msgstr "Exporta cap a Smug"
 
 #: smugwindow.cpp:789 smugwindow.cpp:803
 #, kde-format

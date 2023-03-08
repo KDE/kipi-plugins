@@ -127,7 +127,7 @@ msgstr "S'ha produït un error"
 #: fbwindow.cpp:109
 #, kde-format
 msgid "Export to Facebook Web Service"
-msgstr "Exporta al servei web Facebook"
+msgstr "Exporta cap al servei web Facebook"
 
 #: fbwindow.cpp:111
 #, kde-format
@@ -142,7 +142,7 @@ msgstr "Comença la pujada al servei web Facebook"
 #: fbwindow.cpp:140
 #, kde-format
 msgid "Facebook Export"
-msgstr "Exporta a Facebook"
+msgstr "Exporta cap a Facebook"
 
 #: fbwindow.cpp:141
 #, kde-format
@@ -214,7 +214,7 @@ msgstr "%v / %m"
 #: fbwindow.cpp:543
 #, kde-format
 msgid "Facebook export"
-msgstr "Exporta a Facebook"
+msgstr "Exporta cap a Facebook"
 
 #: fbwindow.cpp:648 fbwindow.cpp:663
 #, kde-format
@@ -255,4 +255,4 @@ msgstr "Barra d'eines principal"
 #: plugin_facebook.cpp:94
 #, kde-format
 msgid "Export to &Facebook..."
-msgstr "Exporta a &Facebook..."
+msgstr "Exporta cap a &Facebook..."
