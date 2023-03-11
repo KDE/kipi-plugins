@@ -71,7 +71,7 @@
   <summary xml:lang="zh-TW">適用於 KDE 應用程式用來匯出影像的外掛程式</summary>
   <description>
     <p>These plugins export image to various services such as Mediawiki or Facebook or a local album.</p>
-    <p xml:lang="ca">Aquests connectors exporten imatges a diversos serveis com Mediawiki, Facebook o un àlbum local.</p>
+    <p xml:lang="ca">Aquests connectors exporten imatges a diversos serveis com el Mediawiki, el Facebook o un àlbum local.</p>
     <p xml:lang="ca-valencia">Estos connectors exporten imatges a diversos serveis com MediaWiki, Facebook o un àlbum local.</p>
     <p xml:lang="de">Mit diesen Modulen können Sie Bilder zu verschiedenen Diensten wie Mediawiki oder Facebook oder in ein lokales Album exportieren.</p>
     <p xml:lang="el">Αυτά τα πρόσθετα εξάγουν εικόνες σε διάφορες υπηρεσίες όπως το Mediawiki ή το Facebook ή ένα τοπικό άλμπουμ.</p>
@@ -102,7 +102,7 @@
     <p xml:lang="zh-CN">这些插件可将图像导出至如 Mediawiki、Facebook 或本地相册之类的各种服务上。</p>
     <p xml:lang="zh-TW">這些外掛程式能匯出圖片至各種服務（例如 MediaWiki、Facebook 等）或本機相簿。</p>
     <p>They add export features to Gwenview and Spectacle.</p>
-    <p xml:lang="ca">Afegeixen característiques d'exportació al Gwenview i l'Spectacle.</p>
+    <p xml:lang="ca">Afegeixen funcionalitats d'exportació al Gwenview i l'Spectacle.</p>
     <p xml:lang="ca-valencia">Afigen característiques d'exportació a Gwenview i Spectacle.</p>
     <p xml:lang="de">Mit den Modulen erhalten Gwenview und Spectacle Funktionen zum Export.</p>
     <p xml:lang="el">Προσθέτουν λειτουργίες εξαγωγής σε Gwenview και Spectacle.</p>
@@ -139,7 +139,7 @@
   <screenshots>
     <screenshot type="default">
       <caption>KIPI Plugins as used in Gwenview.</caption>
-      <caption xml:lang="ca">Connectors KIPI com s'usen en el Gwenview.</caption>
+      <caption xml:lang="ca">Connectors KIPI com s'usen al Gwenview.</caption>
       <caption xml:lang="ca-valencia">Connectors KIPI com s'utilitzen en Gwenview.</caption>
       <caption xml:lang="de">KIPI-Module in Gwenview.</caption>
       <caption xml:lang="el">KIPI πρόσθετα όπως χρησιμοποιούνται στο Gwenview.</caption>
