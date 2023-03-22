@@ -1,4 +1,6 @@
 # Translation of kipiplugin_printimages into esperanto.
+# Copyright (C) 2009 Free Software Foundation, Inc.
+# This file is distributed under the same license as the kipi-plugins package.
 # Axel Rousseau <axel@esperanto-jeunes.org>, 2009.
 #
 msgid ""
@@ -6,8 +8,8 @@ msgstr ""
 "Project-Id-Version: kipiplugin_printimages\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2021-03-28 16:08+0000\n"
-"PO-Revision-Date: 2009-11-15 12:06+0100\n"
-"Last-Translator: Axel Rousseau <axel@esperanto-jeunes.org>\n"
+"PO-Revision-Date: 2023-03-20 22:43+0100\n"
+"Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +22,7 @@ msgstr ""
 #: plugin/kipiplugin_printimagesui.rc:7
 #, kde-format
 msgid "&Image"
-msgstr "&Bildo"
+msgstr "B&ildo"
 
 #. i18n: ectx: ToolBar (mainToolBar)
 #: plugin/kipiplugin_printimagesui.rc:14
@@ -39,10 +41,9 @@ msgid "Print Assistant..."
 msgstr ""
 
 #: plugin/plugin_printimages.cpp:136
-#, fuzzy, kde-format
-#| msgid "Print Image"
+#, kde-format
 msgid "Print Images"
-msgstr "Printi bildon"
+msgstr ""
 
 #: plugin/plugin_printimages.cpp:136 plugin/plugin_printimages.cpp:156
 #, kde-format
@@ -76,32 +77,28 @@ msgstr ""
 #. i18n: ectx: property (toolTip), widget (QPushButton, BtnCropRotateLeft)
 #. i18n: ectx: property (whatsThis), widget (QPushButton, BtnCropRotateLeft)
 #: ui/croppage.ui:42 ui/croppage.ui:45
-#, fuzzy, kde-format
-#| msgid "&Rotate"
+#, kde-format
 msgid "Rotate photo to the left"
-msgstr "&Rotacii"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, BtnCropRotateLeft)
 #: ui/croppage.ui:48
-#, fuzzy, kde-format
-#| msgid "&Rotate"
+#, kde-format
 msgid "Rotate &left"
-msgstr "&Rotacii"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, BtnCropRotateRight)
 #. i18n: ectx: property (whatsThis), widget (QPushButton, BtnCropRotateRight)
 #: ui/croppage.ui:55 ui/croppage.ui:58
-#, fuzzy, kde-format
-#| msgid "&Rotate"
+#, kde-format
 msgid "Rotate photo to the right"
-msgstr "&Rotacii"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, BtnCropRotateRight)
 #: ui/croppage.ui:61
-#, fuzzy, kde-format
-#| msgid "&Rotate"
+#, kde-format
 msgid "Rotate &right"
-msgstr "&Rotacii"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, BtnCropPrev)
 #. i18n: ectx: property (whatsThis), widget (QPushButton, BtnCropPrev)
@@ -187,17 +184,15 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ui/customlayout.ui:122
-#, fuzzy, kde-format
-#| msgid "Row"
+#, kde-format
 msgid "Rows"
-msgstr "Linio"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ui/customlayout.ui:164
-#, fuzzy, kde-format
-#| msgid "Comments"
+#, kde-format
 msgid "Columns"
-msgstr "Komentoj"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: ui/customlayout.ui:227
@@ -219,18 +214,15 @@ msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_photoUnits)
 #: ui/customlayout.ui:314
-#, fuzzy, kde-format
-#| msgctxt "City name (optional, probably does not need a translation)"
-#| msgid "Hamm"
+#, kde-format
 msgid "mm"
-msgstr "Hamm"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_photoUnits)
 #: ui/customlayout.ui:319 wizard/wizard.cpp:2043
-#, fuzzy, kde-format
-#| msgid "Inches"
+#, kde-format
 msgid "inches"
-msgstr "Coloj"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_PrintAutoRotate)
 #. i18n: ectx: property (text), widget (QCheckBox, m_autorotate)
@@ -293,10 +285,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_pagesetup)
 #: ui/photopage.ui:209
-#, fuzzy, kde-format
-#| msgid "Image Settings"
+#, kde-format
 msgid "Page settings"
-msgstr "Bilda agordo"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, mLeftButton)
 #. i18n: ectx: property (text), widget (QToolButton, BtnPreviewPageDown)
@@ -339,10 +330,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_captions)
 #: ui/photopage.ui:452
-#, fuzzy, kde-format
-#| msgid "Image Settings"
+#, kde-format
 msgid "Image file names"
-msgstr "Bilda agordo"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_captions)
 #: ui/photopage.ui:457
@@ -579,10 +569,9 @@ msgid "Print assistant"
 msgstr ""
 
 #: wizard/wizard.cpp:166
-#, fuzzy, kde-format
-#| msgid "Print images"
+#, kde-format
 msgid "A tool to print images"
-msgstr "Presi bildojn"
+msgstr ""
 
 #: wizard/wizard.cpp:167
 #, kde-format
@@ -684,38 +673,3 @@ msgstr ""
 #, kde-format
 msgid "Empty output path."
 msgstr ""
-
-#~ msgctxt "NAME OF TRANSLATORS"
-#~ msgid "Your names"
-#~ msgstr "Axel Rousseau"
-
-#~ msgctxt "EMAIL OF TRANSLATORS"
-#~ msgid "Your emails"
-#~ msgstr "axel@esperanto-jeunes.org"
-
-#~ msgid "Developer and maintainer"
-#~ msgstr "Programisto kaj zorganto"
-
-#~ msgid "KIPI"
-#~ msgstr "KIPI"
-
-#~ msgid "Handbook"
-#~ msgstr "Manlibro"
-
-#~ msgid "1"
-#~ msgstr "1"
-
-#~ msgid "+"
-#~ msgstr "+"
-
-#~ msgid "-"
-#~ msgstr "-"
-
-#~ msgid "Filename"
-#~ msgstr "Dosiernomo"
-
-#~ msgid "Copies"
-#~ msgstr "Kopioj"
-
-#~ msgid "Down"
-#~ msgstr "Malsupren"
