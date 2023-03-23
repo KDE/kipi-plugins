@@ -138,7 +138,7 @@ msgstr ""
 #: flickrtalker.cpp:635
 #, kde-format
 msgid "Invalid API Key"
-msgstr "Clau de la API no vàlida"
+msgstr "Clau de l'API no vàlida"
 
 #: flickrtalker.cpp:639
 #, kde-format

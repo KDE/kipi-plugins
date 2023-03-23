@@ -110,7 +110,7 @@ msgstr "Latitud:"
 #: wmwidget.cpp:245
 #, kde-format
 msgid "Longitude:"
-msgstr "Llargària:"
+msgstr "Longitud:"
 
 #: wmwidget.cpp:273
 #, kde-format
@@ -205,7 +205,7 @@ msgstr "Nom:"
 #: wmwidget.cpp:321
 #, kde-format
 msgid "API URL:"
-msgstr "URL de la API:"
+msgstr "URL de l'API:"
 
 #: wmwidget.cpp:326
 #, kde-format
