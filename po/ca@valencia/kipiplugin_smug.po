@@ -198,7 +198,7 @@ msgstr "Usuari/sobrenom/contrasenya no vàlid"
 #: smugtalker.cpp:470
 #, kde-format
 msgid "Invalid API key"
-msgstr "Clau de la API no vàlida"
+msgstr "Clau de l'API no vàlida"
 
 #: smugtalker.cpp:512 smugwindow.cpp:412 smugwindow.cpp:421 smugwindow.cpp:451
 #: smugwindow.cpp:484 smugwindow.cpp:516 smugwindow.cpp:546 smugwindow.cpp:920
