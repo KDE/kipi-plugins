@@ -1,11 +1,11 @@
 # Burkhard Lück <lueck@hube-lueck.de>, 2013, 2014, 2015, 2016.
-# Frederik Schwarzer <schwarzer@kde.org>, 2016.
+# Frederik Schwarzer <schwarzer@kde.org>, 2016, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2016-09-10 14:59+0100\n"
+"PO-Revision-Date: 2023-04-03 16:47+0200\n"
 "Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -13,6 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #: authorize.cpp:116
 #, kde-format
@@ -38,7 +39,7 @@ msgstr "Fehler"
 #: gdtalker.cpp:337
 #, kde-format
 msgid "Failed to list folders"
-msgstr "Die Liste der Ordner lässt sich nicht lesen."
+msgstr "Die Liste der Ordner lässt sich nicht lesen"
 
 #: gdtalker.cpp:385
 #, kde-format
@@ -48,12 +49,12 @@ msgstr "Der Ordner lässt sich nicht erstellen"
 #: gdtalker.cpp:416 gptalker.cpp:937
 #, kde-format
 msgid "Failed to upload photo"
-msgstr "Das Hochladen des Fotos ist fehlgeschlagen."
+msgstr "Das Hochladen des Fotos ist fehlgeschlagen"
 
 #: gptalker.cpp:569
 #, kde-format
 msgid "No photo specified"
-msgstr "Kein Foto angegeben."
+msgstr "Kein Foto angegeben"
 
 #: gptalker.cpp:572
 #, kde-format
@@ -63,32 +64,32 @@ msgstr "Allgemeiner Fehler beim Hochladen"
 #: gptalker.cpp:575
 #, kde-format
 msgid "File-size was zero"
-msgstr "Die Dateigröße war Null."
+msgstr "Die Dateigröße war Null"
 
 #: gptalker.cpp:578
 #, kde-format
 msgid "File-type was not recognized"
-msgstr "Der Dateityp wurde nicht erkannt."
+msgstr "Der Dateityp wurde nicht erkannt"
 
 #: gptalker.cpp:581
 #, kde-format
 msgid "User exceeded upload limit"
-msgstr "Benutzer hat seine Grenze zum Hochladen überschritten."
+msgstr "Benutzer hat seine Grenze zum Hochladen überschritten"
 
 #: gptalker.cpp:584
 #, kde-format
 msgid "Invalid signature"
-msgstr "Ungültige Signatur."
+msgstr "Ungültige Signatur"
 
 #: gptalker.cpp:587
 #, kde-format
 msgid "Missing signature"
-msgstr "Fehlende Signatur."
+msgstr "Fehlende Signatur"
 
 #: gptalker.cpp:590
 #, kde-format
 msgid "Login failed / Invalid auth token"
-msgstr "Anmeldung fehlgeschlagen / Ungültiger Authentifizierungstoken."
+msgstr "Anmeldung fehlgeschlagen / Ungültiger Authentifizierungstoken"
 
 #: gptalker.cpp:593
 #, kde-format
@@ -108,12 +109,12 @@ msgstr "Ungültiger Frob"
 #: gptalker.cpp:602
 #, kde-format
 msgid "Format \"xxx\" not found"
-msgstr "Format „xxx“ nicht gefunden."
+msgstr "Format „xxx“ nicht gefunden"
 
 #: gptalker.cpp:605
 #, kde-format
 msgid "Method \"xxx\" not found"
-msgstr "Methode „xxx“ nicht gefunden."
+msgstr "Methode „xxx“ nicht gefunden"
 
 #: gptalker.cpp:608
 #, kde-format
@@ -155,12 +156,12 @@ msgstr ""
 #: gptalker.cpp:691 gptalker.cpp:758
 #, kde-format
 msgid "Failed to fetch photo-set list"
-msgstr "Die Liste der Fotosätze kann nicht abgefragt werden."
+msgstr "Die Liste der Fotosätze kann nicht abgefragt werden"
 
 #: gptalker.cpp:894 gptalker.cpp:927
 #, kde-format
 msgid "Failed to create album"
-msgstr "Das Erstellen des Albums ist fehlgeschlagen."
+msgstr "Das Erstellen des Albums ist fehlgeschlagen"
 
 #: gswidget.cpp:60
 #, kde-format

@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: kipiplugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2020-01-18 03:13+0100\n"
-"PO-Revision-Date: 2009-11-15 12:06+0100\n"
-"Last-Translator: Axel Rousseau <axel@esperanto-jeunes.org>\n"
+"PO-Revision-Date: 2023-04-07 10:09+0100\n"
+"Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: libkipiplugins/dialogs/kpbatchprogressdialog.cpp:113
 #, kde-format
 msgid "<p>This is the current processing status.</p>"
-msgstr "<p>Tiu estas la aktuala stato de traktado."
+msgstr "<p>Tiu estas la aktuala stato de traktado.</p>"
 
 #: libkipiplugins/dialogs/kpbatchprogressdialog.cpp:120
 #, kde-format
@@ -68,22 +68,22 @@ msgstr "<i>Kreita:</i>"
 #: libkipiplugins/dialogs/kpimagedialog.cpp:239
 #, kde-format
 msgid "<i>Aperture:</i>"
-msgstr ""
+msgstr "<i>Aperturo:</i>"
 
 #: libkipiplugins/dialogs/kpimagedialog.cpp:240
 #, kde-format
 msgid "<i>Focal:</i>"
-msgstr ""
+msgstr "<i>Fokusa:</i>"
 
 #: libkipiplugins/dialogs/kpimagedialog.cpp:241
 #, kde-format
 msgid "<i>Exposure:</i>"
-msgstr ""
+msgstr "<i>Elmeto:</i>"
 
 #: libkipiplugins/dialogs/kpimagedialog.cpp:242
 #, kde-format
 msgid "<i>Sensitivity:</i>"
-msgstr ""
+msgstr "<i>Sentemeco:</i>"
 
 #: libkipiplugins/dialogs/kpimagedialog.cpp:339
 #, kde-format
@@ -91,6 +91,8 @@ msgid ""
 "\n"
 "%1|Camera RAW files"
 msgstr ""
+"\n"
+"%1|Fotilaj RAW-dosieroj"
 
 #: libkipiplugins/dialogs/kpimagedialog.cpp:358
 #, kde-format
