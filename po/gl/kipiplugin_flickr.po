@@ -8,14 +8,14 @@
 # Xosé <xosecalvo@gmail.com>, 2009, 2012.
 # Marce Villarino <mvillarino@kde-espana.es>, 2012, 2013.
 # Adrian Chaves Fernandez <adriyetichaves@gmail.com>, 2012, 2015.
-# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2017, 2018, 2019, 2020.
+# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2017, 2018, 2019, 2020, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kipiplugin_flickrexport\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2020-01-11 11:24+0100\n"
+"PO-Revision-Date: 2023-04-23 06:08+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 19.08.3\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #: comboboxintermediate.h:54
 #, kde-format
@@ -176,7 +176,7 @@ msgstr "A chamada a un método de XML-RPC é incorrecta"
 #: flickrtalker.cpp:663
 #, kde-format
 msgid "The POST method is now required for all setters"
-msgstr "Agora requírese o método POST para todos os asignadores"
+msgstr "Agora requírese o método POST para todos os escritores"
 
 #: flickrtalker.cpp:667
 #, kde-format
