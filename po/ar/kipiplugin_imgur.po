@@ -96,7 +96,7 @@ msgstr "أداة لتصدير الصّور إلى خدمة Imgur على الوب
 #: imgurwindow.cpp:127
 #, kde-format
 msgid "(c) 2012-2013, Marius Orcsik"
-msgstr "‏© ٢٠١٢-٢٠١٣، Marius Orcsik"
+msgstr "‏© 2012-2013، Marius Orcsik"
 
 #: imgurwindow.cpp:129
 #, kde-format
