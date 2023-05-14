@@ -85,7 +85,7 @@ msgstr "أداة لتصدير الصّور عبر الشّبكة باستخدا�
 #: KioExportWindow.cpp:86 KioImportWindow.cpp:83
 #, kde-format
 msgid "(c) 2009, Johannes Wienke"
-msgstr "‏© ٢٠٠٩، Johannes Wienke"
+msgstr "‏© 2009، Johannes Wienke"
 
 #: KioExportWindow.cpp:88 KioImportWindow.cpp:85
 #, kde-format
