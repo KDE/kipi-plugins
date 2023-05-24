@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: extragear-graphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2023-02-08 19:51+0300\n"
+"PO-Revision-Date: 2023-05-24 01:00+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.2\n"
+"X-Generator: Lokalize 23.07.70\n"
 
 #. i18n: ectx: Menu (Import)
 #: kipiplugin_smugui.rc:7
@@ -361,7 +361,7 @@ msgstr "JPEG kalitesi:"
 #: smugwindow.cpp:86
 #, kde-format
 msgid "Import from SmugMug Web Service"
-msgstr "SmugMug Web Servisinden İçe Aktar"
+msgstr "SmugMug Web Hizmetinden İçe Aktar"
 
 #: smugwindow.cpp:88
 #, kde-format
@@ -371,12 +371,12 @@ msgstr "İndirmeyi Başlat"
 #: smugwindow.cpp:89
 #, kde-format
 msgid "Start download from SmugMug web service"
-msgstr "SmugMug Web servisinden indirmeyi başlat"
+msgstr "SmugMug Web hizmetinden indirmeyi başlat"
 
 #: smugwindow.cpp:95
 #, kde-format
 msgid "Export to SmugMug Web Service"
-msgstr "SmugMug Web Servisine Aktar"
+msgstr "SmugMug Web Hizmetine Dışa Aktar"
 
 #: smugwindow.cpp:97
 #, kde-format
@@ -386,7 +386,7 @@ msgstr "Göndermeye Başla"
 #: smugwindow.cpp:98
 #, kde-format
 msgid "Start upload to SmugMug web service"
-msgstr "SmugMug Web servisine gönderimi başlat"
+msgstr "SmugMug Web hizmetine yüklemeyi başlat"
 
 #: smugwindow.cpp:127
 #, kde-format
@@ -398,7 +398,7 @@ msgstr "Smug İçe/Dışa Aktar"
 msgid ""
 "A tool to import/export image collections from/to the SmugMug web service."
 msgstr ""
-"SmugMug web servisine görsel koleksiyonlarını yüklemeye ve oradan indirmeye "
+"SmugMug web hizmetine görsel koleksiyonlarını yüklemeye ve oradan indirmeye "
 "yarayan bir araç."
 
 #: smugwindow.cpp:130

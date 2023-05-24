@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: extragear-graphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2023-02-08 19:50+0300\n"
+"PO-Revision-Date: 2023-05-24 01:21+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.2\n"
+"X-Generator: Lokalize 23.07.70\n"
 
 #: comboboxintermediate.h:54
 #, kde-format
@@ -142,7 +142,7 @@ msgstr "Geçersiz API Anahtarı"
 #: flickrtalker.cpp:639
 #, kde-format
 msgid "Service currently unavailable"
-msgstr "Servis şu anda kullanılabilir değil"
+msgstr "Hizmet şu anda kullanılamıyor"
 
 #: flickrtalker.cpp:643
 #, kde-format
@@ -392,7 +392,7 @@ msgid ""
 "<b><h2><a href='http://www.23hq.com'><font color=\"#7CD164\">23</font></a> "
 "Export</h2></b>"
 msgstr ""
-"<b><h2><a href='http://www.23hq.com'><font color=\"#7CD164\">23</font></a> "
+"<b><h2><a href='http://www.23hq.com'><font color=\"#7CD164\">23</font></a>'e "
 "Dışa Aktar</h2></b>"
 
 #: flickrwidget.cpp:311
@@ -401,8 +401,8 @@ msgid ""
 "<b><h2><a href='http://www.flickr.com'><font color=\"#0065DE\">flick</"
 "font><font color=\"#FF0084\">r</font></a> Export</h2></b>"
 msgstr ""
-"<b><h2><a href='http://www.flickr.com'><font color=\"#0065DE\">flick</"
-"font><font color=\"#FF0084\">r</font></a> Dışa Aktar</h2></b>"
+"<b><h2><a href='http://www.flickr.com'><font color=\"#0065DE\">Flick</"
+"font><font color=\"#FF0084\">r</font></a>'a Dışa Aktar</h2></b>"
 
 #: flickrwidget.cpp:484
 #, kde-format
@@ -417,7 +417,7 @@ msgstr "Daha az etiket seçeneği"
 #: flickrwindow.cpp:71
 #, kde-format
 msgid "Export to %1 Web Service"
-msgstr "%1 Web Servisine Aktar"
+msgstr "%1 Web Hizmetine Dışa Aktar"
 
 #: flickrwindow.cpp:119
 #, kde-format
@@ -427,13 +427,13 @@ msgstr "Gönderimi Başlat"
 #: flickrwindow.cpp:131
 #, kde-format
 msgid "Flickr/23 Export"
-msgstr "Flickr/23 Dışa Aktar"
+msgstr "Flickr/23'e Dışa Aktar"
 
 #: flickrwindow.cpp:132
 #, kde-format
 msgid "A tool to export an image collection to a Flickr / 23 web service."
 msgstr ""
-"Flickr / 23 web servisine, görsel koleksiyonlarını aktarmaya yarayan bir "
+"Flickr / 23 web hizmetine görsel koleksiyonlarını dışa aktarmaya yarayan bir "
 "araç."
 
 #: flickrwindow.cpp:134
@@ -482,7 +482,7 @@ msgstr "Yalnızca Photostream"
 #: flickrwindow.cpp:741
 #, kde-format
 msgid "Flickr Export"
-msgstr "Flickr'a Aktar"
+msgstr "Flickr'a Dışa Aktar"
 
 #: flickrwindow.cpp:759
 #, kde-format
@@ -528,7 +528,7 @@ msgstr "Ana Araç Çubuğu"
 #: plugin_flickr.cpp:100
 #, kde-format
 msgid "Export to Flick&r..."
-msgstr "Flick&r Servisine Aktar..."
+msgstr "Flick&r'a Dışa Aktar..."
 
 #: selectuserdlg.cpp:47
 #, kde-format
