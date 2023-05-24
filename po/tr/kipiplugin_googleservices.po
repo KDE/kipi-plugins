@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: extragear-graphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2023-03-07 20:29+0300\n"
+"PO-Revision-Date: 2023-05-24 01:00+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.07.70\n"
 
 #: authorize.cpp:116
 #, kde-format
@@ -103,7 +103,7 @@ msgstr "Geçersiz API Anahtarı"
 #: gptalker.cpp:596
 #, kde-format
 msgid "Service currently unavailable"
-msgstr "Servis şu anda kullanılabilir değil"
+msgstr "Hizmet şu anda kullanılamıyor"
 
 #: gptalker.cpp:599
 #, kde-format
@@ -307,17 +307,17 @@ msgstr "Jens Mueller"
 #: gswindow.cpp:217
 #, kde-format
 msgid "Export to Google Photos/PicasaWeb Service"
-msgstr "Google Fotoğraflar/PicasaWeb Servisine Aktar"
+msgstr "Google Fotoğraflar/PicasaWeb Hizmetine Dışa Aktar"
 
 #: gswindow.cpp:220
 #, kde-format
 msgid "Start upload to Google Photos/PicasaWeb Service"
-msgstr "Google Fotoğraflar/PicasaWeb Servisine Yüklemeyi Başlat"
+msgstr "Google Fotoğraflar/PicasaWeb Hizmetine Yüklemeyi Başlat"
 
 #: gswindow.cpp:226
 #, kde-format
 msgid "Import from Google Photos/PicasaWeb Service"
-msgstr "Google Fotoğraflar/PicasaWeb Servisinden İçe Aktar"
+msgstr "Google Fotoğraflar/PicasaWeb Hizmetinden İçe Aktar"
 
 #: gswindow.cpp:228
 #, kde-format
@@ -327,7 +327,7 @@ msgstr "İndirmeyi Başlat"
 #: gswindow.cpp:229
 #, kde-format
 msgid "Start download from Google Photos/PicasaWeb service"
-msgstr "Google Fotoğraflar/PicasaWeb Servisinden indirmeyi Başlat"
+msgstr "Google Fotoğraflar/PicasaWeb Hizmetinden İndirmeyi Başlat"
 
 #: gswindow.cpp:428 gswindow.cpp:467 gswindow.cpp:577
 #, kde-format

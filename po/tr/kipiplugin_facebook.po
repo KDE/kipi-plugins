@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: extragear-graphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2023-02-08 20:55+0300\n"
+"PO-Revision-Date: 2023-05-24 00:59+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.2\n"
+"X-Generator: Lokalize 23.07.70\n"
 
 #: fbalbum.cpp:52
 #, kde-format
@@ -84,7 +84,7 @@ msgstr "Kullanıcı tarafından iptal edildi."
 #: fbtalker.cpp:549
 #, kde-format
 msgid "The service is not available at this time."
-msgstr "Servis şu anda kullanılabilir değil."
+msgstr "Hizmet şu anda kullanılamıyor."
 
 #: fbtalker.cpp:552
 #, kde-format
@@ -126,7 +126,7 @@ msgstr "Hata"
 #: fbwindow.cpp:109
 #, kde-format
 msgid "Export to Facebook Web Service"
-msgstr "Facebook Web Servisine Aktar"
+msgstr "Facebook Web Hizmetine Dışa Aktar"
 
 #: fbwindow.cpp:111
 #, kde-format
@@ -136,7 +136,7 @@ msgstr "Göndermeye Başla"
 #: fbwindow.cpp:112
 #, kde-format
 msgid "Start upload to Facebook web service"
-msgstr "Facebook Web servisine gönderimi başlat"
+msgstr "Facebook Web hizmetine yüklemeyi başlat"
 
 #: fbwindow.cpp:140
 #, kde-format
@@ -147,8 +147,8 @@ msgstr "Facebook'a Dışa Aktar"
 #, kde-format
 msgid "A tool to export image collection to/from Facebook web service."
 msgstr ""
-"Facebook Web servisine görsel koleksiyonlarını aktarmaya ve oradan indirmeye "
-"yarayan bir araç."
+"Facebook web hizmetine görsel koleksiyonlarını dışa aktarmaya ve oradan "
+"indirmeye yarayan bir araç."
 
 #: fbwindow.cpp:143
 #, kde-format
@@ -254,7 +254,7 @@ msgstr "Ana Araç Çubuğu"
 #: plugin_facebook.cpp:94
 #, kde-format
 msgid "Export to &Facebook..."
-msgstr "Facebook'a &Gönder..."
+msgstr "Facebook'a &Dışa Aktar..."
 
 #~ msgid "&Import"
 #~ msgstr "&İçeriye Aktar"
