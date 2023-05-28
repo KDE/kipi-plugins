@@ -420,8 +420,8 @@ msgstr "Opphavsperson og vedlikehaldar"
 #: smugwindow.cpp:144
 #, kde-format
 msgid ""
-"<qt>Enter the <b>email address</b> and <b>password</b> for your <a href="
-"\"http://www.smugmug.com\">SmugMug</a> account</qt>"
+"<qt>Enter the <b>email address</b> and <b>password</b> for your <a "
+"href=\"http://www.smugmug.com\">SmugMug</a> account</qt>"
 msgstr ""
 
 #: smugwindow.cpp:412 smugwindow.cpp:421 smugwindow.cpp:451 smugwindow.cpp:484
