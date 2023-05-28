@@ -427,11 +427,11 @@ msgstr "Forfatter og vedlikeholder"
 #: smugwindow.cpp:144
 #, kde-format
 msgid ""
-"<qt>Enter the <b>email address</b> and <b>password</b> for your <a href="
-"\"http://www.smugmug.com\">SmugMug</a> account</qt>"
+"<qt>Enter the <b>email address</b> and <b>password</b> for your <a "
+"href=\"http://www.smugmug.com\">SmugMug</a> account</qt>"
 msgstr ""
-"<qt>Skriv inn en<b>e-postadresse</b> og et <b>passord</b> for din <a href="
-"\"http://www.smugmug.com\">SmugMug</a> konto</qt>"
+"<qt>Skriv inn en<b>e-postadresse</b> og et <b>passord</b> for din <a "
+"href=\"http://www.smugmug.com\">SmugMug</a> konto</qt>"
 
 #: smugwindow.cpp:412 smugwindow.cpp:421 smugwindow.cpp:451 smugwindow.cpp:484
 #: smugwindow.cpp:516 smugwindow.cpp:546 smugwindow.cpp:920
