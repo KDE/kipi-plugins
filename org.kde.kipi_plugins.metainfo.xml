@@ -11,6 +11,7 @@
   <name xml:lang="de">KIPI-Module</name>
   <name xml:lang="el">KIPI πρόσθετα</name>
   <name xml:lang="en-GB">KIPI Plugins</name>
+  <name xml:lang="eo">KIPI-kromaĵoj</name>
   <name xml:lang="es">Complementos KIPI</name>
   <name xml:lang="et">KIPI pluginad</name>
   <name xml:lang="eu">KIPI pluginak</name>
@@ -44,6 +45,7 @@
   <summary xml:lang="de">Module für KDE-Anwendungen zum Export von Bildern</summary>
   <summary xml:lang="el">Πρόσθετα για KDE εφαρμογές εξαγωγής εικόνων</summary>
   <summary xml:lang="en-GB">Plugins for KDE applications to export images</summary>
+  <summary xml:lang="eo">Kromprogramoj por KDE por eksporti bildojn</summary>
   <summary xml:lang="es">Complementos para exportar imágenes en aplicaciones de KDE</summary>
   <summary xml:lang="et">KDE rakenduste pluginad piltide eksportimiseks</summary>
   <summary xml:lang="eu">KDE aplikazioek irudiak esportatu ditzaten pluginak</summary>
@@ -107,6 +109,7 @@
     <p xml:lang="de">Mit den Modulen erhalten Gwenview und Spectacle Funktionen zum Export.</p>
     <p xml:lang="el">Προσθέτουν λειτουργίες εξαγωγής σε Gwenview και Spectacle.</p>
     <p xml:lang="en-GB">They add export features to Gwenview and Spectacle.</p>
+    <p xml:lang="eo">Ili aldonas eksportkapablojn al Gwenview kaj Spectacle.</p>
     <p xml:lang="es">Añaden funciones de exportación a Gwenview y a Spectacle.</p>
     <p xml:lang="et">Nendega saab lisada rakendustele Gwenview ja Spectacle täiendavaid võimalusi.</p>
     <p xml:lang="eu">Esportatzeko eginbideak gehitzen dizkiete Gwenview eta Spectacle-ri.</p>
@@ -144,6 +147,7 @@
       <caption xml:lang="de">KIPI-Module in Gwenview.</caption>
       <caption xml:lang="el">KIPI πρόσθετα όπως χρησιμοποιούνται στο Gwenview.</caption>
       <caption xml:lang="en-GB">KIPI Plugins as used in Gwenview.</caption>
+      <caption xml:lang="eo">KIPI-kromaĵoj uzitaj ene de Gwenview.</caption>
       <caption xml:lang="es">Complementos KIPI en Gwenview.</caption>
       <caption xml:lang="et">KIPI pluginate kasutamine Gwenview's.</caption>
       <caption xml:lang="eu">KIPI pluginak Gwenview-n erabili bezala.</caption>
