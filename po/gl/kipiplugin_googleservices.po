@@ -493,7 +493,7 @@ msgid ""
 "These are security and privacy settings for the new Google Photos/PicasaWeb "
 "album."
 msgstr ""
-"Esta é a configuración de seguranza e protección da intimidade para o novo "
+"Esta é a configuración de seguridade e protección da intimidade para o novo "
 "álbum de Google Photos ou PicasaWeb."
 
 #: newalbumdlg.cpp:57

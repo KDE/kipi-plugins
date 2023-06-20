@@ -63,7 +63,7 @@ msgid ""
 "Indicate the safety level for the photo or use Upload Options tab to specify "
 "this for all images"
 msgstr ""
-"Indique o nivel de seguranza para a foto ou use o separador «Opcións de "
+"Indique o nivel de seguridade para a foto ou use o separador «Opcións de "
 "envío» para especificar isto con todas as imaxes"
 
 #: flickrlist.cpp:432
@@ -254,7 +254,7 @@ msgstr "Amizades"
 #: flickrwidget.cpp:107
 #, kde-format
 msgid "Safety level"
-msgstr "Nivel de seguranza"
+msgstr "Nivel de seguridade"
 
 #: flickrwidget.cpp:109
 #, kde-format
@@ -368,7 +368,7 @@ msgstr "Máis opcións de publicación"
 #: flickrwidget.cpp:203
 #, kde-format
 msgid "Safety level:"
-msgstr "Nivel de seguranza:"
+msgstr "Nivel de seguridade:"
 
 #: flickrwidget.cpp:205
 #, kde-format

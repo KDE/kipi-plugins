@@ -123,13 +123,13 @@ msgstr "Modelo:"
 #: smugalbum.cpp:98
 #, kde-format
 msgid "Security && Privacy"
-msgstr "Seguranza e intimidade"
+msgstr "Seguridade e intimidade"
 
 #: smugalbum.cpp:99
 #, kde-format
 msgid "These are security and privacy settings for the new SmugMug album."
 msgstr ""
-"Estas son as opcións de seguranza e intimidade para o novo álbum de SmugMug."
+"Estas son as opcións de seguridade e intimidade para o novo álbum de SmugMug."
 
 #: smugalbum.cpp:101
 #, kde-format
@@ -226,7 +226,7 @@ msgstr "Conta"
 #: smugwidget.cpp:86
 #, kde-format
 msgid "This is the SmugMug account that will be used to authenticate."
-msgstr "Esta é a conta en SmugMug que se empregará para autenticarse."
+msgstr "Esta é a conta en SmugMug que se usará para autenticarse."
 
 #: smugwidget.cpp:89
 #, kde-format
@@ -275,7 +275,7 @@ msgstr "Cambiar a conta de SmugMug empregada para autenticarse"
 #: smugwidget.cpp:118
 #, kde-format
 msgid "This is the SmugMug album that will be used for transfer."
-msgstr "Este é o álbum en SmugMug que se empregará para a transferencia."
+msgstr "Este é o álbum en SmugMug que se usará para a transferencia."
 
 #: smugwidget.cpp:123
 #, kde-format
@@ -285,7 +285,7 @@ msgstr "Alcume:"
 #: smugwidget.cpp:125
 #, kde-format
 msgid "Nickname of SmugMug user to list albums."
-msgstr "O alcume do usuario en SmugMug que se emprega para listar os álbums."
+msgstr "O alcume do usuario en SmugMug que se usa para listar os álbums."
 
 #: smugwidget.cpp:126
 #, kde-format

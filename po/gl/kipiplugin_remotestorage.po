@@ -82,7 +82,7 @@ msgstr "Exportar a un almacenamento remoto"
 #, kde-format
 msgid "A tool to export images over network using KIO-Slave"
 msgstr ""
-"Unha ferramenta para exportar imaxes a través dunha rede empregando KIO-Slave"
+"Unha ferramenta para exportar imaxes a través dunha rede usando KIO-Slave"
 
 #: KioExportWindow.cpp:86 KioImportWindow.cpp:83
 #, kde-format
