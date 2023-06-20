@@ -417,7 +417,7 @@ msgstr ""
 "fornece un substituto do GIF libre de patentes e tamén pode substituír "
 "moitos usos habituais de TIFF. PNG deseñouse para traballar ben en "
 "aplicacións de visualización por Internet, como a web, polo que pode "
-"transmitirse e mostrarse progresivamente. Tamén pode gardar datos de gama e "
+"transmitirse e amosarse progresivamente. Tamén pode gardar datos de gama e "
 "cromaticidade para un mellor axuste da cor en plataformas heteroxéneas.</p>"
 
 #: settingswidget.cpp:197
