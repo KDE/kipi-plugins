@@ -115,3 +115,5 @@ void NewAlbumDlg::getAlbumProperties(GSFolder& album)
 }
 
 } // namespace KIPIGoogleServicesPlugin
+
+#include "moc_newalbumdlg.cpp"

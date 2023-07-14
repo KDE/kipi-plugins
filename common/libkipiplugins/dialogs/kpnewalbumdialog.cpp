@@ -222,3 +222,5 @@ QDialogButtonBox* KPNewAlbumDialog::getButtonBox() const
 }
 
 } // namespace KIPIPlugins
+
+#include "moc_kpnewalbumdialog.cpp"

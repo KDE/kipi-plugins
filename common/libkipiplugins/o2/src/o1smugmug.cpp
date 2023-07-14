@@ -82,3 +82,5 @@ O1SmugMug::O1SmugMug(QObject *parent, QNetworkAccessManager *manager, O0Abstract
    setRequestTokenUrl(QUrl("https://secure.smugmug.com/services/oauth/1.0a/getRequestToken"));
    setAccessTokenUrl(QUrl("https://secure.smugmug.com/services/oauth/1.0a/getAccessToken"));
 }
+
+#include "moc_o1smugmug.cpp"

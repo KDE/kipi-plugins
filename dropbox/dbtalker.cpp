@@ -434,3 +434,5 @@ void DBTalker::parseResponseCreateFolder(const QByteArray& data)
 }
 
 } // namespace KIPIDropboxPlugin
+
+#include "moc_dbtalker.cpp"

@@ -215,3 +215,5 @@ void SendImagesDialog::slotImagesCountChanged()
 }
 
 }  // namespace KIPISendimagesPlugin
+
+#include "moc_sendimagesdialog.cpp"

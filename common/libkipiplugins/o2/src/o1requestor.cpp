@@ -55,3 +55,5 @@ QNetworkRequest O1Requestor::setup(const QNetworkRequest &req, const QList<O0Req
     authenticator_->decorateRequest(request, oauthParams);
     return request;
 }
+
+#include "moc_o1requestor.cpp"

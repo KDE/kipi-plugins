@@ -433,3 +433,5 @@ void GDTalker::cancel()
 }
 
 } // namespace KIPIGoogleServicesPlugin
+
+#include "moc_gdtalker.cpp"

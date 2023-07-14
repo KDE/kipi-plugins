@@ -436,3 +436,5 @@ QComboBox* KPSettingsWidget::getAlbumsCoB() const
 }
 
 } // namespace KIPIPlugins
+
+#include "moc_kpsettingswidget.cpp"

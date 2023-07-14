@@ -389,3 +389,5 @@ int Authorize::getTokenEnd(const QString& object, int beginPos)
 }
 
 } // namespace KIPIGoogleServicesPlugin
+
+#include "moc_authorize.cpp"

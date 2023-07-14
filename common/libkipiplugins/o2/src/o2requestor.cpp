@@ -190,3 +190,5 @@ void O2Requestor::retry() {
     connect(reply_, SIGNAL(finished()), this, SLOT(onRequestFinished()), Qt::QueuedConnection);
     connect(reply_, SIGNAL(uploadProgress(qint64,qint64)), this, SLOT(onUploadProgress(qint64,qint64)));
 }
+
+#include "moc_o2requestor.cpp"

@@ -52,3 +52,5 @@ void O0SettingsStore::setValue(const QString &key, const QString &value) {
         }
     }
 }
+
+#include "moc_o0settingsstore.cpp"

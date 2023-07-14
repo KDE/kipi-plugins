@@ -66,3 +66,5 @@ QList<EmailItem> MyImageList::imagesList() const
 }
 
 }  // namespace KIPISendimagesPlugin
+
+#include "moc_myimagelist.cpp"

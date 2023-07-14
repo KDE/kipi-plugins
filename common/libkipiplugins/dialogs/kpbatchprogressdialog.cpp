@@ -283,3 +283,5 @@ void KPBatchProgressDialog::slotCancel()
 }
 
 }  // namespace KIPIPlugins
+
+#include "moc_kpbatchprogressdialog.cpp"

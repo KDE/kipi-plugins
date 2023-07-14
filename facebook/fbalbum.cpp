@@ -78,3 +78,5 @@ void FbNewAlbum::getAlbumProperties(FbAlbum& album)
 }
 
 } // namespace KIPIFacebookPlugin
+
+#include "moc_fbalbum.cpp"

@@ -76,3 +76,5 @@ void o0keyChainStore::clearFromKeychain() {
         qWarning() << "Deleting keychain failed: " << qPrintable(job.errorString());
     }
 }
+
+#include "moc_o0keychainstore.cpp"

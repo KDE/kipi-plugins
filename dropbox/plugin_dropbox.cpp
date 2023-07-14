@@ -121,3 +121,5 @@ void Plugin_Dropbox::slotExport()
 } // namespace KIPIDropboxPlugin
 
 #include "plugin_dropbox.moc"
+
+#include "moc_plugin_dropbox.cpp"

@@ -343,3 +343,5 @@ QColor CropFrame::color() const
 }
 
 }  // NameSpace KIPIPrintImagesPlugin
+
+#include "moc_cropframe.cpp"

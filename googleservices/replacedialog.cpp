@@ -330,3 +330,5 @@ int ReplaceDialog::getResult()
 }
 
 } // namespace KIPIGoogleServicesPlugin
+
+#include "moc_replacedialog.cpp"

@@ -247,3 +247,5 @@ QString KPSaveSettingsWidget::extensionForFormat(KPSaveSettingsWidget::OutputFor
 }
 
 } // namespace KIPIPlugins
+
+#include "moc_kpsavesettingswidget.cpp"

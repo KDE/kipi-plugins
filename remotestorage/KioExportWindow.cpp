@@ -219,3 +219,5 @@ void KioExportWindow::slotUpload()
 }
 
 } // namespace KIPIRemoteStoragePlugin
+
+#include "moc_KioExportWindow.cpp"

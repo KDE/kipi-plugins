@@ -260,3 +260,5 @@ void JAlbumEdit::slotOk()
 }
 
 } // namespace KIPIJAlbumExportPlugin
+
+#include "moc_jalbumconfig.cpp"

@@ -38,3 +38,5 @@ QVariant TweetModel::data(const QModelIndex &index, int role) const {
     }
     return result;
 }
+
+#include "moc_tweetmodel.cpp"

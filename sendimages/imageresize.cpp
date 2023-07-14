@@ -272,3 +272,5 @@ void ImageResize::cancel()
 }
 
 }  // namespace KIPISendimagesPlugin
+
+#include "moc_imageresize.cpp"

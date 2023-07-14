@@ -2697,3 +2697,5 @@ void Wizard::saveCaptionSettings()
 }
 
 } // namespace KIPIPrintImagesPlugin
+
+#include "moc_wizard.cpp"

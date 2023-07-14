@@ -117,3 +117,5 @@ void FBDemo::onFinished() {
         Q_EMIT linkingFailed();
     }
 }
+
+#include "moc_fbdemo.cpp"

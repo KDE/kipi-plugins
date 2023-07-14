@@ -133,3 +133,5 @@ void Plugin_WikiMedia::slotExport()
 } // namespace KIPIWikiMediaPlugin
 
 #include "plugin_wikimedia.moc"
+
+#include "moc_plugin_wikimedia.cpp"

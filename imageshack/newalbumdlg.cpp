@@ -56,3 +56,5 @@ QString NewAlbumDlg::getAlbumTitle()
 }
 
 } // namespace KIPIImageshackPlugin
+
+#include "moc_newalbumdlg.cpp"

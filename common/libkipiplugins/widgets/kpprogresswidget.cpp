@@ -133,3 +133,5 @@ void KPProgressWidget::slotProgressCanceled(const QString& id)
 }
 
 } // namespace KIPIPlugins
+
+#include "moc_kpprogresswidget.cpp"

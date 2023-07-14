@@ -55,3 +55,5 @@ void TwitterApi::requestFailed(QNetworkReply::NetworkError error) {
     QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
     qWarning() << "TwitterApi::requestFailed:" << (int)error << reply->errorString() << reply->readAll();
 }
+
+#include "moc_twitterapi.cpp"

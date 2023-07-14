@@ -153,3 +153,5 @@ void KioImportWindow::slotSourceAndTargetUpdated()
 }
 
 } // namespace KIPIRemoteStoragePlugin
+
+#include "moc_KioImportWindow.cpp"

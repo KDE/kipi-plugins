@@ -1330,3 +1330,5 @@ void GSWindow::closeEvent(QCloseEvent* e)
 }
 
 } // namespace KIPIGoogleServicesPlugin
+
+#include "moc_gswindow.cpp"

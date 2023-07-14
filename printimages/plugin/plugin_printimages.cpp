@@ -171,3 +171,5 @@ void Plugin_PrintImages::slotPrintAssistantActivate()
 } // namespace KIPIPrintImagesPlugin
 
 #include "plugin_printimages.moc"
+
+#include "moc_plugin_printimages.cpp"

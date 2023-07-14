@@ -296,3 +296,5 @@ EmailSettings SettingsWidget::emailSettings() const
 }
 
 }  // namespace KIPISendimagesPlugin
+
+#include "moc_settingswidget.cpp"

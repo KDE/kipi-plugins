@@ -156,3 +156,5 @@ void KPLoginDialog::slotAccept()
 }
 
 } // namespace KIPIPlugins
+
+#include "moc_kplogindialog.cpp"

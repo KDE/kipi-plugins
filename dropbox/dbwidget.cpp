@@ -75,3 +75,5 @@ void DropboxWidget::updateLabels(const QString& name, const QString& url)
 }
 
 } // namespace KIPIDropboxPlugin
+
+#include "moc_dbwidget.cpp"

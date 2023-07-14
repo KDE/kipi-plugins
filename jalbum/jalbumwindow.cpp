@@ -298,3 +298,5 @@ void JAlbumWindow::saveSettings()
 }
 
 } // namespace KIPIJAlbumExportPlugin
+
+#include "moc_jalbumwindow.cpp"

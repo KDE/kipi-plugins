@@ -718,3 +718,5 @@ void FbWindow::slotImageListChanged()
 }
 
 } // namespace KIPIFacebookPlugin
+
+#include "moc_fbwindow.cpp"

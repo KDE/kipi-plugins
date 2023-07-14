@@ -800,3 +800,5 @@ void YandexFotkiWindow::slotUpdateAlbumDone()
 }
 
 } // namespace KIPIYandexFotkiPlugin
+
+#include "moc_yfwindow.cpp"

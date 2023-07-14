@@ -429,3 +429,5 @@ QList<QUrl> KPImageDialog::getImageUrls(QWidget* const parent, bool onlyRaw)
 }
 
 } // namespace KIPIPlugins
+
+#include "moc_kpimagedialog.cpp"

@@ -430,3 +430,5 @@ void ImageshackWindow::slotNewAlbumRequest()
 }
 
 } // namespace KIPIImageshackPlugin
+
+#include "moc_imageshackwindow.cpp"

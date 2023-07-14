@@ -496,3 +496,5 @@ void RajceWidget::writeSettings()
 }
 
 } // namespace KIPIRajcePlugin
+
+#include "moc_rajcewidget.cpp"

@@ -306,3 +306,5 @@ void ImgurWindow::saveSettings()
 }
 
 } // namespace KIPIImgurPlugin
+
+#include "moc_imgurwindow.cpp"

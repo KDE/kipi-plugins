@@ -19,3 +19,5 @@ O2SurveyMonkey::O2SurveyMonkey(QObject *parent): O2(parent) {
     setLocalPort(SMLocalPort);
     setIgnoreSslErrors(true); //needed on Mac
 }
+
+#include "moc_o2surveymonkey.cpp"

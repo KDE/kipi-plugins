@@ -271,3 +271,5 @@ QPushButton* KPWizardDialog::helpButton() const
 }
 
 } // namespace KIPIPlugins
+
+#include "moc_kptooldialog.cpp"

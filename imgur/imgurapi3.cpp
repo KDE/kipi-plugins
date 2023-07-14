@@ -353,3 +353,5 @@ void ImgurAPI3::doWork()
         connect(m_reply, &QNetworkReply::finished, this, &ImgurAPI3::replyFinished);
     }
 }
+
+#include "moc_imgurapi3.cpp"

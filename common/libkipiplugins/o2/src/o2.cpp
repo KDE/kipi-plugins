@@ -497,3 +497,5 @@ bool O2::ignoreSslErrors() {
 void O2::setIgnoreSslErrors(bool ignoreSslErrors) {
     timedReplies_.setIgnoreSslErrors(ignoreSslErrors);
 }
+
+#include "moc_o2.cpp"

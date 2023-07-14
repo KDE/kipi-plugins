@@ -1053,3 +1053,5 @@ void YandexFotkiTalker::parseResponseUpdateAlbum()
 }
 
 } // namespace KIPIYandexFotkiPlugin
+
+#include "moc_yftalker.cpp"

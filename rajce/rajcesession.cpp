@@ -897,3 +897,5 @@ void RajceSession::init(const KIPIRajcePlugin::SessionState& initialState)
 }
 
 } // namespace KIPIRajcePlugin
+
+#include "moc_rajcesession.cpp"

@@ -272,3 +272,5 @@ void WMTalker::slotUploadProgress(KJob* job, unsigned long percent)
 }
 
 } // namespace KIPIWikiMediaPlugin
+
+#include "moc_wmtalker.cpp"

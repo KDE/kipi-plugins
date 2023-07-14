@@ -169,3 +169,5 @@ void Plugin_Flickr::slotActivate23()
 } // namespace KIPIFlickrPlugin
 
 #include "plugin_flickr.moc"
+
+#include "moc_plugin_flickr.cpp"

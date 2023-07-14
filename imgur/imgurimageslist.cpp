@@ -215,3 +215,5 @@ QString ImgurImageListViewItem::ImgurDeleteUrl() const
 }
 
 } // namespace KIPIImgurPlugin
+
+#include "moc_imgurimageslist.cpp"

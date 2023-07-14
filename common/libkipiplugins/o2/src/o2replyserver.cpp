@@ -166,3 +166,5 @@ void O2ReplyServer::setCallbackTries(int maxtries)
 {
   maxtries_ = maxtries;
 }
+
+#include "moc_o2replyserver.cpp"

@@ -407,3 +407,5 @@ QByteArray O1::nonce() {
     u.append(QString::number(qrand()));
     return u.toLatin1();
 }
+
+#include "moc_o1.cpp"

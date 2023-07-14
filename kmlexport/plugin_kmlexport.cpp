@@ -127,3 +127,5 @@ void Plugin_KMLExport::slotKMLExport()
 } // namespace KIPIKMLExportPlugin
 
 #include "plugin_kmlexport.moc"
+
+#include "moc_plugin_kmlexport.cpp"

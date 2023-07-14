@@ -196,3 +196,5 @@ void Plugin_GoogleServices::slotGPhotoImport()
 } // namespace KIPIGoogleServicesPlugin
 
 #include "plugin_googleservices.moc"
+
+#include "moc_plugin_googleservices.cpp"

@@ -343,3 +343,5 @@ void SmugWidget::slotResizeChecked()
 }
 
 } // namespace KIPISmugPlugin
+
+#include "moc_smugwidget.cpp"

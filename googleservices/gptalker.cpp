@@ -964,3 +964,5 @@ void GPTalker::parseResponseAddPhoto(const QByteArray& data)
 }
 
 } // KIPIGoogleServicesPlugin
+
+#include "moc_gptalker.cpp"

@@ -961,3 +961,5 @@ void PiwigoTalker::deleteTemporaryFile()
 }
 
 } // namespace KIPIPiwigoExportPlugin
+
+#include "moc_piwigotalker.cpp"

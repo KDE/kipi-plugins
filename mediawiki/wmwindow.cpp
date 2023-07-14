@@ -431,3 +431,5 @@ bool WMWindow::eventFilter(QObject* /*obj*/, QEvent* event)
 }
 
 } // namespace KIPIWikiMediaPlugin
+
+#include "moc_wmwindow.cpp"

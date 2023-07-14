@@ -123,3 +123,5 @@ void Plugin_YandexFotki::slotExport()
 } // namespace KIPIYandexFotkiPlugin
 
 #include "plugin_yandexfotki.moc"
+
+#include "moc_plugin_yandexfotki.cpp"

@@ -123,3 +123,5 @@ void Plugin_Rajce::slotExport()
 } // namespace KIPIRajcePlugin
 
 #include "plugin_rajce.moc"
+
+#include "moc_plugin_rajce.cpp"

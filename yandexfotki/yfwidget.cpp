@@ -112,3 +112,5 @@ void YandexFotkiWidget::updateLabels(const QString& /*name*/, const QString& /*u
 }
 
 } // namespace KIPIYandexFotkiPlugin
+
+#include "moc_yfwidget.cpp"

@@ -510,3 +510,5 @@ void KmlWindow::saveSettings()
 }
 
 } // namespace KIPIKMLExportPlugin
+
+#include "moc_kmlwindow.cpp"

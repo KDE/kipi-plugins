@@ -67,3 +67,5 @@ void OXTwitter::link() {
     connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(onTokenExchangeError(QNetworkReply::NetworkError)));
     connect(reply, SIGNAL(finished()), this, SLOT(onTokenExchangeFinished()));
 }
+
+#include "moc_oxtwitter.cpp"

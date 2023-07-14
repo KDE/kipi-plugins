@@ -50,3 +50,5 @@ void DBNewAlbum::getFolderTitle(DBFolder& folder)
 }
 
 } // namespace KIPIDropboxPlugin
+
+#include "moc_dbalbum.cpp"

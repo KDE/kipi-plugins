@@ -598,3 +598,5 @@ FlickrList::ContentType FlickrListViewItem::contentType() const
 }
 
 } // namespace KIPIFlickrPlugin
+
+#include "moc_flickrlist.cpp"

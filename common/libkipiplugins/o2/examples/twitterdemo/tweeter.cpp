@@ -133,3 +133,5 @@ void Tweeter::tweetReplyDone() {
     }
     Q_EMIT statusPosted();
 }
+
+#include "moc_tweeter.cpp"

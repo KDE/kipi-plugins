@@ -57,3 +57,5 @@ void NewAlbum::getFolderProperties(FPhotoSet& folder)
 }
 
 } // namespace KIPIFlickrPlugin
+
+#include "moc_newalbum.cpp"

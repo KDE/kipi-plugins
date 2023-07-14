@@ -124,3 +124,5 @@ void Plugin_Facebook::slotExport()
 } // namespace KIPIFacebookPlugin
 
 #include "plugin_facebook.moc"
+
+#include "moc_plugin_facebook.cpp"

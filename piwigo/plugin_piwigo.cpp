@@ -132,3 +132,5 @@ void Plugin_PiwigoExport::slotSync()
 } // namespace KIPIPiwigoExportPlugin
 
 #include "plugin_piwigo.moc"
+
+#include "moc_plugin_piwigo.cpp"

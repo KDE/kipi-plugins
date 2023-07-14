@@ -535,3 +535,5 @@ QProcessEnvironment adjustedEnvironmentForAppImage()
 }
 
 } // namespace KIPIPlugins
+
+#include "moc_kputil.cpp"

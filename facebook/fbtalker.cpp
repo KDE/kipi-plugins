@@ -883,3 +883,5 @@ void FbTalker::slotReject()
 }
 
 } // namespace KIPIFacebookPlugin
+
+#include "moc_fbtalker.cpp"

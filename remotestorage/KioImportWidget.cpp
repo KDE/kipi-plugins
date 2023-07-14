@@ -84,3 +84,5 @@ QList<QUrl> KioImportWidget::sourceUrls() const
 }
 
 } // namespace KIPIRemoteStoragePlugin
+
+#include "moc_KioImportWidget.cpp"

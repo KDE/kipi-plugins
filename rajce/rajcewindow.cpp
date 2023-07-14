@@ -116,3 +116,5 @@ void RajceWindow::closeEvent(QCloseEvent* e)
 }
 
 } //namespace KIPIRajcePlugin
+
+#include "moc_rajcewindow.cpp"

@@ -124,3 +124,5 @@ void CustomLayoutDlg::saveSettings()
 }
 
 } // namespace KIPIGalleryExportPlugin
+
+#include "moc_customdlg.cpp"

@@ -24,6 +24,7 @@ set( o2_SRCS
     o2replyserver.cpp
     o2requestor.cpp
     o2simplecrypt.cpp
+    o0abstractstore.cpp
     o0settingsstore.cpp
     o0baseauth.cpp
 )

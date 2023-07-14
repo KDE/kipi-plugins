@@ -123,3 +123,5 @@ void O2Skydrive::redirected(const QUrl &url) {
         }
     }
 }
+
+#include "moc_o2skydrive.cpp"

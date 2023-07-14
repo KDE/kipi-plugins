@@ -90,3 +90,5 @@ void O2Facebook::onTokenReplyFinished() {
         qWarning() << "O2Facebook::onTokenReplyFinished:" << tokenReply->errorString();
     }
 }
+
+#include "moc_o2facebook.cpp"

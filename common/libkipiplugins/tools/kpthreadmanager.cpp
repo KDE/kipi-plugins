@@ -224,3 +224,5 @@ void KPThreadManager::run()
 }
 
 } // namespace KIPIPlugins
+
+#include "moc_kpthreadmanager.cpp"

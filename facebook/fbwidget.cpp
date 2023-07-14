@@ -92,3 +92,5 @@ void FbWidget::slotReloadAlbumsRequest()
 }
 
 } // namespace KIPIFacebookPlugin
+
+#include "moc_fbwidget.cpp"

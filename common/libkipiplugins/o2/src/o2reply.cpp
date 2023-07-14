@@ -56,3 +56,5 @@ void O2ReplyList::setIgnoreSslErrors(bool ignoreSslErrors)
 {
     ignoreSslErrors_ = ignoreSslErrors;
 }
+
+#include "moc_o2reply.cpp"

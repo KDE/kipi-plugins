@@ -1126,3 +1126,5 @@ QString SmugTalker::htmlToText(const QString& htmlText)
 }
 
 } // namespace KIPISmugPlugin
+
+#include "moc_smugtalker.cpp"

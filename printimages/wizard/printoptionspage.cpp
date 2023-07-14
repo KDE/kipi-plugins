@@ -608,3 +608,5 @@ void PrintOptionsPage::positionChosen(int id)
 }
 
 } // namespace KIPIPrintImagesPlugin
+
+#include "moc_printoptionspage.cpp"

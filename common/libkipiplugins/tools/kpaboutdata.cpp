@@ -134,3 +134,5 @@ void KPAboutData::slotAbout()
 }
 
 } // namespace KIPIPlugins
+
+#include "moc_kpaboutdata.cpp"

@@ -933,3 +933,5 @@ void SmugWindow::slotImageListChanged()
 }
 
 } // namespace KIPISmugPlugin
+
+#include "moc_smugwindow.cpp"

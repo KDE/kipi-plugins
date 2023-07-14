@@ -160,3 +160,5 @@ void Plugin_Smug::slotImport()
 } // namespace KIPISmugPlugin
 
 #include "plugin_smug.moc"
+
+#include "moc_plugin_smug.cpp"

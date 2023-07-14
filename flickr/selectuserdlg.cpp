@@ -146,3 +146,5 @@ SelectUserDlg* SelectUserDlg::getDlg()
 }
 
 } // namespace KIPIFlickrPlugin
+
+#include "moc_selectuserdlg.cpp"

@@ -124,3 +124,5 @@ void Plugin_Imageshack::slotExport()
 } // namespace KIPIImageshackPlugin
 
 #include "plugin_imageshack.moc"
+
+#include "moc_plugin_imageshack.cpp"

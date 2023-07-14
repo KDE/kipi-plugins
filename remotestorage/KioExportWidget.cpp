@@ -173,3 +173,5 @@ void KioExportWidget::slotLabelUrlChanged()
 }
 
 } // namespace KIPIRemoteStoragePlugin
+
+#include "moc_KioExportWidget.cpp"

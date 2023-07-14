@@ -13,3 +13,5 @@ O2Google::O2Google(QObject *parent) : O2(parent){
     setTokenUrl(GftTokenUrl);
     setRefreshTokenUrl(GftRefreshUrl);
 }
+
+#include "moc_o2google.cpp"

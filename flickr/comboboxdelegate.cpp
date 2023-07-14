@@ -182,3 +182,5 @@ void ComboBoxDelegate::slotResetEditedState(QObject*)
 }
 
 } // namespace KIPIFlickrPlugin
+
+#include "moc_comboboxdelegate.cpp"

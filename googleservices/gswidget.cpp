@@ -137,3 +137,5 @@ void GoogleServicesWidget::updateLabels(const QString& name, const QString& url)
 }
 
 } // namespace KIPIGoogleServicesPlugin
+
+#include "moc_gswidget.cpp"

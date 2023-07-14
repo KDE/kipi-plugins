@@ -133,3 +133,5 @@ void Plugin_Imgur::slotActivate()
 } // namespace KIPIImgurPlugin
 
 #include "plugin_imgur.moc"
+
+#include "moc_plugin_imgur.cpp"

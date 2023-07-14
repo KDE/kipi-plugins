@@ -1098,3 +1098,5 @@ void FlickrTalker::parseResponseAddPhotoToPhotoSet(const QByteArray& data)
 }
 
 } // namespace KIPIFlickrPlugin
+
+#include "moc_flickrtalker.cpp"

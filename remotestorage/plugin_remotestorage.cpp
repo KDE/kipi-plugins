@@ -156,3 +156,5 @@ void Plugin_RemoteStorage::slotActivateImport()
 } // namespace KIPIRemoteStoragePlugin
 
 #include "plugin_remotestorage.moc"
+
+#include "moc_plugin_remotestorage.cpp"

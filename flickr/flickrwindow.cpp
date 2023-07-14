@@ -805,3 +805,5 @@ void FlickrWindow::slotReloadPhotoSetRequest()
 }
 
 } // namespace KIPIFlickrPlugin
+
+#include "moc_flickrwindow.cpp"

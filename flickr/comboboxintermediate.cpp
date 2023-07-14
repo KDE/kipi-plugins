@@ -82,3 +82,5 @@ void ComboBoxIntermediate::slotIndexChanged(int)
 }
 
 } // namespace KIPIFlickrPlugin
+
+#include "moc_comboboxintermediate.cpp"

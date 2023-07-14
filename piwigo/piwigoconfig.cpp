@@ -128,3 +128,5 @@ void PiwigoEdit::slotOk()
 }
 
 } // namespace KIPIPiwigoExportPlugin
+
+#include "moc_piwigoconfig.cpp"

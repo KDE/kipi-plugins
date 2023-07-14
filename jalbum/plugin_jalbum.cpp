@@ -134,3 +134,5 @@ void Plugin_JAlbumExport::slotExport()
 }  // namespace KIPIJAlbumExportPlugin
 
 #include "plugin_jalbum.moc"
+
+#include "moc_plugin_jalbum.cpp"

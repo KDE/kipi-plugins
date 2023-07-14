@@ -15,3 +15,5 @@ O2Hubic::O2Hubic(QObject *parent): O2(parent) {
     setScope(HubicScope);
     setLocalhostPolicy("http://localhost:%1/");
 }
+
+#include "moc_o2hubic.cpp"

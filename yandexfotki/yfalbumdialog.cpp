@@ -97,3 +97,5 @@ void YandexFotkiAlbumDialog::slotOkClicked()
 }
 
 } // namespace KIPIYandexFotkiPlugin
+
+#include "moc_yfalbumdialog.cpp"

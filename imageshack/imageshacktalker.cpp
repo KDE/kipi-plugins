@@ -514,3 +514,5 @@ void ImageshackTalker::parseAddPhotoToGalleryDone(QByteArray data)
 }
 
 } // namespace KIPIImageshackPlugin
+
+#include "moc_imageshacktalker.cpp"

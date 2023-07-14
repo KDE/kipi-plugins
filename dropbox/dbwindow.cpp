@@ -451,3 +451,5 @@ void DBWindow::closeEvent(QCloseEvent* e)
 }
 
 } // namespace KIPIDropboxPlugin
+
+#include "moc_dbwindow.cpp"

@@ -40,3 +40,5 @@ QStringList O2Spotify::Scope::allScopesList() {
             << USER_READ_EMAIL
             << USER_TOP_READ;
 }
+
+#include "moc_o2spotify.cpp"

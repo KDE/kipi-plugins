@@ -144,3 +144,5 @@ void ImageshackWidget::slotReloadGalleries()
 }
 
 }  // namespace KIPIImageshackPlugin
+
+#include "moc_imageshackwidget.cpp"

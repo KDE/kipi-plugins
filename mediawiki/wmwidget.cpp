@@ -1176,3 +1176,5 @@ QString WmWidget::longitude() const
 }
 
 } // namespace KIPIWikimediaPlugin
+
+#include "moc_wmwidget.cpp"

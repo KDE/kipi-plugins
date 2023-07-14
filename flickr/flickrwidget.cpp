@@ -516,3 +516,5 @@ void FlickrWidget::slotAddExtraTagsToggled(bool status)
 }
 
 } // namespace KIPIFlickrPlugin
+
+#include "moc_flickrwidget.cpp"

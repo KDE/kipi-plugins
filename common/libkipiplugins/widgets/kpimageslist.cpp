@@ -1323,3 +1323,5 @@ QUrl KPImagesList::getCurrentUrl() const
 }
 
 }  // namespace KIPIPlugins
+
+#include "moc_kpimageslist.cpp"

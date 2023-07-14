@@ -165,3 +165,5 @@ void SmugNewAlbum::getAlbumProperties(SmugAlbum &album)
 }
 
 } // namespace KIPISmugPlugin
+
+#include "moc_smugalbum.cpp"

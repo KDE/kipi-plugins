@@ -165,3 +165,5 @@ void Plugin_SendImages::slotPrepareEmail()
 } // namespace KIPISendimagesPlugin
 
 #include "plugin_sendimages.moc"
+
+#include "moc_plugin_sendimages.cpp"

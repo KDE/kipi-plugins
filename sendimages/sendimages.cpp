@@ -704,3 +704,5 @@ void SendImages::slotCleanUp()
 }
 
 }  // namespace KIPISendimagesPlugin
+
+#include "moc_sendimages.cpp"

@@ -663,3 +663,5 @@ QString PiwigoWindow::cleanName(const QString& str) const
 }
 
 } // namespace KIPIPiwigoExportPlugin
+
+#include "moc_piwigowindow.cpp"
