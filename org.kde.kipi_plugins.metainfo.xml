@@ -11,6 +11,7 @@
   <name xml:lang="de">KIPI-Module</name>
   <name xml:lang="el">KIPI πρόσθετα</name>
   <name xml:lang="en-GB">KIPI Plugins</name>
+  <name xml:lang="eo">KIPI-kromaĵoj</name>
   <name xml:lang="es">Complementos KIPI</name>
   <name xml:lang="et">KIPI pluginad</name>
   <name xml:lang="eu">KIPI pluginak</name>
@@ -44,6 +45,7 @@
   <summary xml:lang="de">Module für KDE-Anwendungen zum Export von Bildern</summary>
   <summary xml:lang="el">Πρόσθετα για KDE εφαρμογές εξαγωγής εικόνων</summary>
   <summary xml:lang="en-GB">Plugins for KDE applications to export images</summary>
+  <summary xml:lang="eo">Kromprogramoj por KDE por eksporti bildojn</summary>
   <summary xml:lang="es">Complementos para exportar imágenes en aplicaciones de KDE</summary>
   <summary xml:lang="et">KDE rakenduste pluginad piltide eksportimiseks</summary>
   <summary xml:lang="eu">KDE aplikazioek irudiak esportatu ditzaten pluginak</summary>
@@ -76,6 +78,7 @@
     <p xml:lang="de">Mit diesen Modulen können Sie Bilder zu verschiedenen Diensten wie Mediawiki oder Facebook oder in ein lokales Album exportieren.</p>
     <p xml:lang="el">Αυτά τα πρόσθετα εξάγουν εικόνες σε διάφορες υπηρεσίες όπως το Mediawiki ή το Facebook ή ένα τοπικό άλμπουμ.</p>
     <p xml:lang="en-GB">These plugins export image to various services such as Mediawiki or Facebook or a local album.</p>
+    <p xml:lang="eo">Ĉi tiuj kromaĵoj eksportas bildon al diversaj servoj kiel Mediawiki aŭ Facebook aŭ loka albumo.</p>
     <p xml:lang="es">Estos complementos exportan imágenes a diversos servicios, como Mediawiki o Facebook, o a un álbum local.</p>
     <p xml:lang="et">Need pluginad võimaldavad eksportida pilte paljudesse teenustesse, nagu näiteks Mediawiki või Facebook või kas või kohalik album.</p>
     <p xml:lang="eu">Plugin hauek irudiak hainbat zerbitzutara esportatzen dituzte, Mediawiki-ra, Facebook-era edo album lokaletara esaterako.</p>
@@ -107,6 +110,7 @@
     <p xml:lang="de">Mit den Modulen erhalten Gwenview und Spectacle Funktionen zum Export.</p>
     <p xml:lang="el">Προσθέτουν λειτουργίες εξαγωγής σε Gwenview και Spectacle.</p>
     <p xml:lang="en-GB">They add export features to Gwenview and Spectacle.</p>
+    <p xml:lang="eo">Ili aldonas eksportkapablojn al Gwenview kaj Spectacle.</p>
     <p xml:lang="es">Añaden funciones de exportación a Gwenview y a Spectacle.</p>
     <p xml:lang="et">Nendega saab lisada rakendustele Gwenview ja Spectacle täiendavaid võimalusi.</p>
     <p xml:lang="eu">Esportatzeko eginbideak gehitzen dizkiete Gwenview eta Spectacle-ri.</p>
@@ -127,7 +131,7 @@
     <p xml:lang="ru">Эти модули используются в приложениях Gwenview и Spectacle.</p>
     <p xml:lang="sl">Dodajo možnosti izvoza slik v orodjih Gwenview in Spectacle.</p>
     <p xml:lang="sv">De lägger till exportfunktioner i Gwenview och Spectacle.</p>
-    <p xml:lang="tr">Gwenview ve Spectacle'a dışa aktarma özellikleri eklerler.</p>
+    <p xml:lang="tr">Gwenview ve Deklanşör'e dışa aktarma özellikleri eklerler.</p>
     <p xml:lang="uk">Додають можливості з експортування до Gwenview та Spectacle.</p>
     <p xml:lang="x-test">xxThey add export features to Gwenview and Spectacle.xx</p>
     <p xml:lang="zh-CN">它们给 Gwenview 和 Spectacle 添加了导出功能。</p>
@@ -144,6 +148,7 @@
       <caption xml:lang="de">KIPI-Module in Gwenview.</caption>
       <caption xml:lang="el">KIPI πρόσθετα όπως χρησιμοποιούνται στο Gwenview.</caption>
       <caption xml:lang="en-GB">KIPI Plugins as used in Gwenview.</caption>
+      <caption xml:lang="eo">KIPI-kromaĵoj uzitaj ene de Gwenview.</caption>
       <caption xml:lang="es">Complementos KIPI en Gwenview.</caption>
       <caption xml:lang="et">KIPI pluginate kasutamine Gwenview's.</caption>
       <caption xml:lang="eu">KIPI pluginak Gwenview-n erabili bezala.</caption>
