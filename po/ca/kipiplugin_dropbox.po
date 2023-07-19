@@ -150,22 +150,3 @@ msgstr "Barra d'eines principal"
 #, kde-format
 msgid "Export to &Dropbox..."
 msgstr "Exporta a &Dropbox..."
-
-#~ msgid "Authorize Dropbox"
-#~ msgstr "Autoritza al Dropbox"
-
-#~ msgid ""
-#~ "Please follow the instructions in the browser. After logging in and "
-#~ "authorizing the application, press OK."
-#~ msgstr ""
-#~ "Si us plau, seguiu les instruccions del navegador. Després d'iniciar la "
-#~ "sessió i autoritzar l'aplicació, premeu «Bé»."
-
-#~ msgid ""
-#~ "The textbox is empty, please enter the code from the browser in the "
-#~ "textbox. To complete the authentication click \"Change Account\", or "
-#~ "\"Start Upload\" to authenticate again."
-#~ msgstr ""
-#~ "El quadre de text està buit, introduïu-hi el codi des del navegador. Per "
-#~ "a completar l'autenticació cliqueu «Canvia el compte», o «Comença la "
-#~ "pujada» per tornar a autenticar-se."

@@ -187,12 +187,3 @@ msgstr "Lukas Krejci"
 #, kde-format
 msgid "Author"
 msgstr "Autor"
-
-#~ msgid "Login:"
-#~ msgstr "Usuari:"
-
-#~ msgid "Password:"
-#~ msgstr "Contrasenya:"
-
-#~ msgid "&Cancel"
-#~ msgstr "&Cancel·la"
