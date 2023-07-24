@@ -30,7 +30,7 @@ msgstr "파일을 열 수 없음"
 #: imgurimageslist.cpp:59
 #, kde-format
 msgid "Thumbnail"
-msgstr "축소판"
+msgstr "섬네일"
 
 #: imgurimageslist.cpp:62
 #, kde-format

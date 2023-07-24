@@ -84,7 +84,7 @@ msgstr "현재 서비스를 사용할 수 없습니다."
 #: fbtalker.cpp:552
 #, kde-format
 msgid "The application has reached the maximum number of requests allowed."
-msgstr "프로그램에서 최대 요청 수를 초과했습니다."
+msgstr "앱에서 최대 요청 수를 초과했습니다."
 
 #: fbtalker.cpp:555
 #, kde-format

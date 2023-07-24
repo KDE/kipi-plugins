@@ -45,7 +45,7 @@ msgstr "태그(선택 사항):"
 #: imageshackwidget.cpp:88
 #, kde-format
 msgid "Remove information bar on thumbnails"
-msgstr "축소판에서 정보 표시줄 삭제"
+msgstr "섬네일에서 정보 표시줄 삭제"
 
 #: imageshackwidget.cpp:125
 #, kde-format
