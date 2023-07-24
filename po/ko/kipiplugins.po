@@ -238,7 +238,7 @@ msgstr "찾아보기..."
 #: libkipiplugins/widgets/kpimageslist.cpp:292
 #, kde-format
 msgid "Thumbnail"
-msgstr "축소판"
+msgstr "섬네일"
 
 #: libkipiplugins/widgets/kpimageslist.cpp:293
 #, kde-format

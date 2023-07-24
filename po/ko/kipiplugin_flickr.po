@@ -298,7 +298,7 @@ msgstr "태그 옵션"
 #: flickrwidget.cpp:138
 #, kde-format
 msgid "Use Host Application Tags"
-msgstr "호스트 프로그램 태그 사용"
+msgstr "호스트 앱 태그 사용"
 
 #: flickrwidget.cpp:140 flickrwidget.cpp:501
 #, kde-format
