@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: extragear-graphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2023-05-24 01:21+0300\n"
+"PO-Revision-Date: 2023-08-02 01:01+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.07.70\n"
+"X-Generator: Lokalize 23.11.70\n"
 
 #: comboboxintermediate.h:54
 #, kde-format
@@ -533,7 +533,7 @@ msgstr "Flick&r'a Dışa Aktar..."
 #: selectuserdlg.cpp:47
 #, kde-format
 msgid "Flickr Account Selector"
-msgstr "Flickr Hesap Seçici"
+msgstr "Flickr Hesabı Seçicisi"
 
 #: selectuserdlg.cpp:52
 #, kde-format
