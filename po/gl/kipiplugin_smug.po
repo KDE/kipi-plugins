@@ -123,13 +123,14 @@ msgstr "Modelo:"
 #: smugalbum.cpp:98
 #, kde-format
 msgid "Security && Privacy"
-msgstr "Seguridade e intimidade"
+msgstr "Seguridade e privacidade"
 
 #: smugalbum.cpp:99
 #, kde-format
 msgid "These are security and privacy settings for the new SmugMug album."
 msgstr ""
-"Estas son as opcións de seguridade e intimidade para o novo álbum de SmugMug."
+"Estas son as opcións de seguridade e privacidade para o novo álbum de "
+"SmugMug."
 
 #: smugalbum.cpp:101
 #, kde-format
@@ -168,7 +169,7 @@ msgstr ""
 #: smugalbum.cpp:118
 #, kde-format
 msgid "Privacy:"
-msgstr "Intimidade:"
+msgstr "Privacidade:"
 
 #: smugalbum.cpp:119
 #, kde-format
