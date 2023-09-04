@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2023-04-23 06:10+0200\n"
+"PO-Revision-Date: 2023-09-03 13:05+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.04.3\n"
 
 #: authorize.cpp:116
 #, kde-format
@@ -32,8 +32,8 @@ msgid ""
 "textbox below, and click OK."
 msgstr ""
 "Siga as instrucións no navegador. Despois de iniciar a sesión e autorizar a "
-"aplicación, copie o código do navegador, pégueo no campo de texto en baixo, "
-"e prema Aceptar."
+"aplicación, copie o código do navegador, pégueo na caixa de texto embaixo, e "
+"prema Aceptar."
 
 #: authorize.cpp:249 gdtalker.cpp:272 gptalker.cpp:644
 #, kde-format
@@ -356,9 +356,9 @@ msgid ""
 "To complete the authentication click \"Change Account\", or \"Start Upload\" "
 "to authenticate again."
 msgstr ""
-"O texto está baleiro. Debe inserir o código que aparece no navegador no "
-"campo de texto. Para completar a autenticación prema «Cambiar a conta», ou "
-"en «Iniciar o envío» para autenticarse de novo."
+"A caixa de texto está baleira. Debe inserir o código que aparece no "
+"navegador na caixa de texto. Para completar a autenticación prema «Cambiar a "
+"conta», ou en «Iniciar o envío» para autenticarse de novo."
 
 #: gswindow.cpp:669
 #, kde-format

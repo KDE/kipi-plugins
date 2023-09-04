@@ -6,13 +6,13 @@
 # Pablo Pita Leira <pablo.pita@gmail.com>, 2010.
 # Hector Wilvert Ivan Valdez Reza <ranmaru.hibikiya@gmail.com>, 2013.
 # Aitor Morant <fromhell091@gmail.com>, 2013.
-# Eloy Cuadra <ecuadra@eloihr.net>, 2015, 2016, 2017.
+# SPDX-FileCopyrightText: 2015, 2016, 2017, 2023 Eloy Cuadra <ecuadra@eloihr.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: kipiplugin_sendimages\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2017-01-24 22:48+0100\n"
+"PO-Revision-Date: 2023-09-03 21:55+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "com>\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Lokalize 23.08.0\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: imageresize.cpp:116
@@ -421,9 +421,8 @@ msgstr ""
 "reemplazar al TIFF. El PNG está diseñado para funcionar bien con "
 "aplicaciones de visualización de imágenes por Internet, como la World Wide "
 "Web, pues es totalmente transmisible con una opción de presentación "
-"progresiva. Además, el PNG puede almacenar la información de gamma y "
-"cromacidad para mejorar la coincidencia de colores entre plataformas "
-"heterogéneas.</p>"
+"progresiva. Además, el PNG puede almacenar la información de gamma y croma "
+"para mejorar la coincidencia de colores entre plataformas heterogéneas.</p>"
 
 #: settingswidget.cpp:197
 #, kde-format
