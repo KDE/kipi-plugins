@@ -33,7 +33,7 @@ msgid ""
 "used in Dolphin or Konqueror, e.g. ftp://my.server.org/sub/folder."
 msgstr ""
 "Indica l'adreça de la destinació a on s'han de pujar les imatges. Pot ser "
-"una adreça emprada en Dolphin o Konqueror, p. ex. ftp://elmeu.servidor.org/"
+"una adreça emprada en Dolphin o Konqueror, p. ex., ftp://elmeu.servidor.org/"
 "sub/carpeta."
 
 #: KioExportWidget.cpp:66
