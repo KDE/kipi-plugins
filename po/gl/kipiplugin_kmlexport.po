@@ -26,7 +26,7 @@ msgstr "Xerando o ficheiro KML…"
 #: kmlexport.cpp:180 kmlexport.cpp:197
 #, kde-format
 msgid "Could not read image '%1'"
-msgstr "Non se puido ler a imaxe «%1»"
+msgstr "Non foi posíbel ler a imaxe «%1»"
 
 #: kmlexport.cpp:189
 #, kde-format
@@ -41,7 +41,7 @@ msgstr "Produciuse un erro ao cargar a imaxe «%1»"
 #: kmlexport.cpp:245
 #, kde-format
 msgid "Could not save image '%1' to '%2'"
-msgstr "Non se puido gardar a imaxe «%1» en «%2»"
+msgstr "Non foi posíbel gardar a imaxe «%1» en «%2»"
 
 #: kmlexport.cpp:350
 #, kde-format
@@ -51,7 +51,7 @@ msgstr "Creación da marca de lugar «%1»"
 #: kmlexport.cpp:358
 #, kde-format
 msgid "Could not save icon for image '%1' to '%2'"
-msgstr "Non se puido gardar a icona da imaxe «%1» en «%2»"
+msgstr "Non foi posíbel gardar a icona da imaxe «%1» en «%2»"
 
 #: kmlexport.cpp:390
 #, kde-format
@@ -61,7 +61,7 @@ msgstr "Non se escolleu ningún ficheiro GPX."
 #: kmlexport.cpp:399
 #, kde-format
 msgid "Cannot parse %1 GPX file."
-msgstr "Non se pode interpretar o ficheiro GPX %1."
+msgstr "Non é posíbel interpretar o ficheiro GPX %1."
 
 #: kmlexport.cpp:405
 #, kde-format
@@ -93,7 +93,7 @@ msgstr[1] "Non hai datos da posición para %1 imaxes"
 #: kmlexport.cpp:526
 #, kde-format
 msgid "Cannot open file for writing"
-msgstr "Non se pode abrir o ficheiro para escribir nel."
+msgstr "Non é posíbel abrir o ficheiro para escribir nel."
 
 #: kmlexport.cpp:539
 #, kde-format
@@ -103,7 +103,7 @@ msgstr "Mover para o directorio final"
 #: kmlexport.cpp:543
 #, kde-format
 msgid "Cannot move data to destination directory"
-msgstr "Non se poden mover os datos ao directorio de destino."
+msgstr "Non é posíbel mover os datos ao directorio de destino."
 
 #: kmlgpsdataparser.cpp:63
 #, kde-format

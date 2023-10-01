@@ -114,7 +114,7 @@ msgstr "Exportación a Image Shack"
 #: imageshackwindow.cpp:261
 #, kde-format
 msgid "Authenticating..."
-msgstr "Estase a autenticar…"
+msgstr "Autenticando…"
 
 #: imageshackwindow.cpp:318
 #, kde-format
@@ -124,7 +124,7 @@ msgstr "O acceso fallou: %1\n"
 #: imageshackwindow.cpp:332
 #, kde-format
 msgid "Failed to get galleries list: %1\n"
-msgstr "Non se puido obter a lista de galerías: %1\n"
+msgstr "Non foi posíbel obter a lista de galerías: %1\n"
 
 #: imageshackwindow.cpp:404
 #, kde-format
@@ -137,7 +137,7 @@ msgid ""
 "Failed to upload photo into Imageshack: %1\n"
 "Do you want to continue?"
 msgstr ""
-"Non se puido enviar a imaxe a ImageShack: %1\n"
+"Non foi posíbel enviar a imaxe a ImageShack: %1\n"
 "Quere continuar?"
 
 #. i18n: ectx: Menu (Export)

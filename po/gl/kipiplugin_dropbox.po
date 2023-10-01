@@ -26,12 +26,12 @@ msgstr "Erro"
 #: dbtalker.cpp:360
 #, kde-format
 msgid "Failed to upload photo"
-msgstr "Non se puido enviar a foto"
+msgstr "Non foi posíbel enviar a foto"
 
 #: dbtalker.cpp:387
 #, kde-format
 msgid "Failed to list folders"
-msgstr "Non se puideron listar os cartafoles"
+msgstr "Non foi posíbel listar os cartafoles"
 
 #: dbwindow.cpp:70
 #, kde-format
@@ -116,7 +116,7 @@ msgid ""
 "%1\n"
 "Do you want to continue?"
 msgstr ""
-"Non se puido enviar a imaxe a Dropbox\n"
+"Non foi posíbel enviar a imaxe a Dropbox\n"
 "%1\n"
 "Quere continuar?"
 

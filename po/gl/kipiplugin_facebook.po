@@ -217,7 +217,7 @@ msgstr "Exportar a Facebook"
 #: fbwindow.cpp:648 fbwindow.cpp:663
 #, kde-format
 msgid "Cannot open file"
-msgstr "Non se pode abrir o ficheiro"
+msgstr "Non é posíbel abrir o ficheiro"
 
 #: fbwindow.cpp:686
 #, kde-format
@@ -230,7 +230,7 @@ msgid ""
 "Failed to upload photo into Facebook: %1\n"
 "Do you want to continue?"
 msgstr ""
-"Non se puido enviar a foto a Facebook: %1\n"
+"Non foi posíbel enviar a foto a Facebook: %1\n"
 "Quere continuar?"
 
 #: fbwindow.cpp:706

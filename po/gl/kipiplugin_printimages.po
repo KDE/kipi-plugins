@@ -64,8 +64,8 @@ msgid ""
 "Unable to create a temporary folder. Please make sure you have proper "
 "permissions to this folder and try again."
 msgstr ""
-"Non se pode crear un cartafol temporal. Asegúrese de que dispón dos permisos "
-"axeitados para este cartafol e inténteo de novo."
+"Non é posíbel crear un cartafol temporal. Asegúrese de que dispón dos "
+"permisos axeitados para este cartafol e inténteo de novo."
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, m_disableCrop)
 #: ui/croppage.ui:19
@@ -672,12 +672,12 @@ msgstr ""
 #: wizard/wizard.cpp:2438
 #, kde-format
 msgid "Could not save file, please check your output entry."
-msgstr "Non se puido gardar o ficheiro. Comprobe a entrada da saída."
+msgstr "Non foi posíbel gardar o ficheiro. Comprobe a entrada da saída."
 
 #: wizard/wizard.cpp:2462
 #, kde-format
 msgid "Could not remove the GIMP's temporary files."
-msgstr "Non se puideron retirar os ficheiros temporais do GIMP."
+msgstr "Non foi posíbel retirar os ficheiros temporais do GIMP."
 
 #: wizard/wizard.cpp:2583
 #, kde-format

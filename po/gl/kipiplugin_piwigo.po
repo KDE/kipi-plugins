@@ -84,7 +84,7 @@ msgstr "Recibiuse unha resposta incorrecta do Piwigo remoto"
 #: piwigotalker.cpp:567
 #, kde-format
 msgid "Failed to list albums"
-msgstr "Non se puideron listar os álbums"
+msgstr "Non foi posíbel listar os álbums"
 
 #: piwigotalker.cpp:613
 #, kde-format
@@ -94,7 +94,7 @@ msgstr "Xa existe a foto «%1»."
 #: piwigotalker.cpp:645 piwigotalker.cpp:785 piwigotalker.cpp:945
 #, kde-format
 msgid "Failed to upload photo"
-msgstr "Non se puido enviar a foto"
+msgstr "Non foi posíbel enviar a foto"
 
 #: piwigotalker.cpp:714
 #, kde-format
@@ -237,7 +237,7 @@ msgstr "Fallou o acceso"
 #: piwigowindow.cpp:396
 #, kde-format
 msgid "Failed to login into remote piwigo. "
-msgstr "Non se puido acceder ao piwigo remoto. "
+msgstr "Non foi posíbel acceder ao piwigo remoto. "
 
 #: piwigowindow.cpp:397
 #, kde-format
@@ -286,7 +286,7 @@ msgstr "O envío fallou"
 #: piwigowindow.cpp:599
 #, kde-format
 msgid "Failed to upload media into remote Piwigo. "
-msgstr "Non se puido enviar o ficheiro ao Piwigo remoto. "
+msgstr "Non foi posíbel enviar o ficheiro ao Piwigo remoto. "
 
 #: piwigowindow.cpp:600
 #, kde-format
