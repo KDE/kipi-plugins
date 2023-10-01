@@ -197,7 +197,7 @@ msgid ""
 "Failed to prepare image %1\n"
 "Do you want to continue?"
 msgstr ""
-"Non se puido preparar a imaxe %1\n"
+"Non foi posíbel preparar a imaxe %1\n"
 "Quere continuar?"
 
 #: yfwindow.cpp:617
@@ -228,22 +228,22 @@ msgstr "As credenciais son incorrectas"
 #: yfwindow.cpp:679
 #, kde-format
 msgid "Cannot get service document"
-msgstr "Non se pode obter o documento do servizo"
+msgstr "Non é posíbel obter o documento do servizo"
 
 #: yfwindow.cpp:692
 #, kde-format
 msgid "Cannot list albums"
-msgstr "Non se poden enumerar os álbums"
+msgstr "Non é posíbel enumerar os álbums"
 
 #: yfwindow.cpp:695
 #, kde-format
 msgid "Cannot list photos"
-msgstr "Non se poden enumerar as fotos"
+msgstr "Non é posíbel enumerar as fotos"
 
 #: yfwindow.cpp:698
 #, kde-format
 msgid "Cannot update album info"
-msgstr "Non se pode actualizar a información do álbum"
+msgstr "Non é posíbel actualizar a información do álbum"
 
 #: yfwindow.cpp:704
 #, kde-format
@@ -256,7 +256,7 @@ msgid ""
 "Failed to upload image %1\n"
 "Do you want to continue?"
 msgstr ""
-"Non se puido enviar a imaxe %1\n"
+"Non foi posíbel enviar a imaxe %1\n"
 "Quere continuar?"
 
 #: yfwindow.cpp:726

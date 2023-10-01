@@ -466,7 +466,7 @@ msgstr "Exportación a Smug"
 #: smugwindow.cpp:789 smugwindow.cpp:803
 #, kde-format
 msgid "Cannot open file"
-msgstr "Non se pode abrir o ficheiro"
+msgstr "Non é posíbel abrir o ficheiro"
 
 #: smugwindow.cpp:826
 #, kde-format
@@ -480,7 +480,7 @@ msgid ""
 "%1\n"
 "Do you want to continue?"
 msgstr ""
-"Non se puido enviar a foto a SmugMug.\n"
+"Non foi posíbel enviar a foto a SmugMug.\n"
 "%1\n"
 "Quere continuar?"
 
@@ -495,7 +495,7 @@ msgid ""
 "Failed to save photo: %1\n"
 "Do you want to continue?"
 msgstr ""
-"Non se puido gardar a foto: %1\n"
+"Non foi posíbel gardar a foto: %1\n"
 "Quere continuar?"
 
 #: smugwindow.cpp:902
@@ -504,7 +504,7 @@ msgid ""
 "Failed to download photo: %1\n"
 "Do you want to continue?"
 msgstr ""
-"Non se puido descargar a imaxe: %1\n"
+"Non foi posíbel descargar a imaxe: %1\n"
 "Quere continuar?"
 
 #~ msgctxt "NAME OF TRANSLATORS"

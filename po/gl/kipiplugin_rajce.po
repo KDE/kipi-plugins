@@ -84,7 +84,7 @@ msgstr "Álbum descoñecido"
 #: rajcewidget.cpp:191
 #, kde-format
 msgid "Failed to open album"
-msgstr "Non se puido abrir o álbum"
+msgstr "Non foi posíbel abrir o álbum"
 
 #: rajcewidget.cpp:192
 #, kde-format
@@ -94,7 +94,7 @@ msgstr "O nome do álbum non pode estar baleiro"
 #: rajcewidget.cpp:193
 #, kde-format
 msgid "Failed to create album"
-msgstr "Non se puido crear o álbum"
+msgstr "Non foi posíbel crear o álbum"
 
 #: rajcewidget.cpp:194
 #, kde-format
