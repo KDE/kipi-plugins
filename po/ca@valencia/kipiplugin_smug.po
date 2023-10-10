@@ -400,7 +400,7 @@ msgstr "Comença la pujada al servei web de SmugMug"
 #: smugwindow.cpp:127
 #, kde-format
 msgid "Smug Import/Export"
-msgstr "Importació/exportació a Smug"
+msgstr "Importeu/exporteu cap a Smug"
 
 #: smugwindow.cpp:128
 #, kde-format
