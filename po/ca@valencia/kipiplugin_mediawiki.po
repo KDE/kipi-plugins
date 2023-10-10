@@ -80,7 +80,7 @@ msgstr "Esta és la llista de les imatges que es pujaran al wiki."
 #, kde-format
 msgid "This is the login form to your account on the chosen wiki."
 msgstr ""
-"Este és el formulari de connexió amb el vostre compte al wiki escollit."
+"Este és el formulari de connexió amb el vostre compte en el wiki escollit."
 
 #: wmwidget.cpp:235
 #, kde-format
