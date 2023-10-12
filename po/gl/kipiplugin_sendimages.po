@@ -26,12 +26,12 @@ msgstr ""
 #: imageresize.cpp:116
 #, kde-format
 msgid "Error opening input file"
-msgstr "Ocorreu un erro ao abrir o ficheiro de entrada"
+msgstr "Produciuse un erro ao abrir o ficheiro de entrada"
 
 #: imageresize.cpp:127
 #, kde-format
 msgid "Error opening temporary folder"
-msgstr "Ocorreu un erro ao abrir o cartafol temporal"
+msgstr "Produciuse un erro ao abrir o cartafol temporal"
 
 #: imageresize.cpp:175
 #, kde-format
