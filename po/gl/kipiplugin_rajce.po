@@ -69,7 +69,7 @@ msgstr "A orde é incorrecta"
 #: rajcewidget.cpp:186
 #, kde-format
 msgid "Invalid login name or password"
-msgstr "Son incorrectos o nome de usuario ou o contrasinal"
+msgstr "Son incorrectos o nome de usuaria ou o contrasinal"
 
 #: rajcewidget.cpp:187
 #, kde-format

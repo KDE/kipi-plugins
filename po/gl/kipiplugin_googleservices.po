@@ -154,7 +154,7 @@ msgid ""
 "Error occurred: %1\n"
 "Unable to proceed further."
 msgstr ""
-"Ocorreu un erro: %1\n"
+"Produciuse un erro: %1\n"
 "Non se pode continuar."
 
 #: gptalker.cpp:691 gptalker.cpp:758

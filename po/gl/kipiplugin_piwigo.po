@@ -42,7 +42,7 @@ msgstr "URL:"
 #, kde-format
 msgctxt "piwigo login settings"
 msgid "Username:"
-msgstr "Nome de usuario:"
+msgstr "Nome de usuaria:"
 
 #: piwigoconfig.cpp:84
 #, kde-format
@@ -68,7 +68,7 @@ msgstr "O URL de Piwigo probabelmente é incorrecto"
 #: piwigotalker.cpp:446
 #, kde-format
 msgid "Incorrect username or password specified"
-msgstr "Indicouse un nome de usuario ou contrasinal incorrecto"
+msgstr "Indicouse un nome de usuaria ou contrasinal incorrecto"
 
 #: piwigotalker.cpp:489 piwigotalker.cpp:663
 #, kde-format

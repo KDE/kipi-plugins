@@ -217,7 +217,7 @@ msgstr "Engadir un novo wiki"
 #: wmwidget.cpp:336
 #, kde-format
 msgid "Login:"
-msgstr "Nome de usuario:"
+msgstr "Nome de usuaria:"
 
 #: wmwidget.cpp:339
 #, kde-format

@@ -112,7 +112,7 @@ msgstr "Escoller imaxes"
 #: libkipiplugins/dialogs/kplogindialog.cpp:76
 #, kde-format
 msgid "Login:"
-msgstr "Nome de usuario:"
+msgstr "Nome de usuaria:"
 
 #: libkipiplugins/dialogs/kplogindialog.cpp:79
 #, kde-format

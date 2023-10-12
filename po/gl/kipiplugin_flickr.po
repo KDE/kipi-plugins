@@ -195,7 +195,7 @@ msgid ""
 "Error Occurred: %1\n"
 "Cannot proceed any further."
 msgstr ""
-"Ocorreu un erro: %1\n"
+"Produciuse un erro: %1\n"
 "Non se pode continuar."
 
 #: flickrtalker.cpp:852
