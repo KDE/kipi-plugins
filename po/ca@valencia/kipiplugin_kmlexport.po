@@ -101,12 +101,12 @@ msgstr "No s'ha pogut obrir el fitxer per a escriptura"
 #: kmlexport.cpp:539
 #, kde-format
 msgid "Move to final directory"
-msgstr "Mou al directori final"
+msgstr "Mou cap al directori final"
 
 #: kmlexport.cpp:543
 #, kde-format
 msgid "Cannot move data to destination directory"
-msgstr "No s'han pogut moure les dades al directori de destinació"
+msgstr "No s'han pogut moure les dades cap al directori de destinació"
 
 #: kmlgpsdataparser.cpp:63
 #, kde-format
@@ -453,7 +453,7 @@ msgstr ""
 #: kmlwindow.cpp:285
 #, kde-format
 msgid "A tool to export to KML"
-msgstr "Una eina per a exportar a KML"
+msgstr "Una eina per a exportar cap a KML"
 
 #: kmlwindow.cpp:286
 #, kde-format

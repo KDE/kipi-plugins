@@ -35,7 +35,7 @@ msgstr "<p>Este és el percentatge en curs del treball per lots.</p>"
 #: libkipiplugins/dialogs/kpbatchprogressdialog.cpp:189
 #, kde-format
 msgid "Copy to Clipboard"
-msgstr "Copia al porta-retalls"
+msgstr "Copia a dins del porta-retalls"
 
 #: libkipiplugins/dialogs/kpbatchprogressdialog.cpp:271
 #: libkipiplugins/dialogs/kptooldialog.cpp:210
