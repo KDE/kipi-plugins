@@ -327,7 +327,7 @@ msgstr ""
 #: wmwidget.cpp:418
 #, kde-format
 msgid "First published in the United States before 1923"
-msgstr "Es va publicar per primera vegada als Estats Units abans del 1923"
+msgstr "Es va publicar per primera vegada en els Estats Units abans del 1923"
 
 #: wmwidget.cpp:420
 #, kde-format

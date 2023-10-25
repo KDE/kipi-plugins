@@ -119,7 +119,9 @@ msgstr ""
 #: KioImportWidget.cpp:52
 #, kde-format
 msgid "This is the list of images to import into the current album."
-msgstr "Esta és la llista de les imatges que s'importaran a l'àlbum actual."
+msgstr ""
+"Esta és la llista de les imatges que s'importaran cap a dins de l'àlbum "
+"actual."
 
 #: KioImportWindow.cpp:60
 #, kde-format
