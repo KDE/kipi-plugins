@@ -36,6 +36,7 @@
   <name xml:lang="sv"> KIPI-insticksprogram</name>
   <name xml:lang="tr">KIPI Eklentileri</name>
   <name xml:lang="uk">Додатки KIPI</name>
+  <name xml:lang="x-test">xxKIPI Pluginsxx</name>
   <name xml:lang="zh-CN">KIPI 插件</name>
   <name xml:lang="zh-TW">KIPI 外掛程式</name>
   <summary>Plugins for KDE applications to export images</summary>
@@ -67,6 +68,7 @@
   <summary xml:lang="sv">Insticksprogram för KDE-program för att exportera bilder</summary>
   <summary xml:lang="tr">KDE uygulamalarının görsel dışa aktarabilmesi için eklentiler</summary>
   <summary xml:lang="uk">Додатки до програм KDE для експортування зображень</summary>
+  <summary xml:lang="x-test">xxPlugins for KDE applications to export imagesxx</summary>
   <summary xml:lang="zh-CN">KDE 应用程序用于导出图像的插件</summary>
   <summary xml:lang="zh-TW">適用於 KDE 應用程式用來匯出影像的外掛程式</summary>
   <description>
@@ -99,6 +101,7 @@
     <p xml:lang="sv">Insticksprogrammen exporterar bilder till diverse tjänster såsom Mediawiki, Facebook eller ett lokalt album.</p>
     <p xml:lang="tr">Bu eklentiler, görselleri Mediawiki veya Facebook gibi hizmetlere veya yerel bir albüme dışa aktarır.</p>
     <p xml:lang="uk">За допомогою цих додатків можна експортувати зображення до різноманітних служб, зокрема Mediawiki та Facebook, або до локального альбому.</p>
+    <p xml:lang="x-test">xxThese plugins export image to various services such as Mediawiki or Facebook or a local album.xx</p>
     <p xml:lang="zh-CN">这些插件可将图像导出至如 Mediawiki、Facebook 或本地相册之类的各种服务上。</p>
     <p xml:lang="zh-TW">這些外掛程式能匯出圖片至各種服務（例如 MediaWiki、Facebook 等）或本機相簿。</p>
     <p>They add export features to Gwenview and Spectacle.</p>
@@ -130,6 +133,7 @@
     <p xml:lang="sv">De lägger till exportfunktioner i Gwenview och Spectacle.</p>
     <p xml:lang="tr">Akbakış ve Deklanşör'e dışa aktarma özellikleri eklerler.</p>
     <p xml:lang="uk">Додають можливості з експортування до Gwenview та Spectacle.</p>
+    <p xml:lang="x-test">xxThey add export features to Gwenview and Spectacle.xx</p>
     <p xml:lang="zh-CN">它们给 Gwenview 和 Spectacle 添加了导出功能。</p>
     <p xml:lang="zh-TW">其會對 Gwenview 及 Spectacle 加入匯出功能。</p>
   </description>
@@ -167,6 +171,7 @@
       <caption xml:lang="sv"> KIPI-insticksprogram som de används i Gwenview.</caption>
       <caption xml:lang="tr">KIPI Eklentileri, Akbakış'da kullanılırken.</caption>
       <caption xml:lang="uk">Додатки KIPI працюють у Gwenview.</caption>
+      <caption xml:lang="x-test">xxKIPI Plugins as used in Gwenview.xx</caption>
       <caption xml:lang="zh-CN">Gwenview 中的 KIPI 插件。</caption>
       <caption xml:lang="zh-TW">當用在 Gwenview 時的 KIPI 外掛程式。</caption>
       <image type="source" width="496" height="488">https://cdn.kde.org/screenshots/kipi-plugins/kipi-plugins.png</image>
