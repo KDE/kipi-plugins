@@ -1,19 +1,21 @@
-# Translation of kipiplugin_piwigoexport into esperanto.
+# Translation of kipiplugin_piwigo.pot into esperanto.
+# Copyright (C) 2009 Free Software Foundation, Inc.
+# This file is distributed under the same license as the kipi-plugins package.
 # Axel Rousseau <axel@esperanto-jeunes.org>, 2010.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: kipiplugin_piwigoexport\n"
+"Project-Id-Version: kipi-plugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:26+0000\n"
-"PO-Revision-Date: 2010-06-20 20:01+0200\n"
-"Last-Translator: Axel Rousseau <axel@esperanto-jeunes.org>\n"
+"PO-Revision-Date: 2023-11-12 22:59+0100\n"
+"Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: pology\n"
+"X-Generator: translate-po (https://github.com/zcribe/translate-po)\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #. i18n: ectx: Menu (Export)
@@ -49,83 +51,83 @@ msgstr "Pasvorto:"
 #: piwigotalker.cpp:305
 #, kde-format
 msgid "Check if %1 already exists"
-msgstr ""
+msgstr "Kontroli ĉu %1 jam ekzistas"
 
 #: piwigotalker.cpp:346
 #, kde-format
 msgid "Error"
-msgstr ""
+msgstr "Eraro"
 
 #: piwigotalker.cpp:440
 #, kde-format
 msgid "Piwigo URL probably incorrect"
-msgstr ""
+msgstr "Piwigo URL verŝajne malĝusta"
 
 #: piwigotalker.cpp:446
 #, kde-format
 msgid "Incorrect username or password specified"
-msgstr ""
+msgstr "Malĝusta uzantnomo aŭ pasvorto specifita"
 
 #: piwigotalker.cpp:489 piwigotalker.cpp:663
 #, kde-format
 msgid "Upload to Piwigo version < 2.4 is no longer supported"
-msgstr ""
+msgstr "Alŝuto al Piwigo-versio < 2.4 ne plu estas subtenata"
 
 #: piwigotalker.cpp:561 piwigotalker.cpp:639 piwigotalker.cpp:708
 #: piwigotalker.cpp:779
 #, kde-format
 msgid "Invalid response received from remote Piwigo"
-msgstr ""
+msgstr "Nevalida respondo ricevita de fora Piwigo"
 
 #: piwigotalker.cpp:567
 #, kde-format
 msgid "Failed to list albums"
-msgstr ""
+msgstr "Malsukcesis listigi albumojn"
 
 #: piwigotalker.cpp:613
 #, kde-format
 msgid "Photo '%1' already exists."
-msgstr ""
+msgstr "Foto '%1' jam ekzistas."
 
 #: piwigotalker.cpp:645 piwigotalker.cpp:785 piwigotalker.cpp:945
 #, kde-format
 msgid "Failed to upload photo"
-msgstr ""
+msgstr "Malsukcesis alŝuti foton"
 
 #: piwigotalker.cpp:714
 #, kde-format
 msgid "Photo '%1' already exists in this album."
-msgstr ""
+msgstr "Foto '%1' jam ekzistas en ĉi tiu albumo."
 
 #: piwigotalker.cpp:800
 #, kde-format
 msgid "Error : Cannot open photo: %1"
-msgstr ""
+msgstr "Eraro: Ne povas malfermi foton: %1"
 
 #: piwigotalker.cpp:827
 #, kde-format
 msgid "Upload the chunk %1/%2 of %3"
-msgstr ""
+msgstr "Alŝuti la pecon %1/%2 de %3"
 
 #: piwigotalker.cpp:860
 #, kde-format
 msgid "Warning : The full size photo cannot be uploaded."
-msgstr ""
+msgstr "Averto : La plengranda foto ne povas esti alŝutita."
 
 #: piwigotalker.cpp:906
 #, kde-format
 msgid "Upload the metadata of %1"
-msgstr ""
+msgstr "Alŝuti la metadatenojn de %1"
 
 #: piwigotalker.cpp:939
 #, kde-format
 msgid "Invalid response received from remote Piwigo (%1)"
-msgstr ""
+msgstr "Nevalida respondo ricevita de fora Piwigo (%1)"
 
 #: piwigowindow.cpp:128
 #, kde-format
 msgid "Visit Piwigo website"
-msgstr ""
+msgstr "Viziti la retejon de Piwigo"
 
 #: piwigowindow.cpp:145
 #, kde-format
@@ -135,7 +137,7 @@ msgstr "Albumoj"
 #: piwigowindow.cpp:156
 #, kde-format
 msgid "Change Account"
-msgstr ""
+msgstr "Ŝanĝi Konton"
 
 #: piwigowindow.cpp:160
 #, kde-format
@@ -145,32 +147,32 @@ msgstr "Opcioj"
 #: piwigowindow.cpp:164
 #, kde-format
 msgid "Resize photos before uploading"
-msgstr ""
+msgstr "Regrandigi fotojn antaŭ alŝuti"
 
 #: piwigowindow.cpp:167
 #, kde-format
 msgid "Maximum width:"
-msgstr ""
+msgstr "Maksimuma larĝo:"
 
 #: piwigowindow.cpp:173
 #, kde-format
 msgid "Maximum height:"
-msgstr ""
+msgstr "Maksimuma alteco:"
 
 #: piwigowindow.cpp:179
 #, kde-format
 msgid "Resized JPEG quality:"
-msgstr ""
+msgstr "Regrandigita JPEG-kvalito:"
 
 #: piwigowindow.cpp:231 piwigowindow.cpp:235
 #, kde-format
 msgid "Piwigo Export"
-msgstr ""
+msgstr "Piwigo Export"
 
 #: piwigowindow.cpp:236
 #, kde-format
 msgid "A tool to export image collections to a remote Piwigo server."
-msgstr ""
+msgstr "Ilo por eksporti bildkolektojn al fora Piwigo-servilo."
 
 #: piwigowindow.cpp:237
 #, kde-format
@@ -181,11 +183,16 @@ msgid ""
 "(c) 2008, Andrea Diamantini\n"
 "(c) 2010-2014, Frédéric Coiffier\n"
 msgstr ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2007, Colin Guthrie\n"
+"(c) 2006-2015, Gilles Caulier\n"
+"(c) 2008, Andrea Diamantini\n"
+"(c) 2010-2014, Frédéric Coiffeur\n"
 
 #: piwigowindow.cpp:243
 #, kde-format
 msgid "Renchi Raju"
-msgstr ""
+msgstr "Renchi Raju"
 
 #: piwigowindow.cpp:244 piwigowindow.cpp:248 piwigowindow.cpp:252
 #: piwigowindow.cpp:256 piwigowindow.cpp:260
@@ -196,37 +203,37 @@ msgstr "Kreinto"
 #: piwigowindow.cpp:247
 #, kde-format
 msgid "Colin Guthrie"
-msgstr ""
+msgstr "Colin Guthrie"
 
 #: piwigowindow.cpp:251
 #, kde-format
 msgid "Andrea Diamantini"
-msgstr ""
+msgstr "Andrea Diamantini"
 
 #: piwigowindow.cpp:255
 #, kde-format
 msgid "Gilles Caulier"
-msgstr ""
+msgstr "Gilles Caulier"
 
 #: piwigowindow.cpp:259
 #, kde-format
 msgid "Frédéric Coiffier"
-msgstr ""
+msgstr "Frédéric Coiffier"
 
 #: piwigowindow.cpp:267
 #, kde-format
 msgid "Start Upload"
-msgstr ""
+msgstr "Komenci Alŝuton"
 
 #: piwigowindow.cpp:395
 #, kde-format
 msgid "Login Failed"
-msgstr ""
+msgstr "Ensaluto malsukcesis"
 
 #: piwigowindow.cpp:396
 #, kde-format
 msgid "Failed to login into remote piwigo. "
-msgstr ""
+msgstr "Malsukcesis ensaluti en fora piwigo."
 
 #: piwigowindow.cpp:397
 #, kde-format
@@ -234,11 +241,13 @@ msgid ""
 "\n"
 "Do you want to check your settings and try again?"
 msgstr ""
+"\n"
+"Ĉu vi volas kontroli viajn agordojn kaj provi denove?"
 
 #: piwigowindow.cpp:404 piwigowindow.cpp:644 plugin_piwigo.cpp:117
 #, kde-format
 msgid "Edit Piwigo Data"
-msgstr ""
+msgstr "Redakti Piwigo-Datumojn"
 
 #: piwigowindow.cpp:464 piwigowindow.cpp:488
 #, kde-format
@@ -253,27 +262,27 @@ msgstr "Bildo"
 #: piwigowindow.cpp:538
 #, kde-format
 msgid "Nothing to upload - please select photos to upload."
-msgstr ""
+msgstr "Nenio por alŝuti - bonvolu elekti fotojn por alŝuti."
 
 #: piwigowindow.cpp:576
 #, kde-format
 msgid "The file %1 is not a supported image or video format"
-msgstr ""
+msgstr "La dosiero %1 ne estas subtenata bildo aŭ videoformato"
 
 #: piwigowindow.cpp:580
 #, kde-format
 msgid "Uploading file %1"
-msgstr ""
+msgstr "Alŝutante dosieron %1"
 
 #: piwigowindow.cpp:598
 #, kde-format
 msgid "Uploading Failed"
-msgstr ""
+msgstr "Malsukcesa alŝuto"
 
 #: piwigowindow.cpp:599
 #, kde-format
 msgid "Failed to upload media into remote Piwigo. "
-msgstr ""
+msgstr "Malsukcesis alŝuti aŭdviaĵojn en fora Piwigo."
 
 #: piwigowindow.cpp:600
 #, kde-format
@@ -281,28 +290,10 @@ msgid ""
 "\n"
 "Do you want to continue?"
 msgstr ""
+"\n"
+"Ĉu vi volas daŭrigi?"
 
 #: plugin_piwigo.cpp:97
 #, kde-format
 msgid "Export to &Piwigo..."
-msgstr ""
-
-#~ msgctxt "NAME OF TRANSLATORS"
-#~ msgid "Your names"
-#~ msgstr "Axel Rousseau"
-
-#~ msgctxt "EMAIL OF TRANSLATORS"
-#~ msgid "Your emails"
-#~ msgstr "axel@esperanto-jeunes.org"
-
-#~ msgid "Author"
-#~ msgstr "Aŭtoro"
-
-#~ msgid "Maintainer"
-#~ msgstr "Prizorganto"
-
-#~ msgid "Handbook"
-#~ msgstr "Manlibro"
-
-#~ msgid "Settings"
-#~ msgstr "Agordo"
+msgstr "Eksporti al &Piwigo..."

@@ -2,46 +2,47 @@
 # Copyright (C) 2009 Free Software Foundation, Inc.
 # This file is distributed under the same license as the kipi-plugins package.
 # Axel Rousseau <axel@esperanto-jeunes.org>, 2009.
+# Oliver Kellogg <okellogg@users.sourceforge.net>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kipiplugin_sendimages\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:26+0000\n"
-"PO-Revision-Date: 2023-03-21 22:43+0100\n"
+"PO-Revision-Date: 2023-11-12 22:59+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: pology\n"
+"X-Generator: translate-po (https://github.com/zcribe/translate-po)\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: imageresize.cpp:116
 #, kde-format
 msgid "Error opening input file"
-msgstr ""
+msgstr "Eraro dum malfermo de eniga dosiero"
 
 #: imageresize.cpp:127
 #, kde-format
 msgid "Error opening temporary folder"
-msgstr ""
+msgstr "Eraro dum malfermado de provizora dosierujo"
 
 #: imageresize.cpp:175
 #, kde-format
 msgid "Cannot resize image. Aborting."
-msgstr ""
+msgstr "Ne povas regrandigi bildon. Abortante."
 
 #: imageresize.cpp:186
 #, kde-format
 msgid "Cannot save resized image (JPEG). Aborting."
-msgstr ""
+msgstr "Ne povas konservi regrandigan bildon (JPEG). Abortante."
 
 #: imageresize.cpp:194
 #, kde-format
 msgid "Cannot save resized image (PNG). Aborting."
-msgstr ""
+msgstr "Ne povas konservi regrandigan bildon (PNG). Abortante."
 
 #. i18n: ectx: Menu (Export)
 #: kipiplugin_sendimagesui.rc:7
@@ -58,52 +59,52 @@ msgstr "Ĉefa ilobreto"
 #: plugin_sendimages.cpp:115
 #, kde-format
 msgid "Email Images..."
-msgstr ""
+msgstr "Retpoŝti Bildojn..."
 
 #: sendimages.cpp:133
 #, kde-format
 msgid "Email images"
-msgstr ""
+msgstr "Retpoŝti bildojn"
 
 #: sendimages.cpp:176
 #, kde-format
 msgid "Operation canceled by user"
-msgstr ""
+msgstr "Operacio nuligita de uzanto"
 
 #: sendimages.cpp:190
 #, kde-format
 msgid "Resizing %1"
-msgstr ""
+msgstr "Regrandigi %1"
 
 #: sendimages.cpp:203
 #, kde-format
 msgid "%1 resized successfully"
-msgstr ""
+msgstr "%1 sukcese regrandigita"
 
 #: sendimages.cpp:212
 #, kde-format
 msgid "Failed to resize %1: %2"
-msgstr ""
+msgstr "Malsukcesis regrandigi %1: %2"
 
 #: sendimages.cpp:240
 #, kde-format
 msgid "There are no files to send"
-msgstr ""
+msgstr "Ne estas dosieroj por sendi"
 
 #: sendimages.cpp:258
 #, kde-format
 msgid "Build images properties file"
-msgstr ""
+msgstr "Konstrui dosieron de bildaj proprecoj "
 
 #: sendimages.cpp:271
 #, kde-format
 msgid "no caption"
-msgstr ""
+msgstr "neniu bildoteksto"
 
 #: sendimages.cpp:274
 #, kde-format
 msgid "no keywords"
-msgstr ""
+msgstr "neniuj ŝlosilvortoj"
 
 #: sendimages.cpp:276
 #, kde-format
@@ -111,41 +112,43 @@ msgid ""
 "file \"%1\":\n"
 "Original images: %2\n"
 msgstr ""
+"dosiero \"%1\":\n"
+"Originaj bildoj: %2\n"
 
 #: sendimages.cpp:279
 #, kde-format
 msgid "Comments: %1\n"
-msgstr ""
+msgstr "Komentoj: %1\n"
 
 #: sendimages.cpp:282
 #, kde-format
 msgid "Tags: %1\n"
-msgstr ""
+msgstr "Etikedoj: %1\n"
 
 #: sendimages.cpp:285
 #, kde-format
 msgid "Rating: %1\n"
-msgstr ""
+msgstr "Taksado: %1\n"
 
 #: sendimages.cpp:290 sendimages.cpp:298
 #, kde-format
 msgid "properties.txt"
-msgstr ""
+msgstr "properties.txt"
 
 #: sendimages.cpp:297
 #, kde-format
 msgid "Image properties file cannot be opened"
-msgstr ""
+msgstr "Dosiero de bildaj proprecoj ne povas esti malfermita"
 
 #: sendimages.cpp:306
 #, kde-format
 msgid "Image properties file done"
-msgstr ""
+msgstr "Dosiero de proprecoj de bildo farita"
 
 #: sendimages.cpp:324
 #, kde-format
 msgid "Processing Failed"
-msgstr ""
+msgstr "Procesado Malsukcesis"
 
 #: sendimages.cpp:325
 #, kde-format
@@ -153,6 +156,8 @@ msgid ""
 "Some images cannot be resized.\n"
 "Do you want them to be added as attachments without resizing?"
 msgstr ""
+"Kelkaj bildoj ne povas esti regrandigeblaj.\n"
+"Ĉu vi volas, ke ili estu aldonitaj kiel aldonaĵoj sen regrandigi?"
 
 #: sendimages.cpp:390
 #, kde-format
@@ -160,57 +165,59 @@ msgid ""
 "The file \"%1\" is too big to be sent, please reduce its size or change your "
 "settings"
 msgstr ""
+"La dosiero \"%1\" estas tro granda por esti sendita, bonvolu redukti ĝian "
+"grandecon aŭ ŝanĝi viajn agordojn"
 
 #: sendimages.cpp:442
 #, kde-format
 msgid "Starting default desktop email program..."
-msgstr ""
+msgstr "Lanĉante defaŭltan labortablan retpoŝtan programon..."
 
 #: sendimages.cpp:674
 #, kde-format
 msgid "Failed to start \"%1\" program. Check your system."
-msgstr ""
+msgstr "Malsukcesis lanĉi \"%1\" programon. Kontrolu vian sistemon."
 
 #: sendimages.cpp:687
 #, kde-format
 msgid "Starting \"%1\" program..."
-msgstr ""
+msgstr "Lanĉanta programon \"%1\"..."
 
 #: sendimages.cpp:697
 #, kde-format
 msgid "After having sent your images by email..."
-msgstr ""
+msgstr "Post sendi viajn bildojn retpoŝte..."
 
 #: sendimages.cpp:698
 #, kde-format
 msgid "Press 'Close' button to clean up temporary files"
-msgstr ""
+msgstr "Premu la butonon 'Fermi' por purigi provizorajn dosierojn"
 
 #: sendimagesdialog.cpp:81
 #, kde-format
 msgid "Email Images Options"
-msgstr ""
+msgstr "Retpoŝtaj Bildoj Opcioj"
 
 #: sendimagesdialog.cpp:84
 #, kde-format
 msgctxt "@action:button"
 msgid "&Send"
-msgstr ""
+msgstr "&Sendi"
 
 #: sendimagesdialog.cpp:103
 #, kde-format
 msgid "Send Images"
-msgstr ""
+msgstr "Sendi Bildojn"
 
 #: sendimagesdialog.cpp:104
 #, kde-format
 msgid "A tool to e-mail items"
-msgstr ""
+msgstr "Ilo por retpoŝti erojn"
 
 #: sendimagesdialog.cpp:105
 #, kde-format
 msgid "(c) 2003-2016, Gilles Caulier"
-msgstr ""
+msgstr "(c) 2003-2016, Gilles Caulier"
 
 #: sendimagesdialog.cpp:107
 #, kde-format
@@ -220,7 +227,7 @@ msgstr "Gilles Caulier"
 #: sendimagesdialog.cpp:107
 #, kde-format
 msgid "Author and Maintainer"
-msgstr ""
+msgstr "Aŭtoro kaj Prizorganto"
 
 #: sendimagesdialog.cpp:110
 #, kde-format
@@ -240,7 +247,7 @@ msgstr "Tom Albers"
 #: settingswidget.cpp:91
 #, kde-format
 msgid "Mail program:"
-msgstr ""
+msgstr "Poŝtprogramo:"
 
 #: settingswidget.cpp:94
 #, kde-format
@@ -254,11 +261,13 @@ msgid ""
 "Select your preferred external email program here. <b>Default</b> is the "
 "current email program set in desktop system settings."
 msgstr ""
+"Elektu vian preferatan eksteran retpoŝtan programon ĉi tie. <b>Defaŭlta</b> "
+"estas la nuna retpoŝta programo agordita en labortablaj sistemaj agordoj."
 
 #: settingswidget.cpp:112
 #, kde-format
 msgid "Attach a file with image properties from %1"
-msgstr ""
+msgstr "Kunigi dosieron kun bildaj propraĵoj de %1"
 
 #: settingswidget.cpp:115
 #, kde-format
@@ -266,6 +275,8 @@ msgid ""
 "If you enable this option, all image properties set by %1 as Comments, "
 "Rating, or Tags, will be added as an attached file."
 msgstr ""
+"Se vi ebligas ĉi tiun opcion, ĉiuj bildaj propraĵoj fiksitaj de %1 kiel "
+"Komentoj, Taksado aŭ Etikedoj, estos aldonitaj kiel kuna dosiero."
 
 #: settingswidget.cpp:125
 #, kde-format
@@ -275,12 +286,12 @@ msgstr " MB"
 #: settingswidget.cpp:127
 #, kde-format
 msgid "Maximum email size limit:"
-msgstr ""
+msgstr "Maksimuma retpoŝta grandeclimo:"
 
 #: settingswidget.cpp:132
 #, kde-format
 msgid "Adjust image properties"
-msgstr ""
+msgstr "Alĝustigi bildoproprecojn"
 
 #: settingswidget.cpp:134
 #, kde-format
@@ -288,6 +299,8 @@ msgid ""
 "If you enable this option, all images to be sent can be resized and "
 "recompressed."
 msgstr ""
+"Se vi ebligas ĉi tiun opcion, ĉiuj sendotaj bildoj povas esti regrandigitaj "
+"kaj rekunpremitaj."
 
 #: settingswidget.cpp:137
 #, kde-format
@@ -297,42 +310,42 @@ msgstr "Ecoj de Bildo"
 #: settingswidget.cpp:141 settingswidget.cpp:167
 #, kde-format
 msgid "Very Small (320 pixels)"
-msgstr ""
+msgstr "Tre Malgranda (320 pikseloj)"
 
 #: settingswidget.cpp:142 settingswidget.cpp:168
 #, kde-format
 msgid "Small (640 pixels)"
-msgstr ""
+msgstr "Malgranda (640 pikseloj)"
 
 #: settingswidget.cpp:143 settingswidget.cpp:169
 #, kde-format
 msgid "Medium (800 pixels)"
-msgstr ""
+msgstr "Meza (800 pikseloj)"
 
 #: settingswidget.cpp:144 settingswidget.cpp:170
 #, kde-format
 msgid "Big (1024 pixels)"
-msgstr ""
+msgstr "Granda (1024 pikseloj)"
 
 #: settingswidget.cpp:145 settingswidget.cpp:171
 #, kde-format
 msgid "Very Big (1280 pixels)"
-msgstr ""
+msgstr "Tre Granda (1280 pikseloj)"
 
 #: settingswidget.cpp:146 settingswidget.cpp:172
 #, kde-format
 msgid "Large - for printing (1600 pixels)"
-msgstr ""
+msgstr "Granda - por presado (1600 pikseloj)"
 
 #: settingswidget.cpp:147 settingswidget.cpp:173
 #, kde-format
 msgid "Full HD (1920 pixels)"
-msgstr ""
+msgstr "Plena HD (1920 pikseloj)"
 
 #: settingswidget.cpp:148 settingswidget.cpp:174
 #, kde-format
 msgid "Ultra HD (3840 pixels)"
-msgstr ""
+msgstr "Ultra HD (3840 pikseloj)"
 
 #: settingswidget.cpp:150
 #, kde-format
@@ -351,16 +364,29 @@ msgid ""
 "on Ultra HD displays. Only if you have a high-speed Internet connection and "
 "the target mailbox size is not limited.</p>"
 msgstr ""
+"<p>Elektu la grandecon de la sendotaj bildoj:</p><p><b>%1</b>: uzu ĉi tion "
+"se vi havas tre malrapidan Interretan konekton aŭ la cela leterkestogrando "
+"estas tre limigita .</p><p><b>%2</b>: uzu ĉi tion se vi havas malrapidan "
+"interretan konekton kaj la cela leterkesto grandeco estas limigita.</p><p><b>"
+"%3</b>: ĉi tiu estas la defaŭlta valoro por meza retkonekto-rapideco kaj "
+"cela leterkestograndeco.</p><p><b>%4</b>: uzu ĉi tion se vi havas altrapidan "
+"interretan konekton kaj la celan leterkeston grandecon. ne estas limigita.</"
+"p><p><b>%5</b>: uzu ĉi tion se vi ne havas grandecon aŭ rapidlimigojn.</"
+"p><p><b>%6</b>: uzu ĉi tio nur por presaj celoj.</p><p><b>%7</b>: uzu ĉi "
+"tion por optimuma spektado sur ekranoj Full HD. Nur se vi havas altrapidan "
+"interretan konekton kaj la cela leterkesto ne estas limigita.</p><p><b>%8</"
+"b>: uzu ĉi tion por optimuma spektado sur ekranoj Ultra HD. Nur se vi havas "
+"altrapidan interretan konekton kaj la cela leterkesto ne estas limigita.</p>"
 
 #: settingswidget.cpp:177
 #, kde-format
 msgid "Image size:"
-msgstr ""
+msgstr "Grando de bildo:"
 
 #: settingswidget.cpp:186
 #, kde-format
 msgid "<p>Select the file format of the image files to be sent.</p>"
-msgstr ""
+msgstr "<p>Elektu la dosierformaton de la bilddosieroj sendotaj.</p>"
 
 #: settingswidget.cpp:187
 #, kde-format
@@ -375,6 +401,15 @@ msgid ""
 "option. Also, PNG can store gamma and chromaticity data for improved color-"
 "matching on heterogeneous platforms.</p>"
 msgstr ""
+"<p><b>JPEG</b>: La dosierformato de Joint Photographic Experts Group estas "
+"bona retdosierformato sed ĝi uzas perdan kunpremadon.</p><p><b>PNG</b>: la "
+"Portebla Reto Grafika formato estas etendebla dosierformato por la senperda, "
+"portebla, bone kunpremita konservejo de rastrumaj bildoj. PNG disponigas sen "
+"patentan anstataŭaĵon por GIF kaj ankaŭ povas anstataŭigi multajn oftajn "
+"uzojn de TIFF. PNG estas desegnita por bone funkcii en interretaj spektaj "
+"aplikaĵoj, kiel la Tutmonda Reto, do ĝi estas plene fluebla kun progresema "
+"montra opcio. Ankaŭ PNG povas konservi gama- kaj kromatecdatenojn por "
+"plibonigita kolor-kongruo sur heterogenaj platformoj.</p>"
 
 #: settingswidget.cpp:197
 #, kde-format
@@ -384,7 +419,7 @@ msgstr "Bildformato:"
 #: settingswidget.cpp:206
 #, kde-format
 msgid "<p>The new compression value of JPEG images to be sent:</p>"
-msgstr ""
+msgstr "<p>La nova kunprema valoro de JPEG-bildoj sendotaj:</p>"
 
 #: settingswidget.cpp:207
 #, kde-format
@@ -393,6 +428,9 @@ msgid ""
 "><b>50</b>: medium compression<br/><b>75</b>: low compression (default "
 "value)<br/><b>100</b>: no compression</p>"
 msgstr ""
+"<p><b>1</b>: tre alta kunpremo<br/><b>25</b>: alta kunpremo<br/><b>50</b>: "
+"meza kunpremo<br/><b>75</b>: malalta kunpremo (defaŭlta valoro)<br/><b>100</"
+"b>: neniu kunpremo</p>"
 
 #: settingswidget.cpp:215
 #, kde-format
