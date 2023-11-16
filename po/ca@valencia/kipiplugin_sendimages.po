@@ -282,8 +282,9 @@ msgid ""
 "If you enable this option, all image properties set by %1 as Comments, "
 "Rating, or Tags, will be added as an attached file."
 msgstr ""
-"Si habiliteu esta opció, totes les propietats de la imatge definides per %1 "
-"com els comentaris, valoracions o etiquetes s'afegiran com un fitxer adjunt."
+"Si seleccioneu esta opció, totes les propietats de la imatge definides per "
+"%1 com els comentaris, valoracions o etiquetes s'afegiran com un fitxer "
+"adjunt."
 
 #: settingswidget.cpp:125
 #, kde-format
@@ -306,7 +307,7 @@ msgid ""
 "If you enable this option, all images to be sent can be resized and "
 "recompressed."
 msgstr ""
-"Si activeu esta opció, totes les imatges que s'enviaran es podran "
+"Si seleccioneu esta opció, totes les imatges que s'enviaran es podran "
 "redimensionar i tornar a comprimir."
 
 #: settingswidget.cpp:137
