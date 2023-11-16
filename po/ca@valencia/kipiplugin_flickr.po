@@ -32,7 +32,7 @@ msgid ""
 "Check if photo should be publicly visible or use Upload Options tab to "
 "specify this for all images"
 msgstr ""
-"Marqueu-la si la fotografia ha de ser visible públicament o utilitzeu la "
+"Seleccioneu-la si la fotografia ha de ser visible públicament o utilitzeu la "
 "pestanya Opcions de la pujada per a especificar-ho per a totes les imatges"
 
 #: flickrlist.cpp:423
@@ -41,8 +41,8 @@ msgid ""
 "Check if photo should be visible to family or use Upload Options tab to "
 "specify this for all images"
 msgstr ""
-"Marqueu-la si la fotografia ha de ser visible per la família o utilitzeu la "
-"pestanya Opcions de la pujada per a especificar-ho per a totes les imatges"
+"Seleccioneu-la si la fotografia ha de ser visible per la família o utilitzeu "
+"la pestanya Opcions de la pujada per a especificar-ho per a totes les imatges"
 
 #: flickrlist.cpp:426
 #, kde-format
@@ -50,8 +50,8 @@ msgid ""
 "Check if photo should be visible to friends or use Upload Options tab to "
 "specify this for all images"
 msgstr ""
-"Marqueu-la si la fotografia ha de ser visible per als amics o utilitzeu la "
-"pestanya Opcions de la pujada per a especificar-ho per a totes les imatges"
+"Seleccioneu-la si la fotografia ha de ser visible per als amics o utilitzeu "
+"la pestanya Opcions de la pujada per a especificar-ho per a totes les imatges"
 
 #: flickrlist.cpp:429
 #, kde-format
@@ -303,7 +303,7 @@ msgstr "Opcions de les etiquetes"
 #: flickrwidget.cpp:138
 #, kde-format
 msgid "Use Host Application Tags"
-msgstr "Utilitza les etiquetes d'aplicació del servidor"
+msgstr "Utilitza les etiquetes d'aplicació de l'amfitrió"
 
 #: flickrwidget.cpp:140 flickrwidget.cpp:501
 #, kde-format
@@ -329,8 +329,8 @@ msgstr "Afig etiquetes per imatge"
 #, kde-format
 msgid "If checked, you can set extra tags for each image in the File List tab"
 msgstr ""
-"Si està marcada, podeu establir etiquetes extres per a cada imatge en la "
-"pestanya de la llista de fitxers"
+"Si se selecciona, podreu establir etiquetes addicionals per a cada imatge en "
+"la pestanya de la llista de fitxers"
 
 #: flickrwidget.cpp:163
 #, kde-format

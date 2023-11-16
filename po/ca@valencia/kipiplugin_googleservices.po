@@ -214,7 +214,7 @@ msgstr "Exportador cap a Google Drive"
 #: gswindow.cpp:117
 #, kde-format
 msgid "A tool to export images to Google Drive"
-msgstr "Una eina per a exportar les imatges a Google Drive"
+msgstr "Una eina per a exportar les imatges cap a Google Drive"
 
 #: gswindow.cpp:119
 #, kde-format
