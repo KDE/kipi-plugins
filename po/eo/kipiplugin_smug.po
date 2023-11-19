@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: kipiplugin_smug\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:26+0000\n"
-"PO-Revision-Date: 2023-01-08 12:30+0100\n"
+"PO-Revision-Date: 2023-11-18 21:07+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -60,32 +60,32 @@ msgstr "Albumo"
 #: smugalbum.cpp:65
 #, kde-format
 msgid "These are basic settings for the new SmugMug album."
-msgstr ""
+msgstr "Ĉi tiuj estas bazaj agordoj por la nova albumo SmugMug."
 
 #: smugalbum.cpp:68
 #, kde-format
 msgid "Title of the album that will be created (required)."
-msgstr ""
+msgstr "Titolo de la albumo kiu estos kreita (postulata)."
 
 #: smugalbum.cpp:72
 #, kde-format
 msgid "Category of the album that will be created (required)."
-msgstr ""
+msgstr "Kategorio de la albumo kiu estos kreita (postulata)."
 
 #: smugalbum.cpp:76
 #, kde-format
 msgid "Subcategory of the album that will be created (optional)."
-msgstr ""
+msgstr "Subkategorio de la albumo kiu estos kreita (laŭvola)."
 
 #: smugalbum.cpp:79
 #, kde-format
 msgid "Description of the album that will be created (optional)."
-msgstr ""
+msgstr "Priskribo de la albumo kiu estos kreita (laŭvola)."
 
 #: smugalbum.cpp:83
 #, kde-format
 msgid "Album template for the new album (optional)."
-msgstr ""
+msgstr "Albumŝablono por la nova albumo (laŭvola)."
 
 #: smugalbum.cpp:86
 #, kde-format
@@ -126,6 +126,7 @@ msgstr "Sekureco && Privateco"
 #, kde-format
 msgid "These are security and privacy settings for the new SmugMug album."
 msgstr ""
+"Ĉi tiuj estas sekurecaj kaj privatecaj agordoj por la nova albumo SmugMug."
 
 #: smugalbum.cpp:101
 #, kde-format
@@ -136,7 +137,7 @@ msgstr "Publika"
 #: smugalbum.cpp:103
 #, kde-format
 msgid "Public album is listed on your public SmugMug page."
-msgstr ""
+msgstr "Publika albumo estas listigita sur via publika paĝo SmugMug."
 
 #: smugalbum.cpp:104
 #, kde-format
@@ -147,17 +148,18 @@ msgstr "Nelistigita"
 #: smugalbum.cpp:105
 #, kde-format
 msgid "Unlisted album is only accessible via URL."
-msgstr ""
+msgstr "Nelistigita albumo estas nur alirebla per URL."
 
 #: smugalbum.cpp:112
 #, kde-format
 msgid "Require password to access the album (optional)."
-msgstr ""
+msgstr "Postuli pasvorton por aliri la albumon (laŭvola)."
 
 #: smugalbum.cpp:115
 #, kde-format
 msgid "Password hint to present to users in the password prompt (optional)."
 msgstr ""
+"Pasvorta sugesto por prezenti al uzantoj en la pasvorta prompto (laŭvola)."
 
 #: smugalbum.cpp:118
 #, kde-format
@@ -187,12 +189,12 @@ msgstr "Ensaluto malsukcesis"
 #: smugtalker.cpp:467
 #, kde-format
 msgid "Invalid user/nick/password"
-msgstr ""
+msgstr "Nevalida uzanto/nomnomo/pasvorto"
 
 #: smugtalker.cpp:470
 #, kde-format
 msgid "Invalid API key"
-msgstr ""
+msgstr "Nevalida API-ŝlosilo"
 
 #: smugtalker.cpp:512 smugwindow.cpp:412 smugwindow.cpp:421 smugwindow.cpp:451
 #: smugwindow.cpp:484 smugwindow.cpp:516 smugwindow.cpp:546 smugwindow.cpp:920
@@ -203,13 +205,14 @@ msgstr "Eraro"
 #: smugwidget.cpp:73
 #, kde-format
 msgid "This is the list of images to upload to your SmugMug account."
-msgstr ""
+msgstr "Jen la listo de bildoj por alŝuti al via SmugMug-konto."
 
 #: smugwidget.cpp:79
 #, kde-format
 msgid ""
 "This is a clickable link to open the SmugMug home page in a web browser."
 msgstr ""
+"Ĉi tio estas klakebla ligilo por malfermi la ĉefpaĝon de SmugMug en retumilo."
 
 #: smugwidget.cpp:85
 #, kde-format
@@ -219,7 +222,7 @@ msgstr "Konto"
 #: smugwidget.cpp:86
 #, kde-format
 msgid "This is the SmugMug account that will be used to authenticate."
-msgstr ""
+msgstr "Ĉi tio estas la konto SmugMug, kiu estos uzata por aŭtentikigi."
 
 #: smugwidget.cpp:89
 #, kde-format
@@ -230,7 +233,7 @@ msgstr "Anonimulo"
 #: smugwidget.cpp:90
 #, kde-format
 msgid "Login as anonymous to SmugMug web service."
-msgstr ""
+msgstr "Ensaluti kiel anonima al la retservo de SmugMug."
 
 #: smugwidget.cpp:92
 #, kde-format
@@ -240,7 +243,7 @@ msgstr "SmugMug-Konto"
 #: smugwidget.cpp:93
 #, kde-format
 msgid "Login to SmugMug web service using email and password."
-msgstr ""
+msgstr "Ensaluti al la retservo de SmugMug uzante retpoŝton kaj pasvorton."
 
 #: smugwidget.cpp:95
 #, kde-format
@@ -262,12 +265,12 @@ msgstr "Ŝanĝi Konton"
 #: smugwidget.cpp:103
 #, kde-format
 msgid "Change SmugMug Account used to authenticate"
-msgstr ""
+msgstr "Ŝanĝi SmugMug-Konton uzatan por aŭtentikigi"
 
 #: smugwidget.cpp:118
 #, kde-format
 msgid "This is the SmugMug album that will be used for transfer."
-msgstr ""
+msgstr "Ĉi tiu estas la albumo SmugMug, kiu estos uzata por translokigo."
 
 #: smugwidget.cpp:123
 #, kde-format
@@ -277,7 +280,7 @@ msgstr "Kromnomo:"
 #: smugwidget.cpp:125
 #, kde-format
 msgid "Nickname of SmugMug user to list albums."
-msgstr ""
+msgstr "Moknomo de uzanto de SmugMug por listigi albumojn."
 
 #: smugwidget.cpp:126
 #, kde-format
@@ -287,7 +290,7 @@ msgstr "Reteja Pasvorto:"
 #: smugwidget.cpp:128
 #, kde-format
 msgid "Site-wide password for specified SmugMug nick/user."
-msgstr ""
+msgstr "Tutreteja pasvorto por specifita SmugMug kromnomo/uzanto."
 
 #: smugwidget.cpp:129
 #, kde-format
@@ -297,7 +300,7 @@ msgstr "Albuma Pasvorto:"
 #: smugwidget.cpp:131
 #, kde-format
 msgid "Password for SmugMug album."
-msgstr ""
+msgstr "Pasvorto por SmugMug-albumo."
 
 #: smugwidget.cpp:134
 #, kde-format
@@ -328,7 +331,7 @@ msgstr "Celo"
 #: smugwidget.cpp:156
 #, kde-format
 msgid "This is the location where SmugMug images will be downloaded."
-msgstr ""
+msgstr "Ĉi tiu estas la loko kie SmugMug-bildoj estos elŝutitaj."
 
 #: smugwidget.cpp:163
 #, kde-format
@@ -338,27 +341,27 @@ msgstr "Opcioj"
 #: smugwidget.cpp:164
 #, kde-format
 msgid "These are options that will be applied to images before upload."
-msgstr ""
+msgstr "Ĉi tiuj estas opcioj, kiuj estos aplikataj al bildoj antaŭ alŝuto."
 
 #: smugwidget.cpp:168
 #, kde-format
 msgid "Resize photos before uploading"
-msgstr ""
+msgstr "Regrandigi fotojn antaŭ alŝuti"
 
 #: smugwidget.cpp:178
 #, kde-format
 msgid "Maximum dimension:"
-msgstr ""
+msgstr "Maksimuma dimensio:"
 
 #: smugwidget.cpp:186
 #, kde-format
 msgid "JPEG quality:"
-msgstr ""
+msgstr "JPEG-kvalito:"
 
 #: smugwindow.cpp:86
 #, kde-format
 msgid "Import from SmugMug Web Service"
-msgstr ""
+msgstr "Importi de SmugMug Reta Servo"
 
 #: smugwindow.cpp:88
 #, kde-format
@@ -368,7 +371,7 @@ msgstr "Startigi Elŝuton"
 #: smugwindow.cpp:89
 #, kde-format
 msgid "Start download from SmugMug web service"
-msgstr ""
+msgstr "Komenci elŝuton de la retservo de SmugMug"
 
 #: smugwindow.cpp:95
 #, kde-format
@@ -383,18 +386,18 @@ msgstr "Startigi Alŝuton"
 #: smugwindow.cpp:98
 #, kde-format
 msgid "Start upload to SmugMug web service"
-msgstr ""
+msgstr "Komenci alŝuton al la retservo de SmugMug"
 
 #: smugwindow.cpp:127
 #, kde-format
 msgid "Smug Import/Export"
-msgstr ""
+msgstr "Smug-Importo/Eksporto"
 
 #: smugwindow.cpp:128
 #, kde-format
 msgid ""
 "A tool to import/export image collections from/to the SmugMug web service."
-msgstr ""
+msgstr "Ilo por importi/eksporti bildkolektojn de/al la retservo SmugMug."
 
 #: smugwindow.cpp:130
 #, kde-format
@@ -403,6 +406,9 @@ msgid ""
 "(c) 2008-2012, Gilles Caulier\n"
 "(c) 2008-2009, Luka Renko"
 msgstr ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2012, Gilles Caulier\n"
+"(c) 2008-2009, Luka Renko"
 
 #: smugwindow.cpp:134
 #, kde-format
@@ -420,17 +426,19 @@ msgid ""
 "<qt>Enter the <b>email address</b> and <b>password</b> for your <a href="
 "\"http://www.smugmug.com\">SmugMug</a> account</qt>"
 msgstr ""
+"<qt>Enigu la <b>retpoŝtadreson</b> kaj <b>pasvorton</b> por via <a href="
+"\"http://www.smugmug.com\">SmugMug</a> konto< /qt>"
 
 #: smugwindow.cpp:412 smugwindow.cpp:421 smugwindow.cpp:451 smugwindow.cpp:484
 #: smugwindow.cpp:516 smugwindow.cpp:546 smugwindow.cpp:920
 #, kde-format
 msgid "SmugMug Call Failed: %1\n"
-msgstr ""
+msgstr "SmugMug-Voko Malsukcesis: %1\n"
 
 #: smugwindow.cpp:480 smugwindow.cpp:542
 #, kde-format
 msgid "&lt;none&gt;"
-msgstr ""
+msgstr "&lt;neniu&lt;"
 
 #: smugwindow.cpp:668 smugwindow.cpp:701
 #, kde-format
@@ -440,17 +448,17 @@ msgstr "%v / %m"
 #: smugwindow.cpp:671
 #, kde-format
 msgid "Smug Import"
-msgstr ""
+msgstr "Smug-Importo"
 
 #: smugwindow.cpp:704
 #, kde-format
 msgid "Smug Export"
-msgstr ""
+msgstr "Smug-Eksporto"
 
 #: smugwindow.cpp:789 smugwindow.cpp:803
 #, kde-format
 msgid "Cannot open file"
-msgstr ""
+msgstr "Ne povas malfermi dosieron"
 
 #: smugwindow.cpp:826
 #, kde-format
@@ -464,6 +472,9 @@ msgid ""
 "%1\n"
 "Do you want to continue?"
 msgstr ""
+"Malsukcesis alŝuti foton al SmugMug.\n"
+"%1\n"
+"Ĉu vi volas daŭrigi?"
 
 #: smugwindow.cpp:888 smugwindow.cpp:901
 #, kde-format
@@ -476,6 +487,8 @@ msgid ""
 "Failed to save photo: %1\n"
 "Do you want to continue?"
 msgstr ""
+"Malsukcesis konservi foton: %1\n"
+"Ĉu vi volas daŭrigi?"
 
 #: smugwindow.cpp:902
 #, kde-format
@@ -483,3 +496,5 @@ msgid ""
 "Failed to download photo: %1\n"
 "Do you want to continue?"
 msgstr ""
+"Malsukcesis elŝuti foton: %1\n"
+"Ĉu vi volas daŭrigi?"
