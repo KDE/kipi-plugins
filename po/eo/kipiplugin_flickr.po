@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: kipiplugin_flickrexport\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:26+0000\n"
-"PO-Revision-Date: 2023-01-08 12:30+0100\n"
+"PO-Revision-Date: 2023-11-19 11:25+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -30,6 +30,8 @@ msgid ""
 "Check if photo should be publicly visible or use Upload Options tab to "
 "specify this for all images"
 msgstr ""
+"Marku se foto estu publike videbla aŭ uzu la langeton Alŝutaj Opcioj por "
+"specifi ĉi tion por ĉiuj bildoj"
 
 #: flickrlist.cpp:423
 #, kde-format
@@ -37,6 +39,8 @@ msgid ""
 "Check if photo should be visible to family or use Upload Options tab to "
 "specify this for all images"
 msgstr ""
+"Marku se foto estu videbla por familio aŭ uzu la langeton Alŝutaj Opcioj por "
+"specifi ĉi tion por ĉiuj bildoj"
 
 #: flickrlist.cpp:426
 #, kde-format
@@ -44,6 +48,8 @@ msgid ""
 "Check if photo should be visible to friends or use Upload Options tab to "
 "specify this for all images"
 msgstr ""
+"Marku se foto estu videbla por amikoj aŭ uzu la langeton Alŝutaj Opcioj por "
+"specifi ĉi tion por ĉiuj bildoj"
 
 #: flickrlist.cpp:429
 #, kde-format
@@ -51,6 +57,8 @@ msgid ""
 "Indicate the safety level for the photo or use Upload Options tab to specify "
 "this for all images"
 msgstr ""
+"Indiku la sekurecan nivelon por la foto aŭ uzu la langeton Alŝutaj Opcioj "
+"por specifi ĉi tion por ĉiuj bildoj"
 
 #: flickrlist.cpp:432
 #, kde-format
@@ -58,107 +66,111 @@ msgid ""
 "Indicate what kind of image this is or use Upload Options tab to specify "
 "this for all images"
 msgstr ""
+"Indiku kia bildo ĉi tio estas aŭ uzu la langeton Alŝutaj Opcioj por specifi "
+"ĉi tion por ĉiuj bildoj"
 
 #: flickrlist.cpp:445
 #, kde-format
 msgid ""
 "Add extra tags per image or use Upload Options tab to add tags for all images"
 msgstr ""
+"Aldonu kromajn etikedojn per bildo aŭ uzu la langeton Alŝutaj Opcioj por "
+"aldoni etikedojn por ĉiuj bildoj"
 
 #: flickrlist.cpp:462
 #, kde-format
 msgid "Enter extra tags, separated by commas."
-msgstr ""
+msgstr "Enigu kromajn etikedojn, apartigitajn per komoj."
 
 #: flickrtalker.cpp:265
 #, kde-format
 msgid "Getting the maximum allowed file size."
-msgstr ""
+msgstr "Akirante la maksimume permesitan dosiergrandecon."
 
 #: flickrtalker.cpp:550
 #, kde-format
 msgid "File Size exceeds maximum allowed file size."
-msgstr ""
+msgstr "Dosiera Grandeco superas la maksimuman permesitan dosiergrandon."
 
 #: flickrtalker.cpp:603
 #, kde-format
 msgid "No photo specified"
-msgstr ""
+msgstr "Neniu foto specifita"
 
 #: flickrtalker.cpp:607
 #, kde-format
 msgid "General upload failure"
-msgstr ""
+msgstr "Ĝenerala malsukceso de alŝuto"
 
 #: flickrtalker.cpp:611
 #, kde-format
 msgid "Filesize was zero"
-msgstr ""
+msgstr "Dosiergrandeco estis nulo"
 
 #: flickrtalker.cpp:615
 #, kde-format
 msgid "Filetype was not recognized"
-msgstr ""
+msgstr "Dosiertipo ne estis rekonita"
 
 #: flickrtalker.cpp:619
 #, kde-format
 msgid "User exceeded upload limit"
-msgstr ""
+msgstr "Uzanto superis alŝutan limon"
 
 #: flickrtalker.cpp:623
 #, kde-format
 msgid "Invalid signature"
-msgstr ""
+msgstr "Nevalida subskribo"
 
 #: flickrtalker.cpp:627
 #, kde-format
 msgid "Missing signature"
-msgstr ""
+msgstr "Mankas subskribo"
 
 #: flickrtalker.cpp:631
 #, kde-format
 msgid "Login Failed / Invalid auth token"
-msgstr ""
+msgstr "Ensaluto Malsukcesa/Nevalida aŭtsignalo"
 
 #: flickrtalker.cpp:635
 #, kde-format
 msgid "Invalid API Key"
-msgstr ""
+msgstr "Nevalida API-ŝlosilo"
 
 #: flickrtalker.cpp:639
 #, kde-format
 msgid "Service currently unavailable"
-msgstr ""
+msgstr "Servo nuntempe nedisponebla"
 
 #: flickrtalker.cpp:643
 #, kde-format
 msgid "Invalid Frob"
-msgstr ""
+msgstr "Nevalida Frob"
 
 #: flickrtalker.cpp:647
 #, kde-format
 msgid "Format \"xxx\" not found"
-msgstr ""
+msgstr "Formato \"xxx\" ne trovita"
 
 #: flickrtalker.cpp:651
 #, kde-format
 msgid "Method \"xxx\" not found"
-msgstr ""
+msgstr "Metodo \"xxx\" ne trovita"
 
 #: flickrtalker.cpp:655
 #, kde-format
 msgid "Invalid SOAP envelope"
-msgstr ""
+msgstr "Nevalida SOAP-koverto"
 
 #: flickrtalker.cpp:659
 #, kde-format
 msgid "Invalid XML-RPC Method Call"
-msgstr ""
+msgstr "Nevalida XML-RPC-Metoda Voko"
 
 #: flickrtalker.cpp:663
 #, kde-format
 msgid "The POST method is now required for all setters"
-msgstr ""
+msgstr "La POST-metodo nun estas postulata por ĉiuj agordintoj"
 
 #: flickrtalker.cpp:667
 #, kde-format
@@ -169,7 +181,7 @@ msgstr "Nekonata eraro"
 #: flickrwindow.cpp:416
 #, kde-format
 msgid "Error"
-msgstr ""
+msgstr "Eraro"
 
 #: flickrtalker.cpp:673
 #, kde-format
@@ -177,26 +189,28 @@ msgid ""
 "Error Occurred: %1\n"
 "Cannot proceed any further."
 msgstr ""
+"Eraro Okazis: %1\n"
+"Ne povas daŭrigi plu."
 
 #: flickrtalker.cpp:852
 #, kde-format
 msgid "PhotoSet creation failed: "
-msgstr ""
+msgstr "Kreado de PhotoSet malsukcesis:"
 
 #: flickrtalker.cpp:947
 #, kde-format
 msgid "Failed to fetch list of photo sets."
-msgstr ""
+msgstr "Malsukcesis alporti liston de foto-aroj."
 
 #: flickrtalker.cpp:1027
 #, kde-format
 msgid "Failed to upload photo"
-msgstr ""
+msgstr "Malsukcesis alŝuti foton"
 
 #: flickrtalker.cpp:1086
 #, kde-format
 msgid "Failed to query photo information"
-msgstr ""
+msgstr "Malsukcesis konsulti foto-informojn"
 
 #: flickrwidget.cpp:63
 #, kde-format
@@ -212,7 +226,7 @@ msgstr "Publika"
 #: flickrwidget.cpp:76
 #, kde-format
 msgid "This is the list of images to upload to your Flickr account."
-msgstr ""
+msgstr "Jen la listo de bildoj por alŝuti al via Flickr-konto."
 
 #: flickrwidget.cpp:81
 #, kde-format
@@ -300,17 +314,19 @@ msgstr "Aldonataj Etikedoj:"
 #: flickrwidget.cpp:156
 #, kde-format
 msgid "Enter new tags here, separated by commas."
-msgstr ""
+msgstr "Enigu novajn etikedojn ĉi tie, apartigitajn per komoj."
 
 #: flickrwidget.cpp:158
 #, kde-format
 msgid "Add tags per image"
-msgstr ""
+msgstr "Aldonu etikedojn po bildo"
 
 #: flickrwidget.cpp:159
 #, kde-format
 msgid "If checked, you can set extra tags for each image in the File List tab"
 msgstr ""
+"Se markite, vi povas agordi kromajn etikedojn por ĉiu bildo en la langeto "
+"Dosiera Listo"
 
 #: flickrwidget.cpp:163
 #, kde-format
@@ -374,6 +390,8 @@ msgid ""
 "<b><h2><a href='http://www.23hq.com'><font color=\"#7CD164\">23</font></a> "
 "Export</h2></b>"
 msgstr ""
+"<b><h2><a href='http://www.23hq.com'><font color=\"#7CD164\">23</font></a> "
+"Eksporti</h2></b>"
 
 #: flickrwidget.cpp:311
 #, kde-format
@@ -381,36 +399,38 @@ msgid ""
 "<b><h2><a href='http://www.flickr.com'><font color=\"#0065DE\">flick</"
 "font><font color=\"#FF0084\">r</font></a> Export</h2></b>"
 msgstr ""
+"<b><h2><a href='http://www.flickr.com'><font color=\"#0065DE\">flick</"
+"font><font color=\"#FF0084\">r </font></a> Eksporti</h2></b>"
 
 #: flickrwidget.cpp:484
 #, kde-format
 msgid "Fewer publication options"
-msgstr ""
+msgstr "Malpli da publikigeblecoj"
 
 #: flickrwidget.cpp:506
 #, kde-format
 msgid "Fewer tag options"
-msgstr ""
+msgstr "Malpli da etikedopcioj"
 
 #: flickrwindow.cpp:71
 #, kde-format
 msgid "Export to %1 Web Service"
-msgstr ""
+msgstr "Eksporti al %1 Reta Servo"
 
 #: flickrwindow.cpp:119
 #, kde-format
 msgid "Start Uploading"
-msgstr ""
+msgstr "Komenci Alŝuton"
 
 #: flickrwindow.cpp:131
 #, kde-format
 msgid "Flickr/23 Export"
-msgstr ""
+msgstr "Flickr/23 Eksporto"
 
 #: flickrwindow.cpp:132
 #, kde-format
 msgid "A tool to export an image collection to a Flickr / 23 web service."
-msgstr ""
+msgstr "Ilo por eksporti bildkolekton al retservo Flickr/23."
 
 #: flickrwindow.cpp:134
 #, kde-format
@@ -420,6 +440,10 @@ msgid ""
 "(c) 2009, Luka Renko\n"
 "(c) 2015, Shourya Singh Gupta"
 msgstr ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2015, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2015, Shourya Singh Gupta"
 
 #: flickrwindow.cpp:139
 #, kde-format
@@ -444,27 +468,27 @@ msgstr "Kreinto"
 #: flickrwindow.cpp:145
 #, kde-format
 msgid "Shourya Singh Gupta"
-msgstr ""
+msgstr "Shourya Singh Gupta"
 
 #: flickrwindow.cpp:557
 #, kde-format
 msgid "Photostream Only"
-msgstr ""
+msgstr "Nur Photostream"
 
 #: flickrwindow.cpp:741
 #, kde-format
 msgid "Flickr Export"
-msgstr ""
+msgstr "Flickr Eksporto"
 
 #: flickrwindow.cpp:759
 #, kde-format
 msgid "Failed to Fetch Photoset information from %1. %2\n"
-msgstr ""
+msgstr "Malsukcesis preni informojn pri fotoaro de %1. %2\n"
 
 #: flickrwindow.cpp:765
 #, kde-format
 msgid "Warning"
-msgstr ""
+msgstr "Averto"
 
 #: flickrwindow.cpp:766
 #, kde-format
@@ -472,6 +496,8 @@ msgid ""
 "Failed to upload photo into %1. %2\n"
 "Do you want to continue?"
 msgstr ""
+"Malsukcesis alŝuti foton en %1. %2\n"
+"Ĉu vi volas daŭrigi?"
 
 #: flickrwindow.cpp:769
 #, kde-format
@@ -513,4 +539,4 @@ msgstr "Aldoni pluan konton"
 #: selectuserdlg.cpp:75
 #, kde-format
 msgid "Choose the %1 account to use for exporting images:"
-msgstr ""
+msgstr "Elekti la konton %1 uzendan por eksporti bildojn:"
