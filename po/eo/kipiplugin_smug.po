@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: kipiplugin_smug\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:26+0000\n"
-"PO-Revision-Date: 2023-11-18 21:07+0100\n"
+"PO-Revision-Date: 2023-11-22 21:35+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -427,7 +427,7 @@ msgid ""
 "\"http://www.smugmug.com\">SmugMug</a> account</qt>"
 msgstr ""
 "<qt>Enigu la <b>retpoŝtadreson</b> kaj <b>pasvorton</b> por via <a href="
-"\"http://www.smugmug.com\">SmugMug</a> konto< /qt>"
+"\"http://www.smugmug.com\">SmugMug</a> konto</qt>"
 
 #: smugwindow.cpp:412 smugwindow.cpp:421 smugwindow.cpp:451 smugwindow.cpp:484
 #: smugwindow.cpp:516 smugwindow.cpp:546 smugwindow.cpp:920
