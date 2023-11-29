@@ -2,20 +2,21 @@
 # Copyright (C) 2009 Free Software Foundation, Inc.
 # This file is distributed under the same license as the kipi-plugins package.
 # Axel Rousseau <axel@esperanto-jeunes.org>, 2009.
+# Oliver Kellogg <okellogg@users.sourceforge.net>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kipiplugin_printimages\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2021-03-28 16:08+0000\n"
-"PO-Revision-Date: 2023-03-21 22:43+0100\n"
+"PO-Revision-Date: 2023-11-19 16:53+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: pology\n"
+"X-Generator: translate-po (https://github.com/zcribe/translate-po)\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #. i18n: ectx: Menu (Image)
@@ -38,22 +39,22 @@ msgstr "Presi bildojn"
 #: plugin/plugin_printimages.cpp:115
 #, kde-format
 msgid "Print Assistant..."
-msgstr ""
+msgstr "Presa Asistanto..."
 
 #: plugin/plugin_printimages.cpp:136
 #, kde-format
 msgid "Print Images"
-msgstr ""
+msgstr "Presi Bildojn"
 
 #: plugin/plugin_printimages.cpp:136 plugin/plugin_printimages.cpp:156
 #, kde-format
 msgid "Please select one or more photos to print."
-msgstr ""
+msgstr "Bonvolu elekti unu aŭ pli da fotoj por presi."
 
 #: plugin/plugin_printimages.cpp:156
 #, kde-format
 msgid "Print Assistant"
-msgstr ""
+msgstr "Presa Asistanto"
 
 #: tools/utils.cpp:71
 #, kde-format
@@ -61,44 +62,46 @@ msgid ""
 "Unable to create a temporary folder. Please make sure you have proper "
 "permissions to this folder and try again."
 msgstr ""
+"Ne eblas krei provizoran dosierujon. Bonvolu certigi, ke vi havas taŭgajn "
+"permesojn al ĉi tiu dosierujo kaj provu denove."
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, m_disableCrop)
 #: ui/croppage.ui:19
 #, kde-format
 msgid "Do not crop photos, just scale them."
-msgstr ""
+msgstr "Ne tondu fotojn, nur grimpi ilin."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_disableCrop)
 #: ui/croppage.ui:22
 #, kde-format
 msgid "Do not crop"
-msgstr ""
+msgstr "Ne tondi"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, BtnCropRotateLeft)
 #. i18n: ectx: property (whatsThis), widget (QPushButton, BtnCropRotateLeft)
 #: ui/croppage.ui:42 ui/croppage.ui:45
 #, kde-format
 msgid "Rotate photo to the left"
-msgstr ""
+msgstr "Rotacii foton maldekstren"
 
 #. i18n: ectx: property (text), widget (QPushButton, BtnCropRotateLeft)
 #: ui/croppage.ui:48
 #, kde-format
 msgid "Rotate &left"
-msgstr ""
+msgstr "Rotacii ma&ldekstren"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, BtnCropRotateRight)
 #. i18n: ectx: property (whatsThis), widget (QPushButton, BtnCropRotateRight)
 #: ui/croppage.ui:55 ui/croppage.ui:58
 #, kde-format
 msgid "Rotate photo to the right"
-msgstr ""
+msgstr "Rotacii foton dekstren"
 
 #. i18n: ectx: property (text), widget (QPushButton, BtnCropRotateRight)
 #: ui/croppage.ui:61
 #, kde-format
 msgid "Rotate &right"
-msgstr ""
+msgstr "Rotacii dekst&ren"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, BtnCropPrev)
 #. i18n: ectx: property (whatsThis), widget (QPushButton, BtnCropPrev)
@@ -107,32 +110,32 @@ msgstr ""
 #: ui/croppage.ui:84 ui/croppage.ui:87 ui/photopage.ui:287 ui/photopage.ui:290
 #, kde-format
 msgid "Previous photo"
-msgstr ""
+msgstr "Antaŭa foto"
 
 #. i18n: ectx: property (text), widget (QPushButton, BtnCropPrev)
 #: ui/croppage.ui:90
 #, kde-format
 msgid "<< Pr&evious"
-msgstr ""
+msgstr "<< &Antaŭa"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, BtnCropNext)
 #. i18n: ectx: property (whatsThis), widget (QPushButton, BtnCropNext)
 #: ui/croppage.ui:97 ui/croppage.ui:100
 #, kde-format
 msgid "Next photo"
-msgstr ""
+msgstr "Sekvanta foto"
 
 #. i18n: ectx: property (text), widget (QPushButton, BtnCropNext)
 #: ui/croppage.ui:103
 #, kde-format
 msgid "Ne&xt >>"
-msgstr ""
+msgstr "Se&kvanta >>"
 
 #. i18n: ectx: property (text), widget (QLabel, LblCropPhoto)
 #: ui/croppage.ui:132
 #, kde-format
 msgid "Photo 0 of 0"
-msgstr ""
+msgstr "Foto 0 el 0"
 
 #. i18n: ectx: property (whatsThis), widget (KIPIPrintImagesPlugin::CropFrame, cropFrame)
 #: ui/croppage.ui:155
@@ -145,6 +148,11 @@ msgid ""
 "setting for each photo.\n"
 "Enable \"Do not crop\" to avoid cropping all of the photos."
 msgstr ""
+"Movu la skatolon por tondi fotojn por ke ili konvenu al la fotograndoj, "
+"kiujn vi donis. \n"
+"Vi povas tondi ĉiun bildon malsame, aŭ simple alklaki la butonon 'Sekva' por "
+"uzi la defaŭltan tondadon por ĉiu foto.\n"
+"Ebligu \"Ne tondi\" por eviti tondi ĉiujn fotojn."
 
 #. i18n: ectx: property (text), widget (QPushButton, BtnSaveAs)
 #: ui/croppage.ui:167
@@ -162,43 +170,43 @@ msgstr "Ktrl+S"
 #: ui/customlayout.ui:26 wizard/wizard.cpp:711
 #, kde-format
 msgid "Custom layout"
-msgstr ""
+msgstr "Propra aranĝo"
 
 #. i18n: ectx: property (text), widget (QRadioButton, m_photoGridCheck)
 #: ui/customlayout.ui:48
 #, kde-format
 msgid "Photo grid"
-msgstr ""
+msgstr "Foto-krado"
 
 #. i18n: ectx: property (text), widget (QRadioButton, m_fitAsManyCheck)
 #: ui/customlayout.ui:73
 #, kde-format
 msgid "Fit as many as possible"
-msgstr ""
+msgstr "Konveni kiel eble plej multajn"
 
 #. i18n: ectx: property (text), widget (QRadioButton, m_photosXPageCheck)
 #: ui/customlayout.ui:95
 #, kde-format
 msgid "Photos per page"
-msgstr ""
+msgstr "Fotoj po paĝo"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ui/customlayout.ui:122
 #, kde-format
 msgid "Rows"
-msgstr ""
+msgstr "Vicoj"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ui/customlayout.ui:164
 #, kde-format
 msgid "Columns"
-msgstr ""
+msgstr "Kolumnoj"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: ui/customlayout.ui:227
 #, kde-format
 msgid "Photo size"
-msgstr ""
+msgstr "Fotograndeco"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: ui/customlayout.ui:267 ui/printoptionspage.ui:439
@@ -210,26 +218,26 @@ msgstr "x"
 #: ui/customlayout.ui:309 wizard/wizard.cpp:2048
 #, kde-format
 msgid "cm"
-msgstr ""
+msgstr "cm"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_photoUnits)
 #: ui/customlayout.ui:314
 #, kde-format
 msgid "mm"
-msgstr ""
+msgstr "mm"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_photoUnits)
 #: ui/customlayout.ui:319 wizard/wizard.cpp:2043
 #, kde-format
 msgid "inches"
-msgstr ""
+msgstr "coloj"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_PrintAutoRotate)
 #. i18n: ectx: property (text), widget (QCheckBox, m_autorotate)
 #: ui/customlayout.ui:433 ui/printoptionspage.ui:73
 #, kde-format
 msgid "Auto rotate"
-msgstr ""
+msgstr "Aŭtomata rotacio"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_doneButton)
 #: ui/customlayout.ui:453
@@ -241,7 +249,7 @@ msgstr "Preta"
 #: ui/photopage.ui:47
 #, kde-format
 msgid "Photos:"
-msgstr ""
+msgstr "Fotoj:"
 
 #. i18n: ectx: property (text), widget (QLabel, LblPhotoCount)
 #. i18n: ectx: property (text), widget (QLabel, LblSheetsPrinted)
@@ -255,39 +263,39 @@ msgstr "<p align=\"right\">0</p>"
 #: ui/photopage.ui:77
 #, kde-format
 msgid "Sheets:"
-msgstr ""
+msgstr "Folioj:"
 
 #. i18n: ectx: property (text), widget (QLabel, TextLabel6)
 #: ui/photopage.ui:107
 #, kde-format
 msgid "Empty slots:"
-msgstr ""
+msgstr "Malplenaj fendoj:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_printer_choice)
 #: ui/photopage.ui:185 wizard/wizard.cpp:1800 wizard/wizard.cpp:2284
 #, kde-format
 msgid "Print to PDF"
-msgstr ""
+msgstr "Presi al PDF"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_printer_choice)
 #: ui/photopage.ui:190 wizard/wizard.cpp:1801 wizard/wizard.cpp:2242
 #: wizard/wizard.cpp:2312 wizard/wizard.cpp:2515 wizard/wizard.cpp:2587
 #, kde-format
 msgid "Print to JPG"
-msgstr ""
+msgstr "Presi al JPG"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_printer_choice)
 #: ui/photopage.ui:195 wizard/wizard.cpp:1802 wizard/wizard.cpp:2516
 #: wizard/wizard.cpp:2560
 #, kde-format
 msgid "Print to gimp"
-msgstr ""
+msgstr "Presi al gimp"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_pagesetup)
 #: ui/photopage.ui:209
 #, kde-format
 msgid "Page settings"
-msgstr ""
+msgstr "Paĝaj agordoj"
 
 #. i18n: ectx: property (text), widget (QPushButton, mLeftButton)
 #. i18n: ectx: property (text), widget (QToolButton, BtnPreviewPageDown)
@@ -320,25 +328,25 @@ msgstr ">"
 #: ui/photopage.ui:436
 #, kde-format
 msgid "Captions:"
-msgstr ""
+msgstr "Subtitoloj:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_captions)
 #: ui/photopage.ui:447 wizard/wizard.cpp:1898
 #, kde-format
 msgid "No captions"
-msgstr ""
+msgstr "Neniuj bildotekstoj"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_captions)
 #: ui/photopage.ui:452
 #, kde-format
 msgid "Image file names"
-msgstr ""
+msgstr "Bildaj dosiernomoj"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_captions)
 #: ui/photopage.ui:457
 #, kde-format
 msgid "Exif date-time"
-msgstr ""
+msgstr "Exif dato-tempo"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_captions)
 #: ui/photopage.ui:462
@@ -359,19 +367,21 @@ msgid ""
 "%f  filename, %t exposure time, %c comment, %i ISO, %d date-time, %r "
 "resolution, %a aperture, %l focal length, \\n newline"
 msgstr ""
+"%f dosiernomo, %t malkovrotempo, %c komento, %i ISO, %d dato-tempo, %r "
+"rezolucio, %a aperturo, %l fokusa distanco, \\n nova linio"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_sameCaption)
 #: ui/photopage.ui:532
 #, kde-format
 msgid "same to all"
-msgstr ""
+msgstr "same al ĉiuj"
 
 #. i18n: ectx: property (text), widget (QPushButton, mSaveSettings)
 #. i18n: ectx: property (text), widget (QPushButton, m_setDefault)
 #: ui/photopage.ui:542 ui/printoptionspage.ui:348
 #, kde-format
 msgid "Use as default"
-msgstr ""
+msgstr "Uzi kiel defaŭlto"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: ui/photopage.ui:555
@@ -468,79 +478,79 @@ msgstr "Konservi la proporciojn"
 #: ui/printoptionspage.ui:345
 #, kde-format
 msgid "Use these scaling options as default. "
-msgstr ""
+msgstr "Uzu ĉi tiujn skalajn opciojn defaŭlte."
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ui/printoptionspage.ui:366
 #, kde-format
 msgid "Photos per page:"
-msgstr ""
+msgstr "Fotoj po paĝo:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ui/printoptionspage.ui:376
 #, kde-format
 msgid "Multiple pages:"
-msgstr ""
+msgstr "Pluraj paĝoj:"
 
 #: wizard/customdlg.cpp:51 wizard/customdlg.cpp:52
 #, kde-format
 msgid "Choose your grid size"
-msgstr ""
+msgstr "Elektu vian kradgrandecon"
 
 #: wizard/customdlg.cpp:53
 #, kde-format
 msgid "Number of rows"
-msgstr ""
+msgstr "Nombro de vicoj"
 
 #: wizard/customdlg.cpp:54
 #, kde-format
 msgid "Insert number of rows"
-msgstr ""
+msgstr "Enmeti nombron da vicoj"
 
 #: wizard/customdlg.cpp:55
 #, kde-format
 msgid "Number of columns"
-msgstr ""
+msgstr "Nombro da kolumnoj"
 
 #: wizard/customdlg.cpp:56
 #, kde-format
 msgid "Insert number of columns"
-msgstr ""
+msgstr "Enmeti nombron da kolumnoj"
 
 #: wizard/customdlg.cpp:58 wizard/customdlg.cpp:59
 #, kde-format
 msgid "Choose to have a custom photo size album"
-msgstr ""
+msgstr "Elektu havi propran fotograndecan albumon"
 
 #: wizard/customdlg.cpp:60
 #, kde-format
 msgid "Photo height"
-msgstr ""
+msgstr "Foto alteco"
 
 #: wizard/customdlg.cpp:61
 #, kde-format
 msgid "Insert photo height"
-msgstr ""
+msgstr "Enigi foton altecon"
 
 #: wizard/customdlg.cpp:62
 #, kde-format
 msgid "Photo width"
-msgstr ""
+msgstr "Larĝo de foto"
 
 #: wizard/customdlg.cpp:63
 #, kde-format
 msgid "Insert photo width"
-msgstr ""
+msgstr "Enigi foto-larĝon"
 
 #: wizard/customdlg.cpp:65
 #, kde-format
 msgid "Auto rotate photo"
-msgstr ""
+msgstr "Aŭtomata rotacio de foto"
 
 #: wizard/printhelper.cpp:241
 #, kde-format
 msgid "Kipi-plugins image printing"
-msgstr ""
+msgstr "Kipi-kromaĵoj presado de bildoj"
 
 #: wizard/printoptionspage.cpp:149 wizard/printoptionspage.cpp:150
 #: wizard/printoptionspage.cpp:151
@@ -551,12 +561,12 @@ msgstr "malŝaltita"
 #: wizard/wizard.cpp:117
 #, kde-format
 msgid "Select page layout"
-msgstr ""
+msgstr "Elekti paĝan aranĝon"
 
 #: wizard/wizard.cpp:118
 #, kde-format
 msgid "Crop photos"
-msgstr ""
+msgstr "Tondi fotojn"
 
 #: wizard/wizard.cpp:120
 #, kde-format
@@ -566,12 +576,12 @@ msgstr "Propra"
 #: wizard/wizard.cpp:162 wizard/wizard.cpp:165 wizard/wizard.cpp:2531
 #, kde-format
 msgid "Print assistant"
-msgstr ""
+msgstr "Presa asistanto"
 
 #: wizard/wizard.cpp:166
 #, kde-format
 msgid "A tool to print images"
-msgstr ""
+msgstr "Ilo por presi bildojn"
 
 #: wizard/wizard.cpp:167
 #, kde-format
@@ -579,6 +589,8 @@ msgid ""
 "(c) 2003-2004, Todd Shoemaker\n"
 "(c) 2007-2013, Angelo Naselli"
 msgstr ""
+"(c) 2003-2004, Todd Shoemaker\n"
+"(c) 2007-2013, Angelo Naselli"
 
 #: wizard/wizard.cpp:170
 #, kde-format
@@ -598,7 +610,7 @@ msgstr "Angelo Naselli"
 #: wizard/wizard.cpp:175
 #, kde-format
 msgid "Developer"
-msgstr ""
+msgstr "Ellaboranto"
 
 #: wizard/wizard.cpp:178
 #, kde-format
@@ -613,22 +625,22 @@ msgstr "Kontribuanto"
 #: wizard/wizard.cpp:678
 #, kde-format
 msgid "Unsupported Paper Size"
-msgstr ""
+msgstr "Nesubtenata Papera Grandeco"
 
 #: wizard/wizard.cpp:1172
 #, kde-format
 msgid "Photo %1 of %2"
-msgstr ""
+msgstr "Foto %1 de %2"
 
 #: wizard/wizard.cpp:1256 wizard/wizard.cpp:1263
 #, kde-format
 msgid "Page %1 of %2"
-msgstr ""
+msgstr "Paĝo %1 el %2"
 
 #: wizard/wizard.cpp:1504
 #, kde-format
 msgid "Add again"
-msgstr ""
+msgstr "Aldoni denove"
 
 #: wizard/wizard.cpp:1514
 #, kde-format
@@ -638,12 +650,12 @@ msgstr "Forpreni"
 #: wizard/wizard.cpp:2218
 #, kde-format
 msgid "Output Path"
-msgstr ""
+msgstr "Eligo Vojo"
 
 #: wizard/wizard.cpp:2413
 #, kde-format
 msgid "Overwrite File"
-msgstr ""
+msgstr "Anstataŭigi Dosieron"
 
 #: wizard/wizard.cpp:2414
 #, kde-format
@@ -651,16 +663,18 @@ msgid ""
 "The following file will be overwritten. Are you sure you want to overwrite "
 "it?"
 msgstr ""
+"La sekva dosiero estos anstataŭita. Ĉu vi certas, ke vi volas anstataŭigi "
+"ĝin?"
 
 #: wizard/wizard.cpp:2438
 #, kde-format
 msgid "Could not save file, please check your output entry."
-msgstr ""
+msgstr "Ne eblis konservi dosieron, bonvolu kontroli vian eligaĵon."
 
 #: wizard/wizard.cpp:2462
 #, kde-format
 msgid "Could not remove the GIMP's temporary files."
-msgstr ""
+msgstr "Ne eblis forigi la provizorajn dosierojn de GIMP."
 
 #: wizard/wizard.cpp:2583
 #, kde-format
@@ -668,8 +682,9 @@ msgid ""
 "There was an error launching the GIMP. Please make sure it is properly "
 "installed."
 msgstr ""
+"Okazis eraro dum lanĉo de GIMP. Bonvolu certigi, ke ĝi estas ĝuste instalita."
 
 #: wizard/wizard.cpp:2595
 #, kde-format
 msgid "Empty output path."
-msgstr ""
+msgstr "Malplena eligvojo."

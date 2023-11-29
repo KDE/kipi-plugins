@@ -1,25 +1,27 @@
-# Translation of kipiplugin_kioexportimport into esperanto.
+# Translation of kipiplugin_remotestorage.pot into esperanto.
+# This file is distributed under the same license as the kipi-plugins package.
 # Axel Rousseau <axel@esperanto-jeunes.org>, 2009.
+# Oliver Kellogg <okellogg@users.sourceforge.net>, 2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: kipiplugin_kioexportimport\n"
+"Project-Id-Version: kipi-plugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2009-11-15 12:06+0100\n"
-"Last-Translator: Axel Rousseau <axel@esperanto-jeunes.org>\n"
+"PO-Revision-Date: 2023-11-12 08:14+0100\n"
+"Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: pology\n"
+"X-Generator: translate-po (https://github.com/zcribe/translate-po)\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: KioExportWidget.cpp:61
 #, kde-format
 msgid "Target location: "
-msgstr ""
+msgstr "Cela loko:"
 
 #: KioExportWidget.cpp:62
 #, kde-format
@@ -27,61 +29,63 @@ msgid ""
 "Sets the target address to upload the images to. This can be any address as "
 "used in Dolphin or Konqueror, e.g. ftp://my.server.org/sub/folder."
 msgstr ""
+"Agordas la cel-adreson por alŝuti la bildojn. Ĉi tio povas esti ajna adreso "
+"kiel uzata en Dolphin aŭ Konqueror, ekz. ftp://my.server.org/sub/folder."
 
 #: KioExportWidget.cpp:66
 #, kde-format
 msgid "Select target location..."
-msgstr ""
+msgstr "Elekti celan lokon..."
 
 #: KioExportWidget.cpp:72
 #, kde-format
 msgid "This is the list of images to upload to the specified target."
-msgstr ""
+msgstr "Jen la listo de bildoj por alŝuti al la specifita celo."
 
 #: KioExportWidget.cpp:134
 #, kde-format
 msgid "Select target..."
-msgstr ""
+msgstr "Elekti celon..."
 
 #: KioExportWidget.cpp:135
 #, kde-format
 msgid "All Files (*)"
-msgstr ""
+msgstr "Ĉiuj dosieroj (*)"
 
 #: KioExportWidget.cpp:155
 #, kde-format
 msgid "<not selected>"
-msgstr ""
+msgstr "<ne elektita>"
 
 #: KioExportWindow.cpp:64
 #, kde-format
 msgid "Export to Remote Storage"
-msgstr ""
+msgstr "Eksporti al Fora Konservejo"
 
 #: KioExportWindow.cpp:67
 #, kde-format
 msgid "Start export"
-msgstr ""
+msgstr "Komenci eksporton"
 
 #: KioExportWindow.cpp:68
 #, kde-format
 msgid "Start export to the specified target"
-msgstr ""
+msgstr "Komenci eksporton al la specifita celo"
 
 #: KioExportWindow.cpp:84
 #, kde-format
 msgid "Export to remote storage"
-msgstr ""
+msgstr "Eksporti al fora konservejo"
 
 #: KioExportWindow.cpp:85
 #, kde-format
 msgid "A tool to export images over network using KIO-Slave"
-msgstr ""
+msgstr "Ilo por eksporti bildojn tra reto uzante KIO-Slave"
 
 #: KioExportWindow.cpp:86 KioImportWindow.cpp:83
 #, kde-format
 msgid "(c) 2009, Johannes Wienke"
-msgstr ""
+msgstr "(c) 2009, Johannes Wienke"
 
 #: KioExportWindow.cpp:88 KioImportWindow.cpp:85
 #, kde-format
@@ -96,7 +100,7 @@ msgstr "Programisto kaj zorganto"
 #: KioExportWindow.cpp:198
 #, kde-format
 msgid "Upload not completed"
-msgstr ""
+msgstr "Alŝuto ne finiĝis"
 
 #: KioExportWindow.cpp:199
 #, kde-format
@@ -104,41 +108,44 @@ msgid ""
 "Some of the images have not been transferred and are still in the list. You "
 "can retry to export these images now."
 msgstr ""
+"Kelkaj el la bildoj ne estis translokigitaj kaj ankoraŭ estas en la listo. "
+"Vi povas reprovi eksporti ĉi tiujn bildojn nun."
 
 #: KioImportWidget.cpp:52
 #, kde-format
 msgid "This is the list of images to import into the current album."
-msgstr ""
+msgstr "Jen la listo de bildoj por importi en la nunan albumon."
 
 #: KioImportWindow.cpp:60
 #, kde-format
 msgid "Import from Remote Storage"
-msgstr ""
+msgstr "Importi el Fora Konservejo"
 
 #: KioImportWindow.cpp:64
 #, kde-format
 msgid "Start import"
-msgstr ""
+msgstr "Komenci importon"
 
 #: KioImportWindow.cpp:65
 #, kde-format
 msgid "Start importing the specified images into the currently selected album."
 msgstr ""
+"Komenci importi la specifitajn bildojn en la nuntempe elektitan albumon."
 
 #: KioImportWindow.cpp:81
 #, kde-format
 msgid "Import from remote storage"
-msgstr ""
+msgstr "Importi el fora konservejo"
 
 #: KioImportWindow.cpp:82
 #, kde-format
 msgid "A tool to import images over network"
-msgstr ""
+msgstr "Ilo por importi bildojn tra reto"
 
 #: KioImportWindow.cpp:137
 #, kde-format
 msgid "Import not completed"
-msgstr ""
+msgstr "Importo ne finiĝis"
 
 #: KioImportWindow.cpp:138
 #, kde-format
@@ -146,6 +153,8 @@ msgid ""
 "Some of the images have not been transferred and are still in the list. You "
 "can retry to import these images now."
 msgstr ""
+"Kelkaj el la bildoj ne estis translokigitaj kaj ankoraŭ estas en la listo. "
+"Vi povas reprovi importi ĉi tiujn bildojn nun."
 
 #. i18n: ectx: Menu (Import)
 #: kipiplugin_remotestorageui.rc:7
@@ -168,20 +177,9 @@ msgstr "Ĉefa ilobreto"
 #: plugin_remotestorage.cpp:93
 #, kde-format
 msgid "Export to remote storage..."
-msgstr ""
+msgstr "Eksporti al fora konservejo..."
 
 #: plugin_remotestorage.cpp:105
 #, kde-format
 msgid "Import from remote storage..."
-msgstr ""
-
-#~ msgctxt "NAME OF TRANSLATORS"
-#~ msgid "Your names"
-#~ msgstr "Axel Rousseau"
-
-#~ msgctxt "EMAIL OF TRANSLATORS"
-#~ msgid "Your emails"
-#~ msgstr "axel@esperanto-jeunes.org"
-
-#~ msgid "Handbook"
-#~ msgstr "Manlibro"
+msgstr "Importi el fora konservejo..."
