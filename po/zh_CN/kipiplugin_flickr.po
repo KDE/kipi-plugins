@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2023-11-25 02:33\n"
+"PO-Revision-Date: 2023-12-09 09:30\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -28,8 +28,8 @@ msgid ""
 "Check if photo should be publicly visible or use Upload Options tab to "
 "specify this for all images"
 msgstr ""
-"勾选后，照片将被设为公开可见，您也可以使用“上传选项”选项卡添加标签到所有图"
-"像。"
+"勾选后，照片将被设为公开可见，您也可以使用“上传选项”标签页来指定此选项到所有"
+"图像。"
 
 #: flickrlist.cpp:423
 #, kde-format
@@ -37,8 +37,8 @@ msgid ""
 "Check if photo should be visible to family or use Upload Options tab to "
 "specify this for all images"
 msgstr ""
-"勾选后，照片将被设为家庭成员可见，您也可以使用“上传选项”选项卡添加标签到所有"
-"图像。"
+"勾选后，照片将被设为家庭成员可见，您也可以使用“上传选项”标签页来指定此选项到"
+"所有图像。"
 
 #: flickrlist.cpp:426
 #, kde-format
@@ -46,29 +46,30 @@ msgid ""
 "Check if photo should be visible to friends or use Upload Options tab to "
 "specify this for all images"
 msgstr ""
-"勾选后，照片将被设为朋友可见，您也可以使用“上传选项”选项卡添加标签到所有图"
-"像。"
+"勾选后，照片将被设为朋友可见，您也可以使用“上传选项”标签页来指定此选项到所有"
+"图像。"
 
 #: flickrlist.cpp:429
 #, kde-format
 msgid ""
 "Indicate the safety level for the photo or use Upload Options tab to specify "
 "this for all images"
-msgstr "指定照片的安全级别，您也可以使用“上传选项”选项卡添加标签到所有图像。"
+msgstr ""
+"指定照片的安全级别，您也可以使用“上传选项”标签页来指定此选项到所有图像。"
 
 #: flickrlist.cpp:432
 #, kde-format
 msgid ""
 "Indicate what kind of image this is or use Upload Options tab to specify "
 "this for all images"
-msgstr "指定图像的类型，您也可以使用“上传选项”选项卡添加标签到所有图像。"
+msgstr "指定图像的类型，您也可以使用“上传选项”标签页来指定此选项到所有图像。"
 
 #: flickrlist.cpp:445
 #, kde-format
 msgid ""
 "Add extra tags per image or use Upload Options tab to add tags for all images"
 msgstr ""
-"您可以逐张添加额外标签到图像，也可以使用“上传选项”选项卡添加标签到所有图像"
+"您可以逐张添加额外标签到图像，也可以使用“上传选项”标签页添加标签到所有图像"
 
 #: flickrlist.cpp:462
 #, kde-format
@@ -317,7 +318,7 @@ msgstr "为每张图像添加标记"
 #: flickrwidget.cpp:159
 #, kde-format
 msgid "If checked, you can set extra tags for each image in the File List tab"
-msgstr "如果选中，您可以为文件列表标签中的每张图像设定额外的标记"
+msgstr "如果选中，您可以为文件列表标签页中的每张图像设定额外的标记"
 
 #: flickrwidget.cpp:163
 #, kde-format
