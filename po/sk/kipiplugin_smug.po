@@ -1,19 +1,19 @@
 # translation of kipiplugin_smug.po to Slovak
 # Richard Fric <Richard.Fric@kdemail.net>, 2009.
-# Roman Paholík <wizzardsk@gmail.com>, 2012, 2013, 2015, 2016.
+# SPDX-FileCopyrightText: 2012, 2013, 2015, 2016, 2023 Roman Paholík <wizzardsk@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kipiplugin_smug\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:07+0200\n"
-"PO-Revision-Date: 2016-08-31 23:07+0100\n"
+"PO-Revision-Date: 2023-12-11 18:55+0100\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Lokalize 23.08.3\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #. i18n: ectx: Menu (Import)
@@ -40,14 +40,14 @@ msgid "Export to &SmugMug..."
 msgstr "SmugMug import a export"
 
 #: plugin_smug.cpp:109
-#, fuzzy, kde-format
+#, kde-format
 msgid "Import from &SmugMug..."
-msgstr "SmugMug import a export"
+msgstr "Importovať zo &SmugMug..."
 
 #: smugalbum.cpp:54
-#, fuzzy, kde-format
+#, kde-format
 msgid "SmugMug New Album"
-msgstr "Vytvoriť nový album"
+msgstr "Nový album SmugMug"
 
 #: smugalbum.cpp:64 smugwidget.cpp:117
 #, kde-format
@@ -57,7 +57,7 @@ msgstr "Album"
 #: smugalbum.cpp:65
 #, kde-format
 msgid "These are basic settings for the new SmugMug album."
-msgstr ""
+msgstr "Toto sú základné nastavenia nového albumu SmugMug."
 
 #: smugalbum.cpp:68
 #, kde-format
@@ -82,7 +82,7 @@ msgstr "Popis albumu, ktorý bude vytvorený (voliteľné)."
 #: smugalbum.cpp:83
 #, kde-format
 msgid "Album template for the new album (optional)."
-msgstr ""
+msgstr "Šablóna pre nový album (voliteľné)."
 
 #: smugalbum.cpp:86
 #, kde-format
@@ -115,14 +115,14 @@ msgid "Template:"
 msgstr "Šablóna:"
 
 #: smugalbum.cpp:98
-#, fuzzy, kde-format
+#, kde-format
 msgid "Security && Privacy"
-msgstr "Nastavenie zabezpečenia a súkromia"
+msgstr "Zabezpečenie a súkromie"
 
 #: smugalbum.cpp:99
 #, kde-format
 msgid "These are security and privacy settings for the new SmugMug album."
-msgstr ""
+msgstr "Toto sú nastavenia zabezpečenia a súkromia nového albumu SmugMug."
 
 #: smugalbum.cpp:101
 #, kde-format
@@ -133,7 +133,7 @@ msgstr "Verejné"
 #: smugalbum.cpp:103
 #, kde-format
 msgid "Public album is listed on your public SmugMug page."
-msgstr ""
+msgstr "Verejný album je uvedený v zozname na vašej verejnej stránke SmugMug."
 
 #: smugalbum.cpp:104
 #, kde-format
@@ -144,17 +144,17 @@ msgstr "Neuvedené"
 #: smugalbum.cpp:105
 #, kde-format
 msgid "Unlisted album is only accessible via URL."
-msgstr ""
+msgstr "Neuvedený album je prístupný iba prostredníctvom adresy URL."
 
 #: smugalbum.cpp:112
 #, kde-format
 msgid "Require password to access the album (optional)."
-msgstr ""
+msgstr "Požadovať heslo pre prístup k albumu (nepovinné)."
 
 #: smugalbum.cpp:115
 #, kde-format
 msgid "Password hint to present to users in the password prompt (optional)."
-msgstr ""
+msgstr "Zobrazenie pomôcky pri výzve na zadanie hesla (nepovinné)."
 
 #: smugalbum.cpp:118
 #, kde-format
@@ -167,14 +167,14 @@ msgid "Password:"
 msgstr "Heslo:"
 
 #: smugalbum.cpp:120
-#, fuzzy, kde-format
+#, kde-format
 msgid "Password Hint:"
-msgstr "   Existuje rada   "
+msgstr "Pomôcka pre heslo:"
 
 #: smugtalker.cpp:111
-#, fuzzy, kde-format
+#, kde-format
 msgid "Logging in to SmugMug service..."
-msgstr "Prihlásenie sa do %1 zlyhalo: autentifikácia potrebná"
+msgstr "Prihlásenie k službe SmugMug..."
 
 #: smugtalker.cpp:464
 #, kde-format
@@ -182,14 +182,14 @@ msgid "Login failed"
 msgstr "Prihlásenie zlyhalo"
 
 #: smugtalker.cpp:467
-#, fuzzy, kde-format
+#, kde-format
 msgid "Invalid user/nick/password"
-msgstr "Zmeniť heslo tohto užívateľa"
+msgstr "Neplatný používateľ/prezývka/heslo"
 
 #: smugtalker.cpp:470
-#, fuzzy, kde-format
+#, kde-format
 msgid "Invalid API key"
-msgstr "Kľúč nie je platný."
+msgstr "Neplatný API kľúč"
 
 #: smugtalker.cpp:512 smugwindow.cpp:412 smugwindow.cpp:421 smugwindow.cpp:451
 #: smugwindow.cpp:484 smugwindow.cpp:516 smugwindow.cpp:546 smugwindow.cpp:920
@@ -207,6 +207,7 @@ msgstr ""
 msgid ""
 "This is a clickable link to open the SmugMug home page in a web browser."
 msgstr ""
+"Toto je odkaz na otvorenie domovskej stránky SmugMug vo webovom prehliadači."
 
 #: smugwidget.cpp:85
 #, kde-format
@@ -216,7 +217,7 @@ msgstr "Účet"
 #: smugwidget.cpp:86
 #, kde-format
 msgid "This is the SmugMug account that will be used to authenticate."
-msgstr ""
+msgstr "Toto je účet SmugMug, ktorý bude použitý na overenie totožnosti."
 
 #: smugwidget.cpp:89
 #, kde-format
@@ -227,17 +228,17 @@ msgstr "Anonym"
 #: smugwidget.cpp:90
 #, kde-format
 msgid "Login as anonymous to SmugMug web service."
-msgstr ""
+msgstr "Prihlásiť sa anonymne k webovej službe SmugMug."
 
 #: smugwidget.cpp:92
-#, fuzzy, kde-format
+#, kde-format
 msgid "SmugMug Account"
-msgstr "Detaily účtu"
+msgstr "Účet SmugMug"
 
 #: smugwidget.cpp:93
 #, kde-format
 msgid "Login to SmugMug web service using email and password."
-msgstr ""
+msgstr "Prihlásiť sa k webovej službe SmugMug pomocou e-mailu a hesla."
 
 #: smugwidget.cpp:95
 #, kde-format
@@ -259,7 +260,7 @@ msgstr "Zmeniť účet"
 #: smugwidget.cpp:103
 #, kde-format
 msgid "Change SmugMug Account used to authenticate"
-msgstr ""
+msgstr "Upraviť účet SmugMug použitý na overenie totožnosti"
 
 #: smugwidget.cpp:118
 #, kde-format
@@ -274,7 +275,7 @@ msgstr "Prezývka:"
 #: smugwidget.cpp:125
 #, kde-format
 msgid "Nickname of SmugMug user to list albums."
-msgstr ""
+msgstr "Prezývka používateľa SmugMug pre prehliadanie albumov."
 
 #: smugwidget.cpp:126
 #, fuzzy, kde-format
@@ -284,17 +285,17 @@ msgstr "Nesprávne heslo."
 #: smugwidget.cpp:128
 #, kde-format
 msgid "Site-wide password for specified SmugMug nick/user."
-msgstr ""
+msgstr "Sieťové heslo pre vybranú prezývku/používateľa SmugMug."
 
 #: smugwidget.cpp:129
-#, fuzzy, kde-format
+#, kde-format
 msgid "Album Password:"
-msgstr "Nesprávne heslo."
+msgstr "Heslo do albumu:"
 
 #: smugwidget.cpp:131
-#, fuzzy, kde-format
+#, kde-format
 msgid "Password for SmugMug album."
-msgstr "Odstrániť heslo pre formulár %1"
+msgstr "Heslo k albumu SmugMug."
 
 #: smugwidget.cpp:134
 #, kde-format
@@ -302,9 +303,9 @@ msgid "New Album"
 msgstr "Nový album"
 
 #: smugwidget.cpp:136
-#, fuzzy, kde-format
+#, kde-format
 msgid "Create new SmugMug album"
-msgstr "<qt><b>Vytvoriť nový album v<br/>\"<i>%1</i>\"</b></qt>"
+msgstr "Vytvoriť nový SmugMug album"
 
 #: smugwidget.cpp:139
 #, kde-format
@@ -325,7 +326,7 @@ msgstr "Cieľ"
 #: smugwidget.cpp:156
 #, kde-format
 msgid "This is the location where SmugMug images will be downloaded."
-msgstr ""
+msgstr "Umiestnenie, kam budú uložené obrázky stiahnuté zo SmugMug."
 
 #: smugwidget.cpp:163
 #, kde-format
@@ -358,9 +359,9 @@ msgid "Import from SmugMug Web Service"
 msgstr ""
 
 #: smugwindow.cpp:88
-#, fuzzy, kde-format
+#, kde-format
 msgid "Start Download"
-msgstr "Poradie sťahovania"
+msgstr "Spustiť preberanie"
 
 #: smugwindow.cpp:89
 #, kde-format
@@ -428,9 +429,9 @@ msgid "SmugMug Call Failed: %1\n"
 msgstr "Volanie D-Bus zlyhalo"
 
 #: smugwindow.cpp:480 smugwindow.cpp:542
-#, fuzzy, kde-format
+#, kde-format
 msgid "&lt;none&gt;"
-msgstr "[Zvýraznenie] (%1) &lt;%2&gt;"
+msgstr "&lt;žiadne&gt;"
 
 #: smugwindow.cpp:668 smugwindow.cpp:701
 #, kde-format
@@ -473,13 +474,13 @@ msgid "Processing Failed"
 msgstr "Spracovanie zlyhalo"
 
 #: smugwindow.cpp:889
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "Failed to save photo: %1\n"
 "Do you want to continue?"
 msgstr ""
-"Zlyhalo ukladanie súboru '%1'.\n"
-"Chcete použiť iné meno súboru?"
+"Fotku sa nepodarilo uložiť: %1\n"
+"Chcete pokračovať?"
 
 #: smugwindow.cpp:902
 #, kde-format
@@ -487,6 +488,8 @@ msgid ""
 "Failed to download photo: %1\n"
 "Do you want to continue?"
 msgstr ""
+"Nepodarilo sa stiahnuť fotografiu: %1\n"
+"Chcete pokračovať?"
 
 #~ msgctxt "NAME OF TRANSLATORS"
 #~ msgid "Your names"
