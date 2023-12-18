@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:26+0000\n"
-"PO-Revision-Date: 2023-12-09 09:27\n"
+"PO-Revision-Date: 2023-12-17 11:29\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -84,7 +84,7 @@ msgstr "旋转照片 (向左)"
 #: ui/croppage.ui:48
 #, kde-format
 msgid "Rotate &left"
-msgstr "旋转 (向左)(&L)"
+msgstr "旋转 (向左) (&L)"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, BtnCropRotateRight)
 #. i18n: ectx: property (whatsThis), widget (QPushButton, BtnCropRotateRight)
@@ -97,7 +97,7 @@ msgstr "旋转照片 (向右)"
 #: ui/croppage.ui:61
 #, kde-format
 msgid "Rotate &right"
-msgstr "旋转 (向右)(&R)"
+msgstr "旋转 (向右) (&R)"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, BtnCropPrev)
 #. i18n: ectx: property (whatsThis), widget (QPushButton, BtnCropPrev)
