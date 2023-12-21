@@ -5,7 +5,7 @@
 # Stanislas Zeller <uncensored.assault@gmail.com>, 2009.
 # Florian Guillochon <florian.guillochon@gmail.com>, 2009.
 # Sebastien Renard <Sebastien.Renard@digitalfox.org>, 2009.
-# xavier <ktranslator31@yahoo.fr>, 2013.
+# Xavier Besnard <xavier.besnard@kde.org>, 2013.
 # Peter Potrowl <peter.potrowl@gmail.com>, 2015, 2016.
 #
 msgid ""
