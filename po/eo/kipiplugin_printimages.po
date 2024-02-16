@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: kipiplugin_printimages\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:26+0000\n"
-"PO-Revision-Date: 2023-11-19 16:53+0100\n"
+"PO-Revision-Date: 2024-02-04 17:21+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -368,7 +368,7 @@ msgid ""
 "resolution, %a aperture, %l focal length, \\n newline"
 msgstr ""
 "%f dosiernomo, %t malkovrotempo, %c komento, %i ISO, %d dato-tempo, %r "
-"rezolucio, %a aperturo, %l fokusa distanco, \\n nova linio"
+"distingivo, %a aperturo, %l fokusa distanco, \\n nova linio"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_sameCaption)
 #: ui/photopage.ui:532
