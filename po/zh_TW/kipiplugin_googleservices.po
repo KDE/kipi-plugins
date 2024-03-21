@@ -3,13 +3,13 @@
 #
 # Franklin Weng <franklin at goodhorse dot idv dot tw>, 2014.
 # pan93412 <pan93412@gmail.com>, 2019.
-# SPDX-FileCopyrightText: 2023 Kisaragi Hiu <mail@kisaragi-hiu.com>
+# SPDX-FileCopyrightText: 2023, 2024 Kisaragi Hiu <mail@kisaragi-hiu.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:26+0000\n"
-"PO-Revision-Date: 2023-12-17 19:09+0900\n"
+"PO-Revision-Date: 2024-03-20 19:08+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 24.04.70\n"
 
 #: authorize.cpp:116
 #, kde-format
@@ -505,12 +505,12 @@ msgstr "公開相簿會列在您的公開 Google Photos/PicasaWeb 頁面。"
 #, kde-format
 msgctxt "google photos/picasaweb album privacy"
 msgid "Unlisted / Private"
-msgstr "不列出 / 私人"
+msgstr "不公開 / 私人"
 
 #: newalbumdlg.cpp:61
 #, kde-format
 msgid "Unlisted album is only accessible via URL."
-msgstr "未列出的相簿只能經由網址存取。"
+msgstr "不公開的相簿只能經由網址存取。"
 
 #: newalbumdlg.cpp:62
 #, kde-format
@@ -521,7 +521,7 @@ msgstr "需要登入才能檢視"
 #: newalbumdlg.cpp:63
 #, kde-format
 msgid "Unlisted album require Sign-In to View"
-msgstr "未列出的相簿需要登入才能檢視"
+msgstr "不公開的相簿需要登入才能檢視"
 
 #: newalbumdlg.cpp:71
 #, kde-format
