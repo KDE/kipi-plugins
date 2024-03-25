@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kipi-plugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:26+0000\n"
-"PO-Revision-Date: 2024-02-26 21:30+0100\n"
+"PO-Revision-Date: 2024-03-24 10:34+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo.org>\n"
 "Language: eo\n"
@@ -48,7 +48,7 @@ msgstr "Eraro en dosiero '%1': %2\n"
 #: wmtalker.cpp:167
 #, kde-format
 msgid "Uploaded via KIPI uploader"
-msgstr ""
+msgstr "Alŝutite per KIPI-alŝutilo"
 
 #: wmtalker.cpp:188
 #, kde-format
@@ -333,6 +333,7 @@ msgstr "Simplaj tiparoj, individuaj vortoj aŭ geometriaj formoj"
 #, kde-format
 msgid "Logos with only simple typefaces, individual words or geometric shapes"
 msgstr ""
+"Emblemoj kun nur simplaj tiparoj, individuaj vortoj aŭ geometriaj formoj"
 
 #: wmwidget.cpp:426
 #, kde-format
@@ -449,12 +450,12 @@ msgstr ""
 #: wmwindow.cpp:128
 #, kde-format
 msgid "(c) 2011, Alexandre Mendes"
-msgstr ""
+msgstr "(c) 2011, Alexandre Mendes"
 
 #: wmwindow.cpp:130
 #, kde-format
 msgid "Alexandre Mendes"
-msgstr ""
+msgstr "Aleksandro Mendes"
 
 #: wmwindow.cpp:131
 #, kde-format
@@ -464,7 +465,7 @@ msgstr "Aŭtoro"
 #: wmwindow.cpp:134
 #, kde-format
 msgid "Guillaume Hormiere"
-msgstr ""
+msgstr "Guillaume Hormiere"
 
 #: wmwindow.cpp:135 wmwindow.cpp:139 wmwindow.cpp:143
 #, kde-format
@@ -479,7 +480,7 @@ msgstr "Gilles Caulier"
 #: wmwindow.cpp:142
 #, kde-format
 msgid "Peter Potrowl"
-msgstr ""
+msgstr "Peter Potrowl"
 
 #: wmwindow.cpp:389
 #, kde-format

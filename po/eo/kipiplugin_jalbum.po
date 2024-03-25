@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kipi-plugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:26+0000\n"
-"PO-Revision-Date: 2024-02-26 21:30+0100\n"
+"PO-Revision-Date: 2024-03-24 10:34+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo.org>\n"
 "Language: eo\n"
@@ -21,12 +21,12 @@ msgstr ""
 #: jalbumconfig.cpp:97 jalbumconfig.cpp:160
 #, kde-format
 msgid "Select Albums Location"
-msgstr ""
+msgstr "Elekti Lokon de Albumoj"
 
 #: jalbumconfig.cpp:111
 #, kde-format
 msgid "Select jAlbum jar File Location"
-msgstr ""
+msgstr "Elekti Dosierlokon de jAlbum-jar"
 
 #: jalbumconfig.cpp:118
 #, kde-format
@@ -41,37 +41,37 @@ msgstr "Nuligi"
 #: jalbumconfig.cpp:180
 #, kde-format
 msgid "Select jar File Location"
-msgstr ""
+msgstr "Elekti jar-Dosierlokon"
 
 #: jalbumconfig.cpp:234
 #, kde-format
 msgid "Not a directory"
-msgstr ""
+msgstr "Ne dosierujo"
 
 #: jalbumconfig.cpp:234
 #, kde-format
 msgid "Chosen path is not a directory"
-msgstr ""
+msgstr "Elektita vojo ne estas dosierujo"
 
 #: jalbumconfig.cpp:238
 #, kde-format
 msgid "Missing directory"
-msgstr ""
+msgstr "Mankas dosierujo"
 
 #: jalbumconfig.cpp:239
 #, kde-format
 msgid "Directory %1 does not exist, do you wish to create it?"
-msgstr ""
+msgstr "Dosierujo %1 ne ekzistas, ĉu vi volas krei ĝin?"
 
 #: jalbumconfig.cpp:250 jalbumconfig.cpp:251
 #, kde-format
 msgid "Failed to create directory"
-msgstr ""
+msgstr "Malsukcesis krei dosierujon"
 
 #: jalbumwindow.cpp:95
 #, kde-format
 msgid "jAlbum Album name to export to:"
-msgstr ""
+msgstr "jAlbum Albumnomo por eksporti al:"
 
 #: jalbumwindow.cpp:113
 #, kde-format
@@ -86,12 +86,12 @@ msgstr "jAlbum-Eksporto"
 #: jalbumwindow.cpp:128
 #, kde-format
 msgid "A Kipi plugin to launch jAlbum using selected images."
-msgstr ""
+msgstr "Kipi-aldonaĵo por lanĉi jAlbum uzante elektitajn bildojn."
 
 #: jalbumwindow.cpp:129
 #, kde-format
 msgid "(c) 2013-2017, Andrew Goodbody\n"
-msgstr ""
+msgstr "(c) 2013-2017, Andrew Goodbody\n"
 
 #: jalbumwindow.cpp:160
 #, kde-format
@@ -101,42 +101,42 @@ msgstr "Eraro"
 #: jalbumwindow.cpp:175
 #, kde-format
 msgid "Overwrite?"
-msgstr ""
+msgstr "Ĉu anstataŭigi?"
 
 #: jalbumwindow.cpp:176
 #, kde-format
 msgid "Album %1 already exists, do you wish to overwrite it?"
-msgstr ""
+msgstr "Albumo %1 jam ekzistas, ĉu vi volas anstataŭigi ĝin?"
 
 #: jalbumwindow.cpp:186
 #, kde-format
 msgid "Create dir Failed"
-msgstr ""
+msgstr "Krei diraĵon Malsukcesis"
 
 #: jalbumwindow.cpp:187
 #, kde-format
 msgid "Failed to create album directory"
-msgstr ""
+msgstr "Malsukcesis krei albumdosierujon"
 
 #: jalbumwindow.cpp:200 jalbumwindow.cpp:218
 #, kde-format
 msgid "Writing Failed"
-msgstr ""
+msgstr "Skribo Malsukcesis"
 
 #: jalbumwindow.cpp:201
 #, kde-format
 msgid "Could not open 'albumfiles.txt' for writing"
-msgstr ""
+msgstr "Ne eblis malfermi 'albumfiles.txt' por skribado"
 
 #: jalbumwindow.cpp:219
 #, kde-format
 msgid "Could not open 'jalbum-settings.jap' for writing"
-msgstr ""
+msgstr "Ne eblis malfermi 'jalbum-settings.jap' por skribado"
 
 #: jalbumwindow.cpp:255 plugin_jalbum.cpp:123
 #, kde-format
 msgid "Edit jAlbum Data"
-msgstr ""
+msgstr "Redakti jAlbum-Datumojn"
 
 #. i18n: ectx: Menu (Export)
 #: kipiplugin_jalbumui.rc:7
@@ -153,4 +153,4 @@ msgstr "Ĉefa ilobreto"
 #: plugin_jalbum.cpp:105
 #, kde-format
 msgid "Export to &jAlbum"
-msgstr ""
+msgstr "Eksporti al &jAlbumo"

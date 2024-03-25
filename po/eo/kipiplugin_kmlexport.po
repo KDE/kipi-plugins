@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kipi-plugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:26+0000\n"
-"PO-Revision-Date: 2024-02-26 21:30+0100\n"
+"PO-Revision-Date: 2024-03-24 10:34+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo.org>\n"
 "Language: eo\n"
@@ -21,7 +21,7 @@ msgstr ""
 #: kmlexport.cpp:90
 #, kde-format
 msgid "Generating KML file..."
-msgstr ""
+msgstr "Generante KML-dosieron..."
 
 #: kmlexport.cpp:180 kmlexport.cpp:197
 #, kde-format
@@ -81,7 +81,7 @@ msgstr "Neniuj poziciodatenoj por '%1'"
 #: kmlexport.cpp:516
 #, kde-format
 msgid "Missing position"
-msgstr ""
+msgstr "Mankas pozicio"
 
 #: kmlexport.cpp:517
 #, kde-format
@@ -98,7 +98,7 @@ msgstr "Ne povas malfermi dosieron por skribi"
 #: kmlexport.cpp:539
 #, kde-format
 msgid "Move to final directory"
-msgstr ""
+msgstr "Movi al fina dosierujo"
 
 #: kmlexport.cpp:543
 #, kde-format
@@ -197,7 +197,7 @@ msgstr "Celka Adresaro:"
 #: kmlwindow.cpp:123
 #, kde-format
 msgid "Select a directory in which to save the kml file and pictures"
-msgstr ""
+msgstr "Elekti dosierujon en kiu konservi la kml-dosieron kaj bildojn"
 
 #: kmlwindow.cpp:125
 #, kde-format
@@ -242,7 +242,7 @@ msgstr "GPX-dosiero:"
 #: kmlwindow.cpp:177
 #, kde-format
 msgid "%1|GPS Exchange Format"
-msgstr ""
+msgstr "%1|Formato de GPS-interŝanĝo"
 
 #: kmlwindow.cpp:178
 #, kde-format
@@ -430,17 +430,17 @@ msgstr ""
 #: kmlwindow.cpp:285
 #, kde-format
 msgid "A tool to export to KML"
-msgstr ""
+msgstr "Ilo por eksporti al KML"
 
 #: kmlwindow.cpp:286
 #, kde-format
 msgid "(c) 2006-2007, Stéphane Pontier"
-msgstr ""
+msgstr "(c) 2006-2007, Stéphane Pontier"
 
 #: kmlwindow.cpp:288
 #, kde-format
 msgid "Stéphane Pontier"
-msgstr ""
+msgstr "Stéphane Pontier"
 
 #: kmlwindow.cpp:289 kmlwindow.cpp:293
 #, kde-format
@@ -465,4 +465,4 @@ msgstr "Prizorganto"
 #: plugin_kmlexport.cpp:92
 #, kde-format
 msgid "Export to KML..."
-msgstr ""
+msgstr "Eksporti al KML..."

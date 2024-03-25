@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kipi-plugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:26+0000\n"
-"PO-Revision-Date: 2024-02-26 21:30+0100\n"
+"PO-Revision-Date: 2024-03-24 10:34+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo.org>\n"
 "Language: eo\n"
@@ -91,17 +91,17 @@ msgstr "Imgur Eksporto"
 #: imgurwindow.cpp:126
 #, kde-format
 msgid "A tool to export images to Imgur web service"
-msgstr ""
+msgstr "Ilo por eksporti bildojn al la retservo Imgur"
 
 #: imgurwindow.cpp:127
 #, kde-format
 msgid "(c) 2012-2013, Marius Orcsik"
-msgstr ""
+msgstr "(c) 2012-2013, Marius Orcsik"
 
 #: imgurwindow.cpp:129
 #, kde-format
 msgid "Marius Orcsik"
-msgstr ""
+msgstr "Marius Orcsik"
 
 #: imgurwindow.cpp:130
 #, kde-format
@@ -121,12 +121,12 @@ msgstr "Ellaboranto"
 #: imgurwindow.cpp:137
 #, kde-format
 msgid "Fabian Vogt"
-msgstr ""
+msgstr "Fabian Vogt"
 
 #: imgurwindow.cpp:220
 #, kde-format
 msgid "<Not logged in>"
-msgstr ""
+msgstr "<Ne ensalutinta>"
 
 #: imgurwindow.cpp:227
 #, kde-format

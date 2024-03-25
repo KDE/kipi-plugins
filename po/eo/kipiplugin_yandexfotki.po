@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kipi-plugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:26+0000\n"
-"PO-Revision-Date: 2024-02-26 21:30+0100\n"
+"PO-Revision-Date: 2024-03-24 10:34+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo.org>\n"
 "Language: eo\n"
@@ -33,12 +33,12 @@ msgstr "Ĉefa ilobreto"
 #: plugin_yandexfotki.cpp:91
 #, kde-format
 msgid "Export to &Yandex.Fotki..."
-msgstr ""
+msgstr "Eksporti al &Yandex.Fotki..."
 
 #: yfalbumdialog.cpp:60
 #, kde-format
 msgid "Password for the album (optional)."
-msgstr ""
+msgstr "Pasvorto por la albumo (laŭvola)."
 
 #: yfalbumdialog.cpp:63
 #, kde-format
@@ -53,87 +53,89 @@ msgstr "Eraro"
 #: yfalbumdialog.cpp:80
 #, kde-format
 msgid "Title cannot be empty."
-msgstr ""
+msgstr "Titolo ne povas esti malplena."
 
 #: yfwidget.cpp:61
 #, kde-format
 msgid "Update policy:"
-msgstr ""
+msgstr "Ĝisdatigi politikon:"
 
 #: yfwidget.cpp:63
 #, kde-format
 msgid "Update metadata"
-msgstr ""
+msgstr "Ĝisdatigi metadatenojn"
 
 #: yfwidget.cpp:64
 #, kde-format
 msgid "Update metadata of remote file and merge remote tags with local"
 msgstr ""
+"Ĝisdatigi metadatenojn de fora dosiero kaj kunfandi forajn etikedojn kun "
+"lokaj"
 
 #: yfwidget.cpp:66
 #, kde-format
 msgid "Skip photo"
-msgstr ""
+msgstr "Preterpasi foton"
 
 #: yfwidget.cpp:67
 #, kde-format
 msgid "Simple skip photo"
-msgstr ""
+msgstr "Simpla salti foton"
 
 #: yfwidget.cpp:68
 #, kde-format
 msgid "Upload as new"
-msgstr ""
+msgstr "Alŝuti kiel nova"
 
 #: yfwidget.cpp:69
 #, kde-format
 msgid "Add photo as new"
-msgstr ""
+msgstr "Aldoni foton kiel nova"
 
 #: yfwidget.cpp:71
 #, kde-format
 msgid "Privacy settings:"
-msgstr ""
+msgstr "Privateca agordo:"
 
 #: yfwidget.cpp:74
 #, kde-format
 msgid "Public access"
-msgstr ""
+msgstr "Publika aliro"
 
 #: yfwidget.cpp:76
 #, kde-format
 msgid "Friends access"
-msgstr ""
+msgstr "Aliro de amikoj"
 
 #: yfwidget.cpp:78
 #, kde-format
 msgid "Private access"
-msgstr ""
+msgstr "Privata aliro"
 
 #: yfwidget.cpp:80
 #, kde-format
 msgid "Hide original photo"
-msgstr ""
+msgstr "Kaŝi originan foton"
 
 #: yfwidget.cpp:81
 #, kde-format
 msgid "Disable comments"
-msgstr ""
+msgstr "Malebligi komentojn"
 
 #: yfwidget.cpp:82
 #, kde-format
 msgid "Adult content"
-msgstr ""
+msgstr "Plenkreska enhavo"
 
 #: yfwindow.cpp:128
 #, kde-format
 msgid "Yandex.Fotki Plugin"
-msgstr ""
+msgstr "Yandex.Fotki Kromaĵo"
 
 #: yfwindow.cpp:129
 #, kde-format
 msgid "A tool to export image collections to Yandex.Fotki web service."
-msgstr ""
+msgstr "Ilo por eksporti bildkolektojn al Yandex.Fotki-retservo."
 
 #: yfwindow.cpp:131
 #, kde-format
@@ -147,7 +149,7 @@ msgstr ""
 #: yfwindow.cpp:136
 #, kde-format
 msgid "Roman Tsisyk"
-msgstr ""
+msgstr "Roman Cisyk"
 
 #: yfwindow.cpp:137
 #, kde-format
@@ -169,13 +171,13 @@ msgstr "Y"
 #, kde-format
 msgctxt "Yandex.Fotki"
 msgid "andex."
-msgstr ""
+msgstr "andex."
 
 #: yfwindow.cpp:264
 #, kde-format
 msgctxt "Yandex.Fotki"
 msgid "Fotki"
-msgstr ""
+msgstr "Fotki"
 
 #: yfwindow.cpp:589
 #, kde-format
@@ -192,47 +194,47 @@ msgstr ""
 #: yfwindow.cpp:617
 #, kde-format
 msgid "Images have been uploaded"
-msgstr ""
+msgstr "Bildoj estas alŝutitaj"
 
 #: yfwindow.cpp:647
 #, kde-format
 msgid "Please select album first"
-msgstr ""
+msgstr "Bonvolu unue elekti albumon"
 
 #: yfwindow.cpp:669
 #, kde-format
 msgid "Session error"
-msgstr ""
+msgstr "Seanca eraro"
 
 #: yfwindow.cpp:672
 #, kde-format
 msgid "Token error"
-msgstr ""
+msgstr "Ĵetoneraro"
 
 #: yfwindow.cpp:675
 #, kde-format
 msgid "Invalid credentials"
-msgstr ""
+msgstr "Nevalidaj akreditaĵoj"
 
 #: yfwindow.cpp:679
 #, kde-format
 msgid "Cannot get service document"
-msgstr ""
+msgstr "Ne povas ricevi servodokumenton"
 
 #: yfwindow.cpp:692
 #, kde-format
 msgid "Cannot list albums"
-msgstr ""
+msgstr "Ne povas listigi albumojn"
 
 #: yfwindow.cpp:695
 #, kde-format
 msgid "Cannot list photos"
-msgstr ""
+msgstr "Ne povas listigi fotojn"
 
 #: yfwindow.cpp:698
 #, kde-format
 msgid "Cannot update album info"
-msgstr ""
+msgstr "Ne povas ĝisdatigi albumajn informojn"
 
 #: yfwindow.cpp:704
 #, kde-format
