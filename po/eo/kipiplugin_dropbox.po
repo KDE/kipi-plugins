@@ -1,61 +1,62 @@
+# translation of kipiplugin_dropbox.pot to Esperanto
+# Copyright (C) 2024 Free Software Foundation, Inc.
+# This file is distributed under the same license as the kipi-plugins package.
+# Oliver Kellogg <okellogg@users.sourceforge.net>, 2024.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: kdeorg\n"
+"Project-Id-Version: kipi-plugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:26+0000\n"
-"PO-Revision-Date: 2024-03-28 19:25\n"
-"Last-Translator: \n"
-"Language-Team: Chinese Simplified\n"
-"Language: zh_CN\n"
+"PO-Revision-Date: 2024-03-24 10:34+0100\n"
+"Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
+"Language-Team: Esperanto <kde-i18n-eo.org>\n"
+"Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Crowdin-Project: kdeorg\n"
-"X-Crowdin-Project-ID: 269464\n"
-"X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf5-stable/messages/kipi-plugins/kipiplugin_dropbox.pot\n"
-"X-Crowdin-File-ID: 10774\n"
+"X-Generator: translate-po (https://github.com/zcribe/translate-po)\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: dbtalker.cpp:317
 #, kde-format
 msgid "Error"
-msgstr "错误"
+msgstr "Eraro"
 
 #: dbtalker.cpp:360
 #, kde-format
 msgid "Failed to upload photo"
-msgstr "上传照片失败"
+msgstr "Malsukcesis alŝuti foton"
 
 #: dbtalker.cpp:387
 #, kde-format
 msgid "Failed to list folders"
-msgstr "列出文件夹失败"
+msgstr "Malsukcesis listigi dosierujojn"
 
 #: dbwindow.cpp:70
 #, kde-format
 msgid "Export to Dropbox"
-msgstr "导出到 Dropbox"
+msgstr "Eksporti al Dropbox"
 
 #: dbwindow.cpp:72
 #, kde-format
 msgid "Start Upload"
-msgstr "开始上传"
+msgstr "Komenci Alŝuton"
 
 #: dbwindow.cpp:73
 #, kde-format
 msgid "Start upload to Dropbox"
-msgstr "开始上传到 Dropbox"
+msgstr "Komenci alŝuton al Dropbox"
 
 #: dbwindow.cpp:92
 #, kde-format
 msgid "Dropbox Export"
-msgstr "Dropbox 导出"
+msgstr "Dropbox-Eksporto"
 
 #: dbwindow.cpp:93
 #, kde-format
 msgid "A tool to export images to Dropbox"
-msgstr "一个将图像导出到 Dropbox 的工具"
+msgstr "Ilo por eksporti bildojn al Dropbox"
 
 #: dbwindow.cpp:95
 #, kde-format
@@ -70,28 +71,28 @@ msgstr "Saurabh Patel"
 #: dbwindow.cpp:98
 #, kde-format
 msgid "Author"
-msgstr "作者"
+msgstr "Aŭtoro"
 
 #: dbwindow.cpp:259
 #, kde-format
 msgctxt "@title:window"
 msgid "Error"
-msgstr "错误"
+msgstr "Eraro"
 
 #: dbwindow.cpp:260
 #, kde-format
 msgid "No image selected. Please select which images should be uploaded."
-msgstr "未选中任何图片。请选择要上传的图片。"
+msgstr "Neniu bildo elektita. Bonvolu elekti kiuj bildoj devas esti alŝutitaj."
 
 #: dbwindow.cpp:266 dbwindow.cpp:386
 #, kde-format
 msgid "Login Failed"
-msgstr "登录失败"
+msgstr "Ensaluto malsukcesis"
 
 #: dbwindow.cpp:267 dbwindow.cpp:387
 #, kde-format
 msgid "Authentication failed. Do you want to try again?"
-msgstr "认证失败。是否要重试？"
+msgstr "Aŭtentigo malsukcesis. Ĉu vi volas provi denove?"
 
 #: dbwindow.cpp:291
 #, kde-format
@@ -101,12 +102,12 @@ msgstr "%v / %m"
 #: dbwindow.cpp:295
 #, kde-format
 msgid "Dropbox export"
-msgstr "Dropbox 导出"
+msgstr "Dropbox-eksporto"
 
 #: dbwindow.cpp:328
 #, kde-format
 msgid "Uploading Failed"
-msgstr "上传失败"
+msgstr "Malsukcesa alŝuto"
 
 #: dbwindow.cpp:329
 #, kde-format
@@ -115,9 +116,6 @@ msgid ""
 "%1\n"
 "Do you want to continue?"
 msgstr ""
-"上传照片到 Dropbox 失败。\n"
-"%1\n"
-"是否继续？"
 
 #: dbwindow.cpp:401 dbwindow.cpp:406
 #, kde-format
@@ -125,22 +123,20 @@ msgid ""
 "Dropbox call failed:\n"
 "%1"
 msgstr ""
-"Dropbox 调用失败：\n"
-"%1"
 
 #. i18n: ectx: Menu (Export)
 #: kipiplugin_dropboxui.rc:7
 #, kde-format
 msgid "&Export"
-msgstr "导出(&E)"
+msgstr "&Eksporti"
 
 #. i18n: ectx: ToolBar (mainToolBar)
 #: kipiplugin_dropboxui.rc:13
 #, kde-format
 msgid "Main Toolbar"
-msgstr "主工具栏"
+msgstr "Ĉefa ilobreto"
 
 #: plugin_dropbox.cpp:90
 #, kde-format
 msgid "Export to &Dropbox..."
-msgstr "导出到 &Dropbox..."
+msgstr "Eksporti al &Dropbox..."

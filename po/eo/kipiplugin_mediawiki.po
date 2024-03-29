@@ -1,169 +1,170 @@
+# translation of kipiplugin_mediawiki.pot to Esperanto
+# Copyright (C) 2024 Free Software Foundation, Inc.
+# This file is distributed under the same license as the kipi-plugins package.
+# Oliver Kellogg <okellogg@users.sourceforge.net>, 2024.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: kdeorg\n"
+"Project-Id-Version: kipi-plugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:26+0000\n"
-"PO-Revision-Date: 2024-03-28 19:25\n"
-"Last-Translator: \n"
-"Language-Team: Chinese Simplified\n"
-"Language: zh_CN\n"
+"PO-Revision-Date: 2024-03-24 10:34+0100\n"
+"Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
+"Language-Team: Esperanto <kde-i18n-eo.org>\n"
+"Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Crowdin-Project: kdeorg\n"
-"X-Crowdin-Project-ID: 269464\n"
-"X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf5-stable/messages/kipi-plugins/kipiplugin_mediawiki.pot\n"
-"X-Crowdin-File-ID: 10746\n"
+"X-Generator: translate-po (https://github.com/zcribe/translate-po)\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #. i18n: ectx: Menu (Export)
 #: kipiplugin_wikimediaui.rc:7
 #, kde-format
 msgid "&Export"
-msgstr "导出(&E)"
+msgstr "&Eksporti"
 
 #. i18n: ectx: ToolBar (mainToolBar)
 #: kipiplugin_wikimediaui.rc:13
 #, kde-format
 msgid "Main Toolbar"
-msgstr "主工具栏"
+msgstr "Ĉefa ilobreto"
 
 #: plugin_wikimedia.cpp:105
 #, kde-format
 msgid "Export to MediaWiki..."
-msgstr "导出至 MediaWiki..."
+msgstr "Eksporti al MediaWiki..."
 
 #: wmtalker.cpp:125
 #, kde-format
 msgid "Error on file '%1'\n"
-msgstr "文件“%1”出错\n"
+msgstr "Eraro en dosiero '%1'\n"
 
 #: wmtalker.cpp:129
 #, kde-format
 msgid "Error on file '%1': %2\n"
-msgstr "文件“%1”出错：%2\n"
+msgstr "Eraro en dosiero '%1': %2\n"
 
 #: wmtalker.cpp:167
 #, kde-format
 msgid "Uploaded via KIPI uploader"
-msgstr "上传自 KIPI 上传程序"
+msgstr "Alŝutite per KIPI-alŝutilo"
 
 #: wmtalker.cpp:188
 #, kde-format
 msgid "Error"
-msgstr "错误"
+msgstr "Eraro"
 
 #: wmwidget.cpp:112
 #, kde-format
 msgid "Select an image"
-msgstr "选择图像"
+msgstr "Elekti bildon"
 
 #: wmwidget.cpp:181
 #, kde-format
 msgid ""
 "This is a clickable link to open the MediaWiki home page in a web browser."
-msgstr "点击此链接即可在网页浏览器中打开 MediaWiki 主页。"
+msgstr ""
 
 #: wmwidget.cpp:189
 #, kde-format
 msgid "This is the list of images to upload to the wiki."
-msgstr "这些图像将被上传到 wiki 类网站上。"
+msgstr "Jen la listo de bildoj alŝutendaj al la vikio."
 
 #: wmwidget.cpp:214 wmwidget.cpp:387
 #, kde-format
 msgid "This is the login form to your account on the chosen wiki."
-msgstr "此处为所选 wiki 类网站的登录框。"
+msgstr "Ĉi tiu estas la ensalutformularo al via konto en la elektita vikio."
 
 #: wmwidget.cpp:235
 #, kde-format
 msgid "Title:"
-msgstr "标题："
+msgstr "Titolo:"
 
 #: wmwidget.cpp:237
 #, kde-format
 msgid "Date:"
-msgstr "日期："
+msgstr "Dato:"
 
 #: wmwidget.cpp:239
 #, kde-format
 msgid "Description:"
-msgstr "描述："
+msgstr "Priskribo:"
 
 #: wmwidget.cpp:241
 #, kde-format
 msgid "Categories:"
-msgstr "类别："
+msgstr "Kategorioj:"
 
 #: wmwidget.cpp:243
 #, kde-format
 msgid "Latitude:"
-msgstr "纬度："
+msgstr "Latitudo:"
 
 #: wmwidget.cpp:245
 #, kde-format
 msgid "Longitude:"
-msgstr "经度："
+msgstr "Longitudo:"
 
 #: wmwidget.cpp:273
 #, kde-format
 msgid "Account"
-msgstr "账户"
+msgstr "Konto"
 
 #: wmwidget.cpp:274
 #, kde-format
 msgid "This is the login form to your MediaWiki account."
-msgstr "此处为 MediaWiki 账户的登录框。"
+msgstr "Ĉi tiu estas la ensalutu formularo al via MediaWiki-konto."
 
 #: wmwidget.cpp:281
 #, kde-format
 msgid "New"
-msgstr "新"
+msgstr "Nova"
 
 #: wmwidget.cpp:282
 #, kde-format
 msgid "Add a wiki to this list"
-msgstr "向此列表中添加 wiki 类网站"
+msgstr "Aldoni vikion al ĉi tiu listo"
 
 #: wmwidget.cpp:287
 #, kde-format
 msgid "Wikimedia Commons"
-msgstr "维基共享资源"
+msgstr "Vikimedia Komunejo"
 
 #: wmwidget.cpp:288
 #, kde-format
 msgid "Wikimedia Meta"
-msgstr "元维基"
+msgstr "Vikimedia Meta"
 
 #: wmwidget.cpp:289
 #, kde-format
 msgid "Wikipedia"
-msgstr "维基百科"
+msgstr "Vikipedio"
 
 #: wmwidget.cpp:290
 #, kde-format
 msgid "Wikibooks"
-msgstr "维基教科书"
+msgstr "Vikilibroj"
 
 #: wmwidget.cpp:291
 #, kde-format
 msgid "Wikinews"
-msgstr "维基新闻"
+msgstr "Vikinovaĵoj"
 
 #: wmwidget.cpp:292
 #, kde-format
 msgid "Wikiquote"
-msgstr "维基语录"
+msgstr "Vikicitaro"
 
 #: wmwidget.cpp:293
 #, kde-format
 msgid "Wikisource"
-msgstr "维基文库"
+msgstr "Vikifontaro"
 
 #: wmwidget.cpp:294
 #, kde-format
 msgid "Wiktionary"
-msgstr "维基词典"
+msgstr "Vikivortaro"
 
 #: wmwidget.cpp:295
 #, kde-format
@@ -173,272 +174,271 @@ msgstr "MediaWiki"
 #: wmwidget.cpp:296
 #, kde-format
 msgid "Wikia Foto"
-msgstr "Wikia Foto"
+msgstr "Vikia Foto"
 
 #: wmwidget.cpp:297
 #, kde-format
 msgid "Wikia Uncyclopedia"
-msgstr "Wikia 伪基百科"
+msgstr "Vikio Neciklopedio"
 
 #: wmwidget.cpp:302
 #, kde-format
 msgid "Wiki:"
-msgstr "Wiki："
+msgstr "Vikio:"
 
 #: wmwidget.cpp:313
 #, kde-format
 msgid "These are options for adding a Wiki."
-msgstr "这些是添加 Wiki 类网站的选项。"
+msgstr "Ĉi tiuj estas ebloj por aldoni Vikio."
 
 #: wmwidget.cpp:318
 #, kde-format
 msgid "Name:"
-msgstr "用户名："
+msgstr "Nomo:"
 
 #: wmwidget.cpp:321
 #, kde-format
 msgid "API URL:"
-msgstr "API URL："
+msgstr "API URL:"
 
 #: wmwidget.cpp:326
 #, kde-format
 msgid "Add"
-msgstr "添加"
+msgstr "Aldoni"
 
 #: wmwidget.cpp:327
 #, kde-format
 msgid "Add a new wiki"
-msgstr "添加新维基"
+msgstr "Aldoni novan vikion"
 
 #: wmwidget.cpp:336
 #, kde-format
 msgid "Login:"
-msgstr "登录："
+msgstr "Ensaluti:"
 
 #: wmwidget.cpp:339
 #, kde-format
 msgid "Password:"
-msgstr "密码："
+msgstr "Pasvorto:"
 
 #: wmwidget.cpp:344
 #, kde-format
 msgid "&Log in"
-msgstr "&登录"
+msgstr "Ensa&luti"
 
 #: wmwidget.cpp:360
 #, kde-format
 msgid "Login Information"
-msgstr "登录信息"
+msgstr "Ensaluta Informo"
 
 #: wmwidget.cpp:366
 #, kde-format
 msgctxt "Name of the wiki the user is currently logged on"
 msgid "Logged on: "
-msgstr "已登录为："
+msgstr "Ensalutinta:"
 
 #: wmwidget.cpp:370
 #, kde-format
 msgctxt "Username which is used to connect to the wiki"
 msgid "Logged as: "
-msgstr "已登录为："
+msgstr "Ensalutinta kiel:"
 
 #: wmwidget.cpp:373
 #, kde-format
 msgid "Change Account"
-msgstr "更改账户"
+msgstr "Ŝanĝi Konton"
 
 #: wmwidget.cpp:374
 #, kde-format
 msgid "Logout and change the account used for transfer"
-msgstr "注销并更改用于传输的账户"
+msgstr "Elsaluti kaj ŝanĝi la konton uzatan por translokigo"
 
 #: wmwidget.cpp:386
 #, kde-format
 msgid "Information"
-msgstr "信息"
+msgstr "Informoj"
 
 #: wmwidget.cpp:392
 #, kde-format
 msgid "Author:"
-msgstr "作者："
+msgstr "Aŭtoro:"
 
 #: wmwidget.cpp:395
 #, kde-format
 msgid "Source:"
-msgstr "来源："
+msgstr "Fonto:"
 
 #: wmwidget.cpp:398
 #, kde-format
 msgid "License:"
-msgstr "许可协议："
+msgstr "Permesilo:"
 
 #: wmwidget.cpp:402
 #, kde-format
 msgid "Own work, Creative Commons Attribution-Share Alike 4.0"
-msgstr "本人作品，知识共享署名-相同方式共享 4.0"
+msgstr "Propra verko, Krea Komunaĵo Atribuite-Samkondiĉe 4.0"
 
 #: wmwidget.cpp:404
 #, kde-format
 msgid "Own work, multi-license with CC-BY-SA-3.0 and GFDL"
-msgstr ""
-"本人作品，知识共享署名-相同方式共享 3.0 (CC-BY-SA-3.0) 和 GFDL 多许可证"
+msgstr "Propra laboro, plurlicenco kun CC-BY-SA-3.0 kaj GFDL"
 
 #: wmwidget.cpp:406
 #, kde-format
 msgid "Own work, multi-license with CC-BY-SA-3.0 and older"
-msgstr ""
-"本人作品，知识共享署名-相同方式共享 3.0 (CC-BY-SA-3.0) 和更旧版本的多许可证"
+msgstr "Propra laboro, plurlicenco kun CC-BY-SA-3.0 kaj pli malnova"
 
 #: wmwidget.cpp:408
 #, kde-format
 msgid "Own work, Creative Commons Attribution-Share Alike 3.0"
-msgstr "本人作品，知识共享署名-相同方式共享 3.0"
+msgstr "Propra verko, Krea Komunaĵo Atribuite-Samkondiĉe 3.0"
 
 #: wmwidget.cpp:410
 #, kde-format
 msgid "Own work, Creative Commons Attribution 3.0"
-msgstr "本人作品，知识共享署名 3.0"
+msgstr "Propra verko, Krea Komunaĵo Atribuite 3.0"
 
 #: wmwidget.cpp:412
 #, kde-format
 msgid "Own work, release into public domain under the CC-Zero license"
-msgstr "本人作品，在 CC0 许可证下发布到公共领域"
+msgstr "Propra laboro, eldoni en publikan domajnon sub la permesilo CC-Zero"
 
 #: wmwidget.cpp:414
 #, kde-format
 msgid "Author died more than 100 years ago"
-msgstr "作者已在百年前逝世"
+msgstr "Aŭtoro mortis antaŭ pli ol 100 jaroj"
 
 #: wmwidget.cpp:416
 #, kde-format
 msgid ""
 "Photo of a two-dimensional work whose author died more than 100 years ago"
-msgstr "由百年前逝世作者创作的平面作品之照片"
+msgstr ""
 
 #: wmwidget.cpp:418
 #, kde-format
 msgid "First published in the United States before 1923"
-msgstr "1923 年前首次发布于美国"
+msgstr "Unue publikigite en Usono antaŭ 1923"
 
 #: wmwidget.cpp:420
 #, kde-format
 msgid "Work of a U.S. government agency"
-msgstr "美国政府机构的作品"
+msgstr "Laboro de usona registara agentejo"
 
 #: wmwidget.cpp:422
 #, kde-format
 msgid "Simple typefaces, individual words or geometric shapes"
-msgstr "简单字体、单词或几何形状"
+msgstr "Simplaj tiparoj, individuaj vortoj aŭ geometriaj formoj"
 
 #: wmwidget.cpp:424
 #, kde-format
 msgid "Logos with only simple typefaces, individual words or geometric shapes"
-msgstr "仅包含简单字体、单词或几何形状的标志"
+msgstr ""
+"Emblemoj kun nur simplaj tiparoj, individuaj vortoj aŭ geometriaj formoj"
 
 #: wmwidget.cpp:426
 #, kde-format
 msgid "No license specified (not recommended for public wiki sites)"
-msgstr "未指定许可证 (不推荐用于公开 Wiki 类网站)"
+msgstr "Neniu permesilo specifita (ne rekomendita por publikaj vikiejoj)"
 
 #: wmwidget.cpp:429
 #, kde-format
 msgid "Generic categories:"
-msgstr "常规类别："
+msgstr "Ĝeneralaj kategorioj:"
 
 #: wmwidget.cpp:432
 #, kde-format
 msgid ""
 "This is a place to enter categories that will be added to all the files."
-msgstr "在此输入添加到所有文件的类别。"
+msgstr ""
 
 #: wmwidget.cpp:435
 #, kde-format
 msgid "Generic text:"
-msgstr "通用文本："
+msgstr "Ĝenerala teksto:"
 
 #: wmwidget.cpp:438
 #, kde-format
 msgid ""
 "This is a place to enter text that will be added to all the files, below the "
 "Information template."
-msgstr "在此输入添加到所有文件的信息模板下的文本。"
+msgstr ""
 
 #: wmwidget.cpp:442
 #, kde-format
 msgid "Upload comments:"
-msgstr "上传评论："
+msgstr "Alŝuti komentojn:"
 
 #: wmwidget.cpp:445
 #, kde-format
 msgid ""
 "This is a place to enter text that will be used as upload comments. The "
 "default of 'Uploaded via KIPI uploader' will be used if empty."
-msgstr "在此输入上传注释，若留空则使用默认的“上传自 KIPI 上传程序”。"
+msgstr ""
 
 #: wmwidget.cpp:467
 #, kde-format
 msgid "Options"
-msgstr "选项"
+msgstr "Elektebloj"
 
 #: wmwidget.cpp:468
 #, kde-format
 msgid "These are options that will be applied to photos before upload."
-msgstr "这些选项将在上传前应用至照片。"
+msgstr "Ĉi tiuj estas opcioj, kiuj estos aplikataj al fotoj antaŭ alŝuto."
 
 #: wmwidget.cpp:474
 #, kde-format
 msgid "Resize photos before uploading"
-msgstr "上传前调整照片大小"
+msgstr "Regrandigi fotojn antaŭ alŝuti"
 
 #: wmwidget.cpp:484
 #, kde-format
 msgid "Maximum size:"
-msgstr "最大大小："
+msgstr "Maksimuma grandeco:"
 
 #: wmwidget.cpp:492
 #, kde-format
 msgid "JPEG quality:"
-msgstr "JPEG 质量："
+msgstr "JPEG-kvalito:"
 
 #: wmwidget.cpp:495
 #, kde-format
 msgid "Remove metadata from file"
-msgstr "移除文件元数据"
+msgstr "Forigi metadatumojn el dosiero"
 
 #: wmwidget.cpp:499
 #, kde-format
 msgid "Remove coordinates from file"
-msgstr "删除文件坐标信息"
+msgstr "Forigi koordinatojn de dosiero"
 
 #: wmwidget.cpp:516
 #, kde-format
 msgid "Items Properties"
-msgstr "项目属性"
+msgstr "Eroj Propraĵoj"
 
 #: wmwidget.cpp:517
 #, kde-format
 msgid "Upload Settings"
-msgstr "上传设置"
+msgstr "Alŝuti Agordojn"
 
 #: wmwindow.cpp:114
 #, kde-format
 msgid "Export to MediaWiki"
-msgstr "导出到 MediaWiki"
+msgstr "Eksporti al MediaWiki"
 
 #: wmwindow.cpp:116
 #, kde-format
 msgid "Start Upload"
-msgstr "开始上传"
+msgstr "Komenci Alŝuton"
 
 #: wmwindow.cpp:117
 #, kde-format
 msgid "Start upload to MediaWiki"
-msgstr "开始上传到 MediaWiki"
+msgstr "Komenci alŝuton al MediaWiki"
 
 #: wmwindow.cpp:124 wmwindow.cpp:354
 #, kde-format
 msgid "MediaWiki export"
-msgstr "MediaWiki 导出"
+msgstr "MediaWiki-eksporto"
 
 #: wmwindow.cpp:125
 #, kde-format
@@ -446,8 +446,6 @@ msgid ""
 "A tool to export image collection to a MediaWiki installation.\n"
 "Using libmediawiki version %1"
 msgstr ""
-"一个将图像集合导出至 MediaWiki 安装程序的工具。\n"
-"使用了 %1 版的 libmediawiki"
 
 #: wmwindow.cpp:128
 #, kde-format
@@ -457,12 +455,12 @@ msgstr "(c) 2011, Alexandre Mendes"
 #: wmwindow.cpp:130
 #, kde-format
 msgid "Alexandre Mendes"
-msgstr "Alexandre Mendes"
+msgstr "Aleksandro Mendes"
 
 #: wmwindow.cpp:131
 #, kde-format
 msgid "Author"
-msgstr "作者"
+msgstr "Aŭtoro"
 
 #: wmwindow.cpp:134
 #, kde-format
@@ -472,7 +470,7 @@ msgstr "Guillaume Hormiere"
 #: wmwindow.cpp:135 wmwindow.cpp:139 wmwindow.cpp:143
 #, kde-format
 msgid "Developer"
-msgstr "开发者"
+msgstr "Ellaboranto"
 
 #: wmwindow.cpp:138
 #, kde-format
@@ -487,14 +485,14 @@ msgstr "Peter Potrowl"
 #: wmwindow.cpp:389
 #, kde-format
 msgid "Login Error"
-msgstr "登录错误"
+msgstr "Ensaluta Eraro"
 
 #: wmwindow.cpp:389
 #, kde-format
 msgid "Please check your credentials and try again."
-msgstr "请检查您的登录信息并重试。"
+msgstr "Bonvolu kontroli viajn akreditaĵojn kaj provi denove."
 
 #: wmwindow.cpp:410
 #, kde-format
 msgid "Upload finished with no errors."
-msgstr "已顺利完成上传。"
+msgstr "Alŝuto finiĝis sen eraroj."
