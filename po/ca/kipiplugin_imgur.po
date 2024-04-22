@@ -176,3 +176,83 @@ msgstr "Barra d'eines principal"
 #, kde-format
 msgid "Export to &Imgur..."
 msgstr "Exporta a &Imgur..."
+
+#~ msgid "Unexpected response from the web service"
+#~ msgstr "Resposta inesperada des del servidor web"
+
+#~ msgid "Upload failed"
+#~ msgstr "Ha fallat la pujada"
+
+#~ msgid "Parse error"
+#~ msgstr "Error d'anàlisi"
+
+#~ msgid "Network error: timeout, cannot connect."
+#~ msgstr "Error de xarxa: temps excedit, no es pot connectar."
+
+#~ msgid "Request endpoint is not valid."
+#~ msgstr "La sol·licitud de punt final no és vàlida."
+
+#~ msgid "Request is not valid: some parameter missing?"
+#~ msgstr "La sol·licitud no és vàlida: falta algun paràmetre?"
+
+#~ msgid "Authorization error: trying to access a resource without tokens."
+#~ msgstr "Error d'autorització: s'intenta accedir a un recurs sense símbols."
+
+#~ msgid "The given request is invalid."
+#~ msgstr "La sol·licitud donada no és vàlida."
+
+#~ msgid "Manager error, cannot use for sending requests."
+#~ msgstr "Error del gestor, no es pot emprar per enviar sol·licituds."
+
+#~ msgid ""
+#~ "This is a clickable link to open the Imgur home page in a web browser"
+#~ msgstr ""
+#~ "Això és un enllaç que podeu clicar per obrir la pàgina inicial d'Imgur en "
+#~ "un navegador web"
+
+#~ msgid ""
+#~ "Requesting Imgur for authorization to upload images with the KIPI Imgur "
+#~ "Exporter plugin."
+#~ msgstr ""
+#~ "Sol·licita a Imgur una autorització per pujar imatges amb el connector "
+#~ "KIPI exportador a Imgur."
+
+#~ msgid "Request authorization"
+#~ msgstr "Sol·licita autorització"
+
+#~ msgid ""
+#~ "Set permissions for the current application to upload images to Imgur."
+#~ msgstr ""
+#~ "Estableix els permisos perquè l'aplicació actual pugi imatges a Imgur."
+
+#~ msgid "Processing %1"
+#~ msgstr "S'està processant %1"
+
+#~ msgid "Authenticated"
+#~ msgstr "Autenticat"
+
+#~ msgid "%v / %m"
+#~ msgstr "%v / %m"
+
+#~ msgid "Export to Imgur"
+#~ msgstr "Exporta a Imgur"
+
+#~ msgctxt "%1 is the error string"
+#~ msgid ""
+#~ "Failed to authenticate to Imgur.\n"
+#~ "%1\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Ha fallat en autenticar amb Imgur.\n"
+#~ "%1\n"
+#~ "Voleu continuar?"
+
+#~ msgid ""
+#~ "Failed to authenticate to Imgur.\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Ha fallat en autenticar amb Imgur.\n"
+#~ "Voleu continuar?"
+
+#~ msgid "Processing Failed"
+#~ msgstr "Ha fallat el processament"

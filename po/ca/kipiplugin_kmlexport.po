@@ -488,3 +488,6 @@ msgstr "Mantenidor"
 #, kde-format
 msgid "Export to KML..."
 msgstr "Exporta a KML..."
+
+#~ msgid "A Kipi plugin for KML exporting"
+#~ msgstr "Un connector de Kipi per a l'exportació KML"
