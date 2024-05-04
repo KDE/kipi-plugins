@@ -83,7 +83,7 @@
     <p xml:lang="et">Need pluginad võimaldavad eksportida pilte paljudesse teenustesse, nagu näiteks Mediawiki või Facebook või kas või kohalik album.</p>
     <p xml:lang="eu">Plugin hauek irudiak hainbat zerbitzutara esportatzen dituzte, Mediawiki-ra, Facebook-era edo album lokaletara esaterako.</p>
     <p xml:lang="fi">Nämä liitännäiset vievät kuvia eri palveluihin kuten MediaWikiin, Facebookiin tai paikalliseen albumiin.</p>
-    <p xml:lang="fr">Ces modules externes exportent les images vers différents services comme Mediawiki, Facebook ou un album local.</p>
+    <p xml:lang="fr">Ces modules externes exportent les images vers différents services comme MediaWiki, Facebook ou un album local.</p>
     <p xml:lang="gl">Estes complementos exportan imaxes a varios servizos, como Mediawiki ou Facebook, ou un álbum local.</p>
     <p xml:lang="ia">Iste plugins exporta image a varie servicios tal como Mediawiki o Facebook o un album local.</p>
     <p xml:lang="id">Plugin-plugin tersebut mengekspor citra gambar ke berbagai layanan seperti Mediawiki atau Facebook atau album lokal.</p>
@@ -153,7 +153,7 @@
       <caption xml:lang="et">KIPI pluginate kasutamine Gwenview's.</caption>
       <caption xml:lang="eu">KIPI pluginak Gwenview-n erabili bezala.</caption>
       <caption xml:lang="fi">KIPI-liitännäiset käytössä Gwenview’ssa.</caption>
-      <caption xml:lang="fr">Modules externes de KIPI tels qu'utilisés dans Gwenview.</caption>
+      <caption xml:lang="fr">Modules externes de Kipi tels qu'utilisés dans Gwenview.</caption>
       <caption xml:lang="gl">Os complementos de KIPI tal e como se usan en Gwenview.</caption>
       <caption xml:lang="ia">Plugins de KIPI como usate in Gwenview.</caption>
       <caption xml:lang="id">KIPI Plugins sebagaimana digunakan di Gwenview.</caption>
