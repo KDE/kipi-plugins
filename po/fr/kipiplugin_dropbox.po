@@ -2,21 +2,22 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Vincent PINON <vpinon@kde.org>, 2013.
 # Peter Potrowl <peter.potrowl@gmail.com>, 2014, 2015, 2016.
+# SPDX-FileCopyrightText: 2024 Xavier Besnard <xavier.besnard@kde.org>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:26+0000\n"
-"PO-Revision-Date: 2016-11-20 23:18+0100\n"
-"Last-Translator: Peter Potrowl <peter.potrowl@gmail.com>\n"
-"Language-Team: French <kde-francophone@kde.org>\n"
+"PO-Revision-Date: 2024-04-25 18:18+0200\n"
+"Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
+"Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 23.08.5\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -39,7 +40,7 @@ msgstr "Le listage des dossiers a échoué"
 #: dbwindow.cpp:70
 #, kde-format
 msgid "Export to Dropbox"
-msgstr "Exporter vers Dropbox"
+msgstr "Exporter vers DropBox"
 
 #: dbwindow.cpp:72
 #, kde-format
@@ -49,17 +50,17 @@ msgstr "Lancer la transmission"
 #: dbwindow.cpp:73
 #, kde-format
 msgid "Start upload to Dropbox"
-msgstr "Lancer la transmission vers Dropbox"
+msgstr "Lancer la transmission vers DropBox"
 
 #: dbwindow.cpp:92
 #, kde-format
 msgid "Dropbox Export"
-msgstr "Export vers Dropbox"
+msgstr "Export vers DropBox"
 
 #: dbwindow.cpp:93
 #, kde-format
 msgid "A tool to export images to Dropbox"
-msgstr "Un outil pour exporter les images vers Dropbox"
+msgstr "Un outil pour exporter les images vers DropBox"
 
 #: dbwindow.cpp:95
 #, kde-format
@@ -107,7 +108,7 @@ msgstr "%v / %m"
 #: dbwindow.cpp:295
 #, kde-format
 msgid "Dropbox export"
-msgstr "Export vers Dropbox"
+msgstr "Export vers DropBox"
 
 #: dbwindow.cpp:328
 #, kde-format
@@ -121,7 +122,7 @@ msgid ""
 "%1\n"
 "Do you want to continue?"
 msgstr ""
-"La transmission de la photo vers Dropbox a échoué.\n"
+"La transmission de la photo vers DropBox a échoué.\n"
 "%1\n"
 "Voulez-vous continuer ?"
 
@@ -131,7 +132,7 @@ msgid ""
 "Dropbox call failed:\n"
 "%1"
 msgstr ""
-"L'appel de Dropbox a échoué :\n"
+"L'appel de DropBox a échoué :\n"
 "%1"
 
 #. i18n: ectx: Menu (Export)
@@ -149,7 +150,7 @@ msgstr "Barre principale"
 #: plugin_dropbox.cpp:90
 #, kde-format
 msgid "Export to &Dropbox..."
-msgstr "Exporter vers &Dropbox..."
+msgstr "Exporter vers &DropBox..."
 
 #~ msgid "Authorize Dropbox"
 #~ msgstr "Autoriser Dropbox"
