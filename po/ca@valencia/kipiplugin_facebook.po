@@ -55,12 +55,12 @@ msgstr "Tothom"
 #: fbtalker.cpp:201
 #, kde-format
 msgid "Validate previous session..."
-msgstr "Valida la sessió anterior..."
+msgstr "Valida la sessió anterior…"
 
 #: fbtalker.cpp:229
 #, kde-format
 msgid "Upgrading to OAuth..."
-msgstr "S'està actualitzant a «OAuth»..."
+msgstr "S'està actualitzant a «OAuth»…"
 
 #: fbtalker.cpp:279
 #, kde-format
@@ -255,4 +255,4 @@ msgstr "Barra d'eines principal"
 #: plugin_facebook.cpp:94
 #, kde-format
 msgid "Export to &Facebook..."
-msgstr "Exporta cap a &Facebook..."
+msgstr "Exporta cap a &Facebook…"

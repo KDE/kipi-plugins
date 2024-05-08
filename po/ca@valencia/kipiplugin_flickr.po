@@ -32,7 +32,7 @@ msgid ""
 "Check if photo should be publicly visible or use Upload Options tab to "
 "specify this for all images"
 msgstr ""
-"Seleccioneu-la si la fotografia ha de ser visible públicament o utilitzeu la "
+"Marqueu-la si la fotografia ha de ser visible públicament o utilitzeu la "
 "pestanya Opcions de la pujada per a especificar-ho per a totes les imatges"
 
 #: flickrlist.cpp:423
@@ -41,8 +41,8 @@ msgid ""
 "Check if photo should be visible to family or use Upload Options tab to "
 "specify this for all images"
 msgstr ""
-"Seleccioneu-la si la fotografia ha de ser visible per la família o utilitzeu "
-"la pestanya Opcions de la pujada per a especificar-ho per a totes les imatges"
+"Marqueu-la si la fotografia ha de ser visible per la família o utilitzeu la "
+"pestanya Opcions de la pujada per a especificar-ho per a totes les imatges"
 
 #: flickrlist.cpp:426
 #, kde-format
@@ -50,8 +50,8 @@ msgid ""
 "Check if photo should be visible to friends or use Upload Options tab to "
 "specify this for all images"
 msgstr ""
-"Seleccioneu-la si la fotografia ha de ser visible per als amics o utilitzeu "
-"la pestanya Opcions de la pujada per a especificar-ho per a totes les imatges"
+"Marqueu-la si la fotografia ha de ser visible per als amics o utilitzeu la "
+"pestanya Opcions de la pujada per a especificar-ho per a totes les imatges"
 
 #: flickrlist.cpp:429
 #, kde-format
@@ -329,7 +329,7 @@ msgstr "Afig etiquetes per imatge"
 #, kde-format
 msgid "If checked, you can set extra tags for each image in the File List tab"
 msgstr ""
-"Si se selecciona, podreu establir etiquetes addicionals per a cada imatge en "
+"Si està marcada, podreu establir etiquetes addicionals per a cada imatge en "
 "la pestanya de la llista de fitxers"
 
 #: flickrwidget.cpp:163
@@ -532,7 +532,7 @@ msgstr "Barra d'eines principal"
 #: plugin_flickr.cpp:100
 #, kde-format
 msgid "Export to Flick&r..."
-msgstr "Exporta cap al Flick&r..."
+msgstr "Exporta cap a Flick&r…"
 
 #: selectuserdlg.cpp:47
 #, kde-format

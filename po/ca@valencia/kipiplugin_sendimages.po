@@ -63,7 +63,7 @@ msgstr "Barra d'eines principal"
 #: plugin_sendimages.cpp:115
 #, kde-format
 msgid "Email Images..."
-msgstr "Imatges per correu electrònic..."
+msgstr "Imatges per correu electrònic…"
 
 #: sendimages.cpp:133
 #, kde-format
@@ -176,8 +176,7 @@ msgstr ""
 #, kde-format
 msgid "Starting default desktop email program..."
 msgstr ""
-"S'està iniciant el programa de correu electrònic per defecte de "
-"l'escriptori..."
+"S'està iniciant el programa de correu electrònic per defecte de l'escriptori…"
 
 #: sendimages.cpp:674
 #, kde-format
@@ -187,12 +186,12 @@ msgstr "No s'ha pogut iniciar el programa «%1». Comproveu el sistema."
 #: sendimages.cpp:687
 #, kde-format
 msgid "Starting \"%1\" program..."
-msgstr "S'està iniciant el programa «%1»..."
+msgstr "S'està iniciant el programa «%1»…"
 
 #: sendimages.cpp:697
 #, kde-format
 msgid "After having sent your images by email..."
-msgstr "Després d'enviar les imatges per correu electrònic..."
+msgstr "Després d'enviar les imatges per correu electrònic…"
 
 #: sendimages.cpp:698
 #, kde-format
@@ -282,9 +281,8 @@ msgid ""
 "If you enable this option, all image properties set by %1 as Comments, "
 "Rating, or Tags, will be added as an attached file."
 msgstr ""
-"Si seleccioneu esta opció, totes les propietats de la imatge definides per "
-"%1 com els comentaris, valoracions o etiquetes s'afegiran com un fitxer "
-"adjunt."
+"Si marqueu esta opció, totes les propietats de la imatge definides per %1 "
+"com els comentaris, valoracions o etiquetes s'afegiran com un fitxer adjunt."
 
 #: settingswidget.cpp:125
 #, kde-format
@@ -307,7 +305,7 @@ msgid ""
 "If you enable this option, all images to be sent can be resized and "
 "recompressed."
 msgstr ""
-"Si seleccioneu esta opció, totes les imatges que s'enviaran es podran "
+"Si marqueu esta opció, totes les imatges que s'enviaran es podran "
 "redimensionar i tornar a comprimir."
 
 #: settingswidget.cpp:137

@@ -175,4 +175,4 @@ msgstr "Barra d'eines principal"
 #: plugin_imgur.cpp:102
 #, kde-format
 msgid "Export to &Imgur..."
-msgstr "Exporta cap a &Imgur..."
+msgstr "Exporta cap a &Imgur…"

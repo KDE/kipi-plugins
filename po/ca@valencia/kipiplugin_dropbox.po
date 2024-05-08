@@ -149,4 +149,4 @@ msgstr "Barra d'eines principal"
 #: plugin_dropbox.cpp:90
 #, kde-format
 msgid "Export to &Dropbox..."
-msgstr "Exporta cap a &Dropbox..."
+msgstr "Exporta cap a &Dropbox…"

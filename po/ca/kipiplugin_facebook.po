@@ -256,6 +256,3 @@ msgstr "Barra d'eines principal"
 #, kde-format
 msgid "Export to &Facebook..."
 msgstr "Exporta a &Facebook..."
-
-#~ msgid "&Import"
-#~ msgstr "&Importa"
