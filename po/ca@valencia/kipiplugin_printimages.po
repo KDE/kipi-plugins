@@ -42,7 +42,7 @@ msgstr "Impressió de les imatges"
 #: plugin/plugin_printimages.cpp:115
 #, kde-format
 msgid "Print Assistant..."
-msgstr "Assistent d'impressió..."
+msgstr "Assistent d'impressió…"
 
 #: plugin/plugin_printimages.cpp:136
 #, kde-format
@@ -156,8 +156,7 @@ msgstr ""
 "Podeu escapçar cada imatge per separat o clicar el botó «Següent» per a "
 "utilitzar les configuracions d'escapçat \n"
 "per defecte per a cada fotografia.\n"
-"Seleccioneu l'opció «No escapces» per a evitar escapçar totes les "
-"fotografies."
+"Marqueu l'opció «No escapces» per a evitar escapçar totes les fotografies."
 
 #. i18n: ectx: property (text), widget (QPushButton, BtnSaveAs)
 #: ui/croppage.ui:167

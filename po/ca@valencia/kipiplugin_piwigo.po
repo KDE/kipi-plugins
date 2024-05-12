@@ -301,4 +301,4 @@ msgstr ""
 #: plugin_piwigo.cpp:97
 #, kde-format
 msgid "Export to &Piwigo..."
-msgstr "Exporta cap a &Piwigo..."
+msgstr "Exporta cap a &Piwigo…"

@@ -218,7 +218,7 @@ msgstr "Manual"
 #: libkipiplugins/tools/kpaboutdata.cpp:84
 #, kde-format
 msgid "About..."
-msgstr "Quant a..."
+msgstr "Quant a…"
 
 #: libkipiplugins/tools/kpaboutdata.cpp:120
 #, kde-format
@@ -238,7 +238,7 @@ msgstr "Copyright 2003-2016, l'equip de desenvolupadors de KDE"
 #: libkipiplugins/tools/kputil.cpp:299
 #, kde-format
 msgid "Browse..."
-msgstr "Navega..."
+msgstr "Navega…"
 
 #: libkipiplugins/widgets/kpimageslist.cpp:292
 #, kde-format

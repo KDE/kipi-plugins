@@ -116,7 +116,7 @@ msgstr "Exporteu cap a Image Shack"
 #: imageshackwindow.cpp:261
 #, kde-format
 msgid "Authenticating..."
-msgstr "S'està autenticant..."
+msgstr "S'està autenticant…"
 
 #: imageshackwindow.cpp:318
 #, kde-format
@@ -157,4 +157,4 @@ msgstr "Barra d'eines principal"
 #: plugin_imageshack.cpp:103
 #, kde-format
 msgid "Export to &Imageshack..."
-msgstr "Exporta cap a &ImageShack..."
+msgstr "Exporta cap a &ImageShack…"
