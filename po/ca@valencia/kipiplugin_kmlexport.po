@@ -24,7 +24,7 @@ msgstr ""
 #: kmlexport.cpp:90
 #, kde-format
 msgid "Generating KML file..."
-msgstr "S'està generant el fitxer KML..."
+msgstr "S'està generant el fitxer KML…"
 
 #: kmlexport.cpp:180 kmlexport.cpp:197
 #, kde-format
@@ -488,4 +488,4 @@ msgstr "Mantenidor"
 #: plugin_kmlexport.cpp:92
 #, kde-format
 msgid "Export to KML..."
-msgstr "Exporta cap a KML..."
+msgstr "Exporta cap a KML…"

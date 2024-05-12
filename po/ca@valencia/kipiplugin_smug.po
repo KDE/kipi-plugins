@@ -42,12 +42,12 @@ msgstr "Barra d'eines principal"
 #: plugin_smug.cpp:98
 #, kde-format
 msgid "Export to &SmugMug..."
-msgstr "Exporta cap a &SmugMug..."
+msgstr "Exporta cap a &SmugMug…"
 
 #: plugin_smug.cpp:109
 #, kde-format
 msgid "Import from &SmugMug..."
-msgstr "Importa des de &SmugMug..."
+msgstr "Importa des de &SmugMug…"
 
 #: smugalbum.cpp:54
 #, kde-format
@@ -183,7 +183,7 @@ msgstr "Consell de la contrasenya:"
 #: smugtalker.cpp:111
 #, kde-format
 msgid "Logging in to SmugMug service..."
-msgstr "S'està iniciant la sessió al servei de SmugMug..."
+msgstr "S'està iniciant la sessió al servei de SmugMug…"
 
 #: smugtalker.cpp:464
 #, kde-format

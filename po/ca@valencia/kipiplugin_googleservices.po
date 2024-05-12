@@ -548,17 +548,17 @@ msgstr "Privadesa:"
 #: plugin_googleservices.cpp:100
 #, kde-format
 msgid "Export to &Google Drive..."
-msgstr "Exporta cap a &Google Drive..."
+msgstr "Exporta cap a &Google Drive…"
 
 #: plugin_googleservices.cpp:110
 #, kde-format
 msgid "Export to &Google Photos/PicasaWeb..."
-msgstr "Exporta cap a &Google Photos/PicasaWeb..."
+msgstr "Exporta cap a &Google Photos/PicasaWeb…"
 
 #: plugin_googleservices.cpp:120
 #, kde-format
 msgid "Import from &Google Photos/PicasaWeb..."
-msgstr "Importa des de &Google Photos/PicasaWeb..."
+msgstr "Importa des de &Google Photos/PicasaWeb…"
 
 #: replacedialog.cpp:112
 #, kde-format

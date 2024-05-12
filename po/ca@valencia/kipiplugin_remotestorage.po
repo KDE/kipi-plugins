@@ -39,7 +39,7 @@ msgstr ""
 #: KioExportWidget.cpp:66
 #, kde-format
 msgid "Select target location..."
-msgstr "Seleccioneu la ubicació de la destinació..."
+msgstr "Seleccioneu la ubicació de la destinació…"
 
 #: KioExportWidget.cpp:72
 #, kde-format
@@ -50,7 +50,7 @@ msgstr ""
 #: KioExportWidget.cpp:134
 #, kde-format
 msgid "Select target..."
-msgstr "Seleccioneu el destí..."
+msgstr "Seleccioneu la destinació…"
 
 #: KioExportWidget.cpp:135
 #, kde-format
@@ -185,9 +185,9 @@ msgstr "Barra d'eines principal"
 #: plugin_remotestorage.cpp:93
 #, kde-format
 msgid "Export to remote storage..."
-msgstr "Exporta cap a un emmagatzematge remot..."
+msgstr "Exporta cap a un emmagatzematge remot…"
 
 #: plugin_remotestorage.cpp:105
 #, kde-format
 msgid "Import from remote storage..."
-msgstr "Importa des d'un emmagatzematge remot..."
+msgstr "Importa des d'un emmagatzematge remot…"
