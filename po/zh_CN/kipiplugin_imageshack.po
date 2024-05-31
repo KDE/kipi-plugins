@@ -20,7 +20,7 @@ msgstr ""
 #: imageshacktalker.cpp:173
 #, kde-format
 msgid "Authenticating the user"
-msgstr "正在认证用户"
+msgstr "正在对用户进行身份验证"
 
 #: imageshacktalker.cpp:199
 #, kde-format
