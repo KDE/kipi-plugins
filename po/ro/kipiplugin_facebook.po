@@ -267,7 +267,7 @@ msgstr "Export către &Facebook..."
 
 #~ msgctxt "EMAIL OF TRANSLATORS"
 #~ msgid "Your emails"
-#~ msgstr "sergiu@ase.md,cfrussen@yahoo.co.uk"
+#~ msgstr "sergiu@cip.md,cfrussen@yahoo.co.uk"
 
 #~ msgid "Facebook New Album"
 #~ msgstr "Album Facebook nou"

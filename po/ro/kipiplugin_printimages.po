@@ -695,7 +695,7 @@ msgstr "Cale de ieșire goală."
 
 #~ msgctxt "EMAIL OF TRANSLATORS"
 #~ msgid "Your emails"
-#~ msgstr "sergiu@ase.md,cfrussen@yahoo.co.uk"
+#~ msgstr "sergiu@cip.md,cfrussen@yahoo.co.uk"
 
 #~ msgid "Print to PS"
 #~ msgstr "Tipărește în PS"
