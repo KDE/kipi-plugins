@@ -390,7 +390,7 @@ msgstr "选项"
 #: libkipiplugins/widgets/kpsettingswidget.cpp:148
 #, kde-format
 msgid "This is the list of images to upload to your %1 account."
-msgstr "下列图像将被上传到账号 %1 上。"
+msgstr "下列图像将被上传到账户 %1 上。"
 
 #: libkipiplugins/widgets/kpsettingswidget.cpp:156
 #, kde-format
