@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:26+0000\n"
-"PO-Revision-Date: 2024-05-08 13:33+0900\n"
+"PO-Revision-Date: 2024-07-01 12:50+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -395,8 +395,8 @@ msgid ""
 "Failed to save photo: %1\n"
 "Do you want to continue?"
 msgstr ""
-"無法儲存圖片：%1\n"
-"確定要繼續嗎？"
+"無法儲存相片：%1\n"
+"您要繼續嗎？"
 
 #: gswindow.cpp:1033
 #, kde-format
@@ -405,12 +405,12 @@ msgid ""
 "Do you want to continue?"
 msgstr ""
 "無法下載相片：%1\n"
-"確定要繼續嗎？"
+"您要繼續嗎？"
 
 #: gswindow.cpp:1079
 #, kde-format
 msgid "Failed to save image to %1"
-msgstr "無法儲存圖片至 %1"
+msgstr "無法儲存相片至 %1"
 
 #: gswindow.cpp:1106
 #, kde-format
@@ -419,9 +419,9 @@ msgid ""
 "%2\n"
 "Do you want to continue?"
 msgstr ""
-"無法上傳圖片到 %1。\n"
+"無法上傳相片到 %1。\n"
 "%2\n"
-"確定要繼續嗎？"
+"您要繼續嗎？"
 
 #: gswindow.cpp:1200
 #, kde-format
