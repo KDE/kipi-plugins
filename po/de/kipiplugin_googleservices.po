@@ -2,7 +2,7 @@
 # Frederik Schwarzer <schwarzer@kde.org>, 2016, 2023.
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: kipiplugin_googleservices\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:26+0000\n"
 "PO-Revision-Date: 2023-04-03 16:47+0200\n"

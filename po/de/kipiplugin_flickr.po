@@ -4,7 +4,7 @@
 # Frederik Schwarzer <schwarzer@kde.org>, 2010, 2012, 2013, 2016.
 msgid ""
 msgstr ""
-"Project-Id-Version: kipiplugin_flickrexport\n"
+"Project-Id-Version: kipiplugin_flickr\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:26+0000\n"
 "PO-Revision-Date: 2019-07-31 08:40+0200\n"

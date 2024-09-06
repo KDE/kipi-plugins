@@ -3,7 +3,7 @@
 # Frederik Schwarzer <schwarzer@kde.org>, 2012, 2016.
 msgid ""
 msgstr ""
-"Project-Id-Version: kipiplugin_piwigoexport\n"
+"Project-Id-Version: kipiplugin_piwigo\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:26+0000\n"
 "PO-Revision-Date: 2017-04-01 23:43+0100\n"
