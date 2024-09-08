@@ -30,8 +30,8 @@ msgid ""
 "used in Dolphin or Konqueror, e.g. ftp://my.server.org/sub/folder."
 msgstr ""
 "Configura o enderezo de destino ao que enviar as imaxes. Isto pode ser "
-"calquera enderezo, tal e como se utilizan en Dolphin ou Konqueror, p.ex. "
-"ftp://meu.servidor.org/sub/cartafol."
+"calquera enderezo, tal e como se usan en Dolphin ou Konqueror, p.ex. ftp://"
+"meu.servidor.org/sub/cartafol."
 
 #: KioExportWidget.cpp:66
 #, kde-format
