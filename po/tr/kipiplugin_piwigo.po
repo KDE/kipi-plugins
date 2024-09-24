@@ -4,13 +4,13 @@
 # Translators:
 # H. İbrahim Güngör <ibrahim@pardus.org.tr>, 2011.
 # Volkan Gezer <volkangezer@gmail.com>, 2013.
-# Emir SARI <emir_sari@icloud.com>, 2022, 2023.
+# SPDX-FileCopyrightText: 2022, 2023, 2024 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: extragear-graphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:26+0000\n"
-"PO-Revision-Date: 2023-03-07 20:35+0300\n"
+"PO-Revision-Date: 2024-09-23 15:28+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 24.11.70\n"
 
 #. i18n: ectx: Menu (Export)
 #: kipiplugin_piwigoui.rc:7
@@ -187,11 +187,11 @@ msgid ""
 "(c) 2008, Andrea Diamantini\n"
 "(c) 2010-2014, Frédéric Coiffier\n"
 msgstr ""
-"(c) 2003-2005, Renchi Raju\n"
-"(c) 2006-2007, Colin Guthrie\n"
-"(c) 2006-2015, Gilles Caulier\n"
-"(c) 2008, Andrea Diamantini\n"
-"(c) 2010-2014, Frédéric Coiffier\n"
+"© 2003–2005, Renchi Raju\n"
+"© 2006–2007, Colin Guthrie\n"
+"© 2006–2015, Gilles Caulier\n"
+"© 2008, Andrea Diamantini\n"
+"© 2010–2014, Frédéric Coiffier\n"
 
 #: piwigowindow.cpp:243
 #, kde-format

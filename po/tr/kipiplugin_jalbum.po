@@ -1,13 +1,13 @@
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the kipi-plugins package.
 #
-# Emir SARI <emir_sari@icloud.com>, 2022.
+# SPDX-FileCopyrightText: 2022, 2024 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kipi-plugins\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:26+0000\n"
-"PO-Revision-Date: 2022-04-11 11:35+0300\n"
+"PO-Revision-Date: 2024-09-23 15:28+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 24.11.70\n"
 
 #: jalbumconfig.cpp:97 jalbumconfig.cpp:160
 #, kde-format
@@ -91,7 +91,7 @@ msgstr ""
 #: jalbumwindow.cpp:129
 #, kde-format
 msgid "(c) 2013-2017, Andrew Goodbody\n"
-msgstr "(c) 2013-2017, Andrew Goodbody\n"
+msgstr "© 2013–2017, Andrew Goodbody\n"
 
 #: jalbumwindow.cpp:160
 #, kde-format
